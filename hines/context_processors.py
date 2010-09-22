@@ -14,5 +14,5 @@ def aggregator_context(request):
         'site': Site.objects.get_current(),
         'aggregator': Aggregator.objects.get_current(),
         
-        'blogs': Blog.objects.all(),
+        'blogs': Blog.on_site.all(),
     }
