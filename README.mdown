@@ -4,6 +4,8 @@ The code for the personal website of Phil Gyford.
 
 This is very much a work in progress and is probably no use to anyone yet. Including me.
 
+This is not supposed to create a generic site that will be useful to everyone. It's a personal project to satisfy specific requirements. So, while I'm happy to hear ideas, at this stage, they'll only ever be implemented if they're useful to me. But you never know.
+
 ## Apps (so far)
 
 * Weblog
@@ -16,14 +18,11 @@ This is very much a work in progress and is probably no use to anyone yet. Inclu
 
 ## Major future tasks
 
-* Add tagging and categories to weblog
-* Fetch and display Last.fm listening
-* Fetch and display Twitter statuses
-* Fetch and display Flickr photos
-* Put located tweets and photos on maps
-* Records of books and magazines read
-* Records of films (and gigs etc?) attended
-* Nice templates
+See the list of Features: http://github.com/philgyford/django-hines/issues/labels/Features
+
+## Bugs
+
+See the list of Bugs: http://github.com/philgyford/django-hines/issues/labels/Bugs
 
 ## Installation
 
