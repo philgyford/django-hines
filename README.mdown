@@ -24,7 +24,7 @@ See the [list of Features](http://github.com/philgyford/django-hines/issues/labe
 
 ## Bugs
 
-See the [list of known Bugs](http://github.com/philgyford/django-hines/issues/labels/Bugs).: 
+See the [list of known Bugs](http://github.com/philgyford/django-hines/issues/labels/Bugs).
 
 ## Installation
 
