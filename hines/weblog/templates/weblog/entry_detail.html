@@ -9,7 +9,7 @@
     {% endif %}
 {% endblock relnav %}
 
-{% block title %}{{ entry.title }}{% endblock %}
+{% block title %}{{ entry.title }}{{ block.super }}{% endblock %}
 
 {% block content_title %}{{ entry.title }}{% endblock %}
 

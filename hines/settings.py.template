@@ -28,9 +28,6 @@ DATABASES = {
 
 SITE_ID = 1
 
-# The ID of the Aggregator object for this site. Like Site ID really.
-AGGREGATOR_ID = 1
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'MOVE THIS TO HERE FROM YOUR SETTINGS_DEFAULT.PY FILE'
 

@@ -1,10 +1,14 @@
 from django.db import models
+from django.contrib.sites.models import Site
 
 
 class LiveEntryManager(models.Manager):
     
     def get_query_set(self):
-        return super(LiveEntryManager, self).get_query_set().filter(status=self.model.LIVE_STATUS).select_related('blog')
+        return super(LiveEntryManager, self).get_query_set().filter(
+            status=self.model.LIVE_STATUS,
+            site=Site.objects.get_current(),
+        ).select_related('blog')
 
 
 class BlogManager(models.Manager):
@@ -18,8 +22,10 @@ class BlogManager(models.Manager):
         """
         from weblog.models import Entry
 
-        blogs = list(self.all())
-            
+        blogs = super(BlogManager, self).get_query_set().filter(
+            site=Site.objects.get_current()
+        )
+        
         for blog in blogs:
             entry_filter['status'] = Entry.LIVE_STATUS
             

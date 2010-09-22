@@ -12,7 +12,6 @@ def aggregator_context(request):
         'time_format': settings.TIME_FORMAT,
         
         'site': Site.objects.get_current(),
-        
         'aggregator': Aggregator.objects.get_current(),
         
         'blogs': Blog.objects.all(),

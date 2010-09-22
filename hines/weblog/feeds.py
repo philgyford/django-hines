@@ -1,9 +1,9 @@
-from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.shortcuts import get_object_or_404
 from weblog.models import Blog,Entry
+from aggregator.models import Aggregator
 
 
 class ExtendedRSSFeed(Rss201rev2Feed):
@@ -87,11 +87,11 @@ class LatestAllEntriesFeed(LatestEntriesFeed):
     """
     
     def get_object(self, request):
-        current_site = Site.objects.get_current()
-        return current_site
+        current_aggregator = Aggregator.objects.get_current()
+        return current_aggregator
         
     def title(self, obj):
-        return obj.name
+        return obj.site.name
     
     def link(self, obj):
         """

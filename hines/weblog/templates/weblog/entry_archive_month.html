@@ -1,6 +1,6 @@
 {% extends "base_weblog.html" %}
 
-{% block title %}{{ date|date:date_format_month }}{% endblock %}
+{% block title %}{{ date|date:date_format_month }}{{ block.super}}{% endblock %}
 
 {% block content_title %}{{ date|date:date_format_month }}{% endblock %}
 

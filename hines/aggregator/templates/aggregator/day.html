@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "base_aggregator.html" %}
 
-{% block title %}{{ date|date:date_format_long }}{% endblock %}
+{% block title %}{{ date|date:date_format_long }}{{ block.super }}{% endblock %}
 
 {% block content_title %}{{ date|date:date_format_long }}{% endblock %}
 

@@ -1,7 +1,7 @@
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
-
-# We'll cache aggregator results, keyed by Aggregator ID.
+from django.contrib.sites.models import Site
+    
+# We'll cache aggregator results, keyed by Site ID (same as Aggregator ID).
 AGGREGATOR_CACHE = {}
 
 class AggregatorManager(models.Manager):
@@ -11,19 +11,16 @@ class AggregatorManager(models.Manager):
         Returns the current Aggregator based on AGGREGATOR_ID setting in the project's settings.
         This is pretty much a copy of the SiteManager from django.core.
         """
-        from django.conf import settings
+        
+        current_site = Site.objects.get_current()
+        
         try:
-            aid = settings.AGGREGATOR_ID
-        except AttributeError:
-            from django.core.exceptions import ImproperlyConfigured
-            raise ImproperlyConfigured("You haven't set the Aggregator ID setting. Create an Aggregator in your database and set the AGGREGATOR_ID setting to fix this error.")
-        try:
-            current_aggregator = AGGREGATOR_CACHE[aid]
+            current_aggregator = AGGREGATOR_CACHE[current_site.id]
         except KeyError:
             try:
-                current_aggregator = self.get(pk=aid)
-                AGGREGATOR_CACHE[aid] = current_aggregator
-            except ObjectDoesNotExist:
+                current_aggregator = self.get(pk__exact=current_site.id)
+                AGGREGATOR_CACHE[current_site.id] = current_aggregator
+            except:
                 """
                 TODO: This is real nasty - if there's no matching Aggregator in the DB, we return an empty string.
                 But if we don't do this, then we can't even load the admin, in order to add the Aggregator.

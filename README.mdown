@@ -31,3 +31,4 @@ As I said, this isn't at a stage it's useful to anyone, and I haven't tried sett
 
 * I've been using [virtualenv](http://pypi.python.org/pypi/virtualenv), [virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/) and [pip](http://pip.openplans.org/). The pip requirements file is at django-hines/requirements.txt.
 * Copy django-hines/hines/settings.py.template to django-hines/hines/settings.py and add your own local settings.
+* You'll need to set up a Site in the Django Admin, and also an Aggregator, related to the Site you just created.

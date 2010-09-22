@@ -7,6 +7,8 @@ from django.template.defaultfilters import linebreaks
 from django.utils.html import strip_tags
 from django.db.models.signals import post_save
 from django.contrib.comments import Comment
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 from django.core.urlresolvers import reverse
 from aggregator.models import Aggregator
 
@@ -22,11 +24,13 @@ class Blog(models.Model):
     slug = models.SlugField(max_length=255)
     enable_comments = models.BooleanField(default=True, help_text="Uncheck to disallow commenting on this Blog. Can be overridden by 'Enable comments' on the Aggregator, but overrides Entry-level permissions.")
     remote_entries_feed_url = models.URLField(blank=True, help_text="If you use a service like Feedburner to host your feeds, add the URL for this Blog's feed here. Then the URL for the local feed will be hidden.")
+    site = models.ForeignKey(Site, blank=False)
     
     # This may be set by calling BlogManager.with_entries()
     entries = []
     
     objects = BlogManager()
+    on_site = CurrentSiteManager()
     
     class Meta:
         ordering = ['name']
@@ -84,16 +88,18 @@ class Entry(models.Model):
     author = models.ForeignKey(User)
     enable_comments = models.BooleanField(default=True, 
                             help_text='Can be overridden at the Blog and Aggregator level')
-    num_comments = models.IntegerField(editable=False)
+    num_comments = models.IntegerField(editable=False, default=0)
     featured = models.BooleanField(default=False)
     format = models.IntegerField(choices=FORMAT_CHOICES, default=MARKDOWN_FORMAT)
     status = models.IntegerField(choices=STATUS_CHOICES, default=LIVE_STATUS)
     blog = models.ForeignKey(Blog)
+    site = models.ForeignKey(Site, blank=False, editable=False)
 
     # Managers
     # Need to be this way around so that non-live entries will show up in Admin, which uses the default (first) manager.
     objects = models.Manager()
     live = LiveEntryManager()
+    on_site = CurrentSiteManager()
     
     class Meta:
         ordering = ['-published_date']
@@ -118,7 +124,8 @@ class Entry(models.Model):
             self.body_html = self.body
             if self.body_more:
                 self.body_more_html = self.body_more
-                
+        
+        self.site = self.blog.site
         self.excerpt = self.make_excerpt()
         super(Entry, self).save(force_insert, force_update)
     

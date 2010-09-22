@@ -4,7 +4,12 @@ from django.contrib import admin
 from weblog.models import Blog, Entry
 
 class BlogAdmin(admin.ModelAdmin):
-    prepopulated_fields = { 'slug': ['name'] }
+    fieldsets = (
+        (None, {
+            'fields': ('site', 'name', 'short_name', 'description', 'slug', 'remote_entries_feed_url', 'enable_comments')
+        }),
+    )
+    prepopulated_fields = { 'slug': ['short_name'] }
     
 admin.site.register(Blog, BlogAdmin)
 
