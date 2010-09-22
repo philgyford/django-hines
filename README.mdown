@@ -2,9 +2,13 @@
 
 The code for the personal website of Phil Gyford.
 
-This is very much a work in progress and is probably no use to anyone yet. Including me.
+This is very much a work in progress and is probably no use to anyone yet. 
+Including me.
 
-This is not supposed to create a generic site that will be useful to everyone. It's a personal project to satisfy specific requirements. So, while I'm happy to hear ideas, at this stage, they'll only ever be implemented if they're useful to me. But you never know.
+This is not supposed to create a generic site that will be useful to 
+everyone. It's a personal project to satisfy specific requirements. So, 
+while I'm happy to hear ideas, at this stage, they'll only ever be 
+implemented if they're useful to me. But you never know.
 
 ## Apps (so far)
 
@@ -13,21 +17,33 @@ This is not supposed to create a generic site that will be useful to everyone. I
     * Uses comments
     * Daily/monthly archives
     * RSS feeds
+    * Tagging using django-taggit
 * Aggregator
-    * Aggregates posts from the various weblogs
+    * Aggregates recent posts from the blogs
+    * Aggregated RSS feed
 
 ## Major future tasks
 
-See the list of Features: http://github.com/philgyford/django-hines/issues/labels/Features
+See the list of Features: 
+http://github.com/philgyford/django-hines/issues/labels/Features
 
 ## Bugs
 
-See the list of Bugs: http://github.com/philgyford/django-hines/issues/labels/Bugs
+See the list of Bugs: 
+http://github.com/philgyford/django-hines/issues/labels/Bugs
 
 ## Installation
 
-As I said, this isn't at a stage it's useful to anyone, and I haven't tried setting it up from scratch yet, but still, extremely briefly...
+As I said, this isn't at a stage it's useful to anyone, and I haven't 
+tried setting it up from scratch yet, but still, extremely briefly...
 
-* I've been using [virtualenv](http://pypi.python.org/pypi/virtualenv), [virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/) and [pip](http://pip.openplans.org/). The pip requirements file is at django-hines/requirements.txt.
-* Copy django-hines/hines/settings.py.template to django-hines/hines/settings.py and add your own local settings.
-* You'll need to set up a Site in the Django Admin, and also an Aggregator, related to the Site you just created.
+1. I've been using [virtualenv](http://pypi.python.org/pypi/virtualenv), 
+   [virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/) 
+   and [pip](http://pip.openplans.org/). The pip requirements file is at 
+   django-hines/requirements.txt.
+
+2. Copy django-hines/hines/settings.py.template to 
+   django-hines/hines/settings.py and add your own local settings.
+
+3. You'll need to set up a Site in the Django Admin, and also an 
+   Aggregator, related to the Site you just created.
