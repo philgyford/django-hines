@@ -1,0 +1,5 @@
+    {% load aggregator_tags %}
+    <p><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a><br />
+        {{ entry.excerpt }}<br />
+        {% linked_date entry.published_date date_format_short_strf %}{% if entry.num_comments > 0 %} | {{ entry.num_comments }} comment{{ entry.num_comments|pluralize }}{% endif %}</p>
+

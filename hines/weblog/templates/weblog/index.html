@@ -1,0 +1,33 @@
+{% extends "base_weblog.html" %}
+
+{% block title %}{{ blog.name }}{% endblock %}
+
+{% block content_title %}{{ blog.name }}{% endblock %}
+
+
+{% block content %}
+
+    {% for entry in entries.object_list %}
+        {% include 'includes/entry_brief.html' %}
+        
+    {% empty %}
+        <p>No entries.</p>
+    {% endfor %}
+    
+    <div class="pagination">
+        {% if entries.has_next %}
+            <a href="?page={{ entries.next_page_number }}">Older</a>
+        {% else %}
+            Older
+        {% endif %}
+        
+        Page {{ entries.number }} of {{ entries.paginator.num_pages }}
+        
+        {% if entries.has_previous %}
+            <a href="?page={{ entries.previous_page_number }}">Newer</a>
+        {% else %}
+            Newer
+        {% endif %}
+    </div>
+
+{% endblock content %}

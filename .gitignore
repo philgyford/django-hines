@@ -1,0 +1,19 @@
+# File types #
+##############
+*.pyc
+
+# Directories #
+###############
+logs/
+
+# Specific files #
+##################
+hines/settings.py
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+*~

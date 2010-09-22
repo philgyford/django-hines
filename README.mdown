@@ -1,0 +1,33 @@
+# Django-Hines
+
+The code for the personal website of Phil Gyford.
+
+This is very much a work in progress and is probably no use to anyone yet. Including me.
+
+## Apps (so far)
+
+* Weblog
+    * Multiple blogs
+    * Uses comments
+    * Daily/monthly archives
+    * RSS feeds
+* Aggregator
+    * Aggregates posts from the various weblogs
+
+## Major future tasks
+
+* Add tagging and categories to weblog
+* Fetch and display Last.fm listening
+* Fetch and display Twitter statuses
+* Fetch and display Flickr photos
+* Put located tweets and photos on maps
+* Records of books and magazines read
+* Records of films (and gigs etc?) attended
+* Nice templates
+
+## Installation
+
+As I said, this isn't at a stage it's useful to anyone, and I haven't tried setting it up from scratch yet, but still, extremely briefly...
+
+* I've been using [virtualenv](http://pypi.python.org/pypi/virtualenv), [virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/) and [pip](http://pip.openplans.org/). The pip requirements file is at django-hines/requirements.txt.
+* Copy django-hines/hines/settings.py.template to django-hines/hines/settings.py and add your own local settings.

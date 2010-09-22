@@ -1,0 +1,8 @@
+Django==1.2.3
+Markdown==2.0.3
+MySQL-python==1.2.3
+distribute==0.6.8
+django-debug-toolbar==0.8.3
+wsgiref==0.1.2
+yolk==0.4.1
+Using already activated environment /Users/phil/.virtualenvs/django-hines

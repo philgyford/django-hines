@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>{% block title %}{% endblock %}</title>
+	{% block stylesheets %}
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/global.css" type="text/css">
+    {% endblock stylesheets %}
+    {% block relnav %}
+        <link rel="start" href="{% url aggregator_index %}" title="Home" />
+    {% endblock relnav %}
+    {% block feeds %}
+        <link href="{{ aggregator.get_entries_feed_url }}" rel="alternate" title="Latest entries on the whole site" type="application/rss+xml" />
+    {% endblock feeds %}
+</head>
+<body>
+    <div id="header">
+        <div id="site-title">{{ site.name }}</div>
+        <ul id="nav">
+            {% load aggregator_tags %}
+            <li class="{% active request '' %}"><a href="{% url aggregator_index %}" title="The front page of the site">Home</a></li>
+            {% for blog in blogs %}
+                <li class="{% active request blog.slug %}"><a href="{{ blog.get_absolute_url }}" title="The front page of {{ blog.short_name }}">{{ blog.short_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+	<h1>{% block content_title %}{% endblock %}</h1>
+	
+	<div id="content">
+	{% block content %}{% endblock %}
+	</div>
+	
+	<div id="sidebar">
+    {% block sidebar %}{% endblock %}
+	</div>
+
+    <div id="footer">
+    {% block footer %}
+        <h2>RSS Feeds</h2>
+        <ul class="feeds">
+            <li><a href="{{ aggregator.get_entries_feed_url }}">Latest entries on the whole site</a></li>
+            {% for blog in blogs %}
+                <li><a href="{{ blog.get_entries_feed_url }}">Latest entries on {{ blog.short_name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+    </div>
+</body>
+</html>

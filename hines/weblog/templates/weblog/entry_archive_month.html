@@ -1,0 +1,16 @@
+{% extends "base_weblog.html" %}
+
+{% block title %}{{ date|date:date_format_month }}{% endblock %}
+
+{% block content_title %}{{ date|date:date_format_month }}{% endblock %}
+
+
+{% block content %}
+
+    {% for entry in entries %}
+        {% include 'includes/entry_brief.html' %}
+    {% empty %}
+        <p>No entries.</p>
+    {% endfor %}
+
+{% endblock content %}

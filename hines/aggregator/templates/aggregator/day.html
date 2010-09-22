@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ date|date:date_format_long }}{% endblock %}
+
+{% block content_title %}{{ date|date:date_format_long }}{% endblock %}
+
+
+{% block content %}
+
+{{ entry.body_html|safe }}
+
+{% for blog in blogs %}
+    <h2>{{ blog.name }}</h2>
+
+    {% for entry in blog.entries %}
+        {% include 'includes/entry_brief.html' %}
+    {% empty %}
+        <p>No entries.</p>
+    {% endfor %}
+{% endfor %}
+
+
+{% endblock content %}
