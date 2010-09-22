@@ -15,6 +15,7 @@ from aggregator.models import Aggregator
 from markdown import markdown
 
 from managers import BlogManager, LiveEntryManager
+from taggit.managers import TaggableManager
 
 
 class Blog(models.Model):
@@ -100,6 +101,8 @@ class Entry(models.Model):
     objects = models.Manager()
     live = LiveEntryManager()
     on_site = CurrentSiteManager()
+    
+    tags = TaggableManager()
     
     class Meta:
         ordering = ['-published_date']

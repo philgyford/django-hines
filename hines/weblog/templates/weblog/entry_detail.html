@@ -21,6 +21,16 @@
     {% if entry.body_more_html %}
         {{ entry.body_more_html|safe }}
     {% endif %}
+    
+    {% if entry.tags.all %}
+        <h2>Tags</h2>
+        <ul class="tags">
+        {% for tag in entry.tags.all %}
+            <li><a href="{% url weblog_tag entry.blog.slug tag.slug %}" title="See more entries tagged with '{{ tag }}">{{ tag }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
 
     {% load comments %}
     {% load markup %}

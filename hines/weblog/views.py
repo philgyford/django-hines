@@ -3,6 +3,7 @@ from weblog.models import Blog, Entry
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.shortcuts import get_list_or_404, get_object_or_404, render_to_response
 from django.template import RequestContext
+from taggit.models import Tag
 
 
 def weblog_archive_month(request, blog_slug, year, month):
@@ -73,4 +74,21 @@ def weblog_entry_detail(request, blog_slug, year, month, day, slug):
         'blog': entry.blog,
         'entry': entry,
         'other_blogs': other_blogs,
+    }, context_instance=RequestContext(request))
+
+
+def weblog_tag(request, blog_slug, tag_slug):
+    blog = get_object_or_404(Blog, slug=blog_slug)
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    
+    entries = list(Entry.live.filter(
+                                blog__slug__exact = blog.slug,
+                                tags__name__in=[tag.slug]
+                            ))
+    
+    return render_to_response('weblog/tag.html', {
+        'blog': blog,
+        'tag': tag,
+        'entries': entries,
+        'related_entries': related_entries,
     }, context_instance=RequestContext(request))

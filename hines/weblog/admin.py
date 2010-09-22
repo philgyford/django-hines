@@ -23,7 +23,7 @@ class EntryAdmin(admin.ModelAdmin):
             'fields': ('blog', 'title', 'format', 'body', 'body_more', 'excerpt')
         }),
         ('Meta', {
-            'fields': ('slug', 'remote_url', 'featured',  'status', 'published_date', 'enable_comments', )
+            'fields': ('slug', 'tags', 'remote_url', 'featured',  'status', 'published_date', 'enable_comments', )
         }),
     )
     prepopulated_fields = { 'slug': ['title'] }

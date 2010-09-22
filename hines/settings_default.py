@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django.contrib.flatpages',
+    'taggit',
     'hines.weblog',
     'hines.aggregator',
 )
