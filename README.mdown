@@ -1,9 +1,11 @@
 # Django-Hines
 
-The code for the personal website of Phil Gyford.
+The code for a future version of the personal website of Phil Gyford.
 
 This is very much a work in progress and is probably no use to anyone yet. 
-Including me.
+Including me. The eventual aim is to replicate the features of
+http://www.gyford.com/ . Although that's a long way off and it's a 
+target that might never be reached.
 
 This is not supposed to create a generic site that will be useful to 
 everyone. It's a personal project to satisfy specific requirements. So, 
