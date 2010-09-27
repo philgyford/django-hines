@@ -90,5 +90,4 @@ def weblog_tag(request, blog_slug, tag_slug):
         'blog': blog,
         'tag': tag,
         'entries': entries,
-        'related_entries': related_entries,
     }, context_instance=RequestContext(request))

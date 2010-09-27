@@ -1,0 +1,1200 @@
+[
+    {
+        "pk": 16,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "aggregator",
+             "name": "aggregator",
+             "app_label": "aggregator"
+        }
+    },
+    {
+        "pk": 14,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "blog",
+             "name": "blog",
+             "app_label": "weblog"
+        }
+    },
+    {
+        "pk": 9,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "comment",
+             "name": "comment",
+             "app_label": "comments"
+        }
+    },
+    {
+        "pk": 10,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "commentflag",
+             "name": "comment flag",
+             "app_label": "comments"
+        }
+    },
+    {
+        "pk": 5,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "contenttype",
+             "name": "content type",
+             "app_label": "contenttypes"
+        }
+    },
+    {
+        "pk": 15,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "entry",
+             "name": "entry",
+             "app_label": "weblog"
+        }
+    },
+    {
+        "pk": 11,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "flatpage",
+             "name": "flat page",
+             "app_label": "flatpages"
+        }
+    },
+    {
+        "pk": 2,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "group",
+             "name": "group",
+             "app_label": "auth"
+        }
+    },
+    {
+        "pk": 8,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "logentry",
+             "name": "log entry",
+             "app_label": "admin"
+        }
+    },
+    {
+        "pk": 4,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "message",
+             "name": "message",
+             "app_label": "auth"
+        }
+    },
+    {
+        "pk": 1,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "permission",
+             "name": "permission",
+             "app_label": "auth"
+        }
+    },
+    {
+        "pk": 6,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "session",
+             "name": "session",
+             "app_label": "sessions"
+        }
+    },
+    {
+        "pk": 7,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "site",
+             "name": "site",
+             "app_label": "sites"
+        }
+    },
+    {
+        "pk": 12,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "tag",
+             "name": "Tag",
+             "app_label": "taggit"
+        }
+    },
+    {
+        "pk": 13,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "taggeditem",
+             "name": "Tagged Item",
+             "app_label": "taggit"
+        }
+    },
+    {
+        "pk": 3,
+         "model": "contenttypes.contenttype",
+         "fields": 
+        {
+            "model": "user",
+             "name": "user",
+             "app_label": "auth"
+        }
+    },
+    {
+        "pk": 1,
+         "model": "sites.site",
+         "fields": 
+        {
+            "domain": "127.0.0.1:8000",
+             "name": "Phil Gyford's website"
+        }
+    },
+    {
+        "pk": 21,
+         "model": "admin.logentry",
+         "fields": 
+        {
+            "action_flag": 1,
+             "action_time": "2010-09-27 17:34:17",
+             "object_repr": "/about/ -- About me",
+             "object_id": "1",
+             "change_message": "",
+             "user": 3,
+             "content_type": 11
+        }
+    },
+    {
+        "pk": 1,
+         "model": "comments.comment",
+         "fields": 
+        {
+            "comment": "Here's my comment.\r\n\r\nWhich goes into another paragraph.",
+             "user_url": "",
+             "submit_date": "2010-09-27 16:09:47",
+             "ip_address": "127.0.0.1",
+             "object_pk": "1",
+             "site": 1,
+             "is_removed": false,
+             "user": null,
+             "content_type": 10,
+             "is_public": true,
+             "user_name": "Sammy Commenter",
+             "user_email": "sammy@example.com"
+        }
+    },
+    {
+        "pk": 2,
+         "model": "comments.comment",
+         "fields": 
+        {
+            "comment": "Another comment is here.",
+             "user_url": "http://www.example.com/",
+             "submit_date": "2010-09-27 16:15:04",
+             "ip_address": "127.0.0.1",
+             "object_pk": "1",
+             "site": 1,
+             "is_removed": false,
+             "user": null,
+             "content_type": 10,
+             "is_public": true,
+             "user_name": "Mary Commenter",
+             "user_email": "mary@example.com"
+        }
+    },
+    {
+        "pk": 1,
+         "model": "flatpages.flatpage",
+         "fields": 
+        {
+            "registration_required": false,
+             "title": "About me",
+             "url": "/about/",
+             "template_name": "",
+             "sites": 
+            [
+                1
+            ],
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis tortor ac urna congue vehicula sed in elit. Integer consequat, felis eget consequat tincidunt, odio dui euismod est, at varius tellus est vitae turpis. Cras ac mauris odio, a dignissim felis. Sed dapibus tortor mauris. Praesent egestas vulputate neque, quis laoreet leo lacinia a. Nullam felis leo, pharetra sed congue ac, accumsan non nisi. Quisque elit justo, ultricies at fermentum vestibulum, placerat quis velit. Mauris egestas blandit neque at pulvinar. In tincidunt iaculis mauris, faucibus laoreet urna dictum id. Vestibulum quis sem vel velit vehicula hendrerit. Morbi porta libero eu velit viverra vel faucibus mauris mollis. Fusce sed purus velit. Vivamus nec mi vel lacus euismod egestas. Ut imperdiet, libero ac dapibus accumsan, dolor orci tristique magna, sed convallis quam eros id nibh. Aenean commodo tellus eu turpis fermentum tristique.\r\n\r\nNulla nisi quam, tempor in tincidunt et, vestibulum vel nisi. Donec massa augue, hendrerit eget cursus pharetra, mollis ut urna. Cras mollis ipsum eu orci iaculis et gravida justo pharetra. Aenean nisi nibh, malesuada eu mollis posuere, interdum vitae urna. Nulla sit amet massa lacus. Morbi volutpat diam non felis ornare accumsan. Curabitur iaculis leo sit amet metus tempor eu euismod enim sodales. Proin a luctus leo. Sed egestas condimentum vehicula. Donec blandit egestas eros nec venenatis.\r\n\r\nInteger varius sollicitudin quam ut viverra. Quisque molestie pulvinar ipsum et tempor. Nam et elit sed neque egestas tristique. Donec dapibus ante diam. Ut justo neque, feugiat nec vehicula vitae, elementum sed nunc. Morbi varius facilisis metus facilisis aliquet. Curabitur lacinia, nisi vel feugiat interdum, sapien ante faucibus risus, quis aliquam nibh nisl nec ante. In erat sem, iaculis ac consequat id, ultrices vitae leo. Sed purus risus, tincidunt vel pharetra ac, congue eget odio. Maecenas aliquam, est sed scelerisque consequat, urna mi blandit nibh, vel facilisis erat odio et quam. Vestibulum convallis vestibulum mi, quis dictum diam varius ac. Pellentesque at tortor ut nunc viverra tristique. Aenean aliquam metus et neque molestie pretium. Morbi posuere lacinia tempus. Cras in nunc vitae ipsum feugiat ultricies.",
+             "enable_comments": false
+        }
+    },
+    {
+        "pk": 1,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "animals",
+             "slug": "animals"
+        }
+    },
+    {
+        "pk": 2,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "cats",
+             "slug": "cats"
+        }
+    },
+    {
+        "pk": 3,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "dogs",
+             "slug": "dogs"
+        }
+    },
+    {
+        "pk": 4,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "lions",
+             "slug": "lions"
+        }
+    },
+    {
+        "pk": 5,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "wolves",
+             "slug": "wolves"
+        }
+    },
+    {
+        "pk": 6,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "felines",
+             "slug": "felines"
+        }
+    },
+    {
+        "pk": 7,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "cake",
+             "slug": "cake"
+        }
+    },
+    {
+        "pk": 13,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 1,
+             "content_type": 15,
+             "object_id": 3
+        }
+    },
+    {
+        "pk": 14,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 2,
+             "content_type": 15,
+             "object_id": 3
+        }
+    },
+    {
+        "pk": 15,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 6,
+             "content_type": 15,
+             "object_id": 3
+        }
+    },
+    {
+        "pk": 16,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 1,
+             "content_type": 15,
+             "object_id": 2
+        }
+    },
+    {
+        "pk": 17,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 3,
+             "content_type": 15,
+             "object_id": 2
+        }
+    },
+    {
+        "pk": 18,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 5,
+             "content_type": 15,
+             "object_id": 2
+        }
+    },
+    {
+        "pk": 19,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 1,
+             "content_type": 15,
+             "object_id": 1
+        }
+    },
+    {
+        "pk": 20,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 7,
+             "content_type": 15,
+             "object_id": 1
+        }
+    },
+    {
+        "pk": 21,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 2,
+             "content_type": 15,
+             "object_id": 1
+        }
+    },
+    {
+        "pk": 22,
+         "model": "taggit.taggeditem",
+         "fields": 
+        {
+            "tag": 3,
+             "content_type": 15,
+             "object_id": 1
+        }
+    },
+    {
+        "pk": 3,
+         "model": "weblog.blog",
+         "fields": 
+        {
+            "name": "Comments posted on other sites",
+             "short_name": "Comments",
+             "site": 1,
+             "remote_entries_feed_url": "",
+             "enable_comments": false,
+             "slug": "comments",
+             "description": "Description for the Comments blog."
+        }
+    },
+    {
+        "pk": 2,
+         "model": "weblog.blog",
+         "fields": 
+        {
+            "name": "Phil Gyford's Links",
+             "short_name": "Links",
+             "site": 1,
+             "remote_entries_feed_url": "",
+             "enable_comments": true,
+             "slug": "links",
+             "description": "The Links blog description here."
+        }
+    },
+    {
+        "pk": 1,
+         "model": "weblog.blog",
+         "fields": 
+        {
+            "name": "Phil Gyford's Writing",
+             "short_name": "Writing",
+             "site": 1,
+             "remote_entries_feed_url": "http://feeds.feedburner.com/PhilGyfordsWriting",
+             "enable_comments": true,
+             "slug": "writing",
+             "description": "Here's a description about the Writing blog."
+        }
+    },
+    {
+        "pk": 3,
+         "model": "weblog.entry",
+         "fields": 
+        {
+            "body": "This post should not appear anywhere on the site.",
+             "status": 1,
+             "author": 2,
+             "title": "A draft post",
+             "num_comments": 0,
+             "body_more_html": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper elit eu ante condimentum ac luctus mauris mattis. Cras a feugiat sapien. Fusce at nibh orci, eget fringilla nunc. Duis gravida bibendum nulla, id aliquam nisi egestas at. Vivamus at ligula nec diam dignissim aliquam. Donec suscipit quam vitae odio ultrices sed bibendum nulla dapibus. Pellentesque eu elit enim. Aliquam varius turpis at lorem ultricies aliquam consectetur erat elementum. Fusce ac convallis mauris. In vulputate turpis faucibus nisi cursus pretium. Maecenas facilisis feugiat dui vel malesuada. Nulla posuere mattis sollicitudin. Donec quis metus odio, ut tempus enim. Vivamus semper leo nec erat scelerisque tincidunt. Sed tellus dui, consectetur nec rhoncus aliquet, commodo nec ipsum.</p>\n<p>Vivamus risus tellus, egestas ut congue eu, facilisis sit amet arcu. Maecenas pharetra odio quis metus mollis sollicitudin. Vestibulum in libero magna. Integer nisi urna, malesuada ut faucibus sit amet, bibendum vel magna. Nam egestas tempus orci, et congue libero ultricies ac. Aliquam elementum dignissim ornare. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quis tempus tellus. Maecenas nec est leo. In nec libero quis orci adipiscing mattis a at tellus. Quisque vulputate, augue vel imperdiet fringilla, lorem risus sagittis lorem, non faucibus orci justo et erat. Praesent id ligula purus. Praesent nec massa ligula, sit amet vehicula mauris. Morbi eget nisi in ante vehicula tristique. Duis non augue magna. Vivamus pellentesque tortor a est lacinia nec tempus velit consequat. Praesent sit amet sem id arcu cursus ullamcorper. Fusce ut nisi in felis rhoncus suscipit in eget velit.</p>",
+             "published_date": "2010-09-27 15:56:14",
+             "excerpt": "An excerpt here. Vivamus risus tellus, egestas ut congue eu, facilisis sit amet arcu. Maecenas pharetra odio quis metus mollis sollicitudin.",
+             "body_more": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper elit eu ante condimentum ac luctus mauris mattis. Cras a feugiat sapien. Fusce at nibh orci, eget fringilla nunc. Duis gravida bibendum nulla, id aliquam nisi egestas at. Vivamus at ligula nec diam dignissim aliquam. Donec suscipit quam vitae odio ultrices sed bibendum nulla dapibus. Pellentesque eu elit enim. Aliquam varius turpis at lorem ultricies aliquam consectetur erat elementum. Fusce ac convallis mauris. In vulputate turpis faucibus nisi cursus pretium. Maecenas facilisis feugiat dui vel malesuada. Nulla posuere mattis sollicitudin. Donec quis metus odio, ut tempus enim. Vivamus semper leo nec erat scelerisque tincidunt. Sed tellus dui, consectetur nec rhoncus aliquet, commodo nec ipsum.\r\n\r\nVivamus risus tellus, egestas ut congue eu, facilisis sit amet arcu. Maecenas pharetra odio quis metus mollis sollicitudin. Vestibulum in libero magna. Integer nisi urna, malesuada ut faucibus sit amet, bibendum vel magna. Nam egestas tempus orci, et congue libero ultricies ac. Aliquam elementum dignissim ornare. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quis tempus tellus. Maecenas nec est leo. In nec libero quis orci adipiscing mattis a at tellus. Quisque vulputate, augue vel imperdiet fringilla, lorem risus sagittis lorem, non faucibus orci justo et erat. Praesent id ligula purus. Praesent nec massa ligula, sit amet vehicula mauris. Morbi eget nisi in ante vehicula tristique. Duis non augue magna. Vivamus pellentesque tortor a est lacinia nec tempus velit consequat. Praesent sit amet sem id arcu cursus ullamcorper. Fusce ut nisi in felis rhoncus suscipit in eget velit.",
+             "body_html": "<p>This post should not appear anywhere on the site.</p>",
+             "blog": 1,
+             "featured": false,
+             "site": 1,
+             "created_date": "2010-09-27 15:57:02",
+             "format": 2,
+             "enable_comments": true,
+             "last_edited_date": "2010-09-27 15:57:02",
+             "slug": "draft-post",
+             "remote_url": ""
+        }
+    },
+    {
+        "pk": 2,
+         "model": "weblog.entry",
+         "fields": 
+        {
+            "body": "Sed metus leo, tristique et volutpat eu, pellentesque sit amet leo. Nam suscipit egestas massa, facilisis cursus est convallis at. In sit amet blandit nulla.",
+             "status": 2,
+             "author": 2,
+             "title": "A featured writing post",
+             "num_comments": 0,
+             "body_more_html": "<p>Pellentesque ac mi vitae dolor fermentum euismod eget sed sem. Nulla facilisi. Duis bibendum, lorem eget tempus condimentum, erat nulla semper nisl, id congue felis metus non est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id metus eu nulla iaculis commodo tempus id dui. Quisque sed lacus lectus, id auctor turpis. Phasellus nisl velit, varius interdum pretium vitae, imperdiet sed nisi. Phasellus turpis nibh, egestas id mattis id, congue et nibh.</p>",
+             "published_date": "2010-09-27 15:55:29",
+             "excerpt": "Here's the custom excerpt for this entry.",
+             "body_more": "Pellentesque ac mi vitae dolor fermentum euismod eget sed sem. Nulla facilisi. Duis bibendum, lorem eget tempus condimentum, erat nulla semper nisl, id congue felis metus non est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id metus eu nulla iaculis commodo tempus id dui. Quisque sed lacus lectus, id auctor turpis. Phasellus nisl velit, varius interdum pretium vitae, imperdiet sed nisi. Phasellus turpis nibh, egestas id mattis id, congue et nibh.",
+             "body_html": "<p>Sed metus leo, tristique et volutpat eu, pellentesque sit amet leo. Nam suscipit egestas massa, facilisis cursus est convallis at. In sit amet blandit nulla.</p>",
+             "blog": 1,
+             "featured": true,
+             "site": 1,
+             "created_date": "2010-09-27 15:56:10",
+             "format": 2,
+             "enable_comments": true,
+             "last_edited_date": "2010-09-27 15:56:10",
+             "slug": "featured-writing-post",
+             "remote_url": ""
+        }
+    },
+    {
+        "pk": 1,
+         "model": "weblog.entry",
+         "fields": 
+        {
+            "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper elit eu ante condimentum ac luctus mauris mattis. Cras a feugiat sapien. Fusce at nibh orci, eget fringilla nunc. Duis gravida bibendum nulla, id aliquam nisi egestas at. Vivamus at ligula nec diam dignissim aliquam. Donec suscipit quam vitae odio ultrices sed bibendum nulla dapibus. Pellentesque eu elit enim. Aliquam varius turpis at lorem ultricies aliquam consectetur erat elementum. Fusce ac convallis mauris. In vulputate turpis faucibus nisi cursus pretium. Maecenas facilisis feugiat dui vel malesuada. Nulla posuere mattis sollicitudin. Donec quis metus odio, ut tempus enim. Vivamus semper leo nec erat scelerisque tincidunt. Sed tellus dui, consectetur nec rhoncus aliquet, commodo nec ipsum.",
+             "status": 2,
+             "author": 2,
+             "title": "A published Writing post",
+             "num_comments": 2,
+             "body_more_html": "<ul>\n<li>A list item here</li>\n<li>And another item here</li>\n<li>And a third item here</li>\n</ul>\n<p><strong>This is bold</strong> <a href=\"http://www.pepysdiary.com\">and this is a link</a>.</p>\n<p>Vivamus risus tellus, egestas ut congue eu, facilisis sit amet arcu. Maecenas pharetra odio quis metus mollis sollicitudin. Vestibulum in libero magna. Integer nisi urna, malesuada ut faucibus sit amet, bibendum vel magna. Nam egestas tempus orci, et congue libero ultricies ac. Aliquam elementum dignissim ornare. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quis tempus tellus. Maecenas nec est leo. In nec libero quis orci adipiscing mattis a at tellus. Quisque vulputate, augue vel imperdiet fringilla, lorem risus sagittis lorem, non faucibus orci justo et erat. Praesent id ligula purus. Praesent nec massa ligula, sit amet vehicula mauris. Morbi eget nisi in ante vehicula tristique. Duis non augue magna. Vivamus pellentesque tortor a est lacinia nec tempus velit consequat. Praesent sit amet sem id arcu cursus ullamcorper. Fusce ut nisi in felis rhoncus suscipit in eget velit.</p>\n<p>Sed condimentum, turpis ultricies sodales dignissim, massa nulla ultrices quam, in lobortis lorem velit aliquam risus. Fusce laoreet tellus ac urna tincidunt vehicula blandit magna convallis. Curabitur tempor dui eget erat gravida id laoreet tellus gravida. Curabitur quis augue quis tellus porttitor ultricies. Aliquam dui turpis, facilisis eu consequat in, pharetra ultricies mi. Sed sodales porttitor neque, a ullamcorper erat eleifend at. Aliquam vitae vehicula lorem. Cras ultricies arcu ac ipsum aliquam vitae pulvinar libero feugiat. Aliquam et sem id lectus semper pulvinar eu quis purus. Mauris tincidunt consectetur massa sed iaculis. Sed congue lacus blandit lectus molestie venenatis.</p>",
+             "published_date": "2010-09-26 15:53:45",
+             "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper elit eu ante condimentum ac...",
+             "body_more": "* A list item here\r\n* And another item here\r\n* And a third item here\r\n\r\n**This is bold** [ and this is a link ] (http://www.pepysdiary.com).\r\n\r\nVivamus risus tellus, egestas ut congue eu, facilisis sit amet arcu. Maecenas pharetra odio quis metus mollis sollicitudin. Vestibulum in libero magna. Integer nisi urna, malesuada ut faucibus sit amet, bibendum vel magna. Nam egestas tempus orci, et congue libero ultricies ac. Aliquam elementum dignissim ornare. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quis tempus tellus. Maecenas nec est leo. In nec libero quis orci adipiscing mattis a at tellus. Quisque vulputate, augue vel imperdiet fringilla, lorem risus sagittis lorem, non faucibus orci justo et erat. Praesent id ligula purus. Praesent nec massa ligula, sit amet vehicula mauris. Morbi eget nisi in ante vehicula tristique. Duis non augue magna. Vivamus pellentesque tortor a est lacinia nec tempus velit consequat. Praesent sit amet sem id arcu cursus ullamcorper. Fusce ut nisi in felis rhoncus suscipit in eget velit.\r\n\r\nSed condimentum, turpis ultricies sodales dignissim, massa nulla ultrices quam, in lobortis lorem velit aliquam risus. Fusce laoreet tellus ac urna tincidunt vehicula blandit magna convallis. Curabitur tempor dui eget erat gravida id laoreet tellus gravida. Curabitur quis augue quis tellus porttitor ultricies. Aliquam dui turpis, facilisis eu consequat in, pharetra ultricies mi. Sed sodales porttitor neque, a ullamcorper erat eleifend at. Aliquam vitae vehicula lorem. Cras ultricies arcu ac ipsum aliquam vitae pulvinar libero feugiat. Aliquam et sem id lectus semper pulvinar eu quis purus. Mauris tincidunt consectetur massa sed iaculis. Sed congue lacus blandit lectus molestie venenatis.\r\n",
+             "body_html": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper elit eu ante condimentum ac luctus mauris mattis. Cras a feugiat sapien. Fusce at nibh orci, eget fringilla nunc. Duis gravida bibendum nulla, id aliquam nisi egestas at. Vivamus at ligula nec diam dignissim aliquam. Donec suscipit quam vitae odio ultrices sed bibendum nulla dapibus. Pellentesque eu elit enim. Aliquam varius turpis at lorem ultricies aliquam consectetur erat elementum. Fusce ac convallis mauris. In vulputate turpis faucibus nisi cursus pretium. Maecenas facilisis feugiat dui vel malesuada. Nulla posuere mattis sollicitudin. Donec quis metus odio, ut tempus enim. Vivamus semper leo nec erat scelerisque tincidunt. Sed tellus dui, consectetur nec rhoncus aliquet, commodo nec ipsum.</p>",
+             "blog": 1,
+             "featured": false,
+             "site": 1,
+             "created_date": "2010-09-27 15:55:28",
+             "format": 2,
+             "enable_comments": true,
+             "last_edited_date": "2010-09-27 16:15:04",
+             "slug": "published-writing-post",
+             "remote_url": ""
+        }
+    },
+    {
+        "pk": 5,
+         "model": "weblog.entry",
+         "fields": 
+        {
+            "body": "I didn't do it with a Leica but I did dig out the Pentax K1000 I bought used when I went to college twenty years ago and haven't used for years. I bought a 50mm f/1.7 lens on eBay and have been using nothing but this (aside from some casual phone/point-and-shoot shots occasionally), with Tri-X, for over a year now.",
+             "status": 2,
+             "author": 3,
+             "title": "The Online Photographer: 'A Leica for a Year' a Year Later",
+             "num_comments": 0,
+             "body_more_html": "<p>I've really enjoyed it and it's been a real refresher -- I was only using a digital point-and-shoot before, not wanting the bulk and expense of a digital SLR. But I didn't like the pictures it took and wasn't sure what to do next. So black and white film on my old SLR was just the change I was after.</p>\n\n<p>I intended to shoot as much as you suggested, but reality took care of that -- I just don't have the time and would have to give other things up to really concentrate on photography that much. I've shot 23 films over the past year, although I sometimes went for weeks or even months without shooting. When I realised I was carrying the camera around a lot but never using it, I stopped taking it everywhere. I didn't like being \"on\" all the time, and I valued being able to just be, to walk around without looking for potential shots. I guess I'm not a natural, compulsive photographer!</p>\n\n<p>But it's been good otherwise. I've thought more about composition. I really love taking my time and valuing each shot, rather than firing off several in one go. It's made me think about what I want from a camera and photography in general. So, many thanks for your idea.</p>\n\n<p><a href=\"http://www.flickr.com/photos/philgyford/sets/72157624665054459/detail/\">Here are my 30 favourites from the past year on Flickr.</a></p>",
+             "published_date": "2010-08-23 16:04:57",
+             "excerpt": "I didn't do it with a Leica but I did dig out the Pentax K1000 I bought used when I went to college...",
+             "body_more": "I've really enjoyed it and it's been a real refresher -- I was only using a digital point-and-shoot before, not wanting the bulk and expense of a digital SLR. But I didn't like the pictures it took and wasn't sure what to do next. So black and white film on my old SLR was just the change I was after.\r\n\r\nI intended to shoot as much as you suggested, but reality took care of that -- I just don't have the time and would have to give other things up to really concentrate on photography that much. I've shot 23 films over the past year, although I sometimes went for weeks or even months without shooting. When I realised I was carrying the camera around a lot but never using it, I stopped taking it everywhere. I didn't like being \"on\" all the time, and I valued being able to just be, to walk around without looking for potential shots. I guess I'm not a natural, compulsive photographer!\r\n\r\nBut it's been good otherwise. I've thought more about composition. I really love taking my time and valuing each shot, rather than firing off several in one go. It's made me think about what I want from a camera and photography in general. So, many thanks for your idea.\r\n\r\n<a href=\"http://www.flickr.com/photos/philgyford/sets/72157624665054459/detail/\">Here are my 30 favourites from the past year on Flickr.</a>",
+             "body_html": "<p>I didn't do it with a Leica but I did dig out the Pentax K1000 I bought used when I went to college twenty years ago and haven't used for years. I bought a 50mm f/1.7 lens on eBay and have been using nothing but this (aside from some casual phone/point-and-shoot shots occasionally), with Tri-X, for over a year now.</p>",
+             "blog": 3,
+             "featured": false,
+             "site": 1,
+             "created_date": "2010-09-27 16:06:49",
+             "format": 1,
+             "enable_comments": true,
+             "last_edited_date": "2010-09-27 16:06:49",
+             "slug": "leica",
+             "remote_url": "http://theonlinephotographer.typepad.com/the_online_photographer/2010/08/a-leica-for-a-year-a-year-later.html"
+        }
+    },
+    {
+        "pk": 4,
+         "model": "weblog.entry",
+         "fields": 
+        {
+            "body": "<dl class=\"links\">\r\n<dt><a href=\"http://html5boilerplate.com/\">HTML5 Boilerplate - A rock-solid default for HTML5 awesome.</a></dt>\r\n<dd>Even if you don't use the whole thing, it's a nice collection of handy little JavaScript/CSS/.htaccess techniques in one place.</dd>\r\n<dt><a href=\"http://cyclehire.tomtaylor.co.uk/\">London Cycle Hire Explorer</a></dt>\r\n<dd>Tom Taylor's nice site for exploring data about London's cycle hire stations - graphs showing their activity over time.</dd>\r\n<dt><a href=\"http://bldgblog.blogspot.com/2010/08/on-road-again.html\">BLDGBLOG: On the Road Again</a></dt>\r\n<dd>A bunch of links that, while fascinating, you shouldn't read if you're feeling at all pessimistic about things. This isn't the future I was hoping for.</dd>\r\n</dl>",
+             "status": 2,
+             "author": 2,
+             "title": "A links post from August",
+             "num_comments": 0,
+             "body_more_html": "",
+             "published_date": "2010-08-11 15:57:02",
+             "excerpt": "\r\nHTML5 Boilerplate - A rock-solid default for HTML5 awesome.\r\nEven if you don't use the whole...",
+             "body_more": "",
+             "body_html": "<p><dl class=\"links\"><br /><dt><a href=\"http://html5boilerplate.com/\">HTML5 Boilerplate - A rock-solid default for HTML5 awesome.</a></dt><br /><dd>Even if you don't use the whole thing, it's a nice collection of handy little JavaScript/CSS/.htaccess techniques in one place.</dd><br /><dt><a href=\"http://cyclehire.tomtaylor.co.uk/\">London Cycle Hire Explorer</a></dt><br /><dd>Tom Taylor's nice site for exploring data about London's cycle hire stations - graphs showing their activity over time.</dd><br /><dt><a href=\"http://bldgblog.blogspot.com/2010/08/on-road-again.html\">BLDGBLOG: On the Road Again</a></dt><br /><dd>A bunch of links that, while fascinating, you shouldn't read if you're feeling at all pessimistic about things. This isn't the future I was hoping for.</dd><br /></dl></p>",
+             "blog": 2,
+             "featured": false,
+             "site": 1,
+             "created_date": "2010-09-27 15:59:30",
+             "format": 1,
+             "enable_comments": true,
+             "last_edited_date": "2010-09-27 15:59:30",
+             "slug": "links-post-august",
+             "remote_url": ""
+        }
+    },
+    {
+        "pk": 1,
+         "model": "aggregator.aggregator",
+         "fields": 
+        {
+            "enable_comments": true,
+             "remote_entries_feed_url": ""
+        }
+    },
+    {
+        "pk": 22,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_logentry",
+             "name": "Can add log entry",
+             "content_type": 8
+        }
+    },
+    {
+        "pk": 23,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_logentry",
+             "name": "Can change log entry",
+             "content_type": 8
+        }
+    },
+    {
+        "pk": 24,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_logentry",
+             "name": "Can delete log entry",
+             "content_type": 8
+        }
+    },
+    {
+        "pk": 47,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_aggregator",
+             "name": "Can add aggregator",
+             "content_type": 16
+        }
+    },
+    {
+        "pk": 48,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_aggregator",
+             "name": "Can change aggregator",
+             "content_type": 16
+        }
+    },
+    {
+        "pk": 49,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_aggregator",
+             "name": "Can delete aggregator",
+             "content_type": 16
+        }
+    },
+    {
+        "pk": 4,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_group",
+             "name": "Can add group",
+             "content_type": 2
+        }
+    },
+    {
+        "pk": 5,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_group",
+             "name": "Can change group",
+             "content_type": 2
+        }
+    },
+    {
+        "pk": 6,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_group",
+             "name": "Can delete group",
+             "content_type": 2
+        }
+    },
+    {
+        "pk": 10,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_message",
+             "name": "Can add message",
+             "content_type": 4
+        }
+    },
+    {
+        "pk": 11,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_message",
+             "name": "Can change message",
+             "content_type": 4
+        }
+    },
+    {
+        "pk": 12,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_message",
+             "name": "Can delete message",
+             "content_type": 4
+        }
+    },
+    {
+        "pk": 1,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_permission",
+             "name": "Can add permission",
+             "content_type": 1
+        }
+    },
+    {
+        "pk": 2,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_permission",
+             "name": "Can change permission",
+             "content_type": 1
+        }
+    },
+    {
+        "pk": 3,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_permission",
+             "name": "Can delete permission",
+             "content_type": 1
+        }
+    },
+    {
+        "pk": 7,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_user",
+             "name": "Can add user",
+             "content_type": 3
+        }
+    },
+    {
+        "pk": 8,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_user",
+             "name": "Can change user",
+             "content_type": 3
+        }
+    },
+    {
+        "pk": 9,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_user",
+             "name": "Can delete user",
+             "content_type": 3
+        }
+    },
+    {
+        "pk": 25,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_comment",
+             "name": "Can add comment",
+             "content_type": 9
+        }
+    },
+    {
+        "pk": 28,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "can_moderate",
+             "name": "Can moderate comments",
+             "content_type": 9
+        }
+    },
+    {
+        "pk": 26,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_comment",
+             "name": "Can change comment",
+             "content_type": 9
+        }
+    },
+    {
+        "pk": 27,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_comment",
+             "name": "Can delete comment",
+             "content_type": 9
+        }
+    },
+    {
+        "pk": 29,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_commentflag",
+             "name": "Can add comment flag",
+             "content_type": 10
+        }
+    },
+    {
+        "pk": 30,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_commentflag",
+             "name": "Can change comment flag",
+             "content_type": 10
+        }
+    },
+    {
+        "pk": 31,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_commentflag",
+             "name": "Can delete comment flag",
+             "content_type": 10
+        }
+    },
+    {
+        "pk": 13,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_contenttype",
+             "name": "Can add content type",
+             "content_type": 5
+        }
+    },
+    {
+        "pk": 14,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_contenttype",
+             "name": "Can change content type",
+             "content_type": 5
+        }
+    },
+    {
+        "pk": 15,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_contenttype",
+             "name": "Can delete content type",
+             "content_type": 5
+        }
+    },
+    {
+        "pk": 32,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_flatpage",
+             "name": "Can add flat page",
+             "content_type": 11
+        }
+    },
+    {
+        "pk": 33,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_flatpage",
+             "name": "Can change flat page",
+             "content_type": 11
+        }
+    },
+    {
+        "pk": 34,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_flatpage",
+             "name": "Can delete flat page",
+             "content_type": 11
+        }
+    },
+    {
+        "pk": 16,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_session",
+             "name": "Can add session",
+             "content_type": 6
+        }
+    },
+    {
+        "pk": 17,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_session",
+             "name": "Can change session",
+             "content_type": 6
+        }
+    },
+    {
+        "pk": 18,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_session",
+             "name": "Can delete session",
+             "content_type": 6
+        }
+    },
+    {
+        "pk": 19,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_site",
+             "name": "Can add site",
+             "content_type": 7
+        }
+    },
+    {
+        "pk": 20,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_site",
+             "name": "Can change site",
+             "content_type": 7
+        }
+    },
+    {
+        "pk": 21,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_site",
+             "name": "Can delete site",
+             "content_type": 7
+        }
+    },
+    {
+        "pk": 35,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_tag",
+             "name": "Can add Tag",
+             "content_type": 12
+        }
+    },
+    {
+        "pk": 36,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_tag",
+             "name": "Can change Tag",
+             "content_type": 12
+        }
+    },
+    {
+        "pk": 37,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_tag",
+             "name": "Can delete Tag",
+             "content_type": 12
+        }
+    },
+    {
+        "pk": 38,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_taggeditem",
+             "name": "Can add Tagged Item",
+             "content_type": 13
+        }
+    },
+    {
+        "pk": 39,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_taggeditem",
+             "name": "Can change Tagged Item",
+             "content_type": 13
+        }
+    },
+    {
+        "pk": 40,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_taggeditem",
+             "name": "Can delete Tagged Item",
+             "content_type": 13
+        }
+    },
+    {
+        "pk": 41,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_blog",
+             "name": "Can add blog",
+             "content_type": 14
+        }
+    },
+    {
+        "pk": 42,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_blog",
+             "name": "Can change blog",
+             "content_type": 14
+        }
+    },
+    {
+        "pk": 43,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_blog",
+             "name": "Can delete blog",
+             "content_type": 14
+        }
+    },
+    {
+        "pk": 44,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "add_entry",
+             "name": "Can add entry",
+             "content_type": 15
+        }
+    },
+    {
+        "pk": 45,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "change_entry",
+             "name": "Can change entry",
+             "content_type": 15
+        }
+    },
+    {
+        "pk": 46,
+         "model": "auth.permission",
+         "fields": 
+        {
+            "codename": "delete_entry",
+             "name": "Can delete entry",
+             "content_type": 15
+        }
+    },
+    {
+        "pk": 2,
+         "model": "auth.user",
+         "fields": 
+        {
+            "username": "billystaff",
+             "first_name": "Billy",
+             "last_name": "Staff",
+             "is_active": true,
+             "is_superuser": false,
+             "is_staff": true,
+             "last_login": "2010-09-27 16:00:18",
+             "groups": 
+            [
+            ],
+             "user_permissions": 
+            [
+                47,
+                 48,
+                 49,
+                 25,
+                 28,
+                 26,
+                 27,
+                 29,
+                 30,
+                 31,
+                 13,
+                 14,
+                 15,
+                 32,
+                 33,
+                 34,
+                 19,
+                 20,
+                 21,
+                 35,
+                 36,
+                 37,
+                 38,
+                 39,
+                 40,
+                 41,
+                 42,
+                 43,
+                 44,
+                 45,
+                 46
+            ],
+             "password": "sha1$bad2a$8125588e89e95938cb01d9ce9da9503a9d75eecf",
+             "email": "billy@example.com",
+             "date_joined": "2010-09-27 16:00:18"
+        }
+    },
+    {
+        "pk": 3,
+         "model": "auth.user",
+         "fields": 
+        {
+            "username": "billyadmin",
+             "first_name": "Billy",
+             "last_name": "Admin",
+             "is_active": true,
+             "is_superuser": true,
+             "is_staff": true,
+             "last_login": "2010-09-27 16:04:41",
+             "groups": 
+            [
+            ],
+             "user_permissions": 
+            [
+                22,
+                 23,
+                 24,
+                 47,
+                 48,
+                 49,
+                 4,
+                 5,
+                 6,
+                 10,
+                 11,
+                 12,
+                 1,
+                 2,
+                 3,
+                 7,
+                 8,
+                 9,
+                 25,
+                 28,
+                 26,
+                 27,
+                 29,
+                 30,
+                 31,
+                 13,
+                 14,
+                 15,
+                 32,
+                 33,
+                 34,
+                 16,
+                 17,
+                 18,
+                 19,
+                 20,
+                 21,
+                 35,
+                 36,
+                 37,
+                 38,
+                 39,
+                 40,
+                 41,
+                 42,
+                 43,
+                 44,
+                 45,
+                 46
+            ],
+             "password": "sha1$49fd8$3ccbb333a5dd5a5b794522207ea61820dfa0981e",
+             "email": "billy@example.com",
+             "date_joined": "2010-09-27 16:02:28"
+        }
+    }
+]

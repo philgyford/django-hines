@@ -195,14 +195,15 @@ def comment_post_save_handler(sender, **kwargs):
     """
     comment = kwargs['instance']
     entry = comment.content_object
-    num_comments_on_entry = Comment.objects.filter(
-        content_type = comment.content_type,
-        object_pk = comment.object_pk,
-        is_public = 1,
-        is_removed = 0
-    ).count()
-    entry.num_comments = num_comments_on_entry
-    entry.save()
+    if entry and 'num_comments' in entry:
+        num_comments_on_entry = Comment.objects.filter(
+            content_type = comment.content_type,
+            object_pk = comment.object_pk,
+            is_public = 1,
+            is_removed = 0
+        ).count()
+        entry.num_comments = num_comments_on_entry
+        entry.save()
 post_save.connect(comment_post_save_handler, sender=Comment)
 
 
