@@ -3,7 +3,7 @@ from django.test import TestCase
 
 class WeblogClientTests(TestCase):
     
-    fixtures = ['test_data.json', ]
+    fixtures = ['../../aggregator/fixtures/test_data.json', ]
 
     def setUp(self):
         pass
@@ -14,12 +14,6 @@ class WeblogClientTests(TestCase):
 
 # Testing Views/URLs.
 
-    def test_HomePage(self):
-        '''Test if the homepage renders.'''
-        c = Client()
-        response = c.get('/')
-        self.failUnlessEqual(response.status_code, 200)
-    
     def test_WritingBlogIndex(self):
         '''Test if the Writing blog homepage renders.'''
         c = Client()
@@ -68,16 +62,8 @@ class WeblogClientTests(TestCase):
         response = c.get('/writing/fish/')
         self.failUnlessEqual(response.status_code, 404)
 
-# Test Flatpages
-    def test_About(self):
-        'Test if the about page renders.'
+    def test_WeblogFeed(self):
+        '''Test if the RSS feed renders.'''
         c = Client()
-        response = c.get('/about/')
-        self.failUnlessEqual(response.status_code, 200)
-        
-# Aggregator tests. Should be elsewhere really...
-    def test_AggregatorDay(self):
-        '''Test if a page for an aggregated day renders.'''
-        c = Client()
-        response = c.get('/2010/09/26/')
+        response = c.get('/writing/feed/')
         self.failUnlessEqual(response.status_code, 200)
