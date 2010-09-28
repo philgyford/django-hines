@@ -104,6 +104,12 @@ class Entry(models.Model):
     
     tags = TaggableManager()
     
+    @property
+    def comments(self):
+        """Return published comments"""
+        from django.contrib.comments.models import Comment
+        return Comment.objects.for_model(self).filter(is_public=True)
+        
     class Meta:
         ordering = ['-published_date']
         verbose_name_plural = 'entries'
@@ -113,23 +119,10 @@ class Entry(models.Model):
     
     def save(self, force_insert=False, force_update=False):
         # Format the HTML versions of the body.
-        if (self.format == self.MARKDOWN_FORMAT):
-            self.body_html = markdown(self.body)
-            if self.body_more:
-                self.body_more_html = markdown(self.body_more)
-                
-        elif (self.format == self.CONVERT_LINE_BREAKS_FORMAT):
-            self.body_html = linebreaks(self.body)
-            if self.body_more:
-                self.body_more_html = linebreaks(self.body_more)
-        else:
-            # No formatting.
-            self.body_html = self.body
-            if self.body_more:
-                self.body_more_html = self.body_more
-        
-        self.site = self.blog.site
+        self.body_html = self.htmlize_text(self.body)
+        self.body_more_html = self.htmlize_text(self.body_more)
         self.excerpt = self.make_excerpt()
+        self.site = self.blog.site
         super(Entry, self).save(force_insert, force_update)
     
     def get_absolute_url(self):
@@ -138,6 +131,16 @@ class Entry(models.Model):
         else:
             return self.get_absolute_local_url()
 
+    def htmlize_text(self, text):
+        if (self.format == self.MARKDOWN_FORMAT):
+            html = markdown(text)
+        elif (self.format == self.CONVERT_LINE_BREAKS_FORMAT):
+            html = linebreaks(text)
+        else:
+            # No formatting.
+            html = text
+        return html
+        
     @models.permalink
     def get_absolute_local_url(self):
         return ('weblog_entry_detail', (), {  'blog_slug': self.blog.slug,
@@ -195,7 +198,7 @@ def comment_post_save_handler(sender, **kwargs):
     """
     comment = kwargs['instance']
     entry = comment.content_object
-    if entry and 'num_comments' in entry:
+    if type(entry) is Entry:
         num_comments_on_entry = Comment.objects.filter(
             content_type = comment.content_type,
             object_pk = comment.object_pk,
