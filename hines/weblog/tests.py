@@ -256,8 +256,12 @@ class EntryTestCase(WeblogBaseTestCase):
                                 ))
         self.failUnlessEqual(len(entries), 1)
         self.failUnlessEqual(entries[0].id, 1)
-        
-        
+    
+    def test_featured_entries(self):
+        featured_entries = Entry.featured_set.all()
+        self.failUnlessEqual(len(featured_entries), 1)
+        self.failUnlessEqual(featured_entries[0].id, 2)
+
 
 class CommentTestCase(WeblogBaseTestCase):
 
