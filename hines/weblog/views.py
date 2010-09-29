@@ -21,6 +21,21 @@ def weblog_archive_month(request, blog_slug, year, month):
         'entries': entries,
         'date': published_date,
     }, context_instance=RequestContext(request))
+    
+def weblog_archive_year(request, blog_slug, year):
+    blog = get_object_or_404(Blog, slug=blog_slug)
+    date_stamp = time.strptime(year+'0101', "%Y%m%d")
+    published_date = datetime.date(*date_stamp[:3])
+    entries = list(Entry.live.filter(
+                                blog__slug__exact = blog_slug,
+                                published_date__year = published_date.year,
+                            ))
+    
+    return render_to_response('weblog/entry_archive_year.html', {
+        'blog': blog,
+        'entries': entries,
+        'date': published_date,
+    }, context_instance=RequestContext(request))
 
 
 def weblog_blog_index(request, blog_slug):

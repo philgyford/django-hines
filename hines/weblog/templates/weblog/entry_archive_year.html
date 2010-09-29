@@ -1,8 +1,8 @@
 {% extends "base_weblog.html" %}
 
-{% block title %}{{ date|date:date_format_month }} ({{ block.super}}){% endblock %}
+{% block title %}{{ date|date:'Y' }} ({{ block.super}}){% endblock %}
 
-{% block content_title %}{{ date|date:date_format_month }} in {{ blog.short_name }}{% endblock %}
+{% block content_title %}{{ date|date:'Y' }} in {{ blog.short_name }}{% endblock %}
 
 
 {% block content %}

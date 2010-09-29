@@ -1,11 +1,13 @@
 {% extends "base_weblog.html" %}
 
-{% block title %}Entries tagged '{{ tag.name }}' {{ block.super}}{% endblock %}
+{% block title %}Entries tagged '{{ tag.name }}' ({{ block.super}}){% endblock %}
 
 {% block content_title %}Entries tagged '{{ tag.name }}'{% endblock %}
 
 
 {% block content %}
+
+<p>TODO: This is fetching stuff across all blogs. Need to make it just for this blog.</p>
 
     {% for entry in entries %}
         {% include 'includes/entry_brief.html' %}
