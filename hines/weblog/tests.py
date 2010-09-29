@@ -5,18 +5,15 @@ import time
 from weblog.models import Blog,Entry
 from aggregator.models import Aggregator
 from django.contrib.comments.forms import CommentSecurityForm
+from django.shortcuts import get_object_or_404
+from taggit.models import Tag
 
-class WeblogTestCase(TestCase):
+
+class WeblogBaseTestCase(TestCase):
     fixtures = ['../../aggregator/fixtures/test_data.json', ]
+    
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-        
-
-class ViewsTestCase(WeblogTestCase):
+class ViewsTestCase(WeblogBaseTestCase):
 
     def test_writing_blog_index(self):
         '''Test if the Writing blog homepage renders.'''
@@ -66,14 +63,8 @@ class ViewsTestCase(WeblogTestCase):
         response = c.get('/writing/fish/')
         self.failUnlessEqual(response.status_code, 404)
 
-    def test_blog_feed(self):
-        '''Test if the RSS feed renders.'''
-        c = Client()
-        response = c.get('/writing/feed/')
-        self.failUnlessEqual(response.status_code, 200)
 
-
-class BlogTestCase(WeblogTestCase):
+class BlogTestCase(WeblogBaseTestCase):
     
     def test_with_entries_manager_method_entry_exclude(self):
         '''Test the correct data is being returned from the with_entries Blog manager method when we use the entry_exclude filter.'''
@@ -115,7 +106,7 @@ class BlogTestCase(WeblogTestCase):
                 self.failUnlessEqual(len(blog.entries), 1)
 
 
-class EntryTestCase(WeblogTestCase):
+class EntryTestCase(WeblogBaseTestCase):
     
     def test_draft_entry(self):
         '''Make sure draft entry isn't visible'''
@@ -232,8 +223,43 @@ class EntryTestCase(WeblogTestCase):
         current_aggregator.enable_comments = True
         current_aggregator.save()
 
+    def test_blog_feed_local(self):
+        '''Test if a blog's local RSS feed renders.'''
+        blog = Blog.objects.get(pk=2)
+        c = Client()
+        response = c.get( blog.get_entries_feed_url() )
+        self.failUnlessEqual(response.status_code, 200)
 
-class CommentTestCase(WeblogTestCase):
+    def test_blog_feed_remote(self):
+        '''Test if we we use a remote RSS feed for a blog if one is set.'''
+        blog = Blog.objects.get(pk=1)
+        self.failUnlessEqual(blog.get_entries_feed_url(), 'http://feeds.feedburner.com/PhilGyfordsWriting')
+
+    def test_tags_on_entry(self):
+        '''Test if the correct tags are fetched from an entry.'''
+        entry = Entry.live.get(pk=1)
+        tags = entry.tags.all()
+        self.failUnlessEqual(len(tags), 4)
+        self.failUnlessEqual(tags[0].name == 'animals', True)
+        self.failUnlessEqual(tags[1].name == 'cake', True)
+        self.failUnlessEqual(tags[2].name == 'cats', True)
+        self.failUnlessEqual(tags[3].name == 'dogs', True)
+    
+    def test_entries_with_tag(self):
+        '''Make sure we get the correct Entries back for a particular tag.'''
+        blog = get_object_or_404(Blog, slug='writing')
+        tag = get_object_or_404(Tag, slug='cats')
+
+        entries = list(Entry.live.filter(
+                                    blog__slug__exact = blog.slug,
+                                    tags__name__in=[tag.slug]
+                                ))
+        self.failUnlessEqual(len(entries), 1)
+        self.failUnlessEqual(entries[0].id, 1)
+        
+        
+
+class CommentTestCase(WeblogBaseTestCase):
 
     def post_comment(self, entry_id=1):
         """
