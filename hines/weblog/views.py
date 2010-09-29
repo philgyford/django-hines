@@ -42,10 +42,13 @@ def weblog_blog_index(request, blog_slug):
     
     popular_tags = Entry.tags.most_common()[:15]
     
+    featured_entries = Entry.featured_set.all()
+    
     return render_to_response('weblog/index.html', {
         'blog': blog,
         'entries': entries,
         'popular_tags': popular_tags,
+        'featured_entries': featured_entries,
     }, context_instance=RequestContext(request))
 
 

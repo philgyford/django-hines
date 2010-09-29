@@ -11,6 +11,16 @@ class LiveEntryManager(models.Manager):
         ).select_related('blog')
 
 
+class FeaturedEntryManager(models.Manager):
+    
+    def get_query_set(self):
+        return super(FeaturedEntryManager, self).get_query_set().filter(
+            status=self.model.LIVE_STATUS,
+            site=Site.objects.get_current(),
+            featured=True,
+        ).select_related('blog')
+
+
 class BlogManager(models.Manager):
     
     def with_entries(self, entry_filter={}, entry_exclude={}, entry_limit=False):

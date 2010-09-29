@@ -14,7 +14,7 @@ from aggregator.models import Aggregator
 
 from markdown import markdown
 
-from managers import BlogManager, LiveEntryManager
+from managers import BlogManager, FeaturedEntryManager, LiveEntryManager
 from taggit.managers import TaggableManager
 
 
@@ -100,6 +100,7 @@ class Entry(models.Model):
     # Need to be this way around so that non-live entries will show up in Admin, which uses the default (first) manager.
     objects = models.Manager()
     live = LiveEntryManager()
+    featured_set = FeaturedEntryManager()
     on_site = CurrentSiteManager()
     
     tags = TaggableManager()

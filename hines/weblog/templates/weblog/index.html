@@ -35,6 +35,16 @@
 
 {% block sidebar %}
 
+    {% if featured_entries %}
+    <div class="block">
+        <h2>Featured {{ blog.short_name }}</h2>
+        {% for entry in featured_entries %}
+            {% include 'includes/entry_sidebar.html' %}
+        {% endfor %}
+    </div>
+    
+    {% endif %}
+
     {% if popular_tags %}
     <div class="block">
         <h2>Popular tags</h2>
