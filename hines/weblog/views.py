@@ -39,10 +39,13 @@ def weblog_blog_index(request, blog_slug):
         entries = paginator.page(page)
     except (EmptyPage, InvalidPage):
         entries = paginator.page(paginator.num_pages)
-        
+    
+    popular_tags = Entry.tags.most_common()[:15]
+    
     return render_to_response('weblog/index.html', {
         'blog': blog,
         'entries': entries,
+        'popular_tags': popular_tags,
     }, context_instance=RequestContext(request))
 
 
