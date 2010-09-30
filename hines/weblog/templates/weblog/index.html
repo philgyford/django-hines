@@ -47,10 +47,9 @@
     {% if popular_tags %}
     <div class="block">
         <h2>Popular tags</h2>
-        <p>[TODO: Currently these aren't unique within a Blog, and include tags used on Draft Entries.]</p>
         <ol class="tags">
         {% for tag in popular_tags %}
-            <li><a href="{% url weblog_tag blog.slug tag.slug %}" title="See more entries tagged with '{{ tag }}">{{ tag }}</a> <span class="count">({{ tag.num_times }})</span></li>
+            <li><a href="{% url weblog_tag blog.slug tag.slug %}" title="See more entries tagged with {{ tag }}">{{ tag }}</a> <span class="count">({{ tag.num_times }})</span></li>
         {% endfor %}
         </ol>
     </div>

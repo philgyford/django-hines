@@ -11,7 +11,6 @@ from taggit.models import Tag
 
 class WeblogBaseTestCase(TestCase):
     fixtures = ['../../aggregator/fixtures/test_data.json', ]
-    
 
 class ViewsTestCase(WeblogBaseTestCase):
 
@@ -24,8 +23,7 @@ class ViewsTestCase(WeblogBaseTestCase):
         self.failUnlessEqual(len(response.context['entries'].object_list), 2)
         self.failUnlessEqual(response.context['entries'].object_list[0].slug, 'featured-writing-post')
         self.failUnlessEqual(response.context['entries'].paginator.num_pages, 1)
-        # TODO: Tags stuff may need to change if we fix it to be per-Blog, rather than per-site.
-        self.failUnlessEqual(len(response.context['popular_tags']), 6)
+        self.failUnlessEqual(len(response.context['popular_tags']), 5)
         self.failUnlessEqual(response.context['popular_tags'][2].name, 'cats')
         self.failUnlessEqual(len(response.context['featured_entries']), 1)
         self.failUnlessEqual(response.context['featured_entries'][0].slug, 'featured-writing-post')

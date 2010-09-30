@@ -1,6 +1,7 @@
 import datetime, time
-from weblog.models import Blog, Entry
+from weblog.models import Blog, Entry, TaggedEntry
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.db.models import Count
 from django.shortcuts import get_list_or_404, get_object_or_404
 from taggit.models import Tag
 from shortcuts import render
@@ -37,6 +38,7 @@ def weblog_archive_year(request, blog_slug, year):
         'date': published_date,
     })
 
+
 def weblog_blog_index(request, blog_slug):
     blog = get_object_or_404(Blog, slug=blog_slug)
 
@@ -54,8 +56,12 @@ def weblog_blog_index(request, blog_slug):
     except (EmptyPage, InvalidPage):
         entries = paginator.page(paginator.num_pages)
     
-    popular_tags = Entry.tags.most_common()[:15]
-    
+    # Get the most popular tags that are within this Blog, and that are on LIVE Entries.
+    popular_tags = Tag.objects.filter(
+        weblog_taggedentry_items__content_object__blog=blog,
+        weblog_taggedentry_items__content_object__status=Entry.LIVE_STATUS,
+    ).annotate(num_times=Count('weblog_taggedentry_items')).order_by('-num_times')[:15]
+     
     featured_entries = Entry.featured_set.all()
     
     return render(request, 'weblog/index.html', {
@@ -125,7 +131,7 @@ def weblog_tag(request, blog_slug, tag_slug):
     tag = get_object_or_404(Tag, slug=tag_slug)
     
     entries = list(Entry.live.filter(
-                                blog__slug__exact = blog.slug,
+                                blog = blog,
                                 tags__name__in=[tag.slug]
                             ))
     

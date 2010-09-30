@@ -1,185 +1,11 @@
 [
     {
-        "pk": 16,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "aggregator",
-             "name": "aggregator",
-             "app_label": "aggregator"
-        }
-    },
-    {
-        "pk": 14,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "blog",
-             "name": "blog",
-             "app_label": "weblog"
-        }
-    },
-    {
-        "pk": 9,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "comment",
-             "name": "comment",
-             "app_label": "comments"
-        }
-    },
-    {
-        "pk": 10,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "commentflag",
-             "name": "comment flag",
-             "app_label": "comments"
-        }
-    },
-    {
-        "pk": 5,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "contenttype",
-             "name": "content type",
-             "app_label": "contenttypes"
-        }
-    },
-    {
-        "pk": 15,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "entry",
-             "name": "entry",
-             "app_label": "weblog"
-        }
-    },
-    {
-        "pk": 11,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "flatpage",
-             "name": "flat page",
-             "app_label": "flatpages"
-        }
-    },
-    {
-        "pk": 2,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "group",
-             "name": "group",
-             "app_label": "auth"
-        }
-    },
-    {
-        "pk": 8,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "logentry",
-             "name": "log entry",
-             "app_label": "admin"
-        }
-    },
-    {
-        "pk": 4,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "message",
-             "name": "message",
-             "app_label": "auth"
-        }
-    },
-    {
-        "pk": 1,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "permission",
-             "name": "permission",
-             "app_label": "auth"
-        }
-    },
-    {
-        "pk": 6,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "session",
-             "name": "session",
-             "app_label": "sessions"
-        }
-    },
-    {
-        "pk": 7,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "site",
-             "name": "site",
-             "app_label": "sites"
-        }
-    },
-    {
-        "pk": 12,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "tag",
-             "name": "Tag",
-             "app_label": "taggit"
-        }
-    },
-    {
-        "pk": 13,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "taggeditem",
-             "name": "Tagged Item",
-             "app_label": "taggit"
-        }
-    },
-    {
-        "pk": 3,
-         "model": "contenttypes.contenttype",
-         "fields": 
-        {
-            "model": "user",
-             "name": "user",
-             "app_label": "auth"
-        }
-    },
-    {
         "pk": 1,
          "model": "sites.site",
          "fields": 
         {
             "domain": "127.0.0.1:8000",
              "name": "Phil Gyford's website"
-        }
-    },
-    {
-        "pk": 21,
-         "model": "admin.logentry",
-         "fields": 
-        {
-            "action_flag": 1,
-             "action_time": "2010-09-27 17:34:17",
-             "object_repr": "/about/ -- About me",
-             "object_id": "1",
-             "change_message": "",
-             "user": 3,
-             "content_type": 11
         }
     },
     {
@@ -301,103 +127,111 @@
         }
     },
     {
+        "pk": 8,
+         "model": "taggit.tag",
+         "fields": 
+        {
+            "name": "linkage",
+             "slug": "linkage"
+        }
+    },
+    {
         "pk": 13,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 1,
-             "content_type": 15,
-             "object_id": 3
+             "content_object": 3
         }
     },
     {
         "pk": 14,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 2,
-             "content_type": 15,
-             "object_id": 3
+             "content_object": 3
         }
     },
     {
         "pk": 15,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 6,
-             "content_type": 15,
-             "object_id": 3
+             "content_object": 3
         }
     },
     {
         "pk": 16,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 1,
-             "content_type": 15,
-             "object_id": 2
+             "content_object": 2
         }
     },
     {
         "pk": 17,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 3,
-             "content_type": 15,
-             "object_id": 2
+             "content_object": 2
         }
     },
     {
         "pk": 18,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 5,
-             "content_type": 15,
-             "object_id": 2
+             "content_object": 2
         }
     },
     {
         "pk": 19,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 1,
-             "content_type": 15,
-             "object_id": 1
+             "content_object": 1
         }
     },
     {
         "pk": 20,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 7,
-             "content_type": 15,
-             "object_id": 1
+             "content_object": 1
         }
     },
     {
         "pk": 21,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 2,
-             "content_type": 15,
-             "object_id": 1
+             "content_object": 1
         }
     },
     {
         "pk": 22,
-         "model": "taggit.taggeditem",
+         "model": "weblog.taggedentry",
          "fields": 
         {
             "tag": 3,
-             "content_type": 15,
-             "object_id": 1
+             "content_object": 1
+        }
+    },
+    {
+        "pk": 23,
+         "model": "weblog.taggedentry",
+         "fields": 
+        {
+            "tag": 8,
+             "content_object": 4
         }
     },
     {

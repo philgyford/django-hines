@@ -16,9 +16,13 @@ from markdown import markdown
 
 from managers import BlogManager, FeaturedEntryManager, LiveEntryManager
 from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
 
 
 class Blog(models.Model):
+    '''
+    A single blog on the site. Each blog has its own URL structure and its own Entries.
+    '''
     name = models.CharField(max_length=255, help_text="Full version of the name, used for titles etc.")
     short_name = models.CharField(max_length=30, help_text="Short version of the name used for things like navigation links")
     description = models.TextField(blank=True)
@@ -50,8 +54,17 @@ class Blog(models.Model):
             return reverse('weblog_entries_feed', kwargs={ 'blog_slug': self.slug })
 
 
-class Entry(models.Model):
+class TaggedEntry(TaggedItemBase):
+    '''
+    A custom through model thing for django-taggit so we can do custom things with tagged Entries.
+    '''
+    content_object = models.ForeignKey('Entry')
 
+
+class Entry(models.Model):
+    '''
+    A single Entry. An Entry belongs to a single Blog.
+    '''
     # The same as Movable Type.
     DRAFT_STATUS = 1
     LIVE_STATUS = 2
@@ -103,7 +116,7 @@ class Entry(models.Model):
     featured_set = FeaturedEntryManager()
     on_site = CurrentSiteManager()
     
-    tags = TaggableManager()
+    tags = TaggableManager(through=TaggedEntry)
     
     @property
     def comments(self):
