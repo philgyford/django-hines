@@ -73,7 +73,11 @@
                 Newer &rarr;
             {% endif %}
         </p>
-        <p>{{ entry.published_date|date:time_format }} {{ entry.published_date|date:date_format_long }}</p>
+        <p>{{ entry.published_date|date:date_format_long }}, {{ entry.published_date|date:time_format }}
+            {% if entry.published_date != entry.last_edited_date %}
+                <br />Last edited: {{ entry.last_edited_date|date:date_format_long }}, {{ entry.last_edited_date|date:time_format }} 
+            {% endif %}
+        </p>
     </div>
     {% for other_blog in other_blogs %}
         {% if other_blog.entries %}
