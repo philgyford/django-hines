@@ -6,6 +6,8 @@ urlpatterns = patterns('',
 
     (r'^(?P<blog_slug>[-\w]+)/$', views.weblog_blog_index, {}, 'weblog_blog_index'),
     
+    (r'^(?P<blog_slug>[-\w]+)/archive/$', views.weblog_blog_archive, {}, 'weblog_blog_archive'),
+    
     (r'^(?P<blog_slug>[-\w]+)/(?P<year>\d{4})/$',
         views.weblog_archive_year, {}, 'weblog_entry_archive_year'),
     

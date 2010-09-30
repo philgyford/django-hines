@@ -98,6 +98,29 @@ def weblog_entry_detail(request, blog_slug, year, month, day, slug):
     }, context_instance=RequestContext(request))
 
 
+def weblog_blog_archive(request, blog_slug):
+    blog = get_object_or_404(Blog, slug=blog_slug)
+    
+    monthly_dates = Entry.live.filter(blog__slug__exact = blog_slug).dates('published_date', 'month', order='ASC')
+    
+    years = []
+    months = []
+    prev_year = ''
+    for month_date in monthly_dates:
+        if month_date.year != prev_year:
+            if months:
+                years.append(months)
+                months = []
+            prev_year = month_date.year
+        months.append(month_date)
+    years.append(months)
+
+    return render_to_response('weblog/archive.html', {
+        'blog': blog,
+        'years': years,
+    }, context_instance=RequestContext(request))
+
+
 def weblog_tag(request, blog_slug, tag_slug):
     blog = get_object_or_404(Blog, slug=blog_slug)
     tag = get_object_or_404(Tag, slug=tag_slug)

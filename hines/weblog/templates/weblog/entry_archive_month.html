@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    {% for entry in entries %}
+    {% for entry in entries reversed %}
         {% include 'includes/entry_brief.html' %}
     {% empty %}
         <p>No entries.</p>

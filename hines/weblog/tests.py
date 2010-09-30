@@ -39,6 +39,12 @@ class ViewsTestCase(WeblogBaseTestCase):
         response = c.get('/writing/2010/09/')
         self.failUnlessEqual(response.status_code, 200)
 
+    def test_blog_archive_year(self):
+        '''Test if an archive page for a year within a weblog renders.'''
+        c = Client()
+        response = c.get('/writing/2010/')
+        self.failUnlessEqual(response.status_code, 200)
+
     def test_entry_detail(self):
         '''Test if a page for a single Entry within a weblog renders.'''
         c = Client()
