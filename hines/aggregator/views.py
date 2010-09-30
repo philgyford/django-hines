@@ -5,7 +5,6 @@ from django.template import RequestContext
 
 
 def aggregator_index(request):
-
     blogs = Blog.objects.with_entries(entry_limit=3)
     
     return render_to_response('aggregator/index.html', {

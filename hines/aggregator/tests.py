@@ -15,19 +15,36 @@ class ViewsTestCase(AggregatorBaseTestCase):
         c = Client()
         response = c.get('/')
         self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(len(response.context['blogs']), 3)
+        self.failUnlessEqual(response.context['blogs'][0].slug, 'comments')
+        self.failUnlessEqual(len(response.context['blogs'][0].entries), 1)
+        self.failUnlessEqual(response.context['blogs'][1].slug, 'links')
+        self.failUnlessEqual(len(response.context['blogs'][1].entries), 1)
+        self.failUnlessEqual(response.context['blogs'][2].slug, 'writing')
+        self.failUnlessEqual(len(response.context['blogs'][2].entries), 2)
 
     def test_aggregator_day(self):
         '''Test if a page for an aggregated day renders.'''
         c = Client()
         response = c.get('/2010/09/26/')
         self.failUnlessEqual(response.status_code, 200)
-    
+        self.failUnlessEqual(len(response.context['blogs']), 3)
+        self.failUnlessEqual(response.context['blogs'][0].slug, 'comments')
+        self.failUnlessEqual(len(response.context['blogs'][0].entries), 0)
+        self.failUnlessEqual(response.context['blogs'][1].slug, 'links')
+        self.failUnlessEqual(len(response.context['blogs'][1].entries), 0)
+        self.failUnlessEqual(response.context['blogs'][2].slug, 'writing')
+        self.failUnlessEqual(len(response.context['blogs'][2].entries), 1)
+        self.failUnlessEqual(response.context['date'].year, 2010)
+        self.failUnlessEqual(response.context['date'].month, 9)
+        self.failUnlessEqual(response.context['date'].day, 26)
+        
     def test_about(self):
         'Test if the about page renders.'
         c = Client()
         response = c.get('/about/')
         self.failUnlessEqual(response.status_code, 200)
-
+        self.failUnlessEqual(response.context['flatpage'].title, 'About me')
 
 class AggregatorTestCase(AggregatorBaseTestCase):
     
