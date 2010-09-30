@@ -20,36 +20,63 @@ class ViewsTestCase(WeblogBaseTestCase):
         c = Client()
         response = c.get('/writing/')
         self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['blog'].id, 1)
+        self.failUnlessEqual(len(response.context['entries'].object_list), 2)
+        self.failUnlessEqual(response.context['entries'].object_list[0].slug, 'featured-writing-post')
+        self.failUnlessEqual(response.context['entries'].paginator.num_pages, 1)
+        # TODO: Tags stuff may need to change if we fix it to be per-Blog, rather than per-site.
+        self.failUnlessEqual(len(response.context['popular_tags']), 6)
+        self.failUnlessEqual(response.context['popular_tags'][2].name, 'cats')
+        self.failUnlessEqual(len(response.context['featured_entries']), 1)
+        self.failUnlessEqual(response.context['featured_entries'][0].slug, 'featured-writing-post')
     
     def test_links_blog_index(self):
         '''Test if the Links blog homepage renders.'''
         c = Client()
         response = c.get('/links/')
         self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['blog'].id, 2)
+        self.failUnlessEqual(len(response.context['entries'].object_list), 1)
+        self.failUnlessEqual(response.context['entries'].object_list[0].slug, 'links-post-august')
 
     def test_comments_blog_index(self):
         '''Test if the Comments blog homepage renders.'''
         c = Client()
         response = c.get('/comments/')
         self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['blog'].id, 3)
+        self.failUnlessEqual(len(response.context['entries'].object_list), 1)
+        self.failUnlessEqual(response.context['entries'].object_list[0].title, "The Online Photographer: 'A Leica for a Year' a Year Later")
     
     def test_blog_archive_month(self):
         '''Test if an archive page for a month within a weblog renders.'''
         c = Client()
         response = c.get('/writing/2010/09/')
         self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['blog'].id, 1)
+        self.failUnlessEqual(len(response.context['entries']), 2)
+        self.failUnlessEqual(response.context['date'].year, 2010)
+        self.failUnlessEqual(response.context['date'].month, 9)
 
     def test_blog_archive_year(self):
         '''Test if an archive page for a year within a weblog renders.'''
         c = Client()
         response = c.get('/writing/2010/')
         self.failUnlessEqual(response.status_code, 200)
-
+        self.failUnlessEqual(response.context['blog'].id, 1)
+        self.failUnlessEqual(len(response.context['entries']), 2)
+        self.failUnlessEqual(response.context['date'].year, 2010)
+        
     def test_entry_detail(self):
         '''Test if a page for a single Entry within a weblog renders.'''
         c = Client()
         response = c.get('/writing/2010/09/27/featured-writing-post/')
         self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['blog'].id, 1)
+        self.failUnlessEqual(response.context['entry'].slug, 'featured-writing-post')
+        self.failUnlessEqual(response.context['entry'].blog.slug, 'writing')
+        self.failUnlessEqual(len(response.context['other_blogs']), 3)
+        self.failUnlessEqual(len(response.context['other_blogs'][0].entries), 0)
 
     def test_draft_entry_detail(self):
         '''Test if a page for a single DRAFT Entry within a weblog 404s.'''
@@ -62,6 +89,10 @@ class ViewsTestCase(WeblogBaseTestCase):
         c = Client()
         response = c.get('/writing/animals/')
         self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['blog'].id, 1)
+        self.failUnlessEqual(response.context['tag'].name, 'animals')
+        self.failUnlessEqual(len(response.context['entries']), 2)
+        self.failUnlessEqual(response.context['entries'][0].slug, 'featured-writing-post')
 
     def test_blog_tag_404(self):
         '''Test if a page for a non-existent tag within a weblog 404s.'''

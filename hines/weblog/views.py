@@ -37,7 +37,6 @@ def weblog_archive_year(request, blog_slug, year):
         'date': published_date,
     }, context_instance=RequestContext(request))
 
-
 def weblog_blog_index(request, blog_slug):
     blog = get_object_or_404(Blog, slug=blog_slug)
 
