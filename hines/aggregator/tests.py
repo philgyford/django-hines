@@ -48,19 +48,34 @@ class ViewsTestCase(AggregatorBaseTestCase):
 
 class AggregatorTestCase(AggregatorBaseTestCase):
     
-    def test_feed_local(self):
-        '''Test if the local RSS feed renders.'''
+    def test_entries_feed_local(self):
+        '''Test if the local Entries RSS feed renders.'''
         current_aggregator = Aggregator.objects.get_current()
         c = Client()
         response = c.get(current_aggregator.get_entries_feed_url())
         self.failUnlessEqual(response.status_code, 200)
         
-    def test_feed_remote(self):
-        '''Test if the remote RSS feed is used if it's set'.'''
+    def test_entries_feed_remote(self):
+        '''Test if the remote Entries RSS feed is used if it's set'.'''
         current_aggregator = Aggregator.objects.get_current()
         current_aggregator.remote_entries_feed_url = 'http://feeds.feedburner.com/PhilGyford'
         current_aggregator.save()
         self.failUnlessEqual( current_aggregator.get_entries_feed_url(), 'http://feeds.feedburner.com/PhilGyford')
-        
         current_aggregator.remote_entries_feed_url = ''
+        current_aggregator.save()
+        
+    def test_comments_feed_local(self):
+        '''Test if the local Comments RSS feed renders.'''
+        current_aggregator = Aggregator.objects.get_current()
+        c = Client()
+        response = c.get(current_aggregator.get_comments_feed_url())
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_comments_feed_remote(self):
+        '''Test if the remote Comments RSS feed is used if it's set'.'''
+        current_aggregator = Aggregator.objects.get_current()
+        current_aggregator.remote_comments_feed_url = 'http://feeds.feedburner.com/PhilGyfordComments'
+        current_aggregator.save()
+        self.failUnlessEqual( current_aggregator.get_comments_feed_url(), 'http://feeds.feedburner.com/PhilGyfordComments')
+        current_aggregator.remote_comments_feed_url = ''
         current_aggregator.save()

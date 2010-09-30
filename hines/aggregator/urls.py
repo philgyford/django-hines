@@ -1,10 +1,12 @@
 from django.conf.urls.defaults import *
 from aggregator.views import aggregator_day, aggregator_index
-from weblog.feeds import LatestAllEntriesFeed
+from weblog.feeds import LatestAllEntriesFeed, LatestAllCommentsFeed
 
 urlpatterns = patterns('',
 
-    (r'^feed/$', LatestAllEntriesFeed(), {}, 'aggregator_entries_feed'),
+    (r'^feed/entries/$', LatestAllEntriesFeed(), {}, 'aggregator_entries_feed'),
+
+    (r'^feed/comments/$', LatestAllCommentsFeed(), {}, 'aggregator_comments_feed'),
 
     (r'^$', aggregator_index, {}, 'aggregator_index'),
         

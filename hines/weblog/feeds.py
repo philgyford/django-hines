@@ -4,6 +4,9 @@ from django.utils.feedgenerator import Rss201rev2Feed
 from django.shortcuts import get_object_or_404
 from weblog.models import Blog,Entry
 from aggregator.models import Aggregator
+from django.contrib.comments import Comment
+from shortcuts import smart_truncate
+from django.utils.html import strip_tags
 
 
 class ExtendedRSSFeed(Rss201rev2Feed):
@@ -18,7 +21,7 @@ class ExtendedRSSFeed(Rss201rev2Feed):
     def add_item_elements(self, handler, item):
         super(ExtendedRSSFeed, self).add_item_elements(handler, item)
         handler.addQuickElement(u'content:encoded', item['content_encoded'])
-    
+
 
 class LatestEntriesFeed(Feed):
     """
@@ -105,3 +108,79 @@ class LatestAllEntriesFeed(LatestEntriesFeed):
     
     def items(self):
         return Entry.live.all()[:5]
+
+
+class LatestCommentsFeed(Feed):
+    """
+    The base feed class for displaying a list of Comments.
+    Child classes will need to, at a minimum, define an items() method.
+    """
+    feed_type = ExtendedRSSFeed
+    
+    # Elements for the top-level, channel.
+    
+    def title(self, obj):
+        return obj.name
+    
+    def link(self, obj):
+        return obj.get_absolute_url()
+    
+    def description(self, obj):
+        return obj.description
+    
+    
+    # Elements for each item.
+    
+    def item_extra_kwargs(self, item):
+        return {'content_encoded': self.item_content_encoded(item)}
+    
+    def item_title(self, item):
+        # Using item.content_object.title works normally, but not in tests, so...
+        entry = Entry.live.get(pk=item.object_pk)
+        return "%s on '%s'" % (item.user_name, entry.title)
+        
+    def item_link(self, item):
+        return item.get_absolute_url()
+        
+    def item_description(self, item):
+        return smart_truncate(strip_tags(item.comment), 200)
+        
+    def item_author_name(self, item):
+        return item.user_name
+    
+    def item_pubdate(self, item):
+        return item.submit_date
+        
+    def item_content_encoded(self, item):
+        return item.comment
+
+
+class LatestAllCommentsFeed(LatestCommentsFeed):
+    """
+    The feed class for showing latest comments from *all* blogs.
+    """
+
+    def get_object(self, request):
+        current_aggregator = Aggregator.objects.get_current()
+        return current_aggregator
+
+    def title(self, obj):
+        return obj.site.name
+
+    def link(self, obj):
+        """
+        Link to the site's home page.
+        """
+        return reverse('aggregator_index')
+
+    def description(self, obj):
+        # Site objects don't have descriptions, but you never know, one day...
+        return ''
+
+    def items(self):
+        return Comment.objects.filter(
+            is_public=True,
+            is_removed=False
+        ).order_by('-submit_date')[:15]
+
+    

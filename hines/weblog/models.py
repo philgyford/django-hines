@@ -11,6 +11,7 @@ from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from django.core.urlresolvers import reverse
 from aggregator.models import Aggregator
+from shortcuts import smart_truncate
 
 from markdown import markdown
 
@@ -196,13 +197,9 @@ class Entry(models.Model):
         if self.excerpt:
             return strip_tags(self.excerpt)
         else:
-            excerpt = strip_tags(self.body + ' '+ self.body_more)
-            max_length = 100
-            if (len(excerpt) <= max_length):
-                return excerpt
-            else:
-                return excerpt[:max_length].rsplit(' ', 1)[0]+'...'
-                
+            excerpt = strip_tags(self.body)
+            return smart_truncate(excerpt, 100)
+
 
 def comment_post_save_handler(sender, **kwargs):
     """

@@ -47,6 +47,25 @@
         }
     },
     {
+        "pk": 3,
+         "model": "comments.comment",
+         "fields": 
+        {
+            "comment": "A non-public comment is here.",
+             "user_url": "",
+             "submit_date": "2010-09-27 17:18:16",
+             "ip_address": "127.0.0.1",
+             "object_pk": "1",
+             "site": 1,
+             "is_removed": false,
+             "user": null,
+             "content_type": 10,
+             "is_public": false,
+             "user_name": "Hidden Commenter",
+             "user_email": "hidden@example.com"
+        }
+    },
+    {
         "pk": 1,
          "model": "flatpages.flatpage",
          "fields": 
@@ -415,7 +434,8 @@
          "fields": 
         {
             "enable_comments": true,
-             "remote_entries_feed_url": ""
+             "remote_entries_feed_url": "",
+             "remote_comments_feed_url": ""
         }
     },
     {
