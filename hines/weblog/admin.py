@@ -6,7 +6,7 @@ from weblog.models import Blog, Entry
 class BlogAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('site', 'name', 'short_name', 'description', 'slug', 'remote_entries_feed_url', 'enable_comments')
+            'fields': ('site', 'name', 'short_name', 'description', 'slug', 'sort_order', 'remote_entries_feed_url', 'enable_comments')
         }),
     )
     prepopulated_fields = { 'slug': ['short_name'] }

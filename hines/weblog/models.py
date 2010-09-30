@@ -30,6 +30,7 @@ class Blog(models.Model):
     enable_comments = models.BooleanField(default=True, help_text="Uncheck to disallow commenting on this Blog. Can be overridden by 'Enable comments' on the Aggregator, but overrides Entry-level permissions.")
     remote_entries_feed_url = models.URLField(blank=True, help_text="If you use a service like Feedburner to host your feeds, add the URL for this Blog's feed here. Then the URL for the local feed will be hidden.")
     site = models.ForeignKey(Site, blank=False)
+    sort_order = models.SmallIntegerField(default=1, blank=False, help_text="Blogs will be sorted on the site with lowest Sort Order first, then alphabetically by Name.")
     
     # This may be set by calling BlogManager.with_entries()
     entries = []
@@ -38,7 +39,7 @@ class Blog(models.Model):
     on_site = CurrentSiteManager()
     
     class Meta:
-        ordering = ['name']
+        ordering = ['sort_order', 'name']
         
     def __unicode__(self):
         return self.name

@@ -245,7 +245,8 @@
              "remote_entries_feed_url": "",
              "enable_comments": false,
              "slug": "comments",
-             "description": "Description for the Comments blog."
+             "description": "Description for the Comments blog.",
+             "sort_order": 3
         }
     },
     {
@@ -259,7 +260,8 @@
              "remote_entries_feed_url": "",
              "enable_comments": true,
              "slug": "links",
-             "description": "The Links blog description here."
+             "description": "The Links blog description here.",
+             "sort_order": 2
         }
     },
     {
@@ -273,7 +275,8 @@
              "remote_entries_feed_url": "http://feeds.feedburner.com/PhilGyfordsWriting",
              "enable_comments": true,
              "slug": "writing",
-             "description": "Here's a description about the Writing blog."
+             "description": "Here's a description about the Writing blog.",
+             "sort_order": 1
         }
     },
     {
