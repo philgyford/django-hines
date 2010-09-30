@@ -1,15 +1,15 @@
 import datetime, time
 from weblog.models import Blog, Entry
-from django.shortcuts import get_list_or_404, get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_list_or_404, get_object_or_404
+from shortcuts import render
 
 
 def aggregator_index(request):
     blogs = Blog.objects.with_entries(entry_limit=3)
     
-    return render_to_response('aggregator/index.html', {
+    return render(request, 'aggregator/index.html', {
         'blogs': blogs,
-    }, context_instance=RequestContext(request))
+    })
 
 
 
@@ -25,8 +25,8 @@ def aggregator_day(request, year, month, day):
         }
     )
     
-    return render_to_response('aggregator/day.html', {
+    return render(request, 'aggregator/day.html', {
         'blogs': blogs,
         'date': published_date,
-    }, context_instance=RequestContext(request))
+    })
 

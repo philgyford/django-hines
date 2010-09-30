@@ -1,9 +1,9 @@
 import datetime, time
 from weblog.models import Blog, Entry
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.shortcuts import get_list_or_404, get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_list_or_404, get_object_or_404
 from taggit.models import Tag
+from shortcuts import render
 
 
 def weblog_archive_month(request, blog_slug, year, month):
@@ -16,11 +16,11 @@ def weblog_archive_month(request, blog_slug, year, month):
                                 published_date__month = published_date.month,
                             ))
     
-    return render_to_response('weblog/entry_archive_month.html', {
+    return render(request, 'weblog/entry_archive_month.html', {
         'blog': blog,
         'entries': entries,
         'date': published_date,
-    }, context_instance=RequestContext(request))
+    })
     
 def weblog_archive_year(request, blog_slug, year):
     blog = get_object_or_404(Blog, slug=blog_slug)
@@ -31,11 +31,11 @@ def weblog_archive_year(request, blog_slug, year):
                                 published_date__year = published_date.year,
                             ))
     
-    return render_to_response('weblog/entry_archive_year.html', {
+    return render(request, 'weblog/entry_archive_year.html', {
         'blog': blog,
         'entries': entries,
         'date': published_date,
-    }, context_instance=RequestContext(request))
+    })
 
 def weblog_blog_index(request, blog_slug):
     blog = get_object_or_404(Blog, slug=blog_slug)
@@ -58,12 +58,12 @@ def weblog_blog_index(request, blog_slug):
     
     featured_entries = Entry.featured_set.all()
     
-    return render_to_response('weblog/index.html', {
+    return render(request, 'weblog/index.html', {
         'blog': blog,
         'entries': entries,
         'popular_tags': popular_tags,
         'featured_entries': featured_entries,
-    }, context_instance=RequestContext(request))
+    })
 
 
 def weblog_entry_detail(request, blog_slug, year, month, day, slug):
@@ -90,11 +90,11 @@ def weblog_entry_detail(request, blog_slug, year, month, day, slug):
         }
     )
     
-    return render_to_response('weblog/entry_detail.html', {
+    return render(request, 'weblog/entry_detail.html', {
         'blog': entry.blog,
         'entry': entry,
         'other_blogs': other_blogs,
-    }, context_instance=RequestContext(request))
+    })
 
 
 def weblog_blog_archive(request, blog_slug):
@@ -114,10 +114,10 @@ def weblog_blog_archive(request, blog_slug):
         months.append(month_date)
     years.append(months)
 
-    return render_to_response('weblog/archive.html', {
+    return render(request, 'weblog/archive.html', {
         'blog': blog,
         'years': years,
-    }, context_instance=RequestContext(request))
+    })
 
 
 def weblog_tag(request, blog_slug, tag_slug):
@@ -129,8 +129,8 @@ def weblog_tag(request, blog_slug, tag_slug):
                                 tags__name__in=[tag.slug]
                             ))
     
-    return render_to_response('weblog/tag.html', {
+    return render(request, 'weblog/tag.html', {
         'blog': blog,
         'tag': tag,
         'entries': entries,
-    }, context_instance=RequestContext(request))
+    })
