@@ -4,4 +4,6 @@
 
 {% block content_title %}{{ flatpage.title }}{% endblock %}
 
-{% block content %}{{ flatpage.content }}{% endblock %}
+{% load markup %}
+
+{% block content %}{{ flatpage.content|markdown }}{% endblock %}

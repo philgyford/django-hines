@@ -46,7 +46,7 @@
                 {% show_gravatar comment.user_email 48 %}
                 <p>On {{ comment.submit_date|date:date_format_short }} <a href="{{ comment.content_object.get_absolute_url }}#c{{ comment.id }}">{{ comment.submit_date|date:time_format }}</a> {% if comment.url %}<a href="{{ comment.url }}">{{ comment.name }}</a>{% else %}{{ comment.name }}{% endif %} said:</p>
         
-                {{ comment.comment|markdown:"safe" }}
+                {{ comment.comment|markdown }}
             </div>
         {% endfor %}
         </div>
