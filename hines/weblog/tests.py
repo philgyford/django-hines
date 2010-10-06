@@ -6,6 +6,7 @@ from aggregator.models import Aggregator
 from django.contrib.comments.forms import CommentSecurityForm
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
+from django.contrib.auth.models import User
 
 
 class WeblogBaseTestCase(TestCase):
@@ -375,4 +376,31 @@ class CommentTestCase(WeblogBaseTestCase):
         entry = Entry.live.get(pk=2)
         self.assertEquals(entry.num_comments, 1)
         self.assertEquals(entry.comments.count(), 1)
+    
+    def test_comment_form_logged_out(self):
+        """
+        Make sure the name/email fields appear on the entry_detail page when logged out.
+        """
+        c = Client()
+        response = c.get('/writing/2010/09/26/published-writing-post/')
+        self.assertContains(response, 'type="text" name="name"')
+        self.assertContains(response, 'type="text" name="email"')
+
+    def test_comment_form_logged_in(self):
+        """
+        Make sure the name/email fields are hidden and filled-in correctly when logged in.
+        """
+        u = User.objects.create_user('terry', 'terry@example.com', 'terrypassword')
+        u.save()
+        c = Client()
+        c.login(username='terry', password='terrypassword')
+        response = c.get('/writing/2010/09/26/published-writing-post/')
+        self.assertContains(response, 'type="hidden" name="name" id="id_name" value="terry"')
+        self.assertContains(response, 'type="hidden" name="email" id="id_email" value="terry@example.com"')
         
+        u.first_name = 'Terry'
+        u.last_name = 'Thomas'
+        u.save()
+        response = c.get('/writing/2010/09/26/published-writing-post/')
+        self.assertContains(response, 'type="hidden" name="name" id="id_name" value="Terry Thomas"')
+    
