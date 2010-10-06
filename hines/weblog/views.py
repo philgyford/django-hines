@@ -6,26 +6,10 @@ from django.db.models import Count
 from django.shortcuts import get_list_or_404, get_object_or_404
 from taggit.models import Tag
 from shortcuts import render
-from django.views.generic.date_based import archive_month
+from django.views.generic.date_based import archive_month, archive_year
 from django.template import RequestContext
 from django.db.models import Max, Min
 
-# 
-# def weblog_archive_month(request, blog_slug, year, month):
-#     blog = get_object_or_404(Blog, slug=blog_slug)
-#     date_stamp = time.strptime(year+month+'01', "%Y%m%d")
-#     published_date = datetime.date(*date_stamp[:3])
-#     entries = list(Entry.live.filter(
-#                                 blog__slug__exact = blog_slug,
-#                                 published_date__year = published_date.year,
-#                                 published_date__month = published_date.month,
-#                             ))
-#     
-#     return render(request, 'weblog/entry_archive_month.html', {
-#         'blog': blog,
-#         'entries': entries,
-#         'date': published_date,
-#     })
     
 def weblog_archive_month(request, blog_slug, year, month):
     """
@@ -49,19 +33,23 @@ def weblog_archive_month(request, blog_slug, year, month):
     
     previous_month_correct = prev_months_entry[0].published_date if prev_months_entry else None
 
-    # Get the date of the 1st of next month.
-    try:
-        next_mon = first_of_month.replace(month=first_of_month.month+1)
-    except ValueError:
-        next_mon = first_of_month.replace(year=first_of_month.year+1, month=1)
+    if first_of_month.month == datetime.datetime.now().month:
+        # Current month, no need to look for Entries in next month.
+        next_month_correct = None
+    else:
+        # Get the date of the 1st of next month.
+        try:
+            next_mon = first_of_month.replace(month=first_of_month.month+1)
+        except ValueError:
+            next_mon = first_of_month.replace(year=first_of_month.year+1, month=1)
     
-    # Get the next entry that is after the current month.
-    next_months_entry = Entry.live.filter(
-        blog__slug__exact = blog.slug,
-        published_date__gte = next_mon,
-    ).annotate(max_date=Max('published_date')).order_by('max_date')[:1]
+        # Get the next entry that is after the current month.
+        next_months_entry = Entry.live.filter(
+            blog__slug__exact = blog.slug,
+            published_date__gte = next_mon,
+        ).annotate(max_date=Max('published_date')).order_by('max_date')[:1]
     
-    next_month_correct = next_months_entry[0].published_date if next_months_entry else None
+        next_month_correct = next_months_entry[0].published_date if next_months_entry else None
     
     return archive_month(request, year, month, queryset, 'published_date',
         template_object_name = 'entry',
@@ -76,19 +64,52 @@ def weblog_archive_month(request, blog_slug, year, month):
     
     
 def weblog_archive_year(request, blog_slug, year):
+    """
+    Wrapper for the archive_year Generic View, so we can make it blog-specific.
+    Although the template tives us next_year and previous_year for free, these
+    don't take into account whether there are actually Entries in those Years.
+    So we go to a lot of trouble here to check that and pass our own dates in.
+    """
     blog = get_object_or_404(Blog, slug=blog_slug)
-    date_stamp = time.strptime(year+'0101', "%Y%m%d")
-    published_date = datetime.date(*date_stamp[:3])
-    entries = list(Entry.live.filter(
-                                blog__slug__exact = blog_slug,
-                                published_date__year = published_date.year,
-                            ))
+    queryset = Entry.live.filter( blog__slug__exact = blog.slug )
     
-    return render(request, 'weblog/entry_archive_year.html', {
-        'blog': blog,
-        'entries': entries,
-        'date': published_date,
-    })
+    # Get the date of the 1st of this year.
+    date_stamp = time.strptime(year+'0101', "%Y%m%d")
+    first_of_year = datetime.date(*date_stamp[:3])
+    
+    # Get the most recent entry that is before the current year.
+    prev_years_entry = Entry.live.filter(
+        blog__slug__exact = blog.slug,
+        published_date__lt = first_of_year,
+    ).annotate(max_date=Max('published_date')).order_by('-max_date')[:1]
+
+    previous_year_correct = prev_years_entry[0].published_date if prev_years_entry else None
+    
+    if first_of_year.year == datetime.datetime.now().year:
+        # Current year, no need to look for Entries in next year.
+        next_year_correct = None
+    else:
+        # Get the date of the 1st of next year.
+        next_year = first_of_year.replace(year=first_of_year.year+1)
+    
+        # Get the next entry that is after the current year.
+        next_years_entry = Entry.live.filter(
+            blog__slug__exact = blog.slug,
+            published_date__gte = next_year,
+        ).annotate(max_date=Max('published_date')).order_by('max_date')[:1]
+    
+        next_year_correct = next_years_entry[0].published_date if next_years_entry else None
+
+    return archive_year(request, year, queryset, 'published_date', 
+        template_object_name = 'entry',
+        context_processors = [RequestContext,],
+        make_object_list = True,
+        extra_context = {
+            'blog':blog,
+            'previous_year_correct':previous_year_correct,
+            'next_year_correct':next_year_correct,
+        }
+    )
 
 
 def weblog_blog_index(request, blog_slug):

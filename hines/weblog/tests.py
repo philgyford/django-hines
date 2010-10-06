@@ -62,8 +62,8 @@ class ViewsTestCase(WeblogBaseTestCase):
         response = c.get('/writing/2010/')
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(response.context['blog'].id, 1)
-        self.failUnlessEqual(len(response.context['entries']), 2)
-        self.failUnlessEqual(response.context['date'].year, 2010)
+        self.failUnlessEqual(len(response.context['entry_list']), 2)
+        self.failUnlessEqual(response.context['year'], u'2010')
         
     def test_entry_detail(self):
         '''Test if a page for a single Entry within a weblog renders.'''
@@ -323,6 +323,34 @@ class EntryTestCase(WeblogBaseTestCase):
         
         e1.delete()
         e2.delete()
+
+    def test_next_prev_year(self):
+        '''Test the yearly next/previous links are correct.'''
+        # Add a couple of older entries as well as the two in test_data.
+        e1 = Entry(title='Entry in Aug 2009', body='test', blog_id=1, published_date='2009-08-15 10:00:00', author_id=1)
+        e1.save()
+        e2 = Entry(title='Entry in Dec 2007', body='test', blog_id=1, published_date='2007-12-15 10:00:00', author_id=1)
+        e2.save()
+
+        c = Client()
+        response = c.get('/writing/2010/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['previous_year_correct'], datetime.datetime(year=2009,month=8,day=15,hour=10,minute=0,second=0))
+        self.failUnlessEqual(response.context['next_year_correct'], None)
+
+        response = c.get('/writing/2009/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['previous_year_correct'], datetime.datetime(year=2007,month=12,day=15,hour=10,minute=0,second=0))
+        self.failUnlessEqual(response.context['next_year_correct'], datetime.datetime(year=2010,month=9,day=26,hour=15,minute=53,second=45))
+
+        response = c.get('/writing/2007/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['previous_year_correct'], None)
+        self.failUnlessEqual(response.context['next_year_correct'], datetime.datetime(year=2009,month=8,day=15,hour=10,minute=0,second=0))
+
+        e1.delete()
+        e2.delete()
+
 
 class CommentTestCase(WeblogBaseTestCase):
 
