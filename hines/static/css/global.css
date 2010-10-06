@@ -19,3 +19,7 @@
 #nav li.active-within a {
 	font-weight: bold;
 }
+
+#comments .loggedin {
+	background: #eee;
+}
