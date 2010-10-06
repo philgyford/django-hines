@@ -52,8 +52,9 @@
         </div>
     {% endif %}
     
-        <h2>{% if comment_list %}Add a comment{% else %}Be first to comment{% endif %}</h2>
-        {% render_comment_form for entry %}
+    <h2>{% if comment_list %}Add a comment{% else %}Be first to comment{% endif %}</h2>
+    
+    {% render_comment_form for entry %}
 
 {% endblock content %}
 
