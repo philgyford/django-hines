@@ -1,6 +1,5 @@
 from django.test.client import Client
 from django.test import TestCase
-
 import time
 from weblog.models import Blog,Entry
 from aggregator.models import Aggregator

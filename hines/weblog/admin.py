@@ -1,5 +1,4 @@
 import datetime
-
 from django.contrib import admin
 from weblog.models import Blog, Entry
 

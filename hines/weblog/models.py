@@ -1,12 +1,12 @@
 import datetime
 
 from django.contrib.auth.models import User
-from django.contrib.comments.moderation import CommentModerator, moderator, AlreadyModerated
 from django.db import models
 from django.template.defaultfilters import linebreaks
 from django.utils.html import strip_tags
 from django.db.models.signals import post_save
 from django.contrib.comments import Comment
+from customcomments.models import CommentOnEntry
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from django.core.urlresolvers import reverse
@@ -201,31 +201,16 @@ class Entry(models.Model):
             return smart_truncate(excerpt, 100)
 
 
-def comment_post_save_handler(sender, **kwargs):
-    """
-    When we save a comment then we update the num_comments field on the associated Entry.
-    NOTE: If we use comments on anything other than Entries then we'll either have to
-    customise this, or give those new objects num_comments fields too, and then this should 
-    also work for them.
-    """
-    comment = kwargs['instance']
-    entry = comment.content_object
-    if type(entry) is Entry:
-        num_comments_on_entry = Comment.objects.filter(
-            content_type = comment.content_type,
-            object_pk = comment.object_pk,
-            is_public = 1,
-            is_removed = 0
-        ).count()
-        entry.num_comments = num_comments_on_entry
-        entry.save()
-post_save.connect(comment_post_save_handler, sender=Comment)
-
+from django.contrib.comments.moderation import moderator, CommentModerator, AlreadyModerated
 
 class EntryModerator(CommentModerator):
+    """
+    Custom moderator that lets us enable comments at Entry, Blog or Aggregator level.
+    We could maybe move this to customcomments/moderation.py but it works here, so it's staying for a bit.
+    """
     email_notification = False
     enable_field = 'enable_comments'
-    
+
     def allow(self, comment, content_object, request):
         """
         Turning comments off at the Blog and Aggregator level override the Entry-level permissions.
@@ -244,3 +229,25 @@ except AlreadyModerated:
     # Safeguard against the models module being imported multiple
     # times (thus registering multiple times and throwing this error)
     pass
+
+
+def comment_post_save_handler(sender, **kwargs):
+    """
+    When we save a comment then we update the num_comments field on the associated Entry.
+    NOTE: If we use comments on anything other than Entries then we'll either have to
+    customise this, or give those new objects num_comments fields too, and then this should 
+    also work for them.
+    """
+    comment = kwargs['instance']
+    entry = comment.content_object
+    if type(entry) is Entry:
+        num_comments_on_entry = CommentOnEntry.objects.filter(
+            content_type = comment.content_type,
+            object_pk = comment.object_pk,
+            is_public = 1,
+            is_removed = 0
+        ).count()
+        entry.num_comments = num_comments_on_entry
+        entry.save()
+post_save.connect(comment_post_save_handler, sender=CommentOnEntry)
+

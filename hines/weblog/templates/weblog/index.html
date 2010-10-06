@@ -29,6 +29,21 @@
             Newer
         {% endif %}
     </div>
+    
+    {% load customcomments_tags %}
+    {% get_latest_blog_comments blog.pk 5 as latest_comments %}
+    {% if latest_comments %}
+        <h2>Latest comments on {{ blog.short_name }}</h2>
+        <ul class="comments">
+        {% for comment in latest_comments %}
+            <li><strong>{{ comment.user_name }}</strong> on {{ comment.submit_date|date:date_format_short }}<br />
+                <a href="{{ comment.get_absolute_url }}">{{ comment.content_object.title }}</a><br />
+                {{ comment.comment|striptags|truncatewords:20 }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
 
 {% endblock content %}
 

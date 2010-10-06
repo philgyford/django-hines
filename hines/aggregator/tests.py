@@ -4,7 +4,6 @@ from aggregator.models import Aggregator
 
 
 class AggregatorBaseTestCase(TestCase):
-    
     fixtures = ['test_data.json', ]
 
 

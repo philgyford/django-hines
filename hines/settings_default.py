@@ -69,16 +69,21 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.admin',
     'django.contrib.comments',
+    'django.contrib.admin',
     'django.contrib.markup',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django.contrib.flatpages',
     'taggit',
-    'hines.weblog',
     'hines.aggregator',
+    # Needs to go before 'hines.weblog' for reasons which escape me.
+    'hines.customcomments',
+    'hines.weblog',
+
 )
+
+COMMENTS_APP = 'hines.customcomments'
 
 import django.conf.global_settings as DEFAULT_SETTINGS
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (

@@ -67,6 +67,27 @@
     },
     {
         "pk": 1,
+         "model": "customcomments.commentonentry",
+         "fields": 
+        {
+        }
+    },
+    {
+        "pk": 2,
+         "model": "customcomments.commentonentry",
+         "fields": 
+        {
+        }
+    },
+    {
+        "pk": 3,
+         "model": "customcomments.commentonentry",
+         "fields": 
+        {
+        }
+    },
+    {
+        "pk": 1,
          "model": "flatpages.flatpage",
          "fields": 
         {
