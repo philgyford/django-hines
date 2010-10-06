@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from weblog.feeds import LatestBlogEntriesFeed
 from weblog import views
 
+
 urlpatterns = patterns('',
 
     (r'^(?P<blog_slug>[-\w]+)/$', views.weblog_blog_index, {}, 'weblog_blog_index'),
@@ -14,6 +15,15 @@ urlpatterns = patterns('',
     (r'^(?P<blog_slug>[-\w]+)/(?P<year>\d{4})/(?P<month>\d{2})/$',
         views.weblog_archive_month, {}, 'weblog_entry_archive_month'),
     
+    # (r'^(?P<blog_slug>[-\w]+)/(?P<year>\d{4})/(?P<month>\d{2})/$',
+    #     'django.views.generic.date_based.archive_month', {
+    #         'queryset': Entry.live.filter(blog__slug__exact = '%(blog_slug)',), 
+    #         'date_field': 'published_date',
+    #         'month_format': '%m',
+    #         'template_object_name': 'entry',
+    #         'context_processors': [RequestContext,],
+    #     }, 'weblog_entry_archive_month'),
+        
     (r'^(?P<blog_slug>[-\w]+)/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)/$',
         views.weblog_entry_detail, {}, 'weblog_entry_detail'),
 

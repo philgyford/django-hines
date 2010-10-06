@@ -108,7 +108,7 @@ class Entry(models.Model):
     featured = models.BooleanField(default=False)
     format = models.IntegerField(choices=FORMAT_CHOICES, default=MARKDOWN_FORMAT)
     status = models.IntegerField(choices=STATUS_CHOICES, default=LIVE_STATUS)
-    blog = models.ForeignKey(Blog)
+    blog = models.ForeignKey(Blog, default=1)
     site = models.ForeignKey(Site, blank=False, editable=False)
 
     # Managers

@@ -1,6 +1,6 @@
 from django.test.client import Client
 from django.test import TestCase
-import time
+import datetime, time
 from weblog.models import Blog,Entry
 from aggregator.models import Aggregator
 from django.contrib.comments.forms import CommentSecurityForm
@@ -52,9 +52,9 @@ class ViewsTestCase(WeblogBaseTestCase):
         response = c.get('/writing/2010/09/')
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(response.context['blog'].id, 1)
-        self.failUnlessEqual(len(response.context['entries']), 2)
-        self.failUnlessEqual(response.context['date'].year, 2010)
-        self.failUnlessEqual(response.context['date'].month, 9)
+        self.failUnlessEqual(len(response.context['entry_list']), 2)
+        self.failUnlessEqual(response.context['month'].year, 2010)
+        self.failUnlessEqual(response.context['month'].month, 9)
 
     def test_blog_archive_year(self):
         '''Test if an archive page for a year within a weblog renders.'''
@@ -297,6 +297,32 @@ class EntryTestCase(WeblogBaseTestCase):
         self.failUnlessEqual(len(featured_entries), 1)
         self.failUnlessEqual(featured_entries[0].id, 2)
 
+    def test_next_prev_month(self):
+        '''Test the monthly next/previous links are correct.'''
+        # Add a couple of older entries as well as the two in test_data.
+        e1 = Entry(title='Entry in Aug 2010', body='test', blog_id=1, published_date='2010-08-15 10:00:00', author_id=1)
+        e1.save()
+        e2 = Entry(title='Entry in Dec 2009', body='test', blog_id=1, published_date='2009-12-15 10:00:00', author_id=1)
+        e2.save()
+
+        c = Client()
+        response = c.get('/writing/2010/09/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['previous_month_correct'], datetime.datetime(year=2010,month=8,day=15,hour=10,minute=0,second=0))
+        self.failUnlessEqual(response.context['next_month_correct'], None)
+        
+        response = c.get('/writing/2010/08/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['previous_month_correct'], datetime.datetime(year=2009,month=12,day=15,hour=10,minute=0,second=0))
+        self.failUnlessEqual(response.context['next_month_correct'], datetime.datetime(year=2010,month=9,day=26,hour=15,minute=53,second=45))
+
+        response = c.get('/writing/2009/12/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['previous_month_correct'], None)
+        self.failUnlessEqual(response.context['next_month_correct'], datetime.datetime(year=2010,month=8,day=15,hour=10,minute=0,second=0))
+        
+        e1.delete()
+        e2.delete()
 
 class CommentTestCase(WeblogBaseTestCase):
 

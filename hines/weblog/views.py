@@ -1,3 +1,4 @@
+import calendar
 import datetime, time
 from weblog.models import Blog, Entry, TaggedEntry
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -5,23 +6,74 @@ from django.db.models import Count
 from django.shortcuts import get_list_or_404, get_object_or_404
 from taggit.models import Tag
 from shortcuts import render
+from django.views.generic.date_based import archive_month
+from django.template import RequestContext
+from django.db.models import Max, Min
 
-
-def weblog_archive_month(request, blog_slug, year, month):
-    blog = get_object_or_404(Blog, slug=blog_slug)
-    date_stamp = time.strptime(year+month+'01', "%Y%m%d")
-    published_date = datetime.date(*date_stamp[:3])
-    entries = list(Entry.live.filter(
-                                blog__slug__exact = blog_slug,
-                                published_date__year = published_date.year,
-                                published_date__month = published_date.month,
-                            ))
+# 
+# def weblog_archive_month(request, blog_slug, year, month):
+#     blog = get_object_or_404(Blog, slug=blog_slug)
+#     date_stamp = time.strptime(year+month+'01', "%Y%m%d")
+#     published_date = datetime.date(*date_stamp[:3])
+#     entries = list(Entry.live.filter(
+#                                 blog__slug__exact = blog_slug,
+#                                 published_date__year = published_date.year,
+#                                 published_date__month = published_date.month,
+#                             ))
+#     
+#     return render(request, 'weblog/entry_archive_month.html', {
+#         'blog': blog,
+#         'entries': entries,
+#         'date': published_date,
+#     })
     
-    return render(request, 'weblog/entry_archive_month.html', {
-        'blog': blog,
-        'entries': entries,
-        'date': published_date,
-    })
+def weblog_archive_month(request, blog_slug, year, month):
+    """
+    Wrapper for the archive_month Generic View, so we can make it blog-specific.
+    Although the template gives us next_month and previous_month for free, these
+    don't take into account whether there are actually Entries on those months.
+    So we go to a lot of trouble here to check that and pass our own dates in.
+    """
+    blog = get_object_or_404(Blog, slug=blog_slug)
+    queryset = Entry.live.filter( blog__slug__exact = blog.slug )
+    
+    # Get the date of the 1st of this month.
+    date_stamp = time.strptime(year+month+'01', "%Y%m%d")
+    first_of_month = datetime.date(*date_stamp[:3])
+    
+    # Get the most recent entry that is before the current month.
+    prev_months_entry = Entry.live.filter(
+        blog__slug__exact = blog.slug,
+        published_date__lt = first_of_month,
+    ).annotate(max_date=Max('published_date')).order_by('-max_date')[:1]
+    
+    previous_month_correct = prev_months_entry[0].published_date if prev_months_entry else None
+
+    # Get the date of the 1st of next month.
+    try:
+        next_mon = first_of_month.replace(month=first_of_month.month+1)
+    except ValueError:
+        next_mon = first_of_month.replace(year=first_of_month.year+1, month=1)
+    
+    # Get the next entry that is after the current month.
+    next_months_entry = Entry.live.filter(
+        blog__slug__exact = blog.slug,
+        published_date__gte = next_mon,
+    ).annotate(max_date=Max('published_date')).order_by('max_date')[:1]
+    
+    next_month_correct = next_months_entry[0].published_date if next_months_entry else None
+    
+    return archive_month(request, year, month, queryset, 'published_date',
+        template_object_name = 'entry',
+        context_processors = [RequestContext,],
+        month_format = '%m',
+        extra_context = {
+            'blog':blog,
+            'previous_month_correct':previous_month_correct,
+            'next_month_correct':next_month_correct,
+        }
+    )
+    
     
 def weblog_archive_year(request, blog_slug, year):
     blog = get_object_or_404(Blog, slug=blog_slug)
