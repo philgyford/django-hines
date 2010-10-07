@@ -53,6 +53,13 @@ class AggregatorTestCase(AggregatorBaseTestCase):
         c = Client()
         response = c.get(current_aggregator.get_entries_feed_url())
         self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, "<title>A featured writing post</title>")
+        self.assertContains(response, "writing/2010/09/27/featured-writing-post/</link>")
+        self.assertContains(response, "writing/2010/09/27/featured-writing-post/</guid>")
+        self.assertContains(response, "<content:encoded>&lt;p&gt;Sed metus leo, tristique", msg_prefix="content:encoded element missing from feed.")
+        self.assertContains(response, "<title>A published Writing post</title>", msg_prefix="A Writing entry missing from feed.")
+        self.assertContains(response, "<title>The Online Photographer: 'A Leica for a Year' a Year Later</title>", msg_prefix="A Writing entry missing from feed.")
+        self.assertContains(response, "<title>A links post from August</title>", msg_prefix="No :inks entry in feed.")
         
     def test_entries_feed_remote(self):
         '''Test if the remote Entries RSS feed is used if it's set'.'''

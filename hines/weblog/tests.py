@@ -140,6 +140,22 @@ class BlogTestCase(WeblogBaseTestCase):
             if blog.id == 1:
                 self.failUnlessEqual(len(blog.entries), 1)
 
+    def test_blog_feed_local(self):
+        '''Test if a blog's local RSS feed renders.'''
+        blog = Blog.objects.get(pk=2)
+        c = Client()
+        response = c.get( blog.get_entries_feed_url() )
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, "<title>A links post from August</title>")
+        self.assertContains(response, 'links/2010/08/11/links-post-august/</link>')
+        self.assertContains(response, "Even if you don't use the whole...</description>")
+        self.assertContains(response, '<content:encoded>&lt;dl class="links"&gt;')
+
+    def test_blog_feed_remote(self):
+        '''Test if we we use a remote RSS feed for a blog if one is set.'''
+        blog = Blog.objects.get(pk=1)
+        self.failUnlessEqual(blog.get_entries_feed_url(), 'http://feeds.feedburner.com/PhilGyfordsWriting')
+
 
 class EntryTestCase(WeblogBaseTestCase):
     
@@ -258,18 +274,6 @@ class EntryTestCase(WeblogBaseTestCase):
         current_aggregator.enable_comments = True
         current_aggregator.save()
 
-    def test_blog_feed_local(self):
-        '''Test if a blog's local RSS feed renders.'''
-        blog = Blog.objects.get(pk=2)
-        c = Client()
-        response = c.get( blog.get_entries_feed_url() )
-        self.failUnlessEqual(response.status_code, 200)
-
-    def test_blog_feed_remote(self):
-        '''Test if we we use a remote RSS feed for a blog if one is set.'''
-        blog = Blog.objects.get(pk=1)
-        self.failUnlessEqual(blog.get_entries_feed_url(), 'http://feeds.feedburner.com/PhilGyfordsWriting')
-
     def test_tags_on_entry(self):
         '''Test if the correct tags are fetched from an entry.'''
         entry = Entry.live.get(pk=1)
@@ -350,6 +354,7 @@ class EntryTestCase(WeblogBaseTestCase):
 
         e1.delete()
         e2.delete()
+        
 
 
 class CommentTestCase(WeblogBaseTestCase):
