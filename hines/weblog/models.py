@@ -5,7 +5,7 @@ from django.db import models
 from django.template.defaultfilters import linebreaks
 from django.utils.html import strip_tags
 from django.db.models.signals import post_save
-from django.contrib.comments.signals import comment_was_posted
+from django.contrib.comments.signals import comment_will_be_posted, comment_was_posted
 from django.contrib.comments import Comment
 from customcomments.models import CommentOnEntry
 from django.contrib.sites.models import Site
@@ -234,7 +234,39 @@ except AlreadyModerated:
     pass
 
 
-def moderate_comment(sender, comment, request, **kwargs):
+from BeautifulSoup import BeautifulSoup, Comment
+import re
+    
+def filter_comment_contents(sender, comment, request, **kwargs):
+    """
+    Filter the HTML of the comment.
+    settings.ALLOWED_COMMENT_TAGS should be in form 'tag2:attr1:attr2 tag2:attr1 tag3', 
+    where tags are allowed HTML tags, and attrs are the allowed attributes for that tag.
+    Adapted from http://djangosnippets.org/snippets/1655/
+    """
+    allowed_tags = settings.ALLOWED_COMMENT_TAGS
+    
+    js_regex = re.compile(r'[\s]*(&#x.{1,7})?'.join(list('javascript')))
+    allowed_tags = [tag.split(':') for tag in allowed_tags.split()]
+    allowed_tags = dict((tag[0], tag[1:]) for tag in allowed_tags)
+
+    soup = BeautifulSoup(comment.comment)
+    for comment in soup.findAll(text=lambda text: isinstance(text, Comment)):
+        comment.extract()
+
+    for tag in soup.findAll(True):
+        if tag.name not in allowed_tags:
+            tag.hidden = True
+        else:
+            tag.attrs = [(attr, js_regex.sub('', val)) for attr, val in tag.attrs
+                         if attr in allowed_tags[tag.name]]
+
+    comment.comment = soup.renderContents().decode('utf8')
+    
+comment_will_be_posted.connect(filter_comment_contents, sender=CommentOnEntry, dispatch_uid='comments.pre_comment')
+
+
+def spam_check_comment(sender, comment, request, **kwargs):
     """
     Filter comments using TypePad AntiSpam or Akismet.
     If TYPEPAD_ANTISPAM_API_KEY is set in settings, we use that.
@@ -273,6 +305,8 @@ def moderate_comment(sender, comment, request, **kwargs):
             'comment_type': 'comment',
             'comment_author': comment.user_name.encode('utf-8'),
         }
+        if comment.user_url:
+            data['comment_author_url'] = comment.user_url
 
         if ak.comment_check(smart_str(comment.comment), data=data, build_data=True):
             if hasattr(comment.content_object,'author'):
@@ -289,7 +323,8 @@ def moderate_comment(sender, comment, request, **kwargs):
             comment.save()
 
 # The dispatch_uid bit stops it being called twice for some reason.
-comment_was_posted.connect(moderate_comment, sender=CommentOnEntry, dispatch_uid='comments.post_comment')
+comment_was_posted.connect(spam_check_comment, sender=CommentOnEntry, dispatch_uid='comments.post_comment')
+
 
 def comment_post_save_handler(sender, **kwargs):
     """
