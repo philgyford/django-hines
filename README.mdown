@@ -10,13 +10,13 @@ This is not supposed to create a generic site that will be useful to everyone. I
 
 * Weblog
     * Multiple blogs
-    * Uses comments
-    * Daily/monthly archives
+    * Uses comments (with HTML filtering, Akismet/AntiSpam filtering, Gravatars)
+    * Daily/monthly/yearly archives
     * RSS feeds
     * Tagging using django-taggit
 * Aggregator
     * Aggregates recent posts from the blogs
-    * Aggregated RSS feed
+    * Aggregated RSS feeds (Entries and Comments)
 
 ## Major future tasks
 
@@ -42,5 +42,4 @@ tried setting it up from scratch yet, but still, extremely briefly...
 
 The fixture for tests in both Aggregator and Weblog apps is currently only in aggregator/fixtures/. Not sure how best to handle it otherwise without duplication.
 
-In case you need to know the password for the Auth users in the fixtures (billystaff and billyadmin), their password is "billy" in both cases. How insecure of them.
 
