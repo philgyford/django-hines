@@ -5,6 +5,7 @@ from django.db import models
 from django.template.defaultfilters import linebreaks
 from django.utils.html import strip_tags
 from django.db.models.signals import post_save
+from django.contrib.comments.signals import comment_was_posted
 from django.contrib.comments import Comment
 from customcomments.models import CommentOnEntry
 from django.contrib.sites.models import Site
@@ -12,6 +13,8 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.core.urlresolvers import reverse
 from aggregator.models import Aggregator
 from shortcuts import smart_truncate
+from django.utils.encoding import smart_str
+from django.conf import settings
 
 from markdown import markdown
 
@@ -231,6 +234,63 @@ except AlreadyModerated:
     pass
 
 
+def moderate_comment(sender, comment, request, **kwargs):
+    """
+    Filter comments using TypePad AntiSpam or Akismet.
+    If TYPEPAD_ANTISPAM_API_KEY is set in settings, we use that.
+    If it's not, and AKISMET_API_KEY is set, we use that.
+    From http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/ and
+    'Practical Django Projects' 2nd edition.
+    """
+    
+    # spam checking can be enabled/disabled per the comment's target Model
+    #if comment.content_type.model_class() != Entry:
+    #    return
+
+    try:
+        from akismet import Akismet
+    except:
+        return
+
+    # use TypePad's AntiSpam if the key is specified in settings.py
+    if hasattr(settings, 'TYPEPAD_ANTISPAM_API_KEY'):
+        ak = Akismet(
+            key=settings.TYPEPAD_ANTISPAM_API_KEY,
+            blog_url='http://%s/' % Site.objects.get_current().domain
+        )
+        ak.baseurl = 'api.antispam.typepad.com/1.1/'
+    else:
+        ak = Akismet(
+            key=settings.AKISMET_API_KEY,
+            blog_url='http://%s/' % Site.objects.get_current().domain
+        )
+
+    if ak.verify_key():
+        data = {
+            'user_ip': comment.ip_address,
+            'user_agent': request.META['HTTP_USER_AGENT'],
+            'referrer': request.META['HTTP_REFERER'],
+            'comment_type': 'comment',
+            'comment_author': comment.user_name.encode('utf-8'),
+        }
+
+        if ak.comment_check(smart_str(comment.comment), data=data, build_data=True):
+            if hasattr(comment.content_object,'author'):
+                user = comment.content_object.author
+            else:
+                from django.contrib.auth.models import User
+                user = User.objects.filter(is_superuser=True)[0]
+            
+            comment.flags.create(
+                user=user,
+                flag='spam'
+            )
+            comment.is_public = False
+            comment.save()
+
+# The dispatch_uid bit stops it being called twice for some reason.
+comment_was_posted.connect(moderate_comment, sender=CommentOnEntry, dispatch_uid='comments.post_comment')
+
 def comment_post_save_handler(sender, **kwargs):
     """
     When we save a comment then we update the num_comments field on the associated Entry.
@@ -249,5 +309,6 @@ def comment_post_save_handler(sender, **kwargs):
         ).count()
         entry.num_comments = num_comments_on_entry
         entry.save()
+
 post_save.connect(comment_post_save_handler, sender=CommentOnEntry)
 

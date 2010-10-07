@@ -53,3 +53,8 @@ DATE_FORMAT_MONTH = 'F Y'
 
 # "3:57pm"
 TIME_FORMAT = 'g:ia'
+
+# If one of these is set, then that service will be used for testing comments for spam.
+# If both are set, only TypePad AntiSpam will be used.
+TYPEPAD_ANTISPAM_API_KEY = 'your-key-here'
+AKISMET_API_KEY = 'your-key-here'
