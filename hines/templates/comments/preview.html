@@ -10,8 +10,9 @@
         <h1>{% blocktrans count form.errors|length as counter %}Please correct the error below{% plural %}Please correct the errors below{% endblocktrans %}</h1>
     {% else %}
         <h1>{% trans "Preview your comment" %}</h1>
-          {% load markup %}
-        <blockquote>{{ comment|markdown:"safe" }}</blockquote>
+          {% load customcomments_tags %}
+          {# If you change this, should also change it in weblog/templates/weblot/entry_detail.html #}
+        <blockquote>{{ comment|filter_html_input|safe|urlizetrunc:30|autop }}</blockquote>
           <p>
           {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Post your comment" %}" id="submit" /> {% trans "or make changes" %}:
           </p>

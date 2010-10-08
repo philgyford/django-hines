@@ -5,7 +5,6 @@ from django.db import models
 from django.template.defaultfilters import linebreaks
 from django.utils.html import strip_tags
 from django.db.models.signals import post_save
-from django.contrib.comments.signals import comment_will_be_posted, comment_was_posted
 from django.contrib.comments import Comment
 from customcomments.models import CommentOnEntry
 from django.contrib.sites.models import Site
@@ -13,8 +12,6 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.core.urlresolvers import reverse
 from aggregator.models import Aggregator
 from shortcuts import smart_truncate
-from django.utils.encoding import smart_str
-from django.conf import settings
 
 from markdown import markdown
 
@@ -234,97 +231,8 @@ except AlreadyModerated:
     pass
 
 
-from BeautifulSoup import BeautifulSoup, Comment
-import re
-    
-def filter_comment_contents(sender, comment, request, **kwargs):
-    """
-    Filter the HTML of the comment.
-    settings.ALLOWED_COMMENT_TAGS should be in form 'tag2:attr1:attr2 tag2:attr1 tag3', 
-    where tags are allowed HTML tags, and attrs are the allowed attributes for that tag.
-    Adapted from http://djangosnippets.org/snippets/1655/
-    """
-    allowed_tags = settings.ALLOWED_COMMENT_TAGS
-    
-    js_regex = re.compile(r'[\s]*(&#x.{1,7})?'.join(list('javascript')))
-    allowed_tags = [tag.split(':') for tag in allowed_tags.split()]
-    allowed_tags = dict((tag[0], tag[1:]) for tag in allowed_tags)
 
-    soup = BeautifulSoup(comment.comment)
-    for comment in soup.findAll(text=lambda text: isinstance(text, Comment)):
-        comment.extract()
-
-    for tag in soup.findAll(True):
-        if tag.name not in allowed_tags:
-            tag.hidden = True
-        else:
-            tag.attrs = [(attr, js_regex.sub('', val)) for attr, val in tag.attrs
-                         if attr in allowed_tags[tag.name]]
-
-    comment.comment = soup.renderContents().decode('utf8')
-    
-comment_will_be_posted.connect(filter_comment_contents, sender=CommentOnEntry, dispatch_uid='comments.pre_comment')
-
-
-def spam_check_comment(sender, comment, request, **kwargs):
-    """
-    Filter comments using TypePad AntiSpam or Akismet.
-    If TYPEPAD_ANTISPAM_API_KEY is set in settings, we use that.
-    If it's not, and AKISMET_API_KEY is set, we use that.
-    From http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/ and
-    'Practical Django Projects' 2nd edition.
-    """
-    
-    # spam checking can be enabled/disabled per the comment's target Model
-    #if comment.content_type.model_class() != Entry:
-    #    return
-
-    try:
-        from akismet import Akismet
-    except:
-        return
-
-    # use TypePad's AntiSpam if the key is specified in settings.py
-    if hasattr(settings, 'TYPEPAD_ANTISPAM_API_KEY'):
-        ak = Akismet(
-            key=settings.TYPEPAD_ANTISPAM_API_KEY,
-            blog_url='http://%s/' % Site.objects.get_current().domain
-        )
-        ak.baseurl = 'api.antispam.typepad.com/1.1/'
-    else:
-        ak = Akismet(
-            key=settings.AKISMET_API_KEY,
-            blog_url='http://%s/' % Site.objects.get_current().domain
-        )
-
-    if ak.verify_key():
-        data = {
-            'user_ip': comment.ip_address,
-            'user_agent': request.META['HTTP_USER_AGENT'],
-            'referrer': request.META['HTTP_REFERER'],
-            'comment_type': 'comment',
-            'comment_author': comment.user_name.encode('utf-8'),
-        }
-        if comment.user_url:
-            data['comment_author_url'] = comment.user_url
-
-        if ak.comment_check(smart_str(comment.comment), data=data, build_data=True):
-            if hasattr(comment.content_object,'author'):
-                user = comment.content_object.author
-            else:
-                from django.contrib.auth.models import User
-                user = User.objects.filter(is_superuser=True)[0]
-            
-            comment.flags.create(
-                user=user,
-                flag='spam'
-            )
-            comment.is_public = False
-            comment.save()
-
-# The dispatch_uid bit stops it being called twice for some reason.
-comment_was_posted.connect(spam_check_comment, sender=CommentOnEntry, dispatch_uid='comments.post_comment')
-
+# Also see some more generic signal functions in customcomments/models.py.
 
 def comment_post_save_handler(sender, **kwargs):
     """
