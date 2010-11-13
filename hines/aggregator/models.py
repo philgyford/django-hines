@@ -18,6 +18,37 @@ class Aggregator(models.Model):
     
     objects = AggregatorManager()
     
+
+    def _get_allowed_tags_list(self):
+        """
+        If allowed_tags is 'a:href:name b img:src' this will return ['a','b','img']
+        """
+        from django.conf import settings
+        tags = []
+        allowed_tags = settings.ALLOWED_COMMENT_TAGS.split(' ')
+        for allowed_tag in allowed_tags:
+            tag_attrs = allowed_tag.split(':')
+            tags.append(tag_attrs[0])
+        return tags   
+    allowed_tags_list = property(_get_allowed_tags_list)
+
+
+    def _get_allowed_attrs_dict(self):
+        """
+        If allowed_tags is 'a:href:name b img:src' this will return 
+        {'a':['href','name'], 'img':['src']}
+        """
+        from django.conf import settings
+        attrs = {}
+        allowed_tags = settings.ALLOWED_COMMENT_TAGS.split(' ')
+        for allowed_tag in allowed_tags:
+            tag_attrs = allowed_tag.split(':')
+            if len(tag_attrs) > 1:
+                attrs[tag_attrs[0]] = tag_attrs[1:]
+        return attrs
+    allowed_attrs_dict = property(_get_allowed_attrs_dict)
+
+
     def get_entries_feed_url(self):
         if (self.remote_entries_feed_url):
             return self.remote_entries_feed_url

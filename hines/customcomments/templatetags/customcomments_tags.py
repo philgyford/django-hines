@@ -4,6 +4,7 @@ from django import template
 from django.conf import settings
 from django.contrib.sites.models import Site
 from weblog.models import Entry
+from aggregator.models import Aggregator
 from customcomments.models import CommentOnEntry
 from django.template.defaultfilters import stringfilter
 
@@ -58,19 +59,54 @@ def get_latest_blog_comments(parser, token):
     return LatestContentNode(bits[1], bits[2], bits[4])
 
 
-from shortcuts import filter_html_input_shortcut
 
 @register.filter
 @stringfilter
-def filter_html_input(value):
+def sanitize(value):
     """
-    Used to only allow certain HTML in input from the user, eg on comments.
-    Used for previewing a comment - when we save it, the comment_will_be_posted
-    signal handles this before putting it in the database. So we don't have to 
-    use this filter on comments we fetch from the database, as they should already
-    have been filtered.
+    Cleans up HTML in text (presumably contributed by a user).
     """
-    return filter_html_input_shortcut(value)
+    from bleach import Bleach
+    bl = Bleach()
+    current_aggregator = Aggregator.objects.get_current()
+
+    return bl.clean(
+        value, 
+        tags=current_aggregator.allowed_tags_list, 
+        attributes=current_aggregator.allowed_attrs_dict
+    )
+
+    
+
+@register.filter
+@stringfilter
+def linkify(value):
+    """
+    Wrap all http://... links in <a href... tags. 
+    """
+    from bleach import Bleach
+    bl = Bleach()
+    return bl.linkify(value, nofollow=False)
+
+
+@register.filter
+@stringfilter
+def linkifytrunc(value, arg):
+    """
+    Wrap all http://... links in <a href... tags. 
+    arg can be the number of characters that we'll truncate the link text to.
+    """
+    from bleach import Bleach
+
+    class MyBleach(Bleach):
+        """ Subclass Bleach to allow for truncating the visible link text. """
+        def filter_text(self, text):
+            if len(text) > arg:
+                text = text[:arg] + '&#8230;' # Add ellipsis. 
+            return text
+
+    bl = MyBleach()
+    return bl.linkify(value, nofollow=False)
 
 
 import re

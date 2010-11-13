@@ -47,9 +47,7 @@
                 <p>On {{ comment.submit_date|date:date_format_short }} <a href="{{ comment.content_object.get_absolute_url }}#c{{ comment.id }}">{{ comment.submit_date|date:time_format }}</a> {% if comment.url %}<a href="{{ comment.url }}">{{ comment.name }}</a>{% else %}{{ comment.name }}{% endif %} said:</p>
         
                 {% load customcomments_tags %}
-                {# We filter the HTML on the way into the database, so it should be safe here... #}
-                {# If you change this, should also change it in templates/comments/preview.html #}
-                {{ comment.comment|safe|urlizetrunc:30|autop }}
+                {{ comment.comment|sanitize|linkifytrunc:50|autop }}
             </div>
         {% endfor %}
         </div>

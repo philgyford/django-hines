@@ -1,6 +1,7 @@
 from django.test.client import Client
 from django.test import TestCase
 from aggregator.models import Aggregator
+from django.conf import settings
 
 
 class AggregatorBaseTestCase(TestCase):
@@ -85,3 +86,27 @@ class AggregatorTestCase(AggregatorBaseTestCase):
         self.failUnlessEqual( current_aggregator.get_comments_feed_url(), 'http://feeds.feedburner.com/PhilGyfordComments')
         current_aggregator.remote_comments_feed_url = ''
         current_aggregator.save()
+
+    def test_allowed_tags(self):
+        """
+        Test that the methods which return lists/dicts of allowed HTML tags
+        (used for filtering user input like comments)
+        are function correctly.
+        """
+        current_aggregator = Aggregator.objects.get_current()
+        old_ALLOWED_COMMENT_TAGS = settings.ALLOWED_COMMENT_TAGS
+        settings.ALLOWED_COMMENT_TAGS = 'a:href:title b img:src'
+
+        # Should be ['a', 'b', 'img']
+        tags = current_aggregator.allowed_tags_list
+        # Should be {'a':['href','title'], 'img':['src']}
+        attrs = current_aggregator.allowed_attrs_dict
+
+        self.failUnlessEqual( len(tags), 3 )
+        self.failUnlessEqual( tags[0], 'a' )
+        self.failUnlessEqual( tags[2], 'img' )
+        self.failUnlessEqual( attrs['a'][0], 'href' )
+        self.failUnlessEqual( attrs['a'][1], 'title' )
+        self.failUnlessEqual( attrs['img'][0], 'src' )
+
+        settings.ALLOWED_COMMENT_TAGS = old_ALLOWED_COMMENT_TAGS

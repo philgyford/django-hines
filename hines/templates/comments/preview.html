@@ -11,8 +11,7 @@
     {% else %}
         <h1>{% trans "Preview your comment" %}</h1>
           {% load customcomments_tags %}
-          {# If you change this, should also change it in weblog/templates/weblot/entry_detail.html #}
-        <blockquote>{{ comment|filter_html_input|safe|urlizetrunc:30|autop }}</blockquote>
+        <blockquote>{{ comment|sanitize|linkifytrunc:50|autop }}</blockquote>
           <p>
           {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Post your comment" %}" id="submit" /> {% trans "or make changes" %}:
           </p>

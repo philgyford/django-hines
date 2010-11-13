@@ -9,14 +9,21 @@ This is not supposed to create a generic site that will be useful to everyone. I
 ## Apps (so far)
 
 * Weblog
-    * Multiple blogs
-    * Uses comments (with HTML filtering, Akismet/AntiSpam filtering, Gravatars)
-    * Daily/monthly/yearly archives
-    * RSS feeds
-    * Tagging using django-taggit
+    * Multiple Blogs.
+    * Daily/monthly/yearly archives.
+    * RSS feeds.
+    * Tagging using django-taggit.
 * Aggregator
-    * Aggregates recent posts from the blogs
-    * Aggregated RSS feeds (Entries and Comments)
+    * Aggregates recent posts from the Blogs.
+    * Aggregated RSS feeds (Entries and Comments).
+* CustomComments
+	* Comments can be posted on Weblog Entries.
+	* Extends the standard Django Comments.
+	* Comments can be disabled/enabled at the Entry, Blog or Aggregator level.
+	* Uses Gravatars.
+	* Spam filtering with TypePad AntiSpam or Akismet.
+	* Logged-in admin users don't have to type their email etc in when posting
+	  a comment.
 
 ## Major future tasks
 

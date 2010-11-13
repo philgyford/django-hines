@@ -2,11 +2,13 @@ from django.test.client import Client
 from django.test import TestCase
 import datetime, time
 from weblog.models import Blog,Entry
+from customcomments.models import CommentOnEntry
 from aggregator.models import Aggregator
 from django.contrib.comments.forms import CommentSecurityForm
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class WeblogBaseTestCase(TestCase):
@@ -359,7 +361,7 @@ class EntryTestCase(WeblogBaseTestCase):
 
 class CommentTestCase(WeblogBaseTestCase):
 
-    def post_comment(self, entry_id=1):
+    def post_comment(self, entry_id=1, comment_text='Hello', author_name='Bobby'):
         """
         Attempts to post a comment to an Entry.
         """
@@ -368,10 +370,10 @@ class CommentTestCase(WeblogBaseTestCase):
         security_hash = form.initial_security_hash(timestamp)
         c = Client()
         response = c.post('/cmnt/post/', { 
-                                'name': 'Bobby', 
+                                'name': author_name, 
                                 'email': 'bobby@example.com', 
                                 'url': '', 
-                                'comment': 'Hello.', 
+                                'comment': comment_text, 
                                 'content_type': 'weblog.entry',
                                 'timestamp': timestamp,
                                 'object_pk': entry_id, 
@@ -428,6 +430,10 @@ class CommentTestCase(WeblogBaseTestCase):
         '''
         Make sure num_comments on an Entry increments when a comment is posted.
         '''
+
+        old_setting = settings.TEST_COMMENTS_FOR_SPAM
+        settings.TEST_COMMENTS_FOR_SPAM = False 
+
         entry = Entry.live.get(pk=2)
         self.assertEquals(entry.num_comments, 0)
         self.assertEquals(entry.comments.count(), 0)
@@ -435,6 +441,8 @@ class CommentTestCase(WeblogBaseTestCase):
         entry = Entry.live.get(pk=2)
         self.assertEquals(entry.num_comments, 1)
         self.assertEquals(entry.comments.count(), 1)
+
+        settings.TEST_COMMENTS_FOR_SPAM = old_setting
     
     def test_comment_form_logged_out(self):
         """
@@ -463,3 +471,36 @@ class CommentTestCase(WeblogBaseTestCase):
         response = c.get('/writing/2010/09/26/published-writing-post/')
         self.assertContains(response, 'type="hidden" name="name" id="id_name" value="Terry Thomas"')
     
+    def test_comment_spam_filter_off(self):
+        old_setting = settings.TEST_COMMENTS_FOR_SPAM
+        settings.TEST_COMMENTS_FOR_SPAM = False
+
+        entry = Entry.live.get(pk=2)
+        response = self.post_comment(entry_id=2)
+        comment = CommentOnEntry.objects.get(pk=4)
+        self.assertEquals(comment.is_public, True)
+
+        settings.TEST_COMMENTS_FOR_SPAM = old_setting
+
+    def test_comment_spam_filter_on(self):
+        old_setting = settings.TEST_COMMENTS_FOR_SPAM
+        settings.TEST_COMMENTS_FOR_SPAM = True 
+
+        entry = Entry.live.get(pk=2)
+        # According to the Akismet API, a comment author name of 'viagra-test-123'
+        # should always be marked as spam, for testing.
+        response = self.post_comment(entry_id=2, author_name='viagra-test-123')
+        comment = CommentOnEntry.objects.get(pk=4)
+        self.assertEquals(comment.is_public, False)
+
+        settings.TEST_COMMENTS_FOR_SPAM = old_setting
+
+    #def test_comment_sanitizing(self):
+        #current_aggregator = Aggregator.objects.get_current()
+        #old_ALLOWED_COMMENT_TAGS = settings.ALLOWED_COMMENT_TAGS
+        #settings.ALLOWED_COMMENT_TAGS = 'a:href:title b img:src'
+
+        #response = self.post_comment(comment_text='<b><i>Hello</i>')
+        #self.failUnlessEqual(response.status_code, 200)
+
+        #settings.ALLOWED_COMMENT_TAGS = old_ALLOWED_COMMENT_TAGS

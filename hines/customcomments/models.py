@@ -15,21 +15,7 @@ class CommentOnEntry(Comment):
 
 
 
-from django.contrib.comments.signals import comment_will_be_posted, comment_was_posted
-
-
-from shortcuts import filter_html_input_shortcut
-
-def filter_comment_contents(sender, comment, request, **kwargs):
-    """Filter the HTML of the comment."""
-    comment.comment = filter_html_input_shortcut(comment.comment)
-
-comment_will_be_posted.connect(
-    filter_comment_contents,
-    sender=CommentOnEntry,
-    dispatch_uid='comments.pre_comment',
-)
-
+from django.contrib.comments.signals import comment_was_posted
 
 
 from django.utils.encoding import smart_str
@@ -53,29 +39,44 @@ def spam_check_comment(sender, comment, request, **kwargs):
     except:
         return
 
-    # use TypePad's AntiSpam if the key is specified in settings.py
+    if not hasattr(settings, 'TEST_COMMENTS_FOR_SPAM') or settings.TEST_COMMENTS_FOR_SPAM == False:
+        # Only continue testing if the spam test is switched on.
+        return
+
     if hasattr(settings, 'TYPEPAD_ANTISPAM_API_KEY'):
+        # Use TypePad's AntiSpam if the key is specified in settings.py
         ak = Akismet(
             key=settings.TYPEPAD_ANTISPAM_API_KEY,
             blog_url='http://%s/' % Site.objects.get_current().domain
         )
         ak.baseurl = 'api.antispam.typepad.com/1.1/'
-    else:
+    elif hasattr(settings, 'AKISMET_API_KEY'):
+        # Or use Akismet if the key is there.
         ak = Akismet(
             key=settings.AKISMET_API_KEY,
             blog_url='http://%s/' % Site.objects.get_current().domain
         )
+    else:
+        # Otherwise, no spam filtering.
+        return
 
     if ak.verify_key():
         data = {
             'user_ip': comment.ip_address,
-            'user_agent': request.META['HTTP_USER_AGENT'],
-            'referrer': request.META['HTTP_REFERER'],
             'comment_type': 'comment',
             'comment_author': comment.user_name.encode('utf-8'),
         }
         if comment.user_url:
             data['comment_author_url'] = comment.user_url
+        # When run from a unit test there was no refererer or user_agent.
+        try:
+            data['referrer'] = request.META['HTTP_REFERER']
+        except:
+            data['referrer'] = ''
+        try:
+            data['user_agent'] = request.META['HTTP_USER_AGENT']
+        except:
+            data['user_agent'] = ''
 
         if ak.comment_check(smart_str(comment.comment), data=data, build_data=True):
             if hasattr(comment.content_object,'author'):
@@ -83,7 +84,6 @@ def spam_check_comment(sender, comment, request, **kwargs):
             else:
                 from django.contrib.auth.models import User
                 user = User.objects.filter(is_superuser=True)[0]
-
             comment.flags.create(
                 user=user,
                 flag='spam'

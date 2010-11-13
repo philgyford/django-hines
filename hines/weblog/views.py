@@ -170,9 +170,9 @@ def weblog_entry_detail(request, blog_slug, year, month, day, slug):
     )
     
     return render(request, 'weblog/entry_detail.html', {
-        'blog': entry.blog,
-        'entry': entry,
-        'other_blogs': other_blogs,
+       'blog': entry.blog,
+       'entry': entry,
+       'other_blogs': other_blogs,
     })
 
 

@@ -1,6 +1,7 @@
 # File types #
 ##############
 *.pyc
+*.swp
 
 # Directories #
 ###############
