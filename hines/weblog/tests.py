@@ -472,6 +472,9 @@ class CommentTestCase(WeblogBaseTestCase):
         self.assertContains(response, 'type="hidden" name="name" id="id_name" value="Terry Thomas"')
     
     def test_comment_spam_filter_off(self):
+        """
+        Ensure that when the spam filter is off, posted comments are public.
+        """
         old_setting = settings.TEST_COMMENTS_FOR_SPAM
         settings.TEST_COMMENTS_FOR_SPAM = False
 
@@ -483,6 +486,9 @@ class CommentTestCase(WeblogBaseTestCase):
         settings.TEST_COMMENTS_FOR_SPAM = old_setting
 
     def test_comment_spam_filter_on(self):
+        """
+        Ensure that when the spam filter is on, spam comments are not public.
+        """
         old_setting = settings.TEST_COMMENTS_FOR_SPAM
         settings.TEST_COMMENTS_FOR_SPAM = True 
 
