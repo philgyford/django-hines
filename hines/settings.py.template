@@ -25,7 +25,6 @@ DATABASES = {
     }
 }
 
-
 SITE_ID = 1
 
 # Make this unique, and don't share it with anybody.
@@ -47,6 +46,7 @@ DATE_FORMAT_LONG = 'l j F Y'
 
 # "14 Sep 2010"
 DATE_FORMAT_SHORT = 'j M Y'
+DATE_FORMAT_SHORT_STRF = '%e %b %Y'
 
 # "September 2010"
 DATE_FORMAT_MONTH = 'F Y'
