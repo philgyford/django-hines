@@ -54,15 +54,7 @@ DATE_FORMAT_MONTH = 'F Y'
 # "3:57pm"
 TIME_FORMAT = 'g:ia'
 
-# This must be set to True in order to test comments for spam.
-# One of the API_KEYs must also be set.
-TEST_COMMENTS_FOR_SPAM = False
-# If one of these is set, then that service will be used for testing comments for spam.
-# If both are set, only TypePad AntiSpam will be used.
-TYPEPAD_ANTISPAM_API_KEY = 'your-key-here'
-AKISMET_API_KEY = 'your-key-here'
-
-# HTML tags that are allowed in user-submitted comments.
-# Of the format 'tag2:attr1:attr2 tag2:attr1 tag3'
-# eg, 'a:href:title blockquote strong em pre ul ol li'
-ALLOWED_COMMENT_TAGS = ''
+# This is far from ideal but...
+# To run the Django tests we need a TypePad AntiSpam API key.
+# Set it here. The key for the site itself, if any, is set in the Admin interface for the Aggregator.
+TEST_TYPEPAD_ANTISPAM_API_KEY = 'your-key-here'

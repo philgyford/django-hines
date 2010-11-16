@@ -1,6 +1,7 @@
 Django==1.2.3
 Markdown==2.0.3
 MySQL-python==1.2.3
+South==0.7.2
 akismet==0.2.0
 bleach==0.3.4
 distribute==0.6.8

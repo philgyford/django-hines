@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.comments.models import Comment
 from django.contrib.comments.managers import CommentManager
+from aggregator.models import Aggregator
 #from weblog.models import Blog
 
 class CommentOnEntry(Comment):
@@ -25,8 +26,8 @@ from django.contrib.sites.models import Site
 def spam_check_comment(sender, comment, request, **kwargs):
     """
     Filter comments using TypePad AntiSpam or Akismet.
-    If TYPEPAD_ANTISPAM_API_KEY is set in settings, we use that.
-    If it's not, and AKISMET_API_KEY is set, we use that.
+    If typepad_antispam_api_key is set in the Aggregator model, we use that.
+    If it's not, and akismet_api_key is set, we use that.
     From http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/ and
     'Practical Django Projects' 2nd edition.
     """
@@ -39,21 +40,23 @@ def spam_check_comment(sender, comment, request, **kwargs):
     except:
         return
 
-    if not hasattr(settings, 'TEST_COMMENTS_FOR_SPAM') or settings.TEST_COMMENTS_FOR_SPAM == False:
+    current_aggregator = Aggregator.objects.get_current()
+    
+    if not current_aggregator.test_comments_for_spam:
         # Only continue testing if the spam test is switched on.
         return
 
-    if hasattr(settings, 'TYPEPAD_ANTISPAM_API_KEY'):
-        # Use TypePad's AntiSpam if the key is specified in settings.py
+    if current_aggregator.typepad_antispam_api_key:
+        # Use TypePad's AntiSpam if the key is specified.
         ak = Akismet(
-            key=settings.TYPEPAD_ANTISPAM_API_KEY,
+            key=current_aggregator.typepad_antispam_api_key,
             blog_url='http://%s/' % Site.objects.get_current().domain
         )
         ak.baseurl = 'api.antispam.typepad.com/1.1/'
-    elif hasattr(settings, 'AKISMET_API_KEY'):
+    elif current_aggregator.akismet_api_key:
         # Or use Akismet if the key is there.
         ak = Akismet(
-            key=settings.AKISMET_API_KEY,
+            key=current_aggregator.akismet_api_key,
             blog_url='http://%s/' % Site.objects.get_current().domain
         )
     else:

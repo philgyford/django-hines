@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     # Needs to go before 'hines.weblog' for reasons which escape me.
     'hines.customcomments',
     'hines.weblog',
-
+    'south',
 )
 
 COMMENTS_APP = 'hines.customcomments'

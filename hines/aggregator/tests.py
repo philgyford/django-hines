@@ -94,8 +94,8 @@ class AggregatorTestCase(AggregatorBaseTestCase):
         are function correctly.
         """
         current_aggregator = Aggregator.objects.get_current()
-        old_ALLOWED_COMMENT_TAGS = settings.ALLOWED_COMMENT_TAGS
-        settings.ALLOWED_COMMENT_TAGS = 'a:href:title b img:src'
+        old_allowed_comment_tags = current_aggregator.allowed_comment_tags
+        current_aggregator.allowed_comment_tags = 'a:href:title b img:src'
 
         # Should be ['a', 'b', 'img']
         tags = current_aggregator.allowed_tags_list
@@ -109,4 +109,4 @@ class AggregatorTestCase(AggregatorBaseTestCase):
         self.failUnlessEqual( attrs['a'][1], 'title' )
         self.failUnlessEqual( attrs['img'][0], 'src' )
 
-        settings.ALLOWED_COMMENT_TAGS = old_ALLOWED_COMMENT_TAGS
+        current_aggregator.allowed_comment_tags = old_allowed_comment_tags

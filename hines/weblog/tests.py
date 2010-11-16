@@ -430,9 +430,10 @@ class CommentTestCase(WeblogBaseTestCase):
         '''
         Make sure num_comments on an Entry increments when a comment is posted.
         '''
-
-        old_setting = settings.TEST_COMMENTS_FOR_SPAM
-        settings.TEST_COMMENTS_FOR_SPAM = False 
+        current_aggregator = Aggregator.objects.get_current()
+        
+        old_setting = current_aggregator.test_comments_for_spam
+        current_aggregator.test_comments_for_spam = False 
 
         entry = Entry.live.get(pk=2)
         self.assertEquals(entry.num_comments, 0)
@@ -442,7 +443,7 @@ class CommentTestCase(WeblogBaseTestCase):
         self.assertEquals(entry.num_comments, 1)
         self.assertEquals(entry.comments.count(), 1)
 
-        settings.TEST_COMMENTS_FOR_SPAM = old_setting
+        current_aggregator.test_comments_for_spam = old_setting
     
     def test_comment_form_logged_out(self):
         """
@@ -475,38 +476,47 @@ class CommentTestCase(WeblogBaseTestCase):
         """
         Ensure that when the spam filter is off, posted comments are public.
         """
-        old_setting = settings.TEST_COMMENTS_FOR_SPAM
-        settings.TEST_COMMENTS_FOR_SPAM = False
+        current_aggregator = Aggregator.objects.get_current()
+        
+        old_setting = current_aggregator.test_comments_for_spam
+        current_aggregator.test_comments_for_spam = False
 
         entry = Entry.live.get(pk=2)
         response = self.post_comment(entry_id=2)
         comment = CommentOnEntry.objects.get(pk=4)
         self.assertEquals(comment.is_public, True)
 
-        settings.TEST_COMMENTS_FOR_SPAM = old_setting
+        current_aggregator.test_comments_for_spam = old_setting
 
     def test_comment_spam_filter_on(self):
         """
         Ensure that when the spam filter is on, spam comments are not public.
         """
-        old_setting = settings.TEST_COMMENTS_FOR_SPAM
-        settings.TEST_COMMENTS_FOR_SPAM = True 
+        current_aggregator = Aggregator.objects.get_current()
+        
+        old_setting = current_aggregator.test_comments_for_spam
+        current_aggregator.test_comments_for_spam = True 
+        
+        old_api_key = current_aggregator.typepad_antispam_api_key
+        current_aggregator.typepad_antispam_api_key = settings.TEST_TYPEPAD_ANTISPAM_API_KEY
 
         entry = Entry.live.get(pk=2)
         # According to the Akismet API, a comment author name of 'viagra-test-123'
         # should always be marked as spam, for testing.
         response = self.post_comment(entry_id=2, author_name='viagra-test-123')
         comment = CommentOnEntry.objects.get(pk=4)
+        print comment
         self.assertEquals(comment.is_public, False)
 
-        settings.TEST_COMMENTS_FOR_SPAM = old_setting
+        current_aggregator.test_comments_for_spam = old_setting
+        current_aggregator.typepad_antispam_api_key = old_api_key
 
     #def test_comment_sanitizing(self):
         #current_aggregator = Aggregator.objects.get_current()
-        #old_ALLOWED_COMMENT_TAGS = settings.ALLOWED_COMMENT_TAGS
-        #settings.ALLOWED_COMMENT_TAGS = 'a:href:title b img:src'
+        #old_allowed_comment_tags = current_aggregator.allowed_comment_tags
+        #current_aggregator.allowed_comment_tags = 'a:href:title b img:src'
 
         #response = self.post_comment(comment_text='<b><i>Hello</i>')
         #self.failUnlessEqual(response.status_code, 200)
 
-        #settings.ALLOWED_COMMENT_TAGS = old_ALLOWED_COMMENT_TAGS
+        #current_aggregator.allowed_comment_tags = old_allowed_comment_tags
