@@ -35,6 +35,16 @@
         {% endif %}
      {% endif %}
 {% endfor %}
+<p>
+{% if aggregator.allowed_tags_list %}
+	Allowed HTML tags:
+	{% for tag in aggregator.allowed_tags_list %}
+		{{ tag }}{% if forloop.last %}.{% else %},{% endif %}
+	{% endfor %}
+{% else %}
+	No HTML allowed.
+{% endif %}
+</p>
 <p class="submit">
 	{% if form.data.preview %}
 		{# Only show the Post button when the user is previewing. So they're forced to preview. #}
