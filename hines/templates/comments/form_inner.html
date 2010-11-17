@@ -36,6 +36,9 @@
      {% endif %}
 {% endfor %}
 <p class="submit">
+	{% if form.data.preview %}
+		{# Only show the Post button when the user is previewing. So they're forced to preview. #}
     <input type="submit" name="post" class="submit-post" value="{% trans "Post" %}" />
+	{% endif %}
     <input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" />
 </p>

@@ -505,7 +505,6 @@ class CommentTestCase(WeblogBaseTestCase):
         # should always be marked as spam, for testing.
         response = self.post_comment(entry_id=2, author_name='viagra-test-123')
         comment = CommentOnEntry.objects.get(pk=4)
-        print comment
         self.assertEquals(comment.is_public, False)
 
         current_aggregator.test_comments_for_spam = old_setting
