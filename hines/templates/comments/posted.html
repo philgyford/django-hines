@@ -4,7 +4,15 @@
 {% block title %}{% trans "Thanks for commenting" %}.{% endblock %}
 
 {% block content %}
-  <h1>{% trans "Thank you for your comment" %}.</h1>
-  
-  <p><a href="{{ comment.get_absolute_url }}">See your comment.</a></p>
+
+
+	{% if comment.is_public %}
+		<h1>{% trans "Thank you for your comment" %}.</h1>
+		<p><a href="{{ comment.get_absolute_url }}">See your comment.</a></p>
+	{% else %}
+		<h1>{% trans "Thank you for your comment" %}, but&#8230;</h1>
+		<p>Your comment looked like spam, so it's going to be checked by a human. Sorry about that.</p>
+		<p><a href="{{ comment.get_content_object_url }}">Back to the post.</a></p>
+	{% endif %}
+
 {% endblock content %}
