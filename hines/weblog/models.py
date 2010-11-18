@@ -19,6 +19,8 @@ from managers import BlogManager, FeaturedEntryManager, LiveEntryManager
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
+import categories
+
 
 class Blog(models.Model):
     '''
@@ -202,6 +204,9 @@ class Entry(models.Model):
 
 
 from django.contrib.comments.moderation import moderator, CommentModerator, AlreadyModerated
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template import Context, loader
 
 class EntryModerator(CommentModerator):
     """
@@ -222,6 +227,32 @@ class EntryModerator(CommentModerator):
             return False
         else:
             return super(EntryModerator, self).allow(comment, content_object, request)
+
+    def email(self, comment, content_object, request):
+        """
+        Send email notification of a new comment to site staff.
+        Overrides the default method to use our custom preferences.
+        """
+        current_aggregator = Aggregator.objects.get_current()
+
+        if comment.is_public and current_aggregator.send_comment_emails_public == False:
+            return
+        elif not comment.is_public and current_aggregator.send_comment_emails_nonpublic == False:
+            return
+
+        # All the below is the same as the email() method in the parent class
+        # with the addition of passing the Site object in the template context.
+        recipient_list = [manager_tuple[1] for manager_tuple in settings.MANAGERS]
+        t = loader.get_template('comments/comment_notification_email.txt')
+        c = Context({ 'comment': comment,
+                      'content_object': content_object,
+                      'site': Site.objects.get_current() })
+        subject = '[%s] New comment posted on "%s"' % (Site.objects.get_current().name,
+                                                          content_object)
+        message = t.render(c)
+
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)
+
 
 try:
     moderator.register(Entry, EntryModerator)

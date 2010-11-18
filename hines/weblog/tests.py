@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.core import mail
 
 
 class WeblogBaseTestCase(TestCase):
@@ -509,6 +510,55 @@ class CommentTestCase(WeblogBaseTestCase):
 
         current_aggregator.test_comments_for_spam = old_setting
         current_aggregator.typepad_antispam_api_key = old_api_key
+
+    def test_comment_emails_on(self):
+        """
+        Ensure that an email is sent when a comment is posted and the
+        preferences are switched on.
+        """
+        current_aggregator = Aggregator.objects.get_current()
+
+        old_public = current_aggregator.send_comment_emails_public
+        old_nonpublic = current_aggregator.send_comment_emails_nonpublic
+
+        current_aggregator.send_comment_emails_public = True 
+        current_aggregator.send_comment_emails_nonpublic = True 
+
+        response = self.post_comment()
+        self.assertEqual(len(mail.outbox), 1)
+
+        response = self.post_comment(author_name='viagra-test-123')
+        self.assertEqual(len(mail.outbox), 2)
+
+        current_aggregator.send_comment_emails_public = old_public
+        current_aggregator.send_comment_emails_nonpublic = old_nonpublic
+
+
+    def test_comment_emails_off(self):
+        """
+        Ensure that no emails are sent when comments are posted and the
+        preferences are switched off.
+        """
+        current_aggregator = Aggregator.objects.get_current()
+
+        old_public = current_aggregator.send_comment_emails_public
+        old_nonpublic = current_aggregator.send_comment_emails_nonpublic
+
+        current_aggregator.send_comment_emails_public = False 
+        current_aggregator.send_comment_emails_nonpublic = False 
+
+        response = self.post_comment()
+        self.assertEqual(len(mail.outbox), 0)
+
+        response = self.post_comment(author_name='viagra-test-123')
+        self.assertEqual(len(mail.outbox), 0)
+
+        current_aggregator.send_comment_emails_public = old_public
+        current_aggregator.send_comment_emails_nonpublic = old_nonpublic
+
+
+
+        
 
     #def test_comment_sanitizing(self):
         #current_aggregator = Aggregator.objects.get_current()

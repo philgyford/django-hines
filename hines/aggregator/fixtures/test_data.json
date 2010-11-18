@@ -456,7 +456,9 @@
         {
             "enable_comments": true,
              "remote_entries_feed_url": "",
-             "remote_comments_feed_url": ""
+             "remote_comments_feed_url": "",
+			 "send_comment_emails_public": false,
+			 "send_comment_emails_nonpublic": false 
         }
     },
     {

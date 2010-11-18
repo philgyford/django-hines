@@ -29,6 +29,12 @@ class Aggregator(models.Model):
     akismet_api_key = models.CharField(blank=True, max_length=50,
         verbose_name='Akismet API key',
         help_text="The API key for the <a href=\"http://akismet.com/\">Akismet</a> anti comment spam service")
+    send_comment_emails_public = models.BooleanField(default=False,
+        verbose_name="Email non-spam comments",
+        help_text="If checked, an email will be sent to the site Moderators when a comment is posted on the site.")
+    send_comment_emails_nonpublic = models.BooleanField(default=False,
+        verbose_name="Email spam comments",
+        help_text="If checked, an email will be sent to the site Moderators when a comment is posted that is marked as not public (ie, spam)")
     
     objects = AggregatorManager()
     
