@@ -1,0 +1,20 @@
+{% extends "base_people.html" %}
+
+{% block title %}{{ person.name }}{{ block.super }}{% endblock %}
+
+{% block content_title %}{{ person.name }}{% endblock %}
+
+{% block content %}
+
+	{% if publications %}
+	<ul>
+		{% for publication in publications %}
+		<li><a href="{% url books_publication publication.id %}">{{ publication.full_name }}</a></li>
+		{% endfor %}
+	</ul>
+
+	{% endif %}
+
+
+{% endblock content %}
+

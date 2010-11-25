@@ -1,0 +1,71 @@
+{% extends "base_books.html" %}
+
+{% block title %}{{ publication.full_name }} ({{ block.super }}){% endblock %}
+
+{% block content_title %}{{ publication.full_name }}{% endblock %}
+
+{% block content %}
+
+	{% if publication.authors.all %}
+		<p>By {{ publication.authors_names }}</p>
+	{% endif %}
+
+	{% if publication.home_url or publication.notes_url %}
+		<p>
+		{% if publication.notes_url %}
+			<a href="{{ publication.notes_url }}">Read my notes</a>
+			{% if publication.home_url %}
+				or
+			{% endif %}
+		{% else %}
+			View at
+		{% endif %}
+		{% if publication.home_url %}
+			<a href="{{ publication.home_url }}">its own site</a>
+		{% endif %}
+		</p>
+	{% endif %}
+
+	{% if publication.isbn_uk or publication.isbn_us %}
+		<p>
+		{% if publication.isbn_uk %}
+			<a href="http://www.amazon.co.uk/dp/{{ publication.isbn_uk }}">Amazon.co.uk</a>
+		{% endif %}
+		{% if publication.isbn_uk and publication.isbn_us %}
+			or 
+		{% endif %}
+		{% if publication.isbn_us %}
+			<a href="http://www.amazon.com/dp/{{ publication.isbn_us }}">Amazon.com</a>
+		{% endif %}
+		</p>
+	{% endif %}
+
+
+	<h2>Readings</h2>
+
+	{% if publication.readings %}
+		{% load books_tags %}
+		<ul>
+		{% for reading in publication.readings %}
+			<li>{% date_span reading.start_date reading.start_date_granularity reading.end_date reading.end_date_granularity %}{% if reading.read_but_unfinished %} (Unfinished){% endif %}</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>Not yet read.</p>
+	{% endif %}
+
+
+	{% if series_publications %}
+
+		<h2>Others in this series</h2>
+		<ul>
+		{% for series_pub in series_publications %}
+			<li><a href="{% url books_publication series_pub.id %}">{{ series_pub.name }}</a></li>
+		{% endfor %}
+
+	{% endif %}
+
+	
+
+			
+{% endblock content %}
