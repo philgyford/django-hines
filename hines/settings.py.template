@@ -58,3 +58,8 @@ TIME_FORMAT = 'g:ia'
 # To run the Django tests we need a TypePad AntiSpam API key.
 # Set it here. The key for the site itself, if any, is set in the Admin interface for the Aggregator.
 TEST_TYPEPAD_ANTISPAM_API_KEY = 'your-key-here'
+
+
+# I needed these after installing these libraries:
+# GEOS_LIBRARY_PATH='/Library/Frameworks/GEOS.framework/GEOS'
+# GDAL_LIBRARY_PATH='/Library/Frameworks/GDAL.framework/GDAL'

@@ -13,6 +13,10 @@ urlpatterns = patterns('',
     
     (r'^', include('aggregator.urls')),
 
+    (r'^', include('books.urls')),
+
+    (r'^', include('people.urls')),
+
     (r'^', include('weblog.urls')),
 )
 

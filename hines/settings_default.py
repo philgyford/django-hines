@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.admin',
     'django.contrib.markup',
+    'django.contrib.gis',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django.contrib.flatpages',
@@ -80,6 +81,9 @@ INSTALLED_APPS = (
     # Needs to go before 'hines.weblog' for reasons which escape me.
     'hines.customcomments',
     'hines.weblog',
+    'hines.people',
+    'hines.books',
+    'hines.movies',
     'south',
 )
 

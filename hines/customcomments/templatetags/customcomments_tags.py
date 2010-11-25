@@ -53,7 +53,7 @@ def get_latest_blog_comments(parser, token):
     """
     bits = token.contents.split()
     if len(bits) != 5:
-        raise TemplateSyntaxError, "get_latest_blog_comments tag takes exactly four arguments"
+        raise TemplateSyntaxError, "%r tag takes exactly four arguments" % token.contents.split()[0]
     if bits[3] != 'as':
         raise TemplateSyntaxError, "third argument to get_latest_blog_comments tag must be 'as'"
     return LatestContentNode(bits[1], bits[2], bits[4])

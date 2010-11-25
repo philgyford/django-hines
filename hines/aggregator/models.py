@@ -43,7 +43,6 @@ class Aggregator(models.Model):
         """
         If allowed_tags is 'a:href:name b img:src' this will return ['a','b','img']
         """
-        from django.conf import settings
         tags = []
         allowed_tags = self.allowed_comment_tags.split(' ')
         for allowed_tag in allowed_tags:
@@ -58,7 +57,6 @@ class Aggregator(models.Model):
         If allowed_tags is 'a:href:name b img:src' this will return 
         {'a':['href','name'], 'img':['src']}
         """
-        from django.conf import settings
         attrs = {}
         allowed_tags = self.allowed_comment_tags.split(' ')
         for allowed_tag in allowed_tags:
