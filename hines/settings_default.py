@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'hines.customcomments',
     'hines.weblog',
     'hines.people',
+    'hines.places',
     'hines.books',
     'hines.movies',
     'south',

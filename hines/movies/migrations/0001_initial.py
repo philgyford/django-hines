@@ -25,11 +25,19 @@ class Migration(SchemaMigration):
         ))
         db.create_unique('movies_movie_directors', ['movie_id', 'person_id'])
 
+        # Adding M2M table for field countries on 'Movie'
+        db.create_table('movies_movie_countries', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('movie', models.ForeignKey(orm['movies.movie'], null=False)),
+            ('country', models.ForeignKey(orm['places.country'], null=False))
+        ))
+        db.create_unique('movies_movie_countries', ['movie_id', 'country_id'])
+
         # Adding model 'Cinema'
         db.create_table('movies_cinema', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('country', self.gf('django_countries.fields.CountryField')(default='GB', max_length=2)),
+            ('country', self.gf('django.db.models.fields.related.ForeignKey')(default=23424975, to=orm['places.Place'])),
             ('coordinate', self.gf('django.contrib.gis.db.models.fields.PointField')()),
         ))
         db.send_create_signal('movies', ['Cinema'])
@@ -37,7 +45,7 @@ class Migration(SchemaMigration):
         # Adding model 'Viewing'
         db.create_table('movies_viewing', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('view_date', self.gf('django.db.models.fields.DateField')(blank=True)),
+            ('view_date', self.gf('django.db.models.fields.DateField')()),
             ('cost', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=5, decimal_places=2, blank=True)),
             ('movie', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['movies.Movie'])),
             ('cinema', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['movies.Cinema'])),
@@ -53,6 +61,9 @@ class Migration(SchemaMigration):
         # Removing M2M table for field directors on 'Movie'
         db.delete_table('movies_movie_directors')
 
+        # Removing M2M table for field countries on 'Movie'
+        db.delete_table('movies_movie_countries')
+
         # Deleting model 'Cinema'
         db.delete_table('movies_cinema')
 
@@ -64,13 +75,14 @@ class Migration(SchemaMigration):
         'movies.cinema': {
             'Meta': {'object_name': 'Cinema'},
             'coordinate': ('django.contrib.gis.db.models.fields.PointField', [], {}),
-            'country': ('django_countries.fields.CountryField', [], {'default': "'GB'", 'max_length': '2'}),
+            'country': ('django.db.models.fields.related.ForeignKey', [], {'default': '23424975', 'to': "orm['places.Place']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'movies.movie': {
             'Meta': {'object_name': 'Movie'},
-            'directors': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['people.Person']", 'symmetrical': 'False'}),
+            'countries': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['places.Place']", 'symmetrical': 'False'}),
+            'directors': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['people.Person']", 'symmetrical': 'False', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'imdb_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -82,7 +94,7 @@ class Migration(SchemaMigration):
             'cost': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '5', 'decimal_places': '2', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'movie': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['movies.Movie']"}),
-            'view_date': ('django.db.models.fields.DateField', [], {'blank': 'True'})
+            'view_date': ('django.db.models.fields.DateField', [], {})
         },
         'people.person': {
             'Meta': {'ordering': "['last_name', 'first_name', 'middle_name', 'suffix']", 'object_name': 'Person'},
@@ -92,6 +104,18 @@ class Migration(SchemaMigration):
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'suffix': ('django.db.models.fields.CharField', [], {'max_length': '12', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'})
+        },
+        'places.country': {
+            'Meta': {'ordering': "['name']", 'object_name': 'Country', 'db_table': "'places_place'", '_ormbases': ['places.Place'], 'proxy': 'True'}
+        },
+        'places.place': {
+            'Meta': {'ordering': "['name']", 'object_name': 'Place'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'iso': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
+            'language': ('django.db.models.fields.CharField', [], {'max_length': '3'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'parent': ('django.db.models.fields.IntegerField', [], {}),
+            'place_type': ('django.db.models.fields.CharField', [], {'max_length': '16'})
         }
     }
 

@@ -1,6 +1,7 @@
 from django.db import models
 from people.models import Person
-from django_countries import CountryField
+from places.models import Country
+from places.fields import CountryField
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 
@@ -13,6 +14,7 @@ class Movie(models.Model):
     imdb_id = models.PositiveIntegerField(null=True, blank=True, verbose_name="IMDb ID",
         help_text="The ID of the movie at IMDb, eg '0103130' (note, no 'tt' required)") 
     directors = models.ManyToManyField(Person, blank=True)
+    countries = models.ManyToManyField(Country)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.year)
@@ -22,7 +24,9 @@ class Cinema(models.Model):
     A place where a Movie was Viewed.
     """
     name = models.CharField(max_length=255, blank=False)
-    country = CountryField(default='GB', blank=False)
+    # Default to UK.
+    #country = CountryField(default=23424975, blank=False)
+    country = models.ForeignKey(Country, default=23424975, blank=False)
     coordinate = models.PointField()
 
     def __unicode__(self):
