@@ -26,16 +26,16 @@
 		</p>
 	{% endif %}
 
-	{% if publication.isbn_uk or publication.isbn_us %}
-		<p>
-		{% if publication.isbn_uk %}
-			<a href="http://www.amazon.co.uk/dp/{{ publication.isbn_uk }}">Amazon.co.uk</a>
+	{% if publication.isbn_gb or publication.isbn_us %}
+		<p>View at
+		{% if publication.isbn_gb %}
+			<a href="{{ publication.amazon_url_gb }}">Amazon.co.uk</a>
 		{% endif %}
-		{% if publication.isbn_uk and publication.isbn_us %}
+		{% if publication.isbn_gb and publication.isbn_us %}
 			or 
 		{% endif %}
 		{% if publication.isbn_us %}
-			<a href="http://www.amazon.com/dp/{{ publication.isbn_us }}">Amazon.com</a>
+			<a href="{{ publication.amazon_url_us }}">Amazon.com</a>
 		{% endif %}
 		</p>
 	{% endif %}

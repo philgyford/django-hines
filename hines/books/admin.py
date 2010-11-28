@@ -28,7 +28,7 @@ class PublicationAdmin(admin.ModelAdmin):
             'fields': ('series', 'name', 'home_url', 'notes_url')
         }),
         ('ISBN', {
-            'fields': (('isbn_uk', 'isbn_us',),)
+            'fields': (('isbn_gb', 'isbn_us',),)
         })
     )
     inlines = (RoleInline, ReadingInline,)

@@ -12,5 +12,8 @@ class AggregatorAdmin(admin.ModelAdmin):
         ('Comments', {
             'fields': ('enable_comments', 'send_comment_emails_public', 'send_comment_emails_nonpublic', 'allowed_comment_tags', 'test_comments_for_spam', 'typepad_antispam_api_key', 'akismet_api_key')
         }),
+        ('Amazon', {
+            'fields': ('amazon_id_us', 'amazon_id_gb'),
+        }),
     )
 admin.site.register(Aggregator, AggregatorAdmin)

@@ -1,7 +1,6 @@
 from django.db import models
 from people.models import Person
 from places.models import Country
-from places.fields import CountryField
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 
