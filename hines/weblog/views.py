@@ -66,7 +66,7 @@ def weblog_archive_month(request, blog_slug, year, month):
 def weblog_archive_year(request, blog_slug, year):
     """
     Wrapper for the archive_year Generic View, so we can make it blog-specific.
-    Although the template tives us next_year and previous_year for free, these
+    Although the template gives us next_year and previous_year for free, these
     don't take into account whether there are actually Entries in those Years.
     So we go to a lot of trouble here to check that and pass our own dates in.
     """
