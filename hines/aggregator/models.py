@@ -12,7 +12,7 @@ class Aggregator(models.Model):
     """
     site = models.OneToOneField(Site, primary_key=True)
     remote_entries_feed_url = models.URLField(null=True, blank=True, 
-        verbose_name='Remove entries feed URL',
+        verbose_name='Remote entries feed URL',
         help_text="If you use a service like <a href=\"http://feedburner.google.com/\">Feedburner</a> to host your feeds, add the URL of the feed that aggregates all the Blogs' entry feeds here. Then the URL for the local feed will be hidden.")
     remote_comments_feed_url = models.URLField(null=True, blank=True, 
         verbose_name='Remote comments feed URL',
