@@ -1,6 +1,8 @@
-from books.models import Publication 
+from books.models import Publication, Reading
 from shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.views.generic.date_based import archive_year
+from django.template import RequestContext
 
 
 def books_publication(request, publication_id):
@@ -15,8 +17,14 @@ def books_publication(request, publication_id):
         'series_publications': series_publications,
     })
 
-def books_reading_year(request, year):
-    pass
+def reading_archive_year(request, year):
 
+    queryset = Reading.objects.select_related('publication', 'publication__series', )
+
+    return archive_year(request, year, queryset, 'end_date',
+        template_object_name = 'reading',
+        context_processors = [RequestContext,],
+        make_object_list = True,
+    )
 
 

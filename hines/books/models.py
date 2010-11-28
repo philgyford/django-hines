@@ -35,32 +35,32 @@ class Publication(models.Model):
     authors = models.ManyToManyField(Person, through='Role')
 
     @property
-    def full_name(self):
-        """
-        Includes the Series name, if any.
-        """
-        if self.series:
-            return '%s: %s' % (self.series.name, self.name)
-        else:
-            return self.name
+    def authors_names(self):
+        return self.authors_names_generator(format='unlinked') 
 
     @property
-    def authors_names(self):
+    def authors_names_linked(self):
+        return self.authors_names_generator(format='linked') 
+
+    def authors_names_generator(self, format='unlinked'):
         """
         Returns a joined list of all the authors' full names.
         This will result in a query for each publication, so be careful if you use
         this for a list of publications...
+        format is 'linked' (adds HTML links) or 'unlinked' (plain text).
         """
         names = []
-        for role in self.role_set.all().select_related(depth=1):
-            names.append(role.name_and_role)
+        for role in self.role_set.select_related(depth=1):
+            if format == 'unlinked':
+                names.append(role.name_and_role)
+            else:
+                names.append(role.name_and_role_linked)
         # Put commas between them, except the last pair, where you get 'and'.
         return ', '.join(names[:-2]+['']) + ' and '.join(names[-2:])
 
     @property
     def readings(self):
         return Reading.objects.filter(publication=self.id)
-
 
     def amazon_url(self, country):
         """
@@ -123,10 +123,26 @@ class Role(models.Model):
 
     @property
     def name_and_role(self):
+        """
+        The name and role of the person, eg "Fred Bloggs (Editor)" or
+        just "Fred Bloggs" if there is no role.
+        """
         name_and_role = self.person.name
+        return self.add_role_to_name
+
+    @property
+    def name_and_role_linked(self):
+        """
+        The name and role of the person, but with the name linked, eg,
+        '<a href="#">Fred Bloggs</a> (Editor)'
+        """
+        name_and_role = '<a href="%s">%s</a>' % (self.person.get_absolute_url(), self.person.name)
+        return self.add_role_to_name(name_and_role)
+
+    def add_role_to_name(self, person_name):
         if self.name:
-            name_and_role += ' (%s)' % self.name
-        return name_and_role
+            person_name += ' (%s)' % self.name
+        return person_name 
 
     def __unicode__(self):
         return self.name_and_role

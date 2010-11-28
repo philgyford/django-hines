@@ -1,0 +1,17 @@
+{% extends "base_books.html" %}
+
+{% block title %}Reading in {{ year }} ({{ block.super }}){% endblock %}
+
+{% block content_title %}Reading in {{ year }}{% endblock %}
+
+{% block content %}
+
+	{% if reading_list %}
+		<ul>
+		{% for reading in reading_list reversed %}
+		<li><a href="{{ reading.publication.get_absolute_url }}">{{ reading.publication }}</a>{% if reading.publication.authors_names_linked %} by {{ reading.publication.authors_names_linked|safe }}{% endif %}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+{% endblock content %}
