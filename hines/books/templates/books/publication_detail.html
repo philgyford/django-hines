@@ -7,7 +7,7 @@
 {% block content %}
 
 	{% if publication.authors.all %}
-		<p>By {{ publication.authors_names }}</p>
+		<p>By {{ publication.authors_names_linked|safe }}</p>
 	{% endif %}
 
 	{% if publication.home_url or publication.notes_url %}

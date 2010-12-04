@@ -48,6 +48,10 @@ class Publication(models.Model):
         This will result in a query for each publication, so be careful if you use
         this for a list of publications...
         format is 'linked' (adds HTML links) or 'unlinked' (plain text).
+
+        Would be nice to have this in a templatetag, but we want the non-linked
+        version for the admin screens too, and I'm not sure how to satisfy both
+        of those requirements.
         """
         names = []
         for role in self.role_set.select_related(depth=1):
