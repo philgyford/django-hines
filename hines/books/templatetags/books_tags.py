@@ -66,8 +66,8 @@ class DateSpanNode(template.Node):
                     # eg '1-3 March 2006'.
                     span_text = '%s-%s' % (self.linked_date(start, '%e'), self.linked_date(end, format))
                 else:
-                    # eg '1 March - 3 April 2006'.
-                    span_text = '%s &#8212; %s' % (self.linked_date(start, '%e %B'), self.linked_date(end, format))
+                    # eg '1 Mar - 3 Apr 2006'.
+                    span_text = '%s &#8212; %s' % (self.linked_date(start, '%e %b'), self.linked_date(end, format))
             else:
                 # eg '1 March 2006 - 3 April 2007'.
                 span_text = '%s &#8212; %s' % (self.linked_date(start, format), self.linked_date(end, format))
