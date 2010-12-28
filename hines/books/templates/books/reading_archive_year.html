@@ -9,11 +9,16 @@
 	{% if publication_list %}
 		{% load books_tags %}
 		{% for publication in publication_list %}
-		{% ifchanged %}<h2>{{ publication.end_date|date:"F" }}</h2>{% endifchanged %}
-		<ul class="publications">
+		{% ifchanged %}
+			{% if not forloop.first %}
+			</ul>
+			{% endif %}
+			<h2>{{ publication.end_date|date:"F" }}</h2>
+			<ul class="publications">
+		{% endifchanged %}
 			<li>{% linked_publication publication %}</li>
-		</ul>
 		{% endfor %}
+			</ul>
 	{% endif %}
 
 {% endblock content %}
