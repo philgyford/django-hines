@@ -1,0 +1,13 @@
+
+	{% if publications_inprogress %}
+		{% load books_tags %}
+		<div class="block">
+			<h2>Currently reading</h2>
+			<ul class="publications">
+			{% for publication in publications_inprogress %}
+				<li>{% linked_publication publication %}</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+

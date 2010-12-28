@@ -64,8 +64,11 @@
 		{% endfor %}
 
 	{% endif %}
-
-	
-
 			
 {% endblock content %}
+
+{% block sidebar %}
+
+	{% include 'books/includes/block_reading_years.html' %}
+
+{% endblock sidebar %}

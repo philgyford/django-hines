@@ -1,0 +1,33 @@
+{% extends "base_books.html" %}
+
+{% block content_title %}Reading{% endblock %}
+
+{% block content %}
+
+	{% if publications_inprogress %}
+		{% load books_tags %}
+		<h2>Currently reading</h2>
+		<ul class="publications">
+		{% for publication in publications_inprogress %}
+			<li>{% linked_publication publication %}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+	{% if publications_unread %}
+		{% load books_tags %}
+		<h2>Waiting to be read</h2>
+		<ul class="publications">
+		{% for publication in publications_unread %}
+			<li>{% linked_publication publication %}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+{% endblock content %}
+
+{% block sidebar %}
+
+	{% include 'books/includes/block_reading_years.html' %}
+
+{% endblock sidebar %}

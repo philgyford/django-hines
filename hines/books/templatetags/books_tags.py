@@ -4,6 +4,17 @@ from django.core.urlresolvers import reverse
 
 register = template.Library()
 
+@register.simple_tag
+def linked_publication(publication):
+    """
+    Displays the name of the Publication, linked to its page, and adds the Authors,
+    if any, each linked to their own page.
+    """
+    authors = ''
+    if publication.authors_names_linked:
+        authors = ' by %s' % publication.authors_names_linked
+    return '<a href="%s"><cite>%s</cite></a>%s' % (publication.get_absolute_url(), publication, authors)
+
 
 class DateSpanNode(template.Node):
     def __init__(self, start_date, start_date_granularity, end_date, end_date_granularity):

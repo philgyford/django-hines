@@ -6,15 +6,21 @@
 
 {% block content %}
 
-	{% if publications %}
-	<ul>
-		{% for publication in publications %}
-		<li><a href="{% url books_publication publication.id %}">{{ publication.full_name }}</a></li>
-		{% endfor %}
-	</ul>
-
+	{% if publication_list %}
+		{% load books_tags %}
+		<ul>
+			{% for publication in publication_list %}
+				<li>{% linked_publication publication %}</li>
+			{% endfor %}
+		</ul>
 	{% endif %}
 
 
 {% endblock content %}
+
+{% block sidebar %}
+
+	{% include 'books/includes/block_reading_years.html' %}
+
+{% endblock sidebar %}
 

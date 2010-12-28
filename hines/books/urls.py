@@ -3,9 +3,11 @@ from books import views
 
 
 urlpatterns = patterns('',
-    (r'^reading/publication/(?P<publication_id>\d+)/$', views.books_publication, {}, 'books_publication'),
+    (r'^$', views.books_index, {}, 'books_index'),
 
-    (r'^reading/(?P<year>\d{4})/$',
+    (r'^publication/(?P<publication_id>\d+)/$', views.books_publication, {}, 'books_publication'),
+
+    (r'^(?P<year>\d{4})/$',
         views.reading_archive_year, {}, 'reading_archive_year'),
 
 )

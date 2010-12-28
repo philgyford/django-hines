@@ -6,12 +6,22 @@
 
 {% block content %}
 
-	{% if reading_list %}
-		<ul>
-		{% for reading in reading_list reversed %}
-		<li><a href="{{ reading.publication.get_absolute_url }}">{{ reading.publication }}</a>{% if reading.publication.authors_names_linked %} by {{ reading.publication.authors_names_linked|safe }}{% endif %}</li>
-		{% endfor %}
+	{% if publication_list %}
+		{% load books_tags %}
+		{% for publication in publication_list %}
+		{% ifchanged %}<h2>{{ publication.end_date|date:"F" }}</h2>{% endifchanged %}
+		<ul class="publications">
+			<li>{% linked_publication publication %}</li>
 		</ul>
+		{% endfor %}
 	{% endif %}
 
 {% endblock content %}
+
+
+{% block sidebar %}
+
+	{% include 'books/includes/block_reading_years.html' %}
+
+{% endblock sidebar %}
+

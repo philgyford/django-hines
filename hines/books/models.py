@@ -1,6 +1,7 @@
 from django.db import models
 from people.models import Person
 from aggregator.models import Aggregator
+from managers import PublicationManager, ReadingManager
 
 
 class Series(models.Model):
@@ -108,6 +109,8 @@ class Publication(models.Model):
     def get_absolute_url(self):
         return ('books_publication', [str(self.id)])
 
+    objects = PublicationManager()
+
     class Meta:
         ordering = ['name']
 
@@ -161,7 +164,7 @@ class Reading(models.Model):
         (6, u'Y'),
     )
 
-    start_date = models.DateField(blank=True)
+    start_date = models.DateField(blank=False, null=False)
     start_date_granularity = models.PositiveSmallIntegerField(blank=False, default=3, choices=GRANULARITY_CHOICES)
     end_date = models.DateField(blank=True, null=True)
     end_date_granularity = models.PositiveSmallIntegerField(blank=False, default=3, choices=GRANULARITY_CHOICES)
@@ -178,6 +181,7 @@ class Reading(models.Model):
         else:
             return False
 
+    objects = ReadingManager()
 
     def Meta(self):
         ordering = ['-end_date', '-start_date']

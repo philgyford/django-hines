@@ -1,6 +1,7 @@
 import calendar
 import datetime, time
 from weblog.models import Blog, Entry, TaggedEntry
+from books.models import Publication
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.db.models import Count
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -168,11 +169,14 @@ def weblog_entry_detail(request, blog_slug, year, month, day, slug):
             'pk' : entry.pk
         }
     )
+
+    publications_day = Publication.objects.read_on_day(published_date)
     
     return render(request, 'weblog/entry_detail.html', {
        'blog': entry.blog,
        'entry': entry,
        'other_blogs': other_blogs,
+       'publications_day': publications_day,
     })
 
 

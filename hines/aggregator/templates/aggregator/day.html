@@ -7,17 +7,23 @@
 
 {% block content %}
 
-{{ entry.body_html|safe }}
+	{{ entry.body_html|safe }}
 
-{% for blog in blogs %}
-    <h2>{{ blog.name }}</h2>
+	{% for blog in blogs %}
+		<h2>{{ blog.name }}</h2>
 
-    {% for entry in blog.entries %}
-        {% include 'includes/entry_brief.html' %}
-    {% empty %}
-        <p>No entries.</p>
-    {% endfor %}
-{% endfor %}
-
+		{% for entry in blog.entries %}
+			{% include 'includes/entry_brief.html' %}
+		{% empty %}
+			<p>No entries.</p>
+		{% endfor %}
+	{% endfor %}
 
 {% endblock content %}
+
+
+{% block sidebar %}
+
+	{% include 'books/includes/block_publications_day.html' %}
+
+{% endblock sidebar %}
