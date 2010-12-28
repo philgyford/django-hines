@@ -40,3 +40,4 @@ class ReadingManager(models.Manager):
         return super(ReadingManager, self).get_query_set().dates(
             'end_date', 'year', order='ASC',
         )
+
