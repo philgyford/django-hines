@@ -134,8 +134,7 @@ class Role(models.Model):
         The name and role of the person, eg "Fred Bloggs (Editor)" or
         just "Fred Bloggs" if there is no role.
         """
-        name_and_role = self.person.name
-        return self.add_role_to_name
+        return self.add_role_to_name(self.person.name)
 
     @property
     def name_and_role_linked(self):
@@ -143,8 +142,8 @@ class Role(models.Model):
         The name and role of the person, but with the name linked, eg,
         '<a href="#">Fred Bloggs</a> (Editor)'
         """
-        name_and_role = '<a href="%s">%s</a>' % (self.person.get_absolute_url(), self.person.name)
-        return self.add_role_to_name(name_and_role)
+        person_name = '<a href="%s">%s</a>' % (self.person.get_absolute_url(), self.person.name)
+        return self.add_role_to_name(person_name)
 
     def add_role_to_name(self, person_name):
         if self.name:
