@@ -5,7 +5,7 @@ from django.conf import settings
 
 
 class AggregatorBaseTestCase(TestCase):
-    fixtures = ['test_data.json', ]
+    fixtures = ['../fixtures/test_data.json', ]
 
 
 class ViewsTestCase(AggregatorBaseTestCase):
