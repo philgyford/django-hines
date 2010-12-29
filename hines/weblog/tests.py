@@ -13,7 +13,10 @@ from django.core import mail
 
 
 class WeblogBaseTestCase(TestCase):
-    fixtures = ['../../aggregator/fixtures/test_data.json', ]
+    fixtures = [
+                '../fixtures/test_data.json',
+                '../../aggregator/fixtures/test_data.json',
+               ]
 
 class ViewsTestCase(WeblogBaseTestCase):
 
@@ -27,7 +30,7 @@ class ViewsTestCase(WeblogBaseTestCase):
         self.failUnlessEqual(response.context['entries'].object_list[0].slug, 'featured-writing-post')
         self.failUnlessEqual(response.context['entries'].paginator.num_pages, 1)
         self.failUnlessEqual(len(response.context['popular_tags']), 5)
-        self.failUnlessEqual(response.context['popular_tags'][2].name, 'cats')
+        self.failUnlessEqual(response.context['popular_tags'][2].name, 'cake')
         self.failUnlessEqual(len(response.context['featured_entries']), 1)
         self.failUnlessEqual(response.context['featured_entries'][0].slug, 'featured-writing-post')
     
@@ -282,10 +285,14 @@ class EntryTestCase(WeblogBaseTestCase):
         entry = Entry.live.get(pk=1)
         tags = entry.tags.all()
         self.failUnlessEqual(len(tags), 4)
-        self.failUnlessEqual(tags[0].name == 'animals', True)
-        self.failUnlessEqual(tags[1].name == 'cake', True)
-        self.failUnlessEqual(tags[2].name == 'cats', True)
-        self.failUnlessEqual(tags[3].name == 'dogs', True)
+        tag_names = []
+        for tag in tags:
+            tag_names.append(tag.name)
+        self.failUnlessEqual('animals' in tag_names, True)
+        self.failUnlessEqual('cake' in tag_names, True)
+        self.failUnlessEqual('cats' in tag_names, True)
+        self.failUnlessEqual('dogs' in tag_names, True)
+        self.failUnlessEqual('fish' in tag_names, False)
     
     def test_entries_with_tag(self):
         '''Make sure we get the correct Entries back for a particular tag.'''

@@ -34,7 +34,7 @@ def weblog_archive_month(request, blog_slug, year, month):
     
     previous_month_correct = prev_months_entry[0].published_date if prev_months_entry else None
 
-    if first_of_month.month == datetime.datetime.now().month:
+    if first_of_month.year == datetime.datetime.now().year and first_of_month.month == datetime.datetime.now().month:
         # Current month, no need to look for Entries in next month.
         next_month_correct = None
     else:
@@ -134,7 +134,7 @@ def weblog_blog_index(request, blog_slug):
     popular_tags = Tag.objects.filter(
         weblog_taggedentry_items__content_object__blog=blog,
         weblog_taggedentry_items__content_object__status=Entry.LIVE_STATUS,
-    ).annotate(num_times=Count('weblog_taggedentry_items')).order_by('-num_times')[:15]
+    ).annotate(num_times=Count('weblog_taggedentry_items')).order_by('-num_times', 'name')[:15]
      
     featured_entries = Entry.featured_set.all()
     
