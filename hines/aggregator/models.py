@@ -41,7 +41,29 @@ class Aggregator(models.Model):
     amazon_id_gb = models.CharField(null=True, blank=True, max_length=30,
         verbose_name='Amazon Associates Tracking ID (.co.uk)',
         help_text="Your tracking ID for Amazon.co.uk, if any.")
+
+    flickr_api_key = models.CharField(null=True, blank=True, max_length=32,
+        verbose_name="Flickr API Key")
+    flickr_api_secret = models.CharField(null=True, blank=True, max_length=16,
+        verbose_name="Flickr API Shared Secret")
+    flickr_user_id = models.CharField(null=True, blank=True, max_length=40,
+        verbose_name="Flickr User ID",
+        help_text="eg, '35034346050@N01'")
     
+    ## Making these slightly longer than might be necessary, as I can't find 
+    ## anything that states their maximum length.
+    #twitter_consumer_key = models.CharField(null=True, blank=True, max_length=30,
+        #help_text="These fields for the Twitter API for the main Twitter account.") # max 21 chars?
+    #twitter_consumer_secret = models.CharField(null=True, blank=True, max_length=50) # max 43?
+    #twitter_access_token = models.CharField(null=True, blank=True, max_length=60) # max 50? 
+    #twitter_access_token_secret = models.CharField(null=True, blank=True, max_length=50) # max 43?
+
+    #twitterdata_consumer_key = models.CharField(null=True, blank=True, max_length=30,
+        #help_text="These fields for the Twitter API account that just contains automatic data.") # max 21 chars?
+    #twitterdata_consumer_secret = models.CharField(null=True, blank=True, max_length=50) # max 43?
+    #twitterdata_access_token = models.CharField(null=True, blank=True, max_length=60) # max 50? 
+    #twitterdata_access_token_secret = models.CharField(null=True, blank=True, max_length=50) # max 43?
+
     objects = AggregatorManager()
     
 

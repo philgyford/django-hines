@@ -15,5 +15,8 @@ class AggregatorAdmin(admin.ModelAdmin):
         ('Amazon', {
             'fields': ('amazon_id_us', 'amazon_id_gb'),
         }),
+        ('Flickr', {
+            'fields': ('flickr_api_key', 'flickr_api_secret', 'flickr_user_id'),
+        }),
     )
 admin.site.register(Aggregator, AggregatorAdmin)

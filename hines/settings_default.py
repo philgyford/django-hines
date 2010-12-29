@@ -85,6 +85,7 @@ INSTALLED_APPS = (
     'hines.places',
     'hines.books',
     'hines.movies',
+    'hines.photos',
     'south',
 )
 
