@@ -19,8 +19,6 @@ from managers import BlogManager, FeaturedEntryManager, LiveEntryManager
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
-import categories
-
 
 class Blog(models.Model):
     '''
