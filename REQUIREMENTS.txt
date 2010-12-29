@@ -8,6 +8,7 @@ distribute==0.6.8
 django-debug-toolbar==0.8.3
 django-taggit==0.9.1
 html5lib==0.90
+psycopg2==2.3.0-beta1
 wsgiref==0.1.2
 yolk==0.4.1
 Using already activated environment /Users/phil/.virtualenvs/django-hines
