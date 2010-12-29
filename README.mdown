@@ -72,6 +72,7 @@ tried setting it up from scratch yet, but still, extremely briefly...
 	* PostGIS
 	* SQLite3
 	* GDAL
+
    All this so I could plot the position of cinemas on maps. Idiot.
 
 5. places/sql/Country.sql contains initial data for a list of countries. The
