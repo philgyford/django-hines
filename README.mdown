@@ -6,6 +6,10 @@ This is very much a work in progress and is probably no use to anyone yet. Inclu
 
 This is not supposed to create a generic site that will be useful to everyone. It's a personal project to satisfy specific requirements. So, while I'm happy to hear ideas, at this stage, they'll only ever be implemented if they're useful to me. But you never know.
 
+Although things are split into apps in what is hopefully a useful way,
+everything seems pretty integrated and it might require some work to use only
+some of these apps, rather than the whole lot together.
+
 ## Apps (so far)
 
 * Weblog
@@ -24,6 +28,20 @@ This is not supposed to create a generic site that will be useful to everyone. I
 	* Spam filtering with TypePad AntiSpam or Akismet.
 	* Logged-in admin users don't have to type their email etc in when posting
 	  a comment.
+* Books
+	* Stores data about books/periodicals and when they were read.
+	* Displays yearly archives, what's being read now, what hasn't been read
+	  yet.
+	* Can display what was being read on a particular day.
+* Movies
+	* Stores data about movies and when and where they were watched.
+	* TODO: Pages displaying all this.
+	* Requires GeoDjango because the app is way over the top.
+* People
+	* Stores names of people, ie, authors of Books or directors of Movies.
+	* A page for each person showing Books they're attached to and (TODO)
+	  Movies they've directed.
+
 
 ## Major future tasks
 
@@ -44,9 +62,23 @@ tried setting it up from scratch yet, but still, extremely briefly...
 
 3. You'll need to set up a Site in the Django Admin, and also an Aggregator, related to the Site you just created.
 
+4. If you're using the Movies app you'll need to install [GeoDjango](http://geodjango.org/). This can be
+   hard. I had to change my database to Postgres and go through the
+   installation instructions which included installing these libraries on my
+   Mac:
+    * GEOS
+	* PROJ
+	* UnixImageIO
+	* PostGIS
+	* SQLite3
+	* GDAL
+   All this so I could plot the position of cinemas on maps. Idiot.
+
+5. places/sql/Country.sql contains initial data for a list of countries. The
+   Country model in the Places app is currently only used in the Movies app.
 
 ## Testing
 
-The fixture for tests in both Aggregator and Weblog apps is currently only in aggregator/fixtures/. Not sure how best to handle it otherwise without duplication.
+Most apps have fixtures for testing in appname/fixtures/test\_data.json.
 
 
