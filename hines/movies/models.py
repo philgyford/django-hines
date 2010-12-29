@@ -23,9 +23,6 @@ class Cinema(models.Model):
     A place where a Movie was Viewed.
     """
     name = models.CharField(max_length=255, blank=False)
-    # Default to UK.
-    #country = CountryField(default=23424975, blank=False)
-    country = models.ForeignKey(Country, default=23424975, blank=False)
     coordinate = models.PointField()
 
     def __unicode__(self):
