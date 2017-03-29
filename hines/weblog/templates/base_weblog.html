@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-
-{% block title %}{{ blog.name }}{% endblock %}
-
-{% block feeds %}
-    {{ block.super }}
-    <link href="{{ blog.get_entries_feed_url }}" rel="alternate" title="Latest entries on {{ blog.name }}" type="application/rss+xml" />
-{% endblock feeds %}

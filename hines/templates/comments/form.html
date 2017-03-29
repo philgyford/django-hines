@@ -1,8 +1,0 @@
-{% comment %}
-This is currently a direct duplicate of the standard django/contrib/comments/templates/comments/form.html template.
-{% endcomment %}
-
-{% load comments i18n %}
-<form action="{% comment_form_target %}" method="post">{% csrf_token %}
-    {% include "comments/form_inner.html" %}
-</form>
