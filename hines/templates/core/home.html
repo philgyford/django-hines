@@ -5,3 +5,11 @@
 {% block content %}
 Hello
 {% endblock %}
+
+{% block sidebar %}
+	{% load flatblocks %}
+	{% flatblock "about-me" %}
+	{% flatblock "other-sites" %}
+
+	{{ block.super }}
+{% endblock %}

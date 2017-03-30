@@ -1,0 +1,13 @@
+{% comment %}
+Custom default flatblock template, for rendering some HTML, such as <p>s, in a card.
+{% endcomment %}
+<div class="card mb-3 flatblock-{{ flatblock.slug }}">
+	<div class="card-block">
+	{% if flatblock.header %}
+		<h2 class="h6 card-title">{{ flatblock.header }}</h2>
+	{% endif %}
+		<div class="card-text">
+			{{ flatblock.content|safe }}
+		</div>
+	</div>
+</div>
