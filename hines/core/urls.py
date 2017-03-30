@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib.flatpages import views as flatpages_views
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -21,6 +22,12 @@ urlpatterns = [
                                                             name='timeline'),
     url(r'^misc/$', flatpages_views.flatpage, {'url': '/misc/'},
                                                             name='misc'),
+
+    # So we can test these templates when DEBUG=True.
+    url(r'^400/$', TemplateView.as_view(template_name='400.html')),
+    url(r'^403/$', TemplateView.as_view(template_name='403.html')),
+    url(r'^404/$', TemplateView.as_view(template_name='404.html')),
+    url(r'^500/$', TemplateView.as_view(template_name='500.html')),
 
 ]
 
