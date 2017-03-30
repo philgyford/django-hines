@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+
+{% block head_page_title %}{{ flatpage.title }}{% endblock %}
+{% block content_title %}{{ flatpage.title }}{% endblock %}
+
+{% block content_column %}
+	<div class="col-md-12">
+		{{ flatpage.content }}
+	</div> <!-- .col-md-12 -->
+{% endblock %}
+
+{% block sidebar_column %}{% endblock %}

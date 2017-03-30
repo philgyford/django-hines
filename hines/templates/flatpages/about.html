@@ -1,0 +1,21 @@
+{% extends 'flatpages/base.html' %}
+
+{% block about_nav_active %}active{% endblock %}
+
+{% block sidebar %}
+	<div class="card">
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<a href="{% url 'hines:about' %}">About me</a>
+			</li>
+			<li class="list-group-item">
+				<a href="{% url 'hines:about_work' %}">About my work</a>
+			</li>
+			<li class="list-group-item">
+				<a href="{% url 'hines:timeline' %}">Timeline of things I’ve done</a>
+			</li>
+		</ul>
+	</div>
+
+	{{ block.super }}
+{% endblock %}

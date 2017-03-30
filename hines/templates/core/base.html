@@ -16,7 +16,7 @@
 	<body>
 
 		{% block navbar %}
-			<nav class="navbar navbar-toggleable">
+			<nav class="navbar navbar-toggleable navbar-light">
 				<div class="container">
 					<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
@@ -31,6 +31,16 @@
 							<li class="nav-item {% block writing_nav_active %}{% endblock %}">
 								<a class="nav-link" href="#">
 									Writing
+								</a>
+							</li>
+							<li class="nav-item {% block misc_nav_active %}{% endblock %}">
+								<a class="nav-link" href="{% url 'hines:misc' %}">
+									More…
+								</a>
+							</li>
+							<li class="nav-item {% block about_nav_active %}{% endblock %}">
+								<a class="nav-link" href="{% url 'hines:about' %}">
+									About
 								</a>
 							</li>
 						</ul>
@@ -50,14 +60,18 @@
 
 			{% block content_main %}
 				<div class="row">
-					<div class="col-md-9">
-						{% block content %}
-						{% endblock %}
-					</div>
-					<div class="col-md-3">
-						{% block sidebar %}
-						{% endblock %}
-					</div>
+					{% block content_column %}
+						<div class="col-md-9">
+							{% block content %}
+							{% endblock %}
+						</div> <!-- .col-md-9 -->
+					{% endblock content_column %}
+					{% block sidebar_column %}
+						<div class="col-md-3">
+							{% block sidebar %}
+							{% endblock %}
+						</div> <!-- .col-md-3 -->
+					{% endblock sidebar_column %}
 				</div>
 			{% endblock content_main %}
 		</div>
