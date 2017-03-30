@@ -13,10 +13,14 @@ We might have a `.env` file with environment variables in, like:
 	export DJANGO_SETTINGS_MODULE=config.settings.local
 
 So:
-	
+
 	$ source .env
 
 Then:
 
 	$ ./manage.py runserver
+
+Run tests:
+
+	$ ./manage.py test --settings=config.settings.tests
 
