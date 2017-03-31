@@ -1,3 +1,7 @@
 Django==1.10.6
 django-debug-toolbar==1.7
 django-flatblocks==0.9.3
+factory-boy==2.8.1
+freezegun==0.3.8
+Markdown==2.6.8
+pytz==2017.2

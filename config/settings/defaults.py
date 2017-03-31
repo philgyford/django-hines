@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'flatblocks',
+    'hines.users',
     'hines.core',
+    'hines.weblogs',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,6 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'users.User'
+

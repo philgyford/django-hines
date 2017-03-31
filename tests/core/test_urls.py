@@ -11,10 +11,10 @@ from hines.core import views
 class CoreUrlsTestCase(TestCase):
 
     def test_home_url(self):
-        self.assertEqual(reverse('hines:home'), '/')
+        self.assertEqual(reverse('hines:home'), '/phil/')
 
     def test_home_view(self):
         "Should use the correct view."
-        self.assertEqual(resolve('/').func.__name__,
+        self.assertEqual(resolve('/phil/').func.__name__,
                          views.HomeView.__name__)
 
