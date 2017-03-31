@@ -1,12 +1,12 @@
 {% extends 'weblogs/base.html' %}
 
-{% block head_page_title %}{{ blog.title }}{% endblock %}
-{% block content_title %}{{ blog.title }}{% endblock %}
+{% block head_page_title %}{{ blog.name }}{% endblock %}
+{% block content_title %}{{ blog.name }}{% endblock %}
 
 {% block content %}
 
 	{% for post in post_list %}
-	<p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+		<p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
 	{% endfor %}
 
 {% endblock %}
