@@ -28,9 +28,14 @@
 					</a>
 					<div class="collapse navbar-collapse" id="navbar-content">
 						<ul class="navbar-nav mr-auto">
-							<li class="nav-item {% block writing_nav_active %}{% endblock %}">
-								<a class="nav-link" href="#">
+							<li class="nav-item{% if blog and blog.slug == 'writing' %} active{% endif %}">
+								<a class="nav-link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">
 									Writing
+								</a>
+							</li>
+							<li class="nav-item{% if blog and blog.slug == 'comments' %} active{% endif %}">
+								<a class="nav-link" href="{% url 'hines:blog_detail' blog_slug='comments' %}">
+									Comments
 								</a>
 							</li>
 							<li class="nav-item {% block misc_nav_active %}{% endblock %}">

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import linebreaks
+from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils import timezone
 
@@ -94,10 +95,12 @@ class Post(TimeStampedModelMixin, models.Model):
     featured = models.PositiveSmallIntegerField(blank=False,
                 choices=FEATURED_CHOICES, default=NOT_FEATURED)
 
-    blog = models.ForeignKey('Blog', null=True, blank=False, default=1)
+    blog = models.ForeignKey('Blog', null=True, blank=False, default=1,
+                related_name='posts')
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, default=1,
-                        on_delete=models.CASCADE, null=True, blank=False)
+                on_delete=models.CASCADE, null=True, blank=False,
+                related_name='posts')
 
     class Meta:
         ordering = ['-time_published', '-time_created']
@@ -116,6 +119,16 @@ class Post(TimeStampedModelMixin, models.Model):
             self.time_published = timezone.now()
 
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('hines:post_detail',
+                            kwargs={
+                                'blog_slug': self.blog.slug,
+                                'year': self.time_published.strftime("%Y"),
+                                'month': self.time_published.strftime("%m"),
+                                'day': self.time_published.strftime("%d"),
+                                'post_slug': self.slug,
+                            })
 
     def htmlize_text(self, text):
         """

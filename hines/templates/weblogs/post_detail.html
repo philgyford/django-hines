@@ -1,0 +1,12 @@
+{% extends 'weblogs/base.html' %}
+
+{% block head_page_title %}{{ post.title }}{% endblock %}
+{% block content_title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+
+	{{ post.intro_html|safe }}
+	{{ post.body_html|safe }}
+
+{% endblock %}
+
