@@ -18,3 +18,15 @@ class CoreUrlsTestCase(TestCase):
         self.assertEqual(resolve('/phil/').func.__name__,
                          views.HomeView.__name__)
 
+    def test_day_archive_url(self):
+        self.assertEqual(
+            reverse('hines:day_archive',
+                        kwargs={'year': 2017, 'month': '04', 'day': '03',}
+                    ),
+            '/phil/2017/04/03/'
+        )
+
+    def test_day_archive_view(self):
+        self.assertEqual(resolve('/phil/2017/04/03/').func.__name__,
+                        views.DayArchiveView.__name__)
+

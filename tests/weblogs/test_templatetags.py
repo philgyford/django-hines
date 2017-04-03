@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post
-from hines.weblogs.templatetags.weblogs_tags import recent_posts
+from hines.weblogs.templatetags.hines_weblogs import recent_posts
 
 
 class RecentPostsTestCase(TestCase):

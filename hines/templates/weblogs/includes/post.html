@@ -1,0 +1,33 @@
+{% comment %}
+Display a Post.
+
+Expects:
+
+* post - A Post.
+* in_list - Boolean, default True. Will show a linked title, and metadata.
+
+{% endcomment %}
+
+<article class="post">
+	{% if in_list|default_if_none:True %}
+		<header>
+			<h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+		</header>
+	{% endif %}
+
+	<div class="post-intro">
+		{{ post.intro_html|safe }}
+	</div>
+
+	<div class="post-body">
+		{{ post.body_html|safe }}
+	</div>
+
+	{% if in_list|default_if_none:True %}
+		<footer>
+			{% load hines_core %}
+			Published at {% display_time post.time_published link_to_day=True %}
+		</footer>
+	{% endif %}
+</article>
+

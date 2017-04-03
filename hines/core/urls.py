@@ -22,6 +22,13 @@ urlpatterns = [
     url(r'^misc/$', flatpages_views.flatpage, {'url': '/misc/'},
                                                             name='misc'),
 
+    url(
+        # /2016/04/18/twitter/favorites
+        regex=r"^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$",
+        view=views.DayArchiveView.as_view(),
+        name='day_archive'
+    ),
+
     # So we can test these templates when DEBUG=True.
     url(r'^400/$', TemplateView.as_view(template_name='400.html')),
     url(r'^403/$', TemplateView.as_view(template_name='403.html')),

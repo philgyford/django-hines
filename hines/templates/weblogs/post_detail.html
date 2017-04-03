@@ -5,8 +5,7 @@
 
 {% block content %}
 
-	{{ post.intro_html|safe }}
-	{{ post.body_html|safe }}
+	{% include 'weblogs/includes/post.html' with post=post in_list=False only %}
 
 	{% with post.get_previous_post as previous_post %}
 		{% with post.get_next_post as next_post %}
@@ -17,7 +16,7 @@
 						<a class="btn btn-outline-primary" href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; Older post</a>
 						{% endif %}
 						{% if next_post %}
-						<a class="btn btn-outline-primary float-right" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">&rarr; Newer post</a>
+						<a class="btn btn-outline-primary float-right" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Newer post &rarr;</a>
 					{% endif %}
 				</p>
 			</nav>
@@ -29,7 +28,15 @@
 
 
 {% block sidebar %}
-	{% load weblogs_tags %}
+
+	{% load hines_core %}
+	<div class="card mb-3">
+		<div class="card-block">
+			<p class="mb-0">Published at {% display_time post.time_published link_to_day=True %}</p>
+		</div>
+	</div>
+
+	{% load hines_weblogs %}
 	{% recent_posts_card blog=post.blog num=5 %}
 
 	{{ block.super }}

@@ -1,0 +1,13 @@
+{% comment %}
+Display several Posts.
+
+Expects:
+
+* post_list: A list or QuerySet of Posts.
+{% endcomment %}
+
+{% for post in post_list %}
+	{% include 'weblogs/includes/post.html' with post=post in_list=True only %}
+	<hr>
+{% endfor %}
+
