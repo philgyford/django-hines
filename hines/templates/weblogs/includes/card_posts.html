@@ -1,0 +1,23 @@
+{% comment %}
+Used by the recent_posts_card template tag.
+
+Expects:
+* post_list - A QuerySet of Posts.
+* card_title - The title for the card.
+{% endcomment %}
+
+{% if post_list|length > 0 %}
+	<div class="card mb-3">
+		<div class="card-block">
+			<h2 class="h6 card-title">{{ card_title }}</h2>
+			<ul>
+				{% for post in post_list %}
+					<li>
+						<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endif %}
+

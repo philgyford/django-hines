@@ -27,3 +27,10 @@
 	{% endwith %}
 {% endblock %}
 
+
+{% block sidebar %}
+	{% load weblogs_tags %}
+	{% recent_posts_card blog=post.blog num=5 %}
+
+	{{ block.super }}
+{% endblock %}
