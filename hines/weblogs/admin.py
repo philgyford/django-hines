@@ -25,7 +25,8 @@ class BlogAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('blog', 'title', 'is_published', 'is_featured', 'time_published',)
+    list_display = ('blog', 'title', 'is_published', 'time_published',
+                    'is_featured', )
     list_display_links = ('title',)
     search_fields = ('title', 'excerpt', 'intro', 'body', )
     date_hierarchy = 'time_published'
