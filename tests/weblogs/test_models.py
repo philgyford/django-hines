@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from freezegun import freeze_time
 
+from tests.core import make_datetime
 from hines.weblogs.models import Blog, Post
 from hines.weblogs.factories import BlogFactory, PostFactory
 
@@ -141,3 +142,44 @@ Another line.""")
         # Hasn't changed to now:
         self.assertEqual(post.time_published, time_published)
 
+    def test_default_manager(self):
+        "It should include published and draft posts."
+        live_post = PostFactory(status=Post.LIVE_STATUS)
+        draft_post = PostFactory(status=Post.DRAFT_STATUS)
+        posts = Post.objects.all()
+        self.assertEqual(len(posts), 2)
+
+    def test_public_posts_manager(self):
+        "It should only include published posts."
+        live_post = PostFactory(status=Post.LIVE_STATUS)
+        draft_post = PostFactory(status=Post.DRAFT_STATUS)
+        posts = Post.public_objects.all()
+        self.assertEqual(len(posts), 1)
+        self.assertEqual(posts[0], live_post)
+
+    def test_get_next_post(self):
+        "It should not return draft posts or posts from other blogs."
+        blog = BlogFactory()
+        post = PostFactory(status=Post.LIVE_STATUS, blog=blog,
+                           time_published=make_datetime('2017-04-03 12:00:00'))
+        draft_post = PostFactory(status=Post.DRAFT_STATUS, blog=blog,
+                           time_published=make_datetime('2017-04-04 12:00:00'))
+        other_blogs_post = PostFactory(status=Post.LIVE_STATUS,
+                           time_published=make_datetime('2017-04-04 12:00:00'))
+        next_post = PostFactory(status=Post.LIVE_STATUS, blog=blog,
+                           time_published=make_datetime('2017-04-05 12:00:00'))
+        self.assertEqual(post.get_next_post(), next_post)
+    
+
+    def test_get_previous_post(self):
+        "It should not return draft posts or posts from other blogs."
+        blog = BlogFactory()
+        post = PostFactory(status=Post.LIVE_STATUS, blog=blog,
+                           time_published=make_datetime('2017-04-05 12:00:00'))
+        draft_post = PostFactory(status=Post.DRAFT_STATUS, blog=blog,
+                           time_published=make_datetime('2017-04-04 12:00:00'))
+        other_blogs_post = PostFactory(status=Post.LIVE_STATUS,
+                           time_published=make_datetime('2017-04-04 12:00:00'))
+        previous_post = PostFactory(status=Post.LIVE_STATUS, blog=blog,
+                           time_published=make_datetime('2017-04-03 12:00:00'))
+        self.assertEqual(post.get_previous_post(), previous_post)

@@ -8,5 +8,22 @@
 	{{ post.intro_html|safe }}
 	{{ post.body_html|safe }}
 
+	{% with post.get_previous_post as previous_post %}
+		{% with post.get_next_post as next_post %}
+			{% if previous_post or next_post %}
+				<nav class="nextprev">
+					<p>
+						{% if previous_post %}
+						<a class="btn btn-outline-primary" href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; Older post</a>
+						{% endif %}
+						{% if next_post %}
+						<a class="btn btn-outline-primary float-right" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">&rarr; Newer post</a>
+					{% endif %}
+				</p>
+			</nav>
+
+			{% endif %}
+		{% endwith %}
+	{% endwith %}
 {% endblock %}
 

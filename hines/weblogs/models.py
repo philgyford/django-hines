@@ -9,6 +9,7 @@ from markdown import markdown
 
 from hines.core.models import TimeStampedModelMixin
 from hines.core.utils import truncate_string
+from . import managers
 
 
 class Blog(TimeStampedModelMixin, models.Model):
@@ -102,6 +103,10 @@ class Post(TimeStampedModelMixin, models.Model):
                 on_delete=models.CASCADE, null=True, blank=False,
                 related_name='posts')
 
+    objects = models.Manager()
+
+    public_objects = managers.PublicPostsManager()
+
     class Meta:
         ordering = ['-time_published', '-time_created']
 
@@ -129,6 +134,24 @@ class Post(TimeStampedModelMixin, models.Model):
                                 'day': self.time_published.strftime("%d"),
                                 'post_slug': self.slug,
                             })
+
+    def get_previous_post(self):
+        "Gets the previous public Post, by time_published."
+        return Post.public_objects.filter(
+                                        blog=self.blog,
+                                        time_published__lt=self.time_published
+                                    )\
+                                   .order_by('-time_published')\
+                                   .first()
+
+    def get_next_post(self):
+        "Gets the next public Post, by time_published."
+        return Post.public_objects.filter(
+                                        blog=self.blog,
+                                        time_published__gt=self.time_published
+                                    )\
+                                   .order_by('time_published')\
+                                   .first()
 
     def htmlize_text(self, text):
         """

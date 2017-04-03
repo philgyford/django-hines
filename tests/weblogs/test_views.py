@@ -4,6 +4,7 @@ import pytz
 from django.http.response import Http404
 from django.test import TestCase
 
+from tests.core import make_datetime
 from tests.core.test_views import ViewTestCase
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs import views
@@ -70,9 +71,7 @@ class PostDetailViewTestCase(ViewTestCase):
         blog = BlogFactory(slug='my-blog')
         PostFactory(blog=blog,
                     slug='my-post',
-                    time_published=datetime.strptime(
-                        '2017-02-20 12:15:00', "%Y-%m-%d %H:%M:%S").replace(
-                                                            tzinfo=pytz.utc))
+                    time_published=make_datetime('2017-02-20 12:15:00'))
 
     def test_response_200(self):
         "It should respond with 200."
