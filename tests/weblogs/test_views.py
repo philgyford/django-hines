@@ -7,6 +7,7 @@ from django.test import TestCase
 from tests.core import make_datetime
 from tests.core.test_views import ViewTestCase
 from hines.weblogs.factories import BlogFactory, PostFactory
+from hines.weblogs.models import Post
 from hines.weblogs import views
 
 
@@ -15,7 +16,7 @@ class BlogDetailViewTestCase(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        self.post = PostFactory(blog=self.blog)
+        self.post = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
 
     def test_response_200(self):
         "It should respond with 200."
@@ -35,8 +36,9 @@ class BlogDetailViewTestCase(ViewTestCase):
         self.assertEqual(response.template_name[0], 'weblogs/blog_detail.html')
 
     def test_context_post_list(self):
-        "It should include the post_list in the context."
+        "It should include the post_list, of public posts, in the context."
         other_blogs_post = PostFactory()
+        draft_post = PostFactory(blog=self.blog, status=Post.DRAFT_STATUS)
         response = views.BlogDetailView.as_view()(
                                             self.request, blog_slug='my-blog')
         self.assertIn('post_list', response.context_data)
@@ -46,7 +48,7 @@ class BlogDetailViewTestCase(ViewTestCase):
     def test_is_paginated(self):
         "It should split the posts into pages."
         # Another page's worth of posts in addition to self.post:
-        PostFactory.create_batch(25, blog=self.blog)
+        PostFactory.create_batch(25, blog=self.blog, status=Post.LIVE_STATUS)
         # Get first page:
         response = views.BlogDetailView.as_view()(
                                             self.request, blog_slug='my-blog')

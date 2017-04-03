@@ -28,7 +28,7 @@ class BlogDetailView(SingleObjectMixin, ListView):
         return context
 
     def get_queryset(self):
-        return self.object.posts.all()
+        return self.object.public_posts.all()
 
 
 class PostDetailView(DateDetailView):

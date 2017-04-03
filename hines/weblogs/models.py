@@ -14,6 +14,7 @@ from . import managers
 
 class Blog(TimeStampedModelMixin, models.Model):
     """
+    A Blog that has Posts.
     """
     name = models.CharField(null=False, blank=False, max_length=255,
             help_text="Full version of the name for headings, titles, etc.")
@@ -31,6 +32,10 @@ class Blog(TimeStampedModelMixin, models.Model):
 
     class Meta:
         ordering = ['sort_order', 'name']
+
+    @property
+    def public_posts(self):
+        return Post.public_objects.filter(blog=self)
 
 
 class Post(TimeStampedModelMixin, models.Model):
