@@ -9,5 +9,17 @@
 		<p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
 	{% endfor %}
 
+	{% if is_paginated %}
+		<nav class="nextprev">
+			<p>
+				{% if page_obj.has_next %}
+					<a class="btn btn-outline-primary" href="{{ blog.get_absolute_url }}?p={{ page_obj.next_page_number }}">&larr; Older posts</a>
+				{% endif %}
+				{% if page_obj.has_previous %}
+					<a class="btn btn-outline-primary float-right" href="{{ blog.get_absolute_url }}?p={{ page_obj.previous_page_number }}">&rarr; Newer posts</a>
+				{% endif %}
+			</p>
+		</nav>
+	{% endif %}
 {% endblock %}
 

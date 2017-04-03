@@ -1,5 +1,6 @@
 import datetime
 
+# from django.core.paginator import Paginator
 from django.http import Http404
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
@@ -11,7 +12,10 @@ from .models import Blog, Post
 
 class BlogDetailView(SingleObjectMixin, ListView):
     slug_url_kwarg = 'blog_slug'
-    template_name = "weblogs/blog_detail.html"
+    template_name = 'weblogs/blog_detail.html'
+    paginate_by = 25
+    page_kwarg = 'p'
+    allow_empty = False
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Blog.objects.all())
@@ -32,7 +36,7 @@ class PostDetailView(DateDetailView):
     model = Post
     month_format = '%m'
     slug_url_kwarg = 'post_slug'
-    template_name = "weblogs/post_detail.html"
+    template_name = 'weblogs/post_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

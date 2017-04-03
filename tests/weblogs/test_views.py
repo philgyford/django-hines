@@ -13,7 +13,8 @@ class BlogDetailViewTestCase(ViewTestCase):
 
     def setUp(self):
         super().setUp()
-        BlogFactory(slug='my-blog')
+        self.blog = BlogFactory(slug='my-blog')
+        self.post = PostFactory(blog=self.blog)
 
     def test_response_200(self):
         "It should respond with 200."
@@ -31,6 +32,35 @@ class BlogDetailViewTestCase(ViewTestCase):
         response = views.BlogDetailView.as_view()(
                                             self.request, blog_slug='my-blog')
         self.assertEqual(response.template_name[0], 'weblogs/blog_detail.html')
+
+    def test_context_post_list(self):
+        "It should include the post_list in the context."
+        other_blogs_post = PostFactory()
+        response = views.BlogDetailView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        self.assertIn('post_list', response.context_data)
+        self.assertEqual(len(response.context_data['post_list']), 1)
+        self.assertEqual(response.context_data['post_list'][0], self.post)
+
+    def test_is_paginated(self):
+        "It should split the posts into pages."
+        # Another page's worth of posts in addition to self.post:
+        PostFactory.create_batch(25, blog=self.blog)
+        # Get first page:
+        response = views.BlogDetailView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        self.assertEqual(len(response.context_data['post_list']), 25)
+
+        # Get second page:
+        request = self.factory.get('/fake-path/?p=2')
+        response = views.BlogDetailView.as_view()(request, blog_slug='my-blog')
+        self.assertEqual(len(response.context_data['post_list']), 1)
+
+    def test_pagination_404(self):
+        "It should raise 404 if requesting a non-existent page number."
+        request = self.factory.get('/fake-path/?p=2')
+        with self.assertRaises(Http404):
+            views.BlogDetailView.as_view()(request, blog_slug='my-blog')
 
 
 class PostDetailViewTestCase(ViewTestCase):
