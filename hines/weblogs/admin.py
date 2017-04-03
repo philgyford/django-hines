@@ -25,7 +25,7 @@ class BlogAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('blog', 'title', 'status', 'featured', 'time_published',)
+    list_display = ('blog', 'title', 'is_published', 'is_featured', 'time_published',)
     list_display_links = ('title',)
     search_fields = ('title', 'excerpt', 'intro', 'body', )
     date_hierarchy = 'time_published'
@@ -48,3 +48,14 @@ class PostAdmin(admin.ModelAdmin):
     radio_fields = {'featured': admin.HORIZONTAL}
     readonly_fields = ('time_created', 'time_modified', 'time_published',)
 
+    def is_published(self, obj):
+        return obj.status == Post.LIVE_STATUS
+    is_published.boolean = True
+    is_published.short_description = 'Published?'
+
+    def is_featured(self, obj):
+        return obj.featured == Post.IS_FEATURED
+    is_featured.boolean = True
+    is_featured.short_description = 'Featured?'
+
+        
