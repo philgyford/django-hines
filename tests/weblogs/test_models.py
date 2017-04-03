@@ -25,6 +25,22 @@ class BlogTestCase(TestCase):
         self.assertEqual(blogs[1], b2)
         self.assertEqual(blogs[2], b3)
 
+    def test_posts(self):
+        "Should return all posts, live or not."
+        blog = BlogFactory()
+        live_posts = PostFactory.create_batch(2,
+                                        blog=blog, status=Post.LIVE_STATUS)
+        draft_post = PostFactory(blog=blog, status=Post.DRAFT_STATUS)
+        self.assertEqual(len(blog.posts.all()), 3)
+
+    def test_public_posts(self):
+        "Should only return live posts."
+        blog = BlogFactory()
+        live_posts = PostFactory.create_batch(2,
+                                        blog=blog, status=Post.LIVE_STATUS)
+        draft_post = PostFactory(blog=blog, status=Post.DRAFT_STATUS)
+        self.assertEqual(len(blog.public_posts.all()), 2)
+
 
 class PostTestCase(TestCase):
 

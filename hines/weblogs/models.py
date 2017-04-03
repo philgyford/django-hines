@@ -35,6 +35,7 @@ class Blog(TimeStampedModelMixin, models.Model):
 
     @property
     def public_posts(self):
+        "Returns a QuerySet of publicly-visible Posts for this Blog."
         return Post.public_objects.filter(blog=self)
 
 
