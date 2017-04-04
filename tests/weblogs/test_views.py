@@ -70,9 +70,10 @@ class PostDetailViewTestCase(ViewTestCase):
 
     def setUp(self):
         super().setUp()
-        blog = BlogFactory(slug='my-blog')
-        PostFactory(blog=blog,
+        self.blog = BlogFactory(slug='my-blog')
+        PostFactory(blog=self.blog,
                     slug='my-post',
+                    status=Post.LIVE_STATUS,
                     time_published=make_datetime('2017-02-20 12:15:00'))
 
     def test_response_200(self):
@@ -115,6 +116,20 @@ class PostDetailViewTestCase(ViewTestCase):
                                                     day='20',
                                                     post_slug='OTHER-POST')
 
+    def test_response_404_invalid_status(self):
+        "It should raise 404 if there's no matching published post"
+        PostFactory(blog=self.blog,
+                    slug='draft-post',
+                    status=Post.DRAFT_STATUS,
+                    time_published=make_datetime('2017-03-01 12:15:00'))
+        with self.assertRaises(Http404):
+            views.PostDetailView.as_view()(self.request,
+                                                    blog_slug='my-blog',
+                                                    year='2017',
+                                                    month='03',
+                                                    day='01',
+                                                    post_slug='draft-post')
+
     def test_templates(self):
         response = views.PostDetailView.as_view()(self.request,
                                                     blog_slug='my-blog',
@@ -124,3 +139,131 @@ class PostDetailViewTestCase(ViewTestCase):
                                                     post_slug='my-post')
         self.assertEqual(response.template_name[0], 'weblogs/post_detail.html')
 
+    def test_context_blog(self):
+        "The blog should be in the context"
+        response = views.PostDetailView.as_view()(self.request,
+                                                    blog_slug='my-blog',
+                                                    year='2017',
+                                                    month='02',
+                                                    day='20',
+                                                    post_slug='my-post')
+        self.assertIn('blog', response.context_data)
+        self.assertEqual(response.context_data['blog'], self.blog)
+
+
+class PostMonthArchiveViewTestCase(ViewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.blog = BlogFactory(slug='my-blog')
+        PostFactory(blog=self.blog,
+                    status=Post.LIVE_STATUS,
+                    time_published=make_datetime('2017-02-20 12:15:00'))
+
+    def test_response_200(self):
+        "It should respond with 200."
+        response = views.PostMonthArchiveView.as_view()(self.request,
+                                                        blog_slug='my-blog',
+                                                        year='2017',
+                                                        month='02')
+        self.assertEqual(response.status_code, 200)
+
+    def test_response_404_invalid_blog(self):
+        "It should raise 404 if there's no Blog with that slug."
+        with self.assertRaises(Http404):
+            views.PostMonthArchiveView.as_view()(self.request,
+                                                    blog_slug='OTHER-BLOG',
+                                                    year='2017',
+                                                    month='02')
+
+    def test_response_404_invalid_date(self):
+        "It should raise 404 if there's no matching posts in that month"
+        with self.assertRaises(Http404):
+            views.PostMonthArchiveView.as_view()(self.request,
+                                                    blog_slug='my-blog',
+                                                    year='2017',
+                                                    month='03')
+
+    def test_response_404_invalid_status(self):
+        "It should raise 404 if there's no matching published post"
+        PostFactory(blog=self.blog,
+                    status=Post.DRAFT_STATUS,
+                    time_published=make_datetime('2017-03-01 12:15:00'))
+        with self.assertRaises(Http404):
+            views.PostMonthArchiveView.as_view()(self.request,
+                                                    blog_slug='my-blog',
+                                                    year='2017',
+                                                    month='03')
+
+    def test_templates(self):
+        response = views.PostMonthArchiveView.as_view()(self.request,
+                                                        blog_slug='my-blog',
+                                                        year='2017',
+                                                        month='02')
+        self.assertEqual(response.template_name[0],
+                         'weblogs/post_archive_month.html')
+
+    def test_context_blog(self):
+        "The blog should be in the context"
+        response = views.PostMonthArchiveView.as_view()(self.request,
+                                                        blog_slug='my-blog',
+                                                        year='2017',
+                                                        month='02')
+        self.assertIn('blog', response.context_data)
+        self.assertEqual(response.context_data['blog'], self.blog)
+
+
+class PostYearArchiveViewTestCase(ViewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.blog = BlogFactory(slug='my-blog')
+        PostFactory(blog=self.blog,
+                    status=Post.LIVE_STATUS,
+                    time_published=make_datetime('2017-02-20 12:15:00'))
+
+    def test_response_200(self):
+        "It should respond with 200."
+        response = views.PostYearArchiveView.as_view()(self.request,
+                                                        blog_slug='my-blog',
+                                                        year='2017')
+        self.assertEqual(response.status_code, 200)
+
+    def test_response_404_invalid_blog(self):
+        "It should raise 404 if there's no Blog with that slug."
+        with self.assertRaises(Http404):
+            views.PostYearArchiveView.as_view()(self.request,
+                                                    blog_slug='OTHER-BLOG',
+                                                    year='2017')
+
+    def test_response_404_invalid_date(self):
+        "It should raise 404 if there's no matching posts in that month"
+        with self.assertRaises(Http404):
+            views.PostYearArchiveView.as_view()(self.request,
+                                                    blog_slug='my-blog',
+                                                    year='2016')
+
+    def test_response_404_invalid_status(self):
+        "It should raise 404 if there's no matching published post"
+        PostFactory(blog=self.blog,
+                    status=Post.DRAFT_STATUS,
+                    time_published=make_datetime('2016-01-01 12:15:00'))
+        with self.assertRaises(Http404):
+            views.PostYearArchiveView.as_view()(self.request,
+                                                    blog_slug='my-blog',
+                                                    year='2016')
+
+    def test_templates(self):
+        response = views.PostYearArchiveView.as_view()(self.request,
+                                                        blog_slug='my-blog',
+                                                        year='2017')
+        self.assertEqual(response.template_name[0],
+                         'weblogs/post_archive_year.html')
+
+    def test_context_blog(self):
+        "The blog should be in the context"
+        response = views.PostYearArchiveView.as_view()(self.request,
+                                                        blog_slug='my-blog',
+                                                        year='2017')
+        self.assertIn('blog', response.context_data)
+        self.assertEqual(response.context_data['blog'], self.blog)

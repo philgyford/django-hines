@@ -1,0 +1,53 @@
+{% extends 'weblogs/base.html' %}
+
+{% block head_page_title %}{{ blog.name }}: {{ year|date:"Y" }}{% endblock %}
+{% block content_title %}{{ blog.name }}:  {{ year|date:"Y" }}{% endblock %}
+
+{% block content %}
+
+	{% if post_list|length > 0 %}
+		{% load hines_core %}
+		<ul>
+			{% for post in post_list %}
+				<li class="mb-2">
+					<a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
+					{% display_time post.time_published link_to_day=False %}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	{% if previous_year or next_year %}
+		<nav class="nextprev">
+			<p>
+				{% if previous_year %}
+					<a class="btn btn-outline-primary" href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=previous_year|date:"Y" %}">&larr; {{ previous_year|date:"Y" }}</a>
+				{% endif %}
+				{% if next_year %}
+					<a class="btn btn-outline-primary float-right" href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=next_year|date:"Y" %}">{{ next_year|date:"Y" }} &rarr;</a>
+				{% endif %}
+			</p>
+		</nav>
+	{% endif %}
+
+{% endblock content %}
+
+{% block sidebar %}
+	{% if date_list|length > 1 %}
+		{# Don't both showing it if there's only one month #}
+		<div class="card mb-3">
+			<div class="card-block">
+				<h2 class="h6 card-title">Months in {{ year|date:"Y" }}</h2>
+				<ul class="mb-0">
+					{% for month in date_list %}
+						<li>
+							<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=month|date:"Y" month=month|date:"m" %}">{{ month|date:"F" }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	{% endif %}
+
+	{{ block.super }}
+{% endblock sidebar %}

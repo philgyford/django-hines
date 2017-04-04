@@ -5,7 +5,7 @@ Expects:
 
 * post - A Post.
 * in_list - Boolean, default True. Will show a linked title, and metadata.
-
+* compact: Boolean, optional, default is False. Don't show the full body.
 {% endcomment %}
 
 <article class="post">
@@ -15,13 +15,20 @@ Expects:
 		</header>
 	{% endif %}
 
-	<div class="post-intro">
-		{{ post.intro_html|safe }}
-	</div>
+	{% if compact|default_if_none:False %}
+		<div class="post-excerpt">
+			{{ post.intro_html|safe }}
+			<p><a href="{{ post.get_absolute_url }}">Continue reading…</a></p>
+		</div>
+	{% else %}
+		<div class="post-intro">
+			{{ post.intro_html|safe }}
+		</div>
 
-	<div class="post-body">
-		{{ post.body_html|safe }}
-	</div>
+		<div class="post-body">
+			{{ post.body_html|safe }}
+		</div>
+	{% endif %}
 
 	{% if in_list|default_if_none:True %}
 		<footer>

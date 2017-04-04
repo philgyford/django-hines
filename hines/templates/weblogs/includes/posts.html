@@ -4,10 +4,11 @@ Display several Posts.
 Expects:
 
 * post_list: A list or QuerySet of Posts.
+* compact: Boolean, optional, default is False. Don't show the full body.
 {% endcomment %}
 
 {% for post in post_list %}
-	{% include 'weblogs/includes/post.html' with post=post in_list=True only %}
+	{% include 'weblogs/includes/post.html' with post=post in_list=True compact=compact|default_if_none:False only %}
 	<hr>
 {% endfor %}
 

@@ -14,4 +14,14 @@ urlpatterns = [
         view=views.PostDetailView.as_view(),
         name='post_detail'
     ),
+    url(
+        regex=r"^(?P<blog_slug>[^/]+)/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$",
+        view=views.PostMonthArchiveView.as_view(),
+        name='post_month_archive'
+    ),
+    url(
+        regex=r"^(?P<blog_slug>[^/]+)/(?P<year>[0-9]{4})/$",
+        view=views.PostYearArchiveView.as_view(),
+        name='post_year_archive'
+    ),
 ]

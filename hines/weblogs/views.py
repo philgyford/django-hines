@@ -4,7 +4,8 @@ import datetime
 from django.http import Http404
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
-from django.views.generic import DateDetailView, ListView
+from django.views.generic import DateDetailView, ListView, MonthArchiveView,\
+        YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Blog, Post
@@ -32,9 +33,14 @@ class BlogDetailView(SingleObjectMixin, ListView):
 
 
 class PostDetailView(DateDetailView):
+    """
+    A bit complicated because we need to match the post using its slug,
+    its date, and its weblog slug.
+    """
     date_field = 'time_published'
     model = Post
     month_format = '%m'
+    queryset = Post.public_objects
     slug_url_kwarg = 'post_slug'
     template_name = 'weblogs/post_detail.html'
 
@@ -99,6 +105,45 @@ class PostDetailView(DateDetailView):
         except queryset.model.DoesNotExist:
             raise Http404(_("No Posts found matching the query"))
         return obj
+
+
+class PostDatedArchiveMixin(object):
+    """
+    A mixin for the month/year archive views that restricts results to a
+    Blog defined by the `blog_slug` URL kwarg.
+    Also includes `blog` in the context_data.
+    """
+    allow_empty = False
+    allow_future = False
+    date_field = 'time_published'
+    model = Post
+    queryset = Post.public_objects
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(blog__slug=self.kwargs.get('blog_slug'))
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context['blog'] = Blog.objects.get(
+                                            slug=self.kwargs.get('blog_slug'))
+        except Blog.DoesNotExist:
+            context['blog'] = None
+        return context
+
+
+class PostMonthArchiveView(PostDatedArchiveMixin, MonthArchiveView):
+    month_format = '%m'
+    template_name = 'weblogs/post_archive_month.html'
+
+
+class PostYearArchiveView(PostDatedArchiveMixin, YearArchiveView):
+    year_format = '%Y'
+    make_object_list = True
+    template_name = 'weblogs/post_archive_year.html'
+
 
 
 def _date_from_string(year, year_format, month='', month_format='', day='', day_format='', delim='__'):
