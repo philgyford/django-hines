@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'flatblocks',
+    'markdownx',
     'hines.users',
     'hines.core',
     'hines.weblogs',
@@ -128,6 +129,7 @@ STATICFILES_DIRS = [
     os.path.join(APPS_DIR, 'static'),
 ]
 
+STATIC_ROOT = os.path.join(APPS_DIR, 'static_collected')
 STATIC_URL = '/static/'
 
 SITE_ID = 1

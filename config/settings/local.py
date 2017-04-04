@@ -8,6 +8,8 @@ ALLOWED_HOSTS = ["*",]
 MEDIA_ROOT = os.path.join(APPS_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# STATIC_ROOT = os.path.join(APPS_DIR, 'static')
+
 
 # Debug Toolbar settings.
 if DEBUG:

@@ -7,6 +7,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^phil/', include('hines.core.urls', namespace='hines')),
+
+    # Used in the weblogs app for the Admin:
+    url(r'^markdownx/', include('markdownx.urls')),
 ]
 
 

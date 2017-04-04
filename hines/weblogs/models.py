@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils import timezone
 
-from markdown import markdown
+from markdownx.utils import markdownify
 
 from hines.core.models import TimeStampedModelMixin
 from hines.core.utils import truncate_string
@@ -165,7 +165,7 @@ class Post(TimeStampedModelMixin, models.Model):
         based on the object's html_format.
         """
         if (self.html_format == self.MARKDOWN_FORMAT):
-            html = markdown(text)
+            html = markdownify(text)
         elif (self.html_format == self.CONVERT_LINE_BREAKS_FORMAT):
             html = linebreaks(text)
         else:

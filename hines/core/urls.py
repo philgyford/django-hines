@@ -6,6 +6,9 @@ from . import views
 
 
 urlpatterns = [
+    # Used in the weblogs app for the Admin:
+    url(r'^markdownx/', include('markdownx.urls')),
+
     url(
         regex=r"^$",
         view=views.HomeView.as_view(),
@@ -36,6 +39,5 @@ urlpatterns = [
     url(r'^500/$', TemplateView.as_view(template_name='500.html')),
 
     url(r'^', include('hines.weblogs.urls')),
-
 ]
 

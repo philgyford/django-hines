@@ -1,4 +1,8 @@
 from django.contrib import admin
+from django.db import models
+from django import forms
+
+from markdownx.widgets import AdminMarkdownxWidget
 
 from .models import Blog, Post
 
@@ -22,6 +26,16 @@ class BlogAdmin(admin.ModelAdmin):
     readonly_fields = ('time_created', 'time_modified',)
 
 
+class PostAdminForm(forms.ModelForm):
+    "So we can use Markdownx for two specific Post fields."
+    class Meta:
+        model = Post
+        widgets = {
+            'intro': AdminMarkdownxWidget,
+            'body': AdminMarkdownxWidget,
+        }
+        fields = '__all__'
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -30,6 +44,8 @@ class PostAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
     search_fields = ('title', 'excerpt', 'intro', 'body', )
     date_hierarchy = 'time_published'
+
+    form = PostAdminForm
 
     fieldsets = (
         (None, {
