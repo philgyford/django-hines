@@ -1,0 +1,29 @@
+{% comment %}
+Used by the blog_years_card template tag.
+
+Expects:
+* date_list - A QuerySet of date objects, one per year.
+* card_title - The title for the card.
+* blog - The Blog object.
+* current_year - The year that shouldn't be linked. Optional.
+{% endcomment %}
+
+{% if date_list|length > 0 %}
+	<div class="card mb-3">
+		<div class="card-block">
+			<h2 class="h6 card-title">{{ card_title }}</h2>
+			<ul class="mb-0 list-inline">
+				{% for year in date_list %}
+					<li class="list-inline-item">
+						{% if current_year == year %}
+							{{ year|date:"Y" }}
+						{% else %}
+							<a href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=year|date:"Y" %}" title="See all posts in {{ year|date:"Y" }}">{{ year|date:"Y" }}</a>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endif %}
+

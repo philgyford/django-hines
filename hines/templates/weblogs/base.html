@@ -1,2 +1,9 @@
 {% extends 'core/base.html' %}
 
+{% block sidebar %}
+
+	{% load hines_weblogs %}
+	{% blog_years_card blog=blog current_year=year|default_if_none:None %}
+
+	{{ block.super }}
+{% endblock sidebar %}

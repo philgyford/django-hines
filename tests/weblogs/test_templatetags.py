@@ -2,7 +2,8 @@ from django.test import TestCase
 
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post
-from hines.weblogs.templatetags.hines_weblogs import recent_posts
+from hines.weblogs.templatetags.hines_weblogs import blog_years, recent_posts
+from tests.core import make_date, make_datetime
 
 
 class RecentPostsTestCase(TestCase):
@@ -39,6 +40,28 @@ class RecentPostsTestCase(TestCase):
         self.assertEqual(len(posts), 6)
 
 
+class BlogYearsTestCase(TestCase):
 
+    def setUp(self):
+        self.blog = BlogFactory()
+        # Two published posts for this blog in 2016 and 2017:
+        PostFactory(blog=self.blog, status=Post.LIVE_STATUS,
+                    time_published=make_datetime('2016-03-01 12:00:00'))
+        PostFactory(blog=self.blog, status=Post.LIVE_STATUS,
+                    time_published=make_datetime('2017-03-01 12:00:00'))
 
+        # This is a draft, so 2015 shouldn't be included:
+        PostFactory(blog=self.blog, status=Post.DRAFT_STATUS,
+                    time_published=make_datetime('2015-03-01 12:00:00'))
+
+        # This is from a different blog, so 2014 shouldn't be included.
+        PostFactory(status=Post.LIVE_STATUS,
+                    time_published=make_datetime('2014-03-01 12:00:00'))
+        
+    def test_queryset(self):
+        "Should not include draft posts or posts from other blogs."
+        qs = blog_years(blog=self.blog)
+        self.assertEqual(len(qs), 2)
+        self.assertEqual(qs[0], make_date('2016-01-01'))
+        self.assertEqual(qs[1], make_date('2017-01-01'))
 
