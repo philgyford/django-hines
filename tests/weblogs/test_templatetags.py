@@ -58,7 +58,7 @@ class BlogYearsTestCase(TestCase):
         # This is from a different blog, so 2014 shouldn't be included.
         PostFactory(status=Post.LIVE_STATUS,
                     time_published=make_datetime('2014-03-01 12:00:00'))
-        
+
     def test_queryset(self):
         "Should not include draft posts or posts from other blogs."
         qs = blog_years(blog=self.blog)
