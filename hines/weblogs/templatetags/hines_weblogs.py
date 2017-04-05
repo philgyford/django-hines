@@ -2,10 +2,18 @@ from django import template
 
 from taggit.models import Tag
 
-from ..models import Post
+from ..models import Blog, Post
 
 
 register = template.Library()
+
+
+@register.assignment_tag
+def get_all_blogs():
+    """
+    Returns a QuerySet of Blog objects.
+    """
+    return Blog.objects.all()
 
 
 @register.assignment_tag

@@ -3,8 +3,19 @@ from django.test import TestCase
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post
 from hines.weblogs.templatetags.hines_weblogs import blog_years,\
-        blog_popular_tags, recent_posts
+        blog_popular_tags, get_all_blogs, recent_posts
 from tests.core import make_date, make_datetime
+
+
+class GetAllBlogsTestCase(TestCase):
+
+    def test_queryset(self):
+        b2 = BlogFactory(sort_order=2)
+        b1 = BlogFactory(sort_order=1)
+        blogs = get_all_blogs()
+        self.assertEqual(len(blogs), 2)
+        self.assertEqual(blogs[0], b1)
+        self.assertEqual(blogs[1], b2)
 
 
 class RecentPostsTestCase(TestCase):
