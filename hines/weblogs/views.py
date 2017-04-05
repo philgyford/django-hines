@@ -6,8 +6,8 @@ from taggit.models import Tag
 from django.http import Http404
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
-from django.views.generic import DateDetailView, DayArchiveView, ListView,\
-        MonthArchiveView, YearArchiveView
+from django.views.generic import DateDetailView, DayArchiveView, DetailView,\
+        ListView, MonthArchiveView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Blog, Post
@@ -53,6 +53,18 @@ class BlogTagDetailView(BlogDetailParentView):
     def get_queryset(self):
         return self.object.public_posts.filter(
                                 tags__slug__in=[self.kwargs.get('tag_slug')])
+
+
+class BlogTagListView(DetailView):
+    "Listing the most popular Tags in a Blog."
+    model = Blog
+    slug_url_kwarg = 'blog_slug'
+    template_name = 'weblogs/blog_tag_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag_list'] = self.object.popular_tags(num=30)
+        return context
 
 
 class PostDetailView(DateDetailView):

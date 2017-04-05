@@ -10,6 +10,11 @@ urlpatterns = [
         name='blog_detail'
     ),
     url(
+        regex=r"^(?P<blog_slug>[^/]+)/tags/$",
+        view=views.BlogTagListView.as_view(),
+        name='blog_tag_list'
+    ),
+    url(
         regex=r"^(?P<blog_slug>[^/]+)/tags/(?P<tag_slug>[^/]+)/$",
         view=views.BlogTagDetailView.as_view(),
         name='blog_tag_detail'

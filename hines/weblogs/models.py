@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.db.models import Count
 from django.template.defaultfilters import linebreaks
 from django.urls import reverse
 from django.utils.html import strip_tags
@@ -7,7 +8,7 @@ from django.utils import timezone
 
 from markdownx.utils import markdownify
 from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import Tag, TaggedItemBase
 
 from hines.core.models import TimeStampedModelMixin
 from hines.core.utils import truncate_string
@@ -45,6 +46,14 @@ class Blog(TimeStampedModelMixin, models.Model):
                             kwargs={
                                 'blog_slug': self.slug,
                             })
+
+    def popular_tags(self, num=10):
+        return Tag.objects.filter(
+            weblogs_taggedpost_items__content_object__blog=self,
+            weblogs_taggedpost_items__content_object__status=Post.LIVE_STATUS,
+        )\
+        .annotate(post_count=Count('weblogs_taggedpost_items'))\
+        .order_by('-post_count', 'slug')[:num]
 
 
 class TaggedPost(TaggedItemBase):

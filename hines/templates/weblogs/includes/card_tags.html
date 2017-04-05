@@ -11,14 +11,10 @@ Expects:
 	<div class="card mb-3">
 		<div class="card-block">
 			<h2 class="h6 card-title">{{ card_title }}</h2>
-			<ol class="mb-0">
-				{% for tag in tag_list %}
-					<li>
-						<a href="{% url 'hines:blog_tag_detail' blog_slug=blog.slug tag_slug=tag.slug %}">{{ tag.name }}</a>
-						<small>({{ tag.post_count }})</small>
-					</li>
-				{% endfor %}
-			</ol>
+
+			{% include 'weblogs/includes/tags.html' with blog=blog tag_list=tag_list only %}
+
+			<p class="card-text"><a href="{% url 'hines:blog_tag_list' blog_slug=blog.slug %}">More tags</a></p>
 		</div>
 	</div>
 {% endif %}

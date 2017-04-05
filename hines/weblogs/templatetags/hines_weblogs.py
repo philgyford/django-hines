@@ -1,5 +1,4 @@
 from django import template
-from django.db.models import Count
 
 from taggit.models import Tag
 
@@ -60,12 +59,7 @@ def blog_popular_tags(blog, num=10):
     Each one has a `post_count` field indicating the number of Posts in this
     Blog that has this Tag.
     """
-    return Tag.objects.filter(
-            weblogs_taggedpost_items__content_object__blog=blog,
-            weblogs_taggedpost_items__content_object__status=Post.LIVE_STATUS,
-        )\
-        .annotate(post_count=Count('weblogs_taggedpost_items'))\
-        .order_by('-post_count', 'slug')[:num]
+    return blog.popular_tags(num=num)
 
 
 @register.inclusion_tag('weblogs/includes/card_tags.html')
@@ -73,7 +67,7 @@ def blog_popular_tags_card(blog, num=10):
     """
     """
     return {
-            'card_title': 'Most popular tags',
+            'card_title': 'Most-used tags',
             'tag_list': blog_popular_tags(blog=blog, num=num),
             'blog': blog,
             }

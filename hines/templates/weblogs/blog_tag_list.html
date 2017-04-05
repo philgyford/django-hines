@@ -1,0 +1,11 @@
+{% extends 'weblogs/base.html' %}
+
+{% block head_page_title %}{{ blog.name }}: Most-used tags{% endblock %}
+{% block content_title %}{{ blog.name }}: Most-used tags{% endblock %}
+
+{% block content %}
+
+	{% include 'weblogs/includes/tags.html' with blog=blog tag_list=tag_list only %}
+
+{% endblock %}
+
