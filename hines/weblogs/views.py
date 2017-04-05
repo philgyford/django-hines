@@ -1,5 +1,7 @@
 import datetime
 
+from taggit.models import Tag
+
 # from django.core.paginator import Paginator
 from django.http import Http404
 from django.utils.encoding import force_str
@@ -11,9 +13,11 @@ from django.views.generic.detail import SingleObjectMixin
 from .models import Blog, Post
 
 
-class BlogDetailView(SingleObjectMixin, ListView):
+class BlogDetailParentView(SingleObjectMixin, ListView):
+    """
+    A parent class for all views that will list Posts from a Blog.
+    """
     slug_url_kwarg = 'blog_slug'
-    template_name = 'weblogs/blog_detail.html'
     paginate_by = 25
     page_kwarg = 'p'
     allow_empty = False
@@ -28,8 +32,27 @@ class BlogDetailView(SingleObjectMixin, ListView):
         context['post_list'] = context['object_list']
         return context
 
+
+class BlogDetailView(BlogDetailParentView):
+    "Front page of a Blog, listing its recent Posts."
+    template_name = 'weblogs/blog_detail.html'
+
     def get_queryset(self):
         return self.object.public_posts.all()
+
+
+class BlogTagDetailView(BlogDetailParentView):
+    "Listing Posts with a particular Tag (by 'tag_slug') in a Blog."
+    template_name = 'weblogs/blog_tag_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = Tag.objects.get(slug=self.kwargs.get('tag_slug'))
+        return context
+
+    def get_queryset(self):
+        return self.object.public_posts.filter(
+                                tags__slug__in=[self.kwargs.get('tag_slug')])
 
 
 class PostDetailView(DateDetailView):

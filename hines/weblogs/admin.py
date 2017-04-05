@@ -53,7 +53,8 @@ class PostAdmin(admin.ModelAdmin):
                         'time_published', 'featured',)
         }),
         ('The post', {
-            'fields': ('html_format', 'intro', 'body', 'excerpt', 'remote_url'),
+            'fields': ('html_format', 'intro', 'body', 'excerpt', 'remote_url',
+                'tags',),
         }),
         ('Times', {
             'classes': ('collapse',),

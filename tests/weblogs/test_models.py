@@ -41,6 +41,10 @@ class BlogTestCase(TestCase):
         draft_post = PostFactory(blog=blog, status=Post.DRAFT_STATUS)
         self.assertEqual(len(blog.public_posts.all()), 2)
 
+    def test_get_absolute_url(self):
+        blog = BlogFactory(slug='writing')
+        self.assertEqual(blog.get_absolute_url(), '/phil/writing/')
+
 
 class PostTestCase(TestCase):
 
@@ -199,3 +203,19 @@ Another line.""")
         previous_post = PostFactory(status=Post.LIVE_STATUS, blog=blog,
                            time_published=make_datetime('2017-04-03 12:00:00'))
         self.assertEqual(post.get_previous_post(), previous_post)
+
+    def test_tags(self):
+        "Should be able to add tags."
+        # Don't want to test everything about django-taggit.
+        # Just make sure it's generall working on Posts.
+        post = PostFactory()
+        post.tags.add('Haddock', 'Sea', 'Fish')
+        tags = post.get_tags()
+        self.assertEqual(len(tags), 3)
+        self.assertEqual(tags[0].name, 'Fish')
+        self.assertEqual(tags[0].slug, 'fish')
+        self.assertEqual(tags[1].name, 'Haddock')
+        self.assertEqual(tags[1].slug, 'haddock')
+        self.assertEqual(tags[2].name, 'Sea')
+        self.assertEqual(tags[2].slug, 'sea')
+

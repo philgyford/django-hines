@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'flatblocks',
-    'markdownx',
+    'markdownx',        # for weblogs
+    'taggit',           # for weblogs
     'hines.users',
     'hines.core',
     'hines.weblogs',

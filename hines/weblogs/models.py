@@ -6,6 +6,8 @@ from django.utils.html import strip_tags
 from django.utils import timezone
 
 from markdownx.utils import markdownify
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
 
 from hines.core.models import TimeStampedModelMixin
 from hines.core.utils import truncate_string
@@ -37,6 +39,21 @@ class Blog(TimeStampedModelMixin, models.Model):
     def public_posts(self):
         "Returns a QuerySet of publicly-visible Posts for this Blog."
         return Post.public_objects.filter(blog=self)
+
+    def get_absolute_url(self):
+        return reverse('hines:blog_detail',
+                            kwargs={
+                                'blog_slug': self.slug,
+                            })
+
+
+class TaggedPost(TaggedItemBase):
+    """
+    A custom through model thing for django-taggit so we can do custom things
+    with tagged Posts, like get the most popular tags filtered by Blog, Status,
+    etc.
+    """
+    content_object = models.ForeignKey('Post')
 
 
 class Post(TimeStampedModelMixin, models.Model):
@@ -109,6 +126,9 @@ class Post(TimeStampedModelMixin, models.Model):
                 on_delete=models.CASCADE, null=True, blank=False,
                 related_name='posts')
 
+    # But you might want to use self.get_tags() instead, so they're in order.
+    tags = TaggableManager(through=TaggedPost)
+
     objects = models.Manager()
 
     public_objects = managers.PublicPostsManager()
@@ -158,6 +178,9 @@ class Post(TimeStampedModelMixin, models.Model):
                                     )\
                                    .order_by('time_published')\
                                    .first()
+
+    def get_tags(self):
+        return self.tags.all().order_by('name')
 
     def htmlize_text(self, text):
         """

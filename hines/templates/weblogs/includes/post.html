@@ -28,6 +28,18 @@ Expects:
 		<div class="post-body">
 			{{ post.body_html|safe }}
 		</div>
+
+		{% with post.get_tags as tags %}
+			{% if tags|length > 0 %}
+				<ul class="post-tags list-inline">
+					{% for tag in tags %}
+						<li class="list-inline-item">
+							<a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
 	{% endif %}
 
 	{% if in_list|default_if_none:True %}
