@@ -4,8 +4,8 @@ import datetime
 from django.http import Http404
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
-from django.views.generic import DateDetailView, ListView, MonthArchiveView,\
-        YearArchiveView
+from django.views.generic import DateDetailView, DayArchiveView, ListView,\
+        MonthArchiveView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Blog, Post
@@ -132,6 +132,12 @@ class PostDatedArchiveMixin(object):
         except Blog.DoesNotExist:
             context['blog'] = None
         return context
+
+
+class PostDayArchiveView(PostDatedArchiveMixin, DayArchiveView):
+    day_format = '%d'
+    month_format = '%m'
+    template_name = 'weblogs/post_archive_day.html'
 
 
 class PostMonthArchiveView(PostDatedArchiveMixin, MonthArchiveView):

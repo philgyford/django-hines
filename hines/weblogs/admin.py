@@ -63,7 +63,7 @@ class PostAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('title',)}
     radio_fields = {'featured': admin.HORIZONTAL}
-    readonly_fields = ('time_created', 'time_modified', 'time_published',)
+    readonly_fields = ('time_created', 'time_modified', )
 
     def is_published(self, obj):
         return obj.status == Post.LIVE_STATUS

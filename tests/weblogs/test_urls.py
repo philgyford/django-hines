@@ -36,6 +36,22 @@ class WeblogsUrlsTestCase(TestCase):
                 resolve('/phil/my-blog/2017/02/20/my-post/').func.__name__,
                          views.PostDetailView.__name__)
 
+    def test_post_day_archive_url(self):
+        self.assertEqual(
+                reverse('hines:post_day_archive', kwargs={
+                                'blog_slug': 'my-blog',
+                                'year': '2017',
+                                'month': '02',
+                                'day': '01'}),
+                '/phil/my-blog/2017/02/01/')
+
+    def test_post_day_archive_view(self):
+        "Should use the correct view."
+        self.assertEqual(
+                resolve('/phil/my-blog/2017/02/01/').func.__name__,
+                         views.PostDayArchiveView.__name__)
+
+
     def test_post_month_archive_url(self):
         self.assertEqual(
                 reverse('hines:post_month_archive', kwargs={

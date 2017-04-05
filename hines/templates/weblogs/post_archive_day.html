@@ -1,0 +1,23 @@
+{% extends 'weblogs/base.html' %}
+
+{% block head_page_title %}{{ blog.name }}: {{ day|date:"j F Y" }}{% endblock %}
+{% block content_title %}{{ blog.name }}:  {{ day|date:"j F Y" }}{% endblock %}
+
+{% block content %}
+
+	{% include 'weblogs/includes/posts.html' with post_list=post_list compact=True only %}
+
+	{% if previous_day or next_day %}
+		<nav class="nextprev">
+			<p>
+				{% if previous_day %}
+					<a class="btn btn-outline-primary" href="{% url 'hines:post_day_archive' blog_slug=blog.slug year=previous_day|date:"Y" month=previous_day|date:"m" day=previous_day|date:"d" %}">&larr; {{ previous_day|date:"j M Y" }}</a>
+				{% endif %}
+				{% if next_day %}
+					<a class="btn btn-outline-primary float-right" href="{% url 'hines:post_day_archive' blog_slug=blog.slug year=next_day|date:"Y" month=next_day|date:"m" day=next_day|date:"d" %}">{{ next_day|date:"j M Y" }} &rarr;</a>
+				{% endif %}
+			</p>
+		</nav>
+	{% endif %}
+
+{% endblock %}
