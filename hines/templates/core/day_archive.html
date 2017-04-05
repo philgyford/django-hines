@@ -3,6 +3,19 @@
 {% block head_title %}{{ site_name }}{% endblock %}
 
 {% block content %}
-Day archive view.
+	Day archive view.
+
+	{% if previous_day or next_day %}
+		<nav class="nextprev">
+			<p>
+				{% if previous_day %}
+					<a class="btn btn-outline-primary" href="{% url 'hines:day_archive' year=previous_day|date:"Y" month=previous_day|date:"m" day=previous_day|date:"d" %}">&larr; {{ previous_day|date:"j M Y" }}</a>
+				{% endif %}
+				{% if next_day %}
+					<a class="btn btn-outline-primary float-right" href="{% url 'hines:day_archive' year=next_day|date:"Y" month=next_day|date:"m" day=next_day|date:"d" %}">{{ next_day|date:"j M Y" }} &rarr;</a>
+				{% endif %}
+			</p>
+		</nav>
+	{% endif %}
 {% endblock %}
 
