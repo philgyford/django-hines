@@ -23,7 +23,7 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
     day_format = '%d'
     month_format = '%m'
     year_format = '%Y'
-    template_name = 'core/day_archive.html'
+    template_name = 'core/archive_day.html'
 
     def get_allow_future(self):
         """
