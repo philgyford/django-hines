@@ -2,7 +2,8 @@ from django.test import TestCase
 
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post
-from hines.weblogs.templatetags.hines_weblogs import blog_years, recent_posts
+from hines.weblogs.templatetags.hines_weblogs import blog_years,\
+        blog_popular_tags, recent_posts
 from tests.core import make_date, make_datetime
 
 
@@ -64,4 +65,37 @@ class BlogYearsTestCase(TestCase):
         self.assertEqual(len(qs), 2)
         self.assertEqual(qs[0], make_date('2016-01-01'))
         self.assertEqual(qs[1], make_date('2017-01-01'))
+
+
+class BlogPopularTagsTestCase(TestCase):
+
+    def setUp(self):
+        self.blog = BlogFactory()
+        fish_post_1 = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
+        fish_post_2 = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
+        fish_post_1.tags.add('Fish')
+        fish_post_1.tags.add('Haddock')
+        fish_post_2.tags.add('Fish')
+
+        # Neither of these should be counted:
+        draft_post = PostFactory(blog=self.blog, status=Post.DRAFT_STATUS)
+        draft_post.tags.add('Fish')
+        other_blogs_post = PostFactory(status=Post.LIVE_STATUS)
+        other_blogs_post.tags.add('Fish')
+
+    def test_queryset(self):
+        "Should return the tags, in order, with post_counts."
+        qs = blog_popular_tags(blog=self.blog)
+        self.assertEqual(len(qs), 2)
+        self.assertEqual(qs[0].name, 'Fish')
+        self.assertEqual(qs[0].post_count, 2)
+        self.assertEqual(qs[1].name, 'Haddock')
+        self.assertEqual(qs[1].post_count, 1)
+
+    def test_queryset_num(self):
+        "Should limit the number of results"
+        qs = blog_popular_tags(blog=self.blog, num=1)
+        self.assertEqual(len(qs), 1)
+        self.assertEqual(qs[0].name, 'Fish')
+        self.assertEqual(qs[0].post_count, 2)
 

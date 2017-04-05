@@ -1,0 +1,25 @@
+{% comment %}
+Used by the blog_popular_tags_card template tag.
+
+Expects:
+* tag_list - A QuerySet of Tags, with 'post_count' field.
+* card_title - The title for the card.
+* blog - A Blog object.
+{% endcomment %}
+
+{% if tag_list|length > 0 %}
+	<div class="card mb-3">
+		<div class="card-block">
+			<h2 class="h6 card-title">{{ card_title }}</h2>
+			<ol class="mb-0">
+				{% for tag in tag_list %}
+					<li>
+						<a href="{% url 'hines:blog_tag_detail' blog_slug=blog.slug tag_slug=tag.slug %}">{{ tag.name }}</a>
+						<small>({{ tag.post_count }})</small>
+					</li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+{% endif %}
+

@@ -10,7 +10,7 @@ Expects:
 	<div class="card mb-3">
 		<div class="card-block">
 			<h2 class="h6 card-title">{{ card_title }}</h2>
-			<ul>
+			<ul class="mb-0">
 				{% for post in post_list %}
 					<li>
 						<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
