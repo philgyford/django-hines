@@ -66,6 +66,78 @@ class BlogDetailViewTestCase(ViewTestCase):
             views.BlogDetailView.as_view()(request, blog_slug='my-blog')
 
 
+class BlogTagDetailViewTestCase(ViewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.blog = BlogFactory(slug='my-blog')
+        self.post = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
+        self.post.tags.add('Fish')
+
+    def test_response_200(self):
+        "It should respond with 200."
+        response = views.BlogTagDetailView.as_view()(
+                            self.request, blog_slug='my-blog', tag_slug='fish')
+        self.assertEqual(response.status_code, 200)
+
+    def test_response_404_blog(self):
+        "It should raise 404 if there's no Blog with that slug."
+        with self.assertRaises(Http404):
+            views.BlogTagDetailView.as_view()(
+                        self.request, blog_slug='other-blog', tag_slug='fish')
+
+    def test_response_404_tag(self):
+        "It should raise 404 if there's no tag with that slug on that Blog."
+        with self.assertRaises(Http404):
+            views.BlogTagDetailView.as_view()(
+                        self.request, blog_slug='my-blog', tag_slug='nope')
+
+    def test_templates(self):
+        response = views.BlogTagDetailView.as_view()(
+                            self.request, blog_slug='my-blog', tag_slug='fish')
+        self.assertEqual(response.template_name[0],
+                         'weblogs/blog_tag_detail.html')
+
+    def test_context_post_list(self):
+        "It should include the post_list, of public posts, in the context."
+        # None of these should be listed:
+        other_blogs_post = PostFactory()
+        draft_post = PostFactory(blog=self.blog, status=Post.DRAFT_STATUS)
+        other_tag_post = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
+        other_tag_post.tags.add('Cats')
+
+        response = views.BlogTagDetailView.as_view()(
+                            self.request, blog_slug='my-blog', tag_slug='fish')
+        self.assertIn('post_list', response.context_data)
+        self.assertEqual(len(response.context_data['post_list']), 1)
+        self.assertEqual(response.context_data['post_list'][0], self.post)
+
+    def test_is_paginated(self):
+        "It should split the posts into pages."
+        # Another page's worth of posts in addition to self.post:
+        PostFactory.create_batch(25, blog=self.blog, status=Post.LIVE_STATUS)
+        for post in Post.objects.all():
+            post.tags.add('Fish')
+
+        # Get first page:
+        response = views.BlogTagDetailView.as_view()(
+                            self.request, blog_slug='my-blog', tag_slug='fish')
+        self.assertEqual(len(response.context_data['post_list']), 25)
+
+        # Get second page:
+        request = self.factory.get('/fake-path/?p=2')
+        response = views.BlogTagDetailView.as_view()(
+                                request, blog_slug='my-blog', tag_slug='fish')
+        self.assertEqual(len(response.context_data['post_list']), 1)
+
+    def test_pagination_404(self):
+        "It should raise 404 if requesting a non-existent page number."
+        request = self.factory.get('/fake-path/?p=2')
+        with self.assertRaises(Http404):
+            views.BlogTagDetailView.as_view()(
+                                request, blog_slug='my-blog', tag_slug='fish')
+
+
 class PostDetailViewTestCase(ViewTestCase):
 
     def setUp(self):
