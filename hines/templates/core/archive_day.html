@@ -1,9 +1,19 @@
 {% extends 'core/base.html' %}
 
-{% block head_title %}{{ site_name }}{% endblock %}
+{% block head_page_title %}{{ day|date:"j F Y" }}{% endblock %}
+{% block content_title %}{{ day|date:"j F Y" }}{% endblock %}
 
 {% block content %}
-	Day archive view.
+
+	{% if blogs|length > 0 %}
+		<hr>
+		{% for blog_data in blogs %}
+			<h2>{{ blog_data.blog.name }}</h2>
+
+			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list only %}
+
+		{% endfor %}
+	{% endif %}
 
 	{% if previous_day or next_day %}
 		<nav class="nextprev">

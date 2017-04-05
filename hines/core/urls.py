@@ -6,8 +6,6 @@ from . import views
 
 
 urlpatterns = [
-    # Used in the weblogs app for the Admin:
-    url(r'^markdownx/', include('markdownx.urls')),
 
     url(
         regex=r"^$",

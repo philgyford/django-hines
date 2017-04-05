@@ -8,6 +8,8 @@ from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 
+from hines.weblogs.models import Blog, Post
+
 
 class HomeView(TemplateView):
     template_name = 'core/home.html'
@@ -19,11 +21,21 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
     don't have a single QuerySet we're fetching for this date, so we can't
     use it.
     """
+    # Note: Disallowing empty pages will still show next/prev links to empty
+    # pages as we don't currently check all the contents of next/prev pages:
+    allow_empty = True
     allow_future = False
     day_format = '%d'
     month_format = '%m'
     year_format = '%Y'
     template_name = 'core/archive_day.html'
+
+    def get_allow_empty(self):
+        """
+        Returns ``True`` if the view should display empty lists, and ``False``
+        if a 404 should be raised instead.
+        """
+        return self.allow_empty
 
     def get_allow_future(self):
         """
@@ -34,9 +46,14 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # date_list and object_list aren't used here.
-        date_list, object_list, extra_context = self.get_dated_items()
+        # date_list isn't used here:
+        # And object_lists is a dict of data, rather than one QuerySet:
+        date_list, object_lists, extra_context = self.get_dated_items()
+
         context.update(extra_context)
+
+        context.update(object_lists)
+
         return context
 
     def get_dated_items(self):
@@ -58,8 +75,25 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         """
         Mirroring the behaviour of BaseDateListView's method, just to keep
         things consistent.
+
+        EXCEPT - we return a dict of data as the second item, rather than a
+        single QuerySet.
         """
-        return (None, None, {
+        allow_future = self.get_allow_future()
+        allow_empty = self.get_allow_empty()
+
+        if not allow_future and date > timezone_today():
+            raise Http404(_("Future dates not available"))
+
+        object_lists = {}
+
+        object_lists.update(self._get_weblog_posts(date))
+
+        if not allow_empty:
+            if len(object_lists) == 0:
+                raise Http404(_("Nothing available"))
+
+        return (None, object_lists, {
             'day': date,
             'previous_day': self.get_previous_day(date),
             'next_day': self.get_next_day(date),
@@ -75,6 +109,21 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
     def get_previous_day(self, date):
         return date - datetime.timedelta(days=1)
+
+    def _get_weblog_posts(self, date):
+        blogs = []
+        for blog in Blog.objects.all():
+            qs = blog.public_posts.filter(time_published__date=date)
+            if qs.count() > 0:
+                blogs.append({
+                    'blog': blog,
+                    'post_list': qs
+                })
+
+        if len(blogs) > 0:
+            return {'blogs': blogs}
+        else:
+            return {}
 
 
 def timezone_today():
