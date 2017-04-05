@@ -2,3 +2,4 @@ Django==1.10.6
 django-flatblocks==0.9.3
 django-markdownx==1.8.1
 pytz==2017.2
+whitenoise==3.3.0

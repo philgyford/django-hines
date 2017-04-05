@@ -24,3 +24,8 @@ Run tests:
 
 	$ ./manage.py test --settings=config.settings.tests
 
+To check Whitenoise is compressing and loading static assets correctly while using the Django development server:
+
+	* Run `./manage.py collectstatic`.
+	* Set `DEBUG = False` in `config/settings/local.py`.
+
