@@ -38,7 +38,7 @@ class PostFactory(factory.DjangoModelFactory):
             return
 
         if extracted:
-            # A list of groups were passed in, use them.
+            # A list of tags were passed in, use them.
             for tag in extracted:
                 self.tags.add(tag)
 
