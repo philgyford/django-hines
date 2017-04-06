@@ -136,6 +136,52 @@ class BlogTagDetailViewTestCase(ViewTestCase):
                                 request, blog_slug='my-blog', tag_slug='fish')
 
 
+class BlogTagListViewTestCase(ViewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.blog = BlogFactory(slug='my-blog')
+        LivePostFactory(blog=self.blog, tags=['Skate', 'Haddock', 'Cod'])
+        LivePostFactory(blog=self.blog, tags=['Skate', 'Haddock',])
+        LivePostFactory(blog=self.blog, tags=['Skate',])
+
+        # These shouldn't be used in the tag list:
+        DraftPostFactory(blog=self.blog, tags=['Skate',])
+        LivePostFactory(tags=['Skate',])
+
+    def test_response_200(self):
+        "It should respond with 200."
+        response = views.BlogTagListView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        self.assertEqual(response.status_code, 200)
+
+    def test_response_404_blog(self):
+        "It should raise 404 if there's no Blog with that slug."
+        with self.assertRaises(Http404):
+            views.BlogTagListView.as_view()(
+                                    self.request, blog_slug='other-blog')
+
+    def test_context_blog(self):
+        response = views.BlogTagListView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        self.assertIn('blog', response.context_data)
+        self.assertEqual(response.context_data['blog'], self.blog)
+
+    def test_context_tag_list(self):
+        "It shouldn't include tags from draft posts or posts on other blogs."
+        response = views.BlogTagListView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        context = response.context_data
+        self.assertIn('tag_list', context)
+        self.assertEqual(len(context['tag_list']), 3)
+        self.assertEqual(context['tag_list'][0].name, 'Skate')
+        self.assertEqual(context['tag_list'][0].post_count, 3)
+        self.assertEqual(context['tag_list'][1].name, 'Haddock')
+        self.assertEqual(context['tag_list'][1].post_count, 2)
+        self.assertEqual(context['tag_list'][2].name, 'Cod')
+        self.assertEqual(context['tag_list'][2].post_count, 1)
+
+
 class PostDetailViewTestCase(ViewTestCase):
 
     def setUp(self):
