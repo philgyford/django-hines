@@ -6,8 +6,8 @@ from django.test import TestCase
 
 from tests.core import make_datetime
 from tests.core.test_views import ViewTestCase
-from hines.weblogs.factories import BlogFactory, PostFactory
-from hines.weblogs.models import Post
+from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
+        LivePostFactory
 from hines.weblogs import views
 
 
@@ -16,7 +16,7 @@ class BlogDetailViewTestCase(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        self.post = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
+        self.post = LivePostFactory(blog=self.blog)
 
     def test_response_200(self):
         "It should respond with 200."
@@ -37,8 +37,8 @@ class BlogDetailViewTestCase(ViewTestCase):
 
     def test_context_post_list(self):
         "It should include the post_list, of public posts, in the context."
-        other_blogs_post = PostFactory()
-        draft_post = PostFactory(blog=self.blog, status=Post.DRAFT_STATUS)
+        other_blogs_post = LivePostFactory()
+        draft_post = DraftPostFactory(blog=self.blog)
         response = views.BlogDetailView.as_view()(
                                             self.request, blog_slug='my-blog')
         self.assertIn('post_list', response.context_data)
@@ -48,7 +48,7 @@ class BlogDetailViewTestCase(ViewTestCase):
     def test_is_paginated(self):
         "It should split the posts into pages."
         # Another page's worth of posts in addition to self.post:
-        PostFactory.create_batch(25, blog=self.blog, status=Post.LIVE_STATUS)
+        LivePostFactory.create_batch(25, blog=self.blog)
         # Get first page:
         response = views.BlogDetailView.as_view()(
                                             self.request, blog_slug='my-blog')
@@ -71,7 +71,7 @@ class BlogTagDetailViewTestCase(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        self.post = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
+        self.post = LivePostFactory(blog=self.blog)
         self.post.tags.add('Fish')
 
     def test_response_200(self):
@@ -101,9 +101,9 @@ class BlogTagDetailViewTestCase(ViewTestCase):
     def test_context_post_list(self):
         "It should include the post_list, of public posts, in the context."
         # None of these should be listed:
-        other_blogs_post = PostFactory()
-        draft_post = PostFactory(blog=self.blog, status=Post.DRAFT_STATUS)
-        other_tag_post = PostFactory(blog=self.blog, status=Post.LIVE_STATUS)
+        other_blogs_post = LivePostFactory()
+        draft_post = DraftPostFactory(blog=self.blog)
+        other_tag_post = LivePostFactory(blog=self.blog)
         other_tag_post.tags.add('Cats')
 
         response = views.BlogTagDetailView.as_view()(
@@ -115,9 +115,7 @@ class BlogTagDetailViewTestCase(ViewTestCase):
     def test_is_paginated(self):
         "It should split the posts into pages."
         # Another page's worth of posts in addition to self.post:
-        PostFactory.create_batch(25, blog=self.blog, status=Post.LIVE_STATUS)
-        for post in Post.objects.all():
-            post.tags.add('Fish')
+        LivePostFactory.create_batch(25, blog=self.blog, tags=['Fish',])
 
         # Get first page:
         response = views.BlogTagDetailView.as_view()(
@@ -143,9 +141,8 @@ class PostDetailViewTestCase(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        PostFactory(blog=self.blog,
+        LivePostFactory(blog=self.blog,
                     slug='my-post',
-                    status=Post.LIVE_STATUS,
                     time_published=make_datetime('2017-02-20 12:15:00'))
 
     def test_response_200(self):
@@ -190,9 +187,8 @@ class PostDetailViewTestCase(ViewTestCase):
 
     def test_response_404_invalid_status(self):
         "It should raise 404 if there's no matching published post"
-        PostFactory(blog=self.blog,
+        DraftPostFactory(blog=self.blog,
                     slug='draft-post',
-                    status=Post.DRAFT_STATUS,
                     time_published=make_datetime('2017-03-01 12:15:00'))
         with self.assertRaises(Http404):
             views.PostDetailView.as_view()(self.request,
@@ -228,8 +224,7 @@ class PostDayArchiveViewTestCase(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        PostFactory(blog=self.blog,
-                    status=Post.LIVE_STATUS,
+        LivePostFactory(blog=self.blog,
                     time_published=make_datetime('2017-02-20 12:15:00'))
 
     def test_response_200(self):
@@ -261,8 +256,7 @@ class PostDayArchiveViewTestCase(ViewTestCase):
 
     def test_response_404_invalid_status(self):
         "It should raise 404 if there's no matching published post"
-        PostFactory(blog=self.blog,
-                    status=Post.DRAFT_STATUS,
+        DraftPostFactory(blog=self.blog,
                     time_published=make_datetime('2017-03-01 12:15:00'))
         with self.assertRaises(Http404):
             views.PostDayArchiveView.as_view()(self.request,
@@ -296,8 +290,7 @@ class PostMonthArchiveViewTestCase(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        PostFactory(blog=self.blog,
-                    status=Post.LIVE_STATUS,
+        LivePostFactory(blog=self.blog,
                     time_published=make_datetime('2017-02-20 12:15:00'))
 
     def test_response_200(self):
@@ -326,8 +319,7 @@ class PostMonthArchiveViewTestCase(ViewTestCase):
 
     def test_response_404_invalid_status(self):
         "It should raise 404 if there's no matching published post"
-        PostFactory(blog=self.blog,
-                    status=Post.DRAFT_STATUS,
+        DraftPostFactory(blog=self.blog,
                     time_published=make_datetime('2017-03-01 12:15:00'))
         with self.assertRaises(Http404):
             views.PostMonthArchiveView.as_view()(self.request,
@@ -358,8 +350,7 @@ class PostYearArchiveViewTestCase(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        PostFactory(blog=self.blog,
-                    status=Post.LIVE_STATUS,
+        LivePostFactory(blog=self.blog,
                     time_published=make_datetime('2017-02-20 12:15:00'))
 
     def test_response_200(self):
@@ -385,8 +376,7 @@ class PostYearArchiveViewTestCase(ViewTestCase):
 
     def test_response_404_invalid_status(self):
         "It should raise 404 if there's no matching published post"
-        PostFactory(blog=self.blog,
-                    status=Post.DRAFT_STATUS,
+        DraftPostFactory(blog=self.blog,
                     time_published=make_datetime('2016-01-01 12:15:00'))
         with self.assertRaises(Http404):
             views.PostYearArchiveView.as_view()(self.request,

@@ -16,6 +16,9 @@ class BlogFactory(factory.DjangoModelFactory):
 
 
 class PostFactory(factory.DjangoModelFactory):
+    """
+    Probably clearer to use either DraftPostFactory or LivePostFactory.
+    """
 
     class Meta:
         model = models.Post
@@ -28,5 +31,21 @@ class PostFactory(factory.DjangoModelFactory):
     blog = factory.SubFactory(BlogFactory)
     author = factory.SubFactory(UserFactory)
 
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        if not create:
+            # Simple build, do nothing.
+            return
+
+        if extracted:
+            # A list of groups were passed in, use them.
+            for tag in extracted:
+                self.tags.add(tag)
 
 
+class DraftPostFactory(PostFactory):
+    status = models.Post.DRAFT_STATUS
+
+
+class LivePostFactory(PostFactory):
+    status = models.Post.LIVE_STATUS
