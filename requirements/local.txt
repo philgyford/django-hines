@@ -1,3 +1,4 @@
+coverage==4.3.4
 Django==1.10.6
 django-debug-toolbar==1.7
 django-flatblocks==0.9.3

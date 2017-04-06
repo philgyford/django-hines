@@ -22,7 +22,11 @@ Then:
 
 Run tests:
 
-	$ ./manage.py test --settings=config.settings.tests
+	$ ./run-tests.sh
+
+To see coverage you can either open `htmlcov/index.html` in a browser or do:
+
+	$ coverage report
 
 To check Whitenoise is compressing and loading static assets correctly while using the Django development server:
 

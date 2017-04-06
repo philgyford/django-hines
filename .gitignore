@@ -1,3 +1,5 @@
+.coverage
 .env
 db.sqlite3
+htmlcov
 static_collected
