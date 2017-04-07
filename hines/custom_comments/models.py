@@ -2,7 +2,7 @@ import bleach
 
 from django_comments.models import Comment
 
-from . import utils
+from .utils import clean_comment
 
 
 class CustomComment(Comment):
@@ -12,12 +12,12 @@ class CustomComment(Comment):
         verbose_name = 'Comment'
 
     def save(self, *args, **kwargs):
-        self.comment = self.clean_comment(self.comment)
+        self.comment = self.sanitize_comment(self.comment)
         super().save(*args, **kwargs)
 
-    def clean_comment(self, comment):
+    def sanitize_comment(self, comment):
         """
         Strip disallowed tags, add rel=nofollow to links, remove extra newlines.
         """
-        return utils.clean_comment(comment)
+        return clean_comment(comment)
 

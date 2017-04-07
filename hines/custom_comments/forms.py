@@ -1,5 +1,3 @@
-import re
-
 from django_comments.forms import CommentForm
 
 from .models import CustomComment
