@@ -175,6 +175,13 @@ Another line.""")
         self.assertEqual(len(posts), 1)
         self.assertEqual(posts[0], live_post)
 
+    def test_get_absolute_url(self):
+        blog = BlogFactory(slug='writing')
+        post = LivePostFactory(blog=blog, slug='my-post',
+                           time_published=make_datetime('2017-04-03 12:00:00'))
+        self.assertEqual(post.get_absolute_url(),
+                            '/phil/writing/2017/04/03/my-post/')
+
     def test_get_next_post(self):
         "It should not return draft posts or posts from other blogs."
         blog = BlogFactory()
@@ -187,7 +194,6 @@ Another line.""")
         next_post = LivePostFactory(blog=blog,
                            time_published=make_datetime('2017-04-05 12:00:00'))
         self.assertEqual(post.get_next_post(), next_post)
-    
 
     def test_get_previous_post(self):
         "It should not return draft posts or posts from other blogs."
