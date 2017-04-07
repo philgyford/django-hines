@@ -1,0 +1,76 @@
+{% comment %}
+Could have this passed in:
+
+* is_preview - Boolean, default false.
+{% endcomment %}
+
+{% load comments %}
+
+<form action="{% comment_form_target %}" method="post">
+	{% csrf_token %}
+
+	{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+	{% else %}
+		<input type="hidden" name="next" value="{{ object.get_absolute_url }}#latest" />
+	{% endif %}
+
+	{% for field in form %}
+		{% if field.is_hidden %}
+			{{ field }}
+		{% else %}
+
+			<div class="form-group row{% if field.errors %} has-danger{% endif %}"{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
+				<label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">
+					{{ field.label }}
+					{% if field.html_name == 'url' %}
+						<span class="text-muted">(optional)</span>
+					{% endif %}
+				</label>
+
+				<div class="col-sm-9">
+					{% if field.html_name == 'comment' %}
+						<textarea class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %} rows="10">{{ field.value|default_if_none:"" }}</textarea>
+					{% else %}
+						<input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:"" }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}>
+					{% endif %}
+
+					{% if field.errors %}
+						{% for error in field.errors %}
+							<div class="form-control-feedback">{{ error }}</div>
+						{% endfor %}
+					{% endif %}
+
+					{% if field.help_text %}
+						<div id="{{ field.id_for_label }}_help" class="form-text text-muted">{{ field.help_text|safe }}</div>
+					{% endif %}
+
+					{% if field.html_name == 'comment' %}
+						{% load hines_comments %}
+						{% allowed_tags as tags %}
+						<p class="text-muted mb-0">
+							URLs will be turned into links.<br>
+							{% if tags|length == 0 %}
+								No tags allowed in comments.
+							{% else %}
+								Allowed HTML tags: <code>{{ tags|join:"</code>, <code>" }}</code>.
+							{% endif %}
+						</p>
+					{% endif %}
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+
+	<div class="col-sm-9 offset-sm-3">
+		{% if is_preview|default_if_none:False %}
+			<button type="submit" name="preview" class="btn btn-primary">Preview again</button>
+			&nbsp;
+			<button type="submit" name="post" class="btn btn-primary">Post comment</button>
+		{% else %}
+			<button type="submit" name="preview" class="btn btn-primary">Preview comment</button>
+		{% endif %}
+	</div>
+
+</form>
+

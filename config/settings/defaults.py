@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'flatblocks',
-    'markdownx',        # for weblogs
-    'taggit',           # for weblogs
+    'markdownx',
+    'taggit',
+    'django_comments',
     'hines.users',
     'hines.core',
+    'hines.custom_comments',
     'hines.weblogs',
 ]
 
@@ -142,4 +144,18 @@ AUTH_USER_MODEL = 'users.User'
 
 # Whitenoise forever-cacheable files and compression support:
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+COMMENTS_APP = 'hines.custom_comments'
+
+# Both these are used by Bleach to whitelist the contents of comments.
+HINES_COMMENTS_ALLOWED_TAGS = [
+   'a', 'blockquote', 'code', 'strong', 'em', 'ul', 'ol', 'li', 'pre',
+]
+HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
+    'a': ['href', 'title',],
+}
+
+# If True, must also be True for a Blog's and a Post's allow_comments field
+# before a comment on a Post is allowed.
+HINES_ALLOW_COMMENTS = True
 

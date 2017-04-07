@@ -30,6 +30,9 @@ class Blog(TimeStampedModelMixin, models.Model):
     sort_order = models.SmallIntegerField(default=1, blank=False,
             help_text="Blogs will be sorted with lowest sort order first, then alphabetically by Name.")
 
+    allow_comments = models.BooleanField(default=True,
+            help_text="If true, can still be overridden in Django SETTINGS.")
+
     def __str__(self):
         return self.name
 
@@ -135,6 +138,9 @@ class Post(TimeStampedModelMixin, models.Model):
                 on_delete=models.CASCADE, null=True, blank=False,
                 related_name='posts')
 
+    allow_comments = models.BooleanField(default=True,
+            help_text="If true, can still be overridden by the Blog's equivalent setting, or in Django SETTINGS.")
+
     # But you might want to use self.get_tags() instead, so they're in order.
     tags = TaggableManager(through=TaggedPost)
 
@@ -221,4 +227,21 @@ class Post(TimeStampedModelMixin, models.Model):
             text = '{} {}'.format(self.intro_html, self.body_html)
             return truncate_string(
                     text, strip_html=True, chars=100, at_word_boundary=True)
+
+    @property
+    def comments_allowed(self):
+        """
+        Returns a boolean indicating whether new comments are allowed on this.
+        """
+        if hasattr(settings, 'HINES_ALLOW_COMMENTS') and settings.HINES_ALLOW_COMMENTS == False:
+            return False
+
+        elif self.blog.allow_comments == False:
+            return False
+
+        elif self.allow_comments == False:
+            return False
+
+        else:
+            return True
 

@@ -7,22 +7,17 @@
 
 	{% include 'weblogs/includes/post.html' with post=post in_list=False only %}
 
-	{% with post.get_previous_post as previous_post %}
-		{% with post.get_next_post as next_post %}
-			{% if previous_post or next_post %}
-				<nav class="nextprev">
-					<p>
-						{% if previous_post %}
-							<a class="btn btn-outline-primary" href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; Older post</a>
-						{% endif %}
-						{% if next_post %}
-							<a class="btn btn-outline-primary float-right" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Newer post &rarr;</a>
-						{% endif %}
-					</p>
-				</nav>
-			{% endif %}
-		{% endwith %}
-	{% endwith %}
+	{% load comments %}
+
+	{% render_comment_list for post %}
+
+	{% if post.comments_allowed %}
+		<h2 class="mb-4">Post a comment</h2>
+		{% render_comment_form for post %}
+	{% else %}
+		<p>Comments are closed for this post.</p>
+	{% endif %}
+
 {% endblock %}
 
 
@@ -32,6 +27,23 @@
 	<div class="card mb-3">
 		<div class="card-block">
 			<p class="mb-0">Published at {% display_time post.time_published link_to_day=True %}</p>
+
+			{% with post.get_previous_post as previous_post %}
+				{% with post.get_next_post as next_post %}
+					{% if previous_post or next_post %}
+						<nav class="nextprev">
+							<p>
+								{% if previous_post %}
+									<a class="btn btn-outline-primary" href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; Older post</a>
+								{% endif %}
+								{% if next_post %}
+									<a class="btn btn-outline-primary float-right" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Newer post &rarr;</a>
+								{% endif %}
+							</p>
+						</nav>
+					{% endif %}
+				{% endwith %}
+			{% endwith %}
 		</div>
 	</div>
 

@@ -1,5 +1,7 @@
+bleach==2.0.0
 coverage==4.3.4
 Django==1.10.6
+django-contrib-comments==1.8.0
 django-debug-toolbar==1.7
 django-flatblocks==0.9.3
 django-markdownx==1.8.1

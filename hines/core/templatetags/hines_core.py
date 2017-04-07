@@ -29,7 +29,7 @@ def current_url_name(context):
 
 @register.simple_tag
 def display_time(dt, link_to_day=False):
-    """Return the HTML to display the time a Photo, Tweet, etc.
+    """Return the HTML to display a datetime nicely.
 
     dt -- The datetime.
     view -- Nothing or 'detail' or 'day', probably.

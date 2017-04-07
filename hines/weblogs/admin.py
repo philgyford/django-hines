@@ -14,7 +14,8 @@ class BlogAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('name', 'short_name', 'slug', 'sort_order')
+            'fields': ('name', 'short_name', 'slug', 'sort_order',
+                        'allow_comments',)
         }),
         ('Times', {
             'classes': ('collapse',),
@@ -50,7 +51,7 @@ class PostAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('blog', 'author', 'title', 'slug', 'status',
-                        'time_published', 'featured',)
+                        'time_published', 'featured', 'allow_comments',)
         }),
         ('The post', {
             'fields': ('html_format', 'intro', 'body', 'excerpt', 'remote_url',
@@ -76,4 +77,4 @@ class PostAdmin(admin.ModelAdmin):
     is_featured.boolean = True
     is_featured.short_description = 'Featured?'
 
-        
+

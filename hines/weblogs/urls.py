@@ -39,4 +39,5 @@ urlpatterns = [
         view=views.PostYearArchiveView.as_view(),
         name='post_year_archive'
     ),
+
 ]

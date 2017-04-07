@@ -5,12 +5,14 @@
 	{% load hines_weblogs %}
 	{% load hines_core %}
 
-	{% current_url_name as url_name %}
-	{% if url_name != 'hines:blog_tag_list' %}
-		{% blog_popular_tags_card blog=blog num=10 %}
-	{% endif %}
+	{% if blog %}
+		{% current_url_name as url_name %}
+		{% if url_name != 'hines:blog_tag_list' %}
+			{% blog_popular_tags_card blog=blog num=10 %}
+		{% endif %}
 
-	{% blog_years_card blog=blog current_year=year|default_if_none:None %}
+		{% blog_years_card blog=blog current_year=year|default_if_none:None %}
+	{% endif %}
 
 	{{ block.super }}
 {% endblock sidebar %}

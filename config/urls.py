@@ -10,6 +10,9 @@ urlpatterns = [
 
     # Used in the weblogs app for the Admin:
     url(r'^markdownx/', include('markdownx.urls')),
+
+    # Used in the weblogs app:
+    url(r'^comments/', include('django_comments.urls')),
 ]
 
 
