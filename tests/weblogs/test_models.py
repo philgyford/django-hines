@@ -1,6 +1,7 @@
 import datetime
 
-from django.test import TestCase
+from django.conf import settings
+from django.test import TestCase, override_settings
 from django.utils import timezone
 
 from freezegun import freeze_time
@@ -222,4 +223,41 @@ Another line.""")
         self.assertEqual(tags[1].slug, 'haddock')
         self.assertEqual(tags[2].name, 'Sea')
         self.assertEqual(tags[2].slug, 'sea')
+
+    @override_settings(HINES_ALLOW_COMMENTS=False)
+    def test_comments_allowed_settings(self):
+        "If the setting is False, should return False."
+        b = BlogFactory(allow_comments=True)
+        p = LivePostFactory(blog=b, allow_comments=True)
+        self.assertFalse(p.comments_allowed)
+
+    @override_settings(HINES_ALLOW_COMMENTS=True)
+    def test_comments_allowed_blog(self):
+        "If the blog doesn't allow comments, it should return False."
+        b = BlogFactory(allow_comments=False)
+        p = LivePostFactory(blog=b, allow_comments=True)
+        self.assertFalse(p.comments_allowed)
+
+    @override_settings(HINES_ALLOW_COMMENTS=True)
+    def test_comments_allowed_post(self):
+        "If the post doesn't allow comments, it should return False."
+        b = BlogFactory(allow_comments=True)
+        p = LivePostFactory(blog=b, allow_comments=False)
+        self.assertFalse(p.comments_allowed)
+        
+    @override_settings(HINES_ALLOW_COMMENTS=True)
+    def test_comments_allowed_all_true(self):
+        "If settings, blog and post are all true, it should return True"
+        b = BlogFactory(allow_comments=True)
+        p = LivePostFactory(blog=b, allow_comments=True)
+        self.assertTrue(p.comments_allowed)
+
+    @override_settings()
+    def test_comments_allowed_no_setting(self):
+        "If no setting, but blog and post are true, it should return True"
+        if hasattr(settings, 'HINES_ALLOW_COMMENTS'):
+            del settings.HINES_ALLOW_COMMENTS
+        b = BlogFactory(allow_comments=True)
+        p = LivePostFactory(blog=b, allow_comments=True)
+        self.assertTrue(p.comments_allowed)
 
