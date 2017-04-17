@@ -1,13 +1,16 @@
 {% comment %}
-Custom default flatblock template, for rendering some HTML, such as <p>s, in a card.
+Default block template, for rendering some HTML, such as <p>s, in a card.
 {% endcomment %}
-<div class="card mb-3 flatblock-{{ flatblock.slug }}">
-	<div class="card-block">
-	{% if flatblock.header %}
-		<h2 class="h6 card-title">{{ flatblock.header }}</h2>
-	{% endif %}
-		<div class="card-text">
-			{{ flatblock.content|safe }}
+
+{% if block %}
+	<div class="card mb-3 flatblock-{{ block.slug }}">
+		<div class="card-block">
+		{% if block.title%}
+			<h2 class="h6 card-title">{{ block.title }}</h2>
+		{% endif %}
+			<div class="card-text">
+				{{ block.content_html|safe }}
+			</div>
 		</div>
 	</div>
-</div>
+{% endif %}

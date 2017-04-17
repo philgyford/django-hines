@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'flatblocks',
     'markdownx',
     'taggit',
     'django_comments',
     'hines.users',
     'hines.core',
+    'hines.blocks',
     'hines.custom_comments',
     'hines.weblogs',
 ]

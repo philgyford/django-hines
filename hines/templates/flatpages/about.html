@@ -3,7 +3,7 @@
 {% block about_nav_active %}active{% endblock %}
 
 {% block sidebar %}
-	{% load hines_tags %}
+	{% load hines_core %}
 	{% current_url_name as url_name %}
 	<div class="card mb-3">
 		<ul class="list-group list-group-flush">
@@ -31,8 +31,8 @@
 		</ul>
 	</div>
 
-	{% load flatblocks %}
-	{% flatblock "elsewhere" %}
+	{% load blocks %}
+	{% render_block "elsewhere" %}
 
 	{{ block.super }}
 {% endblock %}

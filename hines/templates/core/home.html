@@ -7,9 +7,9 @@ Hello
 {% endblock %}
 
 {% block sidebar %}
-	{% load flatblocks %}
-	{% flatblock "about-me" %}
-	{% flatblock "other-sites" %}
+	{% load blocks %}
+	{% render_block "about-me" %}
+	{% render_block "other-sites" %}
 
 	{{ block.super }}
 {% endblock %}
