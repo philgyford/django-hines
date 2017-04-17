@@ -3,8 +3,8 @@ coverage==4.3.4
 Django==1.11.0
 django-contrib-comments==1.8.0
 django-debug-toolbar==1.7
-django-flatblocks==0.9.3
-django-markdownx==1.8.1
+# For Django 1.11 compatibility, until released:
+-e git://github.com/adi-/django-markdownx.git@v.2+docs#egg=django-markdownx
 django-taggit==0.22.0
 factory-boy==2.8.1
 freezegun==0.3.8
