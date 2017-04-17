@@ -120,7 +120,7 @@ Another line.""")
         self.assertEqual(post.body_html,
             '<p><a href="http://example.org">Hello</a>.<br />\n<em>Another</em> line.</p>')
 
-    def test_new_exceprt(self):
+    def test_new_excerpt(self):
         "If excerpt is not set, it should be created on save."
         post = LivePostFactory(html_format=Post.NO_FORMAT,
                 intro='<p><a href="http://example.org">Hello.</a></p>',
@@ -129,7 +129,7 @@ Another line.""")
         self.assertEqual(post.excerpt,
             'Hello. The body goes on for a bit so we can check the excerpt is truncated and working correctly as…')
 
-    def test_existing_exceprt(self):
+    def test_existing_excerpt(self):
         "If the excerpt it set, it isnt overwritten on save."
         post = LivePostFactory(intro='The intro', body='The body',
                 excerpt='The excerpt')
