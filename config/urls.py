@@ -3,8 +3,21 @@ from django.conf.urls import include, static, url
 from django.contrib import admin
 
 
+spectator_patterns = [
+
+    url(r'^phil/spectator/', include('spectator.core.urls.core', namespace='core')),
+
+    url(r'^phil/reading/', include('spectator.reading.urls', namespace='reading')),
+
+    url(r'^phil/creators/', include('spectator.core.urls.creators', namespace='creators')),
+
+]
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    # So these URLs will be in namespaces like 'spectator:reading':
+    url(r'^', include (spectator_patterns, namespace='spectator')),
 
     url(r'^phil/', include('hines.core.urls', namespace='hines')),
 

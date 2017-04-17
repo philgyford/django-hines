@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'markdownx',
     'taggit',
     'django_comments',
+    'spectator.core',
+    'spectator.reading',
     'hines.users',
     'hines.core',
     'hines.blocks',
