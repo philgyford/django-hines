@@ -28,7 +28,7 @@ class HomeViewTestCase(ViewTestCase):
 
     def test_templates(self):
         response = views.HomeView.as_view()(self.request)
-        self.assertEqual(response.template_name[0], 'core/home.html')
+        self.assertEqual(response.template_name[0], 'hines_core/home.html')
 
 
 class DayArchiveViewTestCase(ViewTestCase):
@@ -49,7 +49,7 @@ class DayArchiveViewTestCase(ViewTestCase):
     def test_templates(self):
         response = views.DayArchiveView.as_view()(
                             self.request, year='2016', month='08', day='31')
-        self.assertEqual(response.template_name[0], 'core/archive_day.html')
+        self.assertEqual(response.template_name[0], 'hines_core/archive_day.html')
 
     def test_context_data_dates(self):
         "Should include the date and next/prev dates."

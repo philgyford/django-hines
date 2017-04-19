@@ -12,7 +12,7 @@ from hines.weblogs.models import Blog, Post
 
 
 class HomeView(TemplateView):
-    template_name = 'core/home.html'
+    template_name = 'hines_core/home.html'
 
 
 class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
@@ -28,7 +28,7 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
     day_format = '%d'
     month_format = '%m'
     year_format = '%Y'
-    template_name = 'core/archive_day.html'
+    template_name = 'hines_core/archive_day.html'
 
     def get_allow_empty(self):
         """
