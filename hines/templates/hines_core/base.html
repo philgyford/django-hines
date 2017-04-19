@@ -37,6 +37,11 @@
 									</a>
 								</li>
 							{% endfor %}
+							<li class="nav-item {% block reading_nav_active %}{% endblock %}">
+								<a class="nav-link" href="{% url 'spectator:reading:home' %}">
+									Reading
+								</a>
+							</li>
 							<li class="nav-item {% block misc_nav_active %}{% endblock %}">
 								<a class="nav-link" href="{% url 'hines:misc' %}">
 									More…
@@ -44,7 +49,7 @@
 							</li>
 							<li class="nav-item {% block about_nav_active %}{% endblock %}">
 								<a class="nav-link" href="{% url 'hines:about' %}">
-									About
+									About me
 								</a>
 							</li>
 						</ul>

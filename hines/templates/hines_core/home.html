@@ -11,5 +11,8 @@ Hello
 	{% render_block "about-me" %}
 	{% render_block "other-sites" %}
 
+	{% load spectator_reading %}
+	{% in_progress_publications_card %}
+
 	{{ block.super }}
 {% endblock %}

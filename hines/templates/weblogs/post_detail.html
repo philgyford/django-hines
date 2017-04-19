@@ -50,5 +50,9 @@
 	{% load hines_weblogs %}
 	{% recent_posts_card blog=post.blog num=5 %}
 
+
+	{% load spectator_reading %}
+	{% day_publications_card post.time_published %}
+
 	{{ block.super }}
 {% endblock %}

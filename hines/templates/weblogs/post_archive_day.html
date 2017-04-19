@@ -21,3 +21,12 @@
 	{% endif %}
 
 {% endblock %}
+
+
+{% block sidebar %}
+	{{ block.super }}
+
+	{% load spectator_reading %}
+	{% day_publications_card day %}
+{% endblock %}
+
