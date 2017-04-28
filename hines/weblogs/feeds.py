@@ -7,7 +7,6 @@ from .models import Blog, Post
 
 class BlogPostsFeed(Feed):
     feed_type = ExtendedRSSFeed
-    title = "Police beat site news"
 
     # Getting details about the blog:
 
@@ -36,7 +35,7 @@ class BlogPostsFeed(Feed):
         return item.excerpt
 
     def item_author_name(self, item):
-        return item.author_name
+        return item.author.display_name
 
     def item_author_email(self, item):
         if item.blog.show_author_email_in_feed:

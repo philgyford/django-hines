@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import resolve, reverse
 
-from hines.weblogs import views
+from hines.weblogs import feeds, views
 
 
 # Testing that the named URLs map the correct name to URL,
@@ -19,6 +19,17 @@ class WeblogsUrlsTestCase(TestCase):
         "Should use the correct view."
         self.assertEqual(resolve('/phil/my-blog/').func.__name__,
                          views.BlogDetailView.__name__)
+
+
+    def test_blog_feed_url(self):
+        self.assertEqual(
+                reverse('hines:blog_feed', kwargs={'blog_slug': 'my-blog'}),
+                '/phil/my-blog/feed/')
+
+    def test_blog_feed_view(self):
+        "Should use the correct feed object."
+        self.assertIsInstance(resolve('/phil/my-blog/feed/').func,
+                         feeds.BlogPostsFeed)
 
 
     def test_blog_tag_detail_url(self):

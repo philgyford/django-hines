@@ -10,6 +10,7 @@ from tests.core import make_datetime
 from hines.weblogs.models import Blog, Post
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
+from hines.users.factories import UserFactory
 
 
 class BlogTestCase(TestCase):

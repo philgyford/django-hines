@@ -175,14 +175,6 @@ class Post(TimeStampedModelMixin, models.Model):
 
         super().save(*args, **kwargs)
 
-    @property
-    def author_name(self):
-        author = self.author
-        if author.first_name or author.last_name:
-            return ' '.join([author.first_name, author.last_name])
-        else:
-            return author.username
-
     def get_absolute_url(self):
         return reverse('hines:post_detail',
                             kwargs={
