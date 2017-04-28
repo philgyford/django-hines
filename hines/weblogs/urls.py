@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from . import views
+from . import feeds
 
 
 urlpatterns = [
@@ -8,6 +9,11 @@ urlpatterns = [
         regex=r"^(?P<blog_slug>[^/]+)/$",
         view=views.BlogDetailView.as_view(),
         name='blog_detail'
+    ),
+    url(
+        regex=r"^(?P<blog_slug>[^/]+)/feed/$",
+        view=feeds.BlogPostsFeed(),
+        name='blog_feed'
     ),
     url(
         regex=r"^(?P<blog_slug>[^/]+)/tags/$",

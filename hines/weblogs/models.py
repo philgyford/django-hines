@@ -27,6 +27,15 @@ class Blog(TimeStampedModelMixin, models.Model):
 
     slug = models.SlugField(max_length=255)
 
+    feed_title = models.CharField(null=False, blank=True, max_length=255,
+            help_text="For the Blog's RSS feed of recent Posts.")
+
+    feed_description = models.CharField(null=False, blank=True, max_length=255,
+            help_text="For the Blog's RSS feed of recent Posts.")
+
+    show_author_email_in_feed = models.BooleanField(default=True,
+            help_text="If checked, a Post's author's email will be included in the RSS feed.")
+
     sort_order = models.SmallIntegerField(default=1, blank=False,
             help_text="Blogs will be sorted with lowest sort order first, then alphabetically by Name.")
 
@@ -165,6 +174,14 @@ class Post(TimeStampedModelMixin, models.Model):
             self.time_published = timezone.now()
 
         super().save(*args, **kwargs)
+
+    @property
+    def author_name(self):
+        author = self.author
+        if author.first_name or author.last_name:
+            return ' '.join([author.first_name, author.last_name])
+        else:
+            return author.username
 
     def get_absolute_url(self):
         return reverse('hines:post_detail',

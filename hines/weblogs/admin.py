@@ -17,6 +17,10 @@ class BlogAdmin(admin.ModelAdmin):
             'fields': ('name', 'short_name', 'slug', 'sort_order',
                         'allow_comments',)
         }),
+        ('Feed', {
+            'fields': ('feed_title', 'feed_description',
+                        'show_author_email_in_feed',)
+        }),
         ('Times', {
             'classes': ('collapse',),
             'fields': ('time_created', 'time_modified',)
