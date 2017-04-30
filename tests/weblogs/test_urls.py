@@ -24,11 +24,11 @@ class WeblogsUrlsTestCase(TestCase):
     def test_blog_feed_url(self):
         self.assertEqual(
                 reverse('hines:blog_feed', kwargs={'blog_slug': 'my-blog'}),
-                '/phil/my-blog/feed/')
+                '/phil/my-blog/feeds/posts/')
 
     def test_blog_feed_view(self):
         "Should use the correct feed object."
-        self.assertIsInstance(resolve('/phil/my-blog/feed/').func,
+        self.assertIsInstance(resolve('/phil/my-blog/feeds/posts/').func,
                          feeds.BlogPostsFeed)
 
 

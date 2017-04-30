@@ -17,10 +17,7 @@ class BlogPostsFeed(Feed):
         return obj.get_absolute_url()
 
     def title(self, obj):
-        if obj.feed_title:
-            return obj.feed_title
-        else:
-            return "Latest posts from {}".format(obj.name)
+        return obj.get_feed_title()
 
     def description(self, obj):
         return obj.feed_description

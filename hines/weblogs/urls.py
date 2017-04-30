@@ -10,7 +10,7 @@ urlpatterns = [
         name='blog_detail'
     ),
     url(
-        regex=r"^(?P<blog_slug>[^/]+)/feed/$",
+        regex=r"^(?P<blog_slug>[^/]+)/feeds/posts/$",
         view=feeds.BlogPostsFeed(),
         name='blog_feed'
     ),

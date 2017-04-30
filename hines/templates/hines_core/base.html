@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-gb">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,6 +8,12 @@
 
 		{% load static %}
 		<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+
+		{% load hines_weblogs %}
+		{% get_all_blogs as all_blogs %}
+		{% for b in all_blogs %}
+		<link rel="alternate" type="application/rss+xml" title="{{ b.get_feed_title }}" href="{{ b.get_feed_url }}"/>
+		{% endfor %}
 
 		{% block head_extra %}
 			{# Use this if you need to more to the <head> of every page. #}
@@ -28,8 +34,6 @@
 					</a>
 					<div class="collapse navbar-collapse" id="navbar-content">
 						<ul class="navbar-nav mr-auto">
-							{% load hines_weblogs %}
-							{% get_all_blogs as all_blogs %}
 							{% for b in all_blogs %}
 								<li class="nav-item{% if blog and blog.slug == b.slug %} active{% endif %}">
 									<a class="nav-link" href="{% url 'hines:blog_detail' blog_slug=b.slug %}">
@@ -85,16 +89,31 @@
 			{% endblock content_main %}
 		</div>
 
-	{% block footer %}
-		{# Use this if you need to add a visible footer to every page. #}
-	{% endblock %}
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>RSS feeds</h4>
+						<ul class="list-unstyled">
+							{% for b in all_blogs %}
+								<li>
+									<a href="{{ b.get_feed_url }}">
+										{{ b.short_name }}
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
 
-	<script src="{% static "js/jquery-3.1.1.slim.min.js" %}"></script>
-	<script src="{% static "js/bootstrap/collapse.js" %}"></script>
-	<script src="{% static "js/bootstrap/util.js" %}"></script>
+		<script src="{% static "js/jquery-3.1.1.slim.min.js" %}"></script>
+		<script src="{% static "js/bootstrap/collapse.js" %}"></script>
+		<script src="{% static "js/bootstrap/util.js" %}"></script>
 
-	{% block foot_extra %}
-		{# Use this if you need to add JS etc to the foot of the page. #}
-	{% endblock %}
+		{% block foot_extra %}
+			{# Use this if you need to add JS etc to the foot of the page. #}
+		{% endblock %}
 	</body>
 </html>

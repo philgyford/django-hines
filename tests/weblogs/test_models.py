@@ -46,6 +46,20 @@ class BlogTestCase(TestCase):
         blog = BlogFactory(slug='writing')
         self.assertEqual(blog.get_absolute_url(), '/phil/writing/')
 
+    def test_get_feed_url(self):
+        blog = BlogFactory(slug='writing')
+        self.assertEqual(blog.get_feed_url(), '/phil/writing/feeds/posts/')
+
+    def test_get_feed_title_default(self):
+        "If there's no feed title set, the default is used."
+        blog = BlogFactory(name='My Blog', feed_title='')
+        self.assertEqual(blog.get_feed_title(), 'Latest posts from My Blog')
+
+    def test_get_feed_title(self):
+        "It returned feed_title if set."
+        blog = BlogFactory(feed_title='A feed of great posts')
+        self.assertEqual(blog.get_feed_title(), 'A feed of great posts')
+
 
 class PostTestCase(TestCase):
 

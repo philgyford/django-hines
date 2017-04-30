@@ -55,9 +55,17 @@ class Blog(TimeStampedModelMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse('hines:blog_detail',
-                            kwargs={
-                                'blog_slug': self.slug,
-                            })
+                            kwargs={'blog_slug': self.slug,})
+
+    def get_feed_url(self):
+        return reverse('hines:blog_feed',
+                            kwargs={'blog_slug': self.slug,})
+
+    def get_feed_title(self):
+        if self.feed_title:
+            return self.feed_title
+        else:
+            return "Latest posts from {}".format(self.name)
 
     def popular_tags(self, num=10):
         return Tag.objects.filter(

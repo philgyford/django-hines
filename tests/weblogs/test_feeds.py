@@ -46,11 +46,11 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.other_blogs_post = LivePostFactory()
 
     def test_response_200(self):
-        response = self.client.get('/phil/my-blog/feed/')
+        response = self.client.get('/phil/my-blog/feeds/posts/')
         self.assertEqual(response.status_code, 200)
 
     def test_response_404(self):
-        response = self.client.get('/phil/not-my-blog/feed/')
+        response = self.client.get('/phil/not-my-blog/feeds/posts/')
         self.assertEqual(response.status_code, 404)
 
     def test_feed(self):
@@ -58,7 +58,7 @@ class BlogPostsFeedTestCase(FeedTestCase):
         Borrowing a lot from
         https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
         """
-        response = self.client.get('/phil/my-blog/feed/')
+        response = self.client.get('/phil/my-blog/feeds/posts/')
         doc = minidom.parseString(response.content)
 
         feed_elem = doc.getElementsByTagName('rss')
@@ -114,30 +114,12 @@ class BlogPostsFeedTestCase(FeedTestCase):
             self.assertIsNone(item.getElementsByTagName(
                 'guid')[0].attributes.get('isPermaLink'))
 
-    def test_default_title(self):
-        "If we don't set a feed title on the Blog, the feed generates one."
-        self.blog.feed_title = ''
-        self.blog.save()
-
-        response = self.client.get('/phil/my-blog/feed/')
-        doc = minidom.parseString(response.content)
-
-        feed_elem = doc.getElementsByTagName('rss')
-        feed = feed_elem[0]
-
-        chan_elem = feed.getElementsByTagName('channel')
-        chan = chan_elem[0]
-
-        self.assertEqual(
-                chan.getElementsByTagName('title')[0].firstChild.wholeText,
-                'Latest posts from My Blog')
-
     def test_no_author_email(self):
         "If we don't want to show author emails, they don't appear."
         self.blog.show_author_email_in_feed = False
         self.blog.save()
 
-        response = self.client.get('/phil/my-blog/feed/')
+        response = self.client.get('/phil/my-blog/feeds/posts/')
         doc = minidom.parseString(response.content)
 
         feed_elem = doc.getElementsByTagName('rss')
