@@ -1,4 +1,4 @@
-from .defaults import *
+from .base import *
 
 ALLOWED_HOSTS = ["*",]
 
