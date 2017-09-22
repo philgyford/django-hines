@@ -14,7 +14,7 @@ spectator_patterns = [
 ]
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^backstage/', admin.site.urls),
 
     # So these URLs will be in namespaces like 'spectator:reading':
     url(r'^', include (spectator_patterns, namespace='spectator')),
@@ -27,6 +27,8 @@ urlpatterns = [
     # Used in the weblogs app:
     url(r'^comments/', include('django_comments.urls')),
 ]
+
+admin.site.site_header = 'Gyford.com admin'
 
 
 if settings.DEBUG:
