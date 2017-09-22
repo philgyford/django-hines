@@ -47,6 +47,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ('blog', 'title', 'is_published', 'time_published',
                     'is_featured', )
     list_display_links = ('title',)
+    list_filter = ('blog', 'time_published', 'status', 'featured',)
     search_fields = ('title', 'excerpt', 'intro', 'body', )
     date_hierarchy = 'time_published'
 
