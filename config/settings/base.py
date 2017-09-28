@@ -165,3 +165,6 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 # before a comment on a Post is allowed.
 HINES_ALLOW_COMMENTS = True
 
+# Most hines-related pages will be within this root directory:
+HINES_ROOT_DIR = 'phil'
+

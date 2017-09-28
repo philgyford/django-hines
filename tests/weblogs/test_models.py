@@ -44,11 +44,11 @@ class BlogTestCase(TestCase):
 
     def test_get_absolute_url(self):
         blog = BlogFactory(slug='writing')
-        self.assertEqual(blog.get_absolute_url(), '/phil/writing/')
+        self.assertEqual(blog.get_absolute_url(), '/terry/writing/')
 
     def test_get_feed_url(self):
         blog = BlogFactory(slug='writing')
-        self.assertEqual(blog.get_feed_url(), '/phil/writing/feeds/posts/')
+        self.assertEqual(blog.get_feed_url(), '/terry/writing/feeds/posts/')
 
     def test_get_feed_title_default(self):
         "If there's no feed title set, the default is used."
@@ -196,7 +196,7 @@ Another line.""")
         post = LivePostFactory(blog=blog, slug='my-post',
                            time_published=make_datetime('2017-04-03 12:00:00'))
         self.assertEqual(post.get_absolute_url(),
-                            '/phil/writing/2017/04/03/my-post/')
+                            '/terry/writing/2017/04/03/my-post/')
 
     def test_get_next_post(self):
         "It should not return draft posts or posts from other blogs."

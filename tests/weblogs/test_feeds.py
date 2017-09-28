@@ -46,11 +46,12 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.other_blogs_post = LivePostFactory()
 
     def test_response_200(self):
-        response = self.client.get('/phil/my-blog/feeds/posts/')
+        response = self.client.get('/terry/my-blog/feeds/posts/')
         self.assertEqual(response.status_code, 200)
 
+
     def test_response_404(self):
-        response = self.client.get('/phil/not-my-blog/feeds/posts/')
+        response = self.client.get('/terry/not-my-blog/feeds/posts/')
         self.assertEqual(response.status_code, 404)
 
     def test_feed(self):
@@ -58,7 +59,7 @@ class BlogPostsFeedTestCase(FeedTestCase):
         Borrowing a lot from
         https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
         """
-        response = self.client.get('/phil/my-blog/feeds/posts/')
+        response = self.client.get('/terry/my-blog/feeds/posts/')
         doc = minidom.parseString(response.content)
 
         feed_elem = doc.getElementsByTagName('rss')
@@ -84,7 +85,7 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.assertChildNodeContent(chan, {
             'title': 'My Feed Title',
             'description': 'My feed description.',
-            'link': 'http://127.0.0.1:8000/phil/my-blog/',
+            'link': 'http://127.0.0.1:8000/terry/my-blog/',
             'language': 'en-gb',
             'lastBuildDate': last_build_date,
         })
@@ -97,8 +98,8 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.assertChildNodeContent(items[0], {
             'title': 'My latest post',
             'description': 'This is my excerpt.',
-            'link': 'http://127.0.0.1:8000/phil/my-blog/2017/04/25/my-latest-post/',
-            'guid': 'http://127.0.0.1:8000/phil/my-blog/2017/04/25/my-latest-post/',
+            'link': 'http://127.0.0.1:8000/terry/my-blog/2017/04/25/my-latest-post/',
+            'guid': 'http://127.0.0.1:8000/terry/my-blog/2017/04/25/my-latest-post/',
             'pubDate': rfc2822_date(self.post2.time_published),
             'author': 'bob@example.org (Bob Ferris)',
             'content:encoded': '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p>'
@@ -119,7 +120,7 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.blog.show_author_email_in_feed = False
         self.blog.save()
 
-        response = self.client.get('/phil/my-blog/feeds/posts/')
+        response = self.client.get('/terry/my-blog/feeds/posts/')
         doc = minidom.parseString(response.content)
 
         feed_elem = doc.getElementsByTagName('rss')
