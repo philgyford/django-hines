@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}{% load hines_weblogs %}
 <html lang="en-gb">
 	<head>
 		<meta charset="utf-8">
@@ -6,10 +7,8 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
-		{% load static %}
 		<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
 
-		{% load hines_weblogs %}
 		{% get_all_blogs as all_blogs %}
 		{% for b in all_blogs %}
 		<link rel="alternate" type="application/rss+xml" title="{{ b.get_feed_title }}" href="{{ b.get_feed_url }}"/>
@@ -22,16 +21,16 @@
 	<body>
 
 		{% block navbar %}
-			<nav class="navbar navbar-toggleable navbar-light">
+            <nav class="navbar navbar-expand-sm navbar-light bg-light">
 				<div class="container">
-					<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
 					<a class="navbar-brand" href="{% url 'hines:home' %}">
 						{% block navbar_title %}
 							{{ site_name}}
 						{% endblock %}
 					</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 					<div class="collapse navbar-collapse" id="navbar-content">
 						<ul class="navbar-nav mr-auto">
 							{% for b in all_blogs %}
@@ -53,11 +52,11 @@
 							</li>
 							<li class="nav-item {% block about_nav_active %}{% endblock %}">
 								<a class="nav-link" href="{% url 'hines:about' %}">
-									About me
+									About&nbsp;me
 								</a>
 							</li>
 						</ul>
-					</div> <!-- .collapse.navbar-collapse -->
+					</div> <!-- .collapse -->
 				</div> <!-- .container -->
 			</nav>
 		{% endblock navbar %}

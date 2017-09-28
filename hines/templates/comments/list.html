@@ -1,13 +1,10 @@
-{% load comments %}
 {% load hines_comments %}
 {% load hines_core %}
 
-{% get_comment_count for post as comment_count %}
-
-{% if comment_count > 0 %}
+{% if post.comment_count > 0 %}
 	<section class="comments">
 		<h2 class="mb-3">
-			{{ comment_count }} comment{{ comment_count|pluralize }}
+			{{ post.comment_count }} comment{{ post.comment_count|pluralize }}
 		</h2>
 
 		<hr>

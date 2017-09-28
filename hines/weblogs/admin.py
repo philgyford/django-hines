@@ -56,11 +56,14 @@ class PostAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('blog', 'author', 'title', 'slug', 'status',
-                        'time_published', 'featured', 'allow_comments',)
+                        'time_published', 'featured',)
         }),
         ('The post', {
             'fields': ('html_format', 'intro', 'body', 'excerpt', 'remote_url',
                 'tags',),
+        }),
+        ('Comments', {
+            'fields': ('allow_comments', 'comment_count', 'last_comment_time',),
         }),
         ('Times', {
             'classes': ('collapse',),

@@ -156,7 +156,12 @@ class Post(TimeStampedModelMixin, models.Model):
                 related_name='posts')
 
     allow_comments = models.BooleanField(default=True,
-            help_text="If true, can still be overridden by the Blog's equivalent setting, or in Django SETTINGS.")
+            help_text="If true, can still be overridden by the Blog's equivalent setting, or inThe Diary of Samuel Pepys admin Django SETTINGS.")
+
+    comment_count = models.IntegerField(default=0, blank=False, null=False)
+
+    last_comment_time = models.DateTimeField(blank=True, null=True)
+
 
     # But you might want to use self.get_tags() instead, so they're in order.
     tags = TaggableManager(through=TaggedPost)

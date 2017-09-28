@@ -36,7 +36,7 @@
 	{% if date_list|length > 1 %}
 		{# Don't both showing it if there's only one month #}
 		<div class="card mb-3">
-			<div class="card-block">
+			<div class="card-body">
 				<h2 class="h6 card-title">Months in {{ year|date:"Y" }}</h2>
 				<ul class="mb-0">
 					{% for month in date_list %}

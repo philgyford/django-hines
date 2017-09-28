@@ -46,6 +46,13 @@ Expects:
 		<footer>
 			{% load hines_core %}
 			Published at {% display_time post.time_published link_to_day=True %}
+			|
+			{% if post.comment_count == 0 %}
+				No
+			{% else %}
+				{{ post.comment_count }}
+			{% endif %}
+			comment{{ post.comment_count|pluralize }}
 		</footer>
 	{% endif %}
 </article>

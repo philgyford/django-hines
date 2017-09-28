@@ -1,4 +1,8 @@
 {% extends 'weblogs/base.html' %}
+{% load comments %}
+{% load hines_core %}
+{% load hines_weblogs %}
+{% load spectator_reading %}
 
 {% block head_page_title %}{{ post.title }}{% endblock %}
 {% block content_title %}{{ post.title }}{% endblock %}
@@ -6,8 +10,6 @@
 {% block content %}
 
 	{% include 'weblogs/includes/post.html' with post=post in_list=False only %}
-
-	{% load comments %}
 
 	{% render_comment_list for post %}
 
@@ -23,9 +25,8 @@
 
 {% block sidebar %}
 
-	{% load hines_core %}
 	<div class="card mb-3">
-		<div class="card-block">
+		<div class="card-body">
 			<p class="mb-0">Published at {% display_time post.time_published link_to_day=True %}</p>
 
 			{% with post.get_previous_post as previous_post %}
@@ -47,11 +48,8 @@
 		</div>
 	</div>
 
-	{% load hines_weblogs %}
 	{% recent_posts_card blog=post.blog num=5 %}
 
-
-	{% load spectator_reading %}
 	{% day_publications_card post.time_published %}
 
 	{{ block.super }}

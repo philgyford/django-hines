@@ -9,7 +9,7 @@ Expects:
 
 {% if tag_list|length > 0 %}
 	<div class="card mb-3">
-		<div class="card-block">
+		<div class="card-body">
 			<h2 class="h6 card-title">{{ card_title }}</h2>
 
 			{% include 'weblogs/includes/tags.html' with blog=blog tag_list=tag_list only %}
