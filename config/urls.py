@@ -2,6 +2,8 @@ from django.conf import settings
 from django.conf.urls import include, static, url
 from django.contrib import admin
 
+from hines.core import views as hines_views
+
 
 # e.g. 'phil':
 ROOT_DIR = settings.HINES_ROOT_DIR
@@ -20,6 +22,12 @@ spectator_patterns = [
 
 
 urlpatterns = [
+
+    url(r'^$',
+        view=hines_views.HomeView.as_view(),
+        name='home'
+    ),
+
     url(r'^backstage/', admin.site.urls),
 
     # So these URLs will be in namespaces like 'spectator:reading':

@@ -1,16 +1,17 @@
 from django.conf.urls import include, url
 from django.contrib.flatpages import views as flatpages_views
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 
 from . import views
 
 
 urlpatterns = [
 
+    # Send anyone going to '/phil/' to the home page at '/'.
     url(
         regex=r"^$",
-        view=views.HomeView.as_view(),
-        name='home'
+        view=RedirectView.as_view(url='/', permanent=False)
     ),
 
     # Flatpages

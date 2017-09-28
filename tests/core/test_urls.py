@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import Client, TestCase
 from django.urls import resolve, reverse
 
 from hines.core import views
@@ -11,12 +11,18 @@ from hines.core import views
 class CoreUrlsTestCase(TestCase):
 
     def test_home_url(self):
-        self.assertEqual(reverse('hines:home'), '/terry/')
+        "The very top level page of the site"
+        self.assertEqual(reverse('home'), '/')
 
     def test_home_view(self):
         "Should use the correct view."
-        self.assertEqual(resolve('/terry/').func.__name__,
+        self.assertEqual(resolve('/').func.__name__,
                          views.HomeView.__name__)
+
+    def test_hines_home_url(self):
+        "The URL at /phil/ or whatever."
+        response = Client().get('/terry/', follow=True)
+        self.assertEqual(response.redirect_chain, [('/', 302)])
 
     def test_day_archive_url(self):
         self.assertEqual(
