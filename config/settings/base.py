@@ -171,3 +171,9 @@ HINES_ALLOW_COMMENTS = True
 # Most hines-related pages will be within this root directory:
 HINES_ROOT_DIR = 'phil'
 
+MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)
+MT_MYSQL_DB_USER = os.environ.get('MT_MYSQL_DB_USER', None)
+MT_MYSQL_DB_PASSWORD = os.environ.get('MT_MYSQL_DB_PASSWORD', None)
+MT_MYSQL_DB_NAME = os.environ.get('MT_MYSQL_DB_NAME', None)
+MT_MYSQL_DB_PORT = os.environ.get('MT_MYSQL_DB_PORT', None)
+
