@@ -24,6 +24,10 @@ from hines.users.models import User
 #   * Use the MT categories as tags on the Hines Post
 #   * Add Trackbacks on the post
 #   * Add our custom 'remote_url' field.
+#
+# NOTE: There are some quite bespoke things in this (eg `extra_cats`) so
+# don't expect it to work as some magic generic MT -> Django script.
+# But it might be a good basis if you need something similar.
 
 
 # If True, this won't insert/update into our local database, and will output a
