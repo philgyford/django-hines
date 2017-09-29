@@ -156,6 +156,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 COMMENTS_APP = 'hines.custom_comments'
 
+# We don't want to allow duplicate tags like 'Fish' and 'fish':
+TAGGIT_CASE_INSENSITIVE = True
+
 # Both these are used by Bleach to whitelist the contents of comments.
 HINES_COMMENTS_ALLOWED_TAGS = [
    'a', 'blockquote', 'code', 'strong', 'em', 'ul', 'ol', 'li', 'pre',
