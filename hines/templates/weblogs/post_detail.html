@@ -20,6 +20,36 @@
 		<p>Comments are closed for this post.</p>
 	{% endif %}
 
+	{% if post.trackback_count > 0 %}
+		<section class="trackbacks">
+			<h2 class="mb-2">
+				{{ post.trackback_count }} trackback{{ post.trackback_count|pluralize }}
+			</h2>
+			<hr>
+
+			{% for trackback in post.get_visible_trackbacks %}
+				<div class="row trackback" id="t{{ trackback.id }}">
+					<div class="col-sm-3">
+						<strong>
+							{{ trackback.blog_name }}
+						</strong>
+						<br>
+						{% display_time trackback.time_created %}
+					</div>
+					<div class="col-sm-9">
+						<strong>
+							<a href="{{ trackback.url }}" rel="nofollow">
+								{{ trackback.title }}
+							</a>
+						</strong>
+						<p>{{ trackback.excerpt }}</p>
+					</div>
+				</div> <!-- .trackback -->
+				<hr>
+			{% endfor %}
+		</section>
+	{% endif %}
+
 {% endblock %}
 
 

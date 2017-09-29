@@ -9,7 +9,7 @@ from freezegun import freeze_time
 from tests.core import make_datetime
 from hines.weblogs.models import Post
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
-        LivePostFactory
+        LivePostFactory, TrackbackFactory
 
 
 class PostTestCase(TestCase):
@@ -189,6 +189,17 @@ Another line.""")
         self.assertEqual(tags[1].slug, 'haddock')
         self.assertEqual(tags[2].name, 'Sea')
         self.assertEqual(tags[2].slug, 'sea')
+
+    def test_get_visible_trackbacks(self):
+        "It should only return visible Trackbacks."
+        post = LivePostFactory()
+        visible_tb = TrackbackFactory(post=post, is_visible=True)
+        invisible_tb = TrackbackFactory(post=post, is_visible=False)
+
+        trackbacks = post.get_visible_trackbacks()
+
+        self.assertEqual(len(trackbacks), 1)
+        self.assertEqual(trackbacks[0], visible_tb)
 
     @override_settings(HINES_ALLOW_COMMENTS=False)
     def test_comments_allowed_settings(self):

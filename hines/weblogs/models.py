@@ -221,6 +221,12 @@ class Post(TimeStampedModelMixin, models.Model):
     def get_tags(self):
         return self.tags.all().order_by('name')
 
+    def get_visible_trackbacks(self):
+        if self.trackback_count == 0:
+            return None
+        else:
+            return self.trackbacks.filter(is_visible=True)
+
     def htmlize_text(self, text):
         """
         Given a piece of text (the intro or body), return an HTML version,
