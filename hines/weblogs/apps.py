@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CoreConfig(AppConfig):
+class WeblogsConfig(AppConfig):
     name = 'hines.weblogs'
     verbose_name = 'Weblogs'

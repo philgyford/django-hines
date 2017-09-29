@@ -63,7 +63,8 @@ class PostAdmin(admin.ModelAdmin):
                 'tags',),
         }),
         ('Comments', {
-            'fields': ('allow_comments', 'comment_count', 'last_comment_time',),
+            'fields': ('allow_comments', 'comment_count', 'last_comment_time',
+                        'trackback_count',),
         }),
         ('Times', {
             'classes': ('collapse',),

@@ -18,6 +18,10 @@ class CustomCommentFactory(factory.DjangoModelFactory):
         p = LivePostFactory(title='My title')
         c = CustomCommentFactory(comment='hi', post=p)
 
+    Or:
+        c = CustomCommentFactory(comment='hi', content_object=p)
+
+
     Otherwise a LivePost will be created to associate this comment with.
     """
 

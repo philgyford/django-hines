@@ -18,7 +18,6 @@ class CustomComment(Comment):
     def save(self, *args, **kwargs):
         self.comment = self.sanitize_comment(self.comment)
         super().save(*args, **kwargs)
-        self.set_parent_comment_data()
 
     def sanitize_comment(self, comment):
         """
@@ -35,6 +34,8 @@ class CustomComment(Comment):
 
         We also have to ensure the parent object's last_comment_time is
         still accurate.
+
+        Called from post_delete and post_save signals.
         """
 
         # Make sure the content_type and object for this CustomComment exist.
@@ -79,4 +80,5 @@ class CustomComment(Comment):
                                                             'submit_date__max']
 
         obj.save()
+
 
