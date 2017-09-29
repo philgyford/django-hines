@@ -85,7 +85,7 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.assertChildNodeContent(chan, {
             'title': 'My Feed Title',
             'description': 'My feed description.',
-            'link': 'http://example.com/terry/my-blog/',
+            'link': 'http://127.0.0.1:8000/terry/my-blog/',
             'language': 'en-gb',
             'lastBuildDate': last_build_date,
         })
@@ -98,8 +98,8 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.assertChildNodeContent(items[0], {
             'title': 'My latest post',
             'description': 'This is my excerpt.',
-            'link': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',
-            'guid': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',
+            'link': 'http://127.0.0.1:8000/terry/my-blog/2017/04/25/my-latest-post/',
+            'guid': 'http://127.0.0.1:8000/terry/my-blog/2017/04/25/my-latest-post/',
             'pubDate': rfc2822_date(self.post2.time_published),
             'author': 'bob@example.org (Bob Ferris)',
             'content:encoded': '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p>'
