@@ -4,22 +4,44 @@ import pprint
 import pytz
 
 from django.conf import settings
+from django.db.utils import IntegrityError
 from django.core.management.base import BaseCommand, CommandError
 
-from ...models import Blog, Post
+from ...models import Blog, Post, Trackback
+from hines.custom_comments.models import CustomComment
 from hines.users.models import User
 
 # You'll need to: pip install mysqlclient
 
 
+
+# ABOUT
+#
+# This will import Entries from Movable Type into a Hines Weblog.
+#
+# It can:
+#   * Add the tags used on MT
+#   * Use the MT categories as tags on the Hines Post
+#   * Add Trackbacks on the post
+#   * Add our custom 'remote_url' field.
+
+
 # If True, this won't insert/update into our local database, and will output a
 # load of stuff to the command line instead:
-DRY_RUN = True
+DRY_RUN = False
 
 
 # Which blog are we importing for:
 BLOG_SETTINGS = 'writing'
 # BLOG_SETTINGS = 'comments'
+
+# We'll associate all imported Posts with this Django User ID:
+# If importing comments, and a comment is from this User's email address,
+# we'll associate the Comment in Django with this User.
+USER_ID = 1
+
+# The ID of the Django Site (required when adding comments).
+SITE_ID = 1
 
 
 if BLOG_SETTINGS == 'writing':
@@ -29,7 +51,6 @@ if BLOG_SETTINGS == 'writing':
     # The ID of the Hines Weblog object to import the Posts into:
     HINES_BLOG_ID = 1
 
-    # We'll associate all imported Posts with this Django User ID:
     USER_ID = 1
 
     # Fetch any tags for entries in MT and add them to the Hines Posts?
@@ -38,6 +59,12 @@ if BLOG_SETTINGS == 'writing':
     # If an MT Entry is in a category, add that as a tag to the Hines Post.
     # If False, we ignore categories entirely.
     TURN_CATEGORIES_TO_TAGS = True
+
+    # Fetch comments from MT and save them in Django?
+    ADD_COMMENTS = True
+
+    # Fetch trackbacks for thi blog's Entries and save them in Django?
+    ADD_TRACKBACKS = True
 
     # Do we need to fetch the extra 'remote_url' field for each Post?
     # (This is an 'mt_entry_meta' field in Movable Type that we want to save as
@@ -50,11 +77,13 @@ elif BLOG_SETTINGS == 'comments':
 
     HINES_BLOG_ID = 2
 
-    USER_ID = 1
-
     ADD_TAGS = False
 
     TURN_CATEGORIES_TO_TAGS = False
+
+    ADD_COMMENTS = True
+
+    ADD_TRACKBACKS = False
 
     ADD_REMOTE_URL = True
 
@@ -82,7 +111,7 @@ class Command(BaseCommand):
         if DRY_RUN:
             print("\nTHIS IS A DRY RUN.")
         else:
-            print("\nNot a dry run. This is happening.")
+            print("\nTHIS IS NOT A DRY RUN. This is happening.")
 
         try:
             blog = Blog.objects.get(pk=HINES_BLOG_ID)
@@ -115,7 +144,7 @@ class Command(BaseCommand):
                 "entry_basename "
             "FROM mt_entry "
             "WHERE entry_blog_id='{}' "
-            "AND entry_id=15074 "
+            "AND entry_id=233 "
             # "ORDER BY entry_id DESC LIMIT 15 "
             "".format(MT_BLOG_ID))
 
@@ -181,7 +210,6 @@ class Command(BaseCommand):
                 if row is not None and row['entry_meta_vchar'] is not None:
                     post_kwargs['remote_url'] = row['entry_meta_vchar']
 
-            # TODO: Trackbacks!
 
             if DRY_RUN:
                 print('\nFetched {}: {}'.format(
@@ -199,11 +227,13 @@ class Command(BaseCommand):
                                                   post.id,
                                                   entry['entry_title']))
 
+
             tags = []
 
             if ADD_TAGS:
                 cursor2.execute(
-                    "SELECT tag_name "
+                    "SELECT "
+                        "tag_name "
                     "FROM mt_objecttag, mt_tag "
                     "WHERE objecttag_tag_id=tag_id "
                     "AND objecttag_object_datasource='entry' "
@@ -213,6 +243,7 @@ class Command(BaseCommand):
 
                 for tag in cursor2.fetchall():
                     tags.append(tag['tag_name'])
+
 
             if TURN_CATEGORIES_TO_TAGS:
                 # If we use any of the categories on the left, we'll also add
@@ -233,7 +264,8 @@ class Command(BaseCommand):
                 }
 
                 cursor2.execute(
-                    "SELECT category_label "
+                    "SELECT "
+                        "category_label "
                     "FROM mt_category, mt_placement "
                     "WHERE placement_category_id=category_id "
                     "AND category_class='category' "
@@ -259,6 +291,91 @@ class Command(BaseCommand):
                 if len(tags) > 0:
                     print("Tagged: {}".format(', '.join(tags)))
 
+
+            if ADD_COMMENTS:
+                cursor2.execute(
+                    "SELECT "
+                        "comment_ip, comment_author, comment_email, "
+                        "comment_url, comment_text, comment_created_on, "
+                        "comment_visible "
+                    "FROM mt_comment "
+                    "WHERE comment_blog_id='{}' "
+                    "AND comment_entry_id={} ".format(
+                                            MT_BLOG_ID, entry['entry_id']))
+
+                comment_count = 0
+
+                for comm in cursor2.fetchall():
+                    is_public = True if comm['comment_visible'] == 1 else False
+
+                    comment_count += 1
+
+                    if not DRY_RUN:
+
+                        if author and comm['comment_email'] == author.email:
+                            comment_user = author
+                        else:
+                            comment_user = None
+
+                        time_created = comm['comment_created_on'].replace(
+                                                                tzinfo=pytz.utc)
+
+                        comment = CustomComment.objects.create(
+                                    content_object=post,
+                                    user=comment_user,
+                                    user_name=comm['comment_author'],
+                                    user_email=comm['comment_email'],
+                                    user_url=comm['comment_url'],
+                                    comment=comm['comment_text'],
+                                    submit_date=time_created,
+                                    ip_address=comm['comment_ip'],
+                                    is_public=is_public,
+                                    site_id=SITE_ID)
+
+                        comment.time_created = time_created
+                        comment.save()
+
+                if comment_count > 0:
+                    print("Comment(s): {}".format(comment_count))
+
+
+            if ADD_TRACKBACKS:
+                cursor2.execute(
+                    "SELECT "
+                        "tbping_title, tbping_excerpt, tbping_source_url, "
+                        "tbping_ip, tbping_blog_name, tbping_created_on, "
+                        "tbping_visible "
+                    "FROM mt_tbping, mt_trackback "
+                    "WHERE tbping_tb_id=trackback_id "
+                    "AND trackback_blog_id='{}' "
+                    "AND trackback_entry_id={} ".format(
+                                            MT_BLOG_ID, entry['entry_id']))
+
+                for tb in cursor2.fetchall():
+                    is_visible = True if tb['tbping_visible'] == 1 else False
+
+                    if not DRY_RUN:
+                        try:
+                            trackback = Trackback.objects.create(
+                                            post=post,
+                                            title=tb['tbping_title'],
+                                            excerpt=tb['tbping_excerpt'],
+                                            url=tb['tbping_source_url'],
+                                            ip_address=tb['tbping_ip'],
+                                            blog_name=tb['tbping_blog_name'],
+                                            is_visible=is_visible)
+                        except IntegrityError:
+                            # Probably because there were duplicates for this
+                            # post, as judged by the urls.
+                            print("Trackback failed: {}".format(
+                                                            tb['tbping_title']))
+                        else:
+                            time_created = tb['tbping_created_on'].replace(
+                                                            tzinfo=pytz.utc)
+                            trackback.time_created = time_created
+                            trackback.save()
+
+                    print("Trackback: {}".format(tb['tbping_title']))
 
         cursor.close()
         cursor2.close()

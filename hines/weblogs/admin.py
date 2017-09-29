@@ -4,7 +4,7 @@ from django import forms
 
 from markdownx.widgets import AdminMarkdownxWidget
 
-from .models import Blog, Post
+from .models import Blog, Post, Trackback
 
 
 @admin.register(Blog)
@@ -85,4 +85,26 @@ class PostAdmin(admin.ModelAdmin):
     is_featured.boolean = True
     is_featured.short_description = 'Featured?'
 
+
+@admin.register(Trackback)
+class TrackbackAdmin(admin.ModelAdmin):
+    list_display = ('title', 'blog_name', 'post', 'time_created',
+                    'is_visible', )
+    list_display_links = ('title',)
+    search_fields = ('title', 'excerpt',)
+    date_hierarchy = 'time_created'
+
+    fieldsets = (
+        (None, {
+            'fields': ('post', 'blog_name', 'title', 'excerpt', 'url',
+                        'ip_address', 'is_visible',)
+        }),
+        ('Times', {
+            'classes': ('collapse',),
+            'fields': ('time_created', 'time_modified',)
+        }),
+    )
+
+    raw_id_fields = ('post',)
+    readonly_fields = ('time_created', 'time_modified', )
 

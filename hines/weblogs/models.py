@@ -267,3 +267,27 @@ class Post(TimeStampedModelMixin, models.Model):
         else:
             return True
 
+
+class Trackback(TimeStampedModelMixin, models.Model):
+    """
+    Used to store info about trackbacks that arrived in the old Movable Type
+    version of this site.
+    """
+    post = models.ForeignKey('Post', null=False, blank=False,
+            related_name='trackbacks')
+    title = models.CharField(blank=False, max_length=255)
+    excerpt = models.TextField(blank=True, default='')
+    url = models.URLField(blank=True, default='', verbose_name='URL')
+    ip_address = models.GenericIPAddressField(blank=True, null=True,
+            verbose_name='IP Address', default=None)
+    blog_name = models.CharField(blank=False, max_length=255)
+    is_visible = models.BooleanField(default=True,
+            help_text="Should this be displayed on the site?")
+
+    class Meta:
+        ordering = ['-time_created',]
+        unique_together = (('post', 'url'),)
+
+    def __str__(self):
+        return self.title
+
