@@ -28,7 +28,7 @@ class CustomComment(Comment):
     def set_parent_comment_data(self):
         """
         We store the comment_count for each object that can have comments.
-        So here we set the comment_count after we save each comment.
+        So here we set the comment_count after we save/delete each comment.
         Which should take account of comments being added, removed, flagged
         etc.
 

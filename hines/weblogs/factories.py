@@ -1,4 +1,5 @@
 import factory
+import factory.fuzzy
 
 from . import models
 from hines.users.factories import UserFactory
@@ -49,3 +50,17 @@ class DraftPostFactory(PostFactory):
 
 class LivePostFactory(PostFactory):
     status = models.Post.LIVE_STATUS
+
+
+class TrackbackFactory(factory.DjangoModelFactory):
+
+    class Meta:
+        model = models.Trackback
+
+    post = factory.SubFactory(PostFactory)
+    title = factory.Sequence(lambda n: 'Trackback %s' % n)
+    excerpt = factory.fuzzy.FuzzyText(length=150)
+    url = factory.Sequence(lambda n: 'http://exmple.org/%s.html' % n)
+    ip_address = '123.123.123.123'
+    blog_name = factory.Sequence(lambda n: 'Other Blog %s' % n)
+

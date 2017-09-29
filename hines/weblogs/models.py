@@ -162,6 +162,8 @@ class Post(TimeStampedModelMixin, models.Model):
 
     last_comment_time = models.DateTimeField(blank=True, null=True)
 
+    trackback_count = models.IntegerField(default=0, blank=False, null=False)
+
 
     # But you might want to use self.get_tags() instead, so they're in order.
     tags = TaggableManager(through=TaggedPost)
@@ -290,4 +292,20 @@ class Trackback(TimeStampedModelMixin, models.Model):
 
     def __str__(self):
         return self.title
+
+    def set_parent_trackback_data(self):
+        """
+        After saving or deleting a Trackback we have to set the trackback_count
+        on the Post it's attached to.
+
+        Called from post_delete and post_save signals.
+        """
+        post = self.post
+
+        qs = Trackback.objects.filter(post=post,
+                                      is_visible=True).order_by()
+
+        post.trackback_count = qs.count()
+
+        post.save()
 

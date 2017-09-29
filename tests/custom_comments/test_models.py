@@ -1,7 +1,7 @@
+from freezegun import freeze_time
+
 from django.test import TestCase, override_settings
 from django.utils import timezone
-
-from freezegun import freeze_time
 
 from hines.custom_comments.factories import CustomCommentFactory
 from hines.weblogs.factories import LivePostFactory
