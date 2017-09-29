@@ -28,7 +28,7 @@ from hines.users.models import User
 
 # If True, this won't insert/update into our local database, and will output a
 # load of stuff to the command line instead:
-DRY_RUN = False
+DRY_RUN = True
 
 
 # Which blog are we importing for:
@@ -46,12 +46,11 @@ SITE_ID = 1
 
 if BLOG_SETTINGS == 'writing':
 
+    # The ID of the Movable Type weblog to import:
     MT_BLOG_ID = 1
 
     # The ID of the Hines Weblog object to import the Posts into:
     HINES_BLOG_ID = 1
-
-    USER_ID = 1
 
     # Fetch any tags for entries in MT and add them to the Hines Posts?
     ADD_TAGS = True
@@ -144,7 +143,7 @@ class Command(BaseCommand):
                 "entry_basename "
             "FROM mt_entry "
             "WHERE entry_blog_id='{}' "
-            "AND entry_id=233 "
+            # "AND entry_id=233 "
             # "ORDER BY entry_id DESC LIMIT 15 "
             "".format(MT_BLOG_ID))
 
