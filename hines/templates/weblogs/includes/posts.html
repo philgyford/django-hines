@@ -15,7 +15,7 @@ Expects:
 	{% for post in post_list %}
 		<li class="mb-2">
 			<a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
-			{% display_time post.time_published link_to_day=False %}
+			{% display_time post.time_published show='date' link_to_day=False %}
 		</li>
 	{% endfor %}
 

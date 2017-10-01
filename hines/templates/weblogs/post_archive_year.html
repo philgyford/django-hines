@@ -6,7 +6,6 @@
 {% block content %}
 
 	{% if post_list|length > 0 %}
-		{% load hines_core %}
 		<ul>
 			{% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms style='list' only %}
 		</ul>

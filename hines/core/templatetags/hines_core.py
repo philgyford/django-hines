@@ -28,43 +28,47 @@ def current_url_name(context):
 
 
 @register.simple_tag
-def display_time(dt, link_to_day=False):
-    """Return the HTML to display a datetime nicely.
+def display_time(dt, show='both', link_to_day=False):
+    """Return the HTML to display a datetime nicely, wrapped in a <time> tag.
 
     dt -- The datetime.
-    view -- Nothing or 'detail' or 'day', probably.
-
-    For a 'day' view, just returns the date/time as text.
-    For other views returns it including a link to the ditto:day_archive page
-        for that date.
-    Both wrapped in a <time> tag.
+    show -- 'time', 'date' or 'both'.
+    link_to_day -- Add an <a href=""> link around the date to the day page.
+                   (Ignored if show=='time'.)
 
     See also http://www.brucelawson.co.uk/2012/best-of-time/ for <time> tag.
     """
-
-    stamp = dt.strftime('%Y-%m-%d %H:%M:%S')
-
     # The date and time formats for display:
     d_fmt = '%-d&nbsp;%b&nbsp;%Y'
     t_fmt = '%H:%M'
 
-    if link_to_day:
-        url = reverse('hines:day_archive', kwargs={
-                    'year':     dt.strftime('%Y'),
-                    'month':    dt.strftime('%m'),
-                    'day':      dt.strftime('%d'),
-                })
-
-        visible_time = '%(time)s on <a href="%(url)s" title="All items from this day">%(date)s</a>' % {
-                'time': dt.strftime(t_fmt),
-                'url': url,
-                'date': dt.strftime(d_fmt),
-            }
+    if show == 'time':
+        visible_str = dt.strftime(t_fmt)
     else:
-        visible_time = dt.strftime(t_fmt + ' on ' + d_fmt)
+        # Date only or time and date:
+
+        if link_to_day:
+            url = reverse('hines:day_archive', kwargs={
+                        'year':     dt.strftime('%Y'),
+                        'month':    dt.strftime('%m'),
+                        'day':      dt.strftime('%d'),
+                    })
+
+            visible_str = '<a href="%(url)s" title="All items from this day">%(date)s</a>' % {
+                    'url': url,
+                    'date': dt.strftime(d_fmt),
+                }
+        else:
+            visible_str = dt.strftime(d_fmt)
+
+        if show == 'both':
+            # Add the time:
+            visible_str = '%s on %s' % (dt.strftime(t_fmt), visible_str)
+
+    stamp = dt.strftime('%Y-%m-%d %H:%M:%S')
 
     return format_html('<time datetime="%(stamp)s">%(visible)s</time>' % {
                 'stamp': stamp,
-                'visible': visible_time
+                'visible': visible_str
             })
 
