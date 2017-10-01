@@ -1,4 +1,5 @@
 # coding: utf-8
+import html
 import MySQLdb
 import pprint
 import pytz
@@ -6,6 +7,7 @@ import pytz
 from django.conf import settings
 from django.db.utils import IntegrityError
 from django.core.management.base import BaseCommand, CommandError
+from django.utils.html import strip_tags
 
 from ...models import Blog, Post, Trackback
 from hines.custom_comments.models import CustomComment
@@ -357,12 +359,18 @@ class Command(BaseCommand):
                 for tb in cursor2.fetchall():
                     is_visible = True if tb['tbping_visible'] == 1 else False
 
+                    # Some excerpts had <br>s etc in them.
+                    # Some titles and excerpts had &#....; entities in.
+                    title = html.unescape( strip_tags(tb['tbping_title']) )
+
+                    excerpt = html.unescape( strip_tags(tb['tbping_excerpt']) )
+
                     if not DRY_RUN:
                         try:
                             trackback = Trackback.objects.create(
                                             post=post,
-                                            title=tb['tbping_title'],
-                                            excerpt=tb['tbping_excerpt'],
+                                            title=title,
+                                            excerpt=excerpt,
                                             url=tb['tbping_source_url'],
                                             ip_address=tb['tbping_ip'],
                                             blog_name=tb['tbping_blog_name'],
@@ -370,15 +378,14 @@ class Command(BaseCommand):
                         except IntegrityError:
                             # Probably because there were duplicates for this
                             # post, as judged by the urls.
-                            print("Trackback failed: {}".format(
-                                                            tb['tbping_title']))
+                            print("Trackback failed: {}".format(title))
                         else:
                             time_created = tb['tbping_created_on'].replace(
                                                             tzinfo=pytz.utc)
                             trackback.time_created = time_created
                             trackback.save()
 
-                    print("Trackback: {}".format(tb['tbping_title']))
+                    print("Trackback: {}".format(title))
 
         cursor.close()
         cursor2.close()
