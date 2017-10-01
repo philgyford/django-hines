@@ -5,11 +5,24 @@ Expects:
 
 * post_list: A list or QuerySet of Posts.
 * perms - Django permissions.
-* compact: Boolean, optional, default is False. Don't show the full body.
+* style: 'full', 'compact' (include excerpt) or 'list' (title and date only).
+			Default is 'full'.
 {% endcomment %}
 
-{% for post in post_list %}
-	{% include 'weblogs/includes/post.html' with post=post in_list=True perms=perms compact=compact|default_if_none:False only %}
-	<hr>
-{% endfor %}
+{% if style == 'list' %}
+	{% load hines_core %}
+
+	{% for post in post_list %}
+		<li class="mb-2">
+			<a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
+			{% display_time post.time_published link_to_day=False %}
+		</li>
+	{% endfor %}
+
+{% else %}
+	{% for post in post_list %}
+		{% include 'weblogs/includes/post.html' with post=post in_list=True perms=perms style=style only %}
+		<hr>
+	{% endfor %}
+{% endif %}
 

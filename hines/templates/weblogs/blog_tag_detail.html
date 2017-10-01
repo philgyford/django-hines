@@ -5,7 +5,11 @@
 
 {% block content %}
 
-	{% include 'weblogs/includes/posts.html' with post_list=post_list perms=perms only %}
+	{% if post_list|length > 0 %}
+		<ul>
+			{% include 'weblogs/includes/posts.html' with post_list=post_list perms=perms style='list' only %}
+		</ul>
+	{% endif %}
 
 	{% if is_paginated %}
 		<nav class="nextprev">

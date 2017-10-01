@@ -8,12 +8,7 @@
 	{% if post_list|length > 0 %}
 		{% load hines_core %}
 		<ul>
-			{% for post in post_list %}
-				<li class="mb-2">
-					<a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
-					{% display_time post.time_published link_to_day=False %}
-				</li>
-			{% endfor %}
+			{% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms style='list' only %}
 		</ul>
 	{% endif %}
 

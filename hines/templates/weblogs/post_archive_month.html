@@ -5,7 +5,7 @@
 
 {% block content %}
 
-	{% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms compact=True only %}
+	{% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms style='compact' only %}
 
 	{% if previous_month or next_month %}
 		<nav class="nextprev">
