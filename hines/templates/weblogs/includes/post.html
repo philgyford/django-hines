@@ -36,6 +36,7 @@ Expects:
 
 		{% with post.get_tags as tags %}
 			{% if tags|length > 0 %}
+				Tags:
 				<ul class="post-tags list-inline">
 					{% for tag in tags %}
 						<li class="list-inline-item">
@@ -51,13 +52,14 @@ Expects:
 		<footer>
 			{% load hines_core %}
 			Published at {% display_time post.time_published link_to_day=True %}
-			|
-			{% if post.comment_count == 0 %}
-				No
-			{% else %}
-				{{ post.comment_count }}
+			{% if post.comment_count > 0 %}
+				|
+				{{ post.comment_count }} comment{{ post.comment_count|pluralize }}
 			{% endif %}
-			comment{{ post.comment_count|pluralize }}
+			{% if post.trackback_count > 0 %}
+				|
+				{{ post.trackback_count }} trackback{{ post.trackback_count|pluralize }}
+			{% endif %}
 		</footer>
 	{% endif %}
 </article>
