@@ -9,7 +9,7 @@
 
 {% block content %}
 
-	{% include 'weblogs/includes/post.html' with post=post in_list=False only %}
+	{% include 'weblogs/includes/post.html' with post=post in_list=False perms=perms only %}
 
 	{% render_comment_list for post %}
 

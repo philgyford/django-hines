@@ -5,6 +5,7 @@ Expects:
 
 * post - A Post.
 * in_list - Boolean, default True. Will show a linked title, and metadata.
+* perms - Django permissions.
 * compact: Boolean, optional, default is False. Don't show the full body.
 {% endcomment %}
 
@@ -13,6 +14,10 @@ Expects:
 		<header>
 			<h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
 		</header>
+	{% endif %}
+
+	{% if perms.weblogs.can_change_post %}
+		<a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a>
 	{% endif %}
 
 	{% if compact|default_if_none:False %}

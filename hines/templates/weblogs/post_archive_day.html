@@ -5,7 +5,7 @@
 
 {% block content %}
 
-	{% include 'weblogs/includes/posts.html' with post_list=post_list compact=True only %}
+	{% include 'weblogs/includes/posts.html' with post_list=post_list perms=perms compact=True only %}
 
 	{% if previous_day or next_day %}
 		<nav class="nextprev">

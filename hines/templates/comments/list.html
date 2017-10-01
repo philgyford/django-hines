@@ -20,6 +20,10 @@
 						{% endif %}
 					</strong><br>
 					{% display_time comment.submit_date %}
+
+					{% if perms.custom_comments.can_change_customcomment %}
+						<br><a class="admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
+					{% endif %}
 				</div>
 				<div class="col-sm-9">
 					{{ comment.comment|clean|safe|linebreaks }}
