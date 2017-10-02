@@ -2,7 +2,6 @@ import datetime
 
 from taggit.models import Tag
 
-# from django.core.paginator import Paginator
 from django.http import Http404
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
@@ -10,7 +9,35 @@ from django.views.generic import DateDetailView, DayArchiveView, DetailView,\
         ListView, MonthArchiveView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
+from hines.core.utils import make_date
 from .models import Blog, Post
+
+
+template_sets = (
+    # Colorful
+    # http://web.archive.org/web/20000819162919/http://www.gyford.com:80/phil/daily/
+    # 2000-03-01 - 2000-12-31
+
+    # Monochrome
+    # http://web.archive.org/web/20010214232232/http://www.gyford.com:80/phil/writing/
+    # 2001-01-01 - 2002-11-09
+
+    # Blue links
+    # http://web.archive.org/web/20021211042734/http://www.gyford.com:80/phil/writing/2002/11/11/000072.php
+    # 2002-11-10 - 2006-03-15
+
+    # The basis for how it still is
+    # http://web.archive.org/web/20060323001155/http://www.gyford.com/phil/writing/2006/03/16/my_new_site.php
+    # 2006-03-16 - 2006-08-29
+
+    # Sight & Sound
+    # http://web.archive.org/web/20071011030825/http://www.gyford.com/phil/writing/2006/08/30/a_lick_of_paint.php
+    # 2006-08-30 - 2009-02-09
+
+    # A bit wider
+    # http://web.archive.org/web/20090227031141/http://www.gyford.com/phil/writing/2009/02/10/front_page.php
+    # 2009-02-10 - now
+)
 
 
 class BlogDetailParentView(SingleObjectMixin, ListView):

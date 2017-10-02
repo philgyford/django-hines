@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from freezegun import freeze_time
 
-from tests.core import make_datetime
+from hines.core.utils import make_datetime
 from hines.weblogs.models import Post
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory, TrackbackFactory

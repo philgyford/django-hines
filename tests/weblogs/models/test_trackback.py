@@ -6,9 +6,9 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
 
+from hines.core.utils import make_datetime
 from hines.weblogs.factories import LivePostFactory, TrackbackFactory
 from hines.weblogs.models import Trackback
-from ...core import make_datetime
 
 
 class TrackbackTestCase(TestCase):

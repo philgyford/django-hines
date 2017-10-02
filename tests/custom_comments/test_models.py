@@ -3,9 +3,9 @@ from freezegun import freeze_time
 from django.test import TestCase, override_settings
 from django.utils import timezone
 
+from hines.core.utils import make_datetime
 from hines.custom_comments.factories import CustomCommentFactory
 from hines.weblogs.factories import LivePostFactory
-from ..core import make_datetime
 
 
 class CustomCommentTestCase(TestCase):

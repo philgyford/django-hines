@@ -1,10 +1,10 @@
 from django.test import TestCase
 
+from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
 from hines.weblogs.templatetags.hines_weblogs import blog_years,\
         blog_popular_tags, get_all_blogs, recent_posts
-from tests.core import make_date, make_datetime
 
 
 class GetAllBlogsTestCase(TestCase):

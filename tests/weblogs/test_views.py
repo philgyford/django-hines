@@ -4,7 +4,7 @@ import pytz
 from django.http.response import Http404
 from django.test import TestCase
 
-from tests.core import make_datetime
+from hines.core.utils import make_datetime
 from tests.core.test_views import ViewTestCase
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory

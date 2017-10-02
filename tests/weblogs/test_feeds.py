@@ -2,11 +2,11 @@ from xml.dom import minidom
 
 from django.utils.feedgenerator import rfc2822_date
 
+from hines.core.utils import make_datetime
 from hines.users.factories import UserFactory
 from hines.weblogs.feeds import BlogPostsFeed
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
-from tests.core import make_datetime
 from tests.core.test_feeds import FeedTestCase
 
 

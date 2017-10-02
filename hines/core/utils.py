@@ -1,6 +1,19 @@
 # coding: utf-8
+from datetime import datetime
+import pytz
+
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
+
+
+def make_date(d):
+    "For convenience."
+    return datetime.strptime(d, "%Y-%m-%d").date()
+
+
+def make_datetime(dt):
+    "For convenience."
+    return datetime.strptime(dt, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc)
 
 
 def truncate_string(text, strip_html=True, chars=255, truncate=u'…', at_word_boundary=False):
@@ -24,3 +37,4 @@ def truncate_string(text, strip_html=True, chars=255, truncate=u'…', at_word_b
     else:
         text = Truncator(text).chars(chars, html=False, truncate=truncate)
     return text
+

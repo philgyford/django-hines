@@ -3,7 +3,7 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from hines.core.templatetags.hines_core import display_time
-from . import make_datetime
+from hines.core.utils import make_datetime
 
 
 class DisplayTimeTestCase(TestCase):
