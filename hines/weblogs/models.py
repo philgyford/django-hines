@@ -228,6 +228,17 @@ class Post(TimeStampedModelMixin, models.Model):
         else:
             return self.trackbacks.filter(is_visible=True)
 
+    @property
+    def status_str(self):
+        """
+        Returns the text version of the Post's status. e.g. "Draft".
+        """
+        choices = {a:b for a,b in self.STATUS_CHOICES}
+        if self.status in choices:
+            return choices[self.status]
+        else:
+            return None
+
     def htmlize_text(self, text):
         """
         Given a piece of text (the intro or body), return an HTML version,

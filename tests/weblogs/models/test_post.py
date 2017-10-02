@@ -213,6 +213,10 @@ Another line.""")
         self.assertEqual(len(trackbacks), 1)
         self.assertEqual(trackbacks[0], visible_tb)
 
+    def test_status_str(self):
+        post = LivePostFactory()
+        self.assertEqual(post.status_str, 'Published')
+
     @override_settings(HINES_ALLOW_COMMENTS=False)
     def test_comments_allowed_settings(self):
         "If the setting is False, should return False."

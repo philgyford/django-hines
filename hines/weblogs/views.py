@@ -102,7 +102,6 @@ class PostDetailView(DateDetailView):
     date_field = 'time_published'
     model = Post
     month_format = '%m'
-    queryset = Post.public_objects
     slug_url_kwarg = 'post_slug'
     template_name = 'weblogs/post_detail.html'
 
@@ -110,6 +109,10 @@ class PostDetailView(DateDetailView):
         context = super().get_context_data(**kwargs)
         if self.object:
             context['blog'] = self.object.blog
+
+            if self.object.status != Post.LIVE_STATUS:
+                context['is_preview'] = True
+
         return context
 
     def get_object(self, queryset=None):
@@ -167,6 +170,16 @@ class PostDetailView(DateDetailView):
         except queryset.model.DoesNotExist:
             raise Http404(_("No Posts found matching the query"))
         return obj
+
+    def get_queryset(self):
+        """
+        Allow a Superuser to see draft Posts.
+        Everyone else can only see public Posts.
+        """
+        if self.request.user.is_superuser:
+            return self.model.objects.all()
+        else:
+            return self.model.public_objects.all()
 
 
 class PostDatedArchiveMixin(object):

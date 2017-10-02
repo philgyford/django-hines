@@ -2,13 +2,14 @@ from datetime import datetime
 import pytz
 
 from django.http.response import Http404
-from django.test import TestCase
+from django.test import Client, TestCase
 
 from hines.core.utils import make_datetime
-from tests.core.test_views import ViewTestCase
+from hines.users.models import User
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
 from hines.weblogs import views
+from tests.core.test_views import ViewTestCase
 
 
 class BlogDetailViewTestCase(ViewTestCase):
@@ -183,84 +184,67 @@ class BlogTagListViewTestCase(ViewTestCase):
 
 
 class PostDetailViewTestCase(ViewTestCase):
+    """
+    We have to use the Client() for this view because we test whether the
+    user is a superuser which requires request.user, which doesn't work with
+    a RequestFactory (self.request).
+    """
 
     def setUp(self):
         super().setUp()
         self.blog = BlogFactory(slug='my-blog')
-        LivePostFactory(blog=self.blog,
+        self.p = LivePostFactory(blog=self.blog,
                     slug='my-post',
                     time_published=make_datetime('2017-02-20 12:15:00'))
+        self.client = Client()
 
     def test_response_200(self):
         "It should respond with 200."
-        response = views.PostDetailView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='20',
-                                                    post_slug='my-post')
+        response = self.client.get('/terry/my-blog/2017/02/20/my-post/')
         self.assertEqual(response.status_code, 200)
 
     def test_response_404_invalid_blog(self):
         "It should raise 404 if there's no Blog with that slug."
-        with self.assertRaises(Http404):
-            views.PostDetailView.as_view()(self.request,
-                                                    blog_slug='OTHER-BLOG',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='20',
-                                                    post_slug='my-post')
+        response = self.client.get('/terry/OTHER-BLOG/2017/02/20/my-post/')
+        self.assertEqual(response.status_code, 404)
 
     def test_response_404_invalid_date(self):
         "It should raise 404 if there's no matching post on that date"
-        with self.assertRaises(Http404):
-            views.PostDetailView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='21',
-                                                    post_slug='my-post')
+        response = self.client.get('/terry/my-blog/2017/02/21/my-post/')
+        self.assertEqual(response.status_code, 404)
 
     def test_response_404_invalid_post(self):
         "It should raise 404 if there's no matching post slug"
-        with self.assertRaises(Http404):
-            views.PostDetailView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='20',
-                                                    post_slug='OTHER-POST')
+        response = self.client.get('/terry/my-blog/2017/02/20/OTHER-POST/')
+        self.assertEqual(response.status_code, 404)
 
     def test_response_404_invalid_status(self):
         "It should raise 404 if there's no matching published post"
         DraftPostFactory(blog=self.blog,
-                    slug='draft-post',
-                    time_published=make_datetime('2017-03-01 12:15:00'))
-        with self.assertRaises(Http404):
-            views.PostDetailView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='03',
-                                                    day='01',
-                                                    post_slug='draft-post')
+                         slug='draft-post',
+                         time_published=make_datetime('2017-02-20 12:15:00'))
+        response = self.client.get('/terry/my-blog/2017/02/20/draft-post/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_response_preview_draft_status(self):
+        "A superuser should be able to see a draft post."
+        DraftPostFactory(blog=self.blog,
+                         slug='draft-post',
+                         time_published=make_datetime('2017-02-20 12:15:00'))
+        User.objects.create_superuser('admin', 'admin@test.com', 'pass')
+
+        self.client.login(username='admin', password='pass')
+        response = self.client.get('/terry/my-blog/2017/02/20/draft-post/')
+
+        self.assertEquals(response.status_code, 200)
 
     def test_templates(self):
-        response = views.PostDetailView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='20',
-                                                    post_slug='my-post')
+        response = self.client.get('/terry/my-blog/2017/02/20/my-post/')
         self.assertEqual(response.template_name[0], 'weblogs/post_detail.html')
 
     def test_context_blog(self):
         "The blog should be in the context"
-        response = views.PostDetailView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='20',
-                                                    post_slug='my-post')
+        response = self.client.get('/terry/my-blog/2017/02/20/my-post/')
         self.assertIn('blog', response.context_data)
         self.assertEqual(response.context_data['blog'], self.blog)
 

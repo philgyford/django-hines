@@ -9,6 +9,12 @@
 
 {% block content %}
 
+	{% if is_preview %}
+		<p class="admin">
+			This is a preview. This Post’s status is {{ post.status_str }}.
+		</p>
+	{% endif %}
+
 	{% include 'weblogs/includes/post.html' with post=post in_list=False perms=perms only %}
 
 	{% render_comment_list for post %}
