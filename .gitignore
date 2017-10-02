@@ -1,5 +1,6 @@
 .coverage
 .env
+.vagrant
 db.sqlite3
 htmlcov
 static_collected

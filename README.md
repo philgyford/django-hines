@@ -4,34 +4,37 @@ Code for http://www.gyford.com
 
 Very much a work in progress.
 
+
 ## Local development
 
-	$ pip install -r requirements/local.txt
+### Setup
 
-We might have a `.env` file with environment variables in, like:
+We're using [this Vagrant setup](https://github.com/philgyford/vagrant-heroku-cedar-16-python).
 
-	export DJANGO_SETTINGS_MODULE=config.settings.local
+	$ vagrant up
 
-So:
+Once done, then, for a fresh install:
 
-	$ source .env
+	$ vagrant ssh
+	vagrant$ cd /vagrant
+	vagrant$ ./manage.py migrate
+	vagrant$ ./manage.py collectstatic
+	vagrant$ ./manage.py createsuperuser
+	vagrant$ ./manage.py runserver 0.0.0.0:5000
 
-Then:
+Then visit http://localhost:5000 or http://127.0.0.1:5000.
 
-	$ ./manage.py runserver
+In the Django Admin set the Domain Name of the one Site.
+
+### Other local dev tasks
 
 Run tests:
 
-	$ ./run-tests.sh
+	vagrant$ ./run-tests.sh
 
 To see coverage you can either open `htmlcov/index.html` in a browser or do:
 
-	$ coverage report
-
-To check Whitenoise is compressing and loading static assets correctly while using the Django development server:
-
-	* Run `./manage.py collectstatic`.
-	* Set `DEBUG = False` in `config/settings/local.py`.
+	vagrant$ coverage report
 
 
 ## Django Settings

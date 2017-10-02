@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField(help_text='Must be unique within its date of publication', max_length=255, unique_for_date='time_published')),
                 ('html_format', models.IntegerField(choices=[(0, 'No formatting'), (1, 'Convert line breaks'), (2, 'Markdown')], default=2)),
                 ('status', models.IntegerField(choices=[(1, 'Draft'), (2, 'Published')], default=1)),
-                ('featured', models.BooleanField(choices=[(0, 'Not featured'), (1, 'Featured')], default=0)),
+                ('featured', models.PositiveSmallIntegerField(choices=[(0, 'Not featured'), (1, 'Featured')], default=0)),
                 ('blog', models.ForeignKey(default=1, null=True, on_delete=django.db.models.deletion.CASCADE, to='weblogs.Blog')),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],

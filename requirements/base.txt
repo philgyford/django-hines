@@ -5,6 +5,8 @@ django-contrib-comments==1.8.0
 -e git://github.com/adi-/django-markdownx.git@v.2+docs#egg=django-markdownx
 django-spectator==3.2.3
 django-taggit==0.22.0
+psycopg2==2.7.1
+pylibmc==1.5.2
 pytz==2017.2
 whitenoise==3.3.0
 

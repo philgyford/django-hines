@@ -16,11 +16,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='post',
-            name='featured',
-            field=models.PositiveSmallIntegerField(choices=[(0, 'Not featured'), (1, 'Featured')], default=0),
-        ),
-        migrations.AlterField(
-            model_name='post',
             name='html_format',
             field=models.PositiveSmallIntegerField(choices=[(0, 'No formatting'), (1, 'Convert line breaks'), (2, 'Markdown')], default=2),
         ),

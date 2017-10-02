@@ -137,22 +137,26 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+MEDIA_ROOT = os.path.join(APPS_DIR, 'media/')
+
+MEDIA_URL = '/media/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = os.path.join(APPS_DIR, 'static_collected/')
+
+STATIC_URL = '/static/'
+
 
 STATICFILES_DIRS = [
     os.path.join(APPS_DIR, 'static'),
 ]
 
-STATIC_ROOT = os.path.join(APPS_DIR, 'static_collected')
-STATIC_URL = '/static/'
 
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.User'
-
-# Whitenoise forever-cacheable files and compression support:
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 COMMENTS_APP = 'hines.custom_comments'
 
