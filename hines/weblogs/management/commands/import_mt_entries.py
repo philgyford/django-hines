@@ -16,7 +16,6 @@ from hines.users.models import User
 # You'll need to: pip install mysqlclient
 
 
-
 # ABOUT
 #
 # This will import Entries from Movable Type into a Hines Weblog.
@@ -34,7 +33,7 @@ from hines.users.models import User
 
 # If True, this won't insert/update into our local database, and will output a
 # load of stuff to the command line instead:
-DRY_RUN = True
+DRY_RUN = False
 
 
 # Which blog are we importing for:
@@ -149,6 +148,7 @@ class Command(BaseCommand):
                 "entry_basename "
             "FROM mt_entry "
             "WHERE entry_blog_id='{}' "
+            "AND entry_class='entry' "
             # "AND entry_id=233 "
             # "ORDER BY entry_id DESC LIMIT 15 "
             "".format(MT_BLOG_ID))
@@ -328,7 +328,7 @@ class Command(BaseCommand):
                         comment = CustomComment.objects.create(
                                     content_object=post,
                                     user=comment_user,
-                                    user_name=comm['comment_author'],
+                                    user_name=comm['comment_author'][:50],
                                     user_email=comm['comment_email'],
                                     user_url=comm['comment_url'],
                                     comment=comm['comment_text'],
