@@ -33,7 +33,7 @@ from hines.users.models import User
 
 # If True, this won't insert/update into our local database, and will output a
 # load of stuff to the command line instead:
-DRY_RUN = False
+DRY_RUN = True
 
 
 # Which blog are we importing for:

@@ -21,8 +21,8 @@ from spectator.reading.models import *
 DB_USER = os.environ.get('READING_OLD_DB_USER')
 DB_PASSWORD = os.environ.get('READING_OLD_DB_PASSWORD')
 DB_NAME = os.environ.get('READING_OLD_DB_NAME')
-DB_HOST = '127.0.0.1'
-DB_PORT = 3306
+DB_HOST = os.environ.get('READING_OLD_DB_HOST')
+DB_PORT = os.environ.get('READING_OLD_DB_PORT')
 
 # Set this to only fetch the first n rows from the source database, if you
 # want to check things are working, with minimal possible damage:

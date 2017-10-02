@@ -28,6 +28,39 @@ In the Django Admin set the Domain Name of the one Site.
 
 ### Other local dev tasks
 
+#### Importing old MT weblog
+
+Make sure Blogs 1 (Writing) and 2 (Comments) have been added in admin.
+
+Install requirements (might only need the last):
+
+	vagrant$ sudo apt-get install libmysqlclient-dev
+	vagrant$ pip install mysqlclient
+
+In one window:
+
+	vagrant$ ssh -L 3307:127.0.0.1:3306 MYUSERNAME@MYHOSTNAME
+
+Then in another:
+
+	vagrant$ /vagrant/manage.py import_mt_entries
+
+#### Importing old Reading
+
+Install `libmysqlclient-dev` as above. Then (yes I used a different python
+module for MySQL, grr):
+
+	vagrant$ pip install pymysql
+
+Open SSH connection in one window as above.
+
+Then in another:
+
+	vagrant$ /vagrant/manage.py import_gyford_reading
+
+
+#### Tests
+
 Run tests:
 
 	vagrant$ ./run-tests.sh
