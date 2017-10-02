@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+import smartypants as _smartypants
+
 from django import template
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html
@@ -71,4 +74,12 @@ def display_time(dt, show='both', link_to_day=False):
                 'stamp': stamp,
                 'visible': visible_str
             })
+
+
+@register.filter
+def smartypants(text):
+    """
+    Processes the text with smartypants.
+    """
+    return _smartypants.smartypants(text)
 

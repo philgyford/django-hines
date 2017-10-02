@@ -7,6 +7,7 @@ from django.utils.html import strip_tags
 from django.utils import timezone
 
 from markdownx.utils import markdownify
+import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
 
@@ -239,6 +240,7 @@ class Post(TimeStampedModelMixin, models.Model):
         else:
             # No formatting; it's already HTML.
             html = text
+        html = smartypants.smartypants(html)
         return html
 
     def make_excerpt(self):

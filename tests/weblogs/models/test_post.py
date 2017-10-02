@@ -64,6 +64,12 @@ Another line.""")
         self.assertEqual(post.intro_html,
             '<p><a href="http://example.org">Hello</a>.<br />\n<em>Another</em> line.</p>')
 
+    def test_intro_html_smartypants(self):
+        post = LivePostFactory(html_format=Post.NO_FORMAT,
+                                intro="""This... isn't -- "special".""")
+        self.assertEqual(post.intro_html,
+                        "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;.")
+
     def test_body_html_no_format(self):
         "With no formmating, body_html should be the same as body."
         html = '<p><a href="http://example.org">Hello</a></p>'
@@ -85,6 +91,12 @@ Another line.""")
 *Another* line.""")
         self.assertEqual(post.body_html,
             '<p><a href="http://example.org">Hello</a>.<br />\n<em>Another</em> line.</p>')
+
+    def test_body_html_smartypants(self):
+        post = LivePostFactory(html_format=Post.NO_FORMAT,
+                                body="""This... isn't -- "special".""")
+        self.assertEqual(post.body_html,
+                        "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;.")
 
     def test_new_excerpt(self):
         "If excerpt is not set, it should be created on save."
@@ -123,7 +135,7 @@ Another line.""")
         # Republish it:
         post.status=Post.LIVE_STATUS
         post.save()
-        
+
         # Hasn't changed to now:
         self.assertEqual(post.time_published, time_published)
 
@@ -221,7 +233,7 @@ Another line.""")
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=False)
         self.assertFalse(p.comments_allowed)
-        
+
     @override_settings(HINES_ALLOW_COMMENTS=True)
     def test_comments_allowed_all_true(self):
         "If settings, blog and post are all true, it should return True"

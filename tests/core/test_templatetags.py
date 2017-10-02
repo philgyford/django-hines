@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from hines.core.templatetags.hines_core import display_time
+from hines.core.templatetags.hines_core import display_time, smartypants
 from hines.core.utils import make_datetime
 
 
@@ -56,6 +56,8 @@ class DisplayTimeTestCase(TestCase):
         )
 
 
-
-
-
+    def test_smartypants(self):
+        self.assertEqual(
+            smartypants("""This... isn't -- "special"."""),
+            "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;."
+        )
