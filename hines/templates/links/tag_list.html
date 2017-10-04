@@ -1,0 +1,15 @@
+{% extends 'links/base.html' %}
+
+{% block head_page_title %}Most common tags used for links{% endblock %}
+{% block content_title %}Most common tags used for links{% endblock %}
+
+{% block content %}
+
+	{% if tag_list|length == 0 %}
+		<p>There are no tags in use.</p>
+	{% else %}
+		{% include 'links/includes/tags.html' with tag_list=tag_list only %}
+	{% endif %}
+
+{% endblock %}
+

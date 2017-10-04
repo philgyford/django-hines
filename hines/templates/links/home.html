@@ -11,7 +11,12 @@
 
 {% block content %}
 
-      {% include 'links/includes/bookmark_list.html' with bookmark_list=bookmark_list page_obj=page_obj perms=perms only %}
-  
+	{% include 'links/includes/bookmark_list.html' with bookmark_list=bookmark_list page_obj=page_obj perms=perms only %}
 
+{% endblock %}
+
+{% block sidebar %}
+	{% include 'pinboard/includes/popular_tags.html' only %}
+
+	{% include 'links/includes/annual_bookmark_counts.html' only %}
 {% endblock %}

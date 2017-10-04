@@ -1,0 +1,23 @@
+{% comment %}
+Used by the popular_tags_card template tag.
+
+Expects:
+* tag_list - A QuerySet of Tags, with 'num_times' field.
+* card_title - The title for the card.
+{% endcomment %}
+
+{% if tag_list|length > 0 %}
+	<div class="card mb-3">
+		<div class="card-body">
+			<h2 class="h6 card-title">{{ card_title }}</h2>
+
+			{% include 'links/includes/tags.html' with tag_list=tag_list only %}
+
+			<p class="card-text">
+				<a href="{% url 'pinboard:tag_list' %}">More tags</a>
+			</p>
+		</div>
+	</div>
+{% endif %}
+
+

@@ -1,7 +1,7 @@
 bleach==2.0.0
 Django==1.11.5
 django-contrib-comments==1.8.0
-django-ditto==0.5.2
+django-ditto==0.6.2
 # For Django 1.11 compatibility, until released:
 -e git://github.com/adi-/django-markdownx.git@v.2+docs#egg=django-markdownx
 django-spectator==3.2.3

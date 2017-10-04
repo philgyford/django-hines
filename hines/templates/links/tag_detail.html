@@ -1,0 +1,14 @@
+{% extends 'links/base.html' %}
+
+{% block head_page_title %}Links tagged with “{{ tag.name}}”{% endblock %}
+{% block content_title %}Bookmarks tagged with “{{ tag.name}}”{% endblock %}
+
+{% block content %}
+
+      {% include 'links/includes/bookmark_list.html' with bookmark_list=bookmark_list page_obj=page_obj perms=perms only %}
+
+{% endblock %}
+
+{% block sidebar %}
+      {% include 'pinboard/includes/popular_tags.html' only %}
+{% endblock %}

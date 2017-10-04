@@ -1,0 +1,11 @@
+{% load l10n %}
+
+<ol>
+	{% for tag in tag_list %}
+		<li>
+			<a href="{% url 'pinboard:tag_detail' slug=tag.slug %}">{{ tag.name }}</a>
+			<small>({{ tag.num_times|localize }})</small>
+		</li>
+	{% endfor %}
+</ol>
+
