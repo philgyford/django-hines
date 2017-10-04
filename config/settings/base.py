@@ -42,11 +42,21 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django.contrib.redirects',
+
     'markdownx',
     'taggit',
     'django_comments',
+
     'spectator.core',
     'spectator.reading',
+
+    'sortedm2m',
+    'ditto.core',
+    'ditto.flickr',
+    'ditto.lastfm',
+    'ditto.pinboard',
+    'ditto.twitter',
+
     'hines.users',
     'hines.core',
     'hines.blocks',
@@ -135,6 +145,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+USE_THOUSAND_SEPARATOR = True
 
 
 
