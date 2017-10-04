@@ -9,7 +9,7 @@ from hines.users.models import User
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
 from hines.weblogs import views
-from tests.core.test_views import ViewTestCase
+from tests.core.views.test_core import ViewTestCase
 
 
 class BlogDetailViewTestCase(ViewTestCase):

@@ -1,7 +1,7 @@
 from django.http.response import Http404
 from django.test import RequestFactory, TestCase
 
-from hines.core import views
+from hines.core.views import core as views
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post

@@ -33,13 +33,16 @@
                     </button>
 					<div class="collapse navbar-collapse" id="navbar-content">
 						<ul class="navbar-nav mr-auto">
-							{% for b in all_blogs %}
-								<li class="nav-item{% if blog and blog.slug == b.slug %} active{% endif %}">
-									<a class="nav-link" href="{% url 'hines:blog_detail' blog_slug=b.slug %}">
-										{{ b.short_name }}
-									</a>
-								</li>
-							{% endfor %}
+							<li class="nav-item{% if blog and blog.slug == 'writing' %} active{% endif %}">
+								<a class="nav-link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">
+									Writing
+								</a>
+							</li>
+							<li class="nav-item{% if blog and blog.slug == 'comments' %} active{% endif %}">
+								<a class="nav-link" href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">
+									Comments
+								</a>
+							</li>
 							<li class="nav-item {% block reading_nav_active %}{% endblock %}">
 								<a class="nav-link" href="{% url 'spectator:reading:home' %}">
 									Reading
@@ -73,13 +76,13 @@
 			{% block content_main %}
 				<div class="row">
 					{% block content_column %}
-						<div class="col-md-9">
+						<div class="col-md-9{% if sidebar_position == 'left' %} order-12{% endif %}">
 							{% block content %}
 							{% endblock %}
 						</div> <!-- .col-md-9 -->
 					{% endblock content_column %}
 					{% block sidebar_column %}
-						<div class="col-md-3">
+						<div class="col-md-3{% if sidebar_position == 'left' %} order-1{% endif %}">
 							{% block sidebar %}
 							{% endblock %}
 						</div> <!-- .col-md-3 -->

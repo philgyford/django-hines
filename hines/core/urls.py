@@ -3,7 +3,7 @@ from django.contrib.flatpages import views as flatpages_views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
-from . import views
+from .views import core as core_views
 
 
 urlpatterns = [
@@ -27,7 +27,7 @@ urlpatterns = [
     url(
         # /2016/04/18/twitter/favorites
         regex=r"^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$",
-        view=views.DayArchiveView.as_view(),
+        view=core_views.DayArchiveView.as_view(),
         name='day_archive'
     ),
 

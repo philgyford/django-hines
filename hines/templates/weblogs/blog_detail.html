@@ -3,6 +3,12 @@
 {% block head_page_title %}{{ blog.name }}{% endblock %}
 {% block content_title %}{{ blog.name }}{% endblock %}
 
+{% block content_main %}
+	{% with 'left' as sidebar_position %}
+		{{ block.super }}
+	{% endwith %}
+{% endblock %}
+
 {% block content %}
 
 	{% include 'weblogs/includes/posts.html' with post_list=post_list perms=perms style='compact' only %}

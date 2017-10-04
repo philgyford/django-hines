@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, static, url
 from django.contrib import admin
 
-from hines.core import views as hines_views
+from hines.core.views import core as core_views
 
 
 # e.g. 'phil':
@@ -24,7 +24,7 @@ spectator_patterns = [
 urlpatterns = [
 
     url(r'^$',
-        view=hines_views.HomeView.as_view(),
+        view=core_views.HomeView.as_view(),
         name='home'
     ),
 
