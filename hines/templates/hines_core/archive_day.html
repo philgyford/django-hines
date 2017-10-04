@@ -1,5 +1,7 @@
 {% extends 'hines_core/base.html' %}
 
+{% load spectator_reading ditto_twitter %}
+
 {% block head_page_title %}{{ day|date:"j F Y" }}{% endblock %}
 {% block content_title %}{{ day|date:"j F Y" }}{% endblock %}
 
@@ -36,8 +38,11 @@
 
 
 {% block sidebar %}
-	{% load spectator_reading %}
 	{% day_publications_card day %}
+
+  {% day_tweets date=day screen_name='philgyford' as tweet_list %}
+
+  {% include 'hines_core/includes/card_tweets.html' with tweet_list=tweet_list card_title="Tweets" only %}
 
 	{{ block.super }}
 {% endblock %}

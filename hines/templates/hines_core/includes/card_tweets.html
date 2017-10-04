@@ -1,0 +1,21 @@
+{% comment %}
+Displays a card containing a list of tweets.
+We're assuming we only have one Twitter account at the moment.
+
+Expects:
+* card_title - Title of the card.
+* tweet_list - A QuerySet of Tweets.
+{% endcomment %}
+
+{% if tweet_list|length > 0 %}
+	<div class="card mb-3">
+		<div class="card-body">
+			<h2 class="h6 card-title">{{ card_title }}</h2>
+
+			{% include 'hines_core/includes/tweets.html' with tweet_list=tweet_list only %}
+
+		</div>
+	</div>
+{% endif %}
+
+

@@ -1,0 +1,23 @@
+{% comment %}
+Displays a list of tweets.
+
+Expects:
+
+* tweet_list - A queryset.
+{% endcomment %}
+
+{% load hines_core %}
+
+<ul>
+	{% for tweet in tweet_list %}
+		<li>
+			{{ tweet.text_html|safe }}
+			<br>
+			<small class="text-muted">
+				<a href="{{ tweet.permalink }}" title="See on Twitter">#</a>
+				{% display_time tweet.post_time link_to_day=False %}
+			</small>
+		</li>
+	{% endfor %}
+</ul>
+
