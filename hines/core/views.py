@@ -8,6 +8,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import ListView, TemplateView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 
+from ditto.pinboard.models import Bookmark
 from hines.weblogs.models import Blog, Post
 from .paginator import DiggPaginator
 
@@ -90,6 +91,8 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         object_lists.update(self._get_weblog_posts(date))
 
+        object_lists.update(self._get_pinboard_bookmarks(date))
+
         if not allow_empty:
             if len(object_lists) == 0:
                 raise Http404(_("Nothing available"))
@@ -112,6 +115,18 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         return date - datetime.timedelta(days=1)
 
     def _get_weblog_posts(self, date):
+        """
+        Returns a dict with key 'blogs'.
+        The value is a list of dicts:
+            {
+                'blogs': [
+                    {
+                        'blog': BlogObject,
+                        'post_list': Post.objects...,
+                    }
+                ]
+            }
+        """
         blogs = []
         for blog in Blog.objects.all():
             qs = blog.public_posts.filter(time_published__date=date)
@@ -126,6 +141,13 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         else:
             return {}
 
+    def _get_pinboard_bookmarks(self, date):
+        bookmarks = Bookmark.public_objects.filter(post_time__date=date)
+        if bookmarks.count() > 0:
+            return {'bookmark_list': bookmarks, }
+        else:
+            return {}
+
 
 class PaginatedListView(ListView):
     """Use this instead of ListView to provide standardised pagination."""
@@ -134,8 +156,8 @@ class PaginatedListView(ListView):
     page_kwarg = 'p'
 
     # See ditto.core.paginator for what these mean:
-    paginator_body = 5 
-    paginator_margin = 2 
+    paginator_body = 5
+    paginator_margin = 2
     paginator_padding = 2
     paginator_tail = 2
 

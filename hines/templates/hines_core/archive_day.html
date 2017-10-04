@@ -10,10 +10,15 @@
 		{% for blog_data in blogs %}
 			<h2>{{ blog_data.blog.name }}</h2>
 
-			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list only %}
+			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list style='compact' only %}
 
 		{% endfor %}
 	{% endif %}
+
+  {% if bookmark_list|length > 0 %}
+      <h2>Links</h2>
+			{% include 'links/includes/bookmark_list.html' with bookmark_list=bookmark_list only %}
+  {% endif %}
 
 	{% if previous_day or next_day %}
 		<nav class="nextprev">
