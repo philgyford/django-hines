@@ -31,7 +31,7 @@
 				<ul class="mb-0">
 					{% for day in date_list %}
 						<li>
-							<a href="{% url 'hines:post_day_archive' blog_slug=blog.slug year=day|date:"Y" month=day|date:"m" day=day|date:"d" %}">{{ day|date:"j" }}</a>
+							<a href="{% url 'hines:day_archive' year=day|date:"Y" month=day|date:"m" day=day|date:"d" %}">{{ day|date:"j" }}</a>
 						</li>
 					{% endfor %}
 				</ul>

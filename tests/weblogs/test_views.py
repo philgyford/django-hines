@@ -257,62 +257,14 @@ class PostDayArchiveViewTestCase(ViewTestCase):
         LivePostFactory(blog=self.blog,
                     time_published=make_datetime('2017-02-20 12:15:00'))
 
-    def test_response_200(self):
-        "It should respond with 200."
+    def test_redirect(self):
         response = views.PostDayArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
                                                         year='2017',
                                                         month='02',
                                                         day='20')
-        self.assertEqual(response.status_code, 200)
-
-    def test_response_404_invalid_blog(self):
-        "It should raise 404 if there's no Blog with that slug."
-        with self.assertRaises(Http404):
-            views.PostDayArchiveView.as_view()(self.request,
-                                                    blog_slug='OTHER-BLOG',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='20')
-
-    def test_response_404_invalid_date(self):
-        "It should raise 404 if there's no matching posts in that month"
-        with self.assertRaises(Http404):
-            views.PostDayArchiveView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='03',
-                                                    day='20')
-
-    def test_response_404_invalid_status(self):
-        "It should raise 404 if there's no matching published post"
-        DraftPostFactory(blog=self.blog,
-                    time_published=make_datetime('2017-03-01 12:15:00'))
-        with self.assertRaises(Http404):
-            views.PostDayArchiveView.as_view()(self.request,
-                                                    blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='03',
-                                                    day='01')
-
-    def test_templates(self):
-        response = views.PostDayArchiveView.as_view()(self.request,
-                                                        blog_slug='my-blog',
-                                                        year='2017',
-                                                        month='02',
-                                                        day='20')
-        self.assertEqual(response.template_name[0],
-                         'weblogs/post_archive_day.html')
-
-    def test_context_blog(self):
-        "The blog should be in the context"
-        response = views.PostDayArchiveView.as_view()(self.request,
-                                                        blog_slug='my-blog',
-                                                        year='2017',
-                                                        month='02',
-                                                        day='20')
-        self.assertIn('blog', response.context_data)
-        self.assertEqual(response.context_data['blog'], self.blog)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/terry/2017/02/20/')
 
 
 class PostMonthArchiveViewTestCase(ViewTestCase):

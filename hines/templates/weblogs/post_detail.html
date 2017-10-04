@@ -83,10 +83,4 @@
 			{% endwith %}
 		</div>
 	</div>
-
-	{% recent_posts_card blog=post.blog num=5 %}
-
-	{% day_publications_card post.time_published %}
-
-	{{ block.super }}
 {% endblock %}

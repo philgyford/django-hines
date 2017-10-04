@@ -8,9 +8,9 @@ Expects:
 
 {% load hines_core %}
 
-<ul>
+<ul class="list-unstyled mb-0">
 	{% for tweet in tweet_list %}
-		<li>
+		<li class="mb-2">
 			{{ tweet.text_html|safe }}
 			<br>
 			<small class="text-muted">

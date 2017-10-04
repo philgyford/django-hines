@@ -3,10 +3,11 @@ import datetime
 from taggit.models import Tag
 
 from django.http import Http404
+from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
-from django.views.generic import DateDetailView, DayArchiveView, DetailView,\
-        ListView, MonthArchiveView, YearArchiveView
+from django.views.generic import DateDetailView, DetailView,\
+        ListView, MonthArchiveView, RedirectView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
 from hines.core.utils import make_date
@@ -209,10 +210,16 @@ class PostDatedArchiveMixin(object):
         return context
 
 
-class PostDayArchiveView(PostDatedArchiveMixin, DayArchiveView):
-    day_format = '%d'
-    month_format = '%m'
-    template_name = 'weblogs/post_archive_day.html'
+class PostDayArchiveView(RedirectView):
+    """
+    To keep things simple we redirect to the overall day view.
+    """
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('hines:day_archive', kwargs={
+            'year': kwargs['year'],
+            'month':kwargs['month'],
+            'day':  kwargs['day']
+        })
 
 
 class PostMonthArchiveView(PostDatedArchiveMixin, MonthArchiveView):
