@@ -38,6 +38,11 @@
 									Writing
 								</a>
 							</li>
+							<li class="nav-item {% block links_nav_active %}{% endblock %}">
+								<a class="nav-link" href="{% url 'pinboard:home' %}">
+									Links
+								</a>
+							</li>
 							<li class="nav-item{% if blog and blog.slug == 'comments' %} active{% endif %}">
 								<a class="nav-link" href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">
 									Comments

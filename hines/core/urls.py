@@ -3,7 +3,7 @@ from django.contrib.flatpages import views as flatpages_views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
-from .views import core as core_views
+from . import views as core_views
 
 
 urlpatterns = [

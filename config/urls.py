@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, static, url
 from django.contrib import admin
 
-from hines.core.views import core as core_views
+from hines.core import views as core_views
 
 
 # e.g. 'phil':
@@ -30,10 +30,15 @@ urlpatterns = [
 
     url(r'^backstage/', admin.site.urls),
 
-    # So these URLs will be in namespaces like 'spectator:reading':
-    url(r'^', include (spectator_patterns, namespace='spectator')),
+    url(r'^{}/links/'.format(ROOT_DIR),
+        include('hines.links.urls', namespace='pinboard')),
 
-    url(r'^{}/'.format(ROOT_DIR), include('hines.core.urls', namespace='hines')),
+    # So these URLs will be in namespaces like 'spectator:reading':
+    url(r'^',
+        include (spectator_patterns, namespace='spectator')),
+
+    url(r'^{}/'.format(ROOT_DIR),
+        include('hines.core.urls', namespace='hines')),
 
     # Used in the weblogs app for the Admin:
     url(r'^markdownx/', include('markdownx.urls')),
