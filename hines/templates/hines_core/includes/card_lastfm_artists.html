@@ -1,0 +1,22 @@
+{% comment %}
+Displays a card containing a chart of Last.fm artists.
+We're assuming we only have one account at the moment.
+
+Expects:
+* card_title - Title of the card.
+* artist_list - A QuerySet of Artists.
+{% endcomment %}
+
+{% if artist_list|length > 0 %}
+	<div class="card mb-3">
+		<div class="card-body">
+			<h2 class="h6 card-title">{{ card_title }}</h2>
+
+			{% include 'hines_core/includes/chart.html' with object_list=artist_list only %}
+
+		</div>
+	</div>
+{% endif %}
+
+
+

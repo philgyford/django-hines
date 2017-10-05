@@ -70,6 +70,13 @@ To see coverage you can either open `htmlcov/index.html` in a browser or do:
 	vagrant$ coverage report
 
 
+#### Restarting postgresql
+
+Sometimes it seems to stop.
+
+	vagrant$ /etc/init.d/postgresql start
+
+
 ## Django Settings
 
 Custom settings that can be in the django `settings.py` file:

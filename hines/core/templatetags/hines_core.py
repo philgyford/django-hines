@@ -5,6 +5,8 @@ from django import template
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html
 
+from ditto.lastfm.templatetags.ditto_lastfm import top_artists
+
 
 register = template.Library()
 
@@ -82,4 +84,15 @@ def smartypants(text):
     Processes the text with smartypants.
     """
     return _smartypants.smartypants(text)
+
+
+@register.inclusion_tag('hines_core/includes/card_lastfm_artists.html')
+def lastfm_top_artists_card(limit=10):
+    """
+    Displays the most listened-to Artists for all accounts.
+    """
+    return {
+            'card_title': 'Most listened-to music artists',
+            'artist_list': top_artists(limit=limit),
+            }
 

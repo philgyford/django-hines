@@ -1,9 +1,9 @@
 {% extends 'flatpages/base.html' %}
+{% load hines_core blocks %}
 
 {% block about_nav_active %}active{% endblock %}
 
 {% block sidebar %}
-	{% load hines_core %}
 	{% current_url_name as url_name %}
 	<div class="card mb-3">
 		<ul class="list-group list-group-flush">
@@ -31,8 +31,9 @@
 		</ul>
 	</div>
 
-	{% load blocks %}
 	{% render_block "elsewhere" %}
+
+	{% lastfm_top_artists_card limit=10 %}
 
 	{{ block.super }}
 {% endblock %}
