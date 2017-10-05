@@ -1,0 +1,41 @@
+{% comment %}
+
+Expects:
+ * photo_list, a queryset of Photos.
+ * perms - The Django perms object.
+
+{% endcomment %}
+
+{% if photo_list|length > 0 %}
+	{% load ditto_core %}
+
+    <div class="d-flex flex-wrap flickr-photos flickr-photos-columns">
+        {% for photo in photo_list %}
+            <div class="flickr-photo col-12 col-sm-6 col-md-4 p-3">
+                <h3 class="h6">
+                    <a href="{{ photo.permalink }}">{{ photo.title }}</a>
+                </h3>
+                <p class="flickr-photo-img mb-0">
+                    <a href="{{ photo.permalink }}">
+                        <img src="{{ photo.small_url }}" width="{{ photo.small_width }}" height="{{ photo.small_height }}" alt="" class="img-fluid">
+                    </a>
+                </p>
+                <p class="flickr-photo-meta"><small class="text-muted">
+                    {% if order == 'taken' %}
+                        Taken
+						{% display_time photo.taken_time link_to_day=False granularity=photo.taken_granularity %}
+                    {% else %}
+                        Uploaded
+						{% display_time photo.post_time link_to_day=False granularity=photo.taken_granularity %}
+                    {% endif %}
+                </small></p>
+            </div> <!-- .flickr-photo -->
+        {% endfor %}
+    </div> <!-- .flickr-photos -->
+
+{% else %}
+    <p>There are no photos to show.</p>
+{% endif %}
+
+
+

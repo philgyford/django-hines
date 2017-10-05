@@ -8,6 +8,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import ListView, TemplateView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 
+from ditto.flickr.models import Photo
 from ditto.pinboard.models import Bookmark
 from hines.weblogs.models import Blog, Post
 from .paginator import DiggPaginator
@@ -93,6 +94,8 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         object_lists.update(self._get_pinboard_bookmarks(date))
 
+        object_lists.update(self._get_flickr_photos(date))
+
         if not allow_empty:
             if len(object_lists) == 0:
                 raise Http404(_("Nothing available"))
@@ -145,6 +148,15 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         bookmarks = Bookmark.public_objects.filter(post_time__date=date)
         if bookmarks.count() > 0:
             return {'bookmark_list': bookmarks, }
+        else:
+            return {}
+
+    def _get_flickr_photos(self, date):
+        photos = Photo.public_objects.filter(
+                                        taken_time__date=date,
+                                        taken_granularity=0)
+        if photos.count() > 0:
+            return {'photo_list': photos, }
         else:
             return {}
 

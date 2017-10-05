@@ -7,21 +7,6 @@
 
 {% block content %}
 
-	{% if blogs|length > 0 %}
-		<hr>
-		{% for blog_data in blogs %}
-			<h2>{{ blog_data.blog.name }}</h2>
-
-			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list style='compact' only %}
-
-		{% endfor %}
-	{% endif %}
-
-  {% if bookmark_list|length > 0 %}
-      <h2>Links</h2>
-			{% include 'links/includes/bookmark_list.html' with bookmark_list=bookmark_list only %}
-  {% endif %}
-
 	{% if previous_day or next_day %}
 		<nav class="nextprev">
 			<p>
@@ -34,15 +19,40 @@
 			</p>
 		</nav>
 	{% endif %}
+
+	{% if blogs|length == 0 and bookmark_list|length == 0 and photo_list|length == 0 %}
+		<p>There’s nothing to show here today.</p>
+	{% endif %}
+
+	{% if blogs|length > 0 %}
+		<hr>
+		{% for blog_data in blogs %}
+			<h2>{{ blog_data.blog.name }}</h2>
+
+			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list style='compact' only %}
+
+		{% endfor %}
+	{% endif %}
+
+	{% if bookmark_list|length > 0 %}
+		<h2>Links</h2>
+		{% include 'links/includes/bookmarks.html' with bookmark_list=bookmark_list only %}
+	{% endif %}
+
+	{% if photo_list|length > 0 %}
+		<h2>Photos</h2>
+		{% include 'hines_core/includes/photos.html' with photo_list=photo_list order='taken' only %}
+	{% endif %}
+
 {% endblock %}
 
 
 {% block sidebar %}
 	{% day_publications_card day %}
 
-  {% day_tweets date=day screen_name='philgyford' as tweet_list %}
+	{% day_tweets date=day screen_name='philgyford' as tweet_list %}
 
-  {% include 'hines_core/includes/card_tweets.html' with tweet_list=tweet_list card_title="Tweets" only %}
+	{% include 'hines_core/includes/card_tweets.html' with tweet_list=tweet_list card_title="Tweets" only %}
 
 	{{ block.super }}
 {% endblock %}
