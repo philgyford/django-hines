@@ -1,5 +1,9 @@
 {% extends 'hines_core/base.html' %}
 
+{% load hines_core %}
+{% load blocks %}
+{% load spectator_reading %}
+
 {% block head_title %}{{ site_name }}{% endblock %}
 
 {% block content %}
@@ -7,12 +11,11 @@ Hello
 {% endblock %}
 
 {% block sidebar %}
-	{% load blocks %}
 	{% render_block "about-me" %}
 	{% render_block "other-sites" %}
 
-	{% load spectator_reading %}
 	{% in_progress_publications_card %}
 
-	{{ block.super }}
+	{% lastfm_top_artists_card limit=10 %}
+
 {% endblock %}
