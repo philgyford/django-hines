@@ -87,12 +87,12 @@ def smartypants(text):
 
 
 @register.inclusion_tag('hines_core/includes/card_lastfm_artists.html')
-def lastfm_top_artists_card(limit=10):
+def lastfm_top_artists_card(num=10):
     """
     Displays the most listened-to Artists for all accounts.
     """
     return {
             'card_title': 'Most listened-to music artists',
-            'artist_list': top_artists(limit=limit),
+            'artist_list': top_artists(limit=num),
             }
 

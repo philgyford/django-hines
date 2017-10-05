@@ -35,7 +35,7 @@
 	{% if blog %}
 		{% current_url_name as url_name %}
 		{% if url_name != 'hines:blog_tag_list' %}
-			{% blog_popular_tags_card blog=blog limit=10 %}
+			{% blog_popular_tags_card blog=blog num=10 %}
 		{% endif %}
 
 		{% blog_years_card blog=blog current_year=year|default_if_none:None %}
