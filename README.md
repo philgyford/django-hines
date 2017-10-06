@@ -58,6 +58,15 @@ Then in another:
 
 	vagrant$ /vagrant/manage.py import_gyford_reading
 
+#### Postgresql export/import
+
+Export:
+
+	vagrant$ pg_dump hines =U hines -h localhost -Fc > hines.pgsql
+
+Import:
+
+	vagrant$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U hines -d hines.pgsql
 
 #### Tests
 
