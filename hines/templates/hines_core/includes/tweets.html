@@ -4,20 +4,16 @@ Displays a list of tweets.
 Expects:
 
 * tweet_list - A queryset.
+* perms - A Django permissions object.
 {% endcomment %}
 
-{% load hines_core %}
 
-<ul class="list-unstyled mb-0">
+<div>
 	{% for tweet in tweet_list %}
-		<li class="mb-2">
-			{{ tweet.text_html|safe }}
-			<br>
-			<small class="text-muted">
-				<a href="{{ tweet.permalink }}" title="See on Twitter">#</a>
-				{% display_time tweet.post_time link_to_day=False %}
-			</small>
-		</li>
+		<div class="media">
+			{% include 'hines_core/includes/tweet.html' with tweet=tweet perms=perms view='day' only %}
+		</div>
+		<hr>
 	{% endfor %}
-</ul>
+</div>
 

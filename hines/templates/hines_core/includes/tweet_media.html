@@ -1,0 +1,66 @@
+{% comment %}
+A list of a Tweet's Media objects (ie, photo, GIF or video).
+
+A slightly altered version of Ditto's twitter/includes/media.html template.
+Beacuse:
+	* We use different HTML/CSS
+	* We don't currently have different 'view's.
+	* We don't want to use tweet.get_absolute_url().
+
+Expects:
+
+ * tweet, the Tweet object.
+
+{% endcomment %}
+
+{% if tweet.media_count > 0 %}
+    {% load l10n %}
+
+    {% with media_list=tweet.media.all %}
+
+        {% if media_list|length > 1 %}
+
+            {% comment %}
+                Multiple Photos, and not the Tweet's detail view.
+
+                This assumes that if there are multiple items then they're
+                photos, and there will be a maximum of 4.
+                This is true as of 2016-05-07...
+            {% endcomment %}
+
+            <ul class="list-unstyled row">
+                {% for media in media_list %}
+                    <li class="col-sm-3 mb-3">
+                        <a href="{{ tweet.permalink }}" title="See this tweet on Twitter"><img src="{{ media.small_url }}" width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" class="img-fluid" alt="Photo thumbnail"></a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+
+            <ul class="list-unstyled mb-0">
+                {% for media in media_list %}
+
+                    <li class="mb-3">
+                        {% if media.media_type == 'photo' %}
+
+							<a href="{{ tweet.permalink }}" title="See this tweet on Twitter"><img src="{{ media.small_url }}" width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" alt="" class="img-fluid"></a>
+
+                        {% else %}
+
+                            {# Video or Animated GIF #}
+
+							<video width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" poster="{{ media.large_url }}" controls preload="none">
+								<source src="{{ media.video_url }}" type="{{ media.video_mime_type }}">
+                            </video>
+
+                        {% endif %}
+                    </li>
+
+                {% endfor %}
+            </ul>
+
+        {% endif %}
+    {% endwith %}
+{% endif %}
+

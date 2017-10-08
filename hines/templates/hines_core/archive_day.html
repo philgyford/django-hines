@@ -1,6 +1,6 @@
 {% extends 'hines_core/base.html' %}
 
-{% load spectator_reading ditto_twitter %}
+{% load hines_core spectator_reading ditto_twitter %}
 
 {% block head_page_title %}{{ day|date:"j F Y" }}{% endblock %}
 {% block content_title %}{{ day|date:"j F Y" }}{% endblock %}
@@ -44,16 +44,18 @@
 		{% include 'hines_core/includes/photos.html' with photo_list=photo_list order='taken' only %}
 	{% endif %}
 
+	{% if tweet_list|length > 0 %}
+		<h2>Tweets</h2>
+		{% include 'hines_core/includes/tweets.html' with tweet_list=tweet_list perms=perms only %}
+	{% endif %}
+
 {% endblock %}
 
 
 {% block sidebar %}
 	{% day_publications_card day %}
 
-	{% day_tweets date=day screen_name='philgyford' as tweet_list %}
 
-	{% include 'hines_core/includes/card_tweets.html' with tweet_list=tweet_list card_title="Tweets" only %}
-
-	{{ block.super }}
+	{% lastfm_top_artists_card limit=3 date=day period='day' %}
 {% endblock %}
 

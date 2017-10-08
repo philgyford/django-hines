@@ -87,12 +87,27 @@ def smartypants(text):
 
 
 @register.inclusion_tag('hines_core/includes/card_lastfm_artists.html')
-def lastfm_top_artists_card(num=10):
+def lastfm_top_artists_card(limit=10, date=None, period='day'):
     """
     Displays the most listened-to Artists for all accounts.
     """
+    card_title = 'Most listened-to music artists'
+    more = None
+
+    if date is None:
+        more = {'text': 'More at Last.fm',
+                'url': 'https://www.last.fm/user/gyford',}
+    else:
+        if period == 'day':
+            card_title += ' on this day'
+        elif period == 'month':
+            card_title += ' this month'
+        elif period == 'year':
+            card_title += ' this year'
+
     return {
-            'card_title': 'Most listened-to music artists',
-            'artist_list': top_artists(limit=num),
+            'card_title': card_title,
+            'artist_list': top_artists(limit=limit, date=date, period=period),
+            'more': more,
             }
 
