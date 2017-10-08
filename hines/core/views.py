@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import ListView, TemplateView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 
-from ditto.flickr.models import Photo
+from ditto.flickr.models import Photo, Photoset
 from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
 from hines.weblogs.models import Blog, Post
@@ -228,6 +228,27 @@ class PaginatedListView(ListView):
                 'page_number': page_number,
                 'message': str(e)
             })
+
+
+class PhotosHomeView(PaginatedListView):
+    """
+    We only have a single page showing photos, so doesn't make sense to put
+    it in its own app. So here we are.
+    """
+    template_name = 'hines_core/photos_home.html'
+    queryset = Photo.public_objects.all()
+    # Divisible by three columns:
+    paginate_by = 48
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['photoset_list'] = Photoset.objects.all() \
+                                            .order_by('-last_update_time')[:10]
+
+        return context
+
+
 
 
 def timezone_today():

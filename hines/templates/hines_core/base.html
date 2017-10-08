@@ -38,6 +38,11 @@
 									Writing
 								</a>
 							</li>
+							<li class="nav-item {% block photos_nav_active %}{% endblock %}">
+								<a class="nav-link" href="{% url 'photos:home' %}">
+									Photos
+								</a>
+							</li>
 							<li class="nav-item {% block links_nav_active %}{% endblock %}">
 								<a class="nav-link" href="{% url 'pinboard:home' %}">
 									Links

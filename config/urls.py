@@ -30,6 +30,15 @@ urlpatterns = [
 
     url(r'^backstage/', admin.site.urls),
 
+    url(r'^{}/photos/'.format(ROOT_DIR),
+        # We might in future have a photos app, in which case we'd include
+        # its urlconf here. But for now, just one view in the core app:
+        include([
+            url(r'^$', core_views.PhotosHomeView.as_view(), name='home'),
+        ],
+        namespace='photos')
+    ),
+
     url(r'^{}/links/'.format(ROOT_DIR),
         include('hines.links.urls', namespace='pinboard')),
 

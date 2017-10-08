@@ -1,15 +1,24 @@
 {% comment %}
 
+Display a list of Photos, optionally paginated.
+A simplified version of ditto/flickr/templates/flickr/includes/photo_columns.html
+
 Expects:
  * photo_list, a queryset of Photos.
+ * page_obj - Optional, a DiggPaginator instance or False (default).
+ * order - Either 'uploaded' (default) or 'taken'.
  * perms - The Django perms object.
 
 {% endcomment %}
 
 {% if photo_list|length > 0 %}
-	{% load ditto_core %}
+	{% load hines_core %}
 
-    <div class="d-flex flex-wrap flickr-photos flickr-photos-columns">
+    {% if page_obj|default:False and page_obj.number > 1 %}
+        {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
+    {% endif %}
+	
+    <div class="d-flex flex-wrap">
         {% for photo in photo_list %}
             <div class="flickr-photo col-12 col-sm-6 col-md-4 p-3">
                 <h3 class="h6">
@@ -23,16 +32,27 @@ Expects:
                 <p class="flickr-photo-meta"><small class="text-muted">
                     {% if order == 'taken' %}
                         Taken
-						{% display_time photo.taken_time link_to_day=False granularity=photo.taken_granularity %}
+						{% if view == 'day' %}
+							{% display_time photo.taken_time link_to_day=False granularity=photo.taken_granularity %}
+						{% else %}
+							{% display_time photo.taken_time link_to_day=True granularity=photo.taken_granularity %}
+						{% endif %}
                     {% else %}
                         Uploaded
-						{% display_time photo.post_time link_to_day=False granularity=photo.taken_granularity %}
+						{% if view == 'day' %}
+							{% display_time photo.post_time link_to_day=False granularity=photo.taken_granularity %}
+						{% else %}
+							{% display_time photo.post_time link_to_day=True granularity=photo.taken_granularity %}
+						{% endif %}
                     {% endif %}
                 </small></p>
             </div> <!-- .flickr-photo -->
         {% endfor %}
     </div> <!-- .flickr-photos -->
 
+    {% if page_obj|default:False %}
+        {% include 'ditto/includes/pagination.html' with page_obj=page_obj only %}
+    {% endif %}
 {% else %}
     <p>There are no photos to show.</p>
 {% endif %}

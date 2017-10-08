@@ -1,0 +1,55 @@
+{% extends 'hines_core/base.html' %}
+
+{% block photos_nav_active %}active{% endblock %}
+
+{% block head_page_title %}Photos on Flickr{% endblock %}
+{% block content_title %}Photos on Flickr{% endblock %}
+
+{% block content_main %}
+	{% with 'left' as sidebar_position %}
+		{{ block.super }}
+	{% endwith %}
+{% endblock %}
+
+{% block content %}
+
+	<h2>Recent photos</h2>
+
+	{% include 'hines_core/includes/photos.html' with photo_list=photo_list page_obj=page_obj perms=perms only %}
+
+{% endblock %}
+
+{% block sidebar %}
+
+	{% if photoset_list %}
+		<h2>Albums</h2>
+
+		{% for photoset in photoset_list %}
+			<div>
+                <h3 class="h6">
+					<a href="{{ photoset.permalink }}" title="See this album on Flickr">{{ photoset.title }}</a>
+                </h3>
+                {% if photoset.primary_photo %}
+                    <p class="mb-0">
+						<a href="{{ photoset.permalink }}" title="See this album on Flickr">
+                            <img src="{{ photoset.primary_photo.large_square_url }}" width="{{ photoset.primary_photo.large_square_width }}" height="{{ photoset.primary_photo.large_square_height }}" alt="" class="img-fluid">
+                        </a>
+                    </p>
+                {% endif %}
+                <p class=""><small class="text-muted">
+					{% if photoset.photo_count > 0 %}
+						{{ photoset.photo_count }} photo{{ photoset.photo_count|pluralize }}
+					{% endif %}
+					{% if photoset.photo_count > 0 and photoset.video_count > 0 %}
+						and
+					{% endif %}
+					{% if photoset.video_count > 0 %}
+						{{ photoset.video_count }} video{{ photoset.video_count|pluralize }}
+					{% endif %}
+                </small></p>
+			</div>
+		{% endfor %}
+		<p><a href="https://www.flickr.com/photos/philgyford/albums">More albums on Flickr</a></p>
+	{% endif %}
+{% endblock %}
+
