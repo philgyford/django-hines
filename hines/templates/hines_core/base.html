@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}{% load hines_weblogs %}
+{% load static hines_core hines_weblogs %}
 <html lang="en-gb">
 	<head>
 		<meta charset="utf-8">
@@ -9,9 +9,9 @@
 
 		<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
 
-		{% get_all_blogs as all_blogs %}
-		{% for b in all_blogs %}
-		<link rel="alternate" type="application/rss+xml" title="{{ b.get_feed_title }}" href="{{ b.get_feed_url }}"/>
+		{% get_all_blogs_by_slug as all_blogs %}
+		{% for blog_slug, blog_obj in all_blogs.items %}
+			<link rel="alternate" type="application/rss+xml" title="{{ blog_obj.get_feed_title }}" href="{{ blog_obj.get_feed_url }}"/>
 		{% endfor %}
 
 		{% block head_extra %}
@@ -107,13 +107,23 @@
 					<div class="col-md-3">
 						<h4>RSS feeds</h4>
 						<ul class="list-unstyled">
-							{% for b in all_blogs %}
+							{% with all_blogs|get_item:'writing' as b %}
 								<li>
-									<a href="{{ b.get_feed_url }}">
-										{{ b.short_name }}
-									</a>
+									<a href="{{ b.get_feed_url }}">{{ b.short_name }}</a>
 								</li>
-							{% endfor %}
+							{% endwith %}
+
+							<li>
+								<a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
+							</li>
+							<li>
+								<a href="http://feeds.pinboard.in/rss/u:philgyford/">Links at Pinboard</a>
+							</li>
+							{% with all_blogs|get_item:'comments' as b %}
+								<li>
+									<a href="{{ b.get_feed_url }}">{{ b.name }}</a>
+								</li>
+							{% endwith %}
 						</ul>
 					</div>
 				</div>

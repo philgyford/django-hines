@@ -4,7 +4,7 @@ from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
 from hines.weblogs.templatetags.hines_weblogs import blog_years,\
-        blog_popular_tags, get_all_blogs, recent_posts
+        blog_popular_tags, get_all_blogs, get_all_blogs_by_slug, recent_posts
 
 
 class GetAllBlogsTestCase(TestCase):
@@ -16,6 +16,16 @@ class GetAllBlogsTestCase(TestCase):
         self.assertEqual(len(blogs), 2)
         self.assertEqual(blogs[0], b1)
         self.assertEqual(blogs[1], b2)
+
+
+class GetAllBlogsBySlugTestCase(TestCase):
+
+    def test_queryset(self):
+        b2 = BlogFactory(sort_order=2, slug='blog-2')
+        b1 = BlogFactory(sort_order=1, slug='blog-1')
+        blogs = get_all_blogs_by_slug()
+        self.assertEqual(blogs['blog-1'], b1)
+        self.assertEqual(blogs['blog-2'], b2)
 
 
 class RecentPostsTestCase(TestCase):

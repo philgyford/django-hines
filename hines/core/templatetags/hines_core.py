@@ -11,6 +11,26 @@ from ditto.lastfm.templatetags.ditto_lastfm import top_artists
 register = template.Library()
 
 
+@register.filter
+def get_item(dictionary, key):
+    """
+    Utility filter for getting a value from a dict using its key.
+
+    e.g. if:
+
+        ages = {'bob': 37,}
+
+    then:
+
+        {{ ages|get_item:'bob' }}
+
+    displays:
+
+        37
+    """
+    return dictionary.get(key)
+
+
 @register.simple_tag(takes_context=True)
 def current_url_name(context):
     """

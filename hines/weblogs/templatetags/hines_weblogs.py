@@ -17,6 +17,17 @@ def get_all_blogs():
 
 
 @register.assignment_tag
+def get_all_blogs_by_slug():
+    """
+    Returns a dict of all Blog objects, with their slugs as the dict keys.
+    """
+    blogs = {}
+    for blog in Blog.objects.all():
+        blogs[blog.slug] = blog
+    return blogs
+
+
+@register.assignment_tag
 def recent_posts(blog, num=5):
     """
     Returns a QuerySet of `num` recently-published Posts for `blog`.

@@ -2,8 +2,20 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from hines.core.templatetags.hines_core import display_time, smartypants
+from hines.core.templatetags.hines_core import get_item, display_time,\
+        smartypants
 from hines.core.utils import make_datetime
+
+
+class GetItemTestCase(TestCase):
+
+    def test_returns_value(self):
+        ages = {'bob': 37,}
+        self.assertEqual(get_item(ages, 'bob'), 37)
+
+    def test_returns_None(self):
+        ages = {'bob': 37,}
+        self.assertIsNone(get_item(ages, 'amy'))
 
 
 class DisplayTimeTestCase(TestCase):
