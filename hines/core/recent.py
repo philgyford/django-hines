@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from django.utils import timezone
+
 from ditto.flickr.models import Account as FlickrAccount, Photo
 from ditto.pinboard.models import Account as PinboardAccount, Bookmark
 from hines.weblogs.models import Blog, Post
@@ -14,12 +18,19 @@ class RecentObjects(object):
 
     See __init__() for the valid `kinds`.
 
-    The returned `objects` will be a list of dicts. Each dict will have these
-    keys:
+    The returned `objects` will be a list of dicts.
+    Each dict will have these keys:
 
-        'object': A Django object of the correct type, e.g. Post or Photo.
-        'kind': e.g. 'blog_post', 'flickr_photo', 'pinboard_bookmark'.
+        'object': A Django object of the correct type, e.g. Post or Bookmark.
+        OR
+        'objects': A Queryset of all Photos posted on that day.
+
+        'kind': e.g. 'blog_post', 'flickr_photos', 'pinboard_bookmark'.
         'time': The datetime this object was uploaded/published.
+                OR the datetime at midnight for the day of the Photos QS.
+
+    NOTE: Some types have a single item at a specific time.
+          Some types have several items from a specific day.
 
     The objects will be in reverse chronological order.
 
@@ -157,18 +168,32 @@ class RecentObjects(object):
 
     def get_flickr_photos(self, nsid, num):
         """
-        Returns a list of the `num` most recent Photos from the Flickr User
-        with `nsid`.
+        Returns a list of the `num` most recent dates on which user `nsid` has
+        posted photos, with a queryset of Photos for each one.
+
+        NOTE: This has `objects` rather than `object` (a QuerySet of all the
+        Photos from that day).
         """
         objects = []
 
-        photos = Photo.public_objects.filter(user__nsid=nsid) \
-                                        .order_by('-post_time')[:num]
-        for photo in photos:
+        photo_dates = Photo.public_objects.filter(user__nsid=nsid) \
+                                .dates('post_time', 'day', order='DESC')[:num]
+
+        for photo_date in photo_dates:
+            photos = Photo.public_objects.filter(
+                                            user__nsid=nsid,
+                                            post_time__date=photo_date) \
+                                            .order_by('post_time')
+
+            # Turn photo_date into a timezone aware time at midnight:
+            photo_time = datetime.combine(photo_date, datetime.min.time())
+            photo_time = timezone.make_aware(
+                                photo_time, timezone.get_current_timezone())
+
             objects.append({
-                'kind': 'flickr_photo',
-                'object': photo,
-                'time': photo.post_time
+                'kind': 'flickr_photos',
+                'objects': photos,
+                'time': photo_time,
             })
 
         return objects

@@ -114,26 +114,51 @@ class RecentObjectsTestCase(TestCase):
         PhotoFactory(user=u1, is_private=True)
         PhotoFactory(user=u2, is_private=False)
 
-        r = RecentObjects( (('flickr_photos', '11111111111@N01',),) )
+        r = RecentObjects( (('flickr_photos', u1.nsid,),) )
         objects = r.get_objects()
 
-        self.assertEqual(len(objects), 3)
+        self.assertEqual(len(objects), 1)
 
         for obj in objects:
-            self.assertEqual(obj['object'].user, u1)
-            self.assertFalse(obj['object'].is_private)
+            self.assertEqual(obj['objects'][0].user, u1)
+            self.assertFalse(obj['objects'][0].is_private)
+
+    def test_flickr_photos_several(self):
+        "It should return all Photos from each day."
+
+        user = UserFactory(nsid='11111111111@N01')
+        account = FlickrAccountFactory(user=user)
+
+        day_1_photos = PhotoFactory.create_batch(4,
+                    user=user, is_private=False,
+                    post_time=make_datetime('2017-05-01 12:30:00'))
+
+        day_2_photos = PhotoFactory.create_batch(3,
+                    user=user, is_private=False,
+                    post_time=make_datetime('2017-06-01 12:30:00'))
+
+        r = RecentObjects( (('flickr_photos', user.nsid,),) )
+        objects = r.get_objects()
+
+        self.assertEqual(len(objects), 2)
+        self.assertEqual(len(objects[0]['objects']), 3)
+        self.assertEqual(len(objects[1]['objects']), 4)
+
 
     def test_flickr_photos_format(self):
         "The returned flickr photo dicts should be in the correct format"
         user = UserFactory(nsid='11111111111@N01')
         account = FlickrAccountFactory(user=user)
-        photo = PhotoFactory(user=user, is_private=False)
-        r = RecentObjects( (('flickr_photos', '11111111111@N01',),) )
+        photo = PhotoFactory(user=user, is_private=False,
+                    post_time=make_datetime('2017-05-01 12:30:00'))
+
+        r = RecentObjects( (('flickr_photos', user.nsid,),) )
         objects = r.get_objects()
 
-        self.assertEqual(objects[0]['kind'], 'flickr_photo')
-        self.assertEqual(objects[0]['object'], photo)
-        self.assertEqual(objects[0]['time'], photo.post_time)
+        self.assertEqual(objects[0]['kind'], 'flickr_photos')
+        self.assertEqual(objects[0]['objects'][0], photo)
+        self.assertEqual(objects[0]['time'],
+                                        make_datetime('2017-05-01 00:00:00'))
 
     # PINBOARD BOOKMARKS
 
@@ -196,5 +221,5 @@ class RecentObjectsTestCase(TestCase):
         # Should be most recent first:
         self.assertEqual(objects[0]['object'], bookmark)
         self.assertEqual(objects[1]['object'], post)
-        self.assertEqual(objects[2]['object'], photo)
+        self.assertEqual(objects[2]['objects'][0], photo)
 
