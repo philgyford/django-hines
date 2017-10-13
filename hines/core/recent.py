@@ -27,8 +27,9 @@ class RecentObjects(object):
 
     1. Add to `valid_kind_types`.
     2. Add a check in `validate_kinds()`.
-    3. Fetch the objects in `get_objects()`.
-    4. Add tests.
+    3. Add a clause in `get_objects()`.
+    4. Add a method, equivalent of `get_flickr_photos()`.
+    5. Add tests.
     """
 
     # Will be the kinds passed to __init__(), assuming they're valid.
@@ -137,6 +138,10 @@ class RecentObjects(object):
 
 
     def get_blog_posts(self, blog_slug, num):
+        """
+        Returns a list of the `num` most recent Posts from the Blog with
+        `blog_slug`.
+        """
         objects = []
 
         posts = Post.public_objects.filter(blog__slug=blog_slug) \
@@ -151,6 +156,10 @@ class RecentObjects(object):
         return objects
 
     def get_flickr_photos(self, nsid, num):
+        """
+        Returns a list of the `num` most recent Photos from the Flickr User
+        with `nsid`.
+        """
         objects = []
 
         photos = Photo.public_objects.filter(user__nsid=nsid) \
@@ -165,6 +174,9 @@ class RecentObjects(object):
         return objects
 
     def get_pinboard_bookmarks(self, username, num):
+        """
+        Returns a list of the `num` most recent Bookmarks from `username`.
+        """
         objects = []
 
         bookmarks = Bookmark.public_objects \
