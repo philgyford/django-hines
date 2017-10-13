@@ -123,38 +123,60 @@ class RecentObjects(object):
             kind_id = kind[1]
 
             if kind_type == 'blog_posts':
-                posts = Post.public_objects.filter(blog__slug=kind_id) \
-                                            .order_by('-time_published')[:num]
-                for post in posts:
-                    objects.append({
-                        'kind': 'blog_post',
-                        'object': post,
-                        'time': post.time_published,
-                    })
+                objects.extend( self.get_blog_posts(kind_id, num) )
 
             elif kind_type == 'flickr_photos':
-                photos = Photo.public_objects.filter(user__nsid=kind_id) \
-                                                .order_by('-post_time')[:num]
-                for photo in photos:
-                    objects.append({
-                        'kind': 'flickr_photo',
-                        'object': photo,
-                        'time': photo.post_time
-                    })
+                objects.extend( self.get_flickr_photos(kind_id, num) )
 
             elif kind_type == 'pinboard_bookmarks':
-                bookmarks = Bookmark.public_objects \
-                                    .filter(account__username=kind_id) \
-                                    .order_by('-post_time')[:num]
-
-                for bookmark in bookmarks:
-                    objects.append({
-                        'kind': 'pinboard_bookmark',
-                        'object': bookmark,
-                        'time': bookmark.post_time
-                    })
+                objects.extend( self.get_pinboard_bookmarks(kind_id, num) )
 
         sorted_objects = sorted(objects, key=lambda k: k['time'], reverse=True)
 
         return sorted_objects[:num]
+
+
+    def get_blog_posts(self, blog_slug, num):
+        objects = []
+
+        posts = Post.public_objects.filter(blog__slug=blog_slug) \
+                                    .order_by('-time_published')[:num]
+        for post in posts:
+            objects.append({
+                'kind': 'blog_post',
+                'object': post,
+                'time': post.time_published,
+            })
+
+        return objects
+
+    def get_flickr_photos(self, nsid, num):
+        objects = []
+
+        photos = Photo.public_objects.filter(user__nsid=nsid) \
+                                        .order_by('-post_time')[:num]
+        for photo in photos:
+            objects.append({
+                'kind': 'flickr_photo',
+                'object': photo,
+                'time': photo.post_time
+            })
+
+        return objects
+
+    def get_pinboard_bookmarks(self, username, num):
+        objects = []
+
+        bookmarks = Bookmark.public_objects \
+                            .filter(account__username=username) \
+                            .order_by('-post_time')[:num]
+
+        for bookmark in bookmarks:
+            objects.append({
+                'kind': 'pinboard_bookmark',
+                'object': bookmark,
+                'time': bookmark.post_time
+            })
+
+        return objects
 
