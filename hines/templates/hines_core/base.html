@@ -107,6 +107,9 @@
 					<div class="col-md-3">
 						<h4>RSS feeds</h4>
 						<ul class="list-unstyled">
+							<li>
+								<a href="{% url 'hines:everything_feed' %}">Everything below combined</a>
+							</li>
 							{% with all_blogs|get_item:'writing' as b %}
 								<li>
 									<a href="{{ b.get_feed_url }}">{{ b.short_name }}</a>

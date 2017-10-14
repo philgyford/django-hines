@@ -90,6 +90,12 @@ Sometimes it seems to stop.
 
 Custom settings that can be in the django `settings.py` file:
 
+``HINES_ROOT_DIR``: e.g. `'phil'`. All the pages except things like the very
+front page and admin will live uner this directory.
+
+``HINES_USE_HTTPS``: e.g. `False`. Used when generating full URLs and the
+request object isn't available.
+
 ``HINES_ALLOW_COMMENTS``: Whether to allow commenting on blog posts. If
 ``False``, overrides the settings for individual Blogs and Posts. Default
 ``True``.

@@ -176,6 +176,16 @@ COMMENTS_APP = 'hines.custom_comments'
 # We don't want to allow duplicate tags like 'Fish' and 'fish':
 TAGGIT_CASE_INSENSITIVE = True
 
+# Most hines-related pages will be within this root directory:
+HINES_ROOT_DIR = 'phil'
+
+# Used to generate URLs when we don't have access to a request object:
+HINES_USE_HTTPS = False
+
+# If True, must also be True for a Blog's and a Post's allow_comments field
+# before a comment on a Post is allowed.
+HINES_ALLOW_COMMENTS = True
+
 # Both these are used by Bleach to whitelist the contents of comments.
 HINES_COMMENTS_ALLOWED_TAGS = [
    'a', 'blockquote', 'code', 'strong', 'em', 'ul', 'ol', 'li', 'pre',
@@ -183,13 +193,6 @@ HINES_COMMENTS_ALLOWED_TAGS = [
 HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title',],
 }
-
-# If True, must also be True for a Blog's and a Post's allow_comments field
-# before a comment on a Post is allowed.
-HINES_ALLOW_COMMENTS = True
-
-# Most hines-related pages will be within this root directory:
-HINES_ROOT_DIR = 'phil'
 
 MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)
 MT_MYSQL_DB_USER = os.environ.get('MT_MYSQL_DB_USER', None)

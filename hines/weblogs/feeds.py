@@ -1,11 +1,13 @@
-from django.contrib.syndication.views import Feed
 from django.urls import reverse
+from django.utils.html import strip_tags
 
-from hines.core.feeds import ExtendedRSSFeed
+from hines.core.feeds import ExtendedFeed, ExtendedRSSFeed
 from .models import Blog, Post
 
 
-class BlogPostsFeed(Feed):
+class BlogPostsFeed(ExtendedFeed):
+    num_items = 5
+
     feed_type = ExtendedRSSFeed
 
     # Getting details about the blog:
@@ -17,19 +19,22 @@ class BlogPostsFeed(Feed):
         return obj.get_absolute_url()
 
     def title(self, obj):
-        return obj.get_feed_title()
+        if obj.feed_title:
+            return obj.feed_title
+        else:
+            return "Latest posts from {}".format(obj.name)
 
     def description(self, obj):
         return obj.feed_description
 
     def items(self, obj):
-        return obj.public_posts[:5]
+        return obj.public_posts[:self.num_items]
 
 
     # Getting details for each post in the feed:
 
     def item_description(self, item):
-        return item.excerpt
+        return strip_tags(item.excerpt)
 
     def item_author_name(self, item):
         return item.author.display_name
@@ -47,11 +52,7 @@ class BlogPostsFeed(Feed):
     def item_categories(self, item):
         return [tag.name for tag in item.tags.all()]
 
-    def item_extra_kwargs(self, item):
-        extra = super().item_extra_kwargs(item)
-        extra.update({'content_encoded': self.item_content_encoded(item)})
-        return extra
-
-    def item_content_encoded(self, item):
+    def item_content(self, item):
+        "For content:encoded"
         return item.intro_html + item.body_html
 

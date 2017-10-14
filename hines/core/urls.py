@@ -3,6 +3,7 @@ from django.contrib.flatpages import views as flatpages_views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
+from . import feeds
 from . import views as core_views
 
 
@@ -12,6 +13,12 @@ urlpatterns = [
     url(
         regex=r"^$",
         view=RedirectView.as_view(url='/', permanent=False)
+    ),
+
+    url(
+        regex=r"^feeds/everything/$",
+        view=feeds.EverythingFeed(),
+        name='everything_feed'
     ),
 
     # Flatpages

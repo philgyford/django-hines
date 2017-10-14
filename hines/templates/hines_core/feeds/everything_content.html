@@ -1,0 +1,31 @@
+{% spaceless %}
+{% if obj.kind == 'blog_post' %}
+	{{ obj.object.intro_html|safe }}
+	{{ obj.object.body_html|safe }}
+
+{% elif obj.kind == 'pinboard_bookmark' %}
+	{{ obj.object.description|safe }}
+
+{% elif obj.kind == 'flickr_photos' %}
+	<table border="0" cellspacing="10">
+		<tbody>
+			{% for photo in obj.objects %}
+				<tr>
+					<td valign="top" align="center" width="100" style="vertical-align: top;">
+						<a href="{{ photo.permalink }}" title="See the photo on Flickr">
+							<img src="{{ photo.small_url }}" width="{{ photo.small_width }}" height="{{ photo.small_height }}" border="0" alt="{{ photo.tite }}">
+						</a>
+					</td>
+					<td valign="top" style="vertical-align: top;">
+						<strong><a href="{{ photo.permalink }}" title="See the photo on Flickr">{{ photo.title }}</a></strong>
+						{% if photo.description %}
+							<br>
+							{{ photo.description }}
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endif %}
+{% endspaceless %}
