@@ -204,3 +204,27 @@ class EverythingFeed(ExtendedFeed):
         else:
             return item['object'].get_absolute_url()
 
+    def item_pubdate(self, item):
+        if item['kind'] == 'blog_post':
+            return item['object'].time_published
+
+        elif item['kind'] == 'pinboard_bookmark':
+            return item['object'].post_time
+
+        elif item['kind'] == 'flickr_photos':
+            return item['objects'][0].post_time
+
+    def item_updateddate(self, item):
+        if item['kind'] == 'blog_post':
+            return item['object'].time_modified
+
+        elif item['kind'] == 'pinboard_bookmark':
+            return item['object'].time_modified
+
+        elif item['kind'] == 'flickr_photos':
+            dt = None
+            for photo in item['objects']:
+                if dt is None or photo.last_update_time > dt:
+                    dt = photo.last_update_time
+            return dt
+
