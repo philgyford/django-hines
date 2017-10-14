@@ -32,14 +32,14 @@ class ExtendedRSSFeed(Rss201rev2Feed):
     Create a type of RSS feed generator that has content:encoded elements.
 
     This is adapted from
-    https://github.com/chrisdev/django-wagtail-feeds/blob/master/wagtail_feeds/feeds.py 
+    https://github.com/chrisdev/django-wagtail-feeds/blob/master/wagtail_feeds/feeds.py
 
     To use this for a feed you'll need this and ExtendedFeed (below):
 
         class MyRSSFeed(ExtendedFeed):
 
             feed_type = ExtendedRSSFeed
-            
+
             # EITHER specify a template for the content:encoded HTML:
             content_template = 'app/feeds/content.html'
 
@@ -158,7 +158,7 @@ class EverythingFeed(ExtendedFeed):
     description_template = 'hines_core/feeds/everything_description.html'
 
     content_template = 'hines_core/feeds/everything_content.html'
-    
+
     # Getting details about the feed/site:
 
     def get_object(self, request):
