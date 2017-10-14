@@ -1,12 +1,15 @@
 from django.conf import settings
 from django.conf.urls import include, static, url
 from django.contrib import admin
+from django.templatetags.static import static as static_tag
+from django.views.generic.base import RedirectView
 
 from hines.core import views as core_views
 
 
 # e.g. 'phil':
 ROOT_DIR = settings.HINES_ROOT_DIR
+
 
 
 spectator_patterns = [
@@ -22,6 +25,15 @@ spectator_patterns = [
 
 
 urlpatterns = [
+
+    # REDIRECTS
+
+    url(r'^favicon.ico$',
+        RedirectView.as_view(
+            url=static_tag('img/favicons/favicon.ico'), permanent=True)),
+
+
+    # PAGES
 
     url(r'^$',
         view=core_views.HomeView.as_view(),
