@@ -11,17 +11,20 @@
 		<tbody>
 			{% for photo in obj.objects %}
 				<tr>
-					<td valign="top" align="center" width="100" style="vertical-align: top;">
+					<td valign="top" style="vertical-align: top;" align="center" width="100">
 						<a href="{{ photo.permalink }}" title="See the photo on Flickr">
 							<img src="{{ photo.small_url }}" width="{{ photo.small_width }}" height="{{ photo.small_height }}" border="0" alt="{{ photo.tite }}">
 						</a>
 					</td>
+					<td>&nbsp;&nbsp;&nbsp;</td>
 					<td valign="top" style="vertical-align: top;">
-						<strong><a href="{{ photo.permalink }}" title="See the photo on Flickr">{{ photo.title }}</a></strong>
-						{% if photo.description %}
-							<br>
-							{{ photo.description }}
-						{% endif %}
+						<p>
+							<strong><a href="{{ photo.permalink }}" title="See the photo on Flickr">{{ photo.title }}</a></strong>
+							{% if photo.description %}
+								<br>
+								{{ photo.description }}
+							{% endif %}
+						</p>
 					</td>
 				</tr>
 			{% endfor %}
