@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, static, url
 from django.contrib import admin
 from django.templatetags.static import static as static_tag
+from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
 from hines.core import views as core_views
@@ -40,6 +41,10 @@ urlpatterns = [
         name='home'
     ),
 
+    url(r'^robots.txt$',
+        TemplateView.as_view(
+            template_name="hines_core/robots.txt", content_type="text/plain")),
+
     url(r'^backstage/', admin.site.urls),
 
     url(r'^{}/photos/'.format(ROOT_DIR),
@@ -66,6 +71,12 @@ urlpatterns = [
 
     # Used in the weblogs app:
     url(r'^comments/', include('django_comments.urls')),
+
+    # So we can test these templates when DEBUG=True.
+    url(r'^400/$', TemplateView.as_view(template_name='400.html')),
+    url(r'^403/$', TemplateView.as_view(template_name='403.html')),
+    url(r'^404/$', TemplateView.as_view(template_name='404.html')),
+    url(r'^500/$', TemplateView.as_view(template_name='500.html')),
 ]
 
 

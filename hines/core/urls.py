@@ -21,7 +21,7 @@ urlpatterns = [
         name='everything_feed'
     ),
 
-    # Flatpages
+    # Flatpages with names:
     url(r'^about/$', flatpages_views.flatpage, {'url': '/about/'},
                                                                 name='about'),
     url(r'^work/$', flatpages_views.flatpage, {'url': '/work/'},
@@ -37,12 +37,6 @@ urlpatterns = [
         view=core_views.DayArchiveView.as_view(),
         name='day_archive'
     ),
-
-    # So we can test these templates when DEBUG=True.
-    url(r'^400/$', TemplateView.as_view(template_name='400.html')),
-    url(r'^403/$', TemplateView.as_view(template_name='403.html')),
-    url(r'^404/$', TemplateView.as_view(template_name='404.html')),
-    url(r'^500/$', TemplateView.as_view(template_name='500.html')),
 
     url(r'^', include('hines.weblogs.urls')),
 ]
