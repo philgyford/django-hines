@@ -165,6 +165,10 @@ STATIC_ROOT = os.path.join(APPS_DIR, 'static_collected/')
 
 STATIC_URL = '/static/'
 
+# A directory of static files to be served in the root directory.
+# e.g. 'robots.txt'.
+WHITENOISE_ROOT = os.path.join(APPS_DIR, 'static_root/')
+
 
 STATICFILES_DIRS = [
     os.path.join(APPS_DIR, 'static'),

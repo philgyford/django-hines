@@ -41,10 +41,6 @@ urlpatterns = [
         name='home'
     ),
 
-    url(r'^robots.txt$',
-        TemplateView.as_view(
-            template_name="hines_core/robots.txt", content_type="text/plain")),
-
     url(r'^backstage/', admin.site.urls),
 
     url(r'^{}/photos/'.format(ROOT_DIR),
