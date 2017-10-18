@@ -34,19 +34,27 @@
 		{% endfor %}
 	{% endif %}
 
-	{% if bookmark_list|length > 0 %}
+	{% if pinboard_bookmark_list|length > 0 %}
 		<h2>Links</h2>
-		{% include 'links/includes/bookmarks.html' with bookmark_list=bookmark_list only %}
+		{% include 'links/includes/bookmarks.html' with bookmark_list=pinboard_bookmark_list only %}
 	{% endif %}
 
-	{% if photo_list|length > 0 %}
+	{% if flickr_photo_list|length > 0 %}
 		<h2>Photos</h2>
-		{% include 'hines_core/includes/photos.html' with photo_list=photo_list order='taken' only %}
+		{% include 'hines_core/includes/photos.html' with photo_list=flickr_photo_list order='taken' only %}
 	{% endif %}
 
-	{% if tweet_list|length > 0 %}
+	{% if twitter_tweet_list|length > 0 %}
 		<h2>Tweets</h2>
-		{% include 'hines_core/includes/tweets.html' with tweet_list=tweet_list perms=perms only %}
+		{% include 'hines_core/includes/tweets.html' with tweet_list=twitter_tweet_list perms=perms only %}
+	{% endif %}
+
+	{% if twitter_favorite_list|length > 0 %}
+		<h2>Liked tweets</h2>
+
+		<p class="text-muted">By the day the tweet was posted, not necessarily the same as when it was liked.</p>
+
+		{% include 'hines_core/includes/tweets.html' with tweet_list=twitter_favorite_list perms=perms only %}
 	{% endif %}
 
 {% endblock %}

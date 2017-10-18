@@ -1,0 +1,10 @@
+User-agent: mirago
+Disallow: /
+User-agent: BLEXBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: *
+Disallow: /phil/misc/strandbuilding/
+

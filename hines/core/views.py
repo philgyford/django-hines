@@ -93,9 +93,11 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         object_lists.update(self._get_weblog_posts(date))
 
+        object_lists.update(self._get_flickr_photos(date))
+
         object_lists.update(self._get_pinboard_bookmarks(date))
 
-        object_lists.update(self._get_flickr_photos(date))
+        object_lists.update(self._get_twitter_favorites(date))
 
         object_lists.update(self._get_twitter_tweets(date))
 
@@ -147,19 +149,27 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         else:
             return {}
 
-    def _get_pinboard_bookmarks(self, date):
-        bookmarks = Bookmark.public_objects.filter(post_time__date=date)
-        if bookmarks.count() > 0:
-            return {'bookmark_list': bookmarks, }
-        else:
-            return {}
-
     def _get_flickr_photos(self, date):
         photos = Photo.public_objects.filter(
                                         taken_time__date=date,
                                         taken_granularity=0)
         if photos.count() > 0:
-            return {'photo_list': photos, }
+            return {'flickr_photo_list': photos, }
+        else:
+            return {}
+
+    def _get_pinboard_bookmarks(self, date):
+        bookmarks = Bookmark.public_objects.filter(post_time__date=date)
+        if bookmarks.count() > 0:
+            return {'pinboard_bookmark_list': bookmarks, }
+        else:
+            return {}
+
+    def _get_twitter_favorites(self, date):
+        tweets = Tweet.public_favorite_objects.filter(post_time__date=date) \
+                                                    .prefetch_related('user')
+        if tweets.count() > 0:
+            return {'twitter_favorite_list': tweets, }
         else:
             return {}
 
@@ -167,7 +177,7 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         tweets = Tweet.public_tweet_objects.filter(post_time__date=date) \
                                                     .prefetch_related('user')
         if tweets.count() > 0:
-            return {'tweet_list': tweets, }
+            return {'twitter_tweet_list': tweets, }
         else:
             return {}
 

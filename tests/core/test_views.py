@@ -3,6 +3,9 @@ from django.test import RequestFactory, TestCase
 
 from ditto.flickr.factories import PhotoFactory
 from ditto.pinboard.factories import BookmarkFactory
+from ditto.twitter.factories import TweetFactory,\
+        AccountFactory as TwitterAccountFactory,\
+        UserFactory as TwitterUserFactory
 from hines.core import views
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, PostFactory
@@ -101,21 +104,7 @@ class DayArchiveViewTestCase(ViewTestCase):
         self.assertEqual(context['blogs'][1]['blog'], b2)
         self.assertEqual(context['blogs'][1]['post_list'][0], p2a)
 
-    def test_context_data_bookmarks(self):
-        "Should include public Bookmarks from that day."
-        bookmark = BookmarkFactory(post_time=self.today_time)
-        # These shouldn't appear:
-        BookmarkFactory(post_time=self.tomorrow_time)
-        BookmarkFactory(post_time=self.today_time, is_private=True)
-
-        response = views.DayArchiveView.as_view()(
-                            self.request, year='2016', month='08', day='31')
-        context = response.context_data
-        self.assertIn('bookmark_list', context)
-        self.assertEqual(len(context['bookmark_list']), 1)
-        self.assertEqual(context['bookmark_list'][0], bookmark)
-
-    def test_context_data_photos(self):
+    def test_context_data_flickr_photos(self):
         "Should include public Photos from that day."
         photo = PhotoFactory(taken_time=self.today_time, taken_granularity=0)
         # These shouldn't appear:
@@ -127,7 +116,71 @@ class DayArchiveViewTestCase(ViewTestCase):
         response = views.DayArchiveView.as_view()(
                             self.request, year='2016', month='08', day='31')
         context = response.context_data
-        self.assertIn('photo_list', context)
-        self.assertEqual(len(context['photo_list']), 1)
-        self.assertEqual(context['photo_list'][0], photo)
+        self.assertIn('flickr_photo_list', context)
+        self.assertEqual(len(context['flickr_photo_list']), 1)
+        self.assertEqual(context['flickr_photo_list'][0], photo)
+
+    def test_context_data_pinboard_bookmarks(self):
+        "Should include public Bookmarks from that day."
+        bookmark = BookmarkFactory(post_time=self.today_time)
+        # These shouldn't appear:
+        BookmarkFactory(post_time=self.tomorrow_time)
+        BookmarkFactory(post_time=self.today_time, is_private=True)
+
+        response = views.DayArchiveView.as_view()(
+                            self.request, year='2016', month='08', day='31')
+        context = response.context_data
+        self.assertIn('pinboard_bookmark_list', context)
+        self.assertEqual(len(context['pinboard_bookmark_list']), 1)
+        self.assertEqual(context['pinboard_bookmark_list'][0], bookmark)
+
+    def test_context_data_twitter_favorites(self):
+        "Should include public Favorited Tweets from that day."
+        public_user = TwitterUserFactory(is_private=False)
+        private_user = TwitterUserFactory(is_private=True)
+        public_account = TwitterAccountFactory(user=public_user)
+        private_account = TwitterAccountFactory(user=private_user)
+
+        # Should appear:
+        favorite_tweet = TweetFactory(post_time=self.today_time)
+        public_user.favorites.add(favorite_tweet)
+
+        # These shouldn't appear:
+        public_user.favorites.add(
+                    TweetFactory(post_time=self.tomorrow_time))
+        private_user.favorites.add(
+                    TweetFactory(post_time=self.today_time))
+        public_user.favorites.add(
+                    TweetFactory(post_time=self.tomorrow_time,
+                                 user=private_user))
+
+        response = views.DayArchiveView.as_view()(
+                            self.request, year='2016', month='08', day='31')
+        context = response.context_data
+        self.assertIn('twitter_favorite_list', context)
+        self.assertEqual(len(context['twitter_favorite_list']), 1)
+        self.assertEqual(context['twitter_favorite_list'][0], favorite_tweet)
+
+    def test_context_data_twitter_tweets(self):
+        "Should include public Tweets (not Favorites) from that day."
+        public_user = TwitterUserFactory(is_private=False)
+        private_user = TwitterUserFactory(is_private=True)
+        public_account = TwitterAccountFactory(user=public_user)
+        private_account = TwitterAccountFactory(user=private_user)
+
+        tweet = TweetFactory(post_time=self.today_time,
+                             user=public_user)
+
+        # These shouldn't appear:
+        TweetFactory(post_time=self.tomorrow_time, user=public_user)
+        TweetFactory(post_time=self.today_time, user=private_user)
+        public_user.favorites.add(
+            TweetFactory(post_time=self.today_time))
+
+        response = views.DayArchiveView.as_view()(
+                            self.request, year='2016', month='08', day='31')
+        context = response.context_data
+        self.assertIn('twitter_tweet_list', context)
+        self.assertEqual(len(context['twitter_tweet_list']), 1)
+        self.assertEqual(context['twitter_tweet_list'][0], tweet)
 
