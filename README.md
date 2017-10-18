@@ -43,7 +43,7 @@ In one window:
 
 Then in another:
 
-	vagrant$ /vagrant/manage.py import_mt_entries
+	vagrant$ ./vagrant/manage.py import_mt_entries
 
 #### Importing old Reading
 
@@ -56,7 +56,7 @@ Open SSH connection in one window as above.
 
 Then in another:
 
-	vagrant$ /vagrant/manage.py import_gyford_reading
+	vagrant$ ./vagrant/manage.py import_gyford_reading
 
 #### Postgresql export/import
 
