@@ -71,11 +71,13 @@ class BlogPostsFeedTestCase(FeedTestCase):
         d = self.blog.public_posts.latest('time_modified').time_modified
         last_build_date = rfc2822_date(d)
 
+        # TEST THE channel ELEMENT
+
         # We're not currently using 'ttl', 'copyright' or 'category':
         self.assertChildNodes(
             chan, [
                 'title', 'link', 'description', 'language', 'lastBuildDate',
-                'item', 'atom:link',
+                'item', 'image', 'atom:link',
             ]
         )
 
@@ -89,6 +91,22 @@ class BlogPostsFeedTestCase(FeedTestCase):
             'language': 'en-gb',
             'lastBuildDate': last_build_date,
         })
+
+        # TEST THE channel image ELEMENT
+
+        image_el = chan.getElementsByTagName('image')[0]
+
+        self.assertChildNodes(image_el, ['url', 'title', 'link',])
+
+        self.assertChildNodeContent(image_el, {
+            # This gets a hash on the end from WhiteNoise, so leaving it off
+            # the test for now:
+            # 'url': 'http://127.0.0.1:8000/static/img/feed_icon.jpg',
+            'title': 'Site icon',
+            'link': 'http://127.0.0.1:8000'
+        })
+
+        # TEST THE item ELEMENTS
 
         items = chan.getElementsByTagName('item')
         self.assertEqual(len(items), 5)
