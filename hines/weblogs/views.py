@@ -1,5 +1,6 @@
 import datetime
 
+from dal import autocomplete
 from taggit.models import Tag
 
 from django.http import Http404
@@ -232,6 +233,22 @@ class PostYearArchiveView(PostDatedArchiveMixin, YearArchiveView):
     make_object_list = True
     template_name = 'weblogs/post_archive_year.html'
 
+
+class PostTagAutocomplete(autocomplete.Select2QuerySetView):
+    """
+    Used to autocomplete tag suggestions in the Admin Post change view.
+    Using django-autocomplete-light.
+    """
+    def get_queryset(self):
+        if not self.request.user.is_authenticated():
+            raise Http404("Not found")
+
+        qs = Tag.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q).order_by('name')
+
+        return qs
 
 
 def _date_from_string(year, year_format, month='', month_format='', day='', day_format='', delim='__'):

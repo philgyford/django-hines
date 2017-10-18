@@ -5,6 +5,12 @@ from . import feeds, views
 
 urlpatterns = [
     url(
+        regex=r'^post-tag-autocomplete/$',
+        view=views.PostTagAutocomplete.as_view(),
+        name='post_tag_autocomplete',
+    ),
+
+    url(
         regex=r"^(?P<blog_slug>[^/]+)/$",
         view=views.BlogDetailView.as_view(),
         name='blog_detail'

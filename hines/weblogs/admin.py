@@ -1,6 +1,9 @@
+from dal import autocomplete
+
+from django import forms
 from django.contrib import admin
 from django.db import models
-from django import forms
+from django.urls import reverse_lazy
 
 from markdownx.widgets import AdminMarkdownxWidget
 
@@ -31,13 +34,16 @@ class BlogAdmin(admin.ModelAdmin):
     readonly_fields = ('time_created', 'time_modified',)
 
 
-class PostAdminForm(forms.ModelForm):
+class PostAdminForm(autocomplete.FutureModelForm):
     "So we can use Markdownx for two specific Post fields."
     class Meta:
         model = Post
         widgets = {
             'intro': AdminMarkdownxWidget,
             'body': AdminMarkdownxWidget,
+            # The django-autocomplete-light tag widget:
+            'tags': autocomplete.TaggitSelect2(
+                                reverse_lazy('hines:post_tag_autocomplete')),
         }
         fields = '__all__'
 

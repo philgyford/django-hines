@@ -1,5 +1,6 @@
 bleach==2.0.0
 Django==1.11.5
+django-autocomplete-light==3.2.10
 django-contrib-comments==1.8.0
 django-ditto==0.6.2
 # For Django 1.11 compatibility, until released:
