@@ -10,5 +10,4 @@ psycopg2==2.7.1
 pylibmc==1.5.2
 pytz==2017.2
 smartypants==2.0.0
-whitenoise==3.3.0
-
+whitenoise==4.0b4

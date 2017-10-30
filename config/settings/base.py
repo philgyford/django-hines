@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django.contrib.redirects',
+    'django.contrib.sitemaps',
 
     'markdownx',
     'taggit',
@@ -165,14 +166,17 @@ STATIC_ROOT = os.path.join(APPS_DIR, 'static_collected/')
 
 STATIC_URL = '/static/'
 
-# A directory of static files to be served in the root directory.
-# e.g. 'robots.txt'.
-WHITENOISE_ROOT = os.path.join(APPS_DIR, 'static_root/')
-
-
 STATICFILES_DIRS = [
     os.path.join(APPS_DIR, 'static'),
 ]
+
+
+# A directory of static files to be served in the root directory.
+# e.g. 'robots.txt'.
+WHITENOISE_ROOT = os.path.join(APPS_DIR, 'static_html/')
+
+# Visiting /example/ will serve /example/index.html:
+WHITENOISE_INDEX_FILE = True
 
 
 SITE_ID = 1
