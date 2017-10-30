@@ -85,6 +85,8 @@ Sometimes it seems to stop.
 
 	vagrant$ /etc/init.d/postgresql start
 
+Password is `vagrant`.
+
 
 ## Django Settings
 
