@@ -80,14 +80,20 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         Mirroring the behaviour of BaseDateListView's method, just to keep
         things consistent.
 
-        EXCEPT - we return a dict of data as the second item, rather than a
-        single QuerySet.
+        EXCEPT:
+        - We return a dict of data as the second item, rather than a
+            single QuerySet.
+        - We don't allow viewing pages before HINES_FIRST_DATE.
         """
         allow_future = self.get_allow_future()
         allow_empty = self.get_allow_empty()
+        first_date = self.get_first_date()
 
         if not allow_future and date > timezone_today():
             raise Http404(_("Future dates not available"))
+
+        if first_date and date < first_date:
+            raise Http404(_("Dates this old not available"))
 
         object_lists = {}
 
@@ -119,8 +125,28 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         else:
             return None
 
+    def get_first_date(self):
+        """
+        Our custom method for getting the date set in HINES_FIRST_DATE, if any.
+        If not set, return False.
+        """
+        if hasattr(settings, 'HINES_FIRST_DATE'):
+            return datetime.datetime.strptime(
+                                settings.HINES_FIRST_DATE, "%Y-%m-%d").date()
+        else:
+            return False
+
     def get_previous_day(self, date):
-        return date - datetime.timedelta(days=1)
+        """
+        Customised, so we don't return a previous day if it would be before
+        HINES_FIRST_DATE.
+        """
+        first_date = self.get_first_date()
+        previous_date = date - datetime.timedelta(days=1)
+        if first_date and previous_date < first_date:
+            return False
+        else:
+            return previous_date
 
     def _get_weblog_posts(self, date):
         """
