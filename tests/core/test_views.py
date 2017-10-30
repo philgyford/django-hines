@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 
 from ditto.flickr.factories import PhotoFactory
 from ditto.pinboard.factories import BookmarkFactory
@@ -52,12 +52,19 @@ class DayArchiveViewTestCase(ViewTestCase):
                             self.request, year='2016', month='08', day='31')
         self.assertEqual(response.status_code, 200)
 
-    def test_response_404(self):
+    def test_response_future_404(self):
         "It should raise 404 if the date is in the future."
         # Apologies to the developer in September 3000 who'll find this fails.
         with self.assertRaises(Http404):
             views.DayArchiveView.as_view()(
                             self.request, year='3000', month='08', day='31')
+
+    @override_settings(HINES_FIRST_DATE='2016-09-01')
+    def test_response_old_404(self):
+        "It should raise 404 if the date is before HINES_FIRST_DATE"
+        with self.assertRaises(Http404):
+            views.DayArchiveView.as_view()(
+                            self.request, year='2016', month='08', day='31')
 
     def test_templates(self):
         response = views.DayArchiveView.as_view()(
@@ -76,6 +83,14 @@ class DayArchiveViewTestCase(ViewTestCase):
         self.assertIn('previous_day', response.context_data)
         self.assertEqual(response.context_data['previous_day'],
                         self.yesterday_date)
+
+    @override_settings(HINES_FIRST_DATE='2016-08-31')
+    def test_context_data_dates_first(self):
+        "previous_day should be False if it would be before HINES_FIRST_DATE"
+        response = views.DayArchiveView.as_view()(
+                            self.request, year='2016', month='08', day='31')
+        self.assertIn('previous_day', response.context_data)
+        self.assertFalse(response.context_data['previous_day'])
 
     def test_context_data_blogs(self):
         "Should include public Posts from that day."
