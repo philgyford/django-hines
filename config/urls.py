@@ -1,16 +1,34 @@
 from django.conf import settings
 from django.conf.urls import include, static, url
 from django.contrib import admin
+from django.contrib.flatpages.sitemaps import FlatPageSitemap
+from django.contrib.sitemaps import views as sitemaps_views
 from django.templatetags.static import static as static_tag
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
+from spectator.core.sitemaps import CreatorSitemap
+from spectator.reading import sitemaps as reading_sitemaps
+
 from hines.core import views as core_views
+from hines.core.sitemaps import PagesSitemap
+from hines.links.sitemaps import BookmarkSitemap
+from hines.weblogs.sitemaps import PostSitemap
 
 
 # e.g. 'phil':
 ROOT_DIR = settings.HINES_ROOT_DIR
 
+
+sitemaps = {
+    'pages': PagesSitemap,
+    'posts': PostSitemap,
+    'flatpages': FlatPageSitemap,
+    'publications': reading_sitemaps.PublicationSitemap,
+    'publicationseries': reading_sitemaps.PublicationSeriesSitemap,
+    'creators': CreatorSitemap,
+    'links': BookmarkSitemap,
+}
 
 
 spectator_patterns = [
@@ -39,6 +57,18 @@ urlpatterns = [
     url(r'^$',
         view=core_views.HomeView.as_view(),
         name='home'
+    ),
+
+    # SITEMAP
+
+    url(r'^sitemap\.xml$',
+        sitemaps_views.index,
+        {'sitemaps': sitemaps}
+    ),
+    url(r'^sitemap-(?P<section>.+)\.xml$',
+        sitemaps_views.sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'
     ),
 
     url(r'^backstage/', admin.site.urls),
