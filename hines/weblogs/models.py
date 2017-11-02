@@ -87,6 +87,12 @@ class TaggedPost(TaggedItemBase):
 
 
 class Post(TimeStampedModelMixin, models.Model):
+    """
+    TimeStampedModelMixin gives us:
+
+    time_created
+    time_modified
+    """
 
     DRAFT_STATUS = 1
     LIVE_STATUS = 2

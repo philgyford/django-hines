@@ -191,7 +191,7 @@ TAGGIT_CASE_INSENSITIVE = True
 # Most hines-related pages will be within this root directory:
 HINES_ROOT_DIR = 'phil'
 
-# We won't show Date Archive pages before this YYYY-MM-DD date:
+# We won't show Day Archive pages before this YYYY-MM-DD date:
 HINES_FIRST_DATE = '2000-03-15'
 
 # Used to generate URLs when we don't have access to a request object:
@@ -207,6 +207,12 @@ HINES_COMMENTS_ALLOWED_TAGS = [
 ]
 HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title',],
+}
+
+HINES_POST_TEMPLATE_SETS = {
+    'writing': (
+        {'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
+    ),
 }
 
 MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)

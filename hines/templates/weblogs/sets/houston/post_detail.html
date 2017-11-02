@@ -1,0 +1,99 @@
+<html>{% load static %}
+<head>
+<title>Daily Phil: 
+{{ post.time_created|date:"l jS F Y" }}</title>
+<meta name="description" content="Most days something new by Phil Gyford. Usually some words.">
+<meta name="keywords" content="Phil Gyford, Philip Gyford, Gyford, daily, journal, writing, self-important, self-absorbed, unnecessary">
+<link title="Daily Phil Global Style" rel="stylesheet" href="{% static "weblogs/sets/houston/global.css" %}" type="text/css">
+</head>
+<body bgcolor="#CCCC33">
+
+<!-- THE HEADER-->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td valign="bottom" width="50%">
+	<!-- DAILY PHIL -->
+	<table border="0" cellpadding="10" cellspacing="0" bgcolor="#FFFF66">
+	<tr>
+	<td><b><nobr><a href="{{ post.blog.get_absolute_url }}" class="head">Daily Phil</a></nobr></b></td>
+	</tr>
+	</table>
+</td>
+<td align="right" width="50%">{% with post.get_previous_post as previous_post %}{% if previous_post %}
+	<!-- PREVIOUS ENTRY -->
+	<table border="0" cellpadding="8" cellspacing="0" bgcolor="#99CC66">
+	<tr>
+	<td class="smaller">
+{{ previous_post.time_created|date:"Y-m-d"}}</td><td class="smaller"><a href="{{ previous_post.get_absolute_url }}">Prev</a></td>	</td>
+	</tr>
+	</table>{% endif %}{% endwith %}
+	{% with post.get_next_post as next_post %}{% if next_post %}<!-- NEXT ENTRY -->
+	<table border="0" cellpadding="8" cellspacing="0" bgcolor="#FF9966">
+	<tr>
+	<td class="smaller">
+{{ next_post.time_created|date:"Y-m-d"}}</td><td class="smaller"><a href="{{ next_post.get_absolute_url }}">Next</a></td>	</td>
+	</tr>
+	</table>{% endif %}{% endwith %}
+</td>
+</tr>
+</table>
+<!-- THE DATE -->
+<table border="0" cellpadding="0" cellspacing="0" width="35%">
+<tr>
+<td align="right">
+	<table border="0" cellpadding="10" cellspacing="0" bgcolor="#66FF99">
+	<tr>
+	<td><nobr>
+{{ post.time_created|date:"l jS F Y" }}	</nobr></td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+<!-- THE TITLE 
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr>
+<td align="center">
+	<table border=0 cellpadding=10 cellspacing=0 bgcolor="#FF99CC">
+	<tr>
+	<td align="center" class="title"><b>
+	</b></td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table> -->
+<!-- THE ENTRY ITSELF -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="center">
+	<table border="0" cellpadding="10" cellspacing="0" bgcolor="#CCCCFF">
+	<tr>
+	<td width="400">
+{% if perms.weblogs.can_change_post %}<a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a>{% endif %}
+{{ post.intro_html|safe }}
+{{ post.body_html|safe }}	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+<!-- EMAIL ADDRESS -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="center">
+	<table border="0" cellpadding="8" cellspacing="0" bgcolor="#FFCC33">
+	<tr>
+	<td class="smaller"><a href="mailto:phil@gyford.com">phil@gyford.com</a></td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+
+
+
+</body>
+</html>
+
+

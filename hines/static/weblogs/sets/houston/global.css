@@ -1,0 +1,9 @@
+body, td { font-family: "Trebuchet MS", Verdana, Arial, Geneva, sans-serif ; color: black; line-height: 1.3;}
+.head { font-size: 2em ; font-weight: bold }
+.title { font-weight: bold }
+.smaller { font-size: 0.8em }
+.form { font-family: "Trebuchet MS", Verdana, Arial, Geneva, sans-serif }
+a:hover { background: #FFFF66 }
+a.head { color: #000000 }
+a.head:link { text-decoration: none }
+

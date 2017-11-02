@@ -106,3 +106,19 @@ request object isn't available.
 
 ``HINES_COMMENTS_ALLOWED_ATTRIBUTES``: A dict of attributes allowed in HTML tags in comments; all others will be stripped. e.g. ``{'a': ['href', 'title',],}``. Default is the default dict used by Bleach.
 
+``HINES_FIRST_DATE``: Day Archive pages will 404 for days before this date. e.g.
+``2000-03-15``.
+
+``HINES_POST_TEMPLATE_SETS``: A set of dicts describing different sets of
+templates that can be used for PostDetails between certain dates. e.g.:
+	
+	HINES_POST_TEMPLATE_SETS = {
+		'writing': (
+			{'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
+		),
+	}
+
+Any Post on the Blog with slug `writing` between those two dates will use the
+`weblogs/sets/houston/post_detail.html` template and any other Post will use
+`weblogs/post_detail.html`.
+	

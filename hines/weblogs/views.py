@@ -3,6 +3,7 @@ import datetime
 from dal import autocomplete
 from taggit.models import Tag
 
+from django.conf import settings
 from django.http import Http404
 from django.urls import reverse
 from django.utils.encoding import force_str
@@ -105,7 +106,12 @@ class PostDetailView(DateDetailView):
     model = Post
     month_format = '%m'
     slug_url_kwarg = 'post_slug'
+    # The default, unless we have a different template set to use for this
+    # Post's date:
     template_name = 'weblogs/post_detail.html'
+
+    # Not a standard field, but we'll store the date here.
+    date = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -116,6 +122,19 @@ class PostDetailView(DateDetailView):
                 context['is_preview'] = True
 
         return context
+
+    def get_date(self):
+        """
+        Not a standard method but we need to do this in a couple of places.
+        """
+        if self.date is None:
+            year = self.get_year()
+            month = self.get_month()
+            day = self.get_day()
+            self.date = _date_from_string(year, self.get_year_format(),
+                                         month, self.get_month_format(),
+                                         day, self.get_day_format())
+        return self.date
 
     def get_object(self, queryset=None):
         """
@@ -131,12 +150,7 @@ class PostDetailView(DateDetailView):
         if queryset is None:
             queryset = self.get_queryset()
 
-        year = self.get_year()
-        month = self.get_month()
-        day = self.get_day()
-        date = _date_from_string(year, self.get_year_format(),
-                                 month, self.get_month_format(),
-                                 day, self.get_day_format())
+        date = self.get_date()
         blog_slug = self.kwargs.get('blog_slug')
         post_slug = self.kwargs.get(self.slug_url_kwarg)
 
@@ -182,6 +196,49 @@ class PostDetailView(DateDetailView):
             return self.model.objects.all()
         else:
             return self.model.public_objects.all()
+
+    def get_template_names(self):
+        """
+        If this Post is on a blog whose slug is included in
+        HINES_POST_TEMPLATE_SETS, and its date is between the specified times
+        for a set, then use that set. Otherwise use self.template_name.
+
+        e.g. with:
+
+        HINES_POST_TEMPLATE_SETS = {
+            'writing': (
+                {'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
+            ),
+        }
+
+        Any Post in the Blog that has a slug of `writing`, and was published
+        between 2000-03-01 and 2000-12-31 inclusive, will use the template
+        weblogs/sets/houston/post_detail.html
+        """
+        template_set = None
+
+        if getattr(settings, 'HINES_POST_TEMPLATE_SETS', None):
+            blog_slug = self.kwargs.get('blog_slug')
+
+            if blog_slug in settings.HINES_POST_TEMPLATE_SETS:
+                date = self.get_date()
+
+                for ts in settings.HINES_POST_TEMPLATE_SETS[blog_slug]:
+                    start = make_date(ts['start'])
+                    end = make_date(ts['end'])
+                    if date >= start and date <= end:
+                        template_set = ts['name']
+                        break
+
+        if template_set is not None:
+            template = 'weblogs/sets/{}/post_detail.html'.format(template_set)
+        elif self.template_name is None:
+            raise ImproperlyConfigured(
+                "PostDetailView requires a definition of 'template_name'")
+        else:
+            template = self.template_name
+
+        return [template]
 
 
 class PostDatedArchiveMixin(object):
