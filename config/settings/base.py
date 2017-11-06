@@ -211,7 +211,8 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 
 HINES_POST_TEMPLATE_SETS = {
     'writing': (
-        {'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
+        {'name': '2000', 'start': '2000-03-01', 'end': '2000-12-31'},
+        {'name': '2001', 'start': '2001-01-01', 'end': '2002-11-09'},
     ),
 }
 

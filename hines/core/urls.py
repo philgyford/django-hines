@@ -22,14 +22,27 @@ urlpatterns = [
     ),
 
     # Flatpages with names:
-    url(r'^about/$', flatpages_views.flatpage, {'url': '/about/'},
-                                                                name='about'),
-    url(r'^work/$', flatpages_views.flatpage, {'url': '/work/'},
-                                                            name='about_work'),
-    url(r'^timeline/$', flatpages_views.flatpage, {'url': '/timeline/'},
-                                                            name='timeline'),
-    url(r'^misc/$', flatpages_views.flatpage, {'url': '/misc/'},
-                                                            name='misc'),
+
+    url(r'^about/$', flatpages_views.flatpage,
+        {'url': '/phil/about/'},
+        name='about'),
+
+    url(r'^archive/$', flatpages_views.flatpage,
+        {'url': '/phil/archive/'},
+        name='archive'),
+
+    url(r'^work/$', flatpages_views.flatpage,
+        {'url': '/phil/work/'},
+        name='about_work'),
+
+    url(r'^timeline/$', flatpages_views.flatpage,
+        {'url': '/phil/timeline/'},
+        name='timeline'),
+
+    url(r'^misc/$', flatpages_views.flatpage,
+        {'url': '/phil/misc/'},
+        name='misc'),
+
 
     url(
         # /2016/04/18/twitter/favorites

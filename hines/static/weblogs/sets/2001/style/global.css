@@ -1,0 +1,24 @@
+body, td 	{ font-family: "Trebuchet MS", Verdana, Arial, Geneva, sans-serif ; color: black }
+.p 			{ font-size: 1em }
+
+.menu-off 	{ font-size: 0.9em; line-height: 150%; }
+.menu-on 	{ font-size: 0.9em; line-height: 150%; font-weight: bold; }
+.head3 		{ font-size: 1.2em; font-weight: bold ; color: #999999 }
+.head2 		{ font-size: 1.2em; font-weight: bold ; color: #666666 }
+.head1 		{ font-size: 1.2em; font-weight: bold ; color: #000000 }
+.sub 		{ font-weight: bold }
+.spaced 	{ line-height: 1.5em }
+.smaller 	{ font-size: 0.9em ; line-height: 1.3em}
+.small 		{ font-size: 0.7em ; line-height: 1.3em}
+.white 		{ color: #FFFFFF }
+a 			{ color: #000000 }
+a:hover 	{ color: #0000CC }
+a:link 		{ color: #000000 }
+a:visited 	{ color: #666666 }
+
+.image 		{ margin: 1em 1em 1em 0; border: 1px solid black; }
+.thumbnail	{ border: 1px solid black; }
+div.menu 	{ width: 12%; line-height: 120%; margin-top: 16px; }
+div.main 	{ float: right;  background: white; border: 1px solid #666666; padding: 15px 15px 20px 15px; }
+div.menu-break	{ border-bottom: 1px solid #666666; margin: 15px 10px 10px 0; }
+div.wholepage { margin: 10px 10px 10px 10px; }

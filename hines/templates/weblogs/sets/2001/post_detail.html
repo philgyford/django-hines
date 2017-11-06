@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{% load static %}
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+
+<title>Phil Gyford: {{ post.title }}</title>
+
+<link title="Gyford.com global style" rel="stylesheet" href="{% static 'weblogs/sets/2001/style/global.css' %}" type="text/css"/>
+
+<script language="JavaScript" src="{% static 'weblogs/sets/2001/includes/javascript.js' %}" type="text/javascript"></script>
+
+<style type="text/css">
+<!--
+	body {background-color: #E6E6E6;}
+-->
+</style>
+
+
+</head>
+<body>
+
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td rowspan="5">&nbsp;</td>
+
+<!-- LEFT MENU START -->
+<td rowspan="5" valign="top">
+	<table border="0" cellpadding="0" cellspacing="0">
+	<tr>
+	<td><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="1" height="15" alt="pixel"/></td>
+	<td><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="10" height="1" alt="pixel"/></td>
+	</tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'home' %}">Home</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'hines:timeline' %}">Timeline</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'photos:home' %}">Photos</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-on"><a href="{{ post.blog.get_absolute_url }}">Writing</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="/phil/paintings/1993/college/">Paintings</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="/phil/drawings/1999/lifedrawings/">Drawings</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="/phil/uhcl/">Futures</a></td></tr>
+	<tr><td><hr size="1" noshade="noshade"/></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="http://web.archive.org/web/20021017022649/http://www.gyford.com:80/phil/faq/">FAQ</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'hines:archive' %}">Archive</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="javascript:RandomPhil()">Pop-up Phil</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'hines:misc' %}">Other stuff</a></td></tr>
+	<tr><td><hr size="1" noshade="noshade"/></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="http://www.amazon.co.uk/exec/obidos/wishlist/3JJHI0G9TKGTX/">Gifts</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-off"><a href="mailto:phil@gyford.com">Email</a></td></tr>
+	</table>
+</td>
+<!-- LEFT MENU END -->
+
+<td rowspan="5" bgcolor="#666666" width="1"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="1" height="1" alt="pixel"/></td>
+<td colspan="3" bgcolor="#666666"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="1" height="1" alt="pixel"/></td>
+<td rowspan="5" bgcolor="#666666" width="1"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="1" height="1" alt="pixel"/></td>
+</tr>
+
+<tr>
+<td colspan="3" bgcolor="#FFFFFF" align="right"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="1" height="10" alt="pixel"/></td>
+</tr>
+
+<tr>
+<td bgcolor="#FFFFFF"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="15" height="1" alt="pixel"/></td>
+<td valign="top" bgcolor="#FFFFFF">
+<!-- MAIN BODY START -->
+	<!-- HEADER START -->
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td colspan="3" class="head2">Writing</td>
+</tr>
+<tr>
+	<td>{% with post.get_previous_post as previous_post %}{% if previous_post %}<a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.time_created|date:"Y-m-d" }}: {{ previous_post.title }}"><img src="{% static 'weblogs/sets/2001/images/nav/prev1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev"></a>{% else %}<img src="{% static 'weblogs/sets/2001/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">{% endif %}{% endwith %}<a href="{% url 'hines:post_year_archive' blog_slug=post.blog.slug year=post.time_created|date:"Y" %}" title="Index"><img src="{% static 'weblogs/sets/2001/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index"></a>{% with post.get_next_post as next_post %}{% if next_post %}<a href="{{ next_post.get_absolute_url }}" title="{{ next_post.time_created|date:"Y-m-d" }}: {{ next_post.title }}"><img src="{% static 'weblogs/sets/2001/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next"></a>{% else %}<img src="{% static 'weblogs/sets/2001/images/nav/next_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next">{% endif %}{% endwith %}&nbsp;</td>
+	<td colspan="2"><span class="head1">{{ post.title }} </span><span class="smaller">{{ post.time_created|date:"D, j M Y" }}</span></td>
+</tr>
+</table>
+<!-- HEADER END -->
+
+<a href="http://web.archive.org/web/{{ post.time_created|date:"YmdHis" }}/http://www.gyford.com/phil/{{ post.blog.slug }}/{{ post.time_created|date:"Y/m/d" }}/print/"><p>(printable version of this page)</p></a>
+
+{% if perms.weblogs.can_change_post %}<a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a>{% endif %}
+
+{{ post.intro_html|safe }}
+{{ post.body_html|safe }}
+
+
+<p class="smaller">[<a href="http://www.gyford.com/chronicler/">Powered by Chronicler</a>]</p>
+<!-- MAIN BODY END -->
+<img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="520" height="1" alt="pixel"/></td>
+<td bgcolor="#FFFFFF"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="15" height="1" alt="pixel"/></td>
+<td>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/></td>
+</tr>
+
+<tr>
+<td colspan="3" bgcolor="#FFFFFF" align="right"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="1" height="15" alt="pixel"/></td>
+</tr>
+<tr>
+<td colspan="3" bgcolor="#666666"><img src="{% static 'weblogs/sets/2001/images/pixel.gif' %}" width="1" height="1" alt="pixel"/></td>
+</tr>
+
+</table>
+
+{% include 'hines_core/includes/analytics.html' %}
+
+</body>
+</html>
