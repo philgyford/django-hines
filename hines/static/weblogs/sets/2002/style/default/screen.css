@@ -1,0 +1,96 @@
+/* Font sizes */
+body
+	{ font-size: 80%; }
+input.button
+	{ font-size: 110%; }
+
+h1,
+small,
+#menubar,
+#sidebar,
+div.comment-input,
+#footer
+	{ font-size: 85%; }
+	
+
+
+
+/* Universal styles */
+
+body 			{ background: #E6E6E6; color: black; font-family: Verdana, Arial, Geneva, Helvetica, sans-serif; padding: 0; margin:0; }
+
+h1				{ margin: 0 0 1em 0; padding: 0; }
+h2				{ margin: 0; padding: 0; }
+h3				{ margin: 0 0 0 0.8em; padding: 0; }
+h4				{ margin: 0 0 0 1.6em; padding: 0; }
+h5,h6			{ padding: 0; }
+h5				{ clear: left; }
+
+a:hover			{ color: red; }
+acronym 		{ border-bottom: 1px dotted black; cursor: help; }
+.error			{ color: #660000; font-weight: bold; }
+form			{ margin: 0; }
+
+/* The #menu, #main and #sidebar divs */
+/* Width needs to be 9.2 to fit "Haddock Review" in on PC */
+#menubar		{ width: 7.7em; margin: 0 0 1em 0; padding: 0; }
+#menubar ul		{ margin: 0; padding: 0; line-height: 1.2em; }
+#menubar ul li		{ padding: 0.3em 0.3em 0.3em 0; margin: 0; }
+#menubar ul li.rule	{ border-top: 1px solid #666666; padding-top: 0.8em; margin-top: 0.8em; }
+div#other, ul#menu		{ margin: 0 0 3em 0; padding: 0.5em 0 0.8em 0; }
+ul#menu			{ border-top: 1px solid #666666; border-bottom: 1px solid #666666; color: #666666; }
+#menubar ul li ul { margin-left: 0.5em; }
+#menubar ul li ul li { padding-bottom: 0; }
+span.menu-on	{ font-weight: bold; }
+div#other	{ color: #666666; }
+
+#main-a,#main-b	{ background: white; border: 1px solid #666666; padding: 1em 1.5em 1.5em 1.5em; line-height: 1.5em; }
+
+#sidebar		{ width: 14.7em; margin: 0; padding: 0; color: #666666;}
+#sidebar div	{ padding: 0.5em 0.5em 0.8em 0.7em; margin: 0 0 1em 0; border: 1px solid #666666; }
+#sidebar div.hilite	{ background-color: #fff; color: #000; }
+#sidebar ul		{ margin: 0; padding: 0; line-height: 1.2em; }
+#sidebar li		{ margin-top: 0.4em; }
+#sidebar p		{ margin-top: 0.4em; margin-bottom: 0; padding: 0; line-height: 1.2em; }
+#sidebar form	{ margin-top: 0.4em; }
+
+/* Styles used with #main */
+
+/* Headings */
+.one			{ color: #000000; }
+.two			{ color: #666666; }
+.three			{ color: #999999; }
+
+/* Writing */
+div#writing		{ width: 100%; }
+div.comment		{ line-height: 1.2em; }
+div.trackback		{ line-height: 1.2em; }
+div.comment-fields	{ width: 55%; padding: 0 1em 0.5em 0; margin: 0 1em 0 0; border-right: 1px solid #666666; }
+div.comment-remember{ padding: 0; margin: 0 0 0 60%; }
+div.comment-input 	{ margin: 0.5em 0 0 0; }
+
+/* Images */
+div.spacer		{ clear: both; }
+img.image, input.image	{ margin: 1em 1em 1em 0;  }
+a:hover img.thumbnail,
+a:hover img.flickrimg,
+a:hover img.menu,
+a:hover img.image,
+input.image:hover		{ border: 1px solid red; }
+
+/* Footer - only for some pages */
+#footer			{  margin: 0 15px 1em 10em; padding: 0 1.5em 0 1.5em; line-height: 1.5em; }
+
+/* For things we only want displayed when printed. */
+.print			{ display: none; }
+
+
+.flickrthumb a:hover img {border-color: red; }
+/*
+     FILE ARCHIVED ON 03:46:44 Jan 04, 2006 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 14:56:42 Nov 06, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/

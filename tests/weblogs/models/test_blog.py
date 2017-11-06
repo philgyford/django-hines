@@ -38,9 +38,10 @@ class BlogTestCase(TestCase):
         blog = BlogFactory(slug='writing')
         self.assertEqual(blog.get_absolute_url(), '/terry/writing/')
 
-    def test_get_feed_url(self):
+    def test_get_rss_feed_url(self):
         blog = BlogFactory(slug='writing')
-        self.assertEqual(blog.get_feed_url(), '/terry/writing/feeds/posts/')
+        self.assertEqual(blog.get_rss_feed_url(),
+                '/terry/writing/feeds/posts/rss/')
 
     def test_get_feed_title_default(self):
         "If there's no feed title set, the default is used."

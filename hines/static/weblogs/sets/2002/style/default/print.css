@@ -1,0 +1,34 @@
+body 			{ background: #FFFFFF; color: black; font: 100%; }
+
+/* instead of a dotted border, put title of acronym after text */
+acronym 		{ border: 0; }
+acronym:after 	{ content: " (" attr(title) ")"; }
+
+/*a[href]:after { content: " (" attr(href) ")"; }
+img a:after { content: ""; }*/
+
+#menubar			{ position: relative; }
+
+/* spread main content across page */
+#menubar, #main-a, #main-b { left: 0; top: 0; margin: 0; padding: 0; border: 0; width: auto; background-color: white; color: black; }
+
+/* Hide navigation and sidebar */
+#nav, #sidebar, #footer, div.comments form { display: none; }
+
+
+
+
+/* Headings */
+h1 { font-size: 150%; margin: 0; padding: 0; position: relative; top: 0; left: 0; }
+h2 { font-size: 130%; }
+h3 img, h4 img	{ display: none; }
+
+#front #main-b dt .permalink { display: none; }
+/*
+     FILE ARCHIVED ON 04:11:36 Jan 04, 2006 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 14:56:53 Nov 06, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/

@@ -58,8 +58,8 @@ class Blog(TimeStampedModelMixin, models.Model):
         return reverse('hines:blog_detail',
                             kwargs={'blog_slug': self.slug,})
 
-    def get_feed_url(self):
-        return reverse('hines:blog_feed',
+    def get_rss_feed_url(self):
+        return reverse('hines:blog_feed_posts_rss',
                             kwargs={'blog_slug': self.slug,})
 
     def get_feed_title(self):
@@ -299,6 +299,11 @@ class Trackback(TimeStampedModelMixin, models.Model):
     """
     Used to store info about trackbacks that arrived in the old Movable Type
     version of this site.
+
+    TimeStampedModelMixin gives us:
+
+    time_created
+    time_modified
     """
     post = models.ForeignKey('Post', null=False, blank=False,
             related_name='trackbacks')

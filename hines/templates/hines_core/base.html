@@ -11,7 +11,7 @@
 
 		{% get_all_blogs_by_slug as all_blogs %}
 		{% for blog_slug, blog_obj in all_blogs.items %}
-			<link rel="alternate" type="application/rss+xml" title="{{ blog_obj.get_feed_title }}" href="{{ blog_obj.get_feed_url }}"/>
+			<link rel="alternate" type="application/rss+xml" title="{{ blog_obj.get_feed_title }}" href="{{ blog_obj.get_rss_feed_url }}"/>
 		{% endfor %}
 
 		{% block favicons %}
@@ -124,11 +124,11 @@
 						<h4>RSS feeds</h4>
 						<ul class="list-unstyled">
 							<li>
-								<a href="{% url 'hines:everything_feed' %}">Everything below combined</a>
+								<a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>
 							</li>
 							{% with all_blogs|get_item:'writing' as b %}
 								<li>
-									<a href="{{ b.get_feed_url }}">{{ b.short_name }}</a>
+									<a href="{{ b.get_rss_feed_url }}">{{ b.short_name }}</a>
 								</li>
 							{% endwith %}
 
@@ -140,7 +140,7 @@
 							</li>
 							{% with all_blogs|get_item:'comments' as b %}
 								<li>
-									<a href="{{ b.get_feed_url }}">{{ b.name }}</a>
+									<a href="{{ b.get_rss_feed_url }}">{{ b.name }}</a>
 								</li>
 							{% endwith %}
 						</ul>

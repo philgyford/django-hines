@@ -3,7 +3,7 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from hines.core.templatetags.hines_core import get_item, display_time,\
-        smartypants
+        smartypants, linebreaks_first
 from hines.core.utils import make_datetime
 
 
@@ -68,8 +68,20 @@ class DisplayTimeTestCase(TestCase):
         )
 
 
+class SmartypantsTestCase(TestCase):
+
     def test_smartypants(self):
         self.assertEqual(
             smartypants("""This... isn't -- "special"."""),
             "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;."
         )
+
+
+class LinebreaksFirstTestCase(TestCase):
+
+    def test_linebreaks_first(self):
+        self.assertEqual(
+            linebreaks_first("This is the\nfirst par.\n\nAnd a second."),
+            """<p class="first">This is the<br />first par.</p>\n\n<p>And a second.</p>"""
+        )
+

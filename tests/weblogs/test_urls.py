@@ -21,15 +21,15 @@ class WeblogsUrlsTestCase(TestCase):
                          views.BlogDetailView.__name__)
 
 
-    def test_blog_feed_url(self):
+    def test_blog_feed_rss_url(self):
         self.assertEqual(
-                reverse('hines:blog_feed', kwargs={'blog_slug': 'my-blog'}),
-                '/terry/my-blog/feeds/posts/')
+            reverse('hines:blog_feed_posts_rss', kwargs={'blog_slug': 'my-blog'}),
+            '/terry/my-blog/feeds/posts/rss/')
 
-    def test_blog_feed_view(self):
+    def test_blog_feed_rss_view(self):
         "Should use the correct feed object."
-        self.assertIsInstance(resolve('/terry/my-blog/feeds/posts/').func,
-                         feeds.BlogPostsFeed)
+        self.assertIsInstance(resolve('/terry/my-blog/feeds/posts/rss/').func,
+                         feeds.BlogPostsFeedRSS)
 
 
     def test_blog_tag_detail_url(self):

@@ -1,0 +1,192 @@
+/* Font sizes */
+
+h1,h2,h3,h4
+	{ font-size: 110%; }
+h5,h6
+	{ font-size: 100%; }
+.controls,
+#front #main-b dd dl,
+p.flickrsettitle
+	{ font-size: 90%; }
+
+div.trackback div.controls,
+div.comment,
+div.trackback,
+.footnote,
+th.tl,
+td.tl-year,
+td.tl-place,
+td.tl-work,
+td.tl-ed,
+td.tl-play,
+td.tl-writing,
+td.tl-blank,
+p.more,
+p.flickrnumphotos
+	{ font-size: 85%; }
+blockquote code
+	{ font-size: 120%; }
+
+
+/* Universal styles */
+p.first:first-line { font-weight: bold; }
+img                     { border: 0; }
+div.break {
+	clear: both;
+	font-size: 1px;
+	height: 1px;
+	}
+
+
+/* Styles used with #main */
+
+/* Headings */
+h1,h2,h3,h4             { font-weight: bold; }
+h1.off					{ font-weight: normal; }
+h5                  	{ font-weight: bold; margin: 2em 0 0.5em 0; }
+h6						{ font-weight: bold; margin: 1em 0 0 0; }
+
+/* Misc page and others */
+
+dt						{ margin: 1em 0 0 0; font-weight: bold; }
+dd						{ margin: 0; }
+dl dl                   { margin: 0 0 0 2em; }
+dl dl dt                { margin: 0; }
+dl.spaced dt			{ margin-top: 2em; margin-bottom: 0.5em; }
+
+/* Writing */
+div#writing				{ margin-top: 2em; }
+div#writing ul			{ margin: 1em 0 0 1.4em; padding: 0; line-height: 1.5em; }
+div#writing li			{ margin: 0 0 0.5em 0; }
+div#writing p,
+dd.entry dd				{ margin: 0 0 0.7em 0; }
+div#writing	blockquote  { margin: 0 2em 0 2em; }
+dt.date                 { margin: 1em 0 -1em 0; width: 100%; font-weight: normal; text-align: left; }
+dt.entry                { margin: 1.5em 0 0  0;  }            
+dd.entry                { margin: 0 0 2em 0; width: 100%; }
+div.indv-entry  		{ margin: 1em 0 0 2em; }
+div.comments    		{ margin-top: 1.5em; }
+div.trackbacks    		{ margin-top: 1.5em; }
+div.comment             { margin: 1em 0 1.8em 2em; }
+div.comment p			{ line-height: 1.5em; }
+div.trackback           { margin: 1em 0 1.5em 2em; }
+div.trackback p			{ margin-bottom: 0;  }
+.controls				{ }
+div.controls			{ margin: 0; padding: 0; }
+.footnote              	{ }
+
+#links dt.date			{ margin-bottom: 0.5em; }
+
+/* Search results */
+dl.searchresults		{ margin-left: 2em; }
+
+/* Images */
+div.left div    { clear: left; margin-top: 25px; padding: 0; }
+div.right div   { clear: left; margin-top: 25px; padding: 0; }
+img.menu	{ margin-right: 0.5em; margin-bottom: 1em; vertical-align: top; }
+
+img.thumbnail, img.flickrimg, img.menu, img.image, input.image   { border: 1px solid black; }
+
+div.thumbnail   { margin: 1em; width: 120px; height: 150px; text-align: center;}
+div.thumbnail p { text-align: center; line-height: 1em; }
+div.image       { text-align: center; }
+
+/* Timeline */
+.tl-bg, .tl-year, tl-place, tl-work, tl-ed, tl-play, tl-writing, tl-blank { text-align: left; line-height: 120%; }
+th.tl			{ text-align: center; line-height: 120%; }
+th.tl			{ background: #FFFFFF; font-weight: normal; }
+td.tl-bg 		{ background: #666666; }
+td.tl-year		{ background: #CCCCCC; text-align: center; }
+td.tl-place		{ background: #E6E6E6; text-align: center; }
+td.tl-work		{ background: #CCCCCC; }
+td.tl-ed		{ background: #E6E6E6; }
+td.tl-play		{ background: #CCCCCC; text-align: center; }
+td.tl-writing	{ background: #E6E6E6; text-align: center; }
+td.tl-blank		{ background: #FFFFFF; }
+
+/* Bloglinks blogroll */
+div.blogrollfolder  { font-weight: bold; }
+div.blogrollmain a	{ margin-left: 2em; }
+
+code,kbd,var	{ font-family: monospace; font-style: normal; }
+
+.skiplink		{ display: none; }
+
+/* Books */
+div.years ul,
+div.years li	{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	}
+div.years li {
+	margin-bottom: 0.5em;
+	}
+dl.media dl {
+	margin: 1em 0 0 0;
+	}
+dl.media dd dt,
+dl.media dd dd {
+	line-height: 1.2em;
+	}
+dl.media dd dt {
+	margin-bottom: 0.1em;
+	}
+dl.media dd dd {
+	margin-bottom: 0.7em;
+	}
+span.note,
+span.pp {
+	color: #666;
+	}
+
+/* Changes for front page */
+#front div#writing		{ margin: 0; }
+#front div#writing dl,
+div#delicious .delPost 	{ margin: 0 0 0 2em; }
+.delLink				{ font-weight: bold; }
+.delExt					{ margin-bottom: 0.5em; }			
+#front h5				{ clear: both; }
+#front dt.entry			{ margin-top: 0; }
+#front dd.entry			{ margin-bottom: 0.5em; }
+#front div.flickrstream { margin-left: 2em; }
+div.flickrstream img 	{ margin: 0 1em 1em 0; }
+div.flickrstream p		{ margin-top: -0.5em; }
+
+#front #main-b dt { clear: left; margin-top: 1em; padding-top: 1em; border-top: 1px solid #999; }
+#front #main-b dt .permalink { font-weight: normal; font-size: x-small; } 
+#front #main-b dd dl { margin-left: 2em; margin-right: 3em;}
+#front #main-b dd dt { font-weight: normal; margin-top: 0; padding-top: 0; border-top: none; line-height: 1.3em; }
+#front #main-b dd dd { line-height: 1.2em; margin-top: 0; margin-bottom: 0.5em; }
+#front #main-b dd p { line-height: 1.3em; margin-top: 0; margin-bottom: 0.5em; }
+#front #main-b div.thumbnail { margin: 0.5em; width: 100px; height: auto;}
+#front #main-b div.thumbnail p {margin: 0.2em 0 1em 0; line-height: 1.1em; }
+p.more { font-weight: bold; }
+
+/*
+Images are wrapped in divs classed "flickr_badge_image" with ids
+"flickr_badge_imageX" where "X" is an integer specifying ordinal position.
+Below are some styles to get you started!
+*/
+#flickr_badge_uber_wrapper { }
+#flickr_badge_wrapper {}
+.flickr_badge_image { float: left; width: 80px; margin:0 30px 10px 0;}
+.flickr_badge_image a img {border: 1px solid black; }
+#flickr_badge_source {text-align:left; margin:0 10px 0 10px;}
+#flickr_badge_icon {float:left; margin-right:5px;}
+
+div.flickrset {float: left; width: 80px; padding-right: 30px; height: 170px; }
+.flickrthumb a img {border: 1px solid black; }
+p.flickrsettitle { margin: 0; line-height: 1.3em; }
+p.flickrnumphotos { margin: 0; line-height: 1.3em; color: #666;  }
+
+div.flickrmore {float: left; padding-top: 48px; font-weight: bold; }
+
+/*
+     FILE ARCHIVED ON 03:21:10 Dec 12, 2005 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 14:56:31 Nov 06, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/

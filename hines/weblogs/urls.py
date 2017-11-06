@@ -16,9 +16,9 @@ urlpatterns = [
         name='blog_detail'
     ),
     url(
-        regex=r"^(?P<blog_slug>[^/]+)/feeds/posts/$",
-        view=feeds.BlogPostsFeed(),
-        name='blog_feed'
+        regex=r"^(?P<blog_slug>[^/]+)/feeds/posts/rss/$",
+        view=feeds.BlogPostsFeedRSS(),
+        name='blog_feed_posts_rss'
     ),
     url(
         regex=r"^(?P<blog_slug>[^/]+)/tags/$",

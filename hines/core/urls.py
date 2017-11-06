@@ -16,9 +16,9 @@ urlpatterns = [
     ),
 
     url(
-        regex=r"^feeds/everything/$",
-        view=feeds.EverythingFeed(),
-        name='everything_feed'
+        regex=r"^feeds/everything/rss/$",
+        view=feeds.EverythingFeedRSS(),
+        name='everything_feed_rss'
     ),
 
     # Flatpages with names:
@@ -42,6 +42,10 @@ urlpatterns = [
     url(r'^misc/$', flatpages_views.flatpage,
         {'url': '/phil/misc/'},
         name='misc'),
+
+    url(r'^feeds/$', flatpages_views.flatpage,
+        {'url': '/phil/feeds/'},
+        name='feeds'),
 
 
     url(

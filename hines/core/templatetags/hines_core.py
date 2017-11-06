@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import re
+
 import smartypants as _smartypants
 
 from django import template
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import linebreaks_filter
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe 
 
 from ditto.lastfm.templatetags.ditto_lastfm import top_artists
 
@@ -146,4 +150,22 @@ def lastfm_top_artists_card(limit=10, date=None, period='day'):
             'artist_list': top_artists(limit=limit, date=date, period=period),
             'more': more,
             }
+
+
+@register.filter
+def linebreaks_first(text):
+    """
+    Does the same as the standard Djanago `linebreaks` filter:
+
+    Replace line breaks in plain text with appropriate HTML; a single
+    newline becomes an HTML line break (``<br />``) and a new line
+    followed by a blank line becomes a paragraph break (``</p>``).
+
+    But also adds the CSS class 'first' to the first paragraph tag.
+
+    Used for old Weblog post_detail templates.
+    """
+    text = linebreaks_filter(text)
+    text = re.sub(r'^<p>', '<p class="first">', text)
+    return mark_safe(text)
 

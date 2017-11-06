@@ -149,7 +149,7 @@ class ExtendedFeed(Feed):
         return ''
 
 
-class EverythingFeed(ExtendedFeed):
+class EverythingFeedRSS(ExtendedFeed):
 
     num_items = 14
 

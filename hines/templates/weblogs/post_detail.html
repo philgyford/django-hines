@@ -7,6 +7,20 @@
 {% block head_page_title %}{{ post.title }}{% endblock %}
 {% block content_title %}{{ post.title }}{% endblock %}
 
+{% block head_extra %}
+	{{ block.super }}
+	{% with post.get_previous_post as previous_post %}
+		{% if previous_post %}
+			<link rel="prev" title="{{ previous_post.get_absolute_url }}" href="{{ previous_post.title }}"/>
+		{% endif %}
+	{% endwith %}
+	{% with post.get_next_post as next_post %}
+		{% if next_post %}
+			<link rel="next" title="{{ next_post.get_absolute_url }}" href="{{ next_post.title }}"/>
+		{% endif %}
+	{% endwith %}
+{% endblock %}
+
 {% block content %}
 
 	{% if is_preview %}

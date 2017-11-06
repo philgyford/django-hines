@@ -4,13 +4,12 @@ from django.utils.feedgenerator import rfc2822_date
 
 from hines.core.utils import make_datetime
 from hines.users.factories import UserFactory
-from hines.weblogs.feeds import BlogPostsFeed
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
 from tests.core.test_feeds import FeedTestCase
 
 
-class BlogPostsFeedTestCase(FeedTestCase):
+class BlogPostsFeedRSSTestCase(FeedTestCase):
 
     def setUp(self):
         super().setUp()
@@ -46,12 +45,12 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.other_blogs_post = LivePostFactory()
 
     def test_response_200(self):
-        response = self.client.get('/terry/my-blog/feeds/posts/')
+        response = self.client.get('/terry/my-blog/feeds/posts/rss/')
         self.assertEqual(response.status_code, 200)
 
 
     def test_response_404(self):
-        response = self.client.get('/terry/not-my-blog/feeds/posts/')
+        response = self.client.get('/terry/not-my-blog/feeds/posts/rss/')
         self.assertEqual(response.status_code, 404)
 
     def test_feed(self):
@@ -59,7 +58,7 @@ class BlogPostsFeedTestCase(FeedTestCase):
         Borrowing a lot from
         https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
         """
-        response = self.client.get('/terry/my-blog/feeds/posts/')
+        response = self.client.get('/terry/my-blog/feeds/posts/rss/')
         doc = minidom.parseString(response.content)
 
         feed_elem = doc.getElementsByTagName('rss')
@@ -138,7 +137,7 @@ class BlogPostsFeedTestCase(FeedTestCase):
         self.blog.show_author_email_in_feed = False
         self.blog.save()
 
-        response = self.client.get('/terry/my-blog/feeds/posts/')
+        response = self.client.get('/terry/my-blog/feeds/posts/rss/')
         doc = minidom.parseString(response.content)
 
         feed_elem = doc.getElementsByTagName('rss')

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{% load comments hines_core static %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>{{ post.title }} (Phil Gyford: {{ post.blog.short_name }})</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content="Phil Gyford's website."/>
+	<meta name="keywords" content="Phil Gyford, Philip Gyford, London, Houston, Bristol, Witham, Essex, Fabius, Writing, {{ post.title }}, "/>
+
+	<link rel="author" title="Send feedback to Phil" href="mailto:phil@gyford.com"/>
+	<link rel="home" title="Home" href="{% url 'home' %}"/>
+	<link rel="Shortcut Icon" href="{% static 'weblogs/sets/2002/favicon.ico' %}"/>
+	{% with post.get_previous_post as previous_post %}{% if previous_post %}
+	<link rel="prev" title="{{ previous_post.get_absolute_url }}" href="{{ previous_post.title }}"/>
+	{% endif %}{% endwith %}
+	{% with post.get_next_post as next_post %}{% if next_post %}
+	<link rel="next" title="{{ next_post.get_absolute_url }}" href="{{ next_post.title }}"/>
+	{% endif %}{% endwith %}
+	<link rel="up" title="Archive for {{ post.time_created|date:"F Y" }}" href="{% url 'hines:post_month_archive' blog_slug=post.blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}"/>
+	<!-- skin: default -->
+	<link rel="stylesheet" href="{% static 'weblogs/sets/2002/style/default/global.css' %}" type="text/css"/>
+	<style type="text/css">
+		@import url({% static 'weblogs/sets/2002/style/default/global_non_ns4.css' %});
+	</style>
+	<link rel="stylesheet" href="{% static 'weblogs/sets/2002/style/default/screen.css' %}" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="{% static 'weblogs/sets/2002/style/default/print.css' %}" type="text/css" media="print"/>
+
+	<link rel="alternate" type="application/rdf+xml" title="RSS feed" href="{{ post.blog.get_rss_feed_url }}"/>
+</head>
+
+<body>
+
+<h1 class="off"><a href="{% url 'home' %}">Phil Gyford</a></h1>
+<div id="main-b">
+	<a name="startcontent"></a>
+	<h2 class="three">{{ post.blog.short_name }}</h2>
+	<h3 class="two">{{ post.time_created|date:"l j F Y" }}</h3>
+	<h4 class="one">{% with post.get_previous_post as previous_post %}{% if previous_post %}<a href="{{ previous_post.get_absolute_url }}" title="Previous entry: {{ previous_post.title }}"><img src="{% static 'weblogs/sets/2002/images/nav/prev1.gif' %}" width="14" height="18" alt="Previous"/></a>{% else %}<img src="{% static 'weblogs/sets/2002/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">{% endif %}{% endwith %}<a href="{% url 'hines:post_month_archive' blog_slug=post.blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}" title="Index"><img src="{% static 'weblogs/sets/2002/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index"></a>{% with post.get_next_post as next_post %}{% if next_post %}<a href="{{ next_post.get_absolute_url }}" title="Next entry: {{ next_post.title }}"><img src="{% static 'weblogs/sets/2002/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next"></a>{% else %}<img src="{% static 'weblogs/sets/2002/images/nav/next_off.gif' %}" width="14" height="18" alt="Next"/>{% endif %}{% endwith %}{{ post.title }}</h4>
+
+<div id="writing">
+	<div class="indv-entry">
+
+{% if perms.weblogs.can_change_post %}<a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a>{% endif %}
+
+{{ post.intro_html|safe }}
+{{ post.body_html|safe }}
+
+{% comment %}
+We don't have categories any more, so can't really link to these... 
+<p><small>Read more from <a href="/phil/writing/cats/acting.php">Acting</a>.</small></p>
+{% endcomment %}
+
+{% get_comment_list for post as comment_list %}
+
+{% if comment_list %}
+		<div class="comments">
+
+			<h5><a name="comments"></a>Comments</h5>
+
+		{% for comment in comment_list %}
+			<div class="comment"><a name="c{{ comment.id }}"></a>
+				{{ comment.comment|linebreaks_first }}
+				<div class="controls">Posted by {{ comment.name }} on {{ comment.submit_date|date:"j F Y, g:i" }} {{ comment.submit_date|date:"A"|lower }} | <a href="{{ post.get_absolute_url }}#c{{ comment.id }}" title="Permanent link to this comment">Link</a></div>
+			</div>
+		{% endfor %}
+{% endif %}
+
+{% comment %}
+			<form method="post" action="" name="comments_form" onsubmit="if (this.bakecookie[0].checked) rememberMe(this)">
+			<input type="hidden" name="static" value="1"/>
+			<input type="hidden" name="entry_id" value="5720"/>
+
+			<h5>Post a comment</h5>
+			OR:
+			<h5>Be the first to comment</h5>
+
+			<div class="comment-fields">
+				<div class="comment-input"><label for="author">Name (required):</label><br/>
+				<input name="author" tabindex="1" id="author" size="25"/></div>
+
+				<div class="comment-input"><label for="email">Email address (required):</label><br/>
+				<input name="email" tabindex="2" id="email" size="25"/></div>
+
+				<div class="comment-input"><label for="url">Personal URL:</label><br/>
+				<input name="url" tabindex="3" id="url" size="25"/></div>
+			</div>
+
+			<div class="comment-remember">
+				<div class="comment-input">Remember personal info?<br/>
+					<input type="radio" id="bakecookie" name="bakecookie"/><label for="bakecookie">Yes</label><br/>
+					<input type="radio" id="forget" name="bakecookie" onclick="forgetMe(this.form)" value="Forget Info"/><label for="forget">No</label><br style="clear: both;"/>
+				</div>
+			</div>
+
+			<div class="comment-input"><label for="text">Comments:</label><br/>
+			<textarea name="text" tabindex="4" id="text" rows="10" cols="40"></textarea></div>
+
+			<div class="comment-input"><input type="submit" class="button" name="preview" value=" Preview then post "/></div>
+
+			</form>
+
+			<script type="text/javascript" language="javascript">
+			<!--
+			document.comments_form.email.value = getCookie("mtcmtmail");
+			document.comments_form.author.value = getCookie("mtcmtauth");
+			document.comments_form.url.value = getCookie("mtcmthome");
+			if (getCookie("mtcmtauth")) {
+				document.comments_form.bakecookie[0].checked = true;
+			} else {
+				document.comments_form.bakecookie[1].checked = true;
+			}
+			//-->
+			</script>
+{% endcomment %}
+
+
+		</div><!-- end comments -->
+
+
+{% with post.get_visible_trackbacks as trackbacks %}
+	{% if trackbacks %}
+		<div class="trackbacks">
+			<h5><a name="trackback"></a>Some sites linking to this entry (Trackbacks)</h5>
+
+		{% for trackback in trackbacks %}
+			<div class="trackback">
+				<p><a name="t{{ trackback.id }}"></a><strong><a href="{{ trackback.url }}" rel="nofollow">{{ trackback.title }}</a></strong><br>
+				{{ trackback.excerpt }}<br>
+				<small>At '{{ trackback.blog_name }}' on {{ trackback.time_created|date:"l j F Y, g:i A" }}</small></p>
+			</div>
+		{% endfor %}
+
+		{% comment %}
+			<p>&nbsp;<br/><small>TrackBack(<a href="/phil/writing/2003/01/05/000134.php#whatistrackback" title="More about TrackBack">?</a>) URL for this entry: http://www.gyford.com/cgi-sys/cgiwrap/gyford/gyford.com/mt/mt-tb.cgi/3820</small></p>
+		{% endcomment %}
+		</div><!-- end trackbacks -->
+	{% endif %}
+{% endwith %}
+
+
+	</div><!-- end indv-entry -->
+
+</div><!-- end writing -->
+		<div class="break">&nbsp;</div>
+</div>
+<!-- end main -->
+<div id="sidebar">
+	<div>
+	<strong>Hire me!</strong>
+	<p>I'm available for freelance <acronym title="Information Architecture">IA</acronym>, <acronym title="PHP: Hypertext Preprocessor">PHP</acronym>, <acronym title="HyperText Markup Language">HTML</acronym>, and other web work. <a href="{% url 'hines:about_work' %}" title="More information about what I do"><strong>Read more</strong></a></p>
+	</div>
+	<div>
+	<strong>My other sites</strong>
+	<ul>
+		<li><a href="http://www.pepysdiary.com/" title="Pepys' diary in weblo form">Pepys&#8217; Diary</a></li>
+		<li><a href="http://www.byliner.com/" title="Track your favourite web authors">Byliner</a></li>
+		<li><a href="http://www.haddock.org/directory/" title="Something fishy every day">Haddock Directory</a></li>
+		<li><a href="http://www.haddock.org/blogs/" title="Aggregated fishy weblogs">Haddock Blogs</a></li>
+		<!-- <li><a href="http://www.haddock.org/review/" title="Book and music reviews by fish">Haddock Review</a></li> -->
+	</ul>
+	</div>
+	{% comment %}
+	<div>
+	<strong>Search</strong>
+	<form method="get" action="/cgi-sys/cgiwrap/gyford/gyford.com/mt/mt-search.cgi">
+	<input id="search" name="search" size="15" maxlength="255" accesskey="4"/><br/>
+	<input type="hidden" name="IncludeBlogs" value="1"/>
+	<input type="hidden" name="IncludeBlogs" value="8"/>
+	<input type="hidden" name="IncludeBlogs" value="11"/>
+	<input type="hidden" name="Template" value="gyford"/>
+	<input type="submit" value="Search" class="button"/>
+	</form>
+	</div>
+	{% endcomment %}
+	<div class="hilite">
+		<a href="{% url 'hines:everything_feed_rss' %}" title="An RSS feed of my latest writing, photos, links, notes, etc."><strong>RSS</strong></a> (<a href="/phil/writing/2003/01/05/an-introduction-/#whatisrss" title="'An introduction to weblog terms for weblog readers: What is RSS?', 2003-01-05">?</a>)
+
+		<ul>
+			<li><a href="{% url 'hines:feeds' %}" title="A list of other RSS and Atom feeds available">More feeds</a></li>
+		</ul>
+
+	</div>
+	<div>
+	<ul>
+		<li><a href="http://www.audioscrobbler.com/user/gyford/" title="See what music I've been listening to recently">My Audioscrobbler page</a></li>
+
+		<li><a href="/phil/blogroll/" title="A list of sites I read frequently">Blogroll</a></li>
+
+		<li><a href="/phil/foaf.rdf" title="Some of my friends captured in XML">FOAF</a> (<a href="http://rdfweb.org/foaf/" title="FOAF: the 'friend of a friend' project">?</a>)</li>
+		<li><a href="http://www.amazon.co.uk/exec/obidos/redirect?tag=haddockorg-21&amp;path=registry/3JJHI0G9TKGTX/" title="Buy me nice things">Amazon Wish List</a></li>
+		<li><a href="/misc/accessibility.php" accesskey="0">Accessibility statement</a></li>
+		<li><a href="http://www.movabletype.org/" title="to movabletype.org">Moveable Type powered</a></li>
+		<li>Work on this page is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/1.0" title="Creative Commons Attribution Non-Commercial Share Alike license">Creative Commons License</a></li>
+	</ul>
+	</div>
+</div> <!-- end sidebar -->
+
+<div id="menubar">
+<div id="nav">
+	<ul id="menu">
+	<li><a href="{% url 'hines:blog_detail' blog_slug='writing' %}" title="The front page of the site"><span class="menu-on">Writing</span></a>
+		<ul>
+		<li><a href="/phil/writing/archive/" title="An archive of writing organised by date">By date</a></li>
+		<li><a href="/phil/writing/cats/" title="An archive of writing organised by category">By category</a></li>
+		</ul></li>
+	<li><a href="{% url 'pinboard:home' %}" title="Links I've found interesting">Links</a></li>
+	<li><a href="{% url 'hines:blog_tag_detail' blog_slug='writing' tag_slug='notes' %}" title="Notes I've taken">Notes</a></li>
+	<li><a href="/phil/photos/" title="Collections of my photos">Photos</a></li>
+	<li><a href="/phil/uhcl/" title="Work I did for a Future Studies MSc">Futures</a></li>
+	<li class="rule"><a href="{% url 'hines:timeline' %}" title="A chronological summary of my life">Timeline</a></li>
+	<li><a href="/phil/random/" title="Random photos of me by other people">Random Phil</a></li>
+	<li><a href="{% url 'hines:misc' %}" title="Things on this site that don't fit anywhere else">Other stuff</a></li>
+	<li><a href="mailto:phil@gyford.com" title="Send me email" accesskey="9">Email</a></li>
+	</ul>
+</div> <!-- end nav -->
+</div> <!-- end menubar -->
+
+{% include 'hines_core/includes/analytics.html' %}
+
+</body>
+</html>

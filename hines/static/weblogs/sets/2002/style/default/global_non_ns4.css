@@ -1,0 +1,45 @@
+input		{ line-height: 1em; }
+
+h1				{ position: absolute; top: 20px; left: 15px; }
+#menubar		{ position: absolute; top: 45px; left: 15px; }
+
+#main-a                 { margin: 15px 15px 1em 8.2em; }
+#main-b                 { margin: 15px 14.4em 1em 8.2em; }
+
+#sidebar	{ position: absolute; top: 15px; right: 15px; }
+
+div.comment-input { clear: left; }
+div.comment-remember div.comment-input { clear: none; }
+div.comment-fields { float: left; }
+
+/* Images */
+div.left		{ width: 50%; float: left; margin-bottom: 1.5em; }
+div.right		{ width: 50%; float: right; }
+div.thumbnail	{ float: left; }
+img.menu		{ float: left; }
+
+dl.writing-archive li,
+#menubar ul li,
+#sidebar li,
+ul.links li		{ list-style-type: none; }
+
+img.illustration	{ float: right; margin: 0 0 0.5em 1em; border: 1px solid black; }
+
+/* Books */
+div.years {
+	float: left;
+	margin-top: 2.4em;
+	}
+dl.media {
+	margin-left: 5em;
+	}
+g { border: 1px solid black; }
+
+/* Books */
+div.years {
+	float: left;
+	margin-top: 2.4em;
+	}
+dl.media {
+	margin-left: 5em;
+	}
