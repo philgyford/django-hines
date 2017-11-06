@@ -199,7 +199,7 @@ We don't have categories any more, so can't really link to these...
 	<ul id="menu">
 	<li><a href="{% url 'hines:blog_detail' blog_slug='writing' %}" title="The front page of the site"><span class="menu-on">Writing</span></a>
 		<ul>
-		<li><a href="/phil/writing/archive/" title="An archive of writing organised by date">By date</a></li>
+		<li><a href="{% url 'hines:blog_archive' blog_slug='writing' %}" title="An archive of writing organised by date">By date</a></li>
 		<li><a href="/phil/writing/cats/" title="An archive of writing organised by category">By category</a></li>
 		</ul></li>
 	<li><a href="{% url 'pinboard:home' %}" title="Links I've found interesting">Links</a></li>

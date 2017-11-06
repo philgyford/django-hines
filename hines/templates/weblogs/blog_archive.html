@@ -1,0 +1,44 @@
+{% extends 'weblogs/base.html' %}
+
+{% load hines_weblogs %}
+{% load hines_core %}
+
+{% block head_page_title %}{{ blog.name }} archive{% endblock %}
+{% block content_title %}{{ blog.name }} archive{% endblock %}
+
+{% block content_main %}
+	{% with 'left' as sidebar_position %}
+		{{ block.super }}
+	{% endwith %}
+{% endblock %}
+
+{% block content %}
+
+{% for d in months %}
+	{% ifchanged d|date:"Y" %}
+		{% if forloop.counter0 != 0 %}
+			</ul>
+		{% endif %}
+		<h2>{{ d|date:"Y" }}</h2>
+		<ul class="list-inline">
+	{% endifchanged %}
+	<li class="list-inline-item">
+		<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=d|date:"Y" month=d|date:"m" %}">{{ d|date:"M" }}</a>
+	</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+	{% if blog %}
+		{% current_url_name as url_name %}
+		{% if url_name != 'hines:blog_tag_list' %}
+			{% blog_popular_tags_card blog=blog num=10 %}
+		{% endif %}
+	{% endif %}
+
+	{{ block.super }}
+{% endblock sidebar %}

@@ -4,7 +4,7 @@ import pytz
 from django.http.response import Http404
 from django.test import Client, TestCase
 
-from hines.core.utils import make_datetime
+from hines.core.utils import make_date, make_datetime
 from hines.users.models import User
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
@@ -65,6 +65,62 @@ class BlogDetailViewTestCase(ViewTestCase):
         request = self.factory.get('/fake-path/?p=2')
         with self.assertRaises(Http404):
             views.BlogDetailView.as_view()(request, blog_slug='my-blog')
+
+
+class BlogArchiveViewTestCase(ViewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.blog = BlogFactory(slug='my-blog')
+
+    def test_response_200(self):
+        "It should respond with 200."
+        response = views.BlogArchiveView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        self.assertEqual(response.status_code, 200)
+
+    def test_response_404(self):
+        "It should raise 404 if there's no Blog with that slug."
+        with self.assertRaises(Http404):
+            views.BlogArchiveView.as_view()(
+                                        self.request, blog_slug='other-blog')
+
+    def test_templates(self):
+        response = views.BlogArchiveView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        self.assertEqual(response.template_name[0], 'weblogs/blog_archive.html')
+
+    def test_context_post_list(self):
+        "It should include the post_list, of public posts, in the context."
+        p1 = LivePostFactory(blog=self.blog)
+        p1.time_created = make_datetime('2016-01-01 12:00:00')
+        p1.save()
+        p2 = LivePostFactory(blog=self.blog)
+        p2.time_created = make_datetime('2016-01-02 12:00:00')
+        p2.save()
+        p3 = LivePostFactory(blog=self.blog)
+        p3.time_created = make_datetime('2016-03-01 12:00:00')
+        p3.save()
+        p4 = LivePostFactory(blog=self.blog)
+        p4.time_created = make_datetime('2017-01-01 12:00:00')
+        p4.save()
+
+        # These shouldn't be counted:
+        other_blogs_post = LivePostFactory()
+        other_blogs_post.time_created = make_datetime('2016-04-01 12:00:00')
+        other_blogs_post.save()
+        draft_post = DraftPostFactory(blog=self.blog)
+        draft_post.time_created = make_datetime('2016-05-01 12:00:00')
+        draft_post.save()
+
+        response = views.BlogArchiveView.as_view()(
+                                            self.request, blog_slug='my-blog')
+        self.assertIn('months', response.context_data)
+        months = response.context_data['months']
+        self.assertEqual(len(months), 3)
+        self.assertEqual(months[0], make_date('2016-01-01'))
+        self.assertEqual(months[1], make_date('2016-03-01'))
+        self.assertEqual(months[2], make_date('2017-01-01'))
 
 
 class BlogTagDetailViewTestCase(ViewTestCase):

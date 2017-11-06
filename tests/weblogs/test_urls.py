@@ -21,6 +21,17 @@ class WeblogsUrlsTestCase(TestCase):
                          views.BlogDetailView.__name__)
 
 
+    def test_blog_archive_url(self):
+        self.assertEqual(
+                reverse('hines:blog_archive', kwargs={'blog_slug': 'my-blog'}),
+                '/terry/my-blog/archive/')
+
+    def test_blog_archive_view(self):
+        "Should use the correct view."
+        self.assertEqual(resolve('/terry/my-blog/archive/').func.__name__,
+                         views.BlogArchiveView.__name__)
+
+
     def test_blog_feed_rss_url(self):
         self.assertEqual(
             reverse('hines:blog_feed_posts_rss', kwargs={'blog_slug': 'my-blog'}),

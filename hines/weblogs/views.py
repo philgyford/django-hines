@@ -71,6 +71,21 @@ class BlogDetailView(BlogDetailParentView):
         return self.object.public_posts.all()
 
 
+class BlogArchiveView(DetailView):
+    "List of all the months in which there are posts."
+    template_name = 'weblogs/blog_archive.html'
+    model = Blog
+    slug_url_kwarg = 'blog_slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['months'] = self.get_months()
+        return context
+
+    def get_months(self):
+        return self.object.public_posts.dates('time_created', 'month')
+
+
 class BlogTagDetailView(BlogDetailParentView):
     "Listing Posts with a particular Tag (by 'tag_slug') in a Blog."
     template_name = 'weblogs/blog_tag_detail.html'

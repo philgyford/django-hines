@@ -16,6 +16,11 @@ urlpatterns = [
         name='blog_detail'
     ),
     url(
+        regex=r"^(?P<blog_slug>[^/]+)/archive/$",
+        view=views.BlogArchiveView.as_view(),
+        name='blog_archive'
+    ),
+    url(
         regex=r"^(?P<blog_slug>[^/]+)/feeds/posts/rss/$",
         view=feeds.BlogPostsFeedRSS(),
         name='blog_feed_posts_rss'
