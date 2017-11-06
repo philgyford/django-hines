@@ -78,7 +78,7 @@
 
 <a href="http://web.archive.org/web/{{ post.time_created|date:"YmdHis" }}/http://www.gyford.com/phil/{{ post.blog.slug }}/{{ post.time_created|date:"Y/m/d" }}/print/"><p>(printable version of this page)</p></a>
 
-{% if perms.weblogs.can_change_post %}<a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a>{% endif %}
+{% if perms.weblogs.can_change_post %}<p><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>{% endif %}
 
 {{ post.intro_html|safe }}
 {{ post.body_html|safe }}
