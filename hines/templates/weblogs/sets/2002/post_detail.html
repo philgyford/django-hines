@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{% load comments hines_core static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{% load comments hines_core l10n static %}
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-	<title>{{ post.title }} (Phil Gyford: {{ post.blog.short_name }})</title>
+	<title>{{ post.title }} (Phil Gyford: {{ blog.short_name }})</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<meta name="description" content="Phil Gyford's website."/>
-	<meta name="keywords" content="Phil Gyford, Philip Gyford, London, Houston, Bristol, Witham, Essex, Fabius, Writing, {{ post.title }}, "/>
+	<meta name="keywords" content="Phil Gyford, Philip Gyford, London, Houston, Bristol, Witham, Essex, Fabius, {{ blog.short_name }}, {{ post.title }}, "/>
 
 	<link rel="author" title="Send feedback to Phil" href="mailto:phil@gyford.com"/>
 	<link rel="home" title="Home" href="{% url 'home' %}"/>
@@ -15,7 +15,7 @@
 	{% with post.get_next_post as next_post %}{% if next_post %}
 	<link rel="next" title="{{ next_post.get_absolute_url }}" href="{{ next_post.title }}"/>
 	{% endif %}{% endwith %}
-	<link rel="up" title="Archive for {{ post.time_created|date:"F Y" }}" href="{% url 'hines:post_month_archive' blog_slug=post.blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}"/>
+	<link rel="up" title="Archive for {{ post.time_created|date:"F Y" }}" href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}"/>
 	<!-- skin: default -->
 	<link rel="stylesheet" href="{% static 'weblogs/sets/2002/style/default/global.css' %}" type="text/css"/>
 	<style type="text/css">
@@ -24,7 +24,7 @@
 	<link rel="stylesheet" href="{% static 'weblogs/sets/2002/style/default/screen.css' %}" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="{% static 'weblogs/sets/2002/style/default/print.css' %}" type="text/css" media="print"/>
 
-	<link rel="alternate" type="application/rdf+xml" title="RSS feed" href="{{ post.blog.get_rss_feed_url }}"/>
+	<link rel="alternate" type="application/rdf+xml" title="RSS feed" href="{{ blog.get_rss_feed_url }}"/>
 </head>
 
 <body>
@@ -32,9 +32,32 @@
 <h1 class="off"><a href="{% url 'home' %}">Phil Gyford</a></h1>
 <div id="main-b">
 	<a name="startcontent"></a>
-	<h2 class="three">{{ post.blog.short_name }}</h2>
+	<h2 class="three">{{ blog.short_name }}</h2>
 	<h3 class="two">{{ post.time_created|date:"l j F Y" }}</h3>
-	<h4 class="one">{% with post.get_previous_post as previous_post %}{% if previous_post %}<a href="{{ previous_post.get_absolute_url }}" title="Previous entry: {{ previous_post.title }}"><img src="{% static 'weblogs/sets/2002/images/nav/prev1.gif' %}" width="14" height="18" alt="Previous"/></a>{% else %}<img src="{% static 'weblogs/sets/2002/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">{% endif %}{% endwith %}<a href="{% url 'hines:post_month_archive' blog_slug=post.blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}" title="Index"><img src="{% static 'weblogs/sets/2002/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index"></a>{% with post.get_next_post as next_post %}{% if next_post %}<a href="{{ next_post.get_absolute_url }}" title="Next entry: {{ next_post.title }}"><img src="{% static 'weblogs/sets/2002/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next"></a>{% else %}<img src="{% static 'weblogs/sets/2002/images/nav/next_off.gif' %}" width="14" height="18" alt="Next"/>{% endif %}{% endwith %}{{ post.title }}</h4>
+	<h4 class="one">{% spaceless %}
+		{% with post.get_previous_post as previous_post %}
+			{% if previous_post %}
+				<a href="{{ previous_post.get_absolute_url }}" title="Previous entry: {{ previous_post.title }}">
+					<img src="{% static 'weblogs/sets/2002/images/nav/prev1.gif' %}" width="14" height="18" alt="Previous"/>
+				</a>
+			{% else %}
+				<img src="{% static 'weblogs/sets/2002/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">
+			{% endif %}
+		{% endwith %}
+		<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}" title="Index">
+			<img src="{% static 'weblogs/sets/2002/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index">
+		</a>
+		{% with post.get_next_post as next_post %}
+			{% if next_post %}
+				<a href="{{ next_post.get_absolute_url }}" title="Next entry: {{ next_post.title }}">
+					<img src="{% static 'weblogs/sets/2002/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next">
+				</a>
+			{% else %}
+				<img src="{% static 'weblogs/sets/2002/images/nav/next_off.gif' %}" width="14" height="18" alt="Next"/>
+			{% endif %}
+		{% endwith %}
+		{{ post.title }}
+	{% endspaceless %}</h4>
 
 <div id="writing">
 	<div class="indv-entry">
@@ -57,9 +80,9 @@ We don't have categories any more, so can't really link to these...
 			<h5><a name="comments"></a>Comments</h5>
 
 		{% for comment in comment_list %}
-			<div class="comment"><a name="c{{ comment.id }}"></a>
+			<div class="comment"><a name="c{{ comment.id|unlocalize }}"></a>
 				{{ comment.comment|linebreaks_first }}
-				<div class="controls">Posted by {{ comment.name }} on {{ comment.submit_date|date:"j F Y, g:i" }} {{ comment.submit_date|date:"A"|lower }} | <a href="{{ post.get_absolute_url }}#c{{ comment.id }}" title="Permanent link to this comment">Link</a></div>
+				<div class="controls">Posted by {{ comment.name }} on {{ comment.submit_date|date:"j F Y, g:i" }} {{ comment.submit_date|date:"A"|lower }} | <a href="{{ post.get_absolute_url }}#c{{ comment.id|unlocalize }}" title="Permanent link to this comment">Link</a></div>
 			</div>
 		{% endfor %}
 {% endif %}
@@ -204,7 +227,7 @@ We don't have categories any more, so can't really link to these...
 		</ul></li>
 	<li><a href="{% url 'pinboard:home' %}" title="Links I've found interesting">Links</a></li>
 	<li><a href="{% url 'hines:blog_tag_detail' blog_slug='writing' tag_slug='notes' %}" title="Notes I've taken">Notes</a></li>
-	<li><a href="/phil/photos/" title="Collections of my photos">Photos</a></li>
+	<li><a href="{% url 'photos:home' %}" title="Collections of my photos">Photos</a></li>
 	<li><a href="/phil/uhcl/" title="Work I did for a Future Studies MSc">Futures</a></li>
 	<li class="rule"><a href="{% url 'hines:timeline' %}" title="A chronological summary of my life">Timeline</a></li>
 	<li><a href="/phil/random/" title="Random photos of me by other people">Random Phil</a></li>

@@ -1,0 +1,756 @@
+
+/** MAIN STRUCTURE *******************************************/
+body {
+	text-align: center;
+	min-width: 760px;
+	margin: 10px;
+	color: #000;
+	background-color: #fff;
+	font-family:  "Lucida Grande", "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+#container {
+	text-align: left;
+	width: 740px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Three-column grid.
+   5  230  20  230  30  230  5
+      ------------      ---
+*/
+
+#main {
+	float: left;
+	width: 480px; /* If you change this, change the width of blockquote too. */
+	margin: 2em 30px 0 0;
+}
+body.full #main {
+	/* No sidebar */
+	width: 740px;
+}
+
+#extra {
+	float: left;
+	width: 230px;
+	margin: 2.2em 0 0 0;
+}
+
+#footer {
+	clear: both;
+	width: 740px;
+	padding-top: 3em;
+	color: #666;
+}
+
+
+/** GENERIC STYLES *******************************************/
+
+h1,
+h2,
+h3,
+h4 {
+	margin: 0;
+	padding: 0;
+	line-height: 1.1em;
+}
+
+p {
+	margin: 0 0 1em 0;
+}
+a:link {
+	color: #00e;
+}
+a:visited {
+	color: #551a8b;
+}
+a:hover {
+	background: #ff6;
+}
+a img {
+	border: none;;
+}
+
+div.featured img,
+img.thumbnail,
+img.illustration {
+	border: 1px solid #999;
+}
+div.thumbnail > a:hover {
+	/* For the images in .thumbnail, but not the text which is in <p> tags. */
+	background-color: transparent;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+input.text,
+textarea {
+	border: 1px solid #999;
+}
+
+.hide {
+	display: none;
+}
+
+.right {
+	text-align: right;
+}
+
+th {
+	font-weight: bold;
+	text-align: left;
+	vertical-align: top;
+}
+
+div.clear {
+	clear: both;
+	height: 1px;
+	line-height: 0;
+	font-size: 0;
+}
+
+acronym,
+abbr { 
+	border-bottom: 1px dotted #000; 
+	cursor: help; 
+}
+
+code,
+kbd,
+var	{
+	font-family: monospace; 
+	font-style: normal; 
+}
+
+div.hr {display: none}
+/*/*/a{}
+div.hr {
+	clear: both;
+	display: block;
+	margin: 1em 0 0.8em 0;
+	border-top: 1px solid #999;
+}
+hr {display:none}
+/* */
+
+
+/** TOP OF PAGE *******************************************/
+
+#pagetitle {
+	float: left;
+	position: relative;
+	width: 740px;
+	margin: 0.5em 0 4em 0;
+	line-height: 1.231em; /* If the font-size is 13px, this is 16px. */
+}
+#searchbox {
+	width: 230px;
+	margin: 0;
+	padding: 0;
+	float: right;
+}
+
+#sitetitle {
+	display: block;
+	width: 480px;
+}
+
+/* Main navigation */
+
+#skiplink {
+	display: none;
+}
+
+#mainnav {
+	width: 480px;
+	margin: 0 30px 0 0;
+	padding: 0;
+	float: left;
+	color: #666;
+}
+#mainnav li {
+	list-style-type: none;
+	float: left;
+	margin: 0 0.8em 0 0;
+	padding: 0;
+}
+#mainnav li.split {
+	background: url("../../phil/images/bullet.gif") left 50% no-repeat;
+	margin-left: 0.2em;
+	padding-left: 1.5em;
+}
+#mainnav li.on {
+	color: #000;
+	font-weight: bold;
+}
+
+span#sitetitle {
+	display: block;
+	float: left;
+	font-weight: bold;
+}
+span#searchlink {
+	display: block;
+	text-align: right;
+}
+#searchbox {
+	width: 230px;
+}
+#searchbox p {
+	margin: 0;
+}
+#searchbox input.text {
+	width: 155px;
+	float: left;
+}
+#searchbox input.submit {
+	color: #666;
+	float: right;
+	width: 60px;
+}
+
+
+/** PAGE TITLE *******************************************/
+
+#heading {
+	clear: left;
+	width: 740px;
+}
+
+
+/** IN BOTH CONTENT AND SIDEBAR ***************************/
+
+#main ul.reading-years {
+	list-style-type: none;
+	margin: 0 0 1em 0;
+	padding: 0;
+}
+#main ul.reading-years li {
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+
+/** MAIN CONTENT *******************************************/
+
+#main h2 {
+	margin: 2em 0 1em 0;
+}
+#main h3 {
+	margin: 1.5em 0 0.67em 0;
+}
+#main h4 {
+	margin: 1em 0 0 0;
+}
+#main h2:first-child,
+#main h3:first-child,
+#main h4:first-child {
+	margin-top: 0;
+}
+
+#main #intro {
+	font-weight: bold;
+}
+#main p {
+	line-height: 1.385em; /* If the font-size is 13px, this is 18px. */
+}
+#main blockquote {
+	margin: 0 0 13px 30px;
+	width: 449px; /* Or else it's too wide for Mac IE. */
+}
+#main blockquote blockquote {
+	width: 419px;
+}
+#main blockquote p {
+	line-height: 1.417em; /* If the font-size is 12px, this is 17px. */
+}
+#main blockquote blockquote p {
+	line-height: 1.455em; /* If the font-size is 11px, this is 16px. */
+}
+#main ul,
+#main ol {
+	margin: 0 0 1em 0;
+	padding: 0;
+}
+/* For writing categories list. */
+#main ul ul {
+	margin-bottom: 0;
+}
+#main li,
+#main dt,
+#main dd {
+	margin: 0 0 0 30px;
+	padding: 0;
+}
+#main li {
+	line-height: 1.385em; /* If the font-size is 13px, this is 18px. */
+}
+#main ol li {
+	margin-left: 30px;
+}
+#main dt {
+	font-weight: bold;
+	line-height: 1.385em; /* If the font-size is 13px, this is 18px. */
+}
+#main dd {
+	margin-bottom: 1em;
+}
+
+#main #intro dl.links {
+	margin-top: 0;
+	font-weight: normal;
+}
+
+#main p.illustration {
+	text-align: center;
+}
+#main img.illustration {
+	float: right;
+	margin: 0 0 0.5em 0.5em;
+}
+
+#main ul.comments,
+#main ul.comments li {
+	margin: 0;
+	padding: 0;
+}
+#main ul.comments li {
+	list-style-type: none;
+	margin-bottom: 2em;
+}
+#main ul.comments li p.byline {
+	margin: 0 0 0.5em 30px;
+}
+#main div.comment {
+	margin: 0 0 0 30px;
+}
+#main div.comment p {
+	line-height: 1.5em; /* 12/18px */
+}
+#main div.comment blockquote {
+	width: 419px;
+}
+
+/* Forms */
+#main p.row {
+	margin-bottom: 0;
+	padding-top: 0.5em;
+	clear: left;
+}
+#main p.row span.label {
+	float: left;
+	margin-right: 10px;
+	display: inline;
+	width: 150px;
+}
+#main form.slim-labels p.row span.label {
+	width: 65px;
+}
+#main p.row span.formfield {
+	float: left;
+	width: 320px;
+}
+#main p.row span.formfield input.text {
+	width: 240px;
+}
+#main p.row span.formfield textarea {
+	width: 310px;
+}
+#main p.textarea {
+	padding-top: 0.5em;
+	clear: left;
+}
+#main p.textarea textarea {
+	width: 475px;
+}
+
+/* Lists of entry excerpts - MT Category, Date and Main Index Pages */
+#main dl.entries {
+	margin: 0;
+}
+#main dl.entries dt,
+#main dl.entries dd {
+	margin-left: 0;
+}
+#main dl.entries dt {
+	clear: left;
+}
+#main dl.entries dd {
+	margin-bottom: 2em;
+	margin-left: 1px;
+}
+#main dl.entries p {
+	display: inline;
+	margin-bottom: 0;
+}
+#main dl.entries blockquote {
+	margin-top: 0.5em;
+}
+#main dl.entries blockquote p {
+	display: block;
+}
+#main p.more {
+	display: inline;
+	margin-left: 0.4em;
+	font-weight: bold;
+}
+#main dl.entries p.entrydetails {
+	display: block;
+	color: #666;
+	line-height: 1.727em; /* 11/19px */
+}
+#main dl.entries p.entrydetails a:link {
+	color: #6666f5;
+}
+#main dl.entries p.entrydetails a:visited {
+	color: #9976b9;
+}
+#main dl.entries p.entrydetails a:hover {
+	background: #ffffa3;
+}
+
+
+/* Links - Indvidual Entry Archive page */
+
+#main dl.links dt,
+#main dl.links dd {
+	margin-left: 0;
+	line-height: 1.385em; /* If the font-size is 13px, this is 18px. */
+}
+
+
+/* Home page variations */
+
+#main dl.entries dl.links {
+	margin-top: 0.5em;
+}
+#main dl.entries dl.links dt {
+	font-weight: normal;
+}
+#main dl.entries dl.links dd {
+	margin-bottom: 0.5em;
+}
+
+#main dl.entries dd.photos div.thumbnail {
+	float: left;
+	margin: 0.5em 5px 0 0;
+	width: 114px;
+	height: 150px;
+	text-align: center;
+	display: inline;	/* Fix an annoying Win IE bug */
+}
+#main dl.entries dd.photos div.thumbnail p {
+	text-align: center; 
+	line-height: 1em;
+	display: block;
+}
+
+/* Featured photos on the home and photos pages. */
+#main dl.entries dd.photos div.featured {
+	margin: 0.5em 0 0.5em 0;
+	float: left;
+}
+#main dl.entries dd.photos div.featured img {
+	float: left;
+	margin-right: 10px;
+}
+
+
+/* Master Archive Index */
+#main ul.years {
+}
+#main ul.years li,
+#extra ul.years li {
+	margin-bottom: 1em;
+	font-weight: bold;
+}
+#main ul.months,
+#extra ul.months {
+	margin: 0;
+	padding: 0;
+}
+#main ul.months li,
+#extra ul.months li {
+	display: inline;
+	list-style-type: none;
+	margin: 0;
+	font-weight: normal;
+	white-space: nowrap;
+}
+
+/* Timeline */
+table.timeline {
+	border-collapse: collapse;
+}
+table.timeline th,
+table.timeline td {
+	border: 1px solid #ccc;
+	padding: 4px;
+	vertical-align: top;
+	line-height: 1.4em;
+}
+table.timeline th {
+	text-align: left;
+	font-weight: bold;
+}
+table.timeline td.tl-year {
+	vertical-align: middle;
+}
+table.timeline .tl-year,
+table.timeline .tl-work,
+table.timeline .tl-play {
+	background-color: #eee;
+}
+table.timeline .tl-place,
+table.timeline .tl-ed,
+table.timeline .tl-writing {
+	background-color: #f6f6f6;
+}
+#main table.timeline ul {
+	margin: 0 0 0 1.4em;
+	padding: 0;
+}
+#main table.timeline li {
+	margin: 0.3em 0 0 0;
+	padding: 0;
+}
+
+
+/* NOTES */
+#main span.note,
+#main span.pp {
+	color: #666;
+}
+
+#main ul.publications li {
+	margin-bottom: 0.385em; /* 5px if font is 13px */
+}
+	
+
+/** SIDEBAR *******************************************/
+
+#extra .block {
+	margin: 0 0 2em 0;
+	float: left;
+	color: #666;
+	width: 227px; /* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+}
+#extra .block a:link {
+	color: #6666f5;
+}
+#extra .block a:visited {
+	color: #9976b9;
+}
+#extra .block a:hover {
+	background: #ffffa3;
+}
+
+#extra h2 {
+	margin: 0 0 0.5em 0;
+}
+#extra p {
+	line-height: 1.364em; /* If font-size is 11px, this is 15px. */
+}
+
+#extra .about {
+	margin: 0 0 2em 0;
+	float: left;
+}
+#extra .about p {
+	margin-bottom: 0.5em;
+}
+#extra p.nextprev {
+	float: left;
+}
+#extra p.nextprev .prev,
+#extra p.nextprev .next {
+	display: block;
+	float: left;
+	width: 65px;
+	color: #666;
+}
+#extra p.nextprev .next {
+	text-align: right;
+	width: 62px;	/* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+}
+#extra p.nextprev .index {
+	display: block;
+	float: left;
+	text-align: center;
+	width: 100px;
+}
+#extra dl,
+#extra dt,
+#extra dd {
+	margin: 0;
+	padding: 0;
+}
+#extra dt {
+	font-weight: normal;
+	line-height: 1.364em; /* If font-size is 11px, this is 15px. */
+}
+#extra dd {
+	margin-bottom: 0.5em;
+	line-height: 1.364em; /* If font-size is 11px, this is 15px. */
+}
+
+#extra ol,
+#extra ul,
+#extra li {
+	margin: 0;
+	padding: 0;
+}
+#extra li {
+	line-height: 1.364em; /* If font-size is 11px, this is 15px. */
+	margin: 0 0 0.2em 1.4em;
+}
+#extra ul.years li {
+	list-style-type: none;
+	margin-left: 0;
+}
+#extra ul li ul {
+	margin-top: 0.2em;
+}
+#extra ul li ul li,
+#extra ol li {
+	margin-left: 2.4em;
+}
+
+div.row {
+	clear: both;
+}
+#extra div.thumbnail {
+	width: 102px;
+	float: left;
+	margin: 0 17px 0 2px;
+	text-align: center;
+	display: inline; /* Fix Win IE margin float problem. */
+}
+#extra div.thumbnail a img {
+	opacity: .5;
+	filter: alpha(opacity=50);
+}
+#extra div.thumbnail a:hover img {
+	opacity: 1;
+	filter: none;
+}	
+
+#extra div.last {
+	margin-right: 2px;
+}
+
+#extra ul.reading-years {
+	list-style-type: none;
+}
+#extra ul.reading-years li {
+	float: left;
+	margin-right: 0.5em;
+	margin-left: 0;
+}
+
+/** ADMIN *******************************************/
+
+#main p.row span.formfield input.date {
+	width: 6.5em;
+}
+#main p.row span.formfield input.isbn {
+	width: 8em;
+}
+#main input.name-title {
+	width: 2em;
+}
+#main input.name-middle {
+	width: 5em;
+}
+#main input.name-suffix {
+	width: 2em;
+}
+#main input.name-role {
+	width: 5em;
+}
+	
+/** FONT SIZES *******************************************/
+
+/* Assuming 16px base font size. */
+
+
+h1,
+#main h2 {
+	font-size: 1.25em; /* 20px */
+}
+
+#main h3,
+#main dl.entries dt {
+	font-size: 1em; /* 16px */
+}
+
+ul#mainnav li,
+#sitetitle,
+#main h4,
+#main p,
+#main li,
+#main dt,
+#main dd,
+#main dl.entries dd dd,
+#main th,
+#main td,
+#extra h2,
+#main dl.links dt,
+#main dl.links dd {
+	font-size: 0.8125em; /* 13px */
+}
+
+#main blockquote p,
+#main div.comment p {
+	font-size: 0.75em; /* 12px */
+}
+	
+#extra p,
+#extra li,
+#extra dt,
+#extra dd,
+#searchbox input.submit,
+#footer p,
+#main p.entrydetails,
+#main blockquote blockquote p,
+#searchlink {
+	font-size: 0.6875em; /* 11px */
+}
+
+#main table.timeline th,
+#main table.timeline td {
+	font-size: 0.625em; /* 10px */
+/*	font-size: 0.563em; */ /* 9px */
+}
+
+/* Adjustments */
+#main li p,
+#main ul.comments li p.byline {
+	font-size: 1em;
+}
+#main ul.comments li p {
+	font-size: 0.923em; /* 12px if p is 13px */
+}
+#main li small,
+#main p small {
+	font-size: 0.846em; /* 11px if p is 13px */
+}
+#main td li,
+#main dl.entries dd,
+#main li li,
+#extra li li,
+#extra li p {
+	font-size: 1em;
+}
+/*
+     FILE ARCHIVED ON 05:37:23 Jun 17, 2006 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 18:36:28 Nov 06, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/

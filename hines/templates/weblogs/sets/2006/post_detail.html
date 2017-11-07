@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">{% load comments l10n spectator_reading static %}
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>{{ post.title }} (Phil Gyford: {{ blog.short_name }})</title>
+	<link rel="stylesheet" href="{% static 'weblogs/sets/2006/style/default/global.css' %}" type="text/css"/>
+	<link rel="home" title="Home" href="{% url 'home' %}"/>
+	<link rel="index" title="In all of {{ blog.short_name }}" href="{% url 'hines:blog_archive' blog_slug=blog.slug %}"/>
+	{% with post.get_previous_post as previous_post %}{% if previous_post %}
+	<link rel="prev" title="{{ previous_post.title }}" href="{{ previous_post.get_absolute_url }}"/>
+	{% endif %}{% endwith %}
+	{% with post.get_next_post as next_post %}{% if next_post %}
+	<link rel="next" title="{{ next_post.title }}" href="{{ next_post.get_absolute_url }}"/>
+	{% endif %}{% endwith %}
+
+</head>
+<body>
+
+<div id="container">
+
+	<div id="skiplink"><a href="#heading">Skip navigation</a></div>
+
+	<div id="pagetitle">
+		<span id="sitetitle">Phil Gyford&#8217;s website</span>
+
+		<ul id="mainnav">
+			<li><a href="{% url 'home' %}">Home</a></li>
+			<li class="on split"><a href="{% url 'blog_detail' blog_slug='writing'}">Writing</a></li>
+			<li><a href="{% url 'photos:home' %}">Photos</a></li>
+			<li><a href="{% url 'pinboard:home' %}">Links</a></li>
+			<li><a href="{% url 'spectator:reading:home' %}">Reading</a></li>
+			<li><a href="{% url 'hines:misc' %}">More&#8230;</a></li>
+			<li class=" split"><a href="{% url 'hines:about' %}">About me</a></li>
+		</ul>
+		
+		{% comment %}
+		<div id="searchbox">
+			<form action="/phil/search/" method="get">
+			<p><label for="searchfield" class="hide">Search terms:</label> <input type="text" class="text" name="q" id="searchfield" value=""/> <input type="submit" class="submit" value="Search"/></p>
+			</form>
+		</div>
+		{% endcomment %}
+	</div>
+
+	<div id="heading">
+		<h1>{{ post.title }}</h1>
+	</div>
+		
+	<div id="main">
+
+		<div id="intro">
+{{ post.intro_html|safe }}
+		</div>
+		
+		<div id="more">
+{{ post.body_html|safe }}
+		</div>
+		
+	{% get_comment_list for post as comment_list %}
+	{% if comment_list %}
+		<h2 id="comments">Comments</h2>
+		
+		<ul class="comments">
+			{% for comment in comment_list %}
+				<li id="c{{ comment.id|unlocalize }}">
+					{% spaceless %}
+						<p class="byline">
+							<strong>
+								{% if comment.user_url %}
+									<a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
+								{% else %}
+									{{ comment.name }}
+								{% endif %}
+							</strong>
+							<small>at {{ comment.submit_date|date:"j M Y, g:i" }}{{ comment.submit_date|date:"A"|lower }}. <a href="{{ post.get_absolute_url }}#c{{ comment.id|unlocalize }}" title="The permanent link to this comment">Permalink</a></small>
+						</p>
+					{% endspaceless %}
+
+					<div class="comment">
+						{{ comment.comment|safe|linebreaks }}
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	{% comment %}
+		<form action="" method="post" onsubmit="if (this.bakecookie.checked) rememberMe(this)" name="comments_form" id="comments_form">
+		<input type="hidden" name="static" value="1"/>
+		<input type="hidden" name="entry_id" value="6074"/>
+
+		<div class="comments-open" id="comments-open">
+			<h2 class="comments-open-header">Post a comment</h2>
+
+            <div class="comments-open-content">
+
+				<script type="text/javascript">
+		        <!--
+		        writeTypeKeyGreeting(commenter_name, 6074);
+		        //-->
+		        </script>
+
+	
+				<div id="comments-open-data">
+					<div id="name-email">
+						<p class="row">
+							<span class="label"><label for="author">Your name:</label></span><span class="formfield"><input type="text" class="text" name="author" id="author"/> <small>(required)</small></span>
+						</p>
+
+						<p class="row">
+							<span class="label"><label for="email">Email address:</label></span><span class="formfield"><input type="text" class="text" name="email" id="email"/> <small>(required)</small></span>
+						</p>
+					</div> <!-- #name-email -->
+		
+					<p class="row">
+						<span class="label"><label for="url">Your URL:</label></span><span class="formfield"><input type="text" class="text" name="url" id="url"/> <small>(optional)</small></span>
+					</p>
+
+					<p class="row">
+						<span class="label"><label for="comment-bake-cookie">Remember your info?</label></span><span class="formfield"><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="if (!this.checked) forgetMe(document.comments_form)" value="1"/></span>
+					</p>
+				</div> <!-- #comments-open-data -->
+		
+				<p class="textarea" id="comments-open-text">
+					<label for="text" class="hide">Comment:<br/></label>
+					<textarea name="text" id="text" rows="10" cols="40"></textarea><br/><small>Allowed tags: a href, blockquote, strong, em, ul, ol, li. URLs will be turned into links.</small></span>
+				</p>
+
+				<p class="right comments-open-footer" id="comments-open-footer">
+					<input type="submit" class="submit" accesskey="v" name="preview" value="Preview before posting"/><!-- <input type="submit" class="submit" accesskey="s" name="post" value="Post" /> -->
+				</p>
+			</div> <!-- #comments-open-content -->
+		</div> <!-- #comments-open -->
+		
+		</form>
+	{% endcomment %}
+	
+		<div class="clear"></div>
+	</div> <!-- #main -->
+
+
+	<div id="extra">
+
+		<div class="about">
+			<p>{{ post.time_created|date:"l j F Y, g:i" }}{{ post.time_created|date:"A"|lower }}</p>
+			
+			<p class="nextprev">{% spaceless %}
+				<span class="prev">
+					{% with post.get_previous_post as previous_post %}
+						{% if previous_post %}
+							<a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&lt; Previous</a>
+						{% else %}
+							&lt; Previous
+						{% endif %}
+					{% endwith %}
+				</span>
+				<span class="index">
+					<a href="{% url 'hines:blog_archive' blog_slug=blog.slug %}">In all of {{ blog.short_name }}</a>
+				</span>
+				<span class="next">
+					{% with post.get_next_post as next_post %}
+						{% if next_post %}
+							<a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Next &gt;</a>
+						{% else %}
+							Next &gt;
+						{% endif %}
+					{% endwith %}
+				</span>
+			{% endspaceless %}</p>
+			{% comment %}
+				<div class="clear"></div>
+				<p class="nextprev"><span class="prev"><a href="/phil/writing/2005/07/16/moving_photos.php" title="In Moving photos">&lt; Previous</a></span> <span class="index"><a href="/phil/writing/web_development/">In Web Development</a></span> <span class="next">Next &gt;</span></p>
+			{% endcomment %}
+			<div class="clear"></div>
+		</div>
+
+		{% day_publications date=post.time_created as publications %}
+		{% if publications %}
+			<div class="block">
+				<h2>On this day I was reading</h2>
+				<ul class="publications">
+					{% for pub in publications %}
+						<li>{% spaceless %}
+							{% if pub.series %}
+								{% if pub.series.url %}
+									<a href="{{ pub.series.url }}"><cite>{{ pub.series.title }}</cite></a>,
+								{% else %}
+									<cite>{{ pub.series.title }}</cite>,
+								{% endif %}
+								<a href="{{ pub.get_absolute_url }}">
+									{{ pub.title }}
+								</a>
+							{% else %}
+								<a href="{{ pub.get_absolute_url }}">
+									<cite>{{ pub.title }}</cite>
+								</a>
+							{% endif %}
+							{% if pub.roles.all|length > 0 %}
+								by
+								{% for r in pub.roles.all %}{% if forloop.first %}{% else %}, {% endif %}<a href="{{ r.creator.get_absolute_url }}">{{ r.creator.name }}</a>{% if r.role_name %} ({{ r.role_name }}){% endif %}{% endfor %}
+							{% endif %}
+							{% with amazon_urls=pub.amazon_urls %}
+								{% if amazon_urls %}
+									({% for url in amazon_urls %}<a href="{{ url.url }}" title="See this at {{ url.name }}">{{ url.country }}</a>{% if forloop.last %}{% else %}, {% endif %}{% endfor %})
+								{% endif %}
+							{% endwith %}
+						{% endspaceless %}</li>
+					{% endfor %}
+				</ul>
+			</div> <!-- .block -->
+		{% endif %}
+
+		<div class="block">
+			<h2>Music listened to most that week</h2>
+
+<ol>
+				<li value="1"><a href="/http://www.last.fm/music/Kate+Rusby/_/No+Names" title="See Kate Rusby's page at Last.fm"><strong>Kate Rusby</strong></a> <small>(60)</small></li>
+				<li value="2"><a href="/http://www.last.fm/music/The+Mountain+Goats" title="See The Mountain Goats's page at Last.fm"><strong>The Mountain Goats</strong></a> <small>(42)</small></li>
+				<li value="3"><a href="/http://www.last.fm/music/Vince+Giordano%27s+Nighthawks/_/Hurricane" title="See Vince Giordano's Nighthawks's page at Last.fm"><strong>Vince Giordano&#039;s Nighthawks</strong></a> <small>(39)</small></li>
+				<li value="4"><a href="/http://www.last.fm/music/Low%2B%2526%2BDirty%2BThree/_/Down+By+The+River" title="See Low &amp; Dirty Three's page at Last.fm"><strong>Low &amp; Dirty Three</strong></a> <small>(12)</small></li>
+				<li value="5"><a href="/http://www.last.fm/music/uffie/_/pop+the+glock" title="See uffie's page at Last.fm"><strong>uffie</strong></a> <small>(4)</small></li>
+				<li value="5"><a href="/http://www.last.fm/music/Billy+Bragg" title="See Billy Bragg's page at Last.fm"><strong>Billy Bragg</strong></a> <small>(4)</small></li>
+				<li value="7"><a href="/http://www.last.fm/music/Low" title="See Low's page at Last.fm"><strong>Low</strong></a> <small>(3)</small></li>
+				<li value="7"><a href="/http://www.last.fm/music/Lou+Reed" title="See Lou Reed's page at Last.fm"><strong>Lou Reed</strong></a> <small>(3)</small></li>
+				<li value="7"><a href="/http://www.last.fm/music/Thomas+Dolby" title="See Thomas Dolby's page at Last.fm"><strong>Thomas Dolby</strong></a> <small>(3)</small></li>
+				<li value="7"><a href="/http://www.last.fm/music/Luscious+Jackson" title="See Luscious Jackson's page at Last.fm"><strong>Luscious Jackson</strong></a> <small>(3)</small></li>
+	</ol>
+	<p><a href="http://www.last.fm/user/gyford/charts/&amp;charttype=weekly&amp;subtype=artist" title="See a more complete chart at Last.fm">More at Last.fm...</a></p>
+		</div> <!-- .block -->
+
+		<div class="block">
+			<h2>RSS feeds</h2>
+			<ul>
+				<li><a href="{% url 'hines:everything_feed_rss' %}"><strong>Writing, photos and links combined</strong></a></li>
+				<li><a href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}">Writing only</a></li>
+			<li><a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos only (at Flickr)</a></li>
+			<li><a href="http://del.icio.us/rss/philgyford/top">Links only (at del.icio.us)</a></li>
+			</ul>
+		</div>
+
+
+	</div> <!-- #extra -->
+
+	<div id="footer">
+		<p>&copy; 1995-2006 Phil Gyford. &nbsp;
+		Email: <strong>phil</strong> [at] <strong>gyford</strong> [dot] <strong>com</strong></p>
+	</div>
+	
+</div> <!-- #container -->
+
+{% include 'hines_core/includes/analytics.html' %}
+
+</body>
+</html>

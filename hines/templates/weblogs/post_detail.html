@@ -9,6 +9,7 @@
 
 {% block head_extra %}
 	{{ block.super }}
+	<link rel="index" title="In all of {{ post.blog.short_name }}" href="{% url 'hines:blog_archive' blog_slug=post.blog.slug %}"/>
 	{% with post.get_previous_post as previous_post %}
 		{% if previous_post %}
 			<link rel="prev" title="{{ previous_post.get_absolute_url }}" href="{{ previous_post.title }}"/>
