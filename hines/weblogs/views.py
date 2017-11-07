@@ -3,7 +3,6 @@ import datetime
 from dal import autocomplete
 from taggit.models import Tag
 
-from django.conf import settings
 from django.http import Http404
 from django.urls import reverse
 from django.utils.encoding import force_str

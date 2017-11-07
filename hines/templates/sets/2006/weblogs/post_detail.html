@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">{% load comments l10n spectator_reading static %}
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">{% load comments ditto_lastfm l10n spectator_reading static %}
 <?xml version="1.0" encoding="utf-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -214,23 +214,21 @@
 			</div> <!-- .block -->
 		{% endif %}
 
-		<div class="block">
-			<h2>Music listened to most that week</h2>
-
-<ol>
-				<li value="1"><a href="/http://www.last.fm/music/Kate+Rusby/_/No+Names" title="See Kate Rusby's page at Last.fm"><strong>Kate Rusby</strong></a> <small>(60)</small></li>
-				<li value="2"><a href="/http://www.last.fm/music/The+Mountain+Goats" title="See The Mountain Goats's page at Last.fm"><strong>The Mountain Goats</strong></a> <small>(42)</small></li>
-				<li value="3"><a href="/http://www.last.fm/music/Vince+Giordano%27s+Nighthawks/_/Hurricane" title="See Vince Giordano's Nighthawks's page at Last.fm"><strong>Vince Giordano&#039;s Nighthawks</strong></a> <small>(39)</small></li>
-				<li value="4"><a href="/http://www.last.fm/music/Low%2B%2526%2BDirty%2BThree/_/Down+By+The+River" title="See Low &amp; Dirty Three's page at Last.fm"><strong>Low &amp; Dirty Three</strong></a> <small>(12)</small></li>
-				<li value="5"><a href="/http://www.last.fm/music/uffie/_/pop+the+glock" title="See uffie's page at Last.fm"><strong>uffie</strong></a> <small>(4)</small></li>
-				<li value="5"><a href="/http://www.last.fm/music/Billy+Bragg" title="See Billy Bragg's page at Last.fm"><strong>Billy Bragg</strong></a> <small>(4)</small></li>
-				<li value="7"><a href="/http://www.last.fm/music/Low" title="See Low's page at Last.fm"><strong>Low</strong></a> <small>(3)</small></li>
-				<li value="7"><a href="/http://www.last.fm/music/Lou+Reed" title="See Lou Reed's page at Last.fm"><strong>Lou Reed</strong></a> <small>(3)</small></li>
-				<li value="7"><a href="/http://www.last.fm/music/Thomas+Dolby" title="See Thomas Dolby's page at Last.fm"><strong>Thomas Dolby</strong></a> <small>(3)</small></li>
-				<li value="7"><a href="/http://www.last.fm/music/Luscious+Jackson" title="See Luscious Jackson's page at Last.fm"><strong>Luscious Jackson</strong></a> <small>(3)</small></li>
-	</ol>
-	<p><a href="http://www.last.fm/user/gyford/charts/&amp;charttype=weekly&amp;subtype=artist" title="See a more complete chart at Last.fm">More at Last.fm...</a></p>
-		</div> <!-- .block -->
+		{% top_artists date=post.time_created period='week' limit=10 as artists %}
+		{% if artists %}
+			<div class="block">
+				<h2>Music listened to most that week</h2>
+					<ol>
+						{% for artist in artists %}
+							<li>
+								<a href="{{ artist.permalink }}"><strong>{{ artist.name }}</strong></a>
+								<small>({{ artist.scrobble_count }})</small>
+							</li>
+						{% endfor %}
+					</ol>
+					<p><a href="http://www.last.fm/user/gyford/charts/&amp;charttype=weekly&amp;subtype=artist" title="See a more complete chart at Last.fm">More at Last.fm...</a></p>
+			</div> <!-- .block -->
+		{% endif %}
 
 		<div class="block">
 			<h2>RSS feeds</h2>
@@ -241,7 +239,6 @@
 			<li><a href="http://del.icio.us/rss/philgyford/top">Links only (at del.icio.us)</a></li>
 			</ul>
 		</div>
-
 
 	</div> <!-- #extra -->
 
