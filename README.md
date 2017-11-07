@@ -114,7 +114,7 @@ templates that can be used for PostDetails between certain dates. e.g.:
 	
 	HINES_TEMPLATE_SETS = (
 		{'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
-    )	
+    )
 
 Any Post on the Blog with slug `writing` between those two dates will use the
 `weblogs/sets/houston/post_detail.html` template and any other Post will use

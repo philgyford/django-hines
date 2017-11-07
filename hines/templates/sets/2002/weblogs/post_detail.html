@@ -7,8 +7,8 @@
 	<meta name="keywords" content="Phil Gyford, Philip Gyford, London, Houston, Bristol, Witham, Essex, Fabius, {{ blog.short_name }}, {{ post.title }}, "/>
 
 	<link rel="author" title="Send feedback to Phil" href="mailto:phil@gyford.com"/>
-	<link rel="home" title="Home" href="{% url 'home' %}"/>
 	<link rel="Shortcut Icon" href="{% static 'sets/2002/favicon.ico' %}"/>
+	<link rel="home" title="Home" href="{% url 'home' %}"/>
 	{% with post.get_previous_post as previous_post %}{% if previous_post %}
 	<link rel="prev" title="{{ previous_post.get_absolute_url }}" href="{{ previous_post.title }}"/>
 	{% endif %}{% endwith %}

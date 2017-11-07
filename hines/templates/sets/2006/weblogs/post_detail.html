@@ -7,6 +7,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<title>{{ post.title }} (Phil Gyford: {{ blog.short_name }})</title>
 	<link rel="stylesheet" href="{% static 'sets/2006/style/default/global.css' %}" type="text/css"/>
+	<link rel="Shortcut Icon" href="{% static 'sets/2006/favicon.ico' %}"/>
 	<link rel="home" title="Home" href="{% url 'home' %}"/>
 	<link rel="index" title="In all of {{ blog.short_name }}" href="{% url 'hines:blog_archive' blog_slug=blog.slug %}"/>
 	{% with post.get_previous_post as previous_post %}{% if previous_post %}
