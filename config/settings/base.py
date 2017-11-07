@@ -209,14 +209,12 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title',],
 }
 
-HINES_POST_TEMPLATE_SETS = {
-    'writing': (
-        {'name': '2000', 'start': '2000-03-01', 'end': '2000-12-31'},
-        {'name': '2001', 'start': '2001-01-01', 'end': '2002-11-09'},
-        {'name': '2002', 'start': '2002-11-10', 'end': '2006-03-15'},
-        {'name': '2006', 'start': '2006-03-16', 'end': '2006-08-29'},
-    ),
-}
+HINES_TEMPLATE_SETS = (
+    {'name': '2000', 'start': '2000-03-01', 'end': '2000-12-31'},
+    {'name': '2001', 'start': '2001-01-01', 'end': '2002-11-09'},
+    {'name': '2002', 'start': '2002-11-10', 'end': '2006-03-15'},
+    {'name': '2006', 'start': '2006-03-16', 'end': '2006-08-29'},
+)
 
 MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)
 MT_MYSQL_DB_USER = os.environ.get('MT_MYSQL_DB_USER', None)

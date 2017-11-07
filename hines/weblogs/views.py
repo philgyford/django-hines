@@ -12,35 +12,33 @@ from django.views.generic import DateDetailView, DetailView,\
         ListView, MonthArchiveView, RedirectView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
-from hines.core.utils import make_date
+from hines.core.views import TemplateSetMixin
 from .models import Blog, Post
 
 
-template_sets = (
-    # Colorful
-    # http://web.archive.org/web/20000819162919/http://www.gyford.com:80/phil/daily/
-    # 2000-03-01 - 2000-12-31
+# Colorful
+# http://web.archive.org/web/20000819162919/http://www.gyford.com:80/phil/daily/
+# 2000-03-01 - 2000-12-31
 
-    # Monochrome
-    # http://web.archive.org/web/20010214232232/http://www.gyford.com:80/phil/writing/
-    # 2001-01-01 - 2002-11-09
+# Monochrome
+# http://web.archive.org/web/20010214232232/http://www.gyford.com:80/phil/writing/
+# 2001-01-01 - 2002-11-09
 
-    # Blue links
-    # http://web.archive.org/web/20021211042734/http://www.gyford.com:80/phil/writing/2002/11/11/000072.php
-    # 2002-11-10 - 2006-03-15
+# Blue links
+# http://web.archive.org/web/20021211042734/http://www.gyford.com:80/phil/writing/2002/11/11/000072.php
+# 2002-11-10 - 2006-03-15
 
-    # The basis for how it still is
-    # http://web.archive.org/web/20060323001155/http://www.gyford.com/phil/writing/2006/03/16/my_new_site.php
-    # 2006-03-16 - 2006-08-29
+# The basis for how it still is
+# http://web.archive.org/web/20060323001155/http://www.gyford.com/phil/writing/2006/03/16/my_new_site.php
+# 2006-03-16 - 2006-08-29
 
-    # Sight & Sound
-    # http://web.archive.org/web/20071011030825/http://www.gyford.com/phil/writing/2006/08/30/a_lick_of_paint.php
-    # 2006-08-30 - 2009-02-09
+# Sight & Sound
+# http://web.archive.org/web/20071011030825/http://www.gyford.com/phil/writing/2006/08/30/a_lick_of_paint.php
+# 2006-08-30 - 2009-02-09
 
-    # A bit wider
-    # http://web.archive.org/web/20090227031141/http://www.gyford.com/phil/writing/2009/02/10/front_page.php
-    # 2009-02-10 - now
-)
+# A bit wider
+# http://web.archive.org/web/20090227031141/http://www.gyford.com/phil/writing/2009/02/10/front_page.php
+# 2009-02-10 - now
 
 
 class BlogDetailParentView(SingleObjectMixin, ListView):
@@ -112,7 +110,7 @@ class BlogTagListView(DetailView):
         return context
 
 
-class PostDetailView(DateDetailView):
+class PostDetailView(TemplateSetMixin, DateDetailView):
     """
     A bit complicated because we need to match the post using its slug,
     its date, and its weblog slug.
@@ -202,6 +200,9 @@ class PostDetailView(DateDetailView):
             raise Http404(_("No Posts found matching the query"))
         return obj
 
+    def get_template_set_date(self):
+        return self.get_date()
+
     def get_queryset(self):
         """
         Allow a Superuser to see draft Posts.
@@ -211,49 +212,6 @@ class PostDetailView(DateDetailView):
             return self.model.objects.all()
         else:
             return self.model.public_objects.all()
-
-    def get_template_names(self):
-        """
-        If this Post is on a blog whose slug is included in
-        HINES_POST_TEMPLATE_SETS, and its date is between the specified times
-        for a set, then use that set. Otherwise use self.template_name.
-
-        e.g. with:
-
-        HINES_POST_TEMPLATE_SETS = {
-            'writing': (
-                {'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
-            ),
-        }
-
-        Any Post in the Blog that has a slug of `writing`, and was published
-        between 2000-03-01 and 2000-12-31 inclusive, will use the template
-        weblogs/sets/houston/post_detail.html
-        """
-        template_set = None
-
-        if getattr(settings, 'HINES_POST_TEMPLATE_SETS', None):
-            blog_slug = self.kwargs.get('blog_slug')
-
-            if blog_slug in settings.HINES_POST_TEMPLATE_SETS:
-                date = self.get_date()
-
-                for ts in settings.HINES_POST_TEMPLATE_SETS[blog_slug]:
-                    start = make_date(ts['start'])
-                    end = make_date(ts['end'])
-                    if date >= start and date <= end:
-                        template_set = ts['name']
-                        break
-
-        if template_set is not None:
-            template = 'weblogs/sets/{}/post_detail.html'.format(template_set)
-        elif self.template_name is None:
-            raise ImproperlyConfigured(
-                "PostDetailView requires a definition of 'template_name'")
-        else:
-            template = self.template_name
-
-        return [template]
 
 
 class PostDatedArchiveMixin(object):

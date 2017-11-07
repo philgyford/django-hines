@@ -109,14 +109,12 @@ request object isn't available.
 ``HINES_FIRST_DATE``: Day Archive pages will 404 for days before this date. e.g.
 ``2000-03-15``.
 
-``HINES_POST_TEMPLATE_SETS``: A set of dicts describing different sets of
+``HINES_TEMPLATE_SETS``: A set of dicts describing different sets of
 templates that can be used for PostDetails between certain dates. e.g.:
 	
-	HINES_POST_TEMPLATE_SETS = {
-		'writing': (
-			{'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
-		),
-	}
+	HINES_TEMPLATE_SETS = (
+		{'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
+    )	
 
 Any Post on the Blog with slug `writing` between those two dates will use the
 `weblogs/sets/houston/post_detail.html` template and any other Post will use

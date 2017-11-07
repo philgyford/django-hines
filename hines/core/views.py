@@ -11,6 +11,7 @@ from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 from ditto.flickr.models import Photo, Photoset
 from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
+from hines.core.utils import make_date
 from hines.weblogs.models import Blog, Post
 from .paginator import DiggPaginator
 
@@ -285,6 +286,99 @@ class PhotosHomeView(PaginatedListView):
         return context
 
 
+class TemplateSetMixin(object):
+    """
+    Lets us use a different template for a page depending on the date of its
+    object (or something else).
+
+    We should have a setting something like:
+
+        HINES_TEMPLATE_SETS = (
+            {'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
+            {'name': 'london', 'start': '2000-12-31', 'end': '2003-03-15'},
+        ) 
+
+    By default, and with this setting, if `self.object.date` falls between
+    2000-03-01 and 2000-12-31 inclusive, it will use the template
+    `sets/houston/[self.template_name]`.
+
+    You can change which attribute on self.object is used by setting
+    self.template_set_date_attr. Its value can be a date or datetime.
+
+    If the View you're using doesn't have `self.object` you'll probably want
+    to provide your own get_template_set_date() method to return the date
+    object you need.
+    """
+    template_name = None
+
+    # Which attribute of self.object should be used to determine the date that
+    # we use to find which Template Set to use?
+    # It can be a date or datetime object.
+    template_set_date_attr = 'time_created'
+
+    def get_template_set_date(self):
+        """
+        Returns the date to use for determining which Template Set, if any
+        to use.
+
+        Defaults to using the self.template_set_date_attr attribute of
+        self.object. Create your own get_template_set_date() method in your
+        view class if that isn't appropriate.
+        """
+        if self.object:
+            d = getattr(self.object, self.template_set_date_attr, None)
+            if d is not None:
+                if isinstance(d, datetime.date):
+                    return d
+                elif isinstance(d, datetime.datetme):
+                    return d.date()
+                else:
+                    raise ImproperlyConfigure(
+                        "TemplateSetMixin can't make a date object from the "
+                        "self.template_set_date_attr attribute on self.object.")
+            else:
+                raise ImproperlyConfigured(
+                "TemplateSetMixin can't find a {} attribute on self.object. "
+                "Either change self.template_set_date_attr or use a different "
+                "get_template_set_date() method.")
+        else:
+            raise ImproperlyConfigured(
+                "TemplateSetMixin.get_template_set_date() assumes there is a "
+                "self.object. Provide one or use a different "
+                "get_template_set_date() method.")
+
+    def get_template_names(self):
+        """
+        Like the standard get_template_names() methods, it returns an array of
+        template names.
+
+        If this page is within the dates of a template set, that set's template
+        is first, followed by self.template.
+        """
+        template_set = None
+        templates = []
+
+        if getattr(settings, 'HINES_TEMPLATE_SETS', None):
+            date = self.get_template_set_date()
+
+            for ts in settings.HINES_TEMPLATE_SETS:
+                start = make_date(ts['start'])
+                end = make_date(ts['end'])
+                if date >= start and date <= end:
+                    template_set = ts['name']
+                    break
+
+        if template_set is not None:
+            templates.append(
+                        'sets/{}/{}'.format(template_set, self.template_name))
+
+        if self.template_name is None:
+            raise ImproperlyConfigured(
+                "TemplateSetMixin requires a definition of 'template_name'")
+        else:
+            templates.append(self.template_name)
+
+        return templates
 
 
 def timezone_today():
