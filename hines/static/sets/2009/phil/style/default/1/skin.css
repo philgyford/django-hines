@@ -1,0 +1,756 @@
+/*
+COLOUR SCHEME
+
+Red: 
+	#900	Links.
+	#c66	Links in light text.
+	
+Yellow:
+	#fc0	Tabs.
+	
+Shades of brown:
+	#998	Input borders, light text, timeline borders.
+	#ddc	Horizontal rules.
+	#eed	Sidebar backkgrounds.
+*/
+
+/** MAIN STRUCTURE *******************************************/
+
+body {}
+
+#wrapper-head {
+	margin-left: 0;
+	margin-right: 0;
+	border-bottom: 4px solid #fc0;
+}
+#wrapper-head div.clear {
+	background: #fc0;
+}
+#wrapper-body {
+	margin-top: 2.5em;
+}
+#wrapper-foot {
+	margin: 3em 0 0 0;
+	border-top: 5px solid #ddc;
+}
+
+#container-head {
+	width: 958px;
+}
+
+#main {
+	margin-right: 20px;
+}
+#extra {
+	width: 280px; /* If changed, change width of #extra .block and #extra .about too */
+}
+
+#footer {
+	color: #000;
+	padding-top: 0.5em;
+	margin-bottom: 2em;
+}
+
+
+/** GENERIC STYLES *******************************************/
+
+a:link {
+	color: #900;
+}
+a:visited {
+	color: #900;
+}
+#main p.illustration span.caption a:hover,
+a:hover {
+	background: #900;
+	color: #fff;
+	text-decoration: none;
+}
+
+div.featured img,
+img.thumbnail,
+img.illustration,
+p.illustration img {
+	border: none;
+}
+
+#main p.illustration img {
+	max-width: 100%;
+	height: auto;
+}
+
+input.text,
+textarea {
+	border-color: #998;
+}
+
+/** TOP OF PAGE *******************************************/
+
+#pagetitle {
+	margin-top: 0;
+	width: 958px;
+}
+#pagetitle h1,
+#pagetitle #sitetitle {
+	margin-bottom: 0.5em;
+	padding-left: 69px;
+}
+#sitetitle a:link,
+#sitetitle a:visited {
+	color: #000;
+}
+#sitetitle a:hover {
+	text-decoration: underline;
+	background: none;
+}
+#searchbox {
+	padding-right: 9px;
+}
+
+
+/* Main navigation */
+#mainnav {
+	width: 589px;
+}
+#mainnav li {
+	margin-right: 4px;
+}
+#mainnav li a,
+#mainnav li span {
+	padding: 0.2em 10px 0.3em 10px;
+	background: transparent;
+	display: block;
+	text-align: center;
+	overflow: hidden;
+}
+
+#mainnav li.split-before {
+	background-image: none;
+	padding-left: 0;
+}
+#mainnav li.split-after {
+	margin-right: 47px;
+}
+#mainnav li.last {
+	margin-right: 0;
+}
+
+/*
+#mainnav li.nav-5 a,
+#mainnav li.nav-5 span {
+	width: 65px;
+}
+#mainnav li.nav-5 {
+	margin-right: 51px;
+}*/
+
+/* Final tab is wider, so special cases to allow for it: */
+/*
+#mainnav li.nav-7 {
+	margin-right: 43px;
+}
+
+#mainnav li.nav-8 a,
+#mainnav li.nav-8 span {
+	width: 64px;
+}*/
+
+#mainnav li.on a,
+#mainnav li.on span {
+	background: #fc0;
+	font-weight: normal;
+}
+#mainnav li a:link,
+#mainnav li a:visited,
+#mainnav li a:hover {
+	color: #000;
+	display: block;
+}
+#mainnav li a:hover {
+	background: #fc0;
+	text-decoration: underline;
+}
+
+#main h2#comments {
+	margin-bottom: 0.5em;
+}
+
+#main dl.entries p.entrydetails {
+	color: #998;
+	margin-top: 0.5em;
+	border-top: 1px solid #ddc;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+#main p.entrydetails a:link {
+	color: #c66;
+}
+#main p.entrydetails a:visited {
+	color: #c66;
+}
+#main p.entrydetails a:hover {
+	background: #900;
+	color: #fff;
+}
+
+#main dl.entries dd dt a:link {
+	color: #900;
+	text-decoration: underline;
+}
+#main dl.entries dd dt a:visited {
+	color: #600;
+	text-decoration: underline;
+}
+#main dl.entries dd dt a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+#main ul.comments {
+	border-top: 1px solid #ddc;
+}
+#main ul.comments li {
+	padding-top: 1em;
+	padding-bottom: 0.5em;
+	margin-bottom: 0;
+	border-bottom: 1px solid #ddc;
+}
+#main ul.comments li.own {
+	background: #eed;
+}
+#main ul.comments li p.preview-intro {
+	padding-left: 5px;
+	margin-bottom: 0.5em;
+}
+#main ul.comments li p.byline {
+	width: 95px;
+	padding-left: 5px;
+}
+#main ul.comments li div.comment {
+	width: 455px;
+	padding-right: 5px;
+}
+#main ul.comments li#preview-comment {
+}
+
+#main form#comments_form small {
+	color: #998;
+}
+
+
+#main dl.entries dd.photos div.thumbnail {
+	margin-right: 20px;
+	width: 100px;
+}
+
+
+
+/* Home page - over-riding stuff in the global home.css */
+
+.home #main div.more ul li span a:link,
+.home #main div.more ul li span a:visited {
+    color: #c66;
+}
+.home #main div.more ul li span a:hover {
+    color: #fff;
+    background: #900;
+}
+/*/*/a{}
+.home div.hr {
+	margin-top: 1.125em;
+    margin-bottom: 1.0625em;
+	border-top: 5px solid #eed;
+}
+/* */
+
+p#comments-open-text small {
+	color: #998;
+}
+
+/* Timeline */
+table.timeline th,
+table.timeline td {
+	border: 1px solid #998;
+}
+table.timeline .tl-year,
+table.timeline .tl-work,
+table.timeline .tl-play,
+table.timeline .tl-writing {
+	background-color: #ddc;
+}
+table.timeline .tl-place,
+table.timeline .tl-ed,
+table.timeline .tl-photos {
+	background-color: #eed;
+}
+table.timeline .tl-bottomless {
+	border-bottom-color: #fff;
+}
+table.timeline th.tl-ed { width: 20%; }
+table.timeline th.tl-play { width: 20%; }
+
+/* NOTES */
+#main span.note,
+#main span.pp {
+	color: #998;
+}
+
+/** SIDEBAR *******************************************/
+
+#extra .block {
+	color: #000;
+	background: #eed;
+	margin-bottom: 20px;
+	width: 277px; /* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+}
+#extra .noheader {
+	/* .noheader in addition to .block */
+	padding-top: 1em;
+}
+#extra .block a:link,
+#extra .highlight a:link {
+	color: #900;
+}
+#extra .block a:visited,
+#extra .highlight a:visited {
+	color: #900;
+}
+#extra .block a:hover,
+#extra .highlight a:hover {
+	background: #900;
+	color: #fff;
+}
+#extra h2,
+#extra h3 {
+	padding: 0.5em 10px 0.4em 10px;
+	margin-bottom: 0;
+}
+#extra .highlight h2 {
+	background-color: #fc0;
+	margin-bottom: 0.5em;
+}
+
+#extra .about {
+	width: 280px;
+	border-top: 5px solid #ddc;
+	border-bottom: 5px solid #ddc;
+	margin-bottom: 1em;
+}
+#extra .about ul {
+	/* On About Me pages. */
+	margin-top: 0.3em;
+	margin-bottom: 0.5em;
+}
+#extra .about p {
+	margin: 0 0 0.3em 0;
+	padding: 0.2em 5px 0 5px;
+}
+#extra p.nextprev {
+	border-top: 1px solid #ddc;
+}
+#extra p.nextprev .prev,
+#extra p.nextprev .next {
+	color: #998;
+}
+#extra p.nextprev .prev {
+	width: 65px;
+}
+#extra p.nextprev .next {
+	width: 62px;	/* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+}
+
+#extra p.nextprev .prev a,
+#extra p.nextprev .next a {
+	color: #900;
+	text-decoration: none;
+}
+#extra p.nextprev .prev a:link span,
+#extra p.nextprev .next a:link span,
+#extra p.nextprev .prev a:visited span,
+#extra p.nextprev .next a:visited span {
+	color: #900;
+	text-decoration: underline;
+}
+#extra p.nextprev .prev a:hover span,
+#extra p.nextprev .next a:hover span,
+#extra p.nextprev .prev a:hover,
+#extra p.nextprev .next a:hover,
+#extra p.nextprev .prev a:link:hover span,
+#extra p.nextprev .next a:link:hover span,
+#extra p.nextprev .prev a:link:hover,
+#extra p.nextprev .next a:link:hover,
+#extra p.nextprev .prev a:visited:hover span,
+#extra p.nextprev .next a:visited:hover span,
+#extra p.nextprev .prev a:visited:hover,
+#extra p.nextprev .next a:visited:hover {
+	text-decoration: none;
+	color: #fff;
+}
+
+#extra dl {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 1em;
+}
+#extra ul {
+	margin-bottom: 1em;
+}
+#extra ol,
+#extra ul#my_twitter_status {
+    margin-bottom: 0.5em;
+}
+#extra ul.close,
+#extra ul ul {
+	margin-bottom: 0;
+}
+#extra p,
+#extra ul.reading-years {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+#extra li {
+	margin-left: 27px;
+	margin-right: 10px;
+}
+#extra ul.years li {
+	margin-left: 10px;
+}
+#extra ul.months li {
+	margin-left: 0;
+}
+#extra ul li ul li {
+	margin-left: 15px;
+}
+
+#extra ol li {
+	margin-left: 35px;
+}
+#extra li p {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#extra ul.rss li {
+	margin-left: 10px;
+}
+
+#extra div.thumbnail {
+	width: 100px;
+	margin-right: 19px;
+	margin-left: 19px;
+}
+#extra div.last {
+}
+
+#extra div.thumbnail a img {
+	opacity: 1;
+	filter: none;
+}
+
+#extra #dopplr-blog-badge-for-philgyford p,
+#extra #dopplr-blog-badge-for-philgyford li,
+#extra #dopplr-blog-badge-for-philgyford li .tripmonth {
+	color: #000 ! important;
+}
+#extra .dopplr-badge {
+	background: #eed !important;
+	margin-bottom: 20px !important;
+	padding: 0.5em 0 0.4em 0 !important;
+}
+#extra .dopplr-badge a {
+	color: #900 !important;
+	text-decoration: underline;
+}
+#extra .dopplr-badge a:visited {
+	color: #900;
+}
+#extra .dopplr-badge a:hover {
+	text-decoration: none;
+	background: #900;
+	color: #fff !important;
+}
+
+
+/** MEDIA QUERIES *******************************************/
+/** Retro-fitting responsiveness **/
+
+@media (max-width: 970px) {
+
+	#wrapper-head,
+	#wrapper-body,
+	#wrapper-foot {
+		min-width: 760px;
+	}
+	#container-head,
+	#container-body,
+	#container-foot {
+		width: 740px;
+	}
+
+	#main {
+		width: 480px;
+		margin-left: 0;
+		margin-right: 30px;
+	}
+	body.full #main {
+		/* No sidebar */
+		width: 740px;
+	}
+
+	#extra {
+		width: 230px;
+	}
+
+	#footer {
+		width: 740px;
+		margin-left: 0;
+	}
+	#pagetitle {
+		width: 740px;
+	}
+	#pagetitle h1,
+	#pagetitle #sitetitle {
+		width: 480px;
+		padding-left: 0;
+	}
+	#mainnav {
+		width: 740px;
+		margin-left: 0;
+	}
+	#searchbox {
+		width: 230px;
+		margin-top: -3.3em;
+	}
+	#searchbox input.text {
+		width: 155px;
+	}
+	#searchbox input.submit {
+		width: 60px;
+	}
+	#heading {
+		width: 740px;
+		margin-left: 0;
+	}
+	#main blockquote {
+		width: 420px;
+	}
+	#main li blockquote {
+		width: 420px;
+	}
+	#main blockquote blockquote {
+		width: 360px;
+	}
+	#main li .comment blockquote {
+		width: 355px;
+	}
+	#main pre {
+		width: 439px;
+	}
+	#main li .comment pre {
+		width: 355px;
+	}
+	#main blockquote pre {
+		width: 427px;
+	}
+	body.full #main pre {
+		width: 730px;
+	}
+	#main div.comment blockquote {
+		width: 419px;
+	}
+	#main p.row span.label {
+		width: 150px;
+	}
+	#main form.slim-labels p.row span.label {
+		width: 65px;
+	}
+	#main p.row span.formfield {
+		width: 320px;
+	}
+	#main p.row span.formfield input.text {
+		width: 240px;
+	}
+	#main p.row span.formfield textarea {
+		width: 310px;
+	}
+	#main p.textarea textarea {
+		width: 475px;
+	}
+	#main dl.entries dd.photos div.thumbnail {
+		width: 114px;
+	}
+	#main ul.comments li div.comment {
+		width: 355px;
+	}
+	#extra .about,
+	#extra .block {
+		width: 227px; /* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+	}
+	#extra p.nextprev .prev,
+	#extra p.nextprev .next {
+		width: 60px;
+	}
+	#extra p.nextprev .next {
+		width: 57px;	/* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+	}
+	#extra p.nextprev .index {
+		width: 100px;
+	}
+	#extra div.thumbnail {
+		width: 102px;
+	}
+	#footer .col3 {
+		width: 230px;
+	}
+
+	/* Homepage */
+	#main div.colrow div.col2 {
+		width: 45%;	
+	}
+}
+
+@media (max-width: 767px) {
+
+	#wrapper-head,
+	#wrapper-body,
+	#wrapper-foot {
+		min-width: 0;
+	}
+	#container-head,
+	#container-body,
+	#container-foot {
+		width: 100%;
+	}
+	#wrapper-head {
+		padding-bottom: 0.5em;
+	}
+	#wrapper-head div.clear {
+		background: none;
+	}
+
+	#main {
+		margin-right: 0;
+	}
+	#main,
+	body.full #main,
+	#extra,
+	#footer,
+	#pagetitle,
+	#pagetitle h1,
+	#mainnav {
+		width: 100%;
+	}
+	#mainnav {
+		margin-bottom: 0.5em;
+	}
+	#searchbox {
+		float: none;
+		margin-left: 10px;
+		margin-top: 0;
+	}
+	#pagetitle #sitetitle,
+	#pagetitle h1 {
+		width: auto;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	#mainnav li.split-after {
+		margin-right: 4px;
+	}
+	#heading {
+		width: 100%;
+	}
+	#main li,
+	#main dt,
+	#main dd,
+	#main blockquote {
+		margin-left: 30px;
+	}
+	#main blockquote,
+	#main li blockquote,
+	#main blockquote blockquote,
+	#main li .comment blockquote,
+	#main pre,
+	#main li .comment pre,
+	#main blockquote pre,
+	body.full #main pre {
+		width: auto; 
+	}
+	#main ul.comments li p.byline {
+		width: 100%;
+		padding-left: 0;
+	}
+	#main ul.comments li div.comment {
+		width: 100%;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	#main ul.comments li p.byline strong,
+	#main ul.comments li p.byline small,
+	#main ul.comments li p.byline small a {
+		display: inline-block;	
+		margin-right: 10px;
+	}
+	#main ul.comments li p.byline small a {
+		margin-left: 10px;
+		margin-right: 0;
+	}
+
+	#extra .about,
+	#extra .block,
+	#extra p.nextprev {
+		width: 100%;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	#extra p.nextprev .prev,
+	#extra p.nextprev .next {
+		width: 20%;
+	}
+	#extra p.nextprev .index {
+		width: 60%;
+	}
+
+	#footer .col3 {
+		width: auto;
+		padding-left: 10px;
+		padding-right: 10px;
+		margin-right: 0;
+	}
+	
+	/* Homepage */
+	
+	#main div.colrow div.col2 {
+		width: 45%;
+	}
+}
+
+@media (max-width: 480px) {
+	
+	#main img.illustration {
+		float: none;
+		margin-left: 0;
+		display: block;
+		margin: 0 0 1.462em 0;
+		max-width: 100%;
+		height: auto;
+	}
+
+	/* Homepage */
+	
+	#main div.colrow div.col2 {
+		width: 100%;
+	}
+}
+
+
+
+/** FONT SIZES *******************************************/
+
+ul#mainnav li {
+	font-size: 0.75em; /* 12px */
+}
+#pagetitle h1,
+#pagetitle #sitetitle {
+	font-size: 1.125em; /* From 20px to 18px */
+}

@@ -1,3 +1,6 @@
+{% comment %}
+	Used for template_sets 200603, 200608 and 2009.
+{% endcomment %}
 {% load comments ditto_flickr ditto_lastfm ditto_pinboard ditto_twitter l10n spectator_reading static %}
 {% block start_html %}
 {% endblock start_html %}
@@ -90,13 +93,19 @@
 
 	<div id="extra">
 		<div class="about">
-			<p>{{ post.time_created|date:"l j F Y, g:i" }}{{ post.time_created|date:"A"|lower }}</p>
+			<p>{% spaceless %}
+				{% if template_set == '2009' %}
+					<a href="{% url 'hines:day_archive' year=post.time_created|date:"Y" month=post.time_created|date:"m" day=post.time_created|date:"d" %}">{{ post.time_created|date:"l j F Y" }}</a>, {{ post.time_created|date:"g:i" }}{{ post.time_created|date:"A"|lower }}
+				{% else %}
+					{{ post.time_created|date:"l j F Y, g:i" }}{{ post.time_created|date:"A"|lower }}
+				{% endif %}
+			{% endspaceless %}</p>
 			
 			<p class="nextprev">{% spaceless %}
 				<span class="prev">
 					{% with post.get_previous_post as previous_post %}
 						{% if previous_post %}
-							<a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&lt; Previous</a>
+							<a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">{% if template_set == '2009' %}&larr; <span>Older</span>{% else %}&lt; Previous{% endif %}</a>
 						{% else %}
 							&lt; Previous
 						{% endif %}
@@ -108,7 +117,7 @@
 				<span class="next">
 					{% with post.get_next_post as next_post %}
 						{% if next_post %}
-							<a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Next &gt;</a>
+							<a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">{% if template_set == '2009' %}<span>Newer</span> &rarr;{% else %}Next &gt;{% endif %}</a>
 						{% else %}
 							Next &gt;
 						{% endif %}
@@ -239,45 +248,49 @@
 			</div> <!-- .block -->
 		{% endif %}
 
-		<div class="block">
-			<h2>RSS feeds</h2>
-			<ul{% if template_set == '200608' %} class="rss"{% endif %}>
-				<li>
-					{% if template_set == '200608' %}
-						<a class="nohover" href="{% url 'hines:everything_feed_rss' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
-					{% endif %}
-					<a href="{% url 'hines:everything_feed_rss' %}"><strong>Writing, photos and links combined</strong></a>
-				</li>
-				<li>
-					{% if template_set == '200608' %}
-						<a class="nohover" href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
-					{% endif %}
-					<a href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}">Writing only</a>
-				</li>
-				<li>
-					{% if template_set == '200608' %}
-						<a class="nohover" href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
-					{% endif %}
-					<a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos only (at Flickr)</a>
-				</li>
-				<li>
-					{% if template_set == '200608' %}
-						<a class="nohover" href="http://del.icio.us/rss/philgyford/top"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
-					{% endif %}
-					<a href="http://del.icio.us/rss/philgyford/top">Links only (at del.icio.us)</a>
-				</li>
-			</ul>
-		</div>
+		{% if template_set == '200603' or template_set == '200608' %}
+			<div class="block">
+				<h2>RSS feeds</h2>
+				<ul{% if template_set == '200608' %} class="rss"{% endif %}>
+					<li>
+						{% if template_set == '200608' %}
+							<a class="nohover" href="{% url 'hines:everything_feed_rss' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+						{% endif %}
+						<a href="{% url 'hines:everything_feed_rss' %}"><strong>Writing, photos and links combined</strong></a>
+					</li>
+					<li>
+						{% if template_set == '200608' %}
+							<a class="nohover" href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+						{% endif %}
+						<a href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}">Writing only</a>
+					</li>
+					<li>
+						{% if template_set == '200608' %}
+							<a class="nohover" href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+						{% endif %}
+						<a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos only (at Flickr)</a>
+					</li>
+					<li>
+						{% if template_set == '200608' %}
+							<a class="nohover" href="http://del.icio.us/rss/philgyford/top"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+						{% endif %}
+						<a href="http://del.icio.us/rss/philgyford/top">Links only (at del.icio.us)</a>
+					</li>
+				</ul>
+			</div>
+		{% endif %}
 
 	</div> <!-- #extra -->
 
 {% block end_body_content %}
 {% endblock end_body_content %}
 
+{% block footer %}
     <div id="footer">
-        <p>&copy; 1995-2006 Phil Gyford. &nbsp;
+        <p>&copy; 1995-{% now "Y" %} Phil Gyford. &nbsp;
         Email: <strong>phil</strong> [at] <strong>gyford</strong> [dot] <strong>com</strong></p>
     </div>
+{% endblock footer %}
 
 {% block end_body %}
 {% endblock end_body %}

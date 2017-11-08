@@ -210,11 +210,18 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 }
 
 HINES_TEMPLATE_SETS = (
+    # Colourful:
     {'name': '2000', 'start': '2000-03-01', 'end': '2000-12-31'},
+    # Monochrome:
     {'name': '2001', 'start': '2001-01-01', 'end': '2002-11-09'},
+    # Similar, but blue links:
     {'name': '2002', 'start': '2002-11-10', 'end': '2006-03-15'},
+    # Basis for the next decade+:
     {'name': '200603', 'start': '2006-03-16', 'end': '2006-08-29'},
+    # Sight & Sound theme plus a few tweaks:
     {'name': '200608', 'start': '2006-08-30', 'end': '2009-02-09'},
+    # Same but a bit wider and (later) responsive:
+    {'name': '2009', 'start': '2009-02-10', 'end': '2017-12-31'},
 )
 
 MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)

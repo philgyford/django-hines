@@ -1,0 +1,57 @@
+{% extends 'sets/200608/weblogs/post_detail.html' %}
+{% load static %}
+{% block start_html %}
+<!doctype html>
+<html lang="en-gb">
+{% endblock start_html %}
+
+{% block head_title %}{{ post.title }} (Phil Gyford&#8217;s website){% endblock head_title %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'sets/2009/phil/style/default/global.css' %}" />
+	<link rel="stylesheet" href="{% static 'sets/2009/phil/style/default/1/skin.css' %}" />
+{% endblock css %}
+
+{% block head_extra %}
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{{ block.super }}
+{% endblock head_extra %}
+
+{% block footer %}
+    <div id="footer">
+
+		<div class="col3">
+			<h2>Individual RSS feeds</h2>
+			<ul class="rss">
+				<li><a href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}" title="Things I've written on this site">Writing on Gyford.com</a></li>
+				<li><a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&amp;format=rss_200" title="Photos by me">Photos at Flickr</a></li>
+				<li>Links <a href="http://feeds.pinboard.in/rss/u:philgyford/" title="Links to things I've found interesting">at Pinboard</a></li>
+				<li class="split"><a href="{% url 'hines:blog_feed_posts_rss' blog_slug='comments' %}" title="Things I've written about other people's blog posts etc">Comments on other sites</a></li>
+
+				<li><a href="http://feeds2.feedburner.com/Septivium" title="My site about learning everything">Septivium</a></li>
+				<li><a href="http://feeds.feedburner.com/Overmorgen" title="My site about the future">Overmorgen</a></li>
+				<li><a href="http://feeds.feedburner.com/WhitStillman" title="My site about the film director">Whit Stillman</a></li>
+				<li><a href="http://feeds.feedburner.com/PepysDiary-SiteNews" title="News about my Samuel Pepys website">Pepys' Diary Site News</a></li>
+				<li><a href="https://www.youtube.com/feeds/videos.xml?playlist_id=FLgycUrFUa7ABvcs_vHY0l2Q" title="Videos I've marked as favourites on YouTube">YouTube favourites</a></li>
+			</ul>
+		</div>
+		<div class="col3">
+			<h2>Combined RSS feeds</h2>
+			<p>The individual feeds aggregated&#8230;</p>
+            <ul class="rss spaced">
+				<li><a href="{% url 'hines:everything_feed_rss' %}"><strong>The first four feeds combined</strong></a></li>
+				{% comment %}
+					<li><a href="http://feeds.feedburner.com/PhilGyford-Everything"><strong>All feeds combined</strong></a></li>
+				{% endcomment %}
+            </ul>
+		</div>
+
+		<div class="col3 last">
+			<p>&copy; 1995-{% now "Y" %} Phil Gyford.<br />
+		   Email: <strong>phil</strong> [at] <strong>gyford</strong> [dot] <strong>com</strong></p>
+		</div>
+
+		<div class="clear"></div>
+    </div>
+{% endblock footer %}
