@@ -181,19 +181,14 @@ We don't have categories any more, so can't really link to these...
 		<!-- <li><a href="http://www.haddock.org/review/" title="Book and music reviews by fish">Haddock Review</a></li> -->
 	</ul>
 	</div>
-	{% comment %}
 	<div>
 	<strong>Search</strong>
-	<form method="get" action="/cgi-sys/cgiwrap/gyford/gyford.com/mt/mt-search.cgi">
-	<input id="search" name="search" size="15" maxlength="255" accesskey="4"/><br/>
-	<input type="hidden" name="IncludeBlogs" value="1"/>
-	<input type="hidden" name="IncludeBlogs" value="8"/>
-	<input type="hidden" name="IncludeBlogs" value="11"/>
-	<input type="hidden" name="Template" value="gyford"/>
+	<form method="get" action="http://www.google.com/search">
+	<input id="search" name="q" size="15" maxlength="255" accesskey="4"/><br/>
+	<input type="hidden" name="as_sitesearch" value="www.gyford.com">
 	<input type="submit" value="Search" class="button"/>
 	</form>
 	</div>
-	{% endcomment %}
 	<div class="hilite">
 		<a href="{% url 'hines:everything_feed_rss' %}" title="An RSS feed of my latest writing, photos, links, notes, etc."><strong>RSS</strong></a> (<a href="/phil/writing/2003/01/05/an-introduction-/#whatisrss" title="'An introduction to weblog terms for weblog readers: What is RSS?', 2003-01-05">?</a>)
 

@@ -1,0 +1,288 @@
+{% load comments ditto_flickr ditto_lastfm ditto_pinboard ditto_twitter l10n spectator_reading static %}
+{% block start_html %}
+{% endblock start_html %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>{% block head_title %}{% endblock head_title %}</title>
+	{% block css %}
+	{% endblock css %}
+	<link rel="Shortcut Icon" href="{% static 'sets/200603/favicon.ico' %}"/>
+
+	{% with post.get_previous_post as previous_post %}{% if previous_post %}
+	<link rel="prev" title="{{ previous_post.title }}" href="{{ previous_post.get_absolute_url }}"/>
+	{% endif %}{% endwith %}
+	{% with post.get_next_post as next_post %}{% if next_post %}
+	<link rel="next" title="{{ next_post.title }}" href="{{ next_post.get_absolute_url }}"/>
+	{% endif %}{% endwith %}
+
+	{% block head_extra %}
+	{% endblock head_extra %}
+</head>
+<body>
+
+{% block start_body %}
+{% endblock start_body %}
+
+<div id="skiplink"><a href="#heading">Skip navigation</a></div>
+
+<div id="pagetitle">
+	{% block nav %}
+	{% endblock nav %}
+
+	<div id="searchbox">
+		<form action="http://www.google.com/search" method="get">
+		<p><label for="searchfield" class="hide">Search terms:</label> <input type="text" class="text" name="q" id="searchfield" value=""/> <input type="submit" class="submit" value="Search"/></p>
+		<input type="hidden" name="as_sitesearch" value="www.gyford.com">
+		</form>
+	</div>
+</div>
+
+{% block start_body_content %}
+{% endblock start_body_content %}
+
+	<div id="heading">
+		<h1>{{ post.title }}</h1>
+	</div>
+
+	<div id="main">
+
+		<div id="intro">
+	{{ post.intro_html|safe }}
+		</div>
+		
+		<div id="more">
+	{{ post.body_html|safe }}
+		</div>
+		
+	{% get_comment_list for post as comment_list %}
+	{% if comment_list %}
+		<h2 id="comments">Comments</h2>
+		
+		<ul class="comments">
+			{% for comment in comment_list %}
+				<li id="c{{ comment.id|unlocalize }}">
+					{% spaceless %}
+						<p class="byline">
+							<strong>
+								{% if comment.user_url %}
+									<a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
+								{% else %}
+									{{ comment.name }}
+								{% endif %}
+							</strong>
+							<small> at {{ comment.submit_date|date:"j M Y, g:i" }}{{ comment.submit_date|date:"A"|lower }}. <a href="{{ post.get_absolute_url }}#c{{ comment.id|unlocalize }}" title="The permanent link to this comment">Permalink</a></small>
+						</p>
+					{% endspaceless %}
+
+					<div class="comment">
+						{{ comment.comment|safe|linebreaks }}
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+{% block comment_form %}
+{% endblock comment_form %}
+
+		<div class="clear"></div>
+	</div> <!-- #main -->
+
+	<div id="extra">
+		<div class="about">
+			<p>{{ post.time_created|date:"l j F Y, g:i" }}{{ post.time_created|date:"A"|lower }}</p>
+			
+			<p class="nextprev">{% spaceless %}
+				<span class="prev">
+					{% with post.get_previous_post as previous_post %}
+						{% if previous_post %}
+							<a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&lt; Previous</a>
+						{% else %}
+							&lt; Previous
+						{% endif %}
+					{% endwith %}
+				</span>
+				<span class="index">
+					<a href="{% url 'hines:blog_archive' blog_slug=blog.slug %}">In all of {{ blog.short_name }}</a>
+				</span>
+				<span class="next">
+					{% with post.get_next_post as next_post %}
+						{% if next_post %}
+							<a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Next &gt;</a>
+						{% else %}
+							Next &gt;
+						{% endif %}
+					{% endwith %}
+				</span>
+			{% endspaceless %}</p>
+			{% comment %}
+				<div class="clear"></div>
+				<p class="nextprev"><span class="prev"><a href="/phil/writing/2005/07/16/moving_photos.php" title="In Moving photos">&lt; Previous</a></span> <span class="index"><a href="/phil/writing/web_development/">In Web Development</a></span> <span class="next">Next &gt;</span></p>
+			{% endcomment %}
+			<div class="clear"></div>
+		</div>
+
+		{% day_photos post.time_created time='taken_time' as photo_list %}
+		{% if photo_list %}
+			<div class="block">
+				<h2>{{ post.time_created|date:"j M Y" }} in Photos</h2>
+				{% for photo in photo_list|slice:"4" %}
+					{% if forloop.counter == 1 %}
+						<div class="row">
+					{% elif forloop.counter == 3 %}
+						<div class="row">
+					{% endif %}
+					{% spaceless %}
+						<div class="thumbnail{% if forloop.counter == 2 %} last{% elif forloop.counter == 4 %} last{% endif %}">
+							<a href="{{ photo.permalink }}" title="Click to see this photo's page at Flickr"><img src="{{ photo.thumbnail_url }}" alt="{{ photo.title }}" class="thumbnail"></a>
+							<p>
+							<a href="{{ photo.permalink }}" title="Click to see this photo's page at Flickr">{{ photo.title }}</a>
+							</p>
+						</div>
+					{% endspaceless %}
+					{% if forloop.counter == 2 %}
+						</div>
+					{% elif forloop.counter == 4 %}
+						</div>
+					{% elif forloop.last %}
+						</div>
+					{% endif %}
+				{% endfor %}
+				{% if photo_list|length > 4 %}
+					<div class="row">
+						<p>
+							<a href="http://www.flickr.com/photos/philgyford/archives/date-taken/{{ post.time_created|date:"Y/m/d/" }}/detail/" title="At Flickr">See <strong>{{ photo_list|slice:"4"|length }}</strong> more photo{{ photo_list|slice:"4"|length|pluralize }} from this day</a>
+						</p>
+					</div>
+				{% endif %}
+			</div> <!-- .block -->
+		{% endif %}
+		
+		{% day_tweets post.time_created as tweet_list %}
+		{% if tweet_list %}
+			<div class="block">
+				<h2>{{ post.time_created|date:"j M Y" }} at Twitter</h2>
+				<ul class="statuses">
+					{% for tweet in tweet_list %}
+						<li>
+							<a href="{{ tweet.permalink }}" title="See this item on Twitter">{{ tweet.post_time|date:"g:i" }}{{ tweet.post_time|date:"A"|lower }}</a>: {{ tweet.text_html|safe }}
+						</li>
+					{% endfor %}
+				</ul>
+			</div> <!-- .block -->
+		{% endif %}
+
+		{% day_bookmarks post.time_created as bookmark_list %}
+		{% if bookmark_list %}
+			<div class="block">
+				<h2>{{ post.time_created|date:"j M Y" }} in Links</h2>
+					<dl class="links">
+						{% for bookmark in bookmark_list %}
+							<dt><a href="{{ bookmark.url }}">{{ bookmark.title }}</a></dt>
+							<dd>{{ bookmark.description }}</dd>
+						{% endfor %}
+					</dl>
+			</div>
+		{% endif %}
+
+		{% day_publications date=post.time_created as publication_list %}
+		{% if publication_list %}
+			<div class="block">
+				<h2>On this day I was reading</h2>
+				<ul class="publications">
+					{% for pub in publication_list %}
+						<li>{% spaceless %}
+							{% if pub.series %}
+								{% if template_set == '200603' and pub.series.url %}
+									<a href="{{ pub.series.url }}"><cite>{{ pub.series.title }}</cite></a>,
+								{% else %}
+									<cite>{{ pub.series.title }}</cite>,
+								{% endif %}
+								<a href="{{ pub.get_absolute_url }}">
+									{{ pub.title }}
+								</a>
+							{% else %}
+								<a href="{{ pub.get_absolute_url }}">
+									<cite>{{ pub.title }}</cite>
+								</a>
+							{% endif %}
+							{% if pub.roles.all|length > 0 %}
+								by
+								{% for r in pub.roles.all %}{% if forloop.first %}{% else %}, {% endif %}<a href="{{ r.creator.get_absolute_url }}">{{ r.creator.name }}</a>{% if r.role_name %} ({{ r.role_name }}){% endif %}{% endfor %}
+							{% endif %}
+							{% if template_set == '200603' %}
+								{% with amazon_urls=pub.amazon_urls %}
+									{% if amazon_urls %}
+										({% for url in amazon_urls %}<a href="{{ url.url }}" title="See this at {{ url.name }}">{{ url.country }}</a>{% if forloop.last %}{% else %}, {% endif %}{% endfor %})
+									{% endif %}
+								{% endwith %}
+							{% endif %}
+						{% endspaceless %}</li>
+					{% endfor %}
+				</ul>
+			</div> <!-- .block -->
+		{% endif %}
+
+		{% top_artists date=post.time_created period='week' limit=10 as artists %}
+		{% if artists %}
+			<div class="block">
+				<h2>Music listened to most that week</h2>
+					<ol>
+						{% for artist in artists %}
+							<li>
+								<a href="{{ artist.permalink }}"><strong>{{ artist.name }}</strong></a>
+								<small>({{ artist.scrobble_count }})</small>
+							</li>
+						{% endfor %}
+					</ol>
+					<p><a href="http://www.last.fm/user/gyford/charts/&amp;charttype=weekly&amp;subtype=artist" title="See a more complete chart at Last.fm">More at Last.fm...</a></p>
+			</div> <!-- .block -->
+		{% endif %}
+
+		<div class="block">
+			<h2>RSS feeds</h2>
+			<ul{% if template_set == '200608' %} class="rss"{% endif %}>
+				<li>
+					{% if template_set == '200608' %}
+						<a class="nohover" href="{% url 'hines:everything_feed_rss' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+					{% endif %}
+					<a href="{% url 'hines:everything_feed_rss' %}"><strong>Writing, photos and links combined</strong></a>
+				</li>
+				<li>
+					{% if template_set == '200608' %}
+						<a class="nohover" href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+					{% endif %}
+					<a href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}">Writing only</a>
+				</li>
+				<li>
+					{% if template_set == '200608' %}
+						<a class="nohover" href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+					{% endif %}
+					<a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos only (at Flickr)</a>
+				</li>
+				<li>
+					{% if template_set == '200608' %}
+						<a class="nohover" href="http://del.icio.us/rss/philgyford/top"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+					{% endif %}
+					<a href="http://del.icio.us/rss/philgyford/top">Links only (at del.icio.us)</a>
+				</li>
+			</ul>
+		</div>
+
+	</div> <!-- #extra -->
+
+{% block end_body_content %}
+{% endblock end_body_content %}
+
+    <div id="footer">
+        <p>&copy; 1995-2006 Phil Gyford. &nbsp;
+        Email: <strong>phil</strong> [at] <strong>gyford</strong> [dot] <strong>com</strong></p>
+    </div>
+
+{% block end_body %}
+{% endblock end_body %}
+
+{% include 'hines_core/includes/analytics.html' %}
+
+</body>
+</html>

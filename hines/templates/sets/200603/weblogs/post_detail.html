@@ -1,0 +1,93 @@
+{% extends 'sets/200603/weblogs/base.html' %}
+{% load static %}
+{% block start_html %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% endblock start_html %}
+
+{% block head_title %}{{ post.title }} (Phil Gyford: {{ blog.short_name }}){% endblock head_title %}
+	
+{% block css %}
+	<link rel="stylesheet" href="{% static 'sets/200603/style/default/global.css' %}" type="text/css"/>
+{% endblock css %}
+
+{% block head_extra %}
+	<link rel="home" title="Home" href="{% url 'home' %}"/>
+	<link rel="index" title="In all of {{ blog.short_name }}" href="{% url 'hines:blog_archive' blog_slug=blog.slug %}"/>
+{% endblock head_extra %}
+
+{% block start_body %}
+	<div id="container">
+{% endblock start_body %}
+
+{% block nav %}
+	<span id="sitetitle">Phil Gyford&#8217;s website</span>
+
+	<ul id="mainnav">
+		<li><a href="{% url 'home' %}">Home</a></li>
+		<li class="on split"><a href="{% url 'hines:blog_detail' blog_slug='writing' %}">Writing</a></li>
+		<li><a href="{% url 'photos:home' %}">Photos</a></li>
+		<li><a href="{% url 'pinboard:home' %}">Links</a></li>
+		<li><a href="{% url 'spectator:reading:home' %}">Reading</a></li>
+		<li><a href="{% url 'hines:misc' %}">More&#8230;</a></li>
+		<li class=" split"><a href="{% url 'hines:about' %}">About me</a></li>
+	</ul>
+{% endblock nav %}
+
+
+{% block comment_form %}
+	{% comment %}
+		<form action="" method="post" onsubmit="if (this.bakecookie.checked) rememberMe(this)" name="comments_form" id="comments_form">
+		<input type="hidden" name="static" value="1"/>
+		<input type="hidden" name="entry_id" value="6074"/>
+
+		<div class="comments-open" id="comments-open">
+			<h2 class="comments-open-header">Post a comment</h2>
+
+            <div class="comments-open-content">
+
+				<div id="comments-open-data">
+					<div id="name-email">
+						<p class="row">
+							<span class="label"><label for="author">Your name:</label></span><span class="formfield"><input type="text" class="text" name="author" id="author"/> <small>(required)</small></span>
+						</p>
+
+						<p class="row">
+							<span class="label"><label for="email">Email address:</label></span><span class="formfield"><input type="text" class="text" name="email" id="email"/> <small>(required)</small></span>
+						</p>
+					</div> <!-- #name-email -->
+		
+					<p class="row">
+						<span class="label"><label for="url">Your URL:</label></span><span class="formfield"><input type="text" class="text" name="url" id="url"/> <small>(optional)</small></span>
+					</p>
+
+					<p class="row">
+						<span class="label"><label for="comment-bake-cookie">Remember your info?</label></span><span class="formfield"><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="if (!this.checked) forgetMe(document.comments_form)" value="1"/></span>
+					</p>
+				</div> <!-- #comments-open-data -->
+		
+				<p class="textarea" id="comments-open-text">
+					<label for="text" class="hide">Comment:<br/></label>
+					<textarea name="text" id="text" rows="10" cols="40"></textarea><br/><small>Allowed tags: a href, blockquote, strong, em, ul, ol, li. URLs will be turned into links.</small></span>
+				</p>
+
+				<p class="right comments-open-footer" id="comments-open-footer">
+					<input type="submit" class="submit" accesskey="v" name="preview" value="Preview before posting"/><!-- <input type="submit" class="submit" accesskey="s" name="post" value="Post" /> -->
+				</p>
+			</div> <!-- #comments-open-content -->
+		</div> <!-- #comments-open -->
+		
+		</form>
+	{% endcomment %}
+{% endblock comment_form %}
+	
+{% block end_body %}
+</div> <!-- #container -->
+{% endblock end_body %}
+
+{% include 'hines_core/includes/analytics.html' %}
+
+</body>
+</html>

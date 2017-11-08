@@ -308,6 +308,9 @@ class TemplateSetMixin(object):
     If the View you're using doesn't have `self.object` you'll probably want
     to provide your own get_template_set_date() method to return the date
     object you need.
+
+    The name of the chosen template set will also be set in the context data
+    (or None, if no set was used).
     """
     template_name = None
 
@@ -315,6 +318,19 @@ class TemplateSetMixin(object):
     # we use to find which Template Set to use?
     # It can be a date or datetime object.
     template_set_date_attr = 'time_created'
+
+    # Will be set to the name of the appropriate template set, if any.
+    template_set = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Not sure this is the best place for this call...
+        self.set_template_set()
+
+        context['template_set'] = self.template_set
+
+        return context
 
     def get_template_set_date(self):
         """
@@ -355,22 +371,12 @@ class TemplateSetMixin(object):
         If this page is within the dates of a template set, that set's template
         is first, followed by self.template.
         """
-        template_set = None
         templates = []
 
-        if getattr(settings, 'HINES_TEMPLATE_SETS', None):
-            date = self.get_template_set_date()
-
-            for ts in settings.HINES_TEMPLATE_SETS:
-                start = make_date(ts['start'])
-                end = make_date(ts['end'])
-                if date >= start and date <= end:
-                    template_set = ts['name']
-                    break
-
-        if template_set is not None:
+        if self.template_set is not None:
             templates.append(
-                        'sets/{}/{}'.format(template_set, self.template_name))
+                        'sets/{}/{}'.format(self.template_set,
+                                            self.template_name))
 
         if self.template_name is None:
             raise ImproperlyConfigured(
@@ -379,6 +385,22 @@ class TemplateSetMixin(object):
             templates.append(self.template_name)
 
         return templates
+
+    def set_template_set(self):
+        """
+        Sets the value of self.template_set, if an appropriate template set is
+        found.
+        """
+        if getattr(settings, 'HINES_TEMPLATE_SETS', None):
+            date = self.get_template_set_date()
+
+            for ts in settings.HINES_TEMPLATE_SETS:
+                start = make_date(ts['start'])
+                end = make_date(ts['end'])
+                if date >= start and date <= end:
+                    self.template_set = ts['name']
+                    break
+
 
 
 def timezone_today():

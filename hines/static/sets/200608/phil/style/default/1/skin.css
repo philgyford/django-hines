@@ -1,0 +1,326 @@
+/*
+COLOUR SCHEME
+
+Red: 
+	#900	Links.
+	#c66	Links in light text.
+	
+Yellow:
+	#fc0	Tabs.
+	
+Shades of brown:
+	#998	Input borders, light text, timeline borders.
+	#ddc	Horizontal rules.
+	#eed	Sidebar backkgrounds.
+*/
+
+/** MAIN STRUCTURE *******************************************/
+
+#wrapper-head {
+	margin-left: 0;
+	margin-right: 0;
+	border-bottom: 4px solid #fc0;
+}
+#wrapper-head div.clear {
+	background: #fc0;
+}
+#wrapper-body {
+	margin-top: 2.5em;
+}
+#wrapper-foot {
+	margin: 3em 0 0 0;
+	border-top: 5px solid #ddc;
+}
+
+#main {
+	margin-right: 20px;
+}
+#extra {
+	width: 240px; /* If changed, change width of #extra .block and #extra .about too */
+}
+
+#footer {
+	color: #000;
+	padding-top: 0.5em;
+	margin-bottom: 2em;
+}
+
+
+/** GENERIC STYLES *******************************************/
+
+a:link {
+	color: #900;
+}
+a:visited {
+	color: #900;
+}
+a:hover {
+	background: #900;
+	color: #fff;
+	text-decoration: none;
+}
+
+div.featured img,
+img.thumbnail,
+img.illustration {
+	border: 1px solid #998;
+}
+
+input.text,
+textarea {
+	border-color: #998;
+}
+
+/** TOP OF PAGE *******************************************/
+
+#pagetitle {
+	margin-top: 0;
+}
+#sitetitle {
+	margin-bottom: 0.5em;
+	font-size: 18px;
+}
+#sitetitle a:link,
+#sitetitle a:visited {
+	/*color: #04a;*/
+	color: #000;
+}
+#sitetitle a:hover {
+	text-decoration: underline;
+	background: none;
+}
+
+/* Main navigation */
+#mainnav li {
+	margin: 0 4px 0 0;
+	padding: 0;
+	font-weight: normal;
+}
+
+#mainnav li.split {
+	background-image: none;
+	margin-left: 1em;
+	padding-left: 0.5em;
+}
+#mainnav li.on {
+	padding: 0.2em 0.5em 0.3em 0.5em;
+	background: #fc0;
+	font-weight: normal;
+}
+
+#mainnav li a:link,
+#mainnav li a:visited,
+#mainnav li a:hover {
+	color: #000;
+	display: block;
+	padding: 0.2em 0.5em 0.3em 0.5em;
+}
+#mainnav li.on a {
+	padding: 0;
+}
+#mainnav li a:hover {
+	background: #fc0;
+	text-decoration: underline;
+}
+
+#main h2#comments {
+	margin-bottom: 0.5em;
+}
+
+#main dl.entries p.entrydetails,
+#main div#twitter_status p.entrydetails {
+	color: #998;
+	margin-top: 0.5em;
+	border-top: 1px solid #ddc;
+}
+#main p.entrydetails a:link {
+	color: #c66;
+}
+#main p.entrydetails a:visited {
+	color: #c66;
+}
+#main p.entrydetails a:hover {
+	background: #900;
+	color: #fff;
+}
+
+
+#main ul.comments {
+	border-top: 5px solid #ddc;
+}
+#main ul.comments li {
+	margin-bottom: 0;
+	border-bottom: 5px solid #ddc;
+}
+
+#main ul.comments li#preview-comment {
+}
+
+#main ul.comments li p.byline {
+	padding-top: 0.8em;
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid #ddc;
+}
+
+#main form#comments_form small {
+	color: #998;
+}
+
+
+/* Home page variations */
+
+/* For the Latest Twitter bit at top of home page. */
+#main div#twitter_status span#my_twitter_progress {
+	color: #998;
+}
+
+
+/* Timeline */
+table.timeline th,
+table.timeline td {
+	border: 1px solid #998;
+}
+table.timeline .tl-year,
+table.timeline .tl-work,
+table.timeline .tl-play {
+	background-color: #ddc;
+}
+table.timeline .tl-place,
+table.timeline .tl-ed,
+table.timeline .tl-writing {
+	background-color: #eed;
+}
+
+/* NOTES */
+#main span.note,
+#main span.pp {
+	color: #998;
+}
+
+/** SIDEBAR *******************************************/
+
+#extra .block {
+	color: #000;
+	background: #eed;
+	margin-bottom: 1em;
+	width: 237px; /* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+}
+#extra .noheader {
+	/* .noheader in addition to .block */
+	padding-top: 1em;
+}
+#extra .block a:link,
+#extra .highlight a:link {
+	color: #900;
+}
+#extra .block a:visited,
+#extra .highlight a:visited {
+	color: #900;
+}
+#extra .block a:hover,
+#extra .highlight a:hover {
+	background: #900;
+	color: #fff;
+}
+#extra h2 {
+	padding: 0.5em 5px 0.4em 10px;
+	margin-bottom: 0;
+}
+#extra .highlight h2 {
+	background-color: #fc0;
+	margin-bottom: 0.5em;
+}
+
+#extra .about {
+	width: 240px;
+	border-top: 5px solid #ddc;
+	border-bottom: 5px solid #ddc;
+	margin-bottom: 1em;
+}
+#extra .about ul {
+	/* On About Me pages. */
+	margin-top: 0.3em;
+	margin-bottom: 0.5em;
+}
+#extra .about p {
+	margin: 0 0 0.3em 0;
+	padding: 0.2em 5px 0 5px;
+}
+#extra p.nextprev {
+	border-top: 1px solid #ddc;
+}
+#extra p.nextprev .prev,
+#extra p.nextprev .next {
+	width: 65px;
+	color: #998;
+}
+#extra p.nextprev .next {
+	width: 62px;	/* 3 pixels narrower than it should be to stop Win IE Duplicate Characters Bug */
+}
+#extra p.nextprev .index {
+	width: 103px;
+}
+
+#extra dl {
+	margin-left: 10px;
+	margin-right: 5px;
+	margin-bottom: 1em;
+}
+#extra ul {
+	margin-bottom: 1em;
+}
+#extra ul ul {
+	margin-bottom: 0;
+}
+#extra p,
+#extra ul.reading-years {
+	margin-left: 10px;
+	margin-right: 5px;
+}
+#extra li {
+	margin-left: 27px;
+	margin-right: 5px;
+}
+#extra ul.years li {
+	margin-left: 10px;
+}
+#extra ul.months li {
+	margin-left: 0;
+}
+#extra ul li ul li {
+	margin-left: 15px;
+}
+
+#extra ol li {
+	margin-left: 35px;
+}
+#extra li p {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#extra ul.rss li {
+	margin-left: 10px;
+}
+
+#extra div.row {
+	margin-left: 5px;
+}
+#extra div.thumbnail a img {
+	opacity: 1;
+	filter: none;
+}
+
+/** FONT SIZES *******************************************/
+
+ul#mainnav li {
+	font-size: 0.75em; /* 12px */
+}
+/*
+     FILE ARCHIVED ON 03:08:40 Jul 03, 2007 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 11:07:48 Nov 08, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
