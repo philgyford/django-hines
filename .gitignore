@@ -1,6 +1,7 @@
 .coverage
 .env
 .vagrant
+node_modules
 db.sqlite3
 htmlcov
 static_collected

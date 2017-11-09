@@ -17,7 +17,7 @@ Expects:
 	{% endif %}
 
 	{% if perms.weblogs.can_change_post %}
-		<a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a>
+		<p><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
 	{% endif %}
 
 	{% if style|default_if_none:'full' == 'compact' %}

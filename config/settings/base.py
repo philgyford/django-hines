@@ -221,7 +221,7 @@ HINES_TEMPLATE_SETS = (
     # Sight & Sound theme plus a few tweaks:
     {'name': '200608', 'start': '2006-08-30', 'end': '2009-02-09'},
     # Same but a bit wider and (later) responsive:
-    {'name': '2009', 'start': '2009-02-10', 'end': '2017-12-31'},
+    {'name': '2009', 'start': '2009-02-10', 'end': '2015-11-08'},
 )
 
 MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)

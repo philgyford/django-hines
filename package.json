@@ -1,0 +1,34 @@
+{
+  "name": "django-hines",
+  "version": "0.0.0",
+  "description": "Front-end assets for gyford.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philgyford/django-hines.git"
+  },
+  "author": "Phil Gyford",
+  "license": "No license",
+  "bugs": {
+    "url": "https://github.com/philgyford/django-hines/issues"
+  },
+  "homepage": "https://github.com/philgyford/django-hines",
+  "dependencies": {},
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-inject": "^4.2.0",
+    "gulp-rev": "^8.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "stream-series": "^0.1.1",
+    "watch": "^1.0.2"
+  }
+}
+

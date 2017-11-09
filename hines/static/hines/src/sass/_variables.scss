@@ -1,0 +1,111 @@
+// A lot of these variables taken from Bootstrap.
+
+
+//
+// Color system
+//
+// https://www.w3.org/TR/2008/NOTE-WCAG20-TECHS-20081211/working-examples/G183/link-contrast.html
+
+$white:				#fff;
+$gray-medium:		#999;
+$gray-darkest:		#333;
+$black:				#000;
+$blue:				#33f;
+$purple:			#90c;
+$red:				#c00;
+
+// Spacing
+
+$spacer: 1rem;
+
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-bg:                   $white;
+$body-color:                $gray-darkest!default;
+
+
+// Links
+//
+// Style anchor elements.
+
+$link-decoration:           underline;
+$link-color:                $blue;
+$link-active-color:         $red;
+$link-hover-color:          darken($link-color, 15%);
+$link-visited-color:		$purple;
+$link-visited-hover-color:	darken($link-visited-color, 15%);
+
+
+// Paragraphs
+//
+// Style p element.
+
+$paragraph-margin-bottom:   1rem;
+
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+$container-max-widths: (
+  sm: 550px,
+  md: 740px,
+  lg: 960px,
+  xl: 1140px
+);
+
+$grid-columns:			4;
+$grid-gutter-width:     30px;
+
+
+// Fonts
+
+$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+$font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+$font-family-base:            $font-family-sans-serif;
+
+$font-size-base:              1rem; // Assumes the browser default, typically `16px`
+$font-size-lg:                ($font-size-base * 1.25);
+$font-size-sm:                ($font-size-base * .875);
+
+//$font-weight-light:           300;
+$font-weight-normal:          400;
+$font-weight-bold:            700;
+
+$font-weight-base:            $font-weight-normal;
+$line-height-base:            1.5;
+
+
+$headings-margin-bottom:      ($spacer / 2);
+
+$lead-font-size:              ($font-size-base * 1.25);
+$lead-font-weight:            300;
+
+$small-font-size:             80%;
+
+$text-muted:                  $gray-medium;
+
+$dt-font-weight:              $font-weight-bold;
+
+
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+
+$table-cell-padding:          .75rem;
+

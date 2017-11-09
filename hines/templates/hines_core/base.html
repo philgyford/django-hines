@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-{% load static hines_core hines_weblogs %}
+<!doctype html>{% load static hines_core hines_weblogs %}
 <html lang="en-gb">
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
-		<link rel="stylesheet" href="{% static "hines/css/bootstrap.min.css" %}">
+		<!-- inject:css -->
+		<link rel="stylesheet" href="/static/hines/css/site-8a705450da.css">
+		<!-- endinject -->
 
 		{% get_all_blogs_by_slug as all_blogs %}
 		{% for blog_slug, blog_obj in all_blogs.items %}
@@ -90,37 +91,37 @@
 			</nav>
 		{% endblock navbar %}
 
-		<div class="container">
+		<div class="grid">
 
 			{% block content_heading %}
-				<h1 class="my-4">
+				<h1>
 					{% block content_title %}
 					{% endblock %}
 				</h1>
 			{% endblock %}
 
 			{% block content_main %}
-				<div class="row">
+				<div class="grid__row">
 					{% block content_column %}
-						<div class="col-md-9{% if sidebar_position == 'left' %} order-12{% endif %}">
+						<div class="grid__col grid__col--main{% if sidebar_position == 'left' %} grid__col--last{% endif %}">
 							{% block content %}
 							{% endblock %}
-						</div> <!-- .col-md-9 -->
+						</div> <!-- .grid__col -->
 					{% endblock content_column %}
 					{% block sidebar_column %}
-						<div class="col-md-3{% if sidebar_position == 'left' %} order-1{% endif %}">
+						<div class="grid__col grid__col--sub{% if sidebar_position == 'left' %} grid__col--first{% endif %}">
 							{% block sidebar %}
 							{% endblock %}
-						</div> <!-- .col-md-3 -->
+						</div> <!-- .grid__col -->
 					{% endblock sidebar_column %}
 				</div>
 			{% endblock content_main %}
 		</div>
 
 		<footer>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-3">
+			<div class="grid">
+				<div class="grid__row">
+					<div class="grid__col grid__col--half">
 						<h4>RSS feeds</h4>
 						<ul class="list-unstyled">
 							<li>
@@ -144,14 +145,17 @@
 								</li>
 							{% endwith %}
 						</ul>
-					</div>
-				</div>
-			</div>
+					</div> <!-- .grid__col -->
+					<div class="grid__col grid__col--half">
+							<p>
+								&copy; 1995-{% now "Y" %} Phil Gyford.<br>
+								Email: <a href="mailto:phil@gyford.com">phil@gyford.com</a><Br>
+								Twitter: <a href="https://twitter.com/philgyford">@philgyford</a>
+							</p>
+					</div> <!-- .grid__col -->
+				</div> <!-- .grid__row -->
+			</div> <!-- .grid -->
 		</footer>
-
-		<script src="{% static "hines/js/jquery-3.1.1.slim.min.js" %}"></script>
-		<script src="{% static "hines/js/bootstrap/collapse.js" %}"></script>
-		<script src="{% static "hines/js/bootstrap/util.js" %}"></script>
 
 		{% include 'hines_core/includes/analytics.html' %}
 

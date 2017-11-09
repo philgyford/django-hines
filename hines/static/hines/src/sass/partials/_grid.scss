@@ -1,0 +1,58 @@
+
+/**
+ * Usage:
+ *
+ * <div class="grid">
+ *  <div class="grid__row">
+ *    <div class="grid__col grid__col--main"></div>
+ *    <div class="grid__col grid__col--sub"></div>
+ *  </div>
+ * </div>
+ */
+
+.grid {
+  @include make-container();
+  @include make-container-max-widths();
+}
+
+.grid__row {
+  @include make-row();
+}
+
+// All columns should have this class...
+.grid__col {
+  @include make-col-ready();
+
+  @include media-breakpoint-up(sm) {
+    // At narrowish widths, all columns are full width:
+    @include make-col(4);
+  }
+}
+
+// ...then one of these classes to set the col's width at wider window widths:
+.grid__col--sub {
+  @include media-breakpoint-up(md) {
+    @include make-col(1);
+  }
+}
+.grid__col--half {
+  @include media-breakpoint-up(md) {
+    @include make-col(2);
+  }
+}
+.grid__col--main {
+  @include media-breakpoint-up(md) {
+    @include make-col(3);
+  }
+}
+.grid__col--full {
+}
+
+// Move columns to start/end of their row by adding one of these:
+.grid__col--first {
+  order: 1;
+}
+.grid__col--last {
+  order: 4;
+}
+
