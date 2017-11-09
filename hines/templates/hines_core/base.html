@@ -7,7 +7,7 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
-		<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+		<link rel="stylesheet" href="{% static "hines/css/bootstrap.min.css" %}">
 
 		{% get_all_blogs_by_slug as all_blogs %}
 		{% for blog_slug, blog_obj in all_blogs.items %}
@@ -15,13 +15,13 @@
 		{% endfor %}
 
 		{% block favicons %}
-			<link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicons/apple-touch-icon.png' %}">
-			<link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicons/favicon-32x32.png' %}">
-			<link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicons/favicon-16x16.png' %}">
-			<link rel="manifest" href="{% static 'img/favicons/manifest.json' %}">
-			<link rel="mask-icon" href="{% static 'img/favicons/safari-pinned-tab.svg' %}" color="#ff6600">
-			<link rel="shortcut icon" href="{% static 'img/favicons/favicon.ico' %}">
-			<meta name="msapplication-config" content="{% static 'img/favicons/browserconfig.xml' %}">
+			<link rel="apple-touch-icon" sizes="180x180" href="{% static 'hines/img/favicons/apple-touch-icon.png' %}">
+			<link rel="icon" type="image/png" sizes="32x32" href="{% static 'hines/img/favicons/favicon-32x32.png' %}">
+			<link rel="icon" type="image/png" sizes="16x16" href="{% static 'hines/img/favicons/favicon-16x16.png' %}">
+			<link rel="manifest" href="{% static 'hines/img/favicons/manifest.json' %}">
+			<link rel="mask-icon" href="{% static 'hines/img/favicons/safari-pinned-tab.svg' %}" color="#ff6600">
+			<link rel="shortcut icon" href="{% static 'hines/img/favicons/favicon.ico' %}">
+			<meta name="msapplication-config" content="{% static 'hines/img/favicons/browserconfig.xml' %}">
 			<meta name="theme-color" content="#ffffff">
 		{% endblock favicons %}
 
@@ -149,9 +149,9 @@
 			</div>
 		</footer>
 
-		<script src="{% static "js/jquery-3.1.1.slim.min.js" %}"></script>
-		<script src="{% static "js/bootstrap/collapse.js" %}"></script>
-		<script src="{% static "js/bootstrap/util.js" %}"></script>
+		<script src="{% static "hines/js/jquery-3.1.1.slim.min.js" %}"></script>
+		<script src="{% static "hines/js/bootstrap/collapse.js" %}"></script>
+		<script src="{% static "hines/js/bootstrap/util.js" %}"></script>
 
 		{% include 'hines_core/includes/analytics.html' %}
 

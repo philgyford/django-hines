@@ -9,7 +9,7 @@
 	<title>{% block head_title %}{% endblock head_title %}</title>
 	{% block css %}
 	{% endblock css %}
-	<link rel="Shortcut Icon" href="{% static 'sets/200603/favicon.ico' %}"/>
+	<link rel="Shortcut Icon" href="{% static 'hines/sets/200603/favicon.ico' %}"/>
 
 	{% with post.get_previous_post as previous_post %}{% if previous_post %}
 	<link rel="prev" title="{{ previous_post.title }}" href="{{ previous_post.get_absolute_url }}"/>
@@ -254,25 +254,25 @@
 				<ul{% if template_set == '200608' %} class="rss"{% endif %}>
 					<li>
 						{% if template_set == '200608' %}
-							<a class="nohover" href="{% url 'hines:everything_feed_rss' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+							<a class="nohover" href="{% url 'hines:everything_feed_rss' %}"><img src="{% static 'hines/sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
 						{% endif %}
 						<a href="{% url 'hines:everything_feed_rss' %}"><strong>Writing, photos and links combined</strong></a>
 					</li>
 					<li>
 						{% if template_set == '200608' %}
-							<a class="nohover" href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+							<a class="nohover" href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}"><img src="{% static 'hines/sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
 						{% endif %}
 						<a href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}">Writing only</a>
 					</li>
 					<li>
 						{% if template_set == '200608' %}
-							<a class="nohover" href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+							<a class="nohover" href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200"><img src="{% static 'hines/sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
 						{% endif %}
 						<a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos only (at Flickr)</a>
 					</li>
 					<li>
 						{% if template_set == '200608' %}
-							<a class="nohover" href="http://del.icio.us/rss/philgyford/top"><img src="{% static 'sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
+							<a class="nohover" href="http://del.icio.us/rss/philgyford/top"><img src="{% static 'hines/sets/200608/phil/images/feed-icon-12x12.gif' %}" width="12" height="12" alt="Feed Icon"></a>
 						{% endif %}
 						<a href="http://del.icio.us/rss/philgyford/top">Links only (at del.icio.us)</a>
 					</li>

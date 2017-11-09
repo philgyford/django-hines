@@ -7,7 +7,7 @@
 	<meta name="keywords" content="Phil Gyford, Philip Gyford, London, Houston, Bristol, Witham, Essex, Fabius, {{ blog.short_name }}, {{ post.title }}, "/>
 
 	<link rel="author" title="Send feedback to Phil" href="mailto:phil@gyford.com"/>
-	<link rel="Shortcut Icon" href="{% static 'sets/2002/favicon.ico' %}"/>
+	<link rel="Shortcut Icon" href="{% static 'hines/sets/2002/favicon.ico' %}"/>
 	<link rel="home" title="Home" href="{% url 'home' %}"/>
 	{% with post.get_previous_post as previous_post %}{% if previous_post %}
 	<link rel="prev" title="{{ previous_post.get_absolute_url }}" href="{{ previous_post.title }}"/>
@@ -17,12 +17,12 @@
 	{% endif %}{% endwith %}
 	<link rel="up" title="Archive for {{ post.time_created|date:"F Y" }}" href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}"/>
 	<!-- skin: default -->
-	<link rel="stylesheet" href="{% static 'sets/2002/style/default/global.css' %}" type="text/css"/>
+	<link rel="stylesheet" href="{% static 'hines/sets/2002/style/default/global.css' %}" type="text/css"/>
 	<style type="text/css">
-		@import url({% static 'sets/2002/style/default/global_non_ns4.css' %});
+		@import url({% static 'hines/sets/2002/style/default/global_non_ns4.css' %});
 	</style>
-	<link rel="stylesheet" href="{% static 'sets/2002/style/default/screen.css' %}" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="{% static 'sets/2002/style/default/print.css' %}" type="text/css" media="print"/>
+	<link rel="stylesheet" href="{% static 'hines/sets/2002/style/default/screen.css' %}" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="{% static 'hines/sets/2002/style/default/print.css' %}" type="text/css" media="print"/>
 
 	<link rel="alternate" type="application/rdf+xml" title="RSS feed" href="{{ blog.get_rss_feed_url }}"/>
 </head>
@@ -38,22 +38,22 @@
 		{% with post.get_previous_post as previous_post %}
 			{% if previous_post %}
 				<a href="{{ previous_post.get_absolute_url }}" title="Previous entry: {{ previous_post.title }}">
-					<img src="{% static 'sets/2002/images/nav/prev1.gif' %}" width="14" height="18" alt="Previous"/>
+					<img src="{% static 'hines/sets/2002/images/nav/prev1.gif' %}" width="14" height="18" alt="Previous"/>
 				</a>
 			{% else %}
-				<img src="{% static 'sets/2002/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">
+				<img src="{% static 'hines/sets/2002/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">
 			{% endif %}
 		{% endwith %}
 		<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}" title="Index">
-			<img src="{% static 'sets/2002/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index">
+			<img src="{% static 'hines/sets/2002/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index">
 		</a>
 		{% with post.get_next_post as next_post %}
 			{% if next_post %}
 				<a href="{{ next_post.get_absolute_url }}" title="Next entry: {{ next_post.title }}">
-					<img src="{% static 'sets/2002/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next">
+					<img src="{% static 'hines/sets/2002/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next">
 				</a>
 			{% else %}
-				<img src="{% static 'sets/2002/images/nav/next_off.gif' %}" width="14" height="18" alt="Next"/>
+				<img src="{% static 'hines/sets/2002/images/nav/next_off.gif' %}" width="14" height="18" alt="Next"/>
 			{% endif %}
 		{% endwith %}
 		{{ post.title }}
