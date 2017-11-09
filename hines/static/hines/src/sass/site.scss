@@ -1,6 +1,8 @@
 @import "variables";
-@import "mixins/breakpoints";
-@import "mixins/grid";
+@import "mixins/bootstrap/breakpoints";
+@import "mixins/bootstrap/grid";
 @import "partials/reboot";
 @import "partials/grid";
+@import "partials/navbar";
+@import "partials/utilities";
 //@import "typeplate/typeplate-index";

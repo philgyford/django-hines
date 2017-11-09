@@ -50,9 +50,13 @@
 
 // Move columns to start/end of their row by adding one of these:
 .grid__col--first {
-  order: 1;
+  @include media-breakpoint-up(md) {
+    order: 1;
+  }
 }
 .grid__col--last {
-  order: 4;
+  @include media-breakpoint-up(md) {
+    order: 4;
+  }
 }
 

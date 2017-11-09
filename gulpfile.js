@@ -116,15 +116,15 @@ gulp.task('js', gulp.series('clean:js', function buildJS() {
     .pipe(uglify())
 
   // A stream of the already-minified vendor files.
-  var vendorStream = gulp.src([
-    //PATHS.src.jsVendorDir + '/jquery.min.js',
-    //PATHS.src.jsVendorDir + '/jquery.timeago.min.js',
-    //PATHS.src.jsVendorDir + '/bootstrap.min.js'
-  ]);
+  //var vendorStream = gulp.src([
+    ////PATHS.src.jsVendorDir + '/jquery.timeago.min.js',
+    ////PATHS.src.jsVendorDir + '/bootstrap.min.js'
+  //]);
 
   // Combine both streams of minified JS into one file.
   // Need to be in this order, so jQuery is loaded before our custom JS.
-  return series(vendorStream, customStream)
+  //return series(vendorStream, customStream)
+  return series(customStream)
     .pipe(concat('site.min.js'))
     .pipe(rev())
     .pipe(gulp.dest(PATHS.dest.jsDir));

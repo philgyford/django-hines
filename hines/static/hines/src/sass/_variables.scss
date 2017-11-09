@@ -70,7 +70,6 @@ $container-max-widths: (
 $grid-columns:			4;
 $grid-gutter-width:     30px;
 
-
 // Fonts
 
 $font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -109,3 +108,27 @@ $dt-font-weight:              $font-weight-bold;
 
 $table-cell-padding:          .75rem;
 
+
+
+// Navs
+
+$nav-link-padding-y:                .5rem;
+
+
+// Navbar
+
+$navbar-padding-y:                  ($spacer / 2);
+$navbar-padding-x:                  $spacer;
+
+$navbar-brand-font-size:            $font-size-lg;
+// Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link
+$nav-link-height:                   ($font-size-base * $line-height-base + $nav-link-padding-y * 2);
+$navbar-brand-height:               $navbar-brand-font-size * $line-height-base;
+$navbar-brand-padding-y:            ($nav-link-height - $navbar-brand-height) / 2;
+
+$navbar-link-color:                $link-color;
+$navbar-link-hover-color:          $link-hover-color;
+$navbar-link-active-color:         $link-active-color;
+
+
+$navbar-text-color:         $body-color;
