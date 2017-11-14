@@ -1,7 +1,11 @@
 @import "variables";
+@import "functions";
 @import "mixins/bootstrap/breakpoints";
+@import "mixins/bootstrap/buttons";
 @import "mixins/bootstrap/grid";
 @import "partials/reboot";
+@import "partials/buttons";
+@import "partials/forms";
 @import "partials/grid";
 @import "partials/navbar";
 @import "partials/utilities";

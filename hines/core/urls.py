@@ -55,6 +55,12 @@ urlpatterns = [
         name='day_archive'
     ),
 
+    url(r'^components/$',
+        TemplateView.as_view(template_name='hines_core/components.html'),
+        {'url': '/phil/components/'},
+        name='components'),
+
+
     url(r'^', include('hines.weblogs.urls')),
 ]
 

@@ -1,0 +1,59 @@
+// Buttons
+// Based on Bootstrap v4.
+
+.button {
+  display: inline-block;
+  font-weight: $button-font-weight;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: $button-border-width solid transparent;
+  @include button-size($button-padding-y, $button-padding-x, $font-size-base, $button-line-height, 0);
+  transition: $button-transition;
+
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  &:focus,
+  &.focus {
+    outline: 0;
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    opacity: $button-disabled-opacity;
+
+    &:focus,
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+  &:not([disabled]):not(.disabled):active,
+  &:not([disabled]):not(.disabled).active {
+    background-image: none;
+  }
+}
+
+//
+// Alternate buttons
+//
+
+@each $color, $value in $theme-colors {
+  .button--#{$color} {
+    @include button-variant($value, $value);
+  }
+}
+
+//
+// Button Sizes
+//
+
+.button--sm {
+  @include button-size($button-padding-y-sm, $button-padding-x-sm, $font-size-sm, $button-line-height-sm, 0);
+}

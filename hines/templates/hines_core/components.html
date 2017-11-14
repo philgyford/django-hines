@@ -1,0 +1,185 @@
+{% extends 'hines_core/base_full_width.html' %}
+
+
+{% block head_page_title %}Components{% endblock %}
+{% block content_title %}Components {% endblock %}
+
+
+{% block content %}
+
+<p>Based on <a href="https://getbootstrap.com/docs/4.0/components/forms/">Bootstrap v4</a>. <a href="https://github.com/twbs/bootstrap/blob/v4-dev/scss/_forms.scss">SCSS.</a></p>
+
+<hr>
+
+<h2>Form controls</h2>
+
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Email address</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Example multiple select</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+</form>
+
+<hr>
+
+<h2>Sizing</h2>
+
+<p>We don't use the <code>lg</code> size.</p>
+
+<input class="form-control" type="text" placeholder="Default input">
+<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
+
+<select class="form-control">
+  <option>Default select</option>
+</select>
+<select class="form-control form-control-sm">
+  <option>Small select</option>
+</select>
+
+<hr>
+
+<h2>Readonly</h2>
+
+<input class="form-control" type="text" placeholder="Readonly input here…" readonly>
+
+<hr>
+
+<h2>Readonly plaintext</h2>
+
+<p>Unused.</p>
+
+<hr>
+
+<h2>Checkboxes and radios</h2>
+
+<p>Unused.</p>
+
+<hr>
+
+<h2>Layout</h2>
+
+
+<h3>Form groups</h3>
+
+<form>
+  <div class="form-group">
+    <label class="col-form-label" for="formGroupExampleInput">Example label</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+  </div>
+  <div class="form-group">
+    <label class="col-form-label" for="formGroupExampleInput2">Another label</label>
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+  </div>
+</form>
+
+<h3>Form grid</h3>
+
+<p>Unused.</p>
+
+<h3>Form row</h3>
+
+<p>Unused.</p>
+
+<h3>Horizontal form</h3>
+
+<p>Unused.</p>
+
+<hr>
+
+<h2>Inline forms</h2>
+
+<form class="form-inline">
+  <label class="sr-only" for="inlineFormInputName2">Name</label>
+  <input type="text" class="form-control" id="inlineFormInputName2" placeholder="Jane Doe">
+
+  <label class="sr-only" for="inlineFormInputUsername2">Username</label>
+<input type="text" class="form-control" id="inlineFormInputUsername2" placeholder="Username">
+
+  <button type="submit" class="button button--primary">Submit</button>
+</form>
+
+<hr>
+
+<h2>Help text</h2>
+
+<label for="inputPassword5">Password</label>
+<input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+<small id="passwordHelpBlock" class="form-text text-muted">
+  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+</small>
+
+<hr>
+
+<h2>Disabled forms</h2>
+
+<input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
+
+<hr>
+
+<h2>Validation</h2>
+
+<h3>Client side</h3>
+
+<p>Use default client-side browser validation.</p>
+
+<h3>Server side</h3>
+
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Email address</label>
+    <input type="email" class="form-control is-valid" id="exampleFormControlInput1" value="valid@example.com">
+  </div>
+    <div class="form-group">
+    <label for="exampleFormControlInput2">Name</label>
+    <input type="text" class="form-control is-invalid" id="exampleFormControlInput2" placeholder="Fred">
+	     <div class="invalid-feedback">
+        Please provide a valid name.
+      </div>
+  </div>
+</form>
+
+<hr>
+
+<h2>Buttons</h2>
+
+<button type="button" class="button button--primary">Primary</button>
+<button type="button" class="button button--secondary">Secondary</button>
+
+<h3>Button sizes</h3>
+
+<p>We don't use <code>lg</code>.</p>
+
+<button type="button" class="button button--primary button--sm">Small button</button>
+<button type="button" class="button button--secondary button--sm">Small button</button>
+
+<h3>Disabled state</h3>
+
+<button type="button" class="button button--primary" disabled>Primary button</button>
+<button type="button" class="button button--secondary" disabled>Button</button>
+
+{% endblock content %}
+
