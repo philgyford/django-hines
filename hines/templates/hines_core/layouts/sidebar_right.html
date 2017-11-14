@@ -1,0 +1,8 @@
+{% extends 'hines_core/layouts/base.html' %}
+
+{% block content_main %}
+	{% with 'right' as sidebar_position %}
+		{{ block.super }}
+	{% endwith %}
+{% endblock %}
+

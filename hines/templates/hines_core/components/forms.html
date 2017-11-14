@@ -1,8 +1,8 @@
-{% extends 'hines_core/base_full_width.html' %}
+{% extends 'hines_core/layouts/sidebar_left.html' %}
 
 
-{% block head_page_title %}Components{% endblock %}
-{% block content_title %}Components {% endblock %}
+{% block head_page_title %}Components: Forms{% endblock %}
+{% block content_title %}Components: Forms{% endblock %}
 
 
 {% block content %}
@@ -14,13 +14,13 @@
 <h2>Form controls</h2>
 
 <form>
-  <div class="form-group">
+  <div class="form__group">
     <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+    <input type="email" class="form__control" id="exampleFormControlInput1" placeholder="name@example.com">
   </div>
-  <div class="form-group">
+  <div class="form__group">
     <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
+    <select class="form__control" id="exampleFormControlSelect1">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -28,9 +28,9 @@
       <option>5</option>
     </select>
   </div>
-  <div class="form-group">
+  <div class="form__group">
     <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleFormControlSelect2">
+    <select multiple class="form__control" id="exampleFormControlSelect2">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -38,9 +38,9 @@
       <option>5</option>
     </select>
   </div>
-  <div class="form-group">
+  <div class="form__group">
     <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea class="form__control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
 </form>
 
@@ -50,13 +50,13 @@
 
 <p>We don't use the <code>lg</code> size.</p>
 
-<input class="form-control" type="text" placeholder="Default input">
-<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
+<input class="form__control" type="text" placeholder="Default input">
+<input class="form__control form__control--sm" type="text" placeholder=".form__control--sm">
 
-<select class="form-control">
+<select class="form__control">
   <option>Default select</option>
 </select>
-<select class="form-control form-control-sm">
+<select class="form__control form__control--sm">
   <option>Small select</option>
 </select>
 
@@ -64,7 +64,7 @@
 
 <h2>Readonly</h2>
 
-<input class="form-control" type="text" placeholder="Readonly input here…" readonly>
+<input class="form__control" type="text" placeholder="Readonly input here…" readonly>
 
 <hr>
 
@@ -86,13 +86,13 @@
 <h3>Form groups</h3>
 
 <form>
-  <div class="form-group">
-    <label class="col-form-label" for="formGroupExampleInput">Example label</label>
-    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+  <div class="form__group">
+    <label for="formGroupExampleInput">Example label</label>
+    <input type="text" class="form__control" id="formGroupExampleInput" placeholder="Example input">
   </div>
-  <div class="form-group">
-    <label class="col-form-label" for="formGroupExampleInput2">Another label</label>
-    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+  <div class="form__group">
+    <label for="formGroupExampleInput2">Another label</label>
+    <input type="text" class="form__control" id="formGroupExampleInput2" placeholder="Another input">
   </div>
 </form>
 
@@ -112,14 +112,24 @@
 
 <h2>Inline forms</h2>
 
-<form class="form-inline">
+<form class="form--inline">
   <label class="sr-only" for="inlineFormInputName2">Name</label>
-  <input type="text" class="form-control" id="inlineFormInputName2" placeholder="Jane Doe">
+  <input type="text" class="form__control" id="inlineFormInputName2" placeholder="Jane Doe">
 
   <label class="sr-only" for="inlineFormInputUsername2">Username</label>
-<input type="text" class="form-control" id="inlineFormInputUsername2" placeholder="Username">
+<input type="text" class="form__control" id="inlineFormInputUsername2" placeholder="Username">
 
   <button type="submit" class="button button--primary">Submit</button>
+</form>
+
+<form class="form--inline">
+  <label class="sr-only" for="inlineFormInputName2sm">Name</label>
+  <input type="text" class="form__control form__control--sm" id="inlineFormInputName2sm" placeholder="Jane Doe">
+
+  <label class="sr-only" for="inlineFormInputUsername2sm">Username</label>
+<input type="text" class="form__control form__control--sm" id="inlineFormInputUsername2sm" placeholder="Username">
+
+  <button type="submit" class="button button--primary button--sm">Submit</button>
 </form>
 
 <hr>
@@ -127,8 +137,8 @@
 <h2>Help text</h2>
 
 <label for="inputPassword5">Password</label>
-<input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
-<small id="passwordHelpBlock" class="form-text text-muted">
+<input type="password" id="inputPassword5" class="form__control" aria-describedby="passwordHelpBlock">
+<small id="passwordHelpBlock" class="form__text">
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </small>
 
@@ -136,7 +146,7 @@
 
 <h2>Disabled forms</h2>
 
-<input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
+<input class="form__control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
 
 <hr>
 
@@ -149,13 +159,13 @@
 <h3>Server side</h3>
 
 <form>
-  <div class="form-group">
+  <div class="form__group">
     <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control is-valid" id="exampleFormControlInput1" value="valid@example.com">
+    <input type="email" class="form__control is-valid" id="exampleFormControlInput1" value="valid@example.com">
   </div>
-    <div class="form-group">
+    <div class="form__group">
     <label for="exampleFormControlInput2">Name</label>
-    <input type="text" class="form-control is-invalid" id="exampleFormControlInput2" placeholder="Fred">
+    <input type="text" class="form__control is-invalid" id="exampleFormControlInput2" placeholder="Fred">
 	     <div class="invalid-feedback">
         Please provide a valid name.
       </div>

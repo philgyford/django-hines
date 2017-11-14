@@ -1,13 +1,7 @@
-{% extends 'links/base.html' %}
+{% extends 'links/layouts/sidebar_left.html' %}
 
 {% block head_page_title %}Links{% endblock %}
 {% block content_title %}Links{% endblock %}
-
-{% block content_main %}
-	{% with 'left' as sidebar_position %}
-		{{ block.super }}
-	{% endwith %}
-{% endblock %}
 
 {% block content %}
 

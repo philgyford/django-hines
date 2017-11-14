@@ -14,6 +14,7 @@ $gray-darkest:  #333;
 $black:         #000;
 
 $blue:          #33f;
+$blue-dark:     #00c;
 $purple:        #90c;
 $red:           #c00;
 
@@ -21,6 +22,11 @@ $red:           #c00;
 $theme-colors: (
   "primary":    $blue,
   "secondary":  $gray-darkest
+);
+
+$theme-hover-colors: (
+  "primary":    $blue-dark,
+  "secondary":  $black
 );
 
 $yiq-text-dark:   $gray-darkest;
@@ -123,12 +129,12 @@ $table-cell-padding:          .75rem;
 // Shared variables that are reassigned to `$input-` and `$button-` specific variables.
 
 $input-button-padding-y:         .375rem;
-$input-button-padding-x:         .75rem;
+$input-button-padding-x:         .5rem;
 $input-button-line-height:       $line-height-base;
 
 $input-button-focus-width:       .2rem;
 
-$input-button-padding-y-sm:      .25rem;
+$input-button-padding-y-sm:      .2rem;
 $input-button-padding-x-sm:      .5rem;
 $input-button-line-height-sm:    $line-height-sm;
 
@@ -192,7 +198,7 @@ $form-feedback-invalid-color:           $red;
 
 // Navs
 
-$nav-link-padding-y:                .5rem;
+$nav-link-padding-y:                    .5rem;
 
 
 // Navbar

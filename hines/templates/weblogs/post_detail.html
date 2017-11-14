@@ -1,4 +1,5 @@
-{% extends 'weblogs/base.html' %}
+{% extends 'hines_core/layouts/no_sidebar.html' %}
+
 {% load comments %}
 {% load hines_core %}
 {% load hines_weblogs %}
@@ -29,6 +30,27 @@
 			This is a preview. This Post’s status is {{ post.status_str }}.
 		</p>
 	{% endif %}
+
+		<div class="card-body">
+			<p class="mb-0">Published at {% display_time post.time_published link_to_day=True %}</p>
+
+			{% with post.get_previous_post as previous_post %}
+				{% with post.get_next_post as next_post %}
+					{% if previous_post or next_post %}
+						<nav class="nextprev">
+							<p>
+								{% if previous_post %}
+									<a class="btn btn-outline-primary" href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; Older post</a>
+								{% endif %}
+								{% if next_post %}
+									<a class="btn btn-outline-primary float-right" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Newer post &rarr;</a>
+								{% endif %}
+							</p>
+						</nav>
+					{% endif %}
+				{% endwith %}
+			{% endwith %}
+		</div>
 
 	{% include 'weblogs/includes/post.html' with post=post in_list=False perms=perms only %}
 
@@ -73,29 +95,3 @@
 
 {% endblock %}
 
-
-{% block sidebar %}
-
-	<div class="card mb-3">
-		<div class="card-body">
-			<p class="mb-0">Published at {% display_time post.time_published link_to_day=True %}</p>
-
-			{% with post.get_previous_post as previous_post %}
-				{% with post.get_next_post as next_post %}
-					{% if previous_post or next_post %}
-						<nav class="nextprev">
-							<p>
-								{% if previous_post %}
-									<a class="btn btn-outline-primary" href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; Older post</a>
-								{% endif %}
-								{% if next_post %}
-									<a class="btn btn-outline-primary float-right" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}">Newer post &rarr;</a>
-								{% endif %}
-							</p>
-						</nav>
-					{% endif %}
-				{% endwith %}
-			{% endwith %}
-		</div>
-	</div>
-{% endblock %}

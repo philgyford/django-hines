@@ -1,16 +1,10 @@
-{% extends 'weblogs/base.html' %}
+{% extends 'hines_core/layouts/sidebar_left.html' %}
 
 {% load hines_weblogs %}
 {% load hines_core %}
 
 {% block head_page_title %}{{ blog.name }}{% endblock %}
 {% block content_title %}{{ blog.name }}{% endblock %}
-
-{% block content_main %}
-	{% with 'left' as sidebar_position %}
-		{{ block.super }}
-	{% endwith %}
-{% endblock %}
 
 {% block content %}
 

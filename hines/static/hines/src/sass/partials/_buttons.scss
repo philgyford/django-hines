@@ -46,7 +46,8 @@
 
 @each $color, $value in $theme-colors {
   .button--#{$color} {
-    @include button-variant($value, $value);
+    $hover-color: map-get($theme-hover-colors, $color);
+    @include button-variant($value, $value, $hover-color, $hover-color, $hover-color, $hover-color);
   }
 }
 

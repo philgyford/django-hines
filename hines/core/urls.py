@@ -55,10 +55,19 @@ urlpatterns = [
         name='day_archive'
     ),
 
-    url(r'^components/$',
-        TemplateView.as_view(template_name='hines_core/components.html'),
-        {'url': '/phil/components/'},
-        name='components'),
+    # Components pattern library.
+
+    url(r'^components/',
+        include([
+            url(r'^$',
+                TemplateView.as_view(template_name='hines_core/components/home.html'),
+                name='home'),
+            url(r'^forms/$',
+                TemplateView.as_view(template_name='hines_core/components/forms.html'),
+                name='forms'),
+        ],
+        namespace='components'),
+    ),
 
 
     url(r'^', include('hines.weblogs.urls')),
