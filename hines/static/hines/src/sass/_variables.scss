@@ -6,16 +6,16 @@
 //
 // https://www.w3.org/TR/2008/NOTE-WCAG20-TECHS-20081211/working-examples/G183/link-contrast.html
 
-$white:				  #fff;
+$white:         #fff;
 $gray-light:    #ccc;
-$gray-medium:		#999;
+$gray-medium:   #999;
 $gray-dark:     #666;
-$gray-darkest:	#333;
-$black:				  #000;
+$gray-darkest:  #333;
+$black:         #000;
 
-$blue:				  #33f;
-$purple:			  #90c;
-$red:				    #c00;
+$blue:          #33f;
+$purple:        #90c;
+$red:           #c00;
 
 
 $theme-colors: (
@@ -23,8 +23,8 @@ $theme-colors: (
   "secondary":  $gray-darkest
 );
 
-$yiq-text-dark: $gray-darkest;
-$yiq-text-light: $white;
+$yiq-text-dark:   $gray-darkest;
+$yiq-text-light:  $white;
 
 
 // Spacing
@@ -47,8 +47,8 @@ $link-decoration:           underline;
 $link-color:                $blue;
 $link-active-color:         $red;
 $link-hover-color:          darken($link-color, 15%);
-$link-visited-color:		$purple;
-$link-visited-hover-color:	darken($link-visited-color, 15%);
+$link-visited-color:        $purple;
+$link-visited-hover-color:  darken($link-visited-color, 15%);
 
 
 // Paragraphs
@@ -71,17 +71,10 @@ $grid-breakpoints: (
 );
 
 // Grid containers
-//
-// Define the maximum width of `.container` for different screen sizes.
-$container-max-widths: (
-  sm: 550px,
-  md: 740px,
-  lg: 960px,
-  xl: 1140px
-);
 
-$grid-columns:			4;
-$grid-gutter-width:     30px;
+$grid-columns:      4;
+$grid-gutter-width: 30px;
+$grid-max-width:    1140px;
 
 // Fonts
 
@@ -211,9 +204,9 @@ $nav-link-height:                   ($font-size-base * $line-height-base + $nav-
 $navbar-brand-height:               $navbar-brand-font-size * $line-height-base;
 $navbar-brand-padding-y:            ($nav-link-height - $navbar-brand-height) / 2;
 
-$navbar-link-color:                $link-color;
-$navbar-link-hover-color:          $link-hover-color;
-$navbar-link-active-color:         $link-active-color;
+$navbar-link-color:                 $link-color;
+$navbar-link-hover-color:           $link-hover-color;
+$navbar-link-active-color:          $link-active-color;
 
+$navbar-text-color:                 $body-color;
 
-$navbar-text-color:         $body-color;
