@@ -7,7 +7,7 @@
 		<title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
 		<!-- inject:css -->
-		<link rel="stylesheet" href="/static/hines/css/site-9df18ae0cd.css">
+		<link rel="stylesheet" href="/static/hines/css/site-f0b1b6a009.css">
 		<!-- endinject -->
 
 		{% get_all_blogs_by_slug as all_blogs %}
@@ -43,37 +43,37 @@
 					</a>
 				</div>
 				<ul class="navbar__nav">
-					<li{% if blog and blog.slug == 'writing' %} class="active"{% endif %}>
+					<li class="nav__item{% if blog and blog.slug == 'writing' %} active{% endif %}">
 						<a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">
 							Writing
 						</a>
 					</li>
-					<li class="{% block photos_nav_active %}{% endblock %}">
+					<li class="nav__item {% block photos_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'photos:home' %}">
 							Photos
 						</a>
 					</li>
-					<li class="{% block links_nav_active %}{% endblock %}">
+					<li class="nav__item {% block links_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'pinboard:home' %}">
 							Links
 						</a>
 					</li>
-					<li{% if blog and blog.slug == 'comments' %}class="active"{% endif %}>
+					<li class="nav__item{% if blog and blog.slug == 'comments' %} active{% endif %}">
 						<a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">
 							Comments
 						</a>
 					</li>
-					<li class="{% block reading_nav_active %}{% endblock %}">
+					<li class="nav_item {% block reading_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'spectator:reading:home' %}">
 							Reading
 						</a>
 					</li>
-					<li class="{% block misc_nav_active %}{% endblock %}">
+					<li class="nav__item nav__item--split {% block misc_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'hines:misc' %}">
 							More
 						</a>
 					</li>
-					<li class="{% block about_nav_active %}{% endblock %}">
+					<li class="nav__item {% block about_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'hines:about' %}">
 							About&nbsp;me
 						</a>
