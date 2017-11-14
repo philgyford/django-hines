@@ -7,7 +7,7 @@
 		<title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
 		<!-- inject:css -->
-		<link rel="stylesheet" href="/static/hines/css/site-492332845c.css">
+		<link rel="stylesheet" href="/static/hines/css/site-af7e21130c.css">
 		<!-- endinject -->
 
 		{% get_all_blogs_by_slug as all_blogs %}
@@ -87,19 +87,22 @@
 			</div> <!-- .grid -->
 		</nav>
 
-		<div id="content" class="grid">
-
+		<main id="content" class="grid">
 			{% block content_heading %}
-				<h1>
-					{% block content_title %}
-					{% endblock %}
-				</h1>
+        <div class="grid__row">
+          <header class="grid__col {% if sidebar_position == 'none' %}grid__col--main grid__col--main--only{% else %}grid__col--full{% endif %}">
+            <h1>
+              {% block content_title %}
+              {% endblock %}
+            </h1>
+          </header>
+        </div>
 			{% endblock %}
 
 			{% block content_main %}
 				<div class="grid__row">
 					{% block content_column %}
-						<div class="grid__col grid__col--main{% if sidebar_position == 'left' %} grid__col--last{% endif %}">
+            <div class="grid__col grid__col--main{% if sidebar_position == 'left' %} grid__col--last{% elif sidebar_position == 'none' %} grid__col--main--only{% endif %}">
 							{% block content %}
 							{% endblock content %}
 						</div> <!-- .grid__col -->
@@ -112,7 +115,7 @@
 					{% endblock sidebar_column %}
 				</div>
 			{% endblock content_main %}
-		</div>
+		</main>
 
 		<footer>
 			<div class="grid">

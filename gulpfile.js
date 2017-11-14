@@ -56,7 +56,7 @@ var PATHS = {
     jsFiles:        STATIC_DIR + '/hines/js/**/*.js'
   },
   templates: {
-    files:          [TEMPLATES_DIR + '/hines_core/base.html',
+    files:          [TEMPLATES_DIR + '/hines_core/layouts/base.html',
                      TEMPLATES_DIR + '/400.html',
                      TEMPLATES_DIR + '/403.html',
                      TEMPLATES_DIR + '/404.html',

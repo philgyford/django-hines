@@ -1,8 +1,17 @@
 {% extends 'hines_core/layouts/base.html' %}
 
+{% block content_heading %}
+	{% with 'none' as sidebar_position %}
+		{{ block.super }}
+	{% endwith %}
+{% endblock %}
+
 {% block content_main %}
 	{% with 'none' as sidebar_position %}
 		{{ block.super }}
 	{% endwith %}
 {% endblock %}
 
+
+{% block sidebar_column %}
+{% endblock %}
