@@ -1,8 +1,7 @@
-{% extends 'hines_core/layouts/sidebar_left.html' %}
+{% extends 'hines_core/components/base.html' %}
 
-
-{% block head_page_title %}Components: Forms{% endblock %}
-{% block content_title %}Components: Forms{% endblock %}
+{% block head_page_title %}{{ block.super }}: Forms{% endblock %}
+{% block content_title %}{{ block.super }}: Forms{% endblock %}
 
 
 {% block content %}

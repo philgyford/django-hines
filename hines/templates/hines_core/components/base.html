@@ -1,0 +1,14 @@
+{% extends 'hines_core/layouts/sidebar_left.html' %}
+
+{% block head_page_title %}Components{% endblock %}
+{% block content_title %}Components{% endblock %}
+
+
+{% block sidebar %}
+
+	<ul>
+	  <li><a href="{% url 'hines:components:forms' %}">Forms</a></li>
+	  <li><a href="{% url 'hines:components:type' %}">Type</a></li>
+	</ul>
+
+{% endblock sidebar %}

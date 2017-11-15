@@ -103,9 +103,14 @@ $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 $line-height-base:            1.5;
 
+$headings-margin-bottom:      ($spacer / 2);
+$headings-font-family:        inherit;
+$headings-font-weight:        500;
+$headings-line-height:        1.2;
+$headings-color:              inherit;
+
 $line-height-sm:              $line-height-base; 
 
-$headings-margin-bottom:      ($spacer / 2);
 
 $lead-font-size:              ($font-size-base * 1.25);
 $lead-font-weight:            300;
