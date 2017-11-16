@@ -1,17 +1,13 @@
-//.nav__item--split::before {
-  //content: "• ";
-  //display: list-item;
-//}
-
-
 
 .navbar {
+  font-family: $font-family-sans-serif;
   position: relative;
   width: 100%;
   max-width: $grid-max-width;
   margin: 0.5rem auto $navbar-border-width auto;
   font-weight: bold;
   text-rendering: optimizeLegibility;
+  @include hyphens(none);
 }
 
 .navbar__inner {

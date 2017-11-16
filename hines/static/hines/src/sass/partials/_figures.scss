@@ -1,0 +1,34 @@
+/*
+ * <figure class="figure figure--blockquote">
+ *  <blockquote>
+ *    <p>My quote</p>
+ *  </blockquote>
+ *  <figcaption>
+ *    A caption, <cite>And A Citation</cite>
+ *  </figcaption>
+ * </figure>
+ */
+
+.figure {
+
+  blockquote {
+    border-left: $border-width solid $black;
+    padding-left: $border-width;
+    padding-right: ($border-width * 2);
+  }
+}
+
+.figure--blockquote {
+  figcaption {
+    padding: 0 ($border-width * 2);
+  }
+}
+
+pre {
+  white-space: pre;
+
+  code {
+    word-wrap: normal;
+    white-space: pre-wrap;
+  }
+}

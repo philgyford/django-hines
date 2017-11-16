@@ -1,3 +1,20 @@
+body {
+  word-wrap: break-word;
+  /* @include hyphens(auto) */
+}
+
+input,
+abbr,
+acronym,
+blockquote,
+code,
+kbd,
+q,
+samp,
+var {
+  @include hyphens(none);
+}
+
 // Headings
 
 h1, h2, h3, h4, h5, h6 {
@@ -8,4 +25,56 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $headings-font-family;
   font-weight: $headings-font-weight;
   color: $headings-color;
+}
+
+h1 {
+  font-size: ($font-size-base * 2); //36
+}
+h2 {
+  font-size: ($font-size-base * 1.61111); //29
+}
+h3 {
+  font-size: ($font-size-base * 1.277778); //23
+}
+h4 {
+  font-size: $font-size-base; //18
+}
+h5, h6 {
+  font-size: $font-size-sm;
+}
+
+
+hr {
+  margin-top: $paragraph-margin-bottom;
+  margin-bottom: $paragraph-margin-bottom;
+  border: 0;
+  border-top: $hr-border-width solid $hr-border-color;
+}
+
+ul {
+  list-style-type: square;
+}
+
+pre {
+  white-space: pre;
+  background: $gray-light;
+  padding: 1rem ($border-width * 2);
+
+  code {
+    word-wrap: normal;
+    white-space: pre-wrap;
+  }
+}
+
+code {
+  font-family: $font-family-monospace;
+  background: $gray-light;
+  color: $black;
+  white-space: pre;
+}
+
+abbr {
+  @each $prefix in $browser-prefixes {
+    #{$prefix}font-variant: small-caps;
+  }
 }

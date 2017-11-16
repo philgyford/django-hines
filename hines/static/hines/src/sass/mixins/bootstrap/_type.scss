@@ -1,0 +1,13 @@
+// Hyphens
+// -------------------------------------//
+// @notes
+// http://caniuse.com/#search=hyphens
+// http://trentwalton.com/2011/09/07/css-hyphenation
+//
+// @values              [ none | manual | auto ]
+
+@mixin hyphens($val) {
+  @each $prefix in $browser-prefixes {
+    #{$prefix}hyphens: $val;
+  }
+}

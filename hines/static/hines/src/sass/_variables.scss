@@ -3,6 +3,8 @@
 
 $img-path:      "../img/css/";
 
+$browser-prefixes: -webkit-, -moz-, -ms-, '';
+
 //
 // Color system
 //
@@ -59,12 +61,6 @@ $link-visited-color:        $purple;
 $link-visited-hover-color:  darken($link-visited-color, 15%);
 
 
-// Paragraphs
-//
-// Style p element.
-
-$paragraph-margin-bottom:   1rem;
-
 
 // Grid breakpoints
 //
@@ -78,11 +74,18 @@ $grid-breakpoints: (
   xl: 1200px
 );
 
+
+// What we use for hr's, navbar rules, etc:
+$border-width: 12px;
+$border-color: $black;
+
+
 // Grid containers
 
 $grid-columns:      4;
-$grid-gutter-width: 30px;
+$grid-gutter-width: ($border-width * 4);
 $grid-max-width:    1140px;
+
 
 // Fonts
 
@@ -93,11 +96,11 @@ $font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Rob
 
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-$font-family-base:            $font-family-sans-serif;
+$font-family-base:            $font-family-serif;
 
-$font-size-base:              1rem; // Assumes the browser default, typically `16px`
-$font-size-lg:                ($font-size-base * 1.25);
-$font-size-sm:                ($font-size-base * .8125);
+$font-size-base:              (1rem * 1.125); // probably 18px
+$font-size-lg:                ($font-size-base * 1.3333); // 24px
+$font-size-sm:                ($font-size-base * .72222); // 13px
 
 //$font-weight-light:           300;
 $font-weight-normal:          400;
@@ -106,7 +109,9 @@ $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 $line-height-base:            1.5;
 
-$headings-margin-bottom:      ($spacer / 2);
+$paragraph-margin-bottom:     ($font-size-base);
+
+$headings-margin-bottom:      $paragraph-margin-bottom;
 $headings-font-family:        inherit;
 $headings-font-weight:        500;
 $headings-line-height:        1.2;
@@ -119,7 +124,12 @@ $lead-font-weight:            300;
 
 $text-muted:                  $gray-medium;
 
+$hr-border-color:             $border-color;
+$hr-border-width:             $border-width;
+
 $dt-font-weight:              $font-weight-bold;
+
+
 
 
 // Tables
@@ -208,14 +218,14 @@ $navbar-link-padding-x:             0.5rem;
 
 // Navbar
 
-$navbar-brand-font-size:            $font-size-lg;
+$navbar-brand-font-size:            (1rem * 1.25); // probably 20px
 
 $navbar-link-color:                 $link-color;
 $navbar-link-hover-color:           $link-hover-color;
 $navbar-link-active-color:          $link-active-color;
-$navbar-link-font-size:             $font-size-base;
+$navbar-link-font-size:             1rem;
 
 $navbar-text-color:                 $body-color;
 
-$navbar-border-width:               12px;
+$navbar-border-width:               $border-width;
 
