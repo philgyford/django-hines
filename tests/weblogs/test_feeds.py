@@ -100,7 +100,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.assertChildNodeContent(image_el, {
             # This gets a hash on the end from WhiteNoise, so leaving it off
             # the test for now:
-            # 'url': 'http://127.0.0.1:8000/static/img/feed_icon.jpg',
+            # 'url': 'http://127.0.0.1:8000/static/img/site_icon.jpg',
             'title': 'Site icon',
             'link': 'http://127.0.0.1:8000'
         })

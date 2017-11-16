@@ -11,6 +11,7 @@
   border: $button-border-width solid transparent;
   @include button-size($button-padding-y, $button-padding-x, $font-size-base, $button-line-height, 0);
   transition: $button-transition;
+  text-transform: uppercase;
 
   &:focus,
   &:hover {

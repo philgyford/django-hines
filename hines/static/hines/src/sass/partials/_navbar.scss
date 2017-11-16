@@ -1,32 +1,45 @@
 //.nav__item--split::before {
-	//content: "• ";
-	//display: list-item;
+  //content: "• ";
+  //display: list-item;
 //}
-.nav__item--split {
-	list-style: disc;
-	margin-left: 1.8rem;
-}
+
+
 
 .navbar {
   position: relative;
-
-  .grid {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-  }
+  width: 100%;
+  max-width: $grid-max-width;
+  margin: 0.5rem auto $navbar-border-width auto;
+  font-weight: bold;
+  text-rendering: optimizeLegibility;
 }
+
+.navbar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-left: ($grid-gutter_width / 2);
+  margin-right: ($grid-gutter_width / 2);
+}
+
+//.navbar__icon {
+  //width: 50px;
+  //height: 50px;
+  //background: url("../img/site_icon.jpg") 0 0 no-repeat;
+  //background-size: contain;
+//}
 
 .navbar__title {
   order: 1;
-  padding-top: $navbar-brand-padding-y;
-  padding-bottom: $navbar-brand-padding-y;
-  margin-right: $navbar-padding-x;
   font-size: $navbar-brand-font-size;
-  line-height: inherit;
+  line-height: 1.2em;
   white-space: nowrap;
-    margin-right: auto;
+  text-transform: uppercase;
+  margin-right: auto;
+  border-bottom: $navbar-border-width solid $black;
+  width: 100%;
+  padding-bottom: 1px;
 
   a {
     color: $navbar-text-color;
@@ -36,10 +49,13 @@
     &:hover,
     &:visited {
       color: $navbar-text-color;
-      text-decoration: underline;
+      text-decoration: none;
     }
     &:visited {
       color: $navbar-text-color;
+    }
+    &:hover {
+      color: $navbar-link-hover-color;
     }
   }
 }
@@ -48,20 +64,36 @@
   display: flex;
   flex-direction: row;
   order: 3;
-  padding-left: 0;
+  flex-grow: 2;
+  flex-wrap: wrap;
   list-style: none;
+  padding-left: 0;
+  margin-top: ($navbar-border-width * 0.8);
   margin-bottom: 0;
   // Maximise space between links and search:
   margin-right: auto;
+  background: url('#{$img-path}navbar_nav_bg.png') 0 0 repeat;
+
+  .nav__item {
+    line-height: $navbar-border-width;
+    padding: 0 $navbar-link-padding-x 0 0;
+    background: $white;
+    margin-bottom: $navbar-border-width;
+    padding-left: 0;
+  }
+
+  .nav__item--split {
+    margin-left: $navbar-border-width;
+    padding-left: $navbar-link-padding-x;
+  }
 
   .nav__link {
     display: block;
-    padding-right: .5rem;
-    padding-left: .5rem;
+    font-size: $navbar-link-font-size;
+    padding: 0;
     color: $navbar-link-color;
-    font-variant: small-caps;
-    text-transform: lowercase;
     text-decoration: none;
+    text-transform: uppercase;
 
     &:focus,
     &:hover {
@@ -73,39 +105,88 @@
     }
   }
 
-  .active > .nav__link,
-  .nav__link.active {
-    color: $navbar-text-color;
-  }
+  //.active > .nav__link,
+  //.nav__link.active {
+    //color: $navbar-text-color;
+  //}
 }
 
 .navbar__form {
+  /* At narrowest widths, navbar__form goes underneath navbar__title. */
   order: 2;
-}
+  flex-grow: 2;
+  align-self: flex-start;
+  padding-top: ($navbar-border-width / 2); 
+  padding-bottom: ($navbar-border-width / 2);
+  border-bottom: $navbar-border-width solid $black;
 
-@include media-breakpoint-up(sm) {
-  // Search to right of nav links.
-
-  .navbar__nav {
-    width: 100%;
+  form {
+    float: right;
   }
+
+  .form--inline .form__control {
+    width: 8em;
+    margin-right: ($navbar-border-width / 2);
+    border: 1px solid $black;
+  }
+  //input {
+    //background: blue;
+  //}
 }
 
-@media (min-width: 900px) {
-  // All on one line.
+
+@media (min-width: 460px) {
+  /* Form is to right of title. Nav is underneath. */
 
   .navbar__title {
     width: auto;
-    margin-right: $spacer;
+  }
+
+  .navbar__form {
+    padding-top: 0;
+    /* So it lines up with bottom of navbar__title's text: */
+    padding-bottom: 6px;
+  }
+  //.navbar__form input {
+    //background: green;
+  //}
+
+}
+
+@media (min-width: 860px) {
+  /* Form is to right of title. Nav is in line with title's bottom border. */
+
+  .navbar {
+    /* Replace margin we're taking off the nav__item by adding it to the .navbar's, which is usually $navbar-border-width. */
+    margin-bottom: ($navbar-border-width * 2);
+  }
+
+  .navbar__title {
+    width: auto;
+    margin-right: $navbar-link-padding-x;
+    margin-top: 4px;
   }
 
   .navbar__nav {
     order: 2;
     width: auto;
+
+    .nav__item {
+      margin-bottom: 0;
+    }
   }
 
   .navbar__form {
-    order: 3;
+    position: absolute;
+    /* For some reason. To give it 6px space beneath: */
+    top: -1px;
+    right: ($grid-gutter-width / 2);
+    border-bottom: none;
+    padding-bottom: 0;
   }
+
+  //.navbar__form input {
+    //background: yellow;
+  //}
 }
 

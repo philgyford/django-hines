@@ -7,7 +7,7 @@
 		<title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
 		<!-- inject:css -->
-		<link rel="stylesheet" href="/static/hines/css/site-5e8f7add4c.css">
+		<link rel="stylesheet" href="/static/hines/css/site-7de3b69a2e.css">
 		<!-- endinject -->
 
 		{% get_all_blogs_by_slug as all_blogs %}
@@ -34,9 +34,12 @@
 		<a class="u-sr-only u-sr-only-focusable" href="#content">Skip to main content</a>
 
 		<nav class="navbar">
-			<div class="grid">
+			<!--
+			<div class="navbar__icon"></div>
+			-->
+			<div class="navbar__inner">
 				<div class="navbar__title">
-					<a href="{% url 'home' %}">
+					<a href="{% url 'home' %}" title="To the front page of the site">
 						{% block navbar_title %}
 							{{ site_name}}
 						{% endblock %}
@@ -63,28 +66,30 @@
 							Comments
 						</a>
 					</li>
-					<li class="nav_item {% block reading_nav_active %}{% endblock %}">
+					<li class="nav__item {% block reading_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'spectator:reading:home' %}">
 							Reading
 						</a>
 					</li>
-					<li class="nav__item nav__item--split {% block misc_nav_active %}{% endblock %}">
+					<li class="nav__item {% block misc_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'hines:misc' %}">
 							More
 						</a>
 					</li>
-					<li class="nav__item {% block about_nav_active %}{% endblock %}">
+					<li class="nav__item nav__item--split {% block about_nav_active %}{% endblock %}">
 						<a class="nav__link" href="{% url 'hines:about' %}">
 							About&nbsp;me
 						</a>
 					</li>
 				</ul>
-				<form action="http://www.google.com/search" method="get" class="navbar__form form--inline">
-					<input name="q" class="form__control form__control--sm" type="text" placeholder="Search" aria-label="Search" size="15">
-					<input type="hidden" name="as_sitesearch" value="www.gyford.com">
-					<button class="button button--sm button--secondary" type="submit">Go</button>
-				</form>
-			</div> <!-- .grid -->
+				<div class="navbar__form">
+					<form action="http://www.google.com/search" method="get" class="form--inline">
+						<input name="q" class="form__control form__control--sm" type="text" placeholder="Search" aria-label="Search" size="12">
+						<input type="hidden" name="as_sitesearch" value="www.gyford.com">
+						<button class="button button--sm button--secondary" type="submit">Go</button>
+					</form>
+				</div>
+			</div> <!-- .navbar__inner -->
 		</nav>
 
 		<main id="content" class="grid">
