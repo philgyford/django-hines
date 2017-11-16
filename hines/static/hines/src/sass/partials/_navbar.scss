@@ -92,23 +92,30 @@
     font-size: $navbar-link-font-size;
     padding: 0;
     color: $navbar-link-color;
-    text-decoration: none;
     text-transform: uppercase;
+    white-space: nowrap;
 
     &:focus,
     &:hover {
       color: $navbar-link-hover-color;
-      text-decoration: underline;
     }
     &:active {
       color: $navbar-link-active-color;
     }
   }
 
-  //.active > .nav__link,
-  //.nav__link.active {
-    //color: $navbar-text-color;
-  //}
+  .active > .nav__link,
+  .nav__link.active {
+    color: $navbar-text-color;
+
+  }
+  .active > a.nav__link,
+  a.nav__link.active {
+    &:focus,
+    &:hover {
+      color: $navbar-link-hover-color;
+    }
+  }
 }
 
 .navbar__form {
