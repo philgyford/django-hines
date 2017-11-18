@@ -72,11 +72,14 @@
   background: url('#{$img-path}navbar_nav_bg.png') 0 0 repeat;
 
   .nav__item {
-    line-height: $navbar-border-width;
-    padding: 0 $navbar-link-padding-x 0 0;
     background: $white;
-    margin-bottom: $navbar-border-width;
-    padding-left: 0;
+    padding: 0 $navbar-link-padding-x 0 0;
+    /* When line-height and margin-bottom were both $navbar-border-width, then
+     * the ul's background stripe showed through very slightly, especially on a
+     * Retina screen. So, adjust them like this to help cover the bg with the
+     * li's background color: */
+    line-height: ($navbar-border-width + 1);
+    margin-bottom: ($navbar-border-width - 1);
   }
 
   .nav__item--split {
