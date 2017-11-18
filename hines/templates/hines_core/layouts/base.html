@@ -7,7 +7,7 @@
 		<title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
 		<!-- inject:css -->
-		<link rel="stylesheet" href="/static/hines/css/site-1284fb28cd.css">
+		<link rel="stylesheet" href="/static/hines/css/site-facb782a35.css">
 		<!-- endinject -->
 
 		{% get_all_blogs_by_slug as all_blogs %}
@@ -45,7 +45,7 @@
 					</a>
 				</div>
         {% current_url_name as url_name %}
-				<ul class="navbar__nav">
+				<ul class="navbar__nav js-navbar-nav">
 					<li class="nav__item{% if blog and blog.slug == 'writing' %} active{% endif %}">
             {% if url_name != 'hines:blog_detail' or page_obj.number > 1 %}
               <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">
@@ -124,7 +124,7 @@
             {% endif %}
 					</li>
 				</ul>
-				<div class="navbar__form">
+				<div class="navbar__form js-navbar-form">
 					<form action="http://www.google.com/search" method="get" class="form--inline">
 						<input name="q" class="form__control form__control--sm" type="text" placeholder="Search" aria-label="Search" size="12">
 						<input type="hidden" name="as_sitesearch" value="www.gyford.com">
@@ -204,8 +204,26 @@
 		</footer>
 
 		<!-- inject:js -->
+		<script src="/static/hines/js/site-3fd10a50db.min.js"></script>
 		<!-- endinject -->
 
+    <script>
+      var ready = function (callback) {
+        if (document.readyState === 'complete') {
+          return callback();
+        };
+
+        // If not loaded, wait until it is.
+        document.addEventListener('DOMContentLoaded', callback, false);
+      };
+
+      ready(function() {
+        var navbar = hines.navbar();
+        navbar.init();
+      });
+
+    </script>
+  
 		{% include 'hines_core/includes/analytics.html' %}
 
 		{% block foot_extra %}

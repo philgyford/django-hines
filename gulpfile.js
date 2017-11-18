@@ -183,7 +183,7 @@ gulp.task('sass:watch', function () {
  * Watch both JS and Sass files for changes.
  */
 gulp.task('watch', gulp.parallel(
-  //'js:watch',
+  'js:watch',
   'sass:watch'
 ));
 
@@ -193,7 +193,7 @@ gulp.task('watch', gulp.parallel(
  */
 gulp.task('default', gulp.series(
   gulp.parallel(
-    //'js',
+    'js',
     'sass'
   ),
   'inject'
