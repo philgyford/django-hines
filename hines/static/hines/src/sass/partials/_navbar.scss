@@ -36,6 +36,7 @@
   border-bottom: $navbar-border-width solid $black;
   width: 100%;
   padding-bottom: 1px;
+  margin-top: 11px;
 
   a {
     color: $navbar-text-color;
@@ -143,7 +144,7 @@
 }
 
 
-@media (min-width: 460px) {
+@media (min-width: 510px) {
   /* Form is to right of title. Nav is underneath. */
 
   .navbar__title {
@@ -157,9 +158,8 @@
   .navbar__form {
     order: 2;	
     margin-bottom: 0;
-    padding-top: ($navbar-border-width / 2); 
-    /* So it lines up with bottom of navbar__title's text: */
-    padding-bottom: 6px;
+    //padding-top: ($navbar-border-width / 2); 
+    padding-bottom: $navbar-border-width;
 
     body.js-can-navbar & {
       display: block;
@@ -187,7 +187,7 @@
   .navbar__title {
     width: auto;
     margin-right: $navbar-link-padding-x;
-    margin-top: 4px;
+    margin-top: 10px;
   }
 
   .navbar__nav {
@@ -201,8 +201,7 @@
 
   .navbar__form {
     position: absolute;
-    /* For some reason. To give it 6px space beneath: */
-    top: -1px;
+    top: 0;
     right: ($grid-gutter-width / 2);
     border-bottom: none;
     padding-top: 0;
