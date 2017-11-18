@@ -69,7 +69,13 @@
   margin-bottom: 0;
   // Maximise space between links and search:
   margin-right: auto;
-  background: url('#{$img-path}navbar_nav_bg.png') 0 0 repeat;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    $black,
+    $black $navbar-border-width,
+    $white $navbar-border-width,
+    $white ($navbar-border-width * 2)
+  );
 
   .nav__item {
     background: $white;
