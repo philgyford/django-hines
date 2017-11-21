@@ -65,7 +65,7 @@
   flex-wrap: wrap;
   list-style: none;
   padding-left: 0;
-  margin-top: ($navbar-border-width * 0.8);
+  margin-top: $navbar-border-width;
   margin-bottom: 0;
   // Maximise space between links and search:
   margin-right: auto;
@@ -80,12 +80,8 @@
   .nav__item {
     background: $white;
     padding: 0 $navbar-link-padding-x 0 0;
-    /* When line-height and margin-bottom were both $navbar-border-width, then
-     * the ul's background stripe showed through very slightly, especially on a
-     * Retina screen. So, adjust them like this to help cover the bg with the
-     * li's background color: */
-    line-height: ($navbar-border-width + 1);
-    margin-bottom: ($navbar-border-width - 1);
+    line-height: $navbar-border-width;
+    margin-bottom: $navbar-border-width;
   }
 
   .nav__item--split {
@@ -100,6 +96,9 @@
     color: $navbar-link-color;
     text-transform: uppercase;
     white-space: nowrap;
+
+    // Need to repeat this for the search button at narrow widths:
+    font-weight: bold;
 
     &:focus,
     &:hover {
@@ -165,9 +164,9 @@
   }
 
   .navbar__form {
-    order: 2;	
+    order: 2;
     margin-bottom: 0;
-    //padding-top: ($navbar-border-width / 2); 
+    //padding-top: ($navbar-border-width / 2);
     padding-bottom: $navbar-border-width;
 
     body.js-can-navbar & {

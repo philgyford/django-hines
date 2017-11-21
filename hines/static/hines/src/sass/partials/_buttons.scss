@@ -54,6 +54,49 @@
 }
 
 //
+// Link buttons
+//
+
+// Make a button look and behave like a link
+.button--link {
+  font-weight: $font-weight-normal;
+  color: $link-color;
+  background-color: transparent;
+  border: none;
+  text-transform: none;
+  text-decoration: $link-decoration;
+
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: $link-decoration;
+    cursor: pointer;
+  }
+  //@include hover {
+    //color: $link-hover-color;
+    //text-decoration: $link-hover-decoration;
+    //background-color: transparent;
+    //border-color: transparent;
+  //}
+
+  &:focus,
+  &.focus {
+    border-color: transparent;
+    box-shadow: none;
+    text-decoration: $link-decoration;
+    color: $link-active-color;
+  }
+
+  /*
+  &:disabled,
+  &.disabled {
+    color: $button-link-disabled-color;
+  }
+  */
+
+  // No need for an active state here
+}
+
+//
 // Button Sizes
 //
 
