@@ -57,6 +57,7 @@
       var button = document.createElement('button');
       button.setAttribute('aria-expanded', 'false');
       button.setAttribute('aria-controls', formId);
+      button.setAttribute('type', 'button');
       button.setAttribute('class', 'button--link nav__link ' + buttonClass);
       button.textContent = 'Search';
 
