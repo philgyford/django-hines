@@ -12,10 +12,12 @@
   }
 }
 
-@mixin text-style-2($transform) {
+@mixin text-style-1() {
+  font-family: $text-style-1-font-family;
+  font-weight: $text-style-1-font-weight;
+}
+
+@mixin text-style-2() {
   font-family: $text-style-2-font-family;
   font-weight: $text-style-2-font-weight;
-  @if $transform {
-    text-transform: $transform;
-  }
 }

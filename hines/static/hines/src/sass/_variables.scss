@@ -112,8 +112,6 @@ $line-height-base:            1.5;
 $paragraph-margin-bottom:     $font-size-base;
 
 $headings-margin-bottom:      $paragraph-margin-bottom;
-$headings-font-family:        inherit;
-$headings-font-weight:        500;
 $headings-line-height:        1.2;
 $headings-color:              inherit;
 
@@ -128,6 +126,9 @@ $hr-border-color:             $border-color;
 $hr-border-width:             $border-width;
 
 $dt-font-weight:              $font-weight-bold;
+
+$text-style-1-font-family:    $font-family-serif;
+$text-style-1-font-weight:    $font-weight-normal;
 
 $text-style-2-font-family:    $font-family-sans-serif;
 $text-style-2-font-weight:    $font-weight-bold;

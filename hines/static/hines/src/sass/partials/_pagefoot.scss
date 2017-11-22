@@ -1,10 +1,5 @@
 
 .pagefoot {
-  @include text-style-2(uppercase);
-
-  h1 {
-    font-weight: $text-style-2-font-weight;
-  }
 }
 
 .pagefoot__inner {

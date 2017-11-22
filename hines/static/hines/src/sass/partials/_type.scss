@@ -23,9 +23,8 @@ h1, h2, h3, h4, h5, h6,
   line-height: $headings-line-height;
   margin-top: 0;
   margin-bottom: $headings-margin-bottom;
-  font-family: $headings-font-family;
-  font-weight: $headings-font-weight;
   color: $headings-color;
+  text-transform: uppercase;
 }
 
 h1, .h1 { font-size: ($font-size-base * 1.6666667);  /* 30 */ }
@@ -41,6 +40,22 @@ h6, .h6 { font-size: $font-size-sm;                  /* 13 */ }
   h3, .h3 { font-size: ($font-size-base * 1.277778); /* 23 */ }
 }
 
+.text-style-1 {
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    @include text-style-1();
+    text-transform: none;
+  }
+
+  dd,
+  dt,
+  figcaption,
+  li,
+  p {
+    @include text-style-1();
+  }
+
+}
 
 hr {
   margin-top: $paragraph-margin-bottom;
@@ -66,6 +81,7 @@ pre {
 
 code {
   font-family: $font-family-monospace;
+  font-weight: $font-weight-normal;
   background: $gray-light;
   color: $black;
   white-space: pre;

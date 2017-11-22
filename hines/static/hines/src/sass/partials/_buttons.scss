@@ -3,7 +3,8 @@
 
 .button {
   display: inline-block;
-  @include text-style-2(uppercase);
+  font-weight: $text-style-2-font-weight;
+  text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;

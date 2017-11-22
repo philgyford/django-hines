@@ -1,6 +1,6 @@
 
 .navbar {
-  @include text-style-2(uppercase);
+  text-transform: uppercase;
   position: relative;
   width: 100%;
   max-width: $grid-max-width;
@@ -92,7 +92,6 @@
     font-size: $navbar-link-font-size;
     padding: 0;
     color: $navbar-link-color;
-    text-transform: uppercase;
     white-space: nowrap;
 
     // Need to repeat this for the search button at narrow widths:

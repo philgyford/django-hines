@@ -1,12 +1,14 @@
 {% extends 'hines_core/layouts/no_sidebar.html' %}
-
-{% load comments %}
-{% load hines_core %}
-{% load hines_weblogs %}
-{% load spectator_reading %}
+{% load comments hines_core hines_weblogs spectator_reading %}
 
 {% block head_page_title %}{{ post.title }}{% endblock %}
 {% block content_title %}{{ post.title }}{% endblock %}
+
+{% block content_heading %}
+  {% with text_style='1' %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock content_heading %}
 
 {% block head_extra %}
 	{{ block.super }}
