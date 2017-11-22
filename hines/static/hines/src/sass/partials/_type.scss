@@ -17,7 +17,8 @@ var {
 
 // Headings
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
   text-rendering: optimizeLegibility;
   line-height: $headings-line-height;
   margin-top: 0;
@@ -27,20 +28,17 @@ h1, h2, h3, h4, h5, h6 {
   color: $headings-color;
 }
 
-h1 {
-  font-size: ($font-size-base * 2); //36
-}
-h2 {
-  font-size: ($font-size-base * 1.61111); //29
-}
-h3 {
-  font-size: ($font-size-base * 1.277778); //23
-}
-h4 {
-  font-size: $font-size-base; //18
-}
-h5, h6 {
-  font-size: $font-size-sm;
+h1, .h1 { font-size: ($font-size-base * 1.6666667);  /* 30 */ }
+h2, .h2 { font-size: ($font-size-base * 1.3888889);  /* 25 */ }
+h3, .h3 { font-size: ($font-size-base * 1.1666667);  /* 21 */ }
+h4, .h4 { font-size: $font-size-base;                /* 18 */ }
+h5, .h5,
+h6, .h6 { font-size: $font-size-sm;                  /* 13 */ }
+
+@include media-breakpoint-up(sm) {
+  h1, .h1 { font-size: ($font-size-base * 2);        /* 36 */ }
+  h2, .h2 { font-size: ($font-size-base * 1.611111); /* 29 */ }
+  h3, .h3 { font-size: ($font-size-base * 1.277778); /* 23 */ }
 }
 
 

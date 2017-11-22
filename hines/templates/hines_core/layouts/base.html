@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-e1fa4ae62f.css">
+    <link rel="stylesheet" href="/static/hines/css/site-dd35efa453.css">
     <!-- endinject -->
 
     {% get_all_blogs_by_slug as all_blogs %}
@@ -46,81 +46,53 @@
         </div>
         {% current_url_name as url_name %}
         <ul class="navbar__nav js-navbar-nav">
-          <li class="nav__item{% if blog and blog.slug == 'writing' %} active{% endif %}">
-            {% if url_name != 'hines:blog_detail' or page_obj.number > 1 %}
-              <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">
-              Writing
-              </a>
+          <li class="nav__item{% if blog.slug == 'writing' %} active{% endif %}">
+            {% if url_name != 'hines:blog_detail' or page_obj.number > 1 or blog.slug != 'writing' %}
+              <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">Writing</a>
             {% else %}
-              <span class="nav__link">
-              Writing
-              </span>
+              <span class="nav__link">Writing</span>
             {% endif %}
           </li>
           <li class="nav__item {% block photos_nav_active %}{% endblock %}">
             {% if url_name != 'photos:home' or page_obj.number > 1 %}
-              <a class="nav__link" href="{% url 'photos:home' %}">
-              Photos
-              </a>
+              <a class="nav__link" href="{% url 'photos:home' %}">Photos</a>
             {% else %}
-              <span class="nav__link">
-              Photos
-              </span>
+              <span class="nav__link">Photos</span>
             {% endif %}
           </li>
           <li class="nav__item {% block links_nav_active %}{% endblock %}">
             {% if url_name != 'pinboard:home' or page_obj.number > 1 %}
-              <a class="nav__link" href="{% url 'pinboard:home' %}">
-              Links
-              </a>
+              <a class="nav__link" href="{% url 'pinboard:home' %}">Links</a>
             {% else %}
-              <span class="nav__link">
-              Links
-              </span>
+              <san class="nav__link">Links</span>
             {% endif %}
           </li>
-          <li class="nav__item{% if blog and blog.slug == 'comments' %} active{% endif %}">
-            {% if url_name != 'hines:blog_detail' or page_obj.number > 1 %}
-              <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">
-              Comments
-              </a>
+          <li class="nav__item{% if blog.slug == 'comments' %} active{% endif %}">
+            {% if url_name != 'hines:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
+              <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
             {% else %}
-              <span class="nav__link">
-              Comments
-              </span>
+              <span class="nav__link">Comments</span>
             {% endif %}
           </li>
           <li class="nav__item {% block reading_nav_active %}{% endblock %}">
             {% if url_name != 'spectator:reading:home' %}
-              <a class="nav__link" href="{% url 'spectator:reading:home' %}">
-              Reading
-              </a>
+              <a class="nav__link" href="{% url 'spectator:reading:home' %}">Reading</a>
             {% else %}
-              <span class="nav__link">
-              Reading
-              </span>
+              <span class="nav__link">Reading</span>
             {% endif %}
           </li>
           <li class="nav__item {% block misc_nav_active %}{% endblock %}">
             {% if url_name == 'hines:misc' %}
-              <span class="nav__link">
-              More
-              </span>
+              <span class="nav__link">More</span>
             {% else %}
-              <a class="nav__link" href="{% url 'hines:misc' %}">
-              More
-              </a>
+              <a class="nav__link" href="{% url 'hines:misc' %}">More</a>
             {% endif %}
           </li>
           <li class="nav__item nav__item--split {% block about_nav_active %}{% endblock %}">
             {% if url_name != 'hines:about' %}
-              <a class="nav__link" href="{% url 'hines:about' %}">
-              About me
-              </a>
+              <a class="nav__link" href="{% url 'hines:about' %}">About me</a>
             {% else %}
-              <span class="nav__link">
-              About me
-              </span>
+              <span class="nav__link">About me</span>
             {% endif %}
           </li>
         </ul>
@@ -164,11 +136,12 @@
       {% endblock content_main %}
     </main>
 
-    <footer>
-      <div class="grid">
+    <footer class="pagefoot">
+      <div class="grid pagefoot__inner">
+
         <div class="grid__row">
           <div class="grid__col grid__col--half">
-            <h4>RSS feeds</h4>
+            <h1 class="h3">RSS feeds</h1>
             <ul class="list-unstyled">
               <li>
                 <a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>
@@ -194,7 +167,7 @@
           </div> <!-- .grid__col -->
           <div class="grid__col grid__col--half">
               <p>
-                &copy; 1995-{% now "Y" %} Phil Gyford.<br>
+                &copy; 1995-{% now "Y" %} Phil Gyford<br>
                 Email: <a href="mailto:phil@gyford.com">phil@gyford.com</a><Br>
                 Twitter: <a href="https://twitter.com/philgyford">@philgyford</a>
               </p>

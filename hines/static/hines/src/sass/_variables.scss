@@ -109,7 +109,7 @@ $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 $line-height-base:            1.5;
 
-$paragraph-margin-bottom:     ($font-size-base);
+$paragraph-margin-bottom:     $font-size-base;
 
 $headings-margin-bottom:      $paragraph-margin-bottom;
 $headings-font-family:        inherit;
@@ -129,7 +129,8 @@ $hr-border-width:             $border-width;
 
 $dt-font-weight:              $font-weight-bold;
 
-
+$text-style-2-font-family:    $font-family-sans-serif;
+$text-style-2-font-weight:    $font-weight-bold;
 
 
 // Tables
@@ -167,7 +168,6 @@ $button-line-height-sm:          $input-button-line-height-sm;
 
 $button-border-width:            $input-button-border-width;
 
-$button-font-weight:             $font-weight-bold;
 $button-focus-width:             $input-button-focus-width;
 
 $button-disabled-opacity:        .65;

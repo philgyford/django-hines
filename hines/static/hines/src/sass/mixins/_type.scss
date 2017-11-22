@@ -11,3 +11,11 @@
     #{$prefix}hyphens: $val;
   }
 }
+
+@mixin text-style-2($transform) {
+  font-family: $text-style-2-font-family;
+  font-weight: $text-style-2-font-weight;
+  @if $transform {
+    text-transform: $transform;
+  }
+}

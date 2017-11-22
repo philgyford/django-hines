@@ -1,11 +1,10 @@
 
 .navbar {
-  font-family: $font-family-sans-serif;
+  @include text-style-2(uppercase);
   position: relative;
   width: 100%;
   max-width: $grid-max-width;
   margin: 0.5rem auto $navbar-border-width auto;
-  font-weight: bold;
   text-rendering: optimizeLegibility;
   @include hyphens(none);
 }
@@ -31,7 +30,6 @@
   font-size: $navbar-brand-font-size;
   line-height: 1.2em;
   white-space: nowrap;
-  text-transform: uppercase;
   margin-right: auto;
   border-bottom: $navbar-border-width solid $black;
   width: 100%;
@@ -98,7 +96,7 @@
     white-space: nowrap;
 
     // Need to repeat this for the search button at narrow widths:
-    font-weight: bold;
+    font-weight: $text-style-2-font-weight;
 
     &:focus,
     &:hover {

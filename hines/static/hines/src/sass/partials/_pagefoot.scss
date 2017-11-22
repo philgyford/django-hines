@@ -1,0 +1,25 @@
+
+.pagefoot {
+  @include text-style-2(uppercase);
+
+  h1 {
+    font-weight: $text-style-2-font-weight;
+  }
+}
+
+.pagefoot__inner {
+  .grid__row {
+    border-top: $border-width solid $border-color;
+    margin: 2em 0;
+    padding-top: 0.5rem;
+  }
+
+  .grid__col:first-child {
+    padding-left: 0;
+  }
+
+  .grid__col:last-child {
+    padding-right: 0;
+  }
+}
+
