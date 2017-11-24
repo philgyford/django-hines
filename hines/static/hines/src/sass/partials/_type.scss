@@ -24,7 +24,6 @@ h1, h2, h3, h4, h5, h6,
   margin-top: 0;
   margin-bottom: $headings-margin-bottom;
   color: $headings-color;
-  text-transform: uppercase;
 }
 
 h1, .h1 { font-size: $h1-font-size; }
@@ -40,40 +39,9 @@ h6, .h6 { font-size: $h6-font-size; }
   h3, .h3 { font-size: $h3-font-size-md; }
 }
 
-.h--inline {
-  display: inline-block;
-}
-
 .pagehead h1 {
   margin-bottom: 1em;
 }
-
-.text-style-1 {
-  h1, h2, h3, h4, h5, h6,
-  .h1, .h2, .h3, .h4, .h5, .h6 {
-    @include text-style-1();
-    text-transform: none;
-  }
-
-  dd,
-  dt,
-  figcaption,
-  li,
-  p {
-    @include text-style-1();
-  }
-
-  dt {
-    font-weight: $font-weight-bold;
-  }
-
-  // For overriding the above styles.
-  .text-style-2 {
-    @include text-style-2();
-  }
-}
-
-
 
 hr {
   margin-top: $paragraph-margin-bottom;
@@ -81,37 +49,6 @@ hr {
   border: 0;
   border-top: $hr-border-width solid $hr-border-color;
 }
-
-
-// Lists
-
-ul {
-  list-style-type: square;
-}
-
-.list--unstyled {
-  padding-left: 0;
-  list-style: none;
-}
-
-.list--inline {
-  padding-left: 0;
-  list-style: none;
-}
-
-// Make the list itself, not just its items, inline!
-.list--inline--inline {
-  display: inline-block;
-}
-
-.list--inline__item {
-  display: inline-block;
-
-  &:not(:last-child) {
-    margin-right: .5rem;
-  }
-}
-
 
 pre {
   white-space: pre;

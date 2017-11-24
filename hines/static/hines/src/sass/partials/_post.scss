@@ -1,0 +1,24 @@
+// A Blog Post
+
+.post__about {
+  @include text-style-nav;
+  margin-bottom: $paragraph-margin-bottom;
+  float: right;
+  max-width: 50%;
+  line-height: $line-height-base-computed;
+  border-left: $border-width solid $black;
+  padding-left: $border-width;
+  margin-left: ($grid-gutter-width / 2);
+
+  p,
+  ul {
+    margin-bottom: 0;
+  }
+}
+
+.tags .tags__heading {
+  display: inline-block;
+  font-size: $nav-font-size;
+  margin-bottom: 0;
+  margin-right: $list-inline-padding;
+}

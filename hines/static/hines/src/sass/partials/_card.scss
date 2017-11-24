@@ -10,8 +10,7 @@
   border-top: $border-width solid $black;
   margin-bottom: 1rem;
 
-  &:first-child {
-  }
+  @include text-style-nav;
 
   &:last-child {
     padding-bottom: $border-width;

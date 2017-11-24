@@ -27,7 +27,7 @@
 }
 
 html {
-  @include text-style-2(); // 2
+  @include text-style-default; // 2
   line-height: 1.15; // 3
   -webkit-text-size-adjust: 100%; // 4
   -ms-text-size-adjust: 100%; // 4
@@ -58,7 +58,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 
 body {
   margin: 0; // 1
-  @include text-style-2;
+  @include text-style-default;
   font-size: $font-size-base;
   line-height: $line-height-base;
   color: $body-color;

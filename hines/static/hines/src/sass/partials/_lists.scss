@@ -1,0 +1,34 @@
+
+// Lists
+
+ul {
+  list-style-type: square;
+}
+
+.list--unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+
+// Inline lists
+
+.list--inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+// Make the list itself, not just its items, inline!
+.list--inline--inline {
+  display: inline;
+}
+
+.list--inline__item {
+  display: inline-block;
+
+  &:not(:last-child) {
+    margin-right: $list-inline-padding;
+  }
+}
+
+

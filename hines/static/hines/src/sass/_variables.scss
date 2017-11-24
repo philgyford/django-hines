@@ -1,7 +1,7 @@
 // A lot of these variables taken from Bootstrap.
 
 
-//$img-path:      "../img/css/";
+$img-path:      "../img/css/";
 
 $browser-prefixes: -webkit-, -moz-, -ms-, '';
 
@@ -56,9 +56,9 @@ $body-color:                $gray-darkest;
 $link-decoration:           underline;
 $link-color:                $blue;
 $link-active-color:         $red;
-$link-hover-color:          green;
+$link-hover-color:          $red;
 $link-visited-color:        $purple;
-$link-visited-hover-color:  red;
+$link-visited-hover-color:  $red;
 
 
 
@@ -108,6 +108,7 @@ $font-weight-bold:            700;
 
 $font-weight-base:            $font-weight-normal;
 $line-height-base:            1.5;
+$line-height-base-computed:   ($font-size-base * $line-height-base);
 
 $h1-font-size:      ($font-size-base * 1.6666667);  /* 30 */
 $h2-font-size:      ($font-size-base * 1.3888889);  /* 25 */
@@ -120,6 +121,8 @@ $h6-font-size:      $font-size-sm;                  /* 13 */
 $h1-font-size-md:   ($font-size-base * 2);          /* 36 */
 $h2-font-size-md:   ($font-size-base * 1.611111);   /* 29 */
 $h3-font-size-md:   ($font-size-base * 1.277778);   /* 23 */
+
+$nav-font-size:               1rem;
 
 $paragraph-margin-bottom:     $font-size-base;
 
@@ -139,11 +142,17 @@ $hr-border-width:             $border-width;
 
 $dt-font-weight:              $font-weight-bold;
 
-$text-style-1-font-family:    $font-family-serif;
-$text-style-1-font-weight:    $font-weight-normal;
+$text-style-default-font-family:    $font-family-serif;
+$text-style-default-font-weight:    $font-weight-normal;
 
-$text-style-2-font-family:    $font-family-sans-serif;
-$text-style-2-font-weight:    $font-weight-bold;
+$text-style-alt-font-family:        $font-family-sans-serif;
+$text-style-alt-font-weight:        $font-weight-bold;
+
+$text-style-nav-font-family:        $font-family-sans-serif;
+$text-style-nav-font-weight:        $font-weight-bold;
+
+$list-inline-padding:         .5rem;
+$list-inline-padding-px:      8px; // So we can do maths.
 
 
 // Tables
@@ -236,7 +245,6 @@ $navbar-brand-font-size:            (1rem * 1.25); // probably 20px
 $navbar-link-color:                 $link-color;
 $navbar-link-hover-color:           $link-hover-color;
 $navbar-link-active-color:          $link-active-color;
-$navbar-link-font-size:             1rem;
 
 $navbar-text-color:                 $body-color;
 

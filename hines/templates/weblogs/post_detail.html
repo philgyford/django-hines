@@ -27,39 +27,65 @@
 
 {% block content %}
 
-	{% if is_preview %}
-		<p class="admin">
-			This is a preview. This Post’s status is {{ post.status_str }}.
-		</p>
-	{% endif %}
+  <aside class="post__about">
+    {% if is_preview %}
+      <p class="admin">
+        This is a preview. This Post’s status is {{ post.status_str }}.
+      </p>
+    {% endif %}
 
-  <p>Published at {% display_time post.time_published link_to_day=True %}</p>
+    <p>{% display_time post.time_published link_to_day=True %}</p>
 
-  {% with post.get_previous_post as previous_post %}
-    {% with post.get_next_post as next_post %}
-      {% if previous_post or next_post %}
-        <nav class="nextprev">
-          <p>
-            {% if previous_post %}
-              <a class="nextprev__prev" href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; <span class="a__inner">Older post</span></a>
-            {% endif %}
-            {% if next_post %}
-              <a class="nextprev__next" href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}"><span class="a__inner">Newer post</span> &rarr;</a>
-            {% endif %}
-          </p>
-        </nav>
+    {% with post.get_tags as tags %}
+      {% if tags|length > 0 %}
+        <div class="tags">
+          {% spaceless %}
+            <h2 class="h4 tags__heading">Tags:</h2>
+            <ul class="list--inline list--inline--inline">
+                {% for tag in tags %}
+                  <li class="list--inline__item">
+                    <a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endspaceless %}
+        </div>
       {% endif %}
     {% endwith %}
-  {% endwith %}
 
-	{% include 'weblogs/includes/post.html' with post=post in_list=False perms=perms only %}
+    {% with post.get_previous_post as previous_post %}
+      {% with post.get_next_post as next_post %}
+        {% if previous_post or next_post %}
+          <nav class="nextprev">
+            <ul class="list--inline">
+              {% spaceless %}
+                {% if previous_post %}
+                  <li class="list--inline__item nextprev__prev">
+                    <a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; <span class="a__inner">Older</span></a>
+                  </li>
+                {% endif %}
+                {% if next_post %}
+                  <li class="list--inline__item nextprev__next{% if previous_post %} nextprev__next--hasprev{% endif %}">
+                    <a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}"><span class="a__inner">Newer</span> &rarr;</a>
+                  </li>
+                {% endif %}
+              {% endspaceless %}
+            </ul>
+          </nav>
+        {% endif %}
+      {% endwith %}
+    {% endwith %}
+  </aside>
+
+
+  {% include 'weblogs/includes/post.html' with post=post in_list=False perms=perms only %}
 
   <hr>
 
 	{% render_comment_list for post %}
 
 	{% if post.comments_allowed %}
-		<h2 class="text-style-2">Post a comment</h2>
+		<h2>Post a comment</h2>
 		{% render_comment_form for post %}
 	{% else %}
 		<p>Comments are closed for this post.</p>
@@ -67,7 +93,7 @@
 
 	{% if post.trackback_count > 0 %}
 		<section class="trackbacks">
-			<h2 class="text-style-2">
+			<h2>
 				{{ post.trackback_count }} trackback{{ post.trackback_count|pluralize }}
 			</h2>
 			<hr>

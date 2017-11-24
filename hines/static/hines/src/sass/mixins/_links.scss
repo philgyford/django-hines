@@ -57,6 +57,8 @@
   }
 
   &:hover {
+    text-decoration: none;
+
     .a__inner {
       color: $link-hover-color;
     }

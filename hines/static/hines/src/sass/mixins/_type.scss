@@ -12,12 +12,19 @@
   }
 }
 
-@mixin text-style-1() {
-  font-family: $text-style-1-font-family;
-  font-weight: $text-style-1-font-weight;
+@mixin text-style-default() {
+  font-family: $text-style-default-font-family;
 }
 
-@mixin text-style-2() {
-  font-family: $text-style-2-font-family;
-  font-weight: $text-style-2-font-weight;
+@mixin text-style-alt() {
+  font-family: $text-style-alt-font-family;
+  font-weight: $text-style-alt-font-weight;
 }
+
+@mixin text-style-nav() {
+  font-family:  $text-style-nav-font-family;
+  font-weight:  $text-style-nav-font-weight;
+  font-size:    $nav-font-size;
+  text-transform: uppercase;
+}
+

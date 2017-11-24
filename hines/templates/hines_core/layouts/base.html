@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-d8a674a4bb.css">
+    <link rel="stylesheet" href="/static/hines/css/site-9b34973adc.css">
     <!-- endinject -->
 
     {% get_all_blogs_by_slug as all_blogs %}
@@ -109,7 +109,7 @@
     <main id="content" class="grid">
       {% block content_heading %}
         <div class="grid__row pagehead">
-          <header class="grid__col {% if text_style == '1' %}text-style-1{% endif %} {% if sidebar_position == 'none' %}grid__col--main grid__col--main--only{% else %}grid__col--full{% endif %}">
+          <header class="grid__col {% if sidebar_position == 'none' %}grid__col--main grid__col--main--only{% else %}grid__col--full{% endif %}">
             <h1>{% block content_title %}{% endblock %}</h1>
           </header>
         </div>

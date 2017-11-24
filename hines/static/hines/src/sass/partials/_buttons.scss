@@ -3,15 +3,16 @@
 
 .button {
   display: inline-block;
-  font-weight: $text-style-2-font-weight;
   text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
   border: $button-border-width solid transparent;
-  @include button-size($button-padding-y, $button-padding-x, $font-size-base, $button-line-height, 0);
   transition: $button-transition;
+
+  @include text-style-nav;
+  @include button-size($button-padding-y, $button-padding-x, $font-size-base, $button-line-height, 0);
 
   &:focus,
   &:hover {

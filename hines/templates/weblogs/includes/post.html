@@ -9,10 +9,10 @@ Expects:
 * style: 'full' (default) or 'compact'.
 {% endcomment %}
 
-<article class="post text-style-1">
+<article class="post">
 	{% if in_list|default_if_none:True %}
 		<header>
-			<h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+			<h1 class="post__title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
 		</header>
 	{% endif %}
 
@@ -21,32 +21,18 @@ Expects:
 	{% endif %}
 
 	{% if style|default_if_none:'full' == 'compact' %}
-		<div class="post-excerpt">
+		<div class="post__excerpt">
 			{{ post.intro_html|safe }}
 		</div>
 	{% else %}
-		<div class="post-intro">
+
+		<div class="post__intro">
 			{{ post.intro_html|safe }}
 		</div>
 
-		<div class="post-body">
+		<div class="post__body">
 			{{ post.body_html|safe }}
 		</div>
-
-		{% with post.get_tags as tags %}
-			{% if tags|length > 0 %}
-				<aside>
-					<h2 class="h4 text-style-2 h--inline">Tags:</h2>
-					<ul class="list--inline list--inline--inline">
-						{% for tag in tags %}
-							<li class="list--inline__item">
-								<a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
-							</li>
-						{% endfor %}
-					</ul>
-				</aside>
-			{% endif %}
-		{% endwith %}
 	{% endif %}
 
 	{% if in_list|default_if_none:True %}

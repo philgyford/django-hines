@@ -1,6 +1,5 @@
 
 .navbar {
-  text-transform: uppercase;
   position: relative;
   width: 100%;
   max-width: $grid-max-width;
@@ -28,6 +27,7 @@
 .navbar__title {
   order: 1;
   font-size: $navbar-brand-font-size;
+  text-transform: uppercase;
   line-height: 1.2em;
   white-space: nowrap;
   margin-right: auto;
@@ -75,6 +75,8 @@
     $white ($navbar-border-width * 2)
   );
 
+  @include text-style-nav;
+
   .nav__item {
     background: $white;
     padding: 0 $navbar-link-padding-x 0 0;
@@ -89,13 +91,12 @@
 
   .nav__link {
     display: block;
-    font-size: $navbar-link-font-size;
     padding: 0;
     color: $navbar-link-color;
     white-space: nowrap;
 
     // Need to repeat this for the search button at narrow widths:
-    font-weight: $text-style-2-font-weight;
+    font-weight: $text-style-nav-font-weight;
 
     &:focus,
     &:hover {

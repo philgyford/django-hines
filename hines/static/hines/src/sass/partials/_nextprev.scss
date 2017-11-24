@@ -1,12 +1,20 @@
 .nextprev {
   text-transform: uppercase;
+  font-size: $nav-font-size;
 }
 
 .nextprev__prev,
 .nextprev__next {
-  @include link_inner();
+  white-space: nowrap;
+
+  a {
+    @include link_inner();
+  }
 }
 
-.nextprev__next {
-  float: right;
+.nextprev__next--hasprev {
+  background: url('#{$img-path}bullet.png') 0 50% no-repeat;
+  padding-left: ($border-width + $list-inline-padding-px);
+  //margin-left: 5px;
 }
+
