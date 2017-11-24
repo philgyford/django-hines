@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   max-width: $grid-max-width;
-  margin: 0.5rem auto $navbar-border-width auto;
+  margin: 0.5rem auto 36px auto;
   text-rendering: optimizeLegibility;
   @include hyphens(none);
 }
@@ -148,6 +148,10 @@
   //}
 }
 
+.js-navbar-nav-item-search {
+  text-transform: uppercase;
+}
+
 
 @media (min-width: 510px) {
   /* Form is to right of title. Nav is underneath. */
@@ -186,7 +190,7 @@
 
   .navbar {
     /* Replace margin we're taking off the nav__item by adding it to the .navbar's, which is usually $navbar-border-width. */
-    margin-bottom: ($navbar-border-width * 2);
+    margin-bottom: (36px + $navbar-border-width);
   }
 
   .navbar__title {

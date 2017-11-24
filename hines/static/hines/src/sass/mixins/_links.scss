@@ -1,0 +1,71 @@
+
+@mixin link() {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  background-color: transparent; // Remove the gray background on active links in IE 10.
+  -webkit-text-decoration-skip: ink;
+  text-decoration-skip: ink;
+
+  &:active {
+    color: $link-active-color;
+  }
+
+  @include link_hover();
+
+  &:visited {
+	  color: $link-visited-color;
+  }
+
+  &:visited:hover {
+    color: $link-visited-hover-color;
+  }
+}
+
+@mixin link_hover() {
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: $link-decoration;
+  }
+}
+
+/**
+ * Used when we have a link where we want a bit of it to NOT be underlined.
+ * So we'd have:
+ *
+ * <a class="special-link" href="">
+ *   I'm not underlined.
+ *   <span class="a__inner">I am underlined</span>
+ * </a>
+ *
+ * And we'd do this in scss:
+ *
+ * .special-link {
+ *   @include link__inner();
+ * }
+ */
+@mixin link_inner() {
+  text-decoration: none;
+
+  .a__inner {
+    text-decoration: $link-decoration;
+  }
+
+  &:visited {
+    .a__inner {
+	    color: $link-visited-color;
+    }
+  }
+
+  &:hover {
+    .a__inner {
+      color: $link-hover-color;
+    }
+  }
+
+  &:visited:hover {
+    .a__inner {
+      color: $link-visited-hover-color;
+    }
+  }
+}
+

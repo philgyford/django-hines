@@ -1,4 +1,4 @@
-{% extends 'hines_core/layouts/sidebar_left.html' %}
+{% extends 'hines_core/layouts/sidebar_right.html' %}
 
 {% block head_page_title %}{{ blog.name }}: {{ year|date:"Y" }}{% endblock %}
 {% block content_title %}{{ blog.name }}:  {{ year|date:"Y" }}{% endblock %}
@@ -29,10 +29,10 @@
 {% block sidebar %}
 	{% if date_list|length > 1 %}
 		{# Don't both showing it if there's only one month #}
-		<div class="card mb-3">
-			<div class="card-body">
-				<h2 class="h6 card-title">Months in {{ year|date:"Y" }}</h2>
-				<ul class="mb-0">
+		<aside class="card">
+			<div class="card__body">
+				<h2 class="card__title">Months in {{ year|date:"Y" }}</h2>
+				<ul class="card__text">
 					{% for month in date_list %}
 						<li>
 							<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=month|date:"Y" month=month|date:"m" %}">{{ month|date:"F" }}</a>
@@ -40,7 +40,7 @@
 					{% endfor %}
 				</ul>
 			</div>
-		</div>
+		</aside>
 	{% endif %}
 
 	{{ block.super }}

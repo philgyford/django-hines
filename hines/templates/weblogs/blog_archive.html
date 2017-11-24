@@ -1,4 +1,4 @@
-{% extends 'hines_core/layouts/sidebar_left.html' %}
+{% extends 'hines_core/layouts/sidebar_right.html' %}
 
 {% load hines_weblogs %}
 {% load hines_core %}
@@ -8,22 +8,21 @@
 
 {% block content %}
 
-{% for d in months %}
-	{% ifchanged d|date:"Y" %}
-		{% if forloop.counter0 != 0 %}
-			</ul>
-		{% endif %}
-		<h2>{{ d|date:"Y" }}</h2>
-		<ul class="list-inline">
-	{% endifchanged %}
-	<li class="list-inline-item">
-		<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=d|date:"Y" month=d|date:"m" %}">{{ d|date:"M" }}</a>
-	</li>
-{% endfor %}
-</ul>
+  {% for d in months %}
+    {% ifchanged d|date:"Y" %}
+      {% if forloop.counter0 != 0 %}
+        </ul>
+      {% endif %}
+      <h2>{{ d|date:"Y" }}</h2>
+      <ul class="list--inline">
+    {% endifchanged %}
+    <li class="list--inline__item">
+      <a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=d|date:"Y" month=d|date:"m" %}">{{ d|date:"M" }}</a>
+    </li>
+  {% endfor %}
+  </ul>
 
-
-{% endblock %}
+{% endblock content %}
 
 {% block sidebar %}
 

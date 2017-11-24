@@ -9,12 +9,12 @@ Expects:
 {% endcomment %}
 
 {% if date_list|length > 0 %}
-	<div class="card mb-3">
-		<div class="card-body">
-			<h2 class="h6 card-title">{{ card_title }}</h2>
-			<ul class="mb-0 list-inline">
+	<aside class="card">
+		<div class="card__body">
+			<h2 class="card__title">{{ card_title }}</h2>
+			<ul class="list--inline card__text">
 				{% for year in date_list %}
-					<li class="list-inline-item">
+					<li class="list--inline__item">
 						{% if current_year == year %}
 							{{ year|date:"Y" }}
 						{% else %}
@@ -24,6 +24,6 @@ Expects:
 				{% endfor %}
 			</ul>
 		</div>
-	</div>
+	</aside>
 {% endif %}
 

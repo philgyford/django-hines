@@ -1,0 +1,37 @@
+// CARDS
+// Based on Bootstrap v4
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-top: ($border-width / 2);
+  border-top: $border-width solid $black;
+  margin-bottom: 1rem;
+
+  &:first-child {
+  }
+
+  &:last-child {
+    padding-bottom: $border-width;
+    border-bottom: $border-width solid $black;
+    margin-bottom: 0;
+  }
+}
+
+.card__title {
+  //margin-bottom: $card-spacer-y;
+  font-size: $h4-font-size;
+  margin-bottom: 0.5em;
+}
+
+.card__body {
+  // Enable `flex-grow: 1` for decks and groups so that card blocks take up
+  // as much space as possible, ensuring footers are aligned to the bottom.
+  flex: 1 1 auto;
+}
+
+.card__text:last-child {
+  margin-bottom: 0;
+}

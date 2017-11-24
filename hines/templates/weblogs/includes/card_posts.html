@@ -7,10 +7,10 @@ Expects:
 {% endcomment %}
 
 {% if post_list|length > 0 %}
-	<div class="card mb-3">
-		<div class="card-body">
-			<h2 class="h6 card-title">{{ card_title }}</h2>
-			<ul class="mb-0">
+	<aside class="card">
+		<div class="card__body">
+			<h2 class="card__title">{{ card_title }}</h2>
+			<ul class="card__text">
 				{% for post in post_list %}
 					<li>
 						<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
@@ -18,6 +18,6 @@ Expects:
 				{% endfor %}
 			</ul>
 		</div>
-	</div>
+	</aside>
 {% endif %}
 

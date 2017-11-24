@@ -1,0 +1,12 @@
+.nextprev {
+  text-transform: uppercase;
+}
+
+.nextprev__prev,
+.nextprev__next {
+  @include link_inner();
+}
+
+.nextprev__next {
+  float: right;
+}

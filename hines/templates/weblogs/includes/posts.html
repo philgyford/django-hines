@@ -13,7 +13,7 @@ Expects:
 	{% load hines_core %}
 
 	{% for post in post_list %}
-		<li class="mb-2">
+		<li>
 			<a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
 			{% display_time post.time_published show='date' link_to_day=False %}
 		</li>
@@ -22,7 +22,6 @@ Expects:
 {% else %}
 	{% for post in post_list %}
 		{% include 'weblogs/includes/post.html' with post=post in_list=True perms=perms style=style only %}
-		<hr>
 	{% endfor %}
 {% endif %}
 

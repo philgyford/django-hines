@@ -9,7 +9,7 @@ Expects:
 * style: 'full' (default) or 'compact'.
 {% endcomment %}
 
-<article class="post">
+<article class="post text-style-1">
 	{% if in_list|default_if_none:True %}
 		<header>
 			<h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
@@ -23,7 +23,6 @@ Expects:
 	{% if style|default_if_none:'full' == 'compact' %}
 		<div class="post-excerpt">
 			{{ post.intro_html|safe }}
-			<p><a href="{{ post.get_absolute_url }}">Continue reading…</a></p>
 		</div>
 	{% else %}
 		<div class="post-intro">
@@ -36,14 +35,16 @@ Expects:
 
 		{% with post.get_tags as tags %}
 			{% if tags|length > 0 %}
-				Tags:
-				<ul class="post-tags list-inline">
-					{% for tag in tags %}
-						<li class="list-inline-item">
-							<a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
-						</li>
-					{% endfor %}
-				</ul>
+				<aside>
+					<h2 class="h4 text-style-2 h--inline">Tags:</h2>
+					<ul class="list--inline list--inline--inline">
+						{% for tag in tags %}
+							<li class="list--inline__item">
+								<a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</aside>
 			{% endif %}
 		{% endwith %}
 	{% endif %}

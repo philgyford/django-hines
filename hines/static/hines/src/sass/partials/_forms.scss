@@ -67,6 +67,15 @@ select.form__control {
   display: block;
 }
 
+// For use with horizontal and inline forms, when you need the label text to
+// align with the form controls.
+.form__col__label {
+  padding-top: calc(#{$input-padding-y} + #{$input-border-width});
+  padding-bottom: calc(#{$input-padding-y} + #{$input-border-width});
+  margin-bottom: 0; // Override the `<label>` default
+  line-height: $input-line-height;
+}
+
 
 // Form control sizing
 //

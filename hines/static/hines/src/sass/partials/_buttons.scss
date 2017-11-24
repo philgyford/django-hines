@@ -65,17 +65,11 @@
   text-transform: none;
   text-decoration: $link-decoration;
 
+  @include link_hover();	
+
   &:hover {
-    color: $link-hover-color;
-    text-decoration: $link-decoration;
     cursor: pointer;
   }
-  //@include hover {
-    //color: $link-hover-color;
-    //text-decoration: $link-hover-decoration;
-    //background-color: transparent;
-    //border-color: transparent;
-  //}
 
   &:focus,
   &.focus {

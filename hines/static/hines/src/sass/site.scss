@@ -3,13 +3,16 @@
 @import "mixins/bootstrap/breakpoints";
 @import "mixins/bootstrap/buttons";
 @import "mixins/bootstrap/grid";
+@import "mixins/links";
 @import "mixins/type";
 @import "partials/reboot";
 @import "partials/buttons";
+@import "partials/card";
 @import "partials/figures";
 @import "partials/forms";
 @import "partials/grid";
 @import "partials/navbar";
+@import "partials/nextprev";
 @import "partials/pagefoot";
 @import "partials/type";
 @import "partials/utilities";

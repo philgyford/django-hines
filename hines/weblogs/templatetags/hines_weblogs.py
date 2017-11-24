@@ -63,7 +63,7 @@ def blog_years_card(blog, current_year=None):
     `current_year` is the year (a date object) that shouldn't be a link, if any.
     """
     return {
-            'card_title': 'Years of {}'.format(blog.name),
+            'card_title': 'Years of {}'.format(blog.short_name),
             'date_list': blog_years(blog=blog),
             'blog': blog,
             'current_year': current_year,

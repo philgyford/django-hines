@@ -99,13 +99,32 @@
 
 <p>Unused.</p>
 
+
 <h3>Form row</h3>
 
 <p>Unused.</p>
 
 <h3>Horizontal form</h3>
 
-<p>Unused.</p>
+<form class="grid">
+  <div class="form__group grid__row">
+    <label for="inputEmail3" class="grid__col--sub form__col__label">Email</label>
+    <div class="grid__col--main">
+      <input type="email" class="form__control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div>
+  <div class="form__group grid__row">
+    <label for="inputPassword3" class="grid__col--sub form__col__label">Password</label>
+    <div class="grid__col--main">
+      <input type="password" class="form__control" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+  <div class="form__group grid__row">
+    <div class="grid__col--main">
+      <button type="submit" class="button button--primary">Sign in</button>
+    </div>
+  </div>
+</form>
 
 <hr>
 

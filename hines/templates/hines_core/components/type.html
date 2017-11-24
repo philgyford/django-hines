@@ -6,82 +6,85 @@
 
 {% block content %}
 
-<h1>Level 1 heading</h1>
+  <article class="text-style-1">
 
-<p>A paragraph here.</p>
+    <h1>Level 1 heading</h1>
 
-<h2>Level 2 heading</h2>
+    <p>A paragraph here.</p>
 
-<p>A paragraph here.</p>
+    <h2>Level 2 heading</h2>
 
-<h3>Level 3 heading</h3>
+    <p>A paragraph here.</p>
 
-<p>A paragraph here.</p>
+    <h3>Level 3 heading</h3>
 
-<h4>Level 4 heading</h4>
+    <p>A paragraph here.</p>
 
-<p>A paragraph here.</p>
+    <h4>Level 4 heading</h4>
 
-<h5>Level 5 heading</h5>
+    <p>A paragraph here.</p>
 
-<p>A paragraph here.</p>
+    <h5>Level 5 heading</h5>
 
-<h6>Level 6 heading</h6>
+    <p>A paragraph here.</p>
 
-<p>A paragraph here. Which goes on for a while so that we can see what type looks like when it goes over more than a single line<sup>1</sup>, because this is rather more useful when trying to check that line-height is correct. This should probably be enough to get a sense of it. Here's an abbreviation: <abbr title="HyperText Markup Language">HTML</abbr>.</p>
+    <h6>Level 6 heading</h6>
 
-<p>But we also need another paragraph here to check the spacing between two paragraphs one after the other, like this, you see. <small>And here's some small text for comparison.</small></p>
+    <p>A paragraph here. Which goes on for a while so that we can see what type looks like when it goes over more than a single line<sup>1</sup>, because this is rather more useful when trying to check that line-height is correct. This should probably be enough to get a sense of it. Here's an abbreviation: <abbr title="HyperText Markup Language">HTML</abbr>.</p>
 
-<hr>
+    <p>But we also need another paragraph here to check the spacing between two paragraphs one after the other, like this, <a href="#">with a link</a>, you see. <small>And here's some small text for comparison.</small></p>
 
-<p>That was an <code>&lt;hr&gt;</code> tag and here's a quote:</p>
+    <hr>
 
-<figure class="figure figure--blockquote">
-	<blockquote>
-		<p>Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted.</p>
-		<p>Another paragraph.</p>
-	</blockquote>
+    <p>That was an <code>&lt;hr&gt;</code> tag and here's a quote:</p>
 
-	<figcaption>
-	  Fred Bloggs, <cite>My Book Title</cite>
-	</figcaption>
-</figure>
+    <figure class="figure figure--blockquote">
+      <blockquote>
+        <p>Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted.</p>
+        <p>Another paragraph.</p>
+      </blockquote>
 
-<p>You see how that works? Hopefully it looks nice. Here's <code>some code</code> and here's a code block in an (optional) <code>&lt;figure&gt;</code>:</p>
+      <figcaption>
+        Fred Bloggs, <cite>My Book Title</cite>
+      </figcaption>
+    </figure>
 
-<figure>
-  <pre><code>blockquote {
+    <p>You see how that works? Hopefully it looks nice. Here's <code>some code</code> and here's a code block in an (optional) <code>&lt;figure&gt;</code>:</p>
+
+    <figure>
+      <pre><code>blockquote {
   border-left: $border-width solid $black; // This comment means the line should be quite long...
   padding-left: $border-width;
   padding-right: ($border-width * 2);
 }</code></pre>
 </figure>
 
-<ol>
-  <li>This is a list</li>
-  <li>It has numbers</li>
-  <li>As you can see</li>
-</ol>
+    <ol>
+      <li>This is a list</li>
+      <li>It has numbers</li>
+      <li>As you can see</li>
+    </ol>
 
-<ul>
-  <li>But this list</li>
-  <li>Has bullets</li>
-  <li>Instead of numbers</li>
-</ul>
+    <ul>
+      <li>But this list</li>
+      <li>Has bullets</li>
+      <li>Instead of numbers</li>
+    </ul>
 
-<ul>
-  <li><p>This list also has bullets.</p></li>
-  <li><p>But it has a paragraph.</p></li>
-  <li><p>Within each item.</p><p>Or even two paragraphs.</p></li>
-</ul>
+    <ul>
+      <li><p>This list also has bullets.</p></li>
+      <li><p>But it has a paragraph.</p></li>
+      <li><p>Within each item.</p><p>Or even two paragraphs.</p></li>
+    </ul>
 
-<dl>
-  <dt>Sometimes</dt>
-  <dd>We might like to use a definition list.</dd>
-  <dt>They can be good for things</dt>
-  <dd>Like defining stuff.</dd>
-  <dd>In a list.</dd>
-</dl>
+    <dl>
+      <dt>Sometimes</dt>
+      <dd>We might like to use a definition list.</dd>
+      <dt>They can be good for things</dt>
+      <dd>Like defining stuff.</dd>
+      <dd>In a list.</dd>
+    </dl>
+  </article>
 
 {% endblock content %}
 
