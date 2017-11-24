@@ -19,6 +19,7 @@
 @mixin text-style-alt() {
   font-family: $text-style-alt-font-family;
   font-weight: $text-style-alt-font-weight;
+  text-transform: uppercase;
 }
 
 @mixin text-style-nav() {

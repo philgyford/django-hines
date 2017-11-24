@@ -8,7 +8,7 @@
 
 {% block content %}
 
-	{% include 'weblogs/includes/posts.html' with post_list=post_list perms=perms style='compact' only %}
+	{% include 'weblogs/includes/posts.html' with post_list=post_list perms=perms only %}
 
 	{% if is_paginated %}
 		<nav class="nextprev">

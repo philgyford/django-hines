@@ -5,11 +5,7 @@
 
 {% block content %}
 
-	{% if post_list|length > 0 %}
-		<ul>
-			{% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms style='list' only %}
-		</ul>
-	{% endif %}
+  {% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms only %}
 
 	{% if previous_year or next_year %}
 		<nav class="nextprev">

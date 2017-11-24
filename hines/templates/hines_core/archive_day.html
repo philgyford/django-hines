@@ -29,7 +29,7 @@
 		{% for blog_data in blogs %}
 			<h2>{{ blog_data.blog.name }}</h2>
 
-			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list style='compact' only %}
+			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list only %}
 
 		{% endfor %}
 	{% endif %}

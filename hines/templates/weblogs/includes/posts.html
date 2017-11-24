@@ -5,23 +5,32 @@ Expects:
 
 * post_list: A list or QuerySet of Posts.
 * perms - Django permissions.
-* style: 'full', 'compact' (include excerpt) or 'list' (title and date only).
-			Default is 'full'.
 {% endcomment %}
 
-{% if style == 'list' %}
-	{% load hines_core %}
+{% load hines_core %}
 
-	{% for post in post_list %}
-		<li>
-			<a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
-			{% display_time post.time_published show='date' link_to_day=False %}
-		</li>
-	{% endfor %}
+{% if post_list|length > 0 %}
+  <ul>
+    {% for post in post_list %}
+      <li>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
+        {{ post.excerpt }}<br>
+        {% display_time post.time_published show='date' link_to_day=False %}
 
-{% else %}
-	{% for post in post_list %}
-		{% include 'weblogs/includes/post.html' with post=post in_list=True perms=perms style=style only %}
-	{% endfor %}
+        {% comment %}
+          <footer>
+            {% if post.comment_count > 0 %}
+              |
+              {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+            {% endif %}
+            {% if post.trackback_count > 0 %}
+              |
+              {{ post.trackback_count }} trackback{{ post.trackback_count|pluralize }}
+            {% endif %}
+          </footer>
+        {% endcomment %}
+      </li>
+    {% endfor %}
+  </ul>
 {% endif %}
 

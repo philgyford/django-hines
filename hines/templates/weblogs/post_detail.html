@@ -1,8 +1,8 @@
 {% extends 'hines_core/layouts/no_sidebar.html' %}
 {% load comments hines_core hines_weblogs spectator_reading %}
 
-{% block head_page_title %}{{ post.title }}{% endblock %}
-{% block content_title %}{{ post.title }}{% endblock %}
+{% block head_page_title %}{{ post.title|smartypants|safe }}{% endblock %}
+{% block content_title %}{{ post.title|smartypants|safe }}{% endblock %}
 
 {% block content_heading %}
   {% with text_style='1' %}
@@ -77,15 +77,26 @@
     {% endwith %}
   </aside>
 
+  <article class="post">
+    {% if perms.weblogs.can_change_post %}
+      <p><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
+    {% endif %}
 
-  {% include 'weblogs/includes/post.html' with post=post in_list=False perms=perms only %}
+		<div class="post__intro">
+			{{ post.intro_html|safe }}
+		</div>
+
+		<div class="post__body">
+			{{ post.body_html|safe }}
+		</div>
+  </article>
 
   <hr>
 
 	{% render_comment_list for post %}
 
 	{% if post.comments_allowed %}
-		<h2>Post a comment</h2>
+		<h2 class="h--alt">Post a comment</h2>
 		{% render_comment_form for post %}
 	{% else %}
 		<p>Comments are closed for this post.</p>

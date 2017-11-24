@@ -23,6 +23,7 @@
   //margin-bottom: $card-spacer-y;
   font-size: $h4-font-size;
   margin-bottom: 0.5em;
+  @include text-style-alt;
 }
 
 .card__body {
