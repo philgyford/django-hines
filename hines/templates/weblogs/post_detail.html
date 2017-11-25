@@ -27,66 +27,68 @@
 
 {% block content %}
 
-  <aside class="post__about">
+  <article class="article">
     {% if is_preview %}
       <p class="admin">
         This is a preview. This Post’s status is {{ post.status_str }}.
       </p>
     {% endif %}
 
-    <p>{% display_time post.time_published link_to_day=True %}</p>
-
-    {% with post.get_tags as tags %}
-      {% if tags|length > 0 %}
-        <div class="tags">
-          {% spaceless %}
-            <h2 class="h4 tags__heading">Tags:</h2>
-            <ul class="list--inline list--inline--inline">
-                {% for tag in tags %}
-                  <li class="list--inline__item">
-                    <a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endspaceless %}
-        </div>
-      {% endif %}
-    {% endwith %}
-
-    {% with post.get_previous_post as previous_post %}
-      {% with post.get_next_post as next_post %}
-        {% if previous_post or next_post %}
-          <nav class="nextprev">
-            <ul class="list--inline">
-              {% spaceless %}
-                {% if previous_post %}
-                  <li class="list--inline__item nextprev__prev">
-                    <a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; <span class="a__inner">Older</span></a>
-                  </li>
-                {% endif %}
-                {% if next_post %}
-                  <li class="list--inline__item nextprev__next{% if previous_post %} nextprev__next--hasprev{% endif %}">
-                    <a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}"><span class="a__inner">Newer</span> &rarr;</a>
-                  </li>
-                {% endif %}
-              {% endspaceless %}
-            </ul>
-          </nav>
-        {% endif %}
-      {% endwith %}
-    {% endwith %}
-  </aside>
-
-  <article class="post">
     {% if perms.weblogs.can_change_post %}
       <p><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
     {% endif %}
 
-		<div class="post__intro">
+		<div class="article__intro">
 			{{ post.intro_html|safe }}
 		</div>
 
-		<div class="post__body">
+    <aside class="article__aside">
+      <div class="article__aside__inner">
+      <p>{% display_time post.time_published link_to_day=True %}</p>
+
+      {% with post.get_tags as tags %}
+        {% if tags|length > 0 %}
+          <div class="tags tags--inline">
+            {% spaceless %}
+              <h2 class="tags__heading">Tags:</h2>
+              <ul class="tags__list">
+                  {% for tag in tags %}
+                    <li class="tag">
+                      <a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endspaceless %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% with post.get_previous_post as previous_post %}
+        {% with post.get_next_post as next_post %}
+          {% if previous_post or next_post %}
+            <nav class="nextprev">
+              <ul class="list--inline">
+                {% spaceless %}
+                  {% if previous_post %}
+                    <li class="list--inline__item nextprev__prev">
+                      <a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; <span class="a__inner">Older</span></a>
+                    </li>
+                  {% endif %}
+                  {% if next_post %}
+                    <li class="list--inline__item nextprev__next{% if previous_post %} nextprev__next--hasprev{% endif %}">
+                      <a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}"><span class="a__inner">Newer</span> &rarr;</a>
+                    </li>
+                  {% endif %}
+                {% endspaceless %}
+              </ul>
+            </nav>
+          {% endif %}
+        {% endwith %}
+      {% endwith %}
+      </div>
+    </aside>
+
+		<div class="article__body">
 			{{ post.body_html|safe }}
 		</div>
   </article>

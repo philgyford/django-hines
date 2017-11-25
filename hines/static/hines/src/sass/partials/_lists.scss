@@ -14,8 +14,7 @@ ul {
 // Inline lists
 
 .list--inline {
-  padding-left: 0;
-  list-style: none;
+  @include list-inline;
 }
 
 // Make the list itself, not just its items, inline!
@@ -24,11 +23,6 @@ ul {
 }
 
 .list--inline__item {
-  display: inline-block;
-
-  &:not(:last-child) {
-    margin-right: $list-inline-padding;
-  }
+  @include list-inline-item;
 }
-
 

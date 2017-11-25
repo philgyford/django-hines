@@ -1,0 +1,36 @@
+// e.g. a Blog Post
+
+/**
+ * Because we want the left border to go from the top of the top line of text
+ * to the bottom of the bottom line, ignoring the line height above/below them,
+ * we have the _inner div, and various adjustments up/down. This keeps the
+ * left border visibly the correct height, and also keeps the lines of text
+ * lined up with the article's main body text.
+ */
+
+// Hopefully, the size of the bit of line height that is above/below the
+// text itself:
+$article-aside-offset: ($line-height-base-computed - $nav-font-size) / 2;
+
+.article__aside {
+  @include text-style-nav;
+  float: right;
+  max-width: 50%;
+  line-height: $line-height-base-computed;
+  border-left: $border-width solid $black;
+  margin-top: $article-aside-offset;
+  margin-bottom: ($article-aside-offset + $paragraph-margin-bottom);
+  margin-left: ($grid-gutter-width / 2);
+
+  p,
+  ul {
+    margin-bottom: 0;
+  }
+}
+
+.article__aside__inner {
+  padding-left: $border-width;
+  margin-top: -$article-aside-offset;
+  margin-bottom: -$article-aside-offset;
+}
+
