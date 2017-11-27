@@ -26,15 +26,16 @@
 
 .navbar__title {
   order: 1;
+  width: 100%;
+  white-space: nowrap;
+  border-bottom: $navbar-border-width solid $black;
+  padding-bottom: 1px;
+  margin-top: 11px;
+  margin-right: auto;
   font-size: $navbar-brand-font-size;
   text-transform: uppercase;
   line-height: 1.2em;
-  white-space: nowrap;
-  margin-right: auto;
-  border-bottom: $navbar-border-width solid $black;
-  width: 100%;
-  padding-bottom: 1px;
-  margin-top: 11px;
+  letter-spacing: 0.02em;
 
   a {
     color: $navbar-text-color;
@@ -186,7 +187,7 @@
 
 }
 
-@media (min-width: 860px) {
+@media (min-width: 890px) {
   /* Form is to right of title. Nav is in line with title's bottom border. */
 
   .navbar {
