@@ -1,5 +1,5 @@
 {% extends "comments/base.html" %}
-{% load hines_comments i18n %}
+{% load hines_comments hines_core i18n %}
 
 {% block head_page_title %}Preview your comment{% endblock %}
 {% block content_title %}Preview your comment{% endblock %}
@@ -13,7 +13,24 @@
 		</p>
 	{% else %}
     <hr>
-		<div class="comment">{{ comment|clean|safe|linebreaks }}</div>
+    <article class="comment">
+      <header>
+        <h3 class="comment__title">
+          {% if form.url.value %}
+            <a href="{{ form.url.value }}" rel="nofollow">{{ form.name.value }}</a>
+          {% else %}
+            {{ form.name.value }}
+          {% endif %}
+        </h3>
+          <p class="comment__about">
+            AT {% display_time %}
+          </p>
+      </header>
+
+      <div class="comment__body">
+		    {{ comment|clean|safe|linebreaks }}
+      </div>
+    </article>
     <hr>
 	{% endif %}
 

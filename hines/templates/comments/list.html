@@ -1,39 +1,38 @@
-{% load hines_comments %}
-{% load hines_core %}
+{% load hines_comments hines_core %}
 
 {% if post.comment_count > 0 %}
-	<section>
-		<h2>
-			{{ post.comment_count }} comment{{ post.comment_count|pluralize }}
-		</h2>
+  <section>
+    <h2>
+      {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+    </h2>
 
-		<hr>
+    <hr>
 
-		{% for comment in comment_list %}
-			<article class="comment" id="c{{ comment.id }}">
+    {% for comment in comment_list %}
+      <article class="comment" id="c{{ comment.id }}">
         <header{% if forloop.last %} id="latest"{% endif %}>
           <h3 class="comment__title">
-						{% if comment.user_url %}
-							<a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
-						{% else %}
-							{{ comment.name }}
-						{% endif %}
+            {% if comment.user_url %}
+              <a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
+            {% else %}
+              {{ comment.name }}
+            {% endif %}
           </h3>
           <p class="comment__about">
-					  AT {% display_time comment.submit_date %}
+            AT {% display_time comment.submit_date %}
             <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
           </p>
         </header>
 
-				<div class="comment__body">
-					{{ comment.comment|clean|safe|linebreaks }}
+        <div class="comment__body">
+          {{ comment.comment|clean|safe|linebreaks }}
 
-					{% if perms.custom_comments.can_change_customcomment %}
+          {% if perms.custom_comments.can_change_customcomment %}
             <br><br><a class="admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
-					{% endif %}
-				</div>
-			</article>
-			<hr>
-		{% endfor %}
-	</section>
+          {% endif %}
+        </div>
+      </article>
+      <hr>
+    {% endfor %}
+  </section>
 {% endif %}

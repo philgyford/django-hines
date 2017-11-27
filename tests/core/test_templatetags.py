@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+from freezegun import freeze_time
+
 from django.test import TestCase
 
 from hines.core.templatetags.hines_core import get_item, display_time,\
@@ -23,6 +25,13 @@ class DisplayTimeTestCase(TestCase):
     def test_returns_datetime_by_default(self):
         self.assertEqual(
             display_time(make_datetime('2015-08-14 13:34:56')),
+            '<time datetime="2015-08-14 13:34:56">13:34 on 14&nbsp;Aug&nbsp;2015</time>'
+        )
+
+    @freeze_time("2015-08-14 13:34:56", tz_offset=0)
+    def test_uses_now_if_no_datetime_supplied(self):
+        self.assertEqual(
+            display_time(),
             '<time datetime="2015-08-14 13:34:56">13:34 on 14&nbsp;Aug&nbsp;2015</time>'
         )
 

@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaks_filter
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe 
+from django.utils.timezone import now
 
 from ditto.lastfm.templatetags.ditto_lastfm import top_artists
 
@@ -57,10 +58,10 @@ def current_url_name(context):
 
 
 @register.simple_tag
-def display_time(dt, show='both', granularity=0, link_to_day=False):
+def display_time(dt=None, show='both', granularity=0, link_to_day=False):
     """Return the HTML to display a datetime nicely, wrapped in a <time> tag.
 
-    dt -- The datetime.
+    dt -- The datetime. If None, then the current time is used.
     show -- 'time', 'date' or 'both'.
     granularity -- A number indicating how detailed the datetime is, based on
                     https://www.flickr.com/services/api/misc.dates.html
@@ -69,6 +70,10 @@ def display_time(dt, show='both', granularity=0, link_to_day=False):
 
     See also http://www.brucelawson.co.uk/2012/best-of-time/ for <time> tag.
     """
+
+    if dt is None:
+        dt = now()
+
     # The date and time formats for display:
     d_fmt = '%-d&nbsp;%b&nbsp;%Y'
     t_fmt = '%H:%M'
