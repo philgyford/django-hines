@@ -95,6 +95,7 @@ select.form__control {
 .form__control--sm {
   padding: $input-padding-y-sm $input-padding-x-sm;
   line-height: $input-line-height-sm;
+  font-size: $font-size-sm;
 }
 
 select.form__control--sm {
