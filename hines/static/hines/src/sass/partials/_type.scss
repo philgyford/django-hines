@@ -40,8 +40,14 @@ h6, .h6 { font-size: $h6-font-size; }
   h3, .h3 { font-size: $h3-font-size-md; }
 }
 
-.pagehead h1 {
-  margin-bottom: 1em;
+.pagehead {
+  h1 {
+    margin-bottom: 1em;
+  }
+  .grid__col--main--only h1 {
+    /* e.g. on Blog Posts. */
+    margin-bottom: $paragraph-margin-bottom;
+  }
 }
 
 .h--alt {
