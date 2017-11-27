@@ -54,6 +54,8 @@ select.form__control {
     height: $input-height;
   }
 
+  font-family: $font-family-sans-serif;
+
   &:focus::-ms-value {
     // Suppress the nested default white text on blue background highlight given to
     // the selected option text when the (still closed) <select> receives focus
@@ -73,13 +75,13 @@ select.form__control {
 
 // For use with horizontal and inline forms, when you need the label text to
 // align with the form controls.
-.form__col__label {
-  padding-top: calc(#{$input-padding-y} + #{$input-border-width});
-  padding-bottom: calc(#{$input-padding-y} + #{$input-border-width});
-  margin-bottom: 0; // Override the `<label>` default
-  // Compensate for labels having the smaller nav-font-size:
-  line-height: ($font-size-base / $nav-font-size) * $input-line-height;
-}
+//.form__col__label {
+  //padding-top: calc(#{$input-padding-y} + #{$input-border-width});
+  //padding-bottom: calc(#{$input-padding-y} + #{$input-border-width});
+  //margin-bottom: 0; // Override the `<label>` default
+  //// Compensate for labels having the smaller nav-font-size:
+  //line-height: ($font-size-base / $nav-font-size) * $input-line-height;
+//}
 
 
 // Form control sizing
@@ -110,9 +112,18 @@ select.form__control--sm {
   margin-bottom: $form-group-margin-bottom;
 }
 
+// e.g.
+// <input aria-described-by="my-text" class="form_control" type="text" name="foo">
+// <p class="form__text" id="my-text">Some help text.</p>
 .form__text {
-  display: block;
   margin-top: $form-text-margin-top;
+  font-size: $font-size-sm;
+  
+  @include text-style-alt;
+}
+
+.form__text--invalid {
+  color: $form-feedback-invalid-color;
 }
 
 
@@ -121,27 +132,6 @@ select.form__control--sm {
 // We're only using the invalid color, so replacing the call to the Bootstrap
 // mixin with the bits of its output that we need for that:
 
-.form__feedback--invalid {
-  display: none;
-  margin-top: .25rem;
-  font-size: .875rem;
-  color: $form-feedback-invalid-color;
-}
-
-.form__tooltip--invalid {
-  position: absolute;
-  top: 100%;
-  z-index: 5;
-  display: none;
-  width: 250px;
-  padding: .5rem;
-  margin-top: .1rem;
-  font-size: .875rem;
-  line-height: 1;
-  color: $white;
-  background-color: rgba($form-feedback-invalid-color, .8);
-  border-radius: .2rem;
-}
 
 .form__control {
   .was-validated &:invalid,
@@ -174,6 +164,12 @@ select.form__control--sm {
   flex-flow: row wrap;
   align-items: center; // Prevent shorter elements from growing to same height as others (e.g., small buttons growing to normal sized button height)
 
+  label,
+  .form__control,
+  .button {
+    margin-bottom: $form-group-margin-bottom; 
+  }
+
   // Kick in the inline
   @include media-breakpoint-up(sm) {
     label {
@@ -189,6 +185,7 @@ select.form__control--sm {
       width: auto; // Prevent labels from stacking above inputs in `.form-group`
       vertical-align: middle;
       margin-right: ($spacer / 2);
+      margin-bottom: 0;
 
       &:last-child {
         margin-right: 0;
@@ -198,6 +195,10 @@ select.form__control--sm {
     // Make static controls behave like regular ones
     .form__control--plaintext {
       display: inline-block;
+    }
+
+    .button {
+      margin-bottom: 0;
     }
   }
 }

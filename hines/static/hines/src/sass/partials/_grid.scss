@@ -48,6 +48,25 @@
 .grid__col--full {
 }
 
+// Offsets
+// Add one of these to push the column to the right the width of a sub, half or
+// main column:
+.grid__col--offset--sub {
+  @include media-breakpoint-up(md) {
+    @include make-col-offset(1)
+  }
+}
+.grid__col--offset--half {
+  @include media-breakpoint-up(md) {
+    @include make-col-offset(2)
+  }
+}
+.grid__col--offset--main {
+  @include media-breakpoint-up(md) {
+    @include make-col-offset(3)
+  }
+}
+
 // When there's no sidebar, centre the main column at wider widths, and make
 // sure it doesn't get too wide.
 .grid__col--main--only {
@@ -57,7 +76,7 @@
 }
 
 
-// Move columns to start/end of their row by adding one of these:
+// Swap column orders by adding these:
 .grid__col--first {
   @include media-breakpoint-up(md) {
     order: 1;

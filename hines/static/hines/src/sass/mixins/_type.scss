@@ -12,20 +12,27 @@
   }
 }
 
+// Used for body text - anything that's about "reading".
 @mixin text-style-default() {
   font-family: $text-style-default-font-family;
 }
 
+// Used for things like form help text, form errors, etc.
 @mixin text-style-alt() {
   font-family: $text-style-alt-font-family;
+}
+
+// Used for some headings.
+@mixin text-style-alt-headings() {
+  @include text-style-alt;
   font-weight: $text-style-alt-font-weight;
   text-transform: uppercase;
 }
 
+// Used for cards, asides, navbar, form labels, etc.
 @mixin text-style-nav() {
-  font-family:  $text-style-nav-font-family;
-  font-weight:  $text-style-nav-font-weight;
+  @include text-style-alt-headings;
   font-size:    $nav-font-size;
-  text-transform: uppercase;
 }
+
 

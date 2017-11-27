@@ -100,7 +100,7 @@ $font-family-base:            $font-family-serif;
 
 $font-size-base:              (1rem * 1.125); // probably 18px
 $font-size-lg:                ($font-size-base * 1.3333); // 24px
-$font-size-sm:                ($font-size-base * .72222); // 13px
+$font-size-sm:                ($font-size-base * .77778); // 14px
 
 //$font-weight-light:           300;
 $font-weight-normal:          400;
@@ -149,9 +149,6 @@ $text-style-default-font-weight:    $font-weight-normal;
 $text-style-alt-font-family:        $font-family-sans-serif;
 $text-style-alt-font-weight:        $font-weight-bold;
 
-$text-style-nav-font-family:        $font-family-sans-serif;
-$text-style-nav-font-weight:        $font-weight-bold;
-
 $list-inline-padding:         .5rem;
 $list-inline-padding-px:      8px; // So we can do maths.
 
@@ -168,7 +165,7 @@ $table-cell-padding:          .75rem;
 // Shared variables that are reassigned to `$input-` and `$button-` specific variables.
 
 $input-button-padding-y:         .375rem;
-$input-button-padding-x:         .5rem;
+$input-button-padding-x:         .75rem;
 $input-button-line-height:       $line-height-base;
 
 $input-button-focus-width:       .2rem;
@@ -228,7 +225,7 @@ $input-height-sm:                       calc(#{$input-height-inner-sm} + #{$inpu
 
 $input-transition:                      border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
-$form-text-margin-top:                  .25rem;
+$form-text-margin-top:                  .375rem;
 
 $form-group-margin-bottom:              $paragraph-margin-bottom;
 

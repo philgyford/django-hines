@@ -51,7 +51,7 @@ h6, .h6 { font-size: $h6-font-size; }
 }
 
 .h--alt {
-  @include text-style-alt;
+  @include text-style-alt-headings;
 }
 
 
@@ -81,6 +81,7 @@ code {
   font-weight: $font-weight-normal;
   color: $gray-dark;
   white-space: pre;
+  word-wrap: normal;
 }
 
 abbr {
