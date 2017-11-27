@@ -1,0 +1,10 @@
+
+.comment__title {
+  display: inline-block;
+  margin-bottom: $paragraph-margin-bottom;
+}
+
+.comment__about {
+  display: inline-block;
+  @include text-style-nav;
+}

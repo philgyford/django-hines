@@ -50,8 +50,8 @@ h6, .h6 { font-size: $h6-font-size; }
 // Other things
 
 hr {
-  margin-top: $paragraph-margin-bottom;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-top: ($paragraph-margin-bottom * 2);
+  margin-bottom: ($paragraph-margin-bottom * 2);
   border: 0;
   border-top: $hr-border-width solid $hr-border-color;
 }

@@ -23,7 +23,7 @@ def get_allowed_attributes():
         return bleach.sanitizer.ALLOWED_ATTRIBUTES
 
 
-def clean_comment(comment, max_url_length=30):
+def clean_comment(comment, max_url_length=40):
     """
     Strip disallowed tags, add rel=nofollow to links, remove extra newlines.
 
