@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-98cf5683c7.css">
+    <link rel="stylesheet" href="/static/hines/css/site-62906047f1.css">
     <!-- endinject -->
 
     {% get_all_blogs_by_slug as all_blogs %}
@@ -138,7 +138,7 @@
 
         <div class="grid__row">
           <div class="grid__col grid__col--half">
-            <h1 class="h3 h--alt">RSS feeds</h1>
+            <h1 class="h3">RSS feeds</h1>
             <ul class="list-unstyled">
               <li>
                 <a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>

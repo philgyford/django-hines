@@ -1,5 +1,13 @@
 // e.g. a Blog Post
 
+.article .pagehead h1 {
+  margin-bottom: $paragraph-margin-bottom;
+  @include text-style-default;
+}
+
+
+// ASIDES
+
 /**
  * Because we want the left border to go from the top of the top line of text
  * to the bottom of the bottom line, ignoring the line height above/below them,

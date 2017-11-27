@@ -1,21 +1,22 @@
 {% extends "comments/base.html" %}
-{% load i18n %}
+{% load hines_comments i18n %}
 
 {% block head_page_title %}Preview your comment{% endblock %}
 {% block content_title %}Preview your comment{% endblock %}
 
 {% block content %}
 
-	{% load i18n %}
-	{% load hines_comments %}
 
 	{% if form.errors %}
-		<p class="text-danger">
+		<p class="u-warning">
 			{% blocktrans count counter=form.errors|length %}Please correct the error below{% plural %}Please correct the errors below{% endblocktrans %}.
 		</p>
 	{% else %}
+    <hr>
 		<div class="comment">{{ comment|clean|safe|linebreaks }}</div>
+    <hr>
 	{% endif %}
+
 
 	{% include 'comments/form.html' with is_preview=True %}
 

@@ -10,8 +10,8 @@
 		<hr>
 
 		{% for comment in comment_list %}
-			<div class="row comment" id="c{{ comment.id }}">
-				<div class="col-sm-3">
+			<div class="comment" id="c{{ comment.id }}">
+				<div id="latest">
 					<strong>
 						{% if comment.user_url %}
 							<a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
@@ -25,7 +25,7 @@
 						<br><a class="admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
 					{% endif %}
 				</div>
-				<div class="col-sm-9">
+				<div>
 					{{ comment.comment|clean|safe|linebreaks }}
 				</div>
 			</div> <!-- .comment -->

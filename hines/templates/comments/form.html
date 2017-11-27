@@ -7,36 +7,36 @@ Could have this passed in:
 {% load comments %}
 
 <form action="{% comment_form_target %}" method="post">
-	{% csrf_token %}
+  {% csrf_token %}
 
-	{% if next %}
-		<input type="hidden" name="next" value="{{ next }}" />
-	{% else %}
-		<input type="hidden" name="next" value="{{ object.get_absolute_url }}#latest" />
-	{% endif %}
+  {% if next %}
+    <input type="hidden" name="next" value="{{ next }}" />
+  {% else %}
+    <input type="hidden" name="next" value="{{ object.get_absolute_url }}#latest" />
+  {% endif %}
 
-	{% for field in form %}
-		{% if field.is_hidden %}
-			{{ field }}
-		{% else %}
+  {% for field in form %}
+    {% if field.is_hidden %}
+      {{ field }}
+    {% else %}
 
-			<div class="form__group{% if field.errors %} has-danger{% endif %}"{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
-				<label for="{{ field.id_for_label }}">
-					{{ field.label }}
-					{% if field.html_name == 'url' %}
-						(optional)
-					{% endif %}
-				</label>
+      <div class="form__group{% if field.errors %} has-danger{% endif %}"{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
+        <label for="{{ field.id_for_label }}">
+          {{ field.label }}
+          {% if field.html_name == 'url' %}
+            (optional)
+          {% endif %}
+        </label>
 
         {% if field.html_name == 'comment' %}
-          <textarea class="form__control" id="{{ field.id_for_label }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %} rows="10">{{ field.value|default_if_none:"" }}</textarea>
+          <textarea class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %} rows="10"{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>{{ field.value|default_if_none:"" }}</textarea>
         {% else %}
-          <input type="{{ field.field.widget.input_type }}" class="form__control" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:"" }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}>
+          <input type="{{ field.field.widget.input_type }}" class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:"" }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
         {% endif %}
 
         {% if field.errors %}
           {% for error in field.errors %}
-            <div class="invalid-feedback">{{ error }}</div>
+            <div class="form__text form__text--invalid">{{ error }}</div>
           {% endfor %}
         {% endif %}
 
@@ -56,14 +56,16 @@ Could have this passed in:
             {% endif %}
           </div>
         {% endif %}
-			</div>
-		{% endif %}
-	{% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
 
   {% if is_preview|default_if_none:False %}
-    <button type="submit" name="preview" class="buttton button--primary">Preview again</button>
-    &nbsp;
-    <button type="submit" name="post" class="button button--primary">Post comment</button>
+    <button type="submit" name="preview" class="button button--primary">Preview again</button>
+    {% if form.is_valid %}
+      &nbsp;
+      <button type="submit" name="post" class="button button--primary">Post comment</button>
+    {% endif %}
   {% else %}
     <button type="submit" name="preview" class="button button--primary">Preview comment</button>
   {% endif %}

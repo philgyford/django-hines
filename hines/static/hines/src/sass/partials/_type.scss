@@ -25,6 +25,8 @@ h1, h2, h3, h4, h5, h6,
   margin-bottom: $headings-margin-bottom;
   color: $headings-color;
   font-weight: $headings-font-weight;
+
+  @include text-style-headings();
 }
 
 h1, .h1 { font-size: $h1-font-size; }
@@ -40,18 +42,8 @@ h6, .h6 { font-size: $h6-font-size; }
   h3, .h3 { font-size: $h3-font-size-md; }
 }
 
-.pagehead {
-  h1 {
-    margin-bottom: 1em;
-  }
-  .grid__col--main--only h1 {
-    /* e.g. on Blog Posts. */
-    margin-bottom: $paragraph-margin-bottom;
-  }
-}
-
-.h--alt {
-  @include text-style-alt-headings;
+.pagehead h1 {
+  margin-bottom: 1em;
 }
 
 
@@ -94,3 +86,4 @@ blockquote {
   padding-left: $border-width;
   padding-right: ($border-width * 2);
 }
+

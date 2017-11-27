@@ -15,15 +15,19 @@
 // Used for body text - anything that's about "reading".
 @mixin text-style-default() {
   font-family: $text-style-default-font-family;
+  font-weight: $font-weight-base;
+  text-transform: none;
 }
 
 // Used for things like form help text, form errors, etc.
 @mixin text-style-alt() {
   font-family: $text-style-alt-font-family;
+  font-weight: $font-weight-base;
+  text-transform: none;
 }
 
 // Used for some headings.
-@mixin text-style-alt-headings() {
+@mixin text-style-headings() {
   @include text-style-alt;
   font-weight: $text-style-alt-font-weight;
   text-transform: uppercase;
@@ -31,7 +35,9 @@
 
 // Used for cards, asides, navbar, form labels, etc.
 @mixin text-style-nav() {
-  @include text-style-alt-headings;
+  @include text-style-alt;
+  font-weight: $text-style-alt-font-weight;
+  text-transform: uppercase;
   font-size:    $nav-font-size;
 }
 

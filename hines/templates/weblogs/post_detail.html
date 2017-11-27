@@ -2,13 +2,9 @@
 {% load comments hines_core hines_weblogs spectator_reading %}
 
 {% block head_page_title %}{{ post.title|smartypants|safe }}{% endblock %}
-{% block content_title %}{{ post.title|smartypants|safe }}{% endblock %}
 
-{% block content_heading %}
-  {% with text_style='1' %}
-    {{ block.super }}
-  {% endwith %}
-{% endblock content_heading %}
+{# We put the heading within <article> #}
+{% block content_heading %}{% endblock content_heading %}
 
 {% block head_extra %}
 	{{ block.super }}
@@ -28,6 +24,12 @@
 {% block content %}
 
   <article class="article">
+    <div class="pagehead">
+      <header>
+        <h1>{{ post.title|smartypants|safe }}</h1>
+      </header>
+    </div>
+
     {% if is_preview %}
       <p class="admin">
         This is a preview. This Post’s status is {{ post.status_str }}.
@@ -98,7 +100,7 @@
 	{% render_comment_list for post %}
 
 	{% if post.comments_allowed %}
-		<h2 class="h--alt">Post a comment</h2>
+		<h2>Post a comment</h2>
 		{% render_comment_form for post %}
 	{% else %}
 		<p>Comments are closed for this post.</p>
