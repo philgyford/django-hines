@@ -6,9 +6,14 @@
 
 {% block sidebar %}
 
-	<ul>
-	  <li><a href="{% url 'hines:components:forms' %}">Forms</a></li>
-	  <li><a href="{% url 'hines:components:type' %}">Type</a></li>
-	</ul>
+  <aside class="card">
+    <div class="card__body">
+      <h2 class="card__title">Pages</h2>
+      <ul class="card__text">
+        <li><a href="{% url 'hines:components:forms' %}">Forms</a></li>
+        <li><a href="{% url 'hines:components:type' %}">Type</a></li>
+      </ul>
+    </div>
+  </aside>
 
 {% endblock sidebar %}

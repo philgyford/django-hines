@@ -36,7 +36,14 @@
 
     <hr>
 
-    <p>That was an <code>&lt;hr&gt;</code> tag and here's a quote:</p>
+    <p>That was an <code>&lt;hr&gt;</code> tag and here's a <code>&lt;blockquote&gt;</code>:</p>
+
+      <blockquote>
+        <p>Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted.</p>
+        <p>Another paragraph.</p>
+      </blockquote>
+
+    <p>And here's a quote in a <code>&lt;figure&gt;</code> with a <code>&lt;figcaption&gt;</code>:</p>
 
     <figure class="figure figure--blockquote">
       <blockquote>
@@ -49,13 +56,19 @@
       </figcaption>
     </figure>
 
-    <p>You see how that works? Hopefully it looks nice. Here's <code>some code</code> and here's a code block in an (optional) <code>&lt;figure&gt;</code>:</p>
+    <p>Here's <code>some code</code> and here's a <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code> block:</p>
+
+    <pre><code>blockquote {
+  border-left: $border-width solid $black; // This comment means the line should be quite long...
+  padding-left: $border-width;
+}</code></pre>
+
+    <p>And here's the same block in a <code>&lt;figure&gt;</code> (it looks the same):</p>
 
     <figure>
       <pre><code>blockquote {
   border-left: $border-width solid $black; // This comment means the line should be quite long...
   padding-left: $border-width;
-  padding-right: ($border-width * 2);
 }</code></pre>
 </figure>
 

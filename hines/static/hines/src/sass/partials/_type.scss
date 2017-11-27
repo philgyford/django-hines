@@ -71,7 +71,6 @@ pre {
 
   code {
     color: $body-color;
-    word-wrap: normal;
     white-space: pre-wrap;
   }
 }
@@ -88,4 +87,10 @@ abbr {
   @each $prefix in $browser-prefixes {
     #{$prefix}font-variant: small-caps;
   }
+}
+
+blockquote {
+  border-left: $border-width solid $black;
+  padding-left: $border-width;
+  padding-right: ($border-width * 2);
 }
