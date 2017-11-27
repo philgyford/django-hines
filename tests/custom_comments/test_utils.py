@@ -35,16 +35,22 @@ class CleanCommentTestCase(TestCase):
         )
 
     def test_links_urls(self):
-        "Turns URLs into links and adds rel=nofollow."
+        "Turns URLs into links, removes protocol, and adds rel=nofollow."
         self.assertEqual(
             clean_comment('http://example.org/foo'),
-            '<a href="http://example.org/foo" rel="nofollow">http://example.org/foo</a>')
+            '<a href="http://example.org/foo" rel="nofollow">example.org/foo</a>')
+
+    def test_links_urls_https(self):
+        "Turns https URLs into links, removes protocol, and adds rel=nofollow."
+        self.assertEqual(
+            clean_comment('https://example.org/foo'),
+            '<a href="https://example.org/foo" rel="nofollow">example.org/foo</a>')
 
     def test_truncates_long_urls(self):
         "Turns long URLs into truncated links and adds rel=nofollow."
         self.assertEqual(
             clean_comment('http://example.org/foo/bar/the_filename.html'),
-            '<a href="http://example.org/foo/bar/the_filename.html" rel="nofollow">http://example.org/foo/bar/th…</a>')
+            '<a href="http://example.org/foo/bar/the_filename.html" rel="nofollow">example.org/foo/bar/th…</a>')
 
     def test_removes_extra_newlines(self):
         s1 = """First line.

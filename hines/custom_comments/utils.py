@@ -23,9 +23,11 @@ def get_allowed_attributes():
         return bleach.sanitizer.ALLOWED_ATTRIBUTES
 
 
-def clean_comment(comment, max_url_length=40):
+def clean_comment(comment, max_url_length=23):
     """
     Strip disallowed tags, add rel=nofollow to links, remove extra newlines.
+
+    23 for the max_url_length is about the maximum when viewed on 320px device.
 
     comment - The string to be cleaned.
     max_url_length - URLs longer than this will have their visible version
@@ -43,9 +45,18 @@ def clean_comment(comment, max_url_length=40):
         if not new:
             return attrs
         # _text will be the same as the URL for new links
-        text = attrs[u'_text']
+        text = attrs['_text']
+
+        # Trim the protocol off the start:
+        for protocol in ['http://', 'https://']:
+            if text.startswith(protocol):
+                text = text[len(protocol):]
+                break
+
         if len(text) > max_url_length:
-            attrs[u'_text'] = text[0:max_url_length-1] + '…'
+            attrs['_text'] = text[0:max_url_length-1] + '…'
+        else:
+            attrs['_text'] = text
         return attrs
 
     # Make URLs into links, truncating long ones:

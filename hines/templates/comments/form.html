@@ -60,6 +60,7 @@ Could have this passed in:
     {% endif %}
   {% endfor %}
 
+  <div class="form__buttons">
   {% if is_preview|default_if_none:False %}
     <button type="submit" name="preview" class="button button--primary">Preview again</button>
     {% if form.is_valid %}
@@ -69,6 +70,7 @@ Could have this passed in:
   {% else %}
     <button type="submit" name="preview" class="button button--primary">Preview comment</button>
   {% endif %}
+  </div>
 
 </form>
 
