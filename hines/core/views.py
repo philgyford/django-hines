@@ -20,6 +20,32 @@ class HomeView(TemplateView):
     template_name = 'hines_core/home.html'
 
 
+class ComponentsView(TemplateView):
+    template_name = 'hines_core/components/home.html'
+
+    valid_slugs = [
+                    'forms',
+                    'tables',
+                    'type',
+                    ]
+
+    def get_template_names(self):
+        slug = self.kwargs.get('slug', None)
+
+        if slug is None:
+            return [self.template_name]
+        elif slug in self.valid_slugs:
+            return ['hines_core/components/{}.html'.format(slug)]
+        else:
+            raise Http404(("'{}' is not a valid slug.").format(slug))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['components'] = self.valid_slugs
+        context['current_component'] = self.kwargs.get('slug', None)
+        return context
+
+
 class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
     """
     Trying to keep things a bit consistent with BaseDateListView, except we

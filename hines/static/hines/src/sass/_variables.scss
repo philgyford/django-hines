@@ -80,6 +80,8 @@ $grid-breakpoints: (
 $border-width: 12px;
 $border-color: $black;
 
+$border-width-sm: 1px;
+
 
 // Grid containers
 
@@ -141,6 +143,8 @@ $text-muted:                  $gray-medium;
 
 $hr-border-color:             $border-color;
 $hr-border-width:             $border-width;
+$hr-margin:                   ($paragraph-margin-bottom * 2);
+$hr-margin-sm:                $paragraph-margin-bottom;
 
 $dt-font-weight:              $font-weight-bold;
 
@@ -159,6 +163,10 @@ $list-inline-padding-px:      8px; // So we can do maths.
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 $table-cell-padding:          .75rem;
+$table-cell-padding-sm:       .3rem;
+
+$table-border-width:          $border-width-sm; 
+$table-border-color:          $border-color;
 
 
 // Buttons + Forms

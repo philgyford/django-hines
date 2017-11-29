@@ -1,0 +1,29 @@
+{% comment %}
+Display Older / Newer links to objects' pages.
+
+Expects (both optional):
+
+* previous - An object with `get_absolute_url` and `title` properties.
+* next - As previous.
+
+{% endcomment %}
+
+{% if previous or next %}
+  <nav class="nextprev">
+    <ul class="list--inline">
+      {% spaceless %}
+        {% if previous %}
+          <li class="list--inline__item nextprev__prev">
+          <a href="{{ previous.get_absolute_url }}" title="{{ previous.title }}">&larr; <span class="a__inner">Older</span></a>
+          </li>
+        {% endif %}
+        {% if next %}
+          <li class="list--inline__item nextprev__next{% if previous %} nextprev__next--hasprev{% endif %}">
+          <a href="{{ next.get_absolute_url }}" title="{{ next.title }}"><span class="a__inner">Newer</span> &rarr;</a>
+          </li>
+        {% endif %}
+      {% endspaceless %}
+    </ul>
+  </nav>
+{% endif %}
+

@@ -57,20 +57,13 @@ urlpatterns = [
 
     # Components pattern library.
 
-    url(r'^components/',
-        include([
-            url(r'^$',
-                TemplateView.as_view(template_name='hines_core/components/home.html'),
-                name='home'),
-            url(r'^forms/$',
-                TemplateView.as_view(template_name='hines_core/components/forms.html'),
-                name='forms'),
-            url(r'^type/$',
-                TemplateView.as_view(template_name='hines_core/components/type.html'),
-                name='type'),
-        ],
-        namespace='components'),
-    ),
+    url(r'^components/$',
+        core_views.ComponentsView.as_view(),
+        name='component_list'),
+
+    url(r'^components/(?P<slug>[\w-]+)/$',
+        core_views.ComponentsView.as_view(),
+        name='component_detail'),
 
 
     url(r'^', include('hines.weblogs.urls')),

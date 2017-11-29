@@ -6,37 +6,35 @@ Expects:
 * account -- Optional, a single Account object, to restrict counts to that.
 {% endcomment %}
 
-{% load ditto_pinboard %}
-{% load l10n %}
+{% load l10n ditto_pinboard %}
 
 {% if account %}
-	{% annual_bookmark_counts account=account.username as bookmarks %}
+  {% annual_bookmark_counts account=account.username as bookmarks %}
 {% else %}
-	{% annual_bookmark_counts as bookmarks %}
+  {% annual_bookmark_counts as bookmarks %}
 {% endif %}
 
 {% if bookmarks %}
-	<div class="card mb-3">
-		<div class="card-body">
-			<h2 class="h6 card-title">Links per year</h2>
-			<table class="table table-sm mb-0 pinboard-bookmarks-annual">
-				<thead class="sr-only">
-					<tr>
-						<th>Year</th>
-						<th class="text-right">Bookmarks</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for s in bookmarks %}
-						<tr>
-							<td>{{ s.year|unlocalize }}</td>
-							<td class="text-right">{{ s.count }}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
+  <aside class="card">
+    <div class="card__body">
+      <h2 class="card__title">Links per year</h2>
+      <table class="table table--sm table--full">
+        <thead class="u-sr-only">
+          <tr>
+            <th>Year</th>
+            <th class="u-align-right">Bookmarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in bookmarks %}
+            <tr>
+              <td>{{ s.year|unlocalize }}</td>
+              <td class="u-align-right">{{ s.count }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </aside>
 {% endif %}
-
 

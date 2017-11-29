@@ -3,14 +3,14 @@ Default block template, for rendering some HTML, such as <p>s, in a card.
 {% endcomment %}
 
 {% if block %}
-	<div class="card mb-3 flatblock-{{ block.slug }}">
-		<div class="card-body">
-		{% if block.title%}
-			<h2 class="h6 card-title">{{ block.title }}</h2>
-		{% endif %}
-			<div class="card-text">
-				{{ block.content_html|safe }}
-			</div>
-		</div>
-	</div>
+  <aside class="card flatblock-{{ block.slug }}">
+    <div class="card__body">
+      {% if block.title%}
+        <h2 class="card__title">{{ block.title }}</h2>
+      {% endif %}
+      <div class="card__text">
+        {{ block.content_html|safe }}
+      </div>
+    </div>
+  </aside>
 {% endif %}

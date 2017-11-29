@@ -36,57 +36,21 @@
       </p>
     {% endif %}
 
-    {% if perms.weblogs.can_change_post %}
-      <p><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
-    {% endif %}
-
 		<div class="article__intro">
 			{{ post.intro_html|safe }}
 		</div>
 
-    <aside class="article__aside">
-      <div class="article__aside__inner">
-      <p>{% display_time post.time_published link_to_day=True %}</p>
-
-      {% with post.get_tags as tags %}
-        {% if tags|length > 0 %}
-          <div class="tags tags--inline">
-            {% spaceless %}
-              <h2 class="tags__heading">Tags:</h2>
-              <ul class="tags__list">
-                  {% for tag in tags %}
-                    <li class="tag">
-                      <a href="{% url 'hines:blog_tag_detail' blog_slug=post.blog.slug tag_slug=tag.slug %}" title="More posts tagged with {{ tag.name }}">{{ tag.name }}</a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              {% endspaceless %}
-          </div>
+    <aside class="aside aside--right">
+      <div class="aside__inner">
+        {% if perms.weblogs.can_change_post %}
+          <p><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
         {% endif %}
-      {% endwith %}
 
-      {% with post.get_previous_post as previous_post %}
-        {% with post.get_next_post as next_post %}
-          {% if previous_post or next_post %}
-            <nav class="nextprev">
-              <ul class="list--inline">
-                {% spaceless %}
-                  {% if previous_post %}
-                    <li class="list--inline__item nextprev__prev">
-                      <a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.title }}">&larr; <span class="a__inner">Older</span></a>
-                    </li>
-                  {% endif %}
-                  {% if next_post %}
-                    <li class="list--inline__item nextprev__next{% if previous_post %} nextprev__next--hasprev{% endif %}">
-                      <a href="{{ next_post.get_absolute_url }}" title="{{ next_post.title }}"><span class="a__inner">Newer</span> &rarr;</a>
-                    </li>
-                  {% endif %}
-                {% endspaceless %}
-              </ul>
-            </nav>
-          {% endif %}
-        {% endwith %}
-      {% endwith %}
+        <p>{% display_time post.time_published link_to_day=True %}</p>
+
+        {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
+
+        {% include 'hines_core/includes/next_prev.html' with previous=post.get_previous_post next=post.get_next_post %}
       </div>
     </aside>
 

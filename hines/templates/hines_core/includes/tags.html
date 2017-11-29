@@ -1,0 +1,44 @@
+{% comment %}
+
+Expects:
+
+* tag_list - The list of tags.
+* format - 'inline' or 'chart'.
+* tag_type - 'bookmark' (Default) or 'post'.
+
+Optional:
+
+* blog_slug - If tag_type=='post', the slug of the Post's blog.
+
+{% endcomment %}
+
+{% load l10n %}
+
+{% if tag_list|length > 0 %}
+  <div class="tags{% if format == 'inline' %} tags--inline{% endif %}">
+    {% spaceless %}
+      {% if format == 'inline' %}
+        <h2 class="tags__heading">Tags</h2>
+      {% endif %}
+      <{% if format == 'inline' %}ul{% else %}ol{% endif %} class="tags__list">
+        {% for tag in tag_list %}
+          <li class="tag">
+            <a href="{% if tag_type == 'post' %}
+              {% url 'hines:blog_tag_detail' blog_slug=blog_slug tag_slug=tag.slug %}
+            {% else %}
+              {% url 'pinboard:tag_detail' slug=tag.slug %}
+            {% endif %}" title="More tagged with {{ tag.name }}">{{ tag.name }}</a>
+            {% if format == 'chart' %}
+              {% if tag_type == 'post' %}
+                ({{ tag.post_count|localize }})
+              {% else %}
+                ({{ tag.num_times|localize }})
+              {% endif %}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </{% if format == 'inline' %}ul{% else %}ol{% endif %}>
+    {% endspaceless %}
+  </div>
+{% endif %}
+

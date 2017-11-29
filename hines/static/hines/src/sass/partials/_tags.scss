@@ -4,14 +4,21 @@
  * but at the moment we only use an --inline variant.
  */
 
+.tags {
+  @include text-style-nav;
+}
+
 .tags--inline {
 
   .tags__heading {
     display: inline-block;
-    font-size: $nav-font-size;
     margin-bottom: 0;
     margin-right: $list-inline-padding;
-    font-weight: $text-style-alt-font-weight;
+    @include text-style-nav;
+
+    &:after {
+      content: ": ";
+    }
   }
 
   .tags__list {

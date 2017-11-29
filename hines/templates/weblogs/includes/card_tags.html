@@ -8,14 +8,16 @@ Expects:
 {% endcomment %}
 
 {% if tag_list|length > 0 %}
-	<aside class="card">
-		<div class="card__body">
-			<h2 class="card__title">{{ card_title }}</h2>
+  <aside class="card">
+    <div class="card__body">
+      <h2 class="card__title">{{ card_title }}</h2>
 
-			{% include 'weblogs/includes/tags.html' with blog=blog tag_list=tag_list only %}
+      {% include 'hines_core/includes/tags.html' with tag_list=tag_list format='chart' tag_type='post' blog_slug=blog.slug only %}
 
-			<p class="card__text"><a href="{% url 'hines:blog_tag_list' blog_slug=blog.slug %}">More tags</a></p>
-		</div>
-	</aside>
+      <p class="card__text">
+        <a href="{% url 'hines:blog_tag_list' blog_slug=blog.slug %}">More tags</a>
+      </p>
+    </div>
+  </aside>
 {% endif %}
 

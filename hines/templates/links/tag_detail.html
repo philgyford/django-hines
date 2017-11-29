@@ -5,10 +5,10 @@
 
 {% block content %}
 
-      {% include 'links/includes/bookmarks.html' with bookmark_list=bookmark_list page_obj=page_obj perms=perms only %}
+  {% include 'links/includes/bookmarks.html' with bookmark_list=bookmark_list page_obj=page_obj perms=perms only %}
 
 {% endblock %}
 
 {% block sidebar %}
-      {% include 'pinboard/includes/popular_tags.html' only %}
+  {% include 'pinboard/includes/popular_tags.html' only %}
 {% endblock %}

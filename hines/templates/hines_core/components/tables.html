@@ -1,0 +1,171 @@
+{% extends 'hines_core/components/base.html' %}
+
+
+{% block content %}
+
+  <article>
+
+    <p>Based on <a href="https://getbootstrap.com/docs/4.0/components/forms/">Bootstrap v4</a>. <a href="https://github.com/twbs/bootstrap/blob/v4-dev/scss/_forms.scss">SCSS.</a></p>
+
+    <h2>Standard</h2>
+
+    <p>With <code>.table</code> class:</p>
+
+    <table class="table">
+      <caption>This is a caption</caption>
+      <thead>
+        <tr>
+          <th>Column 1</th>
+          <th class="u-align-right">Col 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Audrey</td>
+          <td class="u-align-right">23</td>
+        </tr>
+        <tr>
+          <td>Bob</td>
+          <td class="u-align-right">9999</td>
+        </tr>
+        <tr>
+          <td>Terry</td>
+          <td class="u-align-right">1</td>
+        </tr>
+        <tr>
+          <td>Thelma</td>
+          <td class="u-align-right">123</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Small table</h2>
+
+    <p>With additional <code>.table--sm</code>:</p>
+
+    <table class="table table--sm">
+      <caption>This is a caption</caption>
+      <thead>
+        <tr>
+          <th>Column 1</th>
+          <th class="u-align-right">Col 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Audrey</td>
+          <td class="u-align-right">23</td>
+        </tr>
+        <tr>
+          <td>Bob</td>
+          <td class="u-align-right">9999</td>
+        </tr>
+        <tr>
+          <td>Terry</td>
+          <td class="u-align-right">1</td>
+        </tr>
+        <tr>
+          <td>Thelma</td>
+          <td class="u-align-right">123</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Full-width table</h2>
+
+    <p>With additional <code>.table--full</code>:</p>
+
+    <table class="table table--full">
+      <caption>This is a caption</caption>
+      <thead>
+        <tr>
+          <th>Column 1</th>
+          <th class="u-align-right">Col 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Audrey</td>
+          <td class="u-align-right">23</td>
+        </tr>
+        <tr>
+          <td>Bob</td>
+          <td class="u-align-right">9999</td>
+        </tr>
+        <tr>
+          <td>Terry</td>
+          <td class="u-align-right">1</td>
+        </tr>
+        <tr>
+          <td>Thelma</td>
+          <td class="u-align-right">123</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <h2>Responsive table</h2>
+
+    <p>With additional <code>.table--responsive</code>. If it's going to be wider than the container, this will </p>
+
+    <table class="table table--responsive">
+      <caption>This is a caption</caption>
+      <thead>
+        <tr>
+          <th>Column 1</th>
+          <th class="u-align-right">Column 2</th>
+          <th>Column 3</th>
+          <th class="u-align-right">Column 4</th>
+          <th>Column 5</th>
+          <th class="u-align-right">Column 6</th>
+          <th>Column 7</th>
+          <th class="u-align-right">Column 8</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Audrey</td>
+          <td class="u-align-right">23</td>
+          <td>Audrey</td>
+          <td class="u-align-right">23</td>
+          <td>Audrey</td>
+          <td class="u-align-right">23</td>
+          <td>Audrey</td>
+          <td class="u-align-right">23</td>
+        </tr>
+        <tr>
+          <td>Bob</td>
+          <td class="u-align-right">9999</td>
+          <td>Bob</td>
+          <td class="u-align-right">9999</td>
+          <td>Bob</td>
+          <td class="u-align-right">9999</td>
+          <td>Bob</td>
+          <td class="u-align-right">9999</td>
+        </tr>
+        <tr>
+          <td>Terry</td>
+          <td class="u-align-right">1</td>
+          <td>Terry</td>
+          <td class="u-align-right">1</td>
+          <td>Terry</td>
+          <td class="u-align-right">1</td>
+          <td>Terry</td>
+          <td class="u-align-right">1</td>
+        </tr>
+        <tr>
+          <td>Thelma</td>
+          <td class="u-align-right">123</td>
+          <td>Thelma</td>
+          <td class="u-align-right">123</td>
+          <td>Thelma</td>
+          <td class="u-align-right">123</td>
+          <td>Thelma</td>
+          <td class="u-align-right">123</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </article>
+{% endblock content %}
+

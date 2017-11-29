@@ -1,0 +1,57 @@
+// Tables
+// Based on Bootstrap v4
+
+
+.table {
+  max-width: 100%;
+  margin-bottom: $paragraph-margin-bottom;
+
+  th,
+  td {
+    padding: $table-cell-padding;
+    vertical-align: top;
+    border-top: $table-border-width solid $table-border-color;
+  }
+
+  thead th {
+    vertical-align: bottom;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: $table-border-width solid $table-border-color;
+  }
+}
+
+
+.table--sm {
+  th,
+  td {
+    padding: $table-cell-padding-sm;
+  }
+}
+
+
+.table--full {
+  width: 100%;
+}
+
+
+.table--responsive {
+  // Allow for bottom scrollbar:
+  margin-bottom: ($paragraph-margin-bottom * 2);
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar; // See https://github.com/twbs/bootstrap/pull/10057
+      }
+    }
+  }
+}

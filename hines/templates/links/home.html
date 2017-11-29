@@ -1,4 +1,5 @@
-{% extends 'links/layouts/sidebar_left.html' %}
+{% extends 'links/layouts/base.html' %}
+{% load links_tags %}
 
 {% block head_page_title %}Links{% endblock %}
 {% block content_title %}Links{% endblock %}
@@ -10,7 +11,7 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% include 'pinboard/includes/popular_tags.html' only %}
+  {% popular_tags_card %}
 
 	{% include 'links/includes/annual_bookmark_counts.html' only %}
 {% endblock %}

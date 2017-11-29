@@ -1,9 +1,0 @@
-
-<ol>
-	{% for tag in tag_list %}
-		<li>
-			<a href="{% url 'hines:blog_tag_detail' blog_slug=blog.slug tag_slug=tag.slug %}">{{ tag.name }}</a>
-			<small>({{ tag.post_count }})</small>
-		</li>
-	{% endfor %}
-</ol>

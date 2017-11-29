@@ -7,17 +7,16 @@ Expects:
 {% endcomment %}
 
 {% if tag_list|length > 0 %}
-	<div class="card mb-3">
-		<div class="card-body">
-			<h2 class="h6 card-title">{{ card_title }}</h2>
+  <aside class="card">
+    <div class="card__body">
+      <h2 class="card__title">{{ card_title }}</h2>
 
-			{% include 'links/includes/tags.html' with tag_list=tag_list only %}
+      {% include 'hines_core/includes/tags.html' with tag_list=tag_list format='chart' tag_type='bookmark' only %}
 
-			<p class="card-text">
-				<a href="{% url 'pinboard:tag_list' %}">More tags</a>
-			</p>
-		</div>
-	</div>
+      <p class="card__text">
+        <a href="{% url 'pinboard:tag_list' %}">More tags</a>
+      </p>
+    </div>
+  </aside>
 {% endif %}
-
 

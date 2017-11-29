@@ -46,14 +46,25 @@ h6, .h6 { font-size: $h6-font-size; }
   margin-bottom: 1em;
 }
 
+.article {
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    @include text-style-default;
+  }
+}
+
 
 // Other things
 
 hr {
-  margin-top: ($paragraph-margin-bottom * 2);
-  margin-bottom: ($paragraph-margin-bottom * 2);
+  margin-top: $hr-margin;
+  margin-bottom: $hr-margin;
   border: 0;
   border-top: $hr-border-width solid $hr-border-color;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 pre {

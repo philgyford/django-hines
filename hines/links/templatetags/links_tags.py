@@ -4,7 +4,7 @@ from ditto.pinboard.templatetags.ditto_pinboard import popular_bookmark_tags
 register = template.Library()
 
 
-@register.inclusion_tag('pinboard/includes/card_tags.html')
+@register.inclusion_tag('links/includes/card_tags.html')
 def popular_tags_card(limit=10):
     """
     """
