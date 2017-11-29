@@ -22,6 +22,12 @@ $article-aside-offset: ($line-height-base-computed - $nav-font-size) / 2;
   margin-top: $article-aside-offset;
   margin-bottom: ($article-aside-offset + $paragraph-margin-bottom);
 
+  // We have to float it to get the border/height stuff to work.
+  // I haven't found a better way to do it.
+  // So whatever this is in will probably need clearfix included.
+  float: left;
+  width: 100%;
+
   p,
   ul {
     margin-bottom: 0;
@@ -36,6 +42,7 @@ $article-aside-offset: ($line-height-base-computed - $nav-font-size) / 2;
 
 .aside--right {
   float: right;
+  width: auto;
   max-width: 50%;
   margin-left: ($grid-gutter-width / 2);
 }
