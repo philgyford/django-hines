@@ -238,14 +238,15 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 class PaginatedListView(ListView):
     """Use this instead of ListView to provide standardised pagination."""
     paginator_class = DiggPaginator
-    paginate_by = 50
+    paginate_by = 30
     page_kwarg = 'p'
 
-    # See ditto.core.paginator for what these mean:
-    paginator_body = 5
-    paginator_margin = 2
-    paginator_padding = 2
-    paginator_tail = 2
+    # See hines.core.paginator for what these mean:
+    # Very minimal, so that it still fits on a small mobile width:
+    paginator_body = 1
+    paginator_margin = 1
+    paginator_padding = 0
+    paginator_tail = 1
 
     def __init__(self, **kwargs):
         return super().__init__(**kwargs)

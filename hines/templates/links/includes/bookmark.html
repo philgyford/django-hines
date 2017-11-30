@@ -25,9 +25,11 @@ Expects:
         <p><a href="{% url 'admin:pinboard_bookmark_change' bookmark.id %}">Edit</a></p>
       {% endif %}
 
+      {% include 'hines_core/includes/tags.html' with tag_list=bookmark.tags.all format='inline' tag_type='bookmark' only %}
+
       <p>
         {% if view != 'detail' %}
-          <a href="{{ bookmark.get_absolute_url }}" title="See only this bookmark">#</a>
+          <a href="{{ bookmark.get_absolute_url }}" title="See only this link">#</a> &nbsp;
         {% endif %}
 
         {% if view == 'day' %}
@@ -36,8 +38,6 @@ Expects:
           {% display_time bookmark.post_time link_to_day=True %}
         {% endif %}
       </p>
-
-      {% include 'hines_core/includes/tags.html' with tag_list=bookmark.tags.all format='inline' tag_type='bookmark' only %}
 
       {% if view == 'detail' %}
         {% include 'hines_core/includes/next_prev.html' with previous=bookmark.get_previous next=bookmark.get_next %}

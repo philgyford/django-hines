@@ -126,6 +126,9 @@ $h2-font-size-md:   ($font-size-base * 1.611111);   /* 29 */
 $h3-font-size-md:   ($font-size-base * 1.277778);   /* 23 */
 
 $nav-font-size:               1rem;
+// Because occasionally we need to add what is probably the size to things like
+// the border-width:
+$nav-font-size-px:            16px;
 
 $paragraph-margin-bottom:     $font-size-base;
 
@@ -241,11 +244,9 @@ $form-group-margin-bottom:              $paragraph-margin-bottom;
 $form-feedback-invalid-color:           $red; 
 
 
-// Navs
+// Navbar
 
 $navbar-link-padding-x:             0.5rem;
-
-// Navbar
 
 $navbar-brand-font-size:            (1rem * 1.25); // probably 20px
 
@@ -256,6 +257,19 @@ $navbar-link-active-color:          $link-active-color;
 $navbar-text-color:                 $body-color;
 
 $navbar-border-width:               $border-width;
+
+
+// Pagination
+
+
+$pagination-color:                  $link-color;
+
+$pagination-hover-color:            $link-hover-color;
+
+$pagination-active-color:           $body-bg;
+$pagination-active-bg:              $border-color;
+
+$pagination-disabled-color:         $gray-medium;
 
 
 // Cards

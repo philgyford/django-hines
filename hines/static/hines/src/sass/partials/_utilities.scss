@@ -2,6 +2,7 @@
 
 .u-warning {
   color: $text-color-warning;
+
   @include text-style-alt;
 }
 
