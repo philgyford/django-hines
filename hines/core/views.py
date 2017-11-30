@@ -242,11 +242,10 @@ class PaginatedListView(ListView):
     page_kwarg = 'p'
 
     # See hines.core.paginator for what these mean:
-    # Very minimal, so that it still fits on a small mobile width:
-    paginator_body = 1
-    paginator_margin = 1
-    paginator_padding = 0
-    paginator_tail = 1
+    paginator_body = 5 
+    paginator_margin = 2
+    paginator_padding = 2
+    paginator_tail = 2
 
     def __init__(self, **kwargs):
         return super().__init__(**kwargs)

@@ -1,0 +1,76 @@
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  padding-left: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    $border-color,
+    $border-color $nav-border-width,
+    $white $nav-border-width,
+    $white ($nav-border-width * 2)
+  );
+
+  @include text-style-nav;
+}
+
+.nav__item {
+  background: $body-bg;
+  padding: 0 $nav-link-padding-x 0 0;
+  line-height: $nav-border-width;
+  margin-bottom: $nav-border-width;
+}
+
+.nav__item--split {
+  margin-left: $nav-border-width;
+  padding-left: $nav-link-padding-x;
+}
+
+
+.nav__link {
+  display: block;
+  padding: 0;
+  color: $nav-link-color;
+  white-space: nowrap;
+
+  // Need to repeat this for the navbar search button at narrow widths:
+  font-weight: $text-style-alt-font-weight;
+
+  &:focus,
+  &:hover {
+    color: $nav-link-hover-color;
+  }
+  &:active {
+    color: $nav-link-active-color;
+  }
+}
+
+.is-active > .nav__link {
+  color: $nav-text-color;
+
+}
+.is-active > a.nav__link {
+  &:focus,
+  &:hover {
+    color: $nav-link-hover-color;
+  }
+}
+
+.is-disabled > .nav__link {
+  color: $nav-disabled-color;
+  pointer-events: none;
+}
+
+
+// Variant for pagination.
+
+.nav--pagination {
+
+  .nav__item {
+    // More spaced out because they're so small:
+    padding-right: ($nav-link-padding-x * 2);
+  }
+}
+

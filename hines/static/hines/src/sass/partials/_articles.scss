@@ -17,6 +17,7 @@
  */
 .articlelist {
   border-top: $border-width-sm solid $border-color;
+  margin-bottom: $paragraph-margin-bottom;
 
   .article {
     padding-top: $hr-margin-sm;

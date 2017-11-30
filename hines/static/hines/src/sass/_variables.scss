@@ -125,11 +125,6 @@ $h1-font-size-md:   ($font-size-base * 2);          /* 36 */
 $h2-font-size-md:   ($font-size-base * 1.611111);   /* 29 */
 $h3-font-size-md:   ($font-size-base * 1.277778);   /* 23 */
 
-$nav-font-size:               1rem;
-// Because occasionally we need to add what is probably the size to things like
-// the border-width:
-$nav-font-size-px:            16px;
-
 $paragraph-margin-bottom:     $font-size-base;
 
 $headings-margin-bottom:      $paragraph-margin-bottom;
@@ -244,32 +239,32 @@ $form-group-margin-bottom:              $paragraph-margin-bottom;
 $form-feedback-invalid-color:           $red; 
 
 
+// Nav
+// e.g. In the .navbar and in pagination.
+
+$nav-link-padding-x:             0.5rem;
+
+$nav-link-color:                 $link-color;
+$nav-link-hover-color:           $link-hover-color;
+$nav-link-active-color:          $link-active-color;
+
+$nav-disabled-color:         $gray-medium;
+
+$nav-text-color:                 $body-color;
+
+$nav-border-width:               $border-width;
+
+// These also used for more general 'nav'-type text everywhere:
+
+$nav-font-size:               1rem;
+// Because occasionally we need to add what is probably the size to things like
+// the border-width:
+$nav-font-size-px:            16px;
+
+
 // Navbar
 
-$navbar-link-padding-x:             0.5rem;
-
 $navbar-brand-font-size:            (1rem * 1.25); // probably 20px
-
-$navbar-link-color:                 $link-color;
-$navbar-link-hover-color:           $link-hover-color;
-$navbar-link-active-color:          $link-active-color;
-
-$navbar-text-color:                 $body-color;
-
-$navbar-border-width:               $border-width;
-
-
-// Pagination
-
-
-$pagination-color:                  $link-color;
-
-$pagination-hover-color:            $link-hover-color;
-
-$pagination-active-color:           $body-bg;
-$pagination-active-bg:              $border-color;
-
-$pagination-disabled-color:         $gray-medium;
 
 
 // Cards

@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-33ee6f9eb8.css">
+    <link rel="stylesheet" href="/static/hines/css/site-2e5d0ee305.css">
     <!-- endinject -->
 
     {% get_all_blogs_by_slug as all_blogs %}
@@ -45,8 +45,8 @@
           </a>
         </div>
         {% current_url_name as url_name %}
-        <ul class="navbar__nav js-navbar-nav">
-          <li class="nav__item{% if blog.slug == 'writing' %} active{% endif %}">
+        <ul class="nav js-navbar-nav">
+          <li class="nav__item{% if blog.slug == 'writing' %} is-active{% endif %}">
             {% if url_name != 'hines:blog_detail' or page_obj.number > 1 or blog.slug != 'writing' %}
               <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">Writing</a>
             {% else %}
@@ -64,10 +64,10 @@
             {% if url_name != 'pinboard:home' or page_obj.number > 1 %}
               <a class="nav__link" href="{% url 'pinboard:home' %}">Links</a>
             {% else %}
-              <san class="nav__link">Links</span>
+              <span class="nav__link">Links</span>
             {% endif %}
           </li>
-          <li class="nav__item{% if blog.slug == 'comments' %} active{% endif %}">
+          <li class="nav__item{% if blog.slug == 'comments' %} is-active{% endif %}">
             {% if url_name != 'hines:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
               <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
             {% else %}

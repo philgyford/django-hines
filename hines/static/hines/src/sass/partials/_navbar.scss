@@ -28,7 +28,7 @@
   order: 1;
   width: 100%;
   white-space: nowrap;
-  border-bottom: $navbar-border-width solid $black;
+  border-bottom: $nav-border-width solid $black;
   padding-bottom: 1px;
   margin-top: 11px;
   margin-right: auto;
@@ -38,88 +38,29 @@
   letter-spacing: 0.03em;
 
   a {
-    color: $navbar-text-color;
+    color: $nav-text-color;
     text-decoration: none;
 
     &:focus,
     &:hover,
     &:visited {
-      color: $navbar-text-color;
+      color: $nav-text-color;
       text-decoration: none;
     }
     &:visited {
-      color: $navbar-text-color;
+      color: $nav-text-color;
     }
     &:hover {
-      color: $navbar-link-hover-color;
+      color: $nav-link-hover-color;
     }
   }
 }
 
-.navbar__nav {
-  display: flex;
-  flex-direction: row;
+.navbar .nav {
   order: 2;
   flex-grow: 2;
-  flex-wrap: wrap;
-  list-style: none;
-  padding-left: 0;
-  margin-top: $navbar-border-width;
-  margin-bottom: 0;
-  // Maximise space between links and search:
-  margin-right: auto;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    $black,
-    $black $navbar-border-width,
-    $white $navbar-border-width,
-    $white ($navbar-border-width * 2)
-  );
-
-  @include text-style-nav;
-
-  .nav__item {
-    background: $white;
-    padding: 0 $navbar-link-padding-x 0 0;
-    line-height: $navbar-border-width;
-    margin-bottom: $navbar-border-width;
-  }
-
-  .nav__item--split {
-    margin-left: $navbar-border-width;
-    padding-left: $navbar-link-padding-x;
-  }
-
-  .nav__link {
-    display: block;
-    padding: 0;
-    color: $navbar-link-color;
-    white-space: nowrap;
-
-    // Need to repeat this for the search button at narrow widths:
-    font-weight: $text-style-alt-font-weight;
-
-    &:focus,
-    &:hover {
-      color: $navbar-link-hover-color;
-    }
-    &:active {
-      color: $navbar-link-active-color;
-    }
-  }
-
-  .active > .nav__link,
-  .nav__link.active {
-    color: $navbar-text-color;
-
-  }
-  .active > a.nav__link,
-  a.nav__link.active {
-    &:focus,
-    &:hover {
-      color: $navbar-link-hover-color;
-    }
-  }
+  // Auto maximises space between links and search:
+  margin: $nav-border-width auto 0 0;
 }
 
 .navbar__form {
@@ -127,9 +68,9 @@
   order: 3;
   flex-grow: 2;
   align-self: flex-start;
-  padding-bottom: $navbar-border-width;
-  border-bottom: $navbar-border-width solid $black;
-  margin-bottom: $navbar-border-width;
+  padding-bottom: $nav-border-width;
+  border-bottom: $nav-border-width solid $black;
+  margin-bottom: $nav-border-width;
 
   form {
     float: right;
@@ -137,7 +78,7 @@
 
   .form--inline .form__control {
     width: 8em;
-    margin-right: ($navbar-border-width / 2);
+    margin-right: ($nav-border-width / 2);
   }
 
   // Hide the form at narrow widths if the JS is enabled:
@@ -162,15 +103,14 @@
     width: auto;
   }
 
-  .navbar__nav {
+  .navbar .nav {
     order: 3;
   }
 
   .navbar__form {
     order: 2;
     margin-bottom: 0;
-    //padding-top: ($navbar-border-width / 2);
-    padding-bottom: $navbar-border-width;
+    padding-bottom: $nav-border-width;
 
     body.js-can-navbar & {
       display: block;
@@ -191,17 +131,17 @@
   /* Form is to right of title. Nav is in line with title's bottom border. */
 
   .navbar {
-    /* Replace margin we're taking off the nav__item by adding it to the .navbar's, which is usually $navbar-border-width. */
-    margin-bottom: (36px + $navbar-border-width);
+    /* Replace margin we're taking off the nav__item by adding it to the .navbar's, which is usually $nav-border-width. */
+    margin-bottom: (36px + $nav-border-width);
   }
 
   .navbar__title {
     width: auto;
-    margin-right: $navbar-link-padding-x;
+    margin-right: $nav-link-padding-x;
     margin-top: 10px;
   }
 
-  .navbar__nav {
+  .navbar .nav {
     order: 2;
     width: auto;
 

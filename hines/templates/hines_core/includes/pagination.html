@@ -8,17 +8,17 @@ Expects:
 {% if page_obj.paginator.num_pages > 1 %}
   {% load ditto_core %}
   <nav>
-    <ul class="pagination">
+    <ul class="nav nav--pagination">
       {% if page_obj.has_previous %}
-        <li class="pagination__item pagination__item--nextprev">
-          <a class="pagination__link" href="?{% query_string 'p' page_obj.previous_page_number %}" aria-label="Newer">
+        <li class="nav__item">
+          <a class="nav__link" href="?{% query_string 'p' page_obj.previous_page_number %}" aria-label="Newer">
             <span aria-hidden="true">&larr;</span>
             <span class="u-sr-only">Newer </span>
           </a>
         </li>
       {% else %}
-        <li class="pagination__item  pagination__item--nextprev is-disabled">
-          <span class="pagination__link" aria-label="Newer">
+        <li class="nav__item is-disabled">
+          <span class="nav__link" aria-label="Newer">
             <span aria-hidden="true">&larr;</span>
             <span class="u-sr-only">Newer</span>
           </span>
@@ -27,33 +27,33 @@ Expects:
 
       {% for p in page_obj.page_range %}
         {% if not p %}
-          <li class="pagination__item is-disabled">
-            <span class="pagination__link">
+          <li class="nav__item is-disabled">
+            <span class="nav__link">
               <span aria-hidden="true">…</span>
               <span class="u-sr-only">(more pages)</span>
             </span>
           </li>
         {% elif p == page_obj.number %}
-          <li class="pagination__item is-active">
-            <a class="pagination__link" href="#">{{ p }} <span class="u-sr-only">(current)</span></a>
+          <li class="nav__item is-active">
+            <span class="nav__link">{{ p }} <span class="u-sr-only">(current)</span></span>
           </li>
         {% else %}
-          <li class="pagination__item">
-            <a class="pagination__link" href="?{% query_string 'p' p %}">{{ p }}</a>
+          <li class="nav__item">
+            <a class="nav__link" href="?{% query_string 'p' p %}">{{ p }}</a>
           </li>
         {% endif %}
       {% endfor %}
 
       {% if page_obj.has_next %}
-        <li class="pagination__item pagination__item--nextprev">
-          <a class="pagination__link" href="?{% query_string 'p' page_obj.next_page_number %}" aria-label="Older">
+        <li class="nav__item">
+          <a class="nav__link" href="?{% query_string 'p' page_obj.next_page_number %}" aria-label="Older">
             <span aria-hidden="true">&rarr;</span>
             <span class="u-sr-only">Older</span>
           </a>
         </li>
       {% else %}
-        <li class="pagination__item pagination__item--nextprev is-disabled">
-          <span class="pagination__link" aria-label="Older">
+        <li class="nav__item is-disabled">
+          <span class="nav__link" aria-label="Older">
             <span aria-hidden="true">&rarr;</span>
             <span class="u-sr-only">Older</span>
           </span>
