@@ -20,7 +20,7 @@ $article-aside-offset: ($line-height-base-computed - $nav-font-size) / 2;
   line-height: $line-height-base-computed;
   border-left: $border-width solid $black;
   margin-top: $article-aside-offset;
-  margin-bottom: ($article-aside-offset + $paragraph-margin-bottom);
+  margin-bottom: $article-aside-offset;
 
   // We have to float it to get the border/height stuff to work.
   // I haven't found a better way to do it.
@@ -45,5 +45,8 @@ $article-aside-offset: ($line-height-base-computed - $nav-font-size) / 2;
   width: auto;
   max-width: 50%;
   margin-left: ($grid-gutter-width / 2);
+  // Otherwise a line of article text will go immediately underneath,
+  // which is neat, but a bit too close:
+  margin-bottom: ($article-aside-offset + $paragraph-margin-bottom);
 }
 
