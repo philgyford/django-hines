@@ -11,17 +11,10 @@ Expects:
     <ul class="nav nav--pagination">
       {% if page_obj.has_previous %}
         <li class="nav__item">
-          <a class="nav__link" href="?{% query_string 'p' page_obj.previous_page_number %}" aria-label="Newer">
+          <a class="nav__link a--special" href="?{% query_string 'p' page_obj.previous_page_number %}">
             <span aria-hidden="true">&larr;</span>
-            <span class="u-sr-only">Newer </span>
+            <span class="a__inner">Newer</span>
           </a>
-        </li>
-      {% else %}
-        <li class="nav__item is-disabled">
-          <span class="nav__link" aria-label="Newer">
-            <span aria-hidden="true">&larr;</span>
-            <span class="u-sr-only">Newer</span>
-          </span>
         </li>
       {% endif %}
 
@@ -45,18 +38,11 @@ Expects:
       {% endfor %}
 
       {% if page_obj.has_next %}
-        <li class="nav__item">
-          <a class="nav__link" href="?{% query_string 'p' page_obj.next_page_number %}" aria-label="Older">
+        <li class="nav__item nav__item--nextprev">
+          <a class="nav__link a--special" href="?{% query_string 'p' page_obj.next_page_number %}">
+            <span class="a__inner">Older</span>
             <span aria-hidden="true">&rarr;</span>
-            <span class="u-sr-only">Older</span>
           </a>
-        </li>
-      {% else %}
-        <li class="nav__item is-disabled">
-          <span class="nav__link" aria-label="Older">
-            <span aria-hidden="true">&rarr;</span>
-            <span class="u-sr-only">Older</span>
-          </span>
         </li>
       {% endif %}
     </ul>

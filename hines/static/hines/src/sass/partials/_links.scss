@@ -1,0 +1,39 @@
+/**
+ * Used when we have a link where we want a bit of it to NOT be underlined.
+ * So we'd have:
+ *
+ * <a class="a--special" href="">
+ *   I'm not underlined.
+ *   <span class="a__inner">I am underlined</span>
+ * </a>
+ *
+ */
+.a--special {
+  white-space: nowrap;
+  text-decoration: none;
+
+  .a__inner {
+    text-decoration: $link-decoration;
+  }
+
+  &:visited {
+    .a__inner {
+	    color: $link-visited-color;
+    }
+  }
+
+  &:hover {
+    text-decoration: none;
+
+    .a__inner {
+      color: $link-hover-color;
+    }
+  }
+
+  &:visited:hover {
+    .a__inner {
+      color: $link-visited-hover-color;
+    }
+  }
+}
+

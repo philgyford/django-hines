@@ -37,14 +37,6 @@
 
   // Need to repeat this for the navbar search button at narrow widths:
   font-weight: $text-style-alt-font-weight;
-
-  &:focus,
-  &:hover {
-    color: $nav-link-hover-color;
-  }
-  &:active {
-    color: $nav-link-active-color;
-  }
 }
 
 .is-active > .nav__link {
