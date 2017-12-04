@@ -9,6 +9,7 @@ Expects:
 {% endcomment %}
 
 {% if bookmark_list|length > 0 %}
+
   {% if page_obj|default:False and page_obj.number > 1 %}
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
   {% endif %}
@@ -24,7 +25,7 @@ Expects:
   {% endif %}
 
 {% else %}
-  <p>There are no bookmarks to show.</p>
+  <p>There are no links to show.</p>
 {% endif %}
 
 

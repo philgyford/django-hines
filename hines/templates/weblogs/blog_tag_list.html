@@ -5,7 +5,7 @@
 
 {% block content %}
 
-	{% include 'weblogs/includes/tags.html' with blog=blog tag_list=tag_list only %}
+	{% include 'hines_core/includes/tags.html' with tag_list=tag_list format='chart' tag_type='post' blog_slug=blog.slug only %}
 
 {% endblock %}
 

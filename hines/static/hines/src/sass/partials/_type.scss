@@ -67,6 +67,12 @@ hr {
   }
 }
 
+hr.hr--sm {
+  border-top-width: $hr-border-width-sm;
+  margin-top: $hr-margin-sm;
+  margin-bottom: $hr-margin-sm;
+}
+
 pre {
   white-space: pre;
   background: $gray-light;

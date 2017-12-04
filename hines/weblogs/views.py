@@ -11,7 +11,7 @@ from django.views.generic import DateDetailView, DetailView,\
         ListView, MonthArchiveView, RedirectView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
-from hines.core.views import TemplateSetMixin
+from hines.core.views import PaginatedListView, TemplateSetMixin
 from .models import Blog, Post
 
 
@@ -40,7 +40,7 @@ from .models import Blog, Post
 # 2009-02-10 - now
 
 
-class BlogDetailParentView(SingleObjectMixin, ListView):
+class BlogDetailParentView(SingleObjectMixin, PaginatedListView):
     """
     A parent class for all views that will list Posts from a Blog.
     """
@@ -105,7 +105,7 @@ class BlogTagListView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tag_list'] = self.object.popular_tags(num=30)
+        context['tag_list'] = self.object.popular_tags(num=100)
         return context
 
 

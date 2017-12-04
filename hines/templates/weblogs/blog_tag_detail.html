@@ -5,20 +5,8 @@
 
 {% block content %}
 
-  {% include 'weblogs/includes/posts.html' with post_list=post_list perms=perms only %}
+  {% include 'weblogs/includes/posts.html' with post_list=post_list page_obj=page_obj perms=perms only %}
 
-	{% if is_paginated %}
-		<nav class="nextprev">
-			<p>
-				{% if page_obj.has_next %}
-					<a class="btn btn-outline-primary" href="{% url 'hines:blog_tag_detail' blog_slug=blog.slug tag_slug=tag.slug %}?p={{ page_obj.next_page_number }}">&larr; Older posts</a>
-				{% endif %}
-				{% if page_obj.has_previous %}
-					<a class="btn btn-outline-primary float-right" href="{% url 'hines:blog_tag_detail' blog_slug=blog.slug tag_slug=tag.slug %}?p={{ page_obj.previous_page_number }}">Newer posts &rarr;</a>
-				{% endif %}
-			</p>
-		</nav>
-	{% endif %}
 {% endblock %}
 
 {% block sidebar %}

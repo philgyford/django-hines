@@ -8,7 +8,7 @@
 	{% if tag_list|length == 0 %}
 		<p>There are no tags in use.</p>
 	{% else %}
-		{% include 'links/includes/tags.html' with tag_list=tag_list only %}
+		{% include 'hines_core/includes/tags.html' with tag_list=tag_list format='chart' tag_type='bookmark' only %}
 	{% endif %}
 
 {% endblock %}

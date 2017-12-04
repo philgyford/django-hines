@@ -6,7 +6,7 @@
       {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
     </h2>
 
-    <hr>
+    <hr class="hr--sm">
 
     {% for comment in comment_list %}
       <article class="comment" id="c{{ comment.id }}">
@@ -32,7 +32,7 @@
           {% endif %}
         </div>
       </article>
-      <hr>
+      <hr class="hr--sm">
     {% endfor %}
   </section>
 {% endif %}

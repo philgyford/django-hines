@@ -4,12 +4,18 @@ Display several Posts.
 Expects:
 
 * post_list: A list or QuerySet of Posts.
+* page_obj, optional, a DiggPaginator instance or False (default).
 * perms - Django permissions.
 {% endcomment %}
 
 {% load hines_core %}
 
 {% if post_list|length > 0 %}
+
+  {% if page_obj|default:False and page_obj.number > 1 %}
+    {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
+  {% endif %}
+
   <ul>
     {% for post in post_list %}
       <li>
@@ -32,5 +38,12 @@ Expects:
       </li>
     {% endfor %}
   </ul>
+
+  {% if page_obj|default:False %}
+    {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
+  {% endif %}
+
+{% else %}
+  <p>There are no posts to show.</p>
 {% endif %}
 
