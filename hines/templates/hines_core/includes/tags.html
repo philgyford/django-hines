@@ -5,6 +5,7 @@ Expects:
 * tag_list - The list of tags.
 * format - 'inline' or 'chart'.
 * tag_type - 'bookmark' (Default) or 'post'.
+* container - 'div' is the default.
 
 Optional:
 
@@ -15,7 +16,7 @@ Optional:
 {% load l10n %}
 
 {% if tag_list|length > 0 %}
-  <div class="tags{% if format == 'inline' %} tags--inline{% endif %}">
+  <{{ container|default:"div" }} class="tags{% if format == 'inline' %} tags--inline{% endif %}">
     {% spaceless %}
       {% if format == 'inline' %}
         <h2 class="tags__heading">Tags</h2>
@@ -39,6 +40,6 @@ Optional:
         {% endfor %}
       </{% if format == 'inline' %}ul{% else %}ol{% endif %}>
     {% endspaceless %}
-  </div>
+  </{{ container|default:"div" }}>
 {% endif %}
 

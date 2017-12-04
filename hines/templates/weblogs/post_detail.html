@@ -41,17 +41,17 @@
 		</div>
 
     <aside class="aside aside--right">
-      <div class="aside__inner">
+      <ul class="aside__inner">
         {% if perms.weblogs.can_change_post %}
-          <p><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
+          <li><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
         {% endif %}
 
-        <p>{% display_time post.time_published link_to_day=True %}</p>
+        <li>{% display_time post.time_published link_to_day=True %}</li>
 
-        {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
+        {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug container='li' only %}
 
-        {% include 'hines_core/includes/next_prev.html' with previous=post.get_previous_post next=post.get_next_post %}
-      </div>
+        <li>{% include 'hines_core/includes/next_prev.html' with previous=post.get_previous_post next=post.get_next_post %}</li>
+      </ul>
     </aside>
 
 		<div class="article__body">

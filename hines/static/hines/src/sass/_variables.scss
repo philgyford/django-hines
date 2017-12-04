@@ -153,8 +153,7 @@ $text-style-default-font-weight:    $font-weight-normal;
 $text-style-alt-font-family:        $font-family-sans-serif;
 $text-style-alt-font-weight:        $font-weight-bold;
 
-$list-inline-padding:         .5rem;
-$list-inline-padding-px:      8px; // So we can do maths.
+$list-inline-padding:         $border-width;
 
 
 // Tables

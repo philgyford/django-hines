@@ -2,12 +2,12 @@
 // Lists
 
 ul {
-  list-style-type: square;
-}
-
-.list--unstyled {
+  list-style-type: none;
   padding-left: 0;
-  list-style: none;
+
+  li {
+    @include list-item-bullet;
+  }
 }
 
 
@@ -15,7 +15,22 @@ ul {
 
 .list--inline {
   @include list-inline;
+
+  & > .list--inline__item--bullet {
+    // For rare case when we want to force a particular item in an inline list
+    // to have a bullet.
+    @include list-item-bullet;
+  }
 }
+
+
+// Unstyled lists
+
+.list--unstyled {
+  @include list-unstyled;
+
+}
+
 
 // Make the list itself, not just its items, inline!
 .list--inline--inline {
@@ -25,4 +40,5 @@ ul {
 .list--inline__item {
   @include list-inline-item;
 }
+
 

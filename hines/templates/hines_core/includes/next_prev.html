@@ -10,7 +10,7 @@ Expects (both optional):
 
 {% if previous or next %}
   <nav>
-    <ul class="list--inline">
+    <ul class="list--inline list--unstyled">
       {% spaceless %}
         {% if previous %}
           <li class="list--inline__item">
@@ -18,7 +18,7 @@ Expects (both optional):
           </li>
         {% endif %}
         {% if next %}
-          <li class="list--inline__item{% if previous %} u-bullet{% endif %}">
+          <li class="list--inline__item{% if previous %} list--inline__item--bullet{% endif %}">
             <a class="a--special" href="{{ next.get_absolute_url }}" title="{{ next.title }}"><span class="a__inner">Newer</span>&nbsp;<span aria-hidden="true">&rarr;</a>
           </li>
         {% endif %}

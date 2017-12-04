@@ -1,6 +1,16 @@
 @mixin list-inline() {
   padding-left: 0;
   list-style: none;
+
+  & > li {
+    @include list-inline-item;
+  }
+}
+
+// Default bulleted list item.
+@mixin list-item-bullet() {
+  background: url('#{$img-path}bullet.png') 0 0.4em no-repeat;
+  padding-left: ($border-width + $list-inline-padding);
 }
 
 @mixin list-inline-item() {
@@ -8,5 +18,12 @@
 
   &:not(:last-child) {
     margin-right: $list-inline-padding;
+  }
+}
+
+@mixin list-unstyled() {
+  & > li {
+    background: none;
+    padding-left: 0;
   }
 }

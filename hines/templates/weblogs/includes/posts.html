@@ -16,28 +16,26 @@ Expects:
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
   {% endif %}
 
-  <ul>
+  <ol class="articles">
     {% for post in post_list %}
-      <li>
+      <li class="article">
         <a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
-        {{ post.excerpt }}<br>
-        {% display_time post.time_published show='date' link_to_day=False %}
 
-        {% comment %}
-          <footer>
+        {{ post.excerpt }}<br>
+
+        <div class="aside aside--inline">
+          <ul class="aside__inner">
+            <li>{% display_time post.time_published show='date' link_to_day=False %}</li>
+
             {% if post.comment_count > 0 %}
-              |
-              {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+              <li>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</li>
             {% endif %}
-            {% if post.trackback_count > 0 %}
-              |
-              {{ post.trackback_count }} trackback{{ post.trackback_count|pluralize }}
-            {% endif %}
-          </footer>
-        {% endcomment %}
+          </ul>
+        </div>
+
       </li>
     {% endfor %}
-  </ul>
+  </ol>
 
   {% if page_obj|default:False %}
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}

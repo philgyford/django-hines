@@ -10,12 +10,6 @@
   text-align: right;
 }
 
-// Add a 'bullet' image in the item's left padding.
-.u-bullet {
-  background: url('#{$img-path}bullet.png') 0 50% no-repeat;
-  padding-left: ($border-width + $list-inline-padding-px);
-}
-
 
 // Only display content to screen readers
 //

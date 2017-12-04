@@ -23,11 +23,12 @@
 
   .tags__list {
     @include list-inline;
+    @include list-unstyled;
     // Make the list itself, not just its items, inline:
     display: inline;
   }
 
-  .tag {
-    @include list-inline-item;
-  }
+  //.tag {
+    //@include list-inline-item;
+  //}
 }
