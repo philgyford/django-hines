@@ -1,0 +1,47 @@
+// MEDIA
+// For lists of blog posts, comments, etc.
+
+/**
+ * <ol class="media-list">
+ *  <li class="media">
+ *    <p class="media__header">
+ *      <span class="media__name">
+ *        Bob
+ *      </span>
+ *      on 23 Feb 2017
+ *    </p>
+ *    <div class="media__body">
+ *      <p>Hello!</p>
+ *    </div>
+ *  </li>
+ * </ol>
+ */
+
+.media-list {
+  @include list-unstyled;
+  border-top: $border-width-sm solid $border-color;
+  margin-bottom: $paragraph-margin-bottom;
+}
+
+.media {
+  padding-top: $hr-margin-sm;
+  padding-bottom: $hr-margin-sm;
+  border-bottom: $border-width-sm solid $border-color;
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.media__header {
+  margin-bottom: $paragraph-margin-bottom;
+  @include text-style-nav;
+}
+
+.media__name {
+  font-size: $h3-font-size;
+  line-height: $line-height-base-computed;
+}
+
+.media__body {
+}

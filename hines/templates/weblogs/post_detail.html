@@ -24,11 +24,9 @@
 {% block content %}
 
   <article class="article">
-    <div class="pagehead">
-      <header>
-        <h1>{{ post.title|smartypants|safe }}</h1>
-      </header>
-    </div>
+    <header class="pagehead">
+      <h1>{{ post.title|smartypants|safe }}</h1>
+    </header>
 
     {% if is_preview %}
       <p class="admin">
@@ -57,48 +55,59 @@
 		<div class="article__body">
 			{{ post.body_html|safe }}
 		</div>
+
+    <hr>
+
+    <section>
+      {% render_comment_list for post %}
+
+      {% if post.comments_allowed %}
+        <h2>Post a comment</h2>
+        {% render_comment_form for post %}
+      {% else %}
+        <p>Comments are closed for this post.</p>
+      {% endif %}
+    </section>
+
+    {% comment %}
+      
+      Not currently going to have any trackbacks for posts that would use
+      this template set.
+      The below HTML hasn't been styled correctly, but just in case...
+
+      {% if post.trackback_count > 0 %}
+        <section class="trackbacks">
+          <h2>
+            {{ post.trackback_count }} trackback{{ post.trackback_count|pluralize }}
+          </h2>
+          <hr>
+
+          {% for trackback in post.get_visible_trackbacks %}
+            <div class="row trackback" id="t{{ trackback.id }}">
+              <div class="col-sm-3">
+                <strong>
+                  {{ trackback.blog_name }}
+                </strong>
+                <br>
+                {% display_time trackback.time_created %}
+              </div>
+              <div class="col-sm-9">
+                <strong>
+                  <a href="{{ trackback.url }}" rel="nofollow">
+                    {{ trackback.title }}
+                  </a>
+                </strong>
+                <p>{{ trackback.excerpt }}</p>
+              </div>
+            </div> <!-- .trackback -->
+            <hr>
+          {% endfor %}
+        </section>
+      {% endif %}
+
+    {% endcomment %}
+    
   </article>
-
-  <hr>
-
-	{% render_comment_list for post %}
-
-	{% if post.comments_allowed %}
-		<h2>Post a comment</h2>
-		{% render_comment_form for post %}
-	{% else %}
-		<p>Comments are closed for this post.</p>
-	{% endif %}
-
-	{% if post.trackback_count > 0 %}
-		<section class="trackbacks">
-			<h2>
-				{{ post.trackback_count }} trackback{{ post.trackback_count|pluralize }}
-			</h2>
-			<hr>
-
-			{% for trackback in post.get_visible_trackbacks %}
-				<div class="row trackback" id="t{{ trackback.id }}">
-					<div class="col-sm-3">
-						<strong>
-							{{ trackback.blog_name }}
-						</strong>
-						<br>
-						{% display_time trackback.time_created %}
-					</div>
-					<div class="col-sm-9">
-						<strong>
-							<a href="{{ trackback.url }}" rel="nofollow">
-								{{ trackback.title }}
-							</a>
-						</strong>
-						<p>{{ trackback.excerpt }}</p>
-					</div>
-				</div> <!-- .trackback -->
-				<hr>
-			{% endfor %}
-		</section>
-	{% endif %}
 
 {% endblock %}
 

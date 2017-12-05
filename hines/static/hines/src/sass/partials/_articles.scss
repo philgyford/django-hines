@@ -11,19 +11,3 @@
   @include text-style-default;
 }
 
-
-/**
- * Put a series of .article elements within .articles.
- */
-.articles {
-  border-top: $border-width-sm solid $border-color;
-  margin-bottom: $paragraph-margin-bottom;
-  padding-left: 0;
-  list-style: none;
-
-  .article {
-    padding-top: $hr-margin-sm;
-    padding-bottom: $hr-margin-sm;
-    border-bottom: $border-width-sm solid $border-color;
-  }
-}

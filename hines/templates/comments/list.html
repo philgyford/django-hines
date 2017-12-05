@@ -1,38 +1,34 @@
 {% load hines_comments hines_core %}
 
 {% if post.comment_count > 0 %}
-  <section>
-    <h2>
-      {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
-    </h2>
+  <h2>
+    {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+  </h2>
 
-    <hr class="hr--sm">
-
+  <ol class="media-list">
     {% for comment in comment_list %}
-      <article class="comment" id="c{{ comment.id }}">
-        <header{% if forloop.last %} id="latest"{% endif %}>
-          <h3 class="comment__title">
+      <li class="media" id="c{{ comment.id }}">
+        <p class="media__header"{% if forloop.last %} id="latest"{% endif %}>
+          <span class="media__name">
             {% if comment.user_url %}
               <a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
             {% else %}
               {{ comment.name }}
             {% endif %}
-          </h3>
-          <p class="comment__about">
-            AT {% display_time comment.submit_date %}
-            <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
-          </p>
-        </header>
+          </span>
 
-        <div class="comment__body">
+          AT {% display_time comment.submit_date %}
+          <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
+        </p>
+
+        <div class="media__body">
           {{ comment.comment|clean|safe|linebreaks }}
 
           {% if perms.custom_comments.can_change_customcomment %}
             <br><br><a class="admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
           {% endif %}
         </div>
-      </article>
-      <hr class="hr--sm">
+      </li>
     {% endfor %}
-  </section>
+  </ol>
 {% endif %}
