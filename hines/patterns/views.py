@@ -6,6 +6,7 @@ class PatternsView(TemplateView):
 
     valid_slugs = [
                     'forms',
+                    'lists',
                     'tables',
                     'type',
                     ]

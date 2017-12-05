@@ -13,12 +13,12 @@ Expects (both optional):
     <ul class="list--inline list--unstyled">
       {% spaceless %}
         {% if previous %}
-          <li class="list--inline__item">
+          <li>
             <a class="a--special" href="{{ previous.get_absolute_url }}" title="{{ previous.title }}"><span aria-hidden="true">&larr;</span>&nbsp;<span class="a__inner">Older</span></a>
           </li>
         {% endif %}
         {% if next %}
-          <li class="list--inline__item{% if previous %} list--inline__item--bullet{% endif %}">
+          <li {% if previous %} class="list--inline__item--bullet"{% endif %}>
             <a class="a--special" href="{{ next.get_absolute_url }}" title="{{ next.title }}"><span class="a__inner">Newer</span>&nbsp;<span aria-hidden="true">&rarr;</a>
           </li>
         {% endif %}

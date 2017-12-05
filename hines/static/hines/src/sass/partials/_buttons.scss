@@ -70,6 +70,10 @@
 
   &:hover {
     cursor: pointer;
+
+    &:disabled {
+      color: $link-color;
+    }
   }
 
   &:focus,
@@ -79,13 +83,6 @@
     text-decoration: $link-decoration;
     color: $link-active-color;
   }
-
-  /*
-  &:disabled,
-  &.disabled {
-    color: $button-link-disabled-color;
-  }
-  */
 
   // No need for an active state here
 }

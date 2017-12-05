@@ -1,161 +1,44 @@
 {% extends 'patterns/base.html' %}
 
+{% load patterns_tags %}
 
 {% block content %}
 
-  <p>Default heading styles:</p>
+<h2>Text</h2>
 
-  <h1>Level 1 heading</h1>
+{% include 'patterns/includes/type/text.html' %}
 
-  <p>A paragraph here.</p>
+<pre><code>{% verbatim_include 'patterns/includes/type/text.html' %}</pre></code>
 
-  <h2>Level 2 heading</h2>
 
-  <p>A paragraph here.</p>
+<h2>Headings</h2>
 
-  <h3>Level 3 heading</h3>
+{% include 'patterns/includes/type/headings.html' %}
 
-  <p>A paragraph here.</p>
+<pre><code>{% verbatim_include 'patterns/includes/type/headings.html' %}</pre></code>
 
-  <h4>Level 4 heading</h4>
 
-  <p>A paragraph here.</p>
+<h2>Horizontal rules</h2>
 
-  <h5>Level 5 heading</h5>
+<p>Standard and small:</p>
 
-  <p>A paragraph here.</p>
+{% include 'patterns/includes/type/rules.html' %}
 
-  <h6>Level 6 heading</h6>
+<pre><code>{% verbatim_include 'patterns/includes/type/rules.html' %}</pre></code>
 
-  <hr>
 
-  <p>That was an <code>&lt;hr&gt;</code> tag. And here's one with the class <code>.hr--sm</code>:</p>
+<h2>Blockquotes</h2>
 
-  <hr class="hr--sm">
+{% include 'patterns/includes/type/blockquotes.html' %}
 
-  <div class="bodytext">
+<pre><code>{% verbatim_include 'patterns/includes/type/blockquotes.html' %}</pre></code>
 
-    <p>All of this below is within a <code>.bodytext</code> class.</p>
 
-    <h1>Level 1 heading</h1>
+<h2>Code blocks</h2>
 
-    <p>A paragraph here.</p>
+{% include 'patterns/includes/type/code.html' %}
 
-    <h2>Level 2 heading</h2>
-
-    <p>A paragraph here.</p>
-
-    <h3>Level 3 heading</h3>
-
-    <p>A paragraph here.</p>
-
-    <h4>Level 4 heading</h4>
-
-    <p>A paragraph here.</p>
-
-    <h5>Level 5 heading</h5>
-
-    <p>A paragraph here.</p>
-
-    <h6>Level 6 heading</h6>
-
-    <p>A paragraph here. Which goes on for a while so that we can see what type looks like when it goes over more than a single line<sup>1</sup>, because this is rather more useful when trying to check that line-height is correct. This should probably be enough to get a sense of it. Here's an abbreviation: <abbr title="HyperText Markup Language">HTML</abbr>.</p>
-
-    <p>But we also need another paragraph here to check the spacing between two paragraphs one after the other, like this, <a href="#">with a link</a>, you see. <small>And here's some small text for comparison.</small></p>
-
-    <p>Here's a <code>&lt;blockquote&gt;</code>:</p>
-
-      <blockquote>
-        <p>Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted.</p>
-        <p>Another paragraph.</p>
-      </blockquote>
-
-    <p>And here's a quote in a <code>&lt;figure&gt;</code> with a <code>&lt;figcaption&gt;</code>:</p>
-
-    <figure class="figure figure--blockquote">
-      <blockquote>
-        <p>Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted. Here's some text that's quoted.</p>
-        <p>Another paragraph.</p>
-      </blockquote>
-
-      <figcaption>
-        Fred Bloggs, <cite>My Book Title</cite>
-      </figcaption>
-    </figure>
-
-    <p>Here's <code>some code</code> and here's a <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code> block:</p>
-
-    <pre><code>blockquote {
-  border-left: $border-width solid $black; // This comment means the line should be quite long...
-  padding-left: $border-width;
-}</code></pre>
-
-    <p>And here's the same block in a <code>&lt;figure&gt;</code> (it looks the same):</p>
-
-    <figure>
-      <pre><code>blockquote {
-  border-left: $border-width solid $black; // This comment means the line should be quite long...
-  padding-left: $border-width;
-}</code></pre>
-</figure>
-
-    <ol>
-      <li>This is a list</li>
-      <li>It has numbers</li>
-      <li>As you can see</li>
-    </ol>
-
-    <hr class="hr--sm">
-
-    <ul>
-      <li>But this list</li>
-      <li>Has bullets</li>
-      <li>Instead of numbers</li>
-    </ul>
-
-    <hr class="hr--sm">
-
-    <ul>
-      <li><p>This list also has bullets.</p></li>
-      <li><p>But it has a paragraph.</p></li>
-      <li><p>Within each item.</p><p>Or even two paragraphs.</p></li>
-    </ul>
-    
-    <hr class="hr--sm">
-
-    <ul class="list--unstyled">
-      <li>An</li>
-      <li>Unstyled</li>
-      <li>List</li>
-    </ul>
-
-    <hr class="hr--sm">
-
-    <ul class="list--inline">
-      <li>An</li>
-      <li>Inline</li>
-      <li>List</li>
-    </ul>
-
-    <hr class="hr--sm">
-
-    <ul class="list--inline list--unstyled">
-      <li>An</li>
-      <li>Inline</li>
-      <li>Unstyled</li>
-      <li>List</li>
-    </ul>
-
-    <hr class="hr--sm">
-    
-    <dl>
-      <dt>Sometimes</dt>
-      <dd>We might like to use a definition list.</dd>
-      <dt>They can be good for things</dt>
-      <dd>Like defining stuff.</dd>
-      <dd>In a list.</dd>
-    </dl>
-  </div>
+<pre><code>{% verbatim_include 'patterns/includes/type/code.html' %}</pre></code>
 
 {% endblock content %}
 

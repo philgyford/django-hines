@@ -28,17 +28,5 @@ ul {
 
 .list--unstyled {
   @include list-unstyled;
-
 }
-
-
-// Make the list itself, not just its items, inline!
-.list--inline--inline {
-  display: inline;
-}
-
-.list--inline__item {
-  @include list-inline-item;
-}
-
 

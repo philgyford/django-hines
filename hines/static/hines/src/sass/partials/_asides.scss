@@ -39,6 +39,11 @@ $article-aside-offset-bottom: 0.5rem;
   // So whatever this is in will probably need clearfix included.
   float: left;
   width: 100%;
+
+  .list--inline>.list--inline__item--bullet {
+    // Adjusting for the larger line height than normal:
+    background-position: 0 0.465em;
+  }
 }
 
 .aside__inner {
