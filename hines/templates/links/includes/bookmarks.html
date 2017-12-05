@@ -14,11 +14,11 @@ Expects:
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
   {% endif %}
 
-  <div class="articles">
+  <ol class="media-list">
     {% for bookmark in bookmark_list %}
       {% include 'links/includes/bookmark.html' with bookmark=bookmark view=view perms=perms only %}
     {% endfor %}
-  </div>
+  </ol>
 
   {% if page_obj|default:False %}
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}

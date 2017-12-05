@@ -7,7 +7,11 @@
 
 {% block content %}
 
+  <hr class="hr--sm">
+
   {% include 'links/includes/bookmark.html' with bookmark=bookmark view='detail' perms=perms only %}
+
+  <hr class="hr--sm">
 
 {% endblock %}
 

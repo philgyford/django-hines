@@ -10,7 +10,11 @@ Expects:
 
 {% load hines_core %}
 
+{% if view == 'detail' %}
 <article class="article">
+{% else %}
+<li class="media article">
+{% endif %}
   <h2 class="h3"><a href="{{ bookmark.url }}">{{ bookmark.title }}</a></h2>
 
   {% if bookmark.description %}
@@ -44,6 +48,9 @@ Expects:
       {% endif %}
     </ul>
   </aside>
+{% if view == 'detail' %}
 </article>
-
+{% else %}
+</li>
+{% endif %}
 
