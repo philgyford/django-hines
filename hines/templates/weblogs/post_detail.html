@@ -23,7 +23,7 @@
 
 {% block content %}
 
-  <article class="article">
+  <article class="bodytext">
     <header class="pagehead">
       <h1>{{ post.title|smartypants|safe }}</h1>
     </header>
@@ -34,9 +34,7 @@
       </p>
     {% endif %}
 
-		<div class="article__intro">
-			{{ post.intro_html|safe }}
-		</div>
+    {{ post.intro_html|safe }}
 
     <aside class="aside aside--right">
       <ul class="aside__inner">
@@ -52,9 +50,7 @@
       </ul>
     </aside>
 
-		<div class="article__body">
-			{{ post.body_html|safe }}
-		</div>
+    {{ post.body_html|safe }}
 
     <hr>
 

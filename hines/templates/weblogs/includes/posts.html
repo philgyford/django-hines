@@ -18,10 +18,12 @@ Expects:
 
   <ol class="media-list">
     {% for post in post_list %}
-      <li class="media article">
-        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
+      <li class="media">
+        <div class="media__header">
+          <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </div>
 
-        {{ post.excerpt }}<br>
+        <p>{{ post.excerpt }}</p>
 
         <div class="aside aside--inline">
           <ul class="aside__inner">

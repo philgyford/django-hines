@@ -2,17 +2,24 @@
 // For lists of blog posts, comments, etc.
 
 /**
+ * Would probably only have .media__header OR .media__byline.
+ *
  * <ol class="media-list">
  *  <li class="media">
- *    <p class="media__header">
- *      <span class="media__name">
+ *
+ *    <div class="media__header">
+ *      <a href="#">The title of a thing</a>
+ *    </div>
+ *
+ *    <div class="media__byline">
+ *      <span class="media__byline_author">
  *        Bob
  *      </span>
  *      on 23 Feb 2017
- *    </p>
- *    <div class="media__body">
- *      <p>Hello!</p>
  *    </div>
+ *
+ *    <p>Hello!</p>
+ *
  *  </li>
  * </ol>
  */
@@ -27,6 +34,7 @@
   padding-top: $hr-margin-sm;
   padding-bottom: $hr-margin-sm;
   border-bottom: $border-width-sm solid $border-color;
+  @include clearfix;
 
   *:last-child {
     margin-bottom: 0;
@@ -35,13 +43,23 @@
 
 .media__header {
   margin-bottom: $paragraph-margin-bottom;
-  @include text-style-nav;
 }
 
-.media__name {
+.media__byline {
+  @include text-style-nav;
+  margin-bottom: $paragraph-margin-bottom;
+}
+
+.media__byline__author {
   font-size: $h3-font-size;
   line-height: $line-height-base-computed;
 }
 
-.media__body {
+
+// Variations on .media
+
+.media--lg {
+  .media__header {
+    font-size: $h3-font-size;
+  }
 }

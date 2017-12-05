@@ -1,7 +1,5 @@
 {% extends 'links/layouts/base.html' %}
 
-{% load hines_core %}
-
 {% block head_page_title %}A link{% endblock %}
 {% block content_title %}A link{% endblock %}
 
@@ -9,7 +7,18 @@
 
   <hr class="hr--sm">
 
-  {% include 'links/includes/bookmark.html' with bookmark=bookmark view='detail' perms=perms only %}
+  <article class="bodytext">
+    <h2 class="h3"><a href="{{ bookmark.url }}">{{ bookmark.title }}</a></h2>
+
+    {% if bookmark.description %}
+      <p>
+        {{ bookmark.description }}
+      </p>
+    {% endif %}
+
+    {% include 'links/includes/bookmark_aside.html' with bookmark=bookmark perms=perms view='detail' only %}
+
+  </article>
 
   <hr class="hr--sm">
 

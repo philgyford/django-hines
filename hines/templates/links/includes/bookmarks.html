@@ -16,7 +16,19 @@ Expects:
 
   <ol class="media-list">
     {% for bookmark in bookmark_list %}
-      {% include 'links/includes/bookmark.html' with bookmark=bookmark view=view perms=perms only %}
+      <li class="media media--lg">
+        <div class="media__header">
+          <a href="{{ bookmark.url }}">{{ bookmark.title }}</a>
+        </div>
+
+        {% if bookmark.description %}
+          <p>
+            {{ bookmark.description }}
+          </p>
+        {% endif %}
+
+        {% include 'links/includes/bookmark_aside.html' with bookmark=bookmark perms=perms view=view only %}
+      </li>
     {% endfor %}
   </ol>
 
