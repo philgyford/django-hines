@@ -56,15 +56,8 @@ urlpatterns = [
     ),
 
     # Components pattern library.
-
-    url(r'^components/$',
-        core_views.ComponentsView.as_view(),
-        name='component_list'),
-
-    url(r'^components/(?P<slug>[\w-]+)/$',
-        core_views.ComponentsView.as_view(),
-        name='component_detail'),
-
+    url(r'^patterns/',
+        include('hines.patterns.urls', namespace='patterns')),
 
     url(r'^', include('hines.weblogs.urls')),
 ]

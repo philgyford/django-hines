@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'hines.blocks',
     'hines.custom_comments',
     'hines.links',
+    'hines.patterns',
     'hines.weblogs',
 ]
 
