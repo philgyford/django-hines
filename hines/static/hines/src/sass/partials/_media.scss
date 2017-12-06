@@ -1,28 +1,14 @@
 // MEDIA
 // For lists of blog posts, comments, etc.
 
-/**
- * Would probably only have .media__header OR .media__byline.
- *
- * <ol class="media-list">
- *  <li class="media">
- *
- *    <div class="media__header">
- *      <a href="#">The title of a thing</a>
- *    </div>
- *
- *    <div class="media__byline">
- *      <span class="media__byline_author">
- *        Bob
- *      </span>
- *      on 23 Feb 2017
- *    </div>
- *
- *    <p>Hello!</p>
- *
- *  </li>
- * </ol>
- */
+
+// How much space we put beneath each header tag and p:
+// Basically, this amount *looks* about right.
+$media-spacing-y: ($line-height-base-computed - $font-size-base);
+
+// Used for both .media_header and .media__byline_author:
+$media-header-size: $h3-font-size;
+
 
 .media-list {
   @include list-unstyled;
@@ -34,32 +20,46 @@
   padding-top: $hr-margin-sm;
   padding-bottom: $hr-margin-sm;
   border-bottom: $border-width-sm solid $border-color;
-  @include clearfix;
+  display: flex;
+  align-items: flex-start;
 
-  *:last-child {
+}
+
+.media__img {
+  margin-top: 0.2em;
+  margin-right: ($border-width * 2);
+}
+
+.media__body {
+  flex: 1;
+
+  p {
+    margin-bottom: $media-spacing-y;
+  }
+
+  &>p:last-child,
+  &>ul:last-child,
+  &>ol:last-child {
     margin-bottom: 0;
   }
 }
 
+
 .media__header {
-  margin-bottom: $paragraph-margin-bottom;
+  @include text-style-default;
+  font-size: $media-header-size;
+  margin-bottom: $media-spacing-y;
 }
+
 
 .media__byline {
   @include text-style-nav;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $media-spacing-y;
 }
 
 .media__byline__author {
-  font-size: $h3-font-size;
-  line-height: $line-height-base-computed;
+  font-size: $media-header-size;
+  // Keep it the same line-height as .media__byline itself:
+  line-height: ($nav-font-size * $line-height-base);
 }
 
-
-// Variations on .media
-
-.media--lg {
-  .media__header {
-    font-size: $h3-font-size;
-  }
-}

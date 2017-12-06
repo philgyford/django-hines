@@ -1,0 +1,35 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+<p>Used for listing lots of types of things.</p>
+
+<h2>Posts, bookmarks, etc</h2>
+
+<p>With a header and body.</p>
+
+{% include 'patterns/includes/media/posts.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/media/posts.html' %}</pre></code>
+
+
+<h2>Comments</h2>
+
+<p>With a byline instead of a header.</p>
+
+{% include 'patterns/includes/media/comments.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/media/comments.html' %}</pre></code>
+
+
+<h2>Tweets</h2>
+
+<p>With an image.</p>
+
+{% include 'patterns/includes/media/tweets.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/media/tweets.html' %}</pre></code>
+
+{% endblock content %}

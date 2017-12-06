@@ -36,8 +36,8 @@
 
     {{ post.intro_html|safe }}
 
-    <aside class="aside aside--right">
-      <ul class="aside__inner">
+    <aside class="meta meta--right">
+      <ul class="meta__inner">
         {% if perms.weblogs.can_change_post %}
           <li><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
         {% endif %}

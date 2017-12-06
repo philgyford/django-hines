@@ -16,14 +16,14 @@ Optional:
 {% load l10n %}
 
 {% if tag_list|length > 0 %}
-  <{{ container|default:"div" }} class="tags{% if format == 'inline' %} tags--inline{% endif %}">
+  <{{ container|default:"div" }}{% if format == 'inline' %} class="u-inline-container"{% endif %}>
     {% spaceless %}
       {% if format == 'inline' %}
-        <h2 class="tags__heading">Tags</h2>
+        <h2>Tags</h2>
       {% endif %}
-      <{% if format == 'inline' %}ul{% else %}ol{% endif %} class="tags__list">
+      <ol{% if format == 'inline' %} class="list--inline list--unstyled"{% endif %}>
         {% for tag in tag_list %}
-          <li class="tag">
+          <li>
             <a href="{% if tag_type == 'post' %}
               {% url 'hines:blog_tag_detail' blog_slug=blog_slug tag_slug=tag.slug %}
             {% else %}
@@ -38,7 +38,7 @@ Optional:
             {% endif %}
           </li>
         {% endfor %}
-      </{% if format == 'inline' %}ul{% else %}ol{% endif %}>
+      </ol>
     {% endspaceless %}
   </{{ container|default:"div" }}>
 {% endif %}

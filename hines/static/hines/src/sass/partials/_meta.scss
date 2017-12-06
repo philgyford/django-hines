@@ -1,11 +1,11 @@
-// ASIDES
+// META
 
 // We use <aside class="card">s for sidebar cards but this file is all about
-// <aside class="aside">
+// <aside class="meta"> (or, indeed, <div class="meta">).
 
 /**
- * <aside class="aside">
- *  <ul class="aside__inner">
+ * <aside class="meta">
+ *  <ul class="meta__inner">
  *    <li>A thing</li>
  *    <li>A thing</li>
  *  </ul>
@@ -24,15 +24,15 @@
 // Hopefully, the size of the bit of line height that is above/below the
 // text itself:
 
-$article-aside-offset-top: 0.4rem;
-$article-aside-offset-bottom: 0.5rem;
+$meta-offset-top: 0.4rem;
+$meta-offset-bottom: 0.5rem;
 
-.aside {
+.meta {
   @include text-style-nav;
   line-height: $line-height-base-computed;
   border-left: $border-width solid $black;
-  margin-top: $article-aside-offset-top;
-  margin-bottom: $article-aside-offset-bottom;
+  margin-top: $meta-offset-top;
+  margin-bottom: $meta-offset-bottom;
 
   // We have to float it to get the border/height stuff to work.
   // I haven't found a better way to do it.
@@ -46,18 +46,18 @@ $article-aside-offset-bottom: 0.5rem;
   }
 }
 
-.aside__inner {
+.meta__inner {
   @include list-unstyled;
   padding-left: $border-width;
-  margin-top: -$article-aside-offset-top;
-  margin-bottom: -$article-aside-offset-bottom;
+  margin-top: -$meta-offset-top;
+  margin-bottom: -$meta-offset-bottom;
 }
 
 
-.aside--inline {
+.meta--inline {
   border-left: none;
 
-  .aside__inner {
+  .meta__inner {
     @include list-inline();
 
     & > li {
@@ -67,13 +67,16 @@ $article-aside-offset-bottom: 0.5rem;
 }
 
 
-.aside--right {
-  float: right;
-  width: auto;
-  max-width: 50%;
-  margin-left: ($grid-gutter-width / 2);
+.meta--right {
   // Otherwise a line of article text will go immediately underneath,
   // which is neat, but a bit too close:
-  margin-bottom: ($article-aside-offset-bottom + $paragraph-margin-bottom);
+  margin-bottom: ($meta-offset-bottom + $paragraph-margin-bottom);
+
+	@include media-breakpoint-up(md) {
+    float: right;
+    width: auto;
+    max-width: 50%;
+    margin-left: ($grid-gutter-width / 2);
+  }
 }
 

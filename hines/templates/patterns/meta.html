@@ -1,0 +1,30 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+<p>Meta blocks are used to show information <em>about</em> a thing: dates, tags, next/previous navigation, etc. It could be used for an <code>&lt;aside&gt;</code> block or just a <code>&lt;div&gt;</code>.</p>
+
+<h2>Standard</h2>
+
+{% include 'patterns/includes/meta/standard.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/meta/standard.html' %}</pre></code>
+
+
+<h2>Aligned right</h2>
+
+{% include 'patterns/includes/meta/right.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/meta/right.html' %}</pre></code>
+
+
+<h2>Inline</h2>
+
+{% include 'patterns/includes/meta/inline.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/meta/inline.html' %}</pre></code>
+
+
+{% endblock content %}

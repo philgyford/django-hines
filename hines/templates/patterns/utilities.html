@@ -1,0 +1,45 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+
+<h2>Warning</h2>
+
+<p>Used in forms.</p>
+
+
+<h2>List</h2>
+
+{% include 'patterns/includes/utilities/warning.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/utilities/warning.html' %}</pre></code>
+
+
+<h2>Alignment</h2>
+
+{% include 'patterns/includes/utilities/alignment.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/utilities/alignment.html' %}</pre></code>
+
+
+<h2>Inline container</h2>
+
+<p>Makes all immediate descendents inline, and everything inside our 'nav' text style.</p>
+
+{% include 'patterns/includes/utilities/inline_container.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/utilities/inline_container.html' %}</pre></code>
+
+
+<h2>Screenreaders</h2>
+
+<p>Hide an element to all devices except screen readers with <code>.sr-only</code>. Combine <code>.u-sr-only</code> with <code>.u-sr-only-focusable</code> to show the element again when it’s focused (e.g. by a keyboard-only user). (<a href="https://getbootstrap.com/docs/4.0/utilities/screenreaders/">From Bootstrap v4.</a>)</p>
+
+{% include 'patterns/includes/utilities/screenreaders.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/utilities/screenreaders.html' %}</pre></code>
+
+
+{% endblock content %}

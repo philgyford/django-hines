@@ -11,8 +11,8 @@ Expects:
 
 {% load hines_core %}
 
-<aside class="aside">
-  <ul class="aside__inner">
+<aside class="meta">
+  <ul class="meta__inner">
     {% if perms.pinboard.can_change_bookmark %}
       <li><a href="{% url 'admin:pinboard_bookmark_change' bookmark.id %}">Edit</a></li>
     {% endif %}

@@ -1,0 +1,18 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+<p>All headings within an element with a class of <code>.bodytext</code> will use the serif font.</p>
+
+<div class="bodytext">
+{% include 'patterns/includes/type/headings.html' %}
+</div>
+
+<pre><code>&lt;div class="bodytext"&gt;
+
+{% verbatim_include 'patterns/includes/type/headings.html' %}
+&lt;/div&gt;</pre></code>
+
+{% endblock content %}

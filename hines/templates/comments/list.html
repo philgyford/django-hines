@@ -8,24 +8,26 @@
   <ol class="media-list">
     {% for comment in comment_list %}
       <li class="media" id="c{{ comment.id }}">
-        <p class="media__byline"{% if forloop.last %} id="latest"{% endif %}>
-          <span class="media__byline__author">
-            {% if comment.user_url %}
-              <a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
-            {% else %}
-              {{ comment.name }}
-            {% endif %}
-          </span>
+        <div class="media__body">
+          <p class="media__byline"{% if forloop.last %} id="latest"{% endif %}>
+            <span class="media__byline__author">
+              {% if comment.user_url %}
+                <a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
+              {% else %}
+                {{ comment.name }}
+              {% endif %}
+            </span>
 
-          AT {% display_time comment.submit_date %}
-          <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
-        </p>
+            at {% display_time comment.submit_date %}
+            <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
+          </p>
 
-        {{ comment.comment|clean|safe|linebreaks }}
+          {{ comment.comment|clean|safe|linebreaks }}
 
-        {% if perms.custom_comments.can_change_customcomment %}
-          <br><br><a class="admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
-        {% endif %}
+          {% if perms.custom_comments.can_change_customcomment %}
+            <br><br><a class="admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
+          {% endif %}
+        </div> <!-- .media__body -->
       </li>
     {% endfor %}
   </ol>

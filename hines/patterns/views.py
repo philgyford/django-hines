@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.views.generic import TemplateView
 
 
@@ -5,10 +6,14 @@ class PatternsView(TemplateView):
     template_name = 'patterns/home.html'
 
     valid_slugs = [
+                    'meta',
+                    'bodytext',
                     'forms',
                     'lists',
+                    'media',
                     'tables',
                     'type',
+                    'utilities',
                     ]
 
     def get_template_names(self):

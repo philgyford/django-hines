@@ -1,4 +1,3 @@
-// From Bootstrap v4.
 
 .u-warning {
   color: $text-color-warning;
@@ -10,6 +9,19 @@
   text-align: right;
 }
 
+
+// Make everything within it inline, and bold sanserif.
+.u-inline-container {
+
+  & > * {
+    display: inline;
+    margin-bottom: 0;
+    margin-right: $list-inline-padding;
+    @include text-style-nav;
+  }
+}
+
+// From Bootstrap v4.
 
 // Only display content to screen readers
 //
