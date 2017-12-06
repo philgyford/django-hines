@@ -102,8 +102,9 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberati
 $font-family-base:            $font-family-serif;
 
 $font-size-base:              (1rem * 1.125); // probably 18px
-$font-size-lg:                ($font-size-base * 1.3333); // 24px
-$font-size-sm:                ($font-size-base * .77778); // 14px
+$font-size-lg:                ($font-size-base * 1.33333); // 24px
+$font-size-sm:                ($font-size-base * 0.77778); // 14px
+$font-size-monospace:         $font-size-sm;
 
 //$font-weight-light:           300;
 $font-weight-normal:          400;
