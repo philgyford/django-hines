@@ -39,10 +39,12 @@
   font-weight: $text-style-alt-font-weight;
 }
 
+// .active is used in Spectator.
+.active > .nav__link,
 .is-active > .nav__link {
   color: $nav-text-color;
-
 }
+.active > a.nav__link,
 .is-active > a.nav__link {
   &:focus,
   &:hover {

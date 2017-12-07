@@ -1,0 +1,21 @@
+{% load spectator_core %}
+{% current_url_name as url_name %}
+
+<aside class="card mb-3">
+  <ul>
+    <li>
+      {% if url_name == 'spectator:reading:publication_list' %}
+        Publications
+      {% else %}
+        <a href="{% url 'spectator:reading:publication_list' %}">Publications</a>
+      {% endif %}
+    </li>
+    <li>
+      {% if url_name == 'spectator:reading:publicationseries_list' %}
+        Publication series
+      {% else %}
+        <a href="{% url 'spectator:reading:publicationseries_list' %}">Publication series</a>
+      {% endif %}
+    </li>
+</aside>
+

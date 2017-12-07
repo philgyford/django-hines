@@ -3,9 +3,9 @@
 
 .card {
   min-width: 0;
-  padding-top: ($border-width / 2);
   border-top: $border-width solid $black;
-  padding-bottom: $border-width;
+  padding-top: ($border-width / 2);
+  padding-bottom: ($border-width / 2);
 
   @include text-style-nav;
 
@@ -36,12 +36,10 @@
 }
 
 .card__body {
-  font-size: $font-size-sm;
-  line-height: $line-height-sm;
-
   @include text-style-alt;
 
   & > *:last-child {
     margin-bottom: 0;
   }
 }
+

@@ -1,0 +1,28 @@
+{% comment %}
+Used by the reading_years_card template tag.
+
+Expects:
+
+* current_year: A date object representing the current year, if any.
+* years: A QuerySet of date objects, one for each year to link to.
+{% endcomment %}
+
+{% if years|length > 0 %}
+  {% load spectator_core  %}
+  {% current_url_name as url_name %}
+  <aside class="card">
+    <h2 class="card__header">Reading by year</h2>
+    <ol class="list--inline list--unstyled">
+      {% for reading_year in years %}
+        <li>
+          {% if url_name == 'spectator:reading:reading_year_archive' and current_year|date:"Y" == reading_year|date:"Y" %}
+            {{ reading_year|date:"Y" }}
+          {% else %}
+            <a href="{% url 'spectator:reading:reading_year_archive' year=reading_year|date:"Y" %}">{{ reading_year|date:"Y" }}</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  </aside>
+{% endif %}
+

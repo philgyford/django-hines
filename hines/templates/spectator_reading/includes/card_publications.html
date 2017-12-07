@@ -1,0 +1,14 @@
+{% comment %}
+Used by the in_progress_publications_card template tag.
+
+Expects:
+* publication_list - A QuerySet of Publications.
+* card_title - The title for the card.
+{% endcomment %}
+
+{% if publication_list|length > 0 %}
+  <aside class="card">
+    <h2 class="card__header">{{ card_title }}</h2>
+    {% include 'spectator_reading/includes/publications.html' with publication_list=publication_list show_readings='none' style='unstyled' only %}
+  </aside>
+{% endif %}

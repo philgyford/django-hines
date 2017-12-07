@@ -1,0 +1,36 @@
+{% extends 'spectator_reading/reading_archive_year.html' %}
+
+{% comment %}
+Overriding the content block of spectator_reading/reading_archive_year.html so:
+
+* Use our next_prev_date.html instead of specatator_core's pager.html.
+* Use our media items instead of the standard list.
+{% endcomment %}
+
+{% block content %}
+  {% include 'hines_core/includes/next_prev_date.html' with url_name='spectator:reading:reading_year_archive' previous=previous_year next=next_year current=year only %}
+
+  {% if reading_list|length > 0 %}
+
+    {% for reading in reading_list %}
+      {% ifchanged reading.end_date|date:"m" %}
+        {% if not forloop.first %}
+					</ol> <!-- .media-list -->
+        {% endif %}
+        <h2>{{ reading.end_date|date:"F"}}</h2>
+        <ol class="media-list">
+      {% endifchanged %}
+      <li class="media">
+        {% include 'spectator_reading/includes/publication.html' with publication=reading.publication show_readings='none' only %}
+      </li>
+    {% endfor %}
+		</ol> <!-- .media-list -->
+
+  {% include 'hines_core/includes/next_prev_date.html' with url_name='spectator:reading:reading_year_archive' previous=previous_year next=next_year current=year only %}
+
+  {% else %}
+    <p>Nothing was read in {{ year|date:"Y" }}.</p>
+  {% endif %}
+
+{% endblock content %}
+

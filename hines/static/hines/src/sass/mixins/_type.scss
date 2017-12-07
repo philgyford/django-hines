@@ -22,20 +22,22 @@
 // Used for things like form help text, form errors, etc.
 @mixin text-style-alt() {
   font-family: $text-style-alt-font-family;
-  font-weight: $font-weight-base;
+  font-weight: $font-weight-bold;
   text-transform: none;
+  font-size: $font-size-sm;
+  line-height: $line-height-sm;
 }
 
 // Used for some headings.
 @mixin text-style-headings() {
-  @include text-style-alt;
+  font-family: $text-style-alt-font-family;
   font-weight: $text-style-alt-font-weight;
   text-transform: uppercase;
 }
 
 // Used for cards, asides, navbar, form labels, etc.
 @mixin text-style-nav() {
-  @include text-style-alt;
+  font-family: $text-style-alt-font-family;
   font-weight: $text-style-alt-font-weight;
   text-transform: uppercase;
   font-size:    $nav-font-size;

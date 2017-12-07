@@ -118,8 +118,6 @@ select.form__control--sm {
 // <p class="form__text" id="my-text">Some help text.</p>
 .form__text {
   margin-top: $form-text-margin-top;
-  font-size: $font-size-sm;
-  line-height: $line-height-sm;
   
   @include text-style-alt;
 }

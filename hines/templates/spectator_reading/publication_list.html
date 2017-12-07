@@ -1,0 +1,42 @@
+{% extends 'spectator_reading/publication_list.html' %}
+
+{% comment %}
+Differences between this and the standard publication_list.html:
+* We're using different class names in .nav here.
+* .is-active is set on the li, rather than .active being set on the a.
+* And if we're on page 1 of books/periodicals, we don't make it a link.
+{% endcomment %}
+
+{% block content %}
+
+  {% if book_count > 0 or periodical_count > 0 %}
+    <ul class="nav">
+      {% if book_count > 0 %}
+        <li class="nav__item nav__item--split{% if publication_kind == 'book' %} is-active{% endif %}">
+          {% if publication_kind == 'book' and page_obj.number == 1 %}
+            <span class="nav__link">Books ({{ book_count }})</span>
+          {% else %}
+            <a class="nav__link" href="{% url 'spectator:reading:publication_list' %}">
+              Books ({{ book_count }})
+            </a>
+          {% endif %}
+        </li>
+      {% endif %}
+      {% if periodical_count > 0 %}
+        <li class="nav__item nav__item--split{% if publication_kind == 'periodical' %} is-active{% endif %}">
+          {% if publication_kind == 'periodical' and page_obj.number == 1 %}
+            <span class="nav__link">Periodicals ({{ periodical_count }})</span>
+          {% else %}
+            <a class="nav__link" href="{% url 'spectator:reading:publication_list_periodical' %}">
+              Periodicals ({{ periodical_count }})
+            </a>
+          {% endif %}
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
+  {% include 'spectator_reading/includes/publications_paginated.html' with publication_list=publication_list show_readings='none' page_obj=page_obj only %}
+
+{% endblock content %}
+

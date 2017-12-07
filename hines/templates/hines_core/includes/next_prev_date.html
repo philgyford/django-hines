@@ -1,0 +1,41 @@
+{% comment %}
+Display Older / Newer links to URLs dated by years.
+The same HTML as plain next_prev.html but with slightly different inputs.
+
+Expects:
+
+* url_name - The name of the URL to link to, including namespace, if any.
+* next - Date object (optional).
+* previous - Date object (optional).
+* current - Date object (optional).
+
+{% endcomment %}
+
+{% if previous or next %}
+  <nav>
+    <ul class="nav">
+      {% if previous %}
+        <li class="nav__item nav__item--split">
+          <a class="nav__link a--special" href="{% url url_name year=previous|date:"Y" %}">
+            <span aria-hidden="true">&larr;</span>
+            <span class="a__inner">{{ previous|date:'Y' }}</span>
+          </a>
+        </li>
+      {% endif %}
+      {% if current %}
+        <li class="nav__item nav__item--split is-active">
+          <span class="nav__link">{{ current|date:'Y' }} <span class="u-sr-only">(current)</span></span>
+        </li>
+      {% endif %}
+      {% if next %}
+        <li class="nav__item nav__item--split">
+          <a class="nav__link a--special" href="{% url url_name year=next|date:"Y" %}">
+            <span class="a__inner">{{ next|date:'Y' }}</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+

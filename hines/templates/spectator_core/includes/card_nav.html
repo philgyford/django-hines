@@ -1,0 +1,15 @@
+{% load spectator_core %}
+{% current_url_name as url_name %}
+
+<aside class="card">
+  <ul>
+    <li>
+      {% if url_name == 'spectator:creators:creator_list' %}
+        Creators
+      {% else %}
+        <a href="{% url 'spectator:creators:creator_list' %}">Creators</a>
+      {% endif %}
+    </li>
+  </ul>
+</aside>
+

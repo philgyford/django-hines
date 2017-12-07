@@ -35,7 +35,8 @@ $media-header-size: $h3-font-size;
 
   &>p:last-child,
   &>ul:last-child,
-  &>ol:last-child {
+  &>ol:last-child,
+  &>.media__header {
     margin-bottom: 0;
   }
 }
@@ -59,3 +60,29 @@ $media-header-size: $h3-font-size;
   line-height: ($nav-font-size * $line-height-base);
 }
 
+// Media items in a .card.
+.card {
+
+  .media-list {
+    border-top: none;
+  }
+
+  .media {
+    padding-top: $paragraph-margin-bottom-sm;
+    padding-bottom: $paragraph-margin-bottom-sm;
+    @include text-style-alt;
+
+    &:first-child {
+      padding-top: 0;
+    }
+  
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0.3em; // Just looks about right.
+    }
+  }
+
+  .media__header {
+    @include text-style-alt;
+  }
+}

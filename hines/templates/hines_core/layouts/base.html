@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-461a6d8dda.css">
+    <link rel="stylesheet" href="/static/hines/css/site-f63bf9d91b.css">
     <!-- endinject -->
 
     {% get_all_blogs_by_slug as all_blogs %}
@@ -107,6 +107,7 @@
     </nav>
 
     <main id="content" class="grid">
+
       {% block content_heading %}
         <div class="grid__row pagehead">
           <header class="grid__col {% if sidebar_position == 'none' %}grid__col--main grid__col--main--only{% else %}grid__col--full{% endif %}">
@@ -193,7 +194,7 @@
       });
 
     </script>
-  
+
     {% include 'hines_core/includes/analytics.html' %}
 
     {% block foot_extra %}
