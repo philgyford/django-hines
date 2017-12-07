@@ -4,13 +4,9 @@ Default block template, for rendering some HTML, such as <p>s, in a card.
 
 {% if block %}
   <aside class="card flatblock-{{ block.slug }}">
-    <div class="card__body">
-      {% if block.title%}
-        <h2 class="card__title">{{ block.title }}</h2>
-      {% endif %}
-      <div class="card__text">
-        {{ block.content_html|safe }}
-      </div>
-    </div>
+    {% if block.title%}
+      <h2 class="card__header">{{ block.title }}</h2>
+    {% endif %}
+    {{ block.content_html|safe }}
   </aside>
 {% endif %}

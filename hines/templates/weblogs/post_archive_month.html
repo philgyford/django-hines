@@ -26,16 +26,14 @@
 	{% if date_list|length > 1 %}
 		{# Don't both showing it if there's only one day #}
 		<aside class="card">
-			<div class="card__body">
-				<h2 class="card__title">Days in {{ month|date:"M Y" }}</h2>
-				<ul class="card__text">
-					{% for day in date_list %}
-						<li>
-							<a href="{% url 'hines:day_archive' year=day|date:"Y" month=day|date:"m" day=day|date:"d" %}">{{ day|date:"j" }}</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
+      <h2 class="card__header">Days in {{ month|date:"M Y" }}</h2>
+      <ul>
+        {% for day in date_list %}
+          <li>
+            <a href="{% url 'hines:day_archive' year=day|date:"Y" month=day|date:"m" day=day|date:"d" %}">{{ day|date:"j" }}</a>
+          </li>
+        {% endfor %}
+      </ul>
 		</aside>
 	{% endif %}
 

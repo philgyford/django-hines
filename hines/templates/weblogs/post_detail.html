@@ -44,7 +44,7 @@
 
         <li>{% display_time post.time_published link_to_day=True %}</li>
 
-        {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug container='li' only %}
+        {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
 
         <li>{% include 'hines_core/includes/next_prev.html' with previous=post.get_previous_post next=post.get_next_post %}</li>
       </ul>

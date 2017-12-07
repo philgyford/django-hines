@@ -10,20 +10,18 @@ Expects:
 
 {% if date_list|length > 0 %}
   <aside class="card">
-    <div class="card__body">
-      <h2 class="card__title">{{ card_title }}</h2>
-      <ul class="list--inline list--unstyled card__text">
-        {% for year in date_list %}
-          <li class="list--inline__item">
-            {% if current_year == year %}
-              {{ year|date:"Y" }}
-            {% else %}
-              <a href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=year|date:"Y" %}" title="See all posts in {{ year|date:"Y" }}">{{ year|date:"Y" }}</a>
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
+    <h2 class="card__header">{{ card_title }}</h2>
+    <ul class="list--inline list--unstyled">
+      {% for year in date_list %}
+        <li>
+          {% if current_year == year %}
+            {{ year|date:"Y" }}
+          {% else %}
+            <a href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=year|date:"Y" %}" title="See all posts in {{ year|date:"Y" }}">{{ year|date:"Y" }}</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
   </aside>
 {% endif %}
 

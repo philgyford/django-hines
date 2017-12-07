@@ -7,17 +7,15 @@ Expects:
 {% endcomment %}
 
 {% if post_list|length > 0 %}
-	<aside class="card">
-		<div class="card__body">
-			<h2 class="card__title">{{ card_title }}</h2>
-			<ul class="card__text">
-				{% for post in post_list %}
-					<li>
-						<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-					</li>
-				{% endfor %}
-			</ul>
-		</div>
-	</aside>
+  <aside class="card">
+    <h2 class="card__header">{{ card_title }}</h2>
+    <ul>
+      {% for post in post_list %}
+        <li>
+          <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </aside>
 {% endif %}
 

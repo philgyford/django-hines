@@ -26,16 +26,14 @@
 	{% if date_list|length > 1 %}
 		{# Don't both showing it if there's only one month #}
 		<aside class="card">
-			<div class="card__body">
-				<h2 class="card__title">Months in {{ year|date:"Y" }}</h2>
-				<ul class="card__text">
-					{% for month in date_list %}
-						<li>
-							<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=month|date:"Y" month=month|date:"m" %}">{{ month|date:"F" }}</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
+      <h2 class="card__header">Months in {{ year|date:"Y" }}</h2>
+      <ul>
+        {% for month in date_list %}
+          <li>
+            <a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=month|date:"Y" month=month|date:"m" %}">{{ month|date:"F" }}</a>
+          </li>
+        {% endfor %}
+      </ul>
 		</aside>
 	{% endif %}
 

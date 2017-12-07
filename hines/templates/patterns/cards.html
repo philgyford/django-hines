@@ -1,0 +1,47 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+
+<h2>Standard</h2>
+
+<p>A header and some paragraphs of text.</p>
+
+<div>
+  {% include 'patterns/includes/cards/standard.html' %}
+</div>
+
+<pre><code>{% verbatim_include 'patterns/includes/cards/standard.html' %}</pre></code>
+
+
+<h2>Lists</h2>
+
+<p>They can have lists instead of paragraphs. Heaaders are always optional.</p>
+
+<div>
+  {% include 'patterns/includes/cards/list_unordered.html' %}
+</div>
+
+<pre><code>{% verbatim_include 'patterns/includes/cards/list_unordered.html' %}</pre></code>
+
+<div>
+  {% include 'patterns/includes/cards/list_ordered.html' %}
+</div>
+
+<pre><code>{% verbatim_include 'patterns/includes/cards/list_ordered.html' %}</pre></code>
+
+
+<h2>Inline list</h2>
+
+<p>Lists can be inline and unstyled.</p>
+
+<div>
+  {% include 'patterns/includes/cards/list_inline.html' %}
+</div>
+
+<pre><code>{% verbatim_include 'patterns/includes/cards/list_inline.html' %}</pre></code>
+
+
+{% endblock content %}

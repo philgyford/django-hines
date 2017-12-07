@@ -8,6 +8,7 @@ class PatternsView(TemplateView):
     valid_slugs = [
                     'meta',
                     'bodytext',
+                    'cards',
                     'forms',
                     'lists',
                     'media',

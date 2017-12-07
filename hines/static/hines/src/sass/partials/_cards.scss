@@ -1,0 +1,43 @@
+// CARDS
+// Based on Bootstrap v4
+
+.card {
+  min-width: 0;
+  padding-top: ($border-width / 2);
+  border-top: $border-width solid $black;
+  padding-bottom: $border-width;
+
+  @include text-style-nav;
+
+  p,
+  ol,
+  ul {
+    margin-bottom: $paragraph-margin-bottom-sm;
+  }
+
+  &:last-child {
+    border-bottom: $border-width solid $black;
+  }
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.card__header {
+  margin-top: 0.2em;
+  margin-bottom: $paragraph-margin-bottom-sm;
+
+  @include text-style-nav;
+}
+
+.card__body {
+  font-size: $font-size-sm;
+  line-height: $line-height-sm;
+
+  @include text-style-alt;
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+}

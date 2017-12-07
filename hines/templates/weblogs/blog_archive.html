@@ -16,7 +16,7 @@
       <h2>{{ d|date:"Y" }}</h2>
       <ul class="list--inline">
     {% endifchanged %}
-    <li class="list--inline__item">
+    <li>
       <a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=d|date:"Y" month=d|date:"m" %}">{{ d|date:"M" }}</a>
     </li>
   {% endfor %}

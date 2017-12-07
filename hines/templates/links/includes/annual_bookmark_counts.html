@@ -16,25 +16,23 @@ Expects:
 
 {% if bookmarks %}
   <aside class="card">
-    <div class="card__body">
-      <h2 class="card__title">Links per year</h2>
-      <table class="table table--sm table--full">
-        <thead class="u-sr-only">
+    <h2 class="card__header">Links per year</h2>
+    <table class="table table--sm table--full">
+      <thead class="u-sr-only">
+        <tr>
+          <th>Year</th>
+          <th class="u-align-right">Bookmarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in bookmarks %}
           <tr>
-            <th>Year</th>
-            <th class="u-align-right">Bookmarks</th>
+            <td>{{ s.year|unlocalize }}</td>
+            <td class="u-align-right">{{ s.count }}</td>
           </tr>
-        </thead>
-        <tbody>
-          {% for s in bookmarks %}
-            <tr>
-              <td>{{ s.year|unlocalize }}</td>
-              <td class="u-align-right">{{ s.count }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+        {% endfor %}
+      </tbody>
+    </table>
   </aside>
 {% endif %}
 

@@ -119,6 +119,7 @@ select.form__control--sm {
 .form__text {
   margin-top: $form-text-margin-top;
   font-size: $font-size-sm;
+  line-height: $line-height-sm;
   
   @include text-style-alt;
 }

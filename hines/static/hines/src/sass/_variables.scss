@@ -127,13 +127,15 @@ $h2-font-size-md:   ($font-size-base * 1.611111);   /* 29 */
 $h3-font-size-md:   ($font-size-base * 1.277778);   /* 23 */
 
 $paragraph-margin-bottom:     $font-size-base;
+// Used for a few things outside of body text. Looks about right:
+$paragraph-margin-bottom-sm:  ($line-height-base-computed - $font-size-base);
 
 $headings-margin-bottom:      $paragraph-margin-bottom;
 $headings-line-height:        1.2;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
 
-$line-height-sm:              $line-height-base; 
+$line-height-sm:              1.42857; // 20px if used with 14px $font-size-sm
 
 $lead-font-size:              ($font-size-base * 1.25);
 $lead-font-weight:            300;
