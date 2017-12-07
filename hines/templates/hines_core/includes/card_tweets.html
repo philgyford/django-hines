@@ -8,14 +8,12 @@ Expects:
 {% endcomment %}
 
 {% if tweet_list|length > 0 %}
-	<div class="card mb-3">
-		<div class="card-body">
-			<h2 class="h6 card-title">{{ card_title }}</h2>
+  <div class="card">
+    <h2 class="card__header">{{ card_title }}</h2>
 
-			{% include 'hines_core/includes/tweets.html' with tweet_list=tweet_list only %}
+    {% include 'hines_core/includes/tweets.html' with tweet_list=tweet_list only %}
 
-		</div>
-	</div>
+  </div>
 {% endif %}
 
 

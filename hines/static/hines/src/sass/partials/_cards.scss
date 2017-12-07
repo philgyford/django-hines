@@ -29,6 +29,10 @@
   margin-bottom: $paragraph-margin-bottom-sm;
 
   @include text-style-nav;
+
+  &:not(:first-child) {
+    margin-top: 0.2em;
+  }
 }
 
 .card__body {

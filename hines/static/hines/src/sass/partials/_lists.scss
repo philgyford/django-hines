@@ -30,3 +30,9 @@ ul {
   @include list-unstyled;
 }
 
+
+// Definition lists
+
+dd:last-child {
+  margin-bottom: 0;
+}

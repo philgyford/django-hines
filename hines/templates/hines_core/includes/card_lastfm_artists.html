@@ -9,19 +9,23 @@ Expects:
 {% endcomment %}
 
 {% if artist_list|length > 0 %}
-	<div class="card mb-3">
-		<div class="card-body">
-			<h2 class="h6 card-title">{{ card_title }}</h2>
+  <div class="card">
+    <h2 class="card__header">{{ card_title }}</h2>
 
-			{% include 'hines_core/includes/chart.html' with object_list=artist_list only %}
+    <ol>
+      {% for artist in artist_list %}
+        <li>
+          <a href="{{ artist.permalink }}">{{ artist.name }}</a> ({{ artist.scrobble_count }})
+        </li>
+      {% endfor %}
+    </ol>
 
-			{% if more %}
-				<p class="mb-0">
-					<a href="{{ more.url }}">{{ more.text }}</a>
-				</p>
-			{% endif %}
-		</div>
-	</div>
+    {% if more %}
+      <p>
+        <a href="{{ more.url }}">{{ more.text }}</a>
+      </p>
+    {% endif %}
+  </div>
 {% endif %}
 
 
