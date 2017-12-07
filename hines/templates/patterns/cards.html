@@ -71,10 +71,24 @@
 
 <h2>Media</h2>
 
+<p>Cards can contain <code>.media-list</code> and <code>.media</code> items. Here the <code>.media-list</code> also has <code>.card__body</code>.</p>
+
 <div>
   {% include 'patterns/includes/cards/media.html' %}
 </div>
 
 <pre><code>{% verbatim_include 'patterns/includes/cards/media.html' %}</pre></code>
+
+
+<h2>No borders</h2>
+
+<p>Remove top and bottom borders by adding <code>.card--no-border</code>.</p>
+
+<div>
+  {% include 'patterns/includes/cards/no_borders.html' %}
+</div>
+
+<pre><code>{% verbatim_include 'patterns/includes/cards/no_borders.html' %}</pre></code>
+
 
 {% endblock content %}

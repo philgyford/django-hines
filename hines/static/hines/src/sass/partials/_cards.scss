@@ -11,7 +11,8 @@
 
   p,
   ol,
-  ul {
+  ul,
+  dl {
     margin-bottom: $paragraph-margin-bottom-sm;
   }
 
@@ -21,6 +22,14 @@
 
   & > *:last-child {
     margin-bottom: 0;
+  }
+}
+
+.card--no-border {
+  border-top: none;
+
+  &:last-child {
+    border-bottom: none;
   }
 }
 
@@ -39,7 +48,8 @@
   @include text-style-alt;
 
   & > *:last-child {
-    margin-bottom: 0;
+    // Need a little space to make these look blanaced:
+    margin-bottom: 0.2em;
   }
 }
 

@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-f63bf9d91b.css">
+    <link rel="stylesheet" href="/static/hines/css/site-bbfe453df6.css">
     <!-- endinject -->
 
     {% get_all_blogs_by_slug as all_blogs %}
@@ -139,36 +139,42 @@
 
         <div class="grid__row">
           <div class="grid__col grid__col--half">
-            <h1 class="h3">RSS feeds</h1>
-            <ul class="list-unstyled">
-              <li>
-                <a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>
-              </li>
-              {% with all_blogs|get_item:'writing' as b %}
+            <aside class="card card--no-border">
+              <h1 class="card__header">RSS feeds</h1>
+              <ul class="list-unstyled">
                 <li>
-                  <a href="{{ b.get_rss_feed_url }}">{{ b.short_name }}</a>
+                  <a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>
                 </li>
-              {% endwith %}
+                {% with all_blogs|get_item:'writing' as b %}
+                  <li>
+                    <a href="{{ b.get_rss_feed_url }}">{{ b.short_name }}</a>
+                  </li>
+                {% endwith %}
 
-              <li>
-                <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
-              </li>
-              <li>
-                <a href="http://feeds.pinboard.in/rss/u:philgyford/">Links at Pinboard</a>
-              </li>
-              {% with all_blogs|get_item:'comments' as b %}
                 <li>
-                  <a href="{{ b.get_rss_feed_url }}">{{ b.name }}</a>
+                  <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
                 </li>
-              {% endwith %}
-            </ul>
+                <li>
+                  <a href="http://feeds.pinboard.in/rss/u:philgyford/">Links at Pinboard</a>
+                </li>
+                {% with all_blogs|get_item:'comments' as b %}
+                  <li>
+                    <a href="{{ b.get_rss_feed_url }}">{{ b.name }}</a>
+                  </li>
+                {% endwith %}
+              </ul>
+            </aside>
           </div> <!-- .grid__col -->
           <div class="grid__col grid__col--half">
-              <p>
-                &copy; 1995-{% now "Y" %} Phil Gyford<br>
-                Email: <a href="mailto:phil@gyford.com">phil@gyford.com</a><Br>
-                Twitter: <a href="https://twitter.com/philgyford">@philgyford</a>
-              </p>
+            <div class="card card--no-border">
+              <div class="card__body">
+                <p>
+                  &copy; 1995-{% now "Y" %} Phil Gyford<br>
+                  Email: <a href="mailto:phil@gyford.com">phil@gyford.com</a><Br>
+                  Twitter: <a href="https://twitter.com/philgyford">@philgyford</a>
+                </p>
+              </div>
+            </div>
           </div> <!-- .grid__col -->
         </div> <!-- .grid__row -->
       </div> <!-- .grid -->
