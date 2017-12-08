@@ -1,0 +1,62 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+<p>The basic grid structure is:</p>
+
+<pre><code>&lt;div class="grid"&gt;
+  &lt;div class="grid__row"&gt;
+    &lt;div class="grid__col"&gt;&lt;/div&gt;
+    &lt;div class="grid__col"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<p>Add modifying classes to <code>.grid__col</code> for different widths etc.</p>
+
+<p>All columns collapse to be full-width from 768px wide down.</p>
+
+
+<h2>Main and sub columns</h2>
+
+<p>They can also be used in the opposite order (or just have their presentation order changed using a modifier class; see below).</p>
+
+{% include 'patterns/includes/grid/sidebar_right.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/grid/sidebar_right.html' %}</pre></code>
+
+
+<h2>Two equal columns</h2>
+
+{% include 'patterns/includes/grid/half.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/grid/half.html' %}</pre></code>
+
+
+<h2>Full-width column</h2>
+
+{% include 'patterns/includes/grid/full_width.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/grid/full_width.html' %}</pre></code>
+
+
+<h2>Central column</h2>
+
+<p>The “main” column can be alone, and centered.</p>
+
+{% include 'patterns/includes/grid/main_only.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/grid/main_only.html' %}</pre></code>
+
+
+<h2>Change presentation order</h2>
+
+<p>Add <code>.grid__col--first</code> or <code>.grid__col--last</code> to the last or first column respectively, to change the display order.</p>
+
+{% include 'patterns/includes/grid/change_order.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/grid/change_order.html' %}</pre></code>
+
+
+{% endblock content %}
