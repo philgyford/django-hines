@@ -44,14 +44,15 @@ $meta-offset-bottom: 0.5rem;
     // Adjusting for the larger line height than normal:
     background-position: 0 0.465em;
   }
+
+  .meta__inner {
+    @include list-unstyled;
+    padding-left: $border-width;
+    margin-top: -$meta-offset-top;
+    margin-bottom: -$meta-offset-bottom;
+  }
 }
 
-.meta__inner {
-  @include list-unstyled;
-  padding-left: $border-width;
-  margin-top: -$meta-offset-top;
-  margin-bottom: -$meta-offset-bottom;
-}
 
 
 .meta--inline {

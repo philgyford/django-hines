@@ -1,0 +1,47 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+<h2>Standard</h2>
+
+<p>For displaying images of different sizes in 1-3 columns, depending on browser width.</p>
+
+{% include 'patterns/includes/galleries/standard.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/galleries/standard.html' %}</pre></code>
+
+
+<h2>Albums</h2>
+
+<p>With the addition of the <code>.gallery--albums</code> class. For displaying links to Albums, which use a square thumbnail. By default they wrap around into multiple rows if the browser width is narrower.</p>
+
+{% include 'patterns/includes/galleries/albums.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/galleries/albums.html' %}</pre></code>
+
+
+<h3>Albums in a sidebar</h3>
+
+<p>If an album gallery is in a <code>.grid__col--sub</code> then at wider widths it will be a single column.</p>
+
+<div class="grid">
+  <div class="grid__row">
+    <div class="grid__col grid__col--sub">
+{% include 'patterns/includes/galleries/albums.html' %}
+    </div>
+  </div>
+</div>
+
+<pre><code>&lt;div class="grid"&gt;
+  &lt;div class="grid__row"&gt;
+    &lt;div class="grid__col grid__col--sub"&gt;
+
+{% verbatim_include 'patterns/includes/galleries/albums.html' %}
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></code>
+
+{% endblock content %}

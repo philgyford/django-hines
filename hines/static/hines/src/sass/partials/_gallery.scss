@@ -1,0 +1,93 @@
+// GALLERY
+
+
+.gallery {
+  @include list-unstyled;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: $paragraph-margin-bottom;
+
+  .gallery__item {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 ($border-width * 2) $paragraph-margin-bottom ($border-width * 2);
+
+    @include media-breakpoint-up(sm) {
+      width: 50%;
+      max-width: 50%;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 33.3333%;
+      max-width: 33.3333%;
+    }
+  }
+}
+
+.gallery__item__header {
+  font-size: $nav-font-size;
+  line-height: $line-height-sm;
+  margin-bottom: 0;
+  order: 2;
+}
+
+.gallery__item__img {
+  order: 1;
+  margin-bottom: ($border-width / 2);
+
+  @include media-breakpoint-up(sm) {
+    // Once we start showing more than one column...
+    // Centering the image within our fixed-height div:
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 240px;
+  }
+}
+
+.gallery__item .meta {
+  order: 3;
+}
+
+
+// Variations for the Albums gallery, currently only in sidebar in .card.
+// All imageas are 150x150 so we collapse things vertically and stop centering
+// the images.
+
+// In general usage, each item is 150px wide, so that they all go into
+// equal-sized columns, and split into as many rows as needed. Neat.
+
+.gallery--albums {
+
+  .gallery__item {
+    width: 150px;
+    max-width: 150px;
+    padding: 0 0 $paragraph-margin-bottom 0;
+    margin-right: $border-width;
+  }
+
+  .gallery__item__img {
+    height: 150px;
+    justify-content: flex-start;
+  }
+}
+
+// But if this album gallery is within .grid__col--sub, and the browser is wide
+// enough for that column to be a sidebar (rather than full browser width)
+// then the items will all be in a single maximum-width column. 
+@include media-breakpoint-up(md) {
+  .grid__col--sub {
+
+    .gallery--albums {
+      .gallery__item {
+        width: 100%;
+        max-width: 100%;
+        margin-right: 0;
+      }
+    }
+  }
+}

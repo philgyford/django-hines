@@ -12,50 +12,51 @@ Expects:
 {% endcomment %}
 
 {% if photo_list|length > 0 %}
-	{% load hines_core %}
+  {% load hines_core %}
 
-    {% if page_obj|default:False and page_obj.number > 1 %}
-        {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
-    {% endif %}
-	
-    <div class="d-flex flex-wrap">
-        {% for photo in photo_list %}
-            <div class="flickr-photo col-12 col-sm-6 col-md-4 p-3">
-                <h3 class="h6">
-                    <a href="{{ photo.permalink }}">{{ photo.title }}</a>
-                </h3>
-                <p class="flickr-photo-img mb-0">
-                    <a href="{{ photo.permalink }}">
-                        <img src="{{ photo.small_url }}" width="{{ photo.small_width }}" height="{{ photo.small_height }}" alt="" class="img-fluid">
-                    </a>
-                </p>
-                <p class="flickr-photo-meta"><small class="text-muted">
-                    {% if order == 'taken' %}
-                        Taken
-						{% if view == 'day' %}
-							{% display_time photo.taken_time link_to_day=False granularity=photo.taken_granularity %}
-						{% else %}
-							{% display_time photo.taken_time link_to_day=True granularity=photo.taken_granularity %}
-						{% endif %}
-                    {% else %}
-                        Uploaded
-						{% if view == 'day' %}
-							{% display_time photo.post_time link_to_day=False granularity=photo.taken_granularity %}
-						{% else %}
-							{% display_time photo.post_time link_to_day=True granularity=photo.taken_granularity %}
-						{% endif %}
-                    {% endif %}
-                </small></p>
-            </div> <!-- .flickr-photo -->
-        {% endfor %}
-    </div> <!-- .flickr-photos -->
+  {% if page_obj|default:False and page_obj.number > 1 %}
+    {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
+  {% endif %}
 
-    {% if page_obj|default:False %}
-        {% include 'ditto/includes/pagination.html' with page_obj=page_obj only %}
-    {% endif %}
+  <ol class="gallery">
+    {% for photo in photo_list %}
+      <li class="gallery__item">
+        <h3 class="gallery__item__header">
+          <a href="{{ photo.permalink }}" title="See this image on Flickr">{{ photo.title }}</a>
+        </h3>
+        <div class="gallery__item__img">
+          <a href="{{ photo.permalink }}" title="See this image on Flickr">
+            <img src="{{ photo.small_url }}" width="{{ photo.small_width }}" height="{{ photo.small_height }}" alt="" class="img-fluid">
+          </a>
+        </div>
+        <div class="meta">
+          <ul class="meta__inner">
+            <li>
+              {% if order == 'taken' %}
+                {% if view == 'day' %}
+                  {% display_time photo.taken_time link_to_day=False granularity=photo.taken_granularity %}
+                {% else %}
+                  {% display_time photo.taken_time link_to_day=True granularity=photo.taken_granularity %}
+                {% endif %}
+              {% else %}
+                {% if view == 'day' %}
+                  {% display_time photo.post_time link_to_day=False granularity=photo.taken_granularity %}
+                {% else %}
+                  {% display_time photo.post_time link_to_day=True granularity=photo.taken_granularity %}
+                {% endif %}
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+      </li> <!-- .gallery__item -->
+    {% endfor %}
+  </ol> <!-- .gallery-photos -->
+
+  {% if page_obj|default:False %}
+    {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
+  {% endif %}
+
 {% else %}
-    <p>There are no photos to show.</p>
+  <p>There are no photos to show.</p>
 {% endif %}
-
-
 
