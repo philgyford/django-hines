@@ -8,7 +8,7 @@
 {% block content %}
 
 	{% if previous_day or next_day %}
-		<nav class="nextprev">
+		<nav>
 			<p>
 				{% if previous_day %}
 					<a class="btn btn-outline-primary" href="{% url 'hines:day_archive' year=previous_day|date:"Y" month=previous_day|date:"m" day=previous_day|date:"d" %}">&larr; {{ previous_day|date:"j M Y" }}</a>

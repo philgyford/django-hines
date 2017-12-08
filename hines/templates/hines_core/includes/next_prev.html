@@ -14,12 +14,12 @@ Expects (both optional):
       {% spaceless %}
         {% if previous %}
           <li>
-            <a class="a--special" href="{{ previous.get_absolute_url }}" title="{{ previous.title }}"><span aria-hidden="true">&larr;</span>&nbsp;<span class="a__inner">Older</span></a>
+            <a class="nextprev" href="{{ previous.get_absolute_url }}" title="{{ previous.title }}"><span aria-hidden="true">&larr;</span>&nbsp;<span class="nextprev__inner">Older</span></a>
           </li>
         {% endif %}
         {% if next %}
           <li {% if previous %} class="list--inline__item--bullet"{% endif %}>
-            <a class="a--special" href="{{ next.get_absolute_url }}" title="{{ next.title }}"><span class="a__inner">Newer</span>&nbsp;<span aria-hidden="true">&rarr;</a>
+            <a class="nextprev" href="{{ next.get_absolute_url }}" title="{{ next.title }}"><span class="nextprev__inner">Newer</span>&nbsp;<span aria-hidden="true">&rarr;</a>
           </li>
         {% endif %}
       {% endspaceless %}

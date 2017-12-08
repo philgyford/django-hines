@@ -8,7 +8,7 @@
   {% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms only %}
 
 	{% if previous_year or next_year %}
-		<nav class="nextprev">
+		<nav>
 			<p>
 				{% if previous_year %}
 					<a class="btn btn-outline-primary" href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=previous_year|date:"Y" %}">&larr; {{ previous_year|date:"Y" }}</a>

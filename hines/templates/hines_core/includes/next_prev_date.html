@@ -16,9 +16,9 @@ Expects:
     <ul class="nav">
       {% if previous %}
         <li class="nav__item nav__item--split">
-          <a class="nav__link a--special" href="{% url url_name year=previous|date:"Y" %}">
+          <a class="nav__link nextprev" href="{% url url_name year=previous|date:"Y" %}">
             <span aria-hidden="true">&larr;</span>
-            <span class="a__inner">{{ previous|date:'Y' }}</span>
+            <span class="nextprev__inner">{{ previous|date:'Y' }}</span>
           </a>
         </li>
       {% endif %}
@@ -29,8 +29,8 @@ Expects:
       {% endif %}
       {% if next %}
         <li class="nav__item nav__item--split">
-          <a class="nav__link a--special" href="{% url url_name year=next|date:"Y" %}">
-            <span class="a__inner">{{ next|date:'Y' }}</span>
+          <a class="nav__link nextprev" href="{% url url_name year=next|date:"Y" %}">
+            <span class="nextprev__inner">{{ next|date:'Y' }}</span>
             <span aria-hidden="true">&rarr;</span>
           </a>
         </li>

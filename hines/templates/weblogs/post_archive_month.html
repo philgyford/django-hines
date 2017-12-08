@@ -8,7 +8,7 @@
 	{% include 'weblogs/includes/posts.html' with post_list=post_list perm=perms only %}
 
 	{% if previous_month or next_month %}
-		<nav class="nextprev">
+		<nav>
 			<p>
 				{% if previous_month %}
 					<a class="btn btn-outline-primary" href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=previous_month|date:"Y" month=previous_month|date:"m" %}">&larr; {{ previous_month|date:"F Y" }}</a>

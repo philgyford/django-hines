@@ -2,17 +2,17 @@
  * Used when we have a link where we want a bit of it to NOT be underlined.
  * So we'd have:
  *
- * <a class="a--special" href="">
+ * <a class="nextprev" href="">
  *   I'm not underlined.
- *   <span class="a__inner">I am underlined</span>
+ *   <span class="nextprev__inner">I am underlined</span>
  * </a>
  *
  */
-.a--special {
+.nextprev {
   white-space: nowrap;
   text-decoration: none;
 
-  .a__inner {
+  .nextprev__inner {
     text-decoration: $link-decoration;
   }
 
@@ -25,13 +25,13 @@
   &:hover {
     text-decoration: none;
 
-    .a__inner {
+    .nextprev__inner {
       color: $link-hover-color;
     }
   }
 
   &:visited:hover {
-    .a__inner {
+    .nextprev__inner {
       color: $link-visited-hover-color;
     }
   }

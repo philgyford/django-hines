@@ -14,6 +14,7 @@ class PatternsView(TemplateView):
                     'lists',
                     'media',
                     'meta',
+                    'nav',
                     'tables',
                     'type',
                     'utilities',

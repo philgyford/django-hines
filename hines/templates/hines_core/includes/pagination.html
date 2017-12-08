@@ -11,9 +11,9 @@ Expects:
     <ul class="nav nav--pagination">
       {% if page_obj.has_previous %}
         <li class="nav__item">
-          <a class="nav__link a--special" href="?{% query_string 'p' page_obj.previous_page_number %}">
+          <a class="nav__link nextprev" href="?{% query_string 'p' page_obj.previous_page_number %}">
             <span aria-hidden="true">&larr;</span>
-            <span class="a__inner">Previous&nbsp;page</span>
+            <span class="nextprev__inner">Previous page</span>
           </a>
         </li>
       {% endif %}
@@ -39,8 +39,8 @@ Expects:
 
       {% if page_obj.has_next %}
         <li class="nav__item">
-          <a class="nav__link a--special" href="?{% query_string 'p' page_obj.next_page_number %}">
-            <span class="a__inner">Next&nbsp;page</span>
+          <a class="nav__link nextprev" href="?{% query_string 'p' page_obj.next_page_number %}">
+            <span class="nextprev__inner">Next page</span>
             <span aria-hidden="true">&rarr;</span>
           </a>
         </li>
