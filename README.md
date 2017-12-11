@@ -92,12 +92,6 @@ Password is `vagrant`.
 
 Custom settings that can be in the django `settings.py` file:
 
-``HINES_ROOT_DIR``: e.g. `'phil'`. All the pages except things like the very
-front page and admin will live uner this directory.
-
-``HINES_USE_HTTPS``: e.g. `False`. Used when generating full URLs and the
-request object isn't available.
-
 ``HINES_ALLOW_COMMENTS``: Whether to allow commenting on blog posts. If
 ``False``, overrides the settings for individual Blogs and Posts. Default
 ``True``.
@@ -109,6 +103,13 @@ request object isn't available.
 ``HINES_FIRST_DATE``: Day Archive pages will 404 for days before this date. e.g.
 ``2000-03-15``.
 
+``HINES_GOOGLE_ANALYTICS_ID``: e.g. ``'UA-123456-1'``. If present, the Google
+Analytics Tracking code will be put into every page, using this ID. This value
+is taken from the ``HINES_GOOGLE_ANALYTICS_ID`` environment variable.
+
+``HINES_ROOT_DIR``: e.g. `'phil'`. All the pages except things like the very
+front page and admin will live uner this directory.
+
 ``HINES_TEMPLATE_SETS``: A set of dicts describing different sets of
 templates that can be used for PostDetails between certain dates. e.g.:
 	
@@ -119,4 +120,8 @@ templates that can be used for PostDetails between certain dates. e.g.:
 Any Post on the Blog with slug `writing` between those two dates will use the
 `weblogs/sets/houston/post_detail.html` template and any other Post will use
 `weblogs/post_detail.html`.
-	
+
+``HINES_USE_HTTPS``: e.g. `False`. Used when generating full URLs and the
+request object isn't available.
+
+

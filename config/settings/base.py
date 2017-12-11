@@ -189,6 +189,8 @@ COMMENTS_APP = 'hines.custom_comments'
 # We don't want to allow duplicate tags like 'Fish' and 'fish':
 TAGGIT_CASE_INSENSITIVE = True
 
+## DJANGO-HINES-SPECIFIC SETTINGS
+
 # Most hines-related pages will be within this root directory:
 HINES_ROOT_DIR = 'phil'
 
@@ -224,6 +226,8 @@ HINES_TEMPLATE_SETS = (
     # Same but a bit wider and (later) responsive:
     {'name': '2009', 'start': '2009-02-10', 'end': '2015-11-08'},
 )
+
+HINES_GOOGLE_ANALYTICS_ID = os.environ.get('HINES_GOOGLE_ANALYTICS_ID', None)
 
 MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)
 MT_MYSQL_DB_USER = os.environ.get('MT_MYSQL_DB_USER', None)
