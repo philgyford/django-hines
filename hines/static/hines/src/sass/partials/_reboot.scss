@@ -157,7 +157,7 @@ dd {
 }
 
 blockquote {
-  margin: 0 0 1rem;
+  margin: 0 0 $paragraph-margin-bottom 0;
 }
 
 dfn {
@@ -253,7 +253,7 @@ pre {
 
 figure {
   // Apply a consistent margin strategy (matches our type styles).
-  margin: 0 0 1rem;
+  margin: 0 0 $paragraph-margin-bottom 0;
 }
 
 

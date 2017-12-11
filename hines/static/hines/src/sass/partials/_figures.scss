@@ -9,9 +9,88 @@
  * </figure>
  */
 
+.figure {
+  margin: 0 0 $paragraph-margin-bottom 0;
+}
+
+figcaption {
+  @include text-style-alt;
+}
+
 .figure--blockquote {
+  p:last-child {
+    margin-bottom: 0;
+  }
+
   figcaption {
     padding: 0 ($border-width * 2);
+  }
+}
+
+.figure--img {
+
+  figcaption {
+    margin-top: $paragraph-margin-bottom-sm;
+  }
+
+  &.figure--full {
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &.figure--left,
+  &.figure--right {
+    margin-top: 0.3em;
+    max-width: 100%;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  &.figure--left {
+    @include media-breakpoint-up(sm) {
+      float: left;
+      margin-right: ($grid-gutter-width / 2);
+      max-width: 50%
+    }
+  }
+
+  &.figure--right {
+    @include media-breakpoint-up(sm) {
+      float: right;
+      margin-left: ($grid-gutter-width / 2);
+      max-width: 50%
+    }
+  }
+}
+
+// At wider widths, expand a .figure--full almost to the right-hand edge.
+@include media-breakpoint-up(md) {
+  .grid__col--main--only {
+    .figure--img {
+      &.figure--full {
+        // Not -50vw because that seems to take it *just* over the right-hand
+        // edge and we get a horizontal scrollbar.
+        // As we're adding padding anyway, you don't notice any slight gap.
+        margin-right: calc(50% - 49vw);
+        // Make it line up with right-edge of top navbar:
+        padding-right: ($grid-gutter-width / 2);
+        // We don't want it being TOO big in a massive window:
+        // This seems to make it stretch to same as top nav bar:
+        max-width: ($grid-main-only-max-width * 1.354);
+
+        figcaption {
+          // Make it the same width as the main--only column:
+          max-width: $grid-main-only-max-width;
+          padding-right: $grid-gutter-width;
+        }
+      }
+    }
   }
 }
 

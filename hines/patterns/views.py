@@ -11,6 +11,7 @@ class PatternsView(TemplateView):
                     'forms',
                     'galleries',
                     'grid',
+                    'images',
                     'lists',
                     'media',
                     'meta',

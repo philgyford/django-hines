@@ -85,9 +85,10 @@ $border-width-sm: 1px;
 
 // Grid containers
 
-$grid-columns:      4;
-$grid-gutter-width: ($border-width * 4);
-$grid-max-width:    1140px;
+$grid-columns:              4;
+$grid-gutter-width:         ($border-width * 4);
+$grid-max-width:            1140px;
+$grid-main-only-max-width:  40rem;
 
 
 // Fonts
@@ -139,8 +140,6 @@ $line-height-sm:              1.42857; // 20px if used with 14px $font-size-sm
 
 $lead-font-size:              ($font-size-base * 1.25);
 $lead-font-weight:            300;
-
-$text-muted:                  $gray-medium;
 
 $hr-border-color:             $border-color;
 $hr-border-width:             $border-width;
@@ -223,7 +222,7 @@ $input-border-color:                    $black;
 $input-border-width:                    $input-button-border-width;
 $input-box-shadow:                      inset 0 1px 1px rgba($black, .075);
 
-$input-placeholder-color:               $text-muted;
+$input-placeholder-color:               $gray-medium;
 
 $input-height-border:                   $input-button-border-width * 2;
 

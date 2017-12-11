@@ -71,7 +71,7 @@
 // When there's no sidebar, centre the main column at wider widths, and make
 // sure it doesn't get too wide.
 .grid__col--main--only {
-  max-width: 40rem;
+  max-width: $grid-main-only-max-width;
   margin-left: auto;
   margin-right: auto;
 }

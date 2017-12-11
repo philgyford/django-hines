@@ -1,0 +1,42 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+<p>The <code>.img-fluid</code> class can be applied directly to <code>&lt;img&gt;</code>s as it’s useful in many places. Images within text (like blog posts) should be within <code>&lt;figure class="figure figure--img"&gt;&lt;/figure&gt;</code> tags.</p>
+
+<h2>Responsive</h2>
+
+<p><code>.img-fluid</code> makes an image be as wide as its container or, if the container is wider than the image, its natural size.</p>
+
+{% include 'patterns/includes/images/responsive.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/images/responsive.html' %}</pre></code>
+
+<h2>Figure: Full-width</h2>
+
+<p><code>.figure--full</code> makes the figure be as wide as its container (even if the image within has a narrower natural size).</p>
+
+{% include 'patterns/includes/images/figure_full.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/images/figure_full.html' %}</pre></code>
+
+<p><strong>NOTE:</strong> when a <code>.figure--full</code> is used within the centered single grid column <code>.grid__col--main--only</code> then it expands to the right at wider widths, almost to the right-edge of the window.</p>
+
+<h2>Figure: Aligned left or right</h2>
+
+<p><code>.figure--left</code> and <code>.figure--right</code> float the figure and image to one side at wider widths, with text wrapping around.</p>
+
+{% include 'patterns/includes/images/figure_aligned.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/images/figure_aligned.html' %}</pre></code>
+
+
+<h2>Captions</h2>
+
+{% include 'patterns/includes/images/figure_caption.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/images/figure_caption.html' %}</pre></code>
+
+{% endblock content %}
