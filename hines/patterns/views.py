@@ -6,7 +6,6 @@ class PatternsView(TemplateView):
     template_name = 'patterns/home.html'
 
     valid_slugs = [
-                    'bodytext',
                     'cards',
                     'forms',
                     'galleries',

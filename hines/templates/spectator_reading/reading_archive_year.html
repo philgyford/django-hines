@@ -8,7 +8,7 @@ Overriding the content block of spectator_reading/reading_archive_year.html so:
 {% endcomment %}
 
 {% block content %}
-  {% include 'hines_core/includes/next_prev_date.html' with url_name='spectator:reading:reading_year_archive' previous=previous_year next=next_year current=year only %}
+  {% include 'hines_core/includes/next_prev_date.html' with date_type='year' url_name='spectator:reading:reading_year_archive' previous=previous_year next=next_year current=year only %}
 
   {% if reading_list|length > 0 %}
 

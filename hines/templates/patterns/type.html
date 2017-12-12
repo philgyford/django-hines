@@ -4,11 +4,13 @@
 
 {% block content %}
 
-<h2>Text</h2>
+<h2>Type styles</h2>
 
-{% include 'patterns/includes/type/text.html' %}
+<p>There are three main styles of type used across the site.</p>
 
-<pre><code>{% verbatim_include 'patterns/includes/type/text.html' %}</pre></code>
+{% include 'patterns/includes/type/styles.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/type/styles.html' %}</pre></code>
 
 
 <h2>Headings</h2>
@@ -22,6 +24,20 @@
 {% include 'patterns/includes/type/headings_small.html' %}
 
 <pre><code>{% verbatim_include 'patterns/includes/type/headings_small.html' %}</pre></code>
+
+
+<h2>Bodytext</h2>
+
+<p>All headings within an element with a class of <code>.bodytext</code> will use the serif font.</p>
+
+<div class="bodytext">
+{% include 'patterns/includes/type/headings.html' %}
+</div>
+
+<pre><code>&lt;div class="bodytext"&gt;
+
+{% verbatim_include 'patterns/includes/type/headings.html' %}
+&lt;/div&gt;</pre></code>
 
 
 <h2>Horizontal rules</h2>

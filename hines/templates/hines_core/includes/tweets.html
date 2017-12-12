@@ -8,12 +8,11 @@ Expects:
 {% endcomment %}
 
 
-<div>
-	{% for tweet in tweet_list %}
-		<div class="media">
-			{% include 'hines_core/includes/tweet.html' with tweet=tweet perms=perms view='day' only %}
-		</div>
-		<hr>
-	{% endfor %}
+<div class="media-list">
+  {% for tweet in tweet_list %}
+    <li class="media">
+      {% include 'hines_core/includes/tweet.html' with tweet=tweet perms=perms view='day' only %}
+    </li> <!-- .media -->
+  {% endfor %}
 </div>
 

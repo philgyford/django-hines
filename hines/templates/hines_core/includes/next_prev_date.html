@@ -4,6 +4,7 @@ The same HTML as plain next_prev.html but with slightly different inputs.
 
 Expects:
 
+* date_type - 'year' or 'day' (default).
 * url_name - The name of the URL to link to, including namespace, if any.
 * next - Date object (optional).
 * previous - Date object (optional).
@@ -16,21 +17,21 @@ Expects:
     <ul class="nav">
       {% if previous %}
         <li class="nav__item nav__item--split">
-          <a class="nav__link nextprev" href="{% url url_name year=previous|date:"Y" %}">
+          <a class="nav__link nextprev" href="{% if date_type == 'year' %}{% url url_name year=previous|date:'Y' %}{% else %}{% url url_name year=previous|date:'Y' month=previous|date:'m' day=previous|date:'d' %}{% endif %}">
             <span aria-hidden="true">&larr;</span>
-            <span class="nextprev__inner">{{ previous|date:'Y' }}</span>
+            <span class="nextprev__inner">{% if date_type == 'year' %}{{ previous|date:'Y' }}{% else %}{{ previous|date:'j M Y' }}{% endif %}</span>
           </a>
         </li>
       {% endif %}
       {% if current %}
         <li class="nav__item nav__item--split is-active">
-          <span class="nav__link">{{ current|date:'Y' }} <span class="u-sr-only">(current)</span></span>
+          <span class="nav__link">{% if date_type == 'year' %}{{ current|date:'Y' }}{% else %}{{ current|date:'j M Y' }}{% endif %} <span class="u-sr-only">(current)</span></span>
         </li>
       {% endif %}
       {% if next %}
         <li class="nav__item nav__item--split">
-          <a class="nav__link nextprev" href="{% url url_name year=next|date:"Y" %}">
-            <span class="nextprev__inner">{{ next|date:'Y' }}</span>
+          <a class="nav__link nextprev" href="{% if date_type == 'year' %}{% url url_name year=next|date:'Y' %}{% else %}{% url url_name year=next|date:'Y' month=next|date:'m' day=next|date:'d' %}{% endif %}">
+            <span class="nextprev__inner">{% if date_type == 'year' %}{{ next|date:'Y' }}{% else %}{{ next|date:'j M Y' }}{% endif %}</span>
             <span aria-hidden="true">&rarr;</span>
           </a>
         </li>

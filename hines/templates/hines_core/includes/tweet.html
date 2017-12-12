@@ -3,9 +3,9 @@ Displays a single tweet, with quoted tweet, media, etc.
 
 This is a simplified version of the Ditto twitter/includes/tweet.html template.
 Because:
-	* We use different HTML/CSS
-	* We don't currently have different 'view's.
-	* We don't want to use tweet.get_absolute_url().
+  * We use different HTML/CSS
+  * We don't currently have different 'view's.
+  * We don't want to use tweet.get_absolute_url().
 
 Expects:
 
@@ -15,65 +15,61 @@ Expects:
 
 {% load hines_core %}
 
-<img class="d-flex mr-3" src="{{ tweet.user.avatar_url }}" alt="{{ tweet.user.screen_name }}’s avatar" width="48" height="48">
+<img class="media__img" src="{{ tweet.user.avatar_url }}" alt="{{ tweet.user.screen_name }}’s avatar" width="48" height="48">
 
-<div class="media-body">
-	<p class="{% if not tweet.get_retweeted_tweet %}mb-0 {% endif %}">
-		<a href="{{ twitter.user.permalink }}" title="This person on Twitter">
-			<strong>{{ tweet.user.name }}</strong>
-			<small>{{ tweet.user }}</small>
-		</a>
-		<small class="text-muted">
-			•
-			{% display_time tweet.post_time False %}
+<div class="media__body">
+  <div class="media__byline">
+    <span class="media__byline__author">
+      <a href="{{ tweet.user.permalink }}" title="This person on Twitter">{{ tweet.user.name }}</a>
+    </span>
+    {{ tweet.user }}
+    •
+    {% display_time tweet.post_time False %}
 
-			{% if tweet.is_reply %}
-				• <a href="{{ tweet.in_reply_to_url }}" title="See their Tweet">In reply to…</a>
-			{% endif %}
+    {% if tweet.is_reply %}
+      • <a href="{{ tweet.in_reply_to_url }}" title="See their Tweet">In reply to…</a>
+    {% endif %}
 
-			• <a href="{{ tweet.permalink }}" title="See this Tweet on Twitter">#</a>
+    • <a href="{{ tweet.permalink }}" title="See this Tweet on Twitter">#</a>
 
-			{% if perms.twitter.can_change_tweet %}
-				• <a href="{% url 'admin:twitter_tweet_change' tweet.id %}" class="admin">Edit</a>
-			{% endif %}
-		</small>
-	</p>
+    {% if perms.twitter.can_change_tweet %}
+      • <a href="{% url 'admin:twitter_tweet_change' tweet.id %}" class="admin">Edit</a>
+    {% endif %}
+  </div>
 
-	{% if tweet.get_retweeted_tweet %}
-		{# This Tweet is just retweeting another; so display that. #}
+  {% if tweet.get_retweeted_tweet %}
+    {# This Tweet is just retweeting another; so display that. #}
 
-		<div class="media">
-			{% include 'hines_core/includes/tweet.html' with tweet=tweet.get_retweeted_tweet perms=perms only %}
-		</div>
+    <div class="media">
+      {% include 'hines_core/includes/tweet.html' with tweet=tweet.get_retweeted_tweet perms=perms only %}
+    </div> <!-- .media -->
 
-	{% else %}
+  {% else %}
 
-		<p class="{% if tweet.media_count == 0 %}mb-0{% endif %}{% if view == 'detail' %} lead{% endif %}">
-			{{ tweet.text_html|safe }}
-		</p>
-	
-		{% if tweet.get_quoted_tweet %}
-			<div class="media mt-3">
-				{% include 'hines_core/includes/tweet.html' with tweet=tweet.get_quoted_tweet perms=perms only %}
-			</div>
-		{% endif %}
+    <p>{{ tweet.text_html|safe }}</p>
 
-		{% if tweet.media_count > 0 %}
-			{% include 'hines_core/includes/tweet_media.html' with tweet=tweet only %}
-		{% endif %}
-		
-		{% if tweet.place %}
-			<p class="mb-0 text-muted">
-				<small>
-					{% if tweet.latitude %}
-						<a href="https://maps.google.com/maps/place/{{ tweet.latitude }},{{ tweet.longitude }}/@{{ tweet.latitude }},{{ tweet.longitude }},14z" title="See on Google Maps">{{ tweet.place }}</a>
-					{% else %}
-						{{ tweet.place }}
-					{% endif %}
-				</small>
-			</p>
-		{% endif %}
+    {% if tweet.get_quoted_tweet %}
+      <div class="media">
+        {% include 'hines_core/includes/tweet.html' with tweet=tweet.get_quoted_tweet perms=perms only %}
+      </div> <!-- .media -->
+    {% endif %}
 
-	{% endif %}
-</div><!-- .media-body -->
+    {% if tweet.media_count > 0 %}
+      {% include 'hines_core/includes/tweet_media.html' with tweet=tweet only %}
+    {% endif %}
+
+    {% if tweet.place %}
+      <p>
+        <small>
+          {% if tweet.latitude %}
+            <a href="https://maps.google.com/maps/place/{{ tweet.latitude }},{{ tweet.longitude }}/@{{ tweet.latitude }},{{ tweet.longitude }},14z" title="See on Google Maps">{{ tweet.place }}</a>
+          {% else %}
+            {{ tweet.place }}
+          {% endif %}
+        </small>
+      </p>
+    {% endif %}
+
+  {% endif %}
+</div><!-- .media__body -->
 

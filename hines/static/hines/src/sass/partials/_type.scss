@@ -24,13 +24,12 @@ h1, h2, h3, h4, h5, h6,
   margin-top: 0;
   margin-bottom: $headings-margin-bottom;
   color: $headings-color;
-  font-weight: $headings-font-weight;
 
   &:not(:first-child) {
     margin-top: ($paragraph-margin-bottom * 2);
   }
 
-  @include text-style-headings();
+  @include text-style-nav;
 }
 
 h1, h2, h3,
@@ -107,3 +106,17 @@ blockquote {
   padding-right: ($border-width * 2);
 }
 
+/**
+ * Demo styles.
+ * These are *only* used for the demonstration of type styles used in the
+ * Patterns pages. DO NOT use these anywher on the actual site.
+ **/
+.demo-text-style-default {
+  @include text-style-default; 
+}
+.demo-text-style-alt {
+  @include text-style-alt; 
+}
+.demo-text-style-nav {
+  @include text-style-nav; 
+}

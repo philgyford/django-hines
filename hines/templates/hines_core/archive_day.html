@@ -8,16 +8,7 @@
 {% block content %}
 
 	{% if previous_day or next_day %}
-		<nav>
-			<p>
-				{% if previous_day %}
-					<a class="btn btn-outline-primary" href="{% url 'hines:day_archive' year=previous_day|date:"Y" month=previous_day|date:"m" day=previous_day|date:"d" %}">&larr; {{ previous_day|date:"j M Y" }}</a>
-				{% endif %}
-				{% if next_day %}
-					<a class="btn btn-outline-primary float-right" href="{% url 'hines:day_archive' year=next_day|date:"Y" month=next_day|date:"m" day=next_day|date:"d" %}">{{ next_day|date:"j M Y" }} &rarr;</a>
-				{% endif %}
-			</p>
-		</nav>
+    {% include 'hines_core/includes/next_prev_date.html' with date_type='day' url_name='hines:day_archive' next=next_day previous=previous_day only %}
 	{% endif %}
 
 	{% if blogs|length == 0 and bookmark_list|length == 0 and photo_list|length == 0 %}
@@ -45,6 +36,7 @@
 	{% endif %}
 
 	{% if twitter_tweet_list|length > 0 %}
+    <hr>
 		<h2>Tweets</h2>
 		{% include 'hines_core/includes/tweets.html' with tweet_list=twitter_tweet_list perms=perms only %}
 	{% endif %}
