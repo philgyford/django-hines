@@ -35,7 +35,6 @@
 	{% endif %}
 
 	{% if twitter_tweet_list|length > 0 %}
-    <hr>
 		<h2>Tweets</h2>
 		{% include 'hines_core/includes/tweets.html' with tweet_list=twitter_tweet_list perms=perms only %}
 	{% endif %}
