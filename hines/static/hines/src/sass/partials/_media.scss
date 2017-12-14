@@ -19,6 +19,10 @@ $media-header-size: $h3-font-size;
   display: flex;
   align-items: flex-start;
 
+  .media:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
 }
 
 .media__img {
