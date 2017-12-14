@@ -6,42 +6,61 @@
 
 <h2>Standard</h2>
 
-<p>For displaying images of different sizes in 1-3 columns, depending on browser width. (It currently assumes this will be used in a <code>.grid__col--main</code>; if used in something narrower it will still try to display in three columns if the browser is wide.)</p>
+<p>For displaying images of different sizes in 1-4 columns. As the browser narrows the number of columns reduces. The examples below all use the following HTML, only with different modifying classes on the container to change the number of colums:</p>
 
+<pre><code>&lt;ol class="gallery"&gt;
+{% verbatim_include 'patterns/includes/galleries/standard.html' %}
+&lt;/ol&gt;</pre></code>
+
+<h3>2 columns (default)</h3>
+
+<p>By default, at wider widths, the gallery has two columns:</p>
+
+<ol class="gallery">
 {% include 'patterns/includes/galleries/standard.html' %}
+</ol>
 
-<pre><code>{% verbatim_include 'patterns/includes/galleries/standard.html' %}</pre></code>
+<h3>3 columns</h3>
+
+<p>Add the <code>.gallery--3</code> class to the container to get three columns:</p>
+
+<ol class="gallery gallery--3">
+{% include 'patterns/includes/galleries/standard.html' %}
+</ol>
+
+<h3>4 columns</h3>
+
+<p>Add the <code>.gallery--4</code> class to the container to get three columns:</p>
+
+<ol class="gallery gallery--4">
+{% include 'patterns/includes/galleries/standard.html' %}
+</ol>
 
 
-<h2>Albums</h2>
+<h2>Flow Gallery</h2>
 
-<p>With the addition of the <code>.gallery--albums</code> class. For displaying links to Albums, which use a square thumbnail. By default they wrap around into multiple rows if the browser width is narrower.</p>
+<p>The "flow" gallery is treated more like a single column or row of images, rather than a grid. Currently used for displaying links to Albums, which use a square thumbnail. For By default they wrap around into multiple rows if the browser width is narrower. Add the <code>.gallery--flow</code> class to the container.</p>
 
-{% include 'patterns/includes/galleries/albums.html' %}
+<p>Both examples below use this HTML:</p>
 
-<pre><code>{% verbatim_include 'patterns/includes/galleries/albums.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/galleries/flow.html' %}</pre></code>
 
 
-<h3>Albums in a sidebar</h3>
+<h3>In a main content column</h3>
 
-<p>If an album gallery is in a <code>.grid__col--sub</code> then at wider widths it will be a single column.</p>
+{% include 'patterns/includes/galleries/flow.html' %}
+
+<h3>In a sidebar</h3>
+
+<p>If a flow gallery is in a <code>.grid__col--sub</code> it’s a single column when the browser is wider:</p>
 
 <div class="grid">
   <div class="grid__row">
     <div class="grid__col grid__col--sub">
-{% include 'patterns/includes/galleries/albums.html' %}
+{% include 'patterns/includes/galleries/flow.html' %}
     </div>
   </div>
 </div>
 
-<pre><code>&lt;div class="grid"&gt;
-  &lt;div class="grid__row"&gt;
-    &lt;div class="grid__col grid__col--sub"&gt;
-
-{% verbatim_include 'patterns/includes/galleries/albums.html' %}
-
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</pre></code>
 
 {% endblock content %}

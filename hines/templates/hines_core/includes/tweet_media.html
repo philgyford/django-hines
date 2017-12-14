@@ -17,47 +17,22 @@ Expects:
   {% load l10n %}
 
   {% with media_list=tweet.media.all %}
-
-    {% if media_list|length > 1 %}
-
-      {% comment %}
-        Multiple Photos, and not the Tweet's detail view.
-
-        This assumes that if there are multiple items then they're
-        photos, and there will be a maximum of 4.
-        This is true as of 2016-05-07...
-      {% endcomment %}
-
-      <ul class="list--unstyled grid__row">
-        {% for media in media_list %}
-          <li class="grid__col--sub">
-            <a href="{{ tweet.permalink }}" title="See this tweet on Twitter"><img src="{{ media.small_url }}" width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" class="img-fluid" alt="Photo thumbnail"></a>
-          </li>
-        {% endfor %}
-      </ul>
-
-    {% else %}
-
-      <ul class="list--unstyled">
-        {% for media in media_list %}
-
-          <li>
+    <ol class="gallery{% if media_list|length >= 4 %} gallery--4{% elif media_list|length == 3 %} gallery--3{% endif %}">
+      {% for media in media_list %}
+        <li class="gallery__item">
+          <div class="gallery__item__img">
             {% if media.media_type == 'photo' %}
-              <a href="{{ tweet.permalink }}" title="See this tweet on Twitter"><img src="{{ media.small_url }}" width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" alt="" class="img-fluid"></a>
-
+              <a href="{{ tweet.permalink }}" title="See this tweet on Twitter"><img src="{{ media.small_url }}" width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" class="img-fluid" alt="Photo thumbnail"></a>
             {% else %}
               {# Video or Animated GIF #}
               <video width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" poster="{{ media.large_url }}" controls preload="none">
                 <source src="{{ media.video_url }}" type="{{ media.video_mime_type }}">
               </video>
-
             {% endif %}
-          </li>
-
-        {% endfor %}
-      </ul>
-
-    {% endif %}
+            </div>
+        </li>
+      {% endfor %}
+    </ol>
   {% endwith %}
 {% endif %}
 

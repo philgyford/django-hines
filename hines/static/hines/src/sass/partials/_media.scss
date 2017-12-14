@@ -23,7 +23,7 @@ $media-header-size: $h3-font-size;
 
 .media__img {
   margin-top: 0.2em;
-  margin-right: ($border-width * 2);
+  margin-right: $border-width;
 }
 
 .media__body {
@@ -75,7 +75,7 @@ $media-header-size: $h3-font-size;
     &:first-child {
       padding-top: 0;
     }
-  
+
     &:last-child {
       border-bottom: none;
       padding-bottom: 0.3em; // Just looks about right.
