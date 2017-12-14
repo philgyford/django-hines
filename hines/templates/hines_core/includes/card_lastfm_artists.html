@@ -9,10 +9,10 @@ Expects:
 {% endcomment %}
 
 {% if artist_list|length > 0 %}
-  <div class="card">
+  <aside class="card">
     <h2 class="card__header">{{ card_title }}</h2>
 
-    <ol>
+    <ol class="card__body">
       {% for artist in artist_list %}
         <li>
           <a href="{{ artist.permalink }}">{{ artist.name }}</a> ({{ artist.scrobble_count }})
@@ -25,7 +25,7 @@ Expects:
         <a href="{{ more.url }}">{{ more.text }}</a>
       </p>
     {% endif %}
-  </div>
+  </aside>
 {% endif %}
 
 
