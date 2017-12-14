@@ -137,6 +137,11 @@
   order: 1;
   margin-bottom: ($border-width / 2);
 
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
   @include media-breakpoint-up(sm) {
     // Once we start showing more than one column...
     // Centering the image within our fixed-height div:

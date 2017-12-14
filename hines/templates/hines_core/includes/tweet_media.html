@@ -17,22 +17,21 @@ Expects:
   {% load l10n %}
 
   {% with media_list=tweet.media.all %}
-    <ol class="gallery{% if media_list|length >= 4 %} gallery--4{% elif media_list|length == 3 %} gallery--3{% endif %}">
-      {% for media in media_list %}
-        <li class="gallery__item">
-          <div class="gallery__item__img">
-            {% if media.media_type == 'photo' %}
-              <a href="{{ tweet.permalink }}" title="See this tweet on Twitter"><img src="{{ media.small_url }}" width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" class="img-fluid" alt="Photo thumbnail"></a>
-            {% else %}
-              {# Video or Animated GIF #}
-              <video width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" poster="{{ media.large_url }}" controls preload="none">
-                <source src="{{ media.video_url }}" type="{{ media.video_mime_type }}">
-              </video>
-            {% endif %}
+    {% if media_list|length == 1 and media_list.0.media_type != 'photo' %}
+      <video class="video-fluid" width="{{ media_list.0.small_w|unlocalize }}" height="{{ media_list.0.small_h|unlocalize }}" poster="{{ media_list.0.large_url }}" controls preload="none">
+        <source src="{{ media_list.0.video_url }}" type="{{ media_list.0.video_mime_type }}">
+      </video>
+    {% else %}
+      <ol class="gallery{% if media_list|length >= 4 %} gallery--4{% elif media_list|length == 3 %} gallery--3{% endif %}">
+        {% for media in media_list %}
+          <li class="gallery__item">
+            <div class="gallery__item__img">
+              <a href="{{ tweet.permalink }}" title="See this tweet on Twitter"><img src="{{ media.small_url }}" width="{{ media.small_w|unlocalize }}" height="{{ media.small_h|unlocalize }}" alt="Photo thumbnail"></a>
             </div>
-        </li>
-      {% endfor %}
-    </ol>
+          </li>
+        {% endfor %}
+      </ol>
+    {% endif %}
   {% endwith %}
 {% endif %}
 

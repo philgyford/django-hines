@@ -1,6 +1,12 @@
 
 // Make an image be a maximum of as wide as its container.
+
 .img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+// Same for <video>.
+.video-fluid {
   max-width: 100%;
   height: auto;
 }
