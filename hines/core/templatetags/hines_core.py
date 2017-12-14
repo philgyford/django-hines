@@ -144,7 +144,8 @@ def lastfm_top_artists_card(limit=10, date=None, period='day'):
                 'url': 'https://www.last.fm/user/gyford',}
     else:
         if period == 'day':
-            card_title += ' on this day'
+            pass
+            # card_title += ' on this day'
         elif period == 'month':
             card_title += ' this month'
         elif period == 'year':
