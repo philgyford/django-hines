@@ -47,9 +47,9 @@ urlpatterns = [
 
     # REDIRECTS
 
-    url(r'^favicon.ico$',
-        RedirectView.as_view(
-            url=static_tag('img/favicons/favicon.ico'), permanent=True)),
+    url(r'^favicon.ico$', RedirectView.as_view(
+        url=static_tag('hines/img/favicons/favicon.ico'), permanent=True)
+    ),
 
 
     # PAGES
