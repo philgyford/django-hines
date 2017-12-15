@@ -15,14 +15,14 @@
 		<p>There’s nothing to show here today.</p>
 	{% endif %}
 
-	{% if blogs|length > 0 %}
-		{% for blog_data in blogs %}
-			<h2>{{ blog_data.blog.name }}</h2>
+  {% for blog_data in blogs %}
+    {% if blog_data.post_list|length > 0 %}
+      <h2>{{ blog_data.blog.name }}</h2>
 
-			{% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list only %}
+      {% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list only %}
 
-		{% endfor %}
-	{% endif %}
+    {% endif %}
+  {% endfor %}
 
 	{% if flickr_photo_list|length > 0 %}
 		<h2>Photos</h2>

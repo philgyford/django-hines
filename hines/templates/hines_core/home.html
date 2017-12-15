@@ -7,7 +7,27 @@
 {% block head_title %}{{ site_name }}{% endblock %}
 
 {% block content %}
-Hello
+
+  {% for key, qs in sections.items %}
+    {% if qs|length > 0 %}
+      {% if key|slice:"12" == 'weblog_posts' %}
+        <h2>{{ qs.0.blog.name }}</h2>
+
+        {% include 'weblogs/includes/posts.html' with post_list=qs only %}
+
+      {% elif key == 'pinboard_bookmark_list' %}
+        <h2>Links</h2>
+        {% include 'links/includes/bookmarks.html' with bookmark_list=qs only %}
+
+      {% elif key == 'flickr_photo_list' %}
+        <h2>Photos</h2>
+        {% include 'hines_core/includes/photos.html' with photo_list=qs order='uploaded' only %}
+
+      {% endif %}
+    {% endif %}
+
+  {% endfor %}
+
 {% endblock %}
 
 {% block sidebar %}
@@ -16,6 +36,6 @@ Hello
 
 	{% in_progress_publications_card %}
 
-	{% lastfm_top_artists_card limit=10 %}
+	{% lastfm_recent_scrobbles_card limit=10 %}
 
 {% endblock %}

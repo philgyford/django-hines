@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import datetime
 
 from django.conf import settings
@@ -19,6 +20,67 @@ from .paginator import DiggPaginator
 
 class HomeView(TemplateView):
     template_name = 'hines_core/home.html'
+    weblog_posts = {'writing': 3, 'comments': 1}
+    pinboard_bookmarks = 3
+    flickr_photos = 3
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sections'] = self.get_recent_items()
+        return context
+
+    def get_recent_items(self):
+        items = {}
+
+        for blog, posts in self._get_weblog_posts().items():
+            items.update({blog:posts})
+        items.update(self._get_flickr_photos())
+        items.update(self._get_pinboard_bookmarks())
+
+        def by_time_key(item):
+            qs = item[1]
+            if len(qs) > 0:
+                if hasattr(qs[0], 'time_published'):
+                    return qs[0].time_published
+                else:
+                    return qs[0].post_time
+            return False
+
+        sorted_items = OrderedDict(
+                    sorted(items.items(), key=by_time_key, reverse=True))
+
+        return sorted_items 
+
+    def _get_weblog_posts(self):
+        """
+        Returns a list of dicts:
+        e.g. assuming we have two Blogs with the short_names 'writing' and
+        'comments':
+            {
+                'weblog_posts_writing': Post.objects...},
+                'weblog_posts_comments': Post.objects...},
+            }
+        """
+        posts = {}
+
+        for blog_slug, num in self.weblog_posts.items():
+            try:
+                blog = Blog.objects.get(slug=blog_slug)
+            except Blog.DoesNotExist:
+                continue
+            qs = blog.public_posts.all()[:num]
+            key = 'weblog_posts_{}'.format(blog_slug)
+            posts[key] = qs
+
+        return posts
+
+    def _get_flickr_photos(self):
+        photos = Photo.public_objects.all()[:self.flickr_photos]
+        return {'flickr_photo_list': photos}
+
+    def _get_pinboard_bookmarks(self):
+        bookmarks = Bookmark.public_objects.all()[:self.pinboard_bookmarks]
+        return {'pinboard_bookmark_list': bookmarks}
 
 
 class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
@@ -165,49 +227,33 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         """
         blogs = []
         for blog in Blog.objects.all():
-            qs = blog.public_posts.filter(time_published__date=date)
-            if qs.count() > 0:
-                blogs.append({
-                    'blog': blog,
-                    'post_list': qs
-                })
+            posts = blog.public_posts.filter(time_published__date=date)
+            blogs.append({
+                'blog': blog,
+                'post_list': posts
+            })
 
-        if len(blogs) > 0:
-            return {'blogs': blogs}
-        else:
-            return {}
+        return {'blogs': blogs}
 
     def _get_flickr_photos(self, date):
         photos = Photo.public_objects.filter(
                                         taken_time__date=date,
                                         taken_granularity=0)
-        if photos.count() > 0:
-            return {'flickr_photo_list': photos, }
-        else:
-            return {}
+        return {'flickr_photo_list': photos}
 
     def _get_pinboard_bookmarks(self, date):
         bookmarks = Bookmark.public_objects.filter(post_time__date=date)
-        if bookmarks.count() > 0:
-            return {'pinboard_bookmark_list': bookmarks, }
-        else:
-            return {}
+        return {'pinboard_bookmark_list': bookmarks}
 
     def _get_twitter_favorites(self, date):
         tweets = Tweet.public_favorite_objects.filter(post_time__date=date) \
                                                     .prefetch_related('user')
-        if tweets.count() > 0:
-            return {'twitter_favorite_list': tweets, }
-        else:
-            return {}
+        return {'twitter_favorite_list': tweets}
 
     def _get_twitter_tweets(self, date):
         tweets = Tweet.public_tweet_objects.filter(post_time__date=date) \
                                                     .prefetch_related('user')
-        if tweets.count() > 0:
-            return {'twitter_tweet_list': tweets, }
-        else:
-            return {}
+        return {'twitter_tweet_list': tweets}
 
 
 class PaginatedListView(ListView):
