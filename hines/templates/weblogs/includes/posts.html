@@ -8,6 +8,7 @@ Expects:
 * post_list: A list or QuerySet of Posts.
 * page_obj, optional, a DiggPaginator instance or False (default).
 * perms - Django permissions.
+* view - 'day' or 'list' (default).
 {% endcomment %}
 
 {% load hines_core %}
@@ -21,23 +22,29 @@ Expects:
   <ol class="media-list">
     {% for post in post_list %}
       <li class="media">
-		<div class="media__body">
-			<h2 class="media__header">
-			  <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-			</h2>
+        <div class="media__body">
+          <h2 class="media__header">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+          </h2>
 
-			<p>{{ post.excerpt }}</p>
+          <p>{{ post.excerpt }}</p>
 
-			<div class="meta meta--inline">
-			  <ul class="meta__inner">
-				<li>{% display_time post.time_published show='date' link_to_day=False %}</li>
+          <div class="meta meta--inline">
+            <ul class="meta__inner">
+            <li>
+              {% if view == 'day' %}
+                {% display_time post.time_published show='date' link_to_day=False %}
+              {% else %}
+                {% display_time post.time_published show='date' link_to_day=True %}
+              {% endif %}
+            </li>
 
-				{% if post.comment_count > 0 %}
-				  <li>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</li>
-				{% endif %}
-			  </ul>
-			</div>
-		</div>
+            {% if post.comment_count > 0 %}
+              <li>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</li>
+            {% endif %}
+            </ul>
+          </div>
+        </div>
       </li>
     {% endfor %}
   </ol>

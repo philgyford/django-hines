@@ -19,7 +19,7 @@
     {% if blog_data.post_list|length > 0 %}
       <h2>{{ blog_data.blog.name }}</h2>
 
-      {% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list only %}
+      {% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list view='day' only %}
 
     {% endif %}
   {% endfor %}

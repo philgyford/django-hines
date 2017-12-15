@@ -34,15 +34,15 @@ Expects:
             <li>
               {% if order == 'taken' %}
                 {% if view == 'day' %}
-                  {% display_time photo.taken_time link_to_day=False granularity=photo.taken_granularity %}
+                  {% display_time photo.taken_time show='date' link_to_day=False granularity=photo.taken_granularity %}
                 {% else %}
-                  {% display_time photo.taken_time link_to_day=True granularity=photo.taken_granularity %}
+                  {% display_time photo.taken_time show='date' link_to_day=True granularity=photo.taken_granularity %}
                 {% endif %}
               {% else %}
                 {% if view == 'day' %}
-                  {% display_time photo.post_time link_to_day=False granularity=photo.taken_granularity %}
+                  {% display_time photo.post_time show='date' link_to_day=False granularity=photo.taken_granularity %}
                 {% else %}
-                  {% display_time photo.post_time link_to_day=True granularity=photo.taken_granularity %}
+                  {% display_time photo.post_time show='date' link_to_day=True granularity=photo.taken_granularity %}
                 {% endif %}
               {% endif %}
             </li>
