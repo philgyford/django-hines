@@ -91,7 +91,8 @@ class ExtendedRSSFeed(Rss201rev2Feed):
 
     def channel_image_url(self):
         "URL of the image to use for the feed."
-        return '{}{}'.format(get_site_url(), static('img/site_icon.jpg'))
+        return '{}{}'.format(get_site_url(), static(
+                                            'hines/img/site_icon.jpg'))
 
     def channel_image_title(self):
         "Might be used for image alt tag."
