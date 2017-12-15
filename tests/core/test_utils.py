@@ -1,6 +1,15 @@
 from django.test import TestCase
 
-from hines.core.utils import truncate_string
+from hines.core.utils import markdownify, truncate_string
+
+
+class MarkdownifyTestCase(TestCase):
+
+    def test_markdownify(self):
+        "Just test it actually does some Markdowning"
+        html = markdownify("Hello\n\nBye")
+        self.assertEqual(html,
+            "<p>Hello</p>\n<p>Bye</p>")
 
 
 class TruncateStringTestCase(TestCase):

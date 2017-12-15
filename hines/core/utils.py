@@ -18,6 +18,7 @@ def make_datetime(dt):
 
 
 def markdownify(content):
+    "Wrap the method, just in case we need to do something extray in future."
     md = markdownifyx(content)
     return md
 
