@@ -189,6 +189,8 @@ COMMENTS_APP = 'hines.custom_comments'
 # We don't want to allow duplicate tags like 'Fish' and 'fish':
 TAGGIT_CASE_INSENSITIVE = True
 
+MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
+
 ## DJANGO-HINES-SPECIFIC SETTINGS
 
 # Most hines-related pages will be within this root directory:

@@ -16,6 +16,12 @@
     margin-bottom: $paragraph-margin-bottom-sm;
   }
 
+  hr {
+    border-top: $hr-border-width-sm solid $hr-border-color;
+    margin-top: ($border-width / 2);
+    margin-bottom: ($border-width / 2);
+  }
+
   &:last-child {
     border-bottom: $border-width solid $black;
   }
