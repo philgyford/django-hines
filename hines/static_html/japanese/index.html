@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hiragana and Katakana quiz</title>
+	<meta name="description" content="Free Hiragana and Katakana practise quiz">
+	<link rel="stylesheet" href="style.css" media="all">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/japanese/icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/japanese/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/japanese/icons/favicon-16x16.png">
+	<link rel="manifest" href="/japanese/icons/manifest.json">
+	<link rel="mask-icon" href="/japanese/icons/safari-pinned-tab.svg" color="#465835">
+	<link rel="shortcut icon" href="/japanese/icons/favicon.ico">
+	<meta name="apple-mobile-web-app-title" content="Japanese">
+	<meta name="application-name" content="Japanese">
+	<meta name="msapplication-config" content="/japanese/icons/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+	<header>
+		<h1>Hiragana and Katakana quiz</h1>
+		<p class="subtitle">Practise your knowledge of Japanese alphabets</p>
+	</header>
+
+	<p class="js-alert">
+		<strong>This site requires JavaScript.</strong>
+	</p>
+
+	<main>
+		<p class="js-message message"></p>
+
+		<div class="js-front">
+			<div class="block block-front block-bordered">
+				<form action="" method="get" class="js-startform">
+					<p>Select what you want&nbsp;to&nbsp;practise:</p>
+					<p>
+						<input type="checkbox" name="sets" value="hiragana" id="input-hiragana" class="js-sets-hiragana" checked="checked">
+						<label for="input-hiragana">Hiragana</label>
+					</p>
+					<p>
+						<input type="checkbox" name="sets" value="katakana" id="input-katakana" class="js-sets-katakana" checked="checked">
+						<label for="input-katakana">Katakana</label>
+					</p>
+
+					<p>
+						<button type="submit" class="button">Start!</button>
+					</p>
+				</form>
+			</div>
+
+			<div class="footer">
+				<div class="js-intro">
+					<p><strong>New!</strong> 28 October 2017</p>
+
+					<ul>
+						<li>Now accepts alternative answers where appropriate.<br>
+							e.g. “しゅ” can be “syu” or “shu”.</li>
+						<li>Works better on phones.</li>
+						<li>Continues to work if you go offline.</li>
+						<li>Saves your progress – if you return, using the same browser, you can start where you left off.</li>
+					</ul>
+					<p>
+						Please <a href="mailto:phil@gyford.com">email me</a> any comments or bugs.<br>
+						<a href="http://www.gyford.com/">Phil Gyford</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="js-quiz" style="display:none;">
+			<div class="blocks">
+				<div class="block block-1">
+					<div class="js-instructions">
+						<p>
+							<strong>Enter the romaji in the box and hit&nbsp;“Enter”</strong><br>
+							(or press the Return key on your&nbsp;keyboard)
+						</p>
+
+						<p>Or enter nothing to “pass” if you give up!</p>
+					</div>
+					<div class="js-answer" style="display:none">
+						<p class="js-answer-correct answer-correct">
+							<strong>Correct!</strong>
+						</p>
+						<p class="js-answer-wrong answer-wrong">
+							<strong>You guessed wrong.</strong><br>
+							Try again!
+						</p>
+						<p class="js-answer-pass">
+							<strong>You passed on that&nbsp;one.</strong><br>
+							We’ll come back to it&nbsp;later…
+						</p>
+						<p class="quiz-answer js-answer-letter">
+							<span class="text-large-x quiz-answer-jp js-answer-letter-jp"></span>
+							<span class="text-large quiz-answer-en js-answer-letter-en"></span>
+						</p>
+					</div>
+				</div> <!-- .block-1 -->
+
+				<div class="block block-2 block-bordered">
+
+					<form action="" method="get" class="js-guessform">
+						<p class="text-large-xx quiz-letter js-letter"></p>
+
+						<p><input type="text" size="4" maxlength="3" name="guess" value="" class="input-text js-guessform-input" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></p>
+
+						<p><button type="submit" class="button">Enter</button></p>
+					</form>
+
+					<div class="js-complete complete" style="display: none;">
+						<p>Well done, you've got everything right!</p>
+
+						<p><a href="#" class="js-restart-link button">Start again?</a></p>
+					</div>
+				</div><!-- .block-2 -->
+
+				<div class="block block-3">
+					<div class="js-scores">
+						<div class="row">
+							Progress<br>
+							<progress class="js-progress-bar progress-bar" value="0" max="100">0%</progress>
+						</div>
+
+						<div class="row">
+							<div class="left">Total attempts:</div>
+							<div class="u-right js-total-attempts"></div>
+						</div>
+
+						<div class="row">
+							<div class="left">Number correct:</div>
+							<div class="u-right js-correct-count"></div>
+						</div>
+
+						<div class="row">
+							<div class="left">Percentage correct:</div>
+							<div class="u-right">
+								<strong><span class="js-correct-percentage"></span>%</strong>
+							</div>
+						</div>
+					</div>
+				</div> <!-- .block-3 -->
+			</div> <!-- .blocks -->
+
+			<div class="footer">
+				<p class="js-restart">
+					<button class="js-restart-button button button-secondary">Start again</button>
+				</p>
+			</div>
+		</div> <!-- .js-quiz -->
+	</main>
+
+
+	<script src="site.js"></script>
+
+	<script>
+		var ready = function (callback) {
+			if (document.readyState === 'complete') {
+				return callback();
+			};
+
+			// If not loaded, wait until it is.
+			document.addEventListener('DOMContentLoaded', callback, false);
+		};
+
+		ready(function() {
+			var test = japanese();
+			test.init();
+		});
+
+	</script>
+</body>
+</html>

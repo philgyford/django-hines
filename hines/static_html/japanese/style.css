@@ -1,0 +1,273 @@
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #fff;
+  font-family: Georgia, Times, serif;
+  line-height: 1.4em;
+  margin: 0.5em 1em 1em 1em;
+  font-size: 16px;
+}
+.text-large {
+  font-size: 2em;
+  line-height: 1.4em;
+}
+.text-large-x {
+  font-size: 4em;
+  line-height: 1.4em;
+}
+.text-large-xx {
+  font-size: 6em;
+  line-height: 1.4em;
+}
+.text-light {
+  color: #666;
+}
+
+.input-text {
+  font-size: 2em;
+  letter-spacing: 0.05em;
+  padding: 0.1em 0.3em 0.2em 0.3em;
+  font-family: Georgia, Times, serif;
+  width: 2.5em;
+  border: 1px solid #ccc;
+  border-radius: none;
+  box-shadow: none;
+}
+.input-text:focus {
+  outline-color: #bca;
+}
+
+.button {
+  background: #dde6d5;
+  color: #465835;
+  border: none;
+  padding: 0.5em 1em 0.6em 1em;
+  font-size: 1em;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  font-family: sans-serif;
+}
+a.button {
+  display: inline-block;
+}
+.button:hover {
+  background: #ccd9bf;
+  color: #2f3a23;
+}
+.button:active {
+  color: #000;
+  background: #bca;
+}
+.button-secondary {
+  background: #eef2ea;
+  color: #999;
+  font-size: 1em;
+}
+p {
+  margin: 0 0 0.5em 0;
+  padding: 0;
+}
+
+header {
+  margin: 0 0 3em 0;
+}
+h1 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2em;
+  font-size: 2em;
+}
+.subtitle        {
+  margin: 0;
+  padding: 0;
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+/* Message when all done. */
+.complete {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.complete p {
+  margin-bottom: 2em;
+}
+
+.progress-bar {
+    background-color: #eef2ea;
+    border: 0;
+    width: 100%;
+    height: 10px;
+}
+.progress-bar::-moz-progress-bar {
+    background: #bca;
+}
+.progress-bar::-webkit-progress-bar {
+    background: #eef2ea;
+}
+.progress-bar::-webkit-progress-value {
+    background: #bca;
+}
+.progress-bar::-ms-fill {
+    background: #bca;
+}
+
+div.row {
+  margin-bottom: 0.5em;
+  clear: both;
+}
+div.left {
+  float: left;
+  width: 9.5em;
+  text-align: left;
+}
+div.right {
+  float: left;
+  text-align: left;
+}
+
+/* The japanese character to guess. */
+.quiz-letter {
+  margin-bottom: 0.2em;
+}
+/* Showing the answer after guessing. */
+.quiz-answer span {
+  display: block;
+}
+.quiz-answer span.text-light {
+  display: inline;
+}
+
+.answer-correct {
+  margin-top: 1em;
+}
+.answer-wrong {
+  margin-top: 2em;
+}
+
+
+.footer {
+  margin: 0 20px 0 20px;
+  padding: 3em 0 0 0;
+}  
+.u-right {
+  text-align: right;
+}
+
+
+.blocks {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.block {
+  text-align: center;
+}
+.block-bordered {
+  border: 10px solid #bca;
+  padding: 2em 0.5em 2em 0.5em;
+}
+/* hiragana or katakana? */
+.block-front {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The three blocks in the quiz. */
+.block-1 {
+  width: 30%;
+  padding: 2em 2em 1.5em 0;
+}
+.block-2 {
+  width: 40%;
+  padding: 1em 0.5em 2em 0.5em;
+}
+.block-3 {
+  width: 30%;
+  padding: 2em 0 1.5em 2em;
+}
+
+@media (max-width: 600px) {
+  body {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  header {
+    margin: 0 0 1em 0;
+  }
+  h1 {
+    font-size: 1.2em;
+  }
+  .quiz-letter {
+    margin-bottom: 0em;
+  }
+  .quiz-answer {
+    margin-top: -1em;
+  }
+  .quiz-answer-en {
+    margin-top: -0.3em;
+  }
+
+  .block {
+    width: 100%;
+  }
+  .block-1 {
+    padding: 0;
+    height: 11.25em;
+    width: 50%;
+    padding-right: 5px;
+  }
+  .block-2 {
+    padding-top: 0;
+    padding-bottom: 1em;
+    width: 50%;
+  }
+  .block-3 {
+    padding: 1em 0 1.5em 0;
+  }
+
+  .footer {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+@media (max-width: 420px) {
+  h1 {
+    font-size: 1em;
+  }
+  .subtitle {
+    font-size: 0.9em;
+  }
+  .block-1 {
+    font-size: 0.9em;
+  }
+}
+@media (max-width: 350px) {
+  /* Assuming small phone. */
+  body {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .subtitle {
+    font-size: 0.8em;
+  } 
+  .quiz-letter {
+    font-size: 4em;
+  }
+  .input-text {
+    font-size: 1.5em;
+    width: 2.5em;
+  }
+}
