@@ -20,8 +20,14 @@ from .paginator import DiggPaginator
 
 class HomeView(TemplateView):
     template_name = 'hines_core/home.html'
+
+    # How many Posts from each Blog do we want showing:
     weblog_posts = {'writing': 3, 'comments': 1}
+
+    # How many Bookmarks do we want showing:
     pinboard_bookmarks = 3
+
+    # How many Photos do we want showing:
     flickr_photos = 3
 
     def get_context_data(self, **kwargs):
@@ -30,6 +36,18 @@ class HomeView(TemplateView):
         return context
 
     def get_recent_items(self):
+        """
+        Returns an OrderedDict like:
+            {
+                'flickr_photos_list': <QuerySet of Photos>,
+                'weblog_posts_writing': <QuerySet of Posts>,
+                'weblog_posts_comments': <QuerySet of Posts>,
+                'pinboard_bookmark_list': <QuerySet of Bookmarks>,
+            }
+
+        It will be ordered base on whichever thing as the most recent item
+        in its QuerySet.
+        """
         items = {}
 
         for blog, posts in self._get_weblog_posts().items():
@@ -38,6 +56,12 @@ class HomeView(TemplateView):
         items.update(self._get_pinboard_bookmarks())
 
         def by_time_key(item):
+            """
+            For sorting the sets of item by date.
+            item is like:
+                ('flickr_photos_list', <QuerySet of Photos>)
+            We assume the QuerySet is sorted, with most recent first.
+            """
             qs = item[1]
             if len(qs) > 0:
                 if hasattr(qs[0], 'time_published'):
@@ -46,6 +70,8 @@ class HomeView(TemplateView):
                     return qs[0].post_time
             return False
 
+        # Sort the dict of items so that they're in reverse-chronological
+        # order, based on their most recent post, photo, link etc.
         sorted_items = OrderedDict(
                     sorted(items.items(), key=by_time_key, reverse=True))
 
@@ -53,12 +79,12 @@ class HomeView(TemplateView):
 
     def _get_weblog_posts(self):
         """
-        Returns a list of dicts:
+        Returns a dict:
         e.g. assuming we have two Blogs with the short_names 'writing' and
         'comments':
             {
-                'weblog_posts_writing': Post.objects...},
-                'weblog_posts_comments': Post.objects...},
+                'weblog_posts_writing': <QuerySet of Posts>,
+                'weblog_posts_comments': <QuerySet of Posts>,
             }
         """
         posts = {}
@@ -120,7 +146,7 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         context.update(extra_context)
 
-        context.update(object_lists)
+        context['sections'] = object_lists
 
         return context
 
@@ -161,24 +187,34 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         object_lists = {}
 
-        object_lists.update(self._get_weblog_posts(date))
+        # The order we add things to object_lists is the order in which
+        # they'll appear in the page...
+
+        for blog, posts in self._get_weblog_posts(date).items():
+            object_lists.update({blog:posts})
 
         object_lists.update(self._get_flickr_photos(date))
 
         object_lists.update(self._get_pinboard_bookmarks(date))
 
-        object_lists.update(self._get_twitter_favorites(date))
-
         object_lists.update(self._get_twitter_tweets(date))
+
+        object_lists.update(self._get_twitter_favorites(date))
 
         if not allow_empty:
             if len(object_lists) == 0:
                 raise Http404(_("Nothing available"))
 
+        # Count the total number of ALL items are in the QuerySets:
+        object_count = 0
+        for key, object_list in object_lists.items():
+            object_count += len(object_list)
+
         return (None, object_lists, {
             'day': date,
             'previous_day': self.get_previous_day(date),
             'next_day': self.get_next_day(date),
+            'object_count': object_count,
         })
 
     def get_next_day(self, date):
@@ -214,26 +250,22 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
     def _get_weblog_posts(self, date):
         """
-        Returns a dict with key 'blogs'.
-        The value is a list of dicts:
+        Returns a dict:
+        e.g. assuming we have two Blogs with the short_names 'writing' and
+        'comments':
             {
-                'blogs': [
-                    {
-                        'blog': BlogObject,
-                        'post_list': Post.objects...,
-                    }
-                ]
+                'weblog_posts_writing': <QuerySet of Posts>,
+                'weblog_posts_comments': <QuerySet of Posts>,
             }
         """
-        blogs = []
-        for blog in Blog.objects.all():
-            posts = blog.public_posts.filter(time_published__date=date)
-            blogs.append({
-                'blog': blog,
-                'post_list': posts
-            })
+        posts = {}
 
-        return {'blogs': blogs}
+        for blog in Blog.objects.all():
+            qs = blog.public_posts.filter(time_published__date=date)
+            key = 'weblog_posts_{}'.format(blog.slug)
+            posts[key] = qs
+
+        return posts
 
     def _get_flickr_photos(self, date):
         photos = Photo.public_objects.filter(

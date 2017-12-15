@@ -11,41 +11,46 @@
     {% include 'hines_core/includes/next_prev_date.html' with date_type='day' url_name='hines:day_archive' next=next_day previous=previous_day only %}
 	{% endif %}
 
-	{% if blogs|length == 0 and pinboard_bookmark_list|length == 0 and flickr_photo_list|length == 0 and twitter_tweet_list|length == 0 and twitter_favorite_list|length == 0 %}
+  {% if object_count == 0 %}
+
 		<p>There’s nothing to show here today.</p>
-	{% endif %}
 
-  {% for blog_data in blogs %}
-    {% if blog_data.post_list|length > 0 %}
-      <h2>{{ blog_data.blog.name }}</h2>
+  {% else %}
 
-      {% include 'weblogs/includes/posts.html' with post_list=blog_data.post_list view='day' only %}
+    {% for key, object_list in sections.items %}
+      {% if object_list|length > 0 %}
+        {% if key|slice:"12" == 'weblog_posts' %}
+          {% with object_list.0.blog as blog %}
+            <h2>{{ blog.name }}</h2>
 
-    {% endif %}
-  {% endfor %}
+            {% include 'weblogs/includes/posts.html' with post_list=object_list view='day' only %}
+          {% endwith %}
 
-	{% if flickr_photo_list|length > 0 %}
-		<h2>Photos</h2>
-		{% include 'hines_core/includes/photos.html' with photo_list=flickr_photo_list order='taken' only %}
-	{% endif %}
+        {% elif key == 'flickr_photo_list' %}
+          <h2>Photos</h2>
 
-	{% if pinboard_bookmark_list|length > 0 %}
-		<h2>Links</h2>
-		{% include 'links/includes/bookmarks.html' with bookmark_list=pinboard_bookmark_list only %}
-	{% endif %}
+          {% include 'hines_core/includes/photos.html' with photo_list=object_list order='taken' only %}
 
-	{% if twitter_tweet_list|length > 0 %}
-		<h2>Tweets</h2>
-		{% include 'hines_core/includes/tweets.html' with tweet_list=twitter_tweet_list perms=perms only %}
-	{% endif %}
+        {% elif key == 'pinboard_bookmark_list' %}
+          <h2>Links</h2>
 
-	{% if twitter_favorite_list|length > 0 %}
-		<h2>Liked tweets</h2>
+          {% include 'links/includes/bookmarks.html' with bookmark_list=object_list only %}
 
-		{% include 'hines_core/includes/tweets.html' with tweet_list=twitter_favorite_list perms=perms only %}
+        {% elif key == 'twitter_tweet_list' %}
+          <h2>Tweets</h2>
 
-    <p><small>Liked tweets are listed according to the day the tweet was posted, not when it was liked.</small></p>
-	{% endif %}
+          {% include 'hines_core/includes/tweets.html' with tweet_list=object_list perms=perms only %}
+
+        {% elif key == 'twitter_favorite_list' %}
+          <h2>Liked tweets</h2>
+
+          {% include 'hines_core/includes/tweets.html' with tweet_list=object_list perms=perms only %}
+
+        {% endif %}
+
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
 {% endblock %}
 
