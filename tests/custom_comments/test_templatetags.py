@@ -23,6 +23,6 @@ class CleanTestCase(TestCase):
 
     def test_clean_links(self):
         self.assertEqual(clean('http://foo.org'),
-                '<a href="http://foo.org" rel="nofollow">http://foo.org</a>')
+                '<a href="http://foo.org" rel="nofollow">foo.org</a>')
 
 

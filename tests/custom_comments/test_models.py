@@ -25,7 +25,7 @@ class CustomCommentTestCase(TestCase):
         p = LivePostFactory()
         c = CustomCommentFactory(comment='http://foo.org', post=p)
         self.assertEqual(c.comment,
-                '<a href="http://foo.org" rel="nofollow">http://foo.org</a>')
+                '<a href="http://foo.org" rel="nofollow">foo.org</a>')
 
     @freeze_time("2017-07-01 12:00:00", tz_offset=0)
     def test_save(self):
