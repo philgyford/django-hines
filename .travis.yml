@@ -14,16 +14,13 @@ env:
     - DB_USERNAME='postgres'
     - DB_PASSWORD=''
     - DB_HOST='localhost'
-#matrix:
-  #include:
-    #- python: "3.6"
 install:
   - pip install -q coverage coveralls
   - pip install -q -r ./requirements/tests.txt
 before_script:
-  - ./manage.py collectstatic --noinput --settings=config.settings.tests --verbosity=0
   - psql -c 'CREATE DATABASE test_db;' -U postgres
-  - ./manage.py migrate --settings=config.settings.tests
+  - ./manage.py migrate --settings=config.settings.tests --verbosity=0
+  - ./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput 
 script:
   - ./scripts/run-tests.sh
 after_success:
