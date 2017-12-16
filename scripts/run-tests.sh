@@ -6,4 +6,5 @@ set -e
 # ./run_tests.sh tests.appname.test_models.TestClass.test_a_thing
 TESTS_TO_RUN=${1:tests}
 
-manage.py test --settings=config.settings.tests $TESTS_TO_RUN
+./manage.py test --settings=config.settings.tests $TESTS_TO_RUN
+

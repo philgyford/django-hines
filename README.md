@@ -74,9 +74,9 @@ Run tests:
 
 	vagrant$ ./scripts/run-tests.sh
 
-To see coverage, run the tests then do:
+To include coverage, do:
 
-	vagrant$ coverage html
+	vagrant$ ./scripts/coverage.sh
 
 and then open `htmlcov/index.html` in a browser.
 
