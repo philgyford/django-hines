@@ -23,7 +23,7 @@ install:
 before_script:
   - ./manage.py collectstatic --noinput --settings=config.settings.tests --verbosity=0
   - psql -c 'CREATE DATABASE test_db;' -U postgres
-  - ./manage.py migrate
+  - ./manage.py migrate --settings=config.settings.tests
 script:
   - ./scripts/run-tests.sh
 after_success:
