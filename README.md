@@ -4,6 +4,9 @@ Code for http://www.gyford.com
 
 Very much a work in progress.
 
+[![Build Status](https://travis-ci.org/philgyford/django-hines.svg?branch=master)](https://travis-ci.org/philgyford/django-hines)
+[![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=master)](https://coveralls.io/github/philgyford/django-hines?branch=master)
+
 
 ## Local development
 
