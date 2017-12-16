@@ -21,15 +21,6 @@ from .paginator import DiggPaginator
 class HomeView(TemplateView):
     template_name = 'hines_core/home.html'
 
-    # How many Posts from each Blog do we want showing:
-    weblog_posts = {'writing': 3, 'comments': 1}
-
-    # How many Bookmarks do we want showing:
-    pinboard_bookmarks = 3
-
-    # How many Photos do we want showing:
-    flickr_photos = 3
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sections'] = self.get_recent_items()
@@ -75,7 +66,36 @@ class HomeView(TemplateView):
         sorted_items = OrderedDict(
                     sorted(items.items(), key=by_time_key, reverse=True))
 
-        return sorted_items 
+        return sorted_items
+
+    def _get_section_quantity(self, section_name, subsection_name=None):
+        """
+        Get the number of things to display for a section.
+
+        Expects a Django setting like:
+
+        HINES_HOME_PAGE_DISPLAY = {
+            'flickr_photos': 3,
+            'pinboard_bookmarks': 3,
+            'weblog_posts': {
+                'writing': 3,
+                'comments': 1,
+            },
+        }
+
+        section_name is like 'flickr_photos' or 'weblog_posts'
+        If it's 'weblog_posts', then subsection_name should be like 'writing'.
+        """
+        section_quantity = 0
+
+        if hasattr(settings, 'HINES_HOME_PAGE_DISPLAY'):
+            if section_name in settings.HINES_HOME_PAGE_DISPLAY:
+                section_quantity = settings.HINES_HOME_PAGE_DISPLAY[section_name]
+                if section_name == 'weblog_posts':
+                    if subsection_name in section_quantity:
+                        section_quantity = section_quantity[subsection_name]
+
+        return section_quantity
 
     def _get_weblog_posts(self):
         """
@@ -89,23 +109,29 @@ class HomeView(TemplateView):
         """
         posts = {}
 
-        for blog_slug, num in self.weblog_posts.items():
-            try:
-                blog = Blog.objects.get(slug=blog_slug)
-            except Blog.DoesNotExist:
-                continue
-            qs = blog.public_posts.all()[:num]
-            key = 'weblog_posts_{}'.format(blog_slug)
+        for blog in Blog.objects.all():
+            quantity = self._get_section_quantity('weblog_posts', blog.slug)
+            if quantity > 0:
+                qs = blog.public_posts.all()[:quantity]
+            key = 'weblog_posts_{}'.format(blog.slug)
             posts[key] = qs
 
         return posts
 
     def _get_flickr_photos(self):
-        photos = Photo.public_objects.all()[:self.flickr_photos]
+        quantity = self._get_section_quantity('flickr_photos')
+        if quantity > 0:
+            photos = Photo.public_objects.all()[:quantity]
+        else:
+            photos = Photo.objects.none()
         return {'flickr_photo_list': photos}
 
     def _get_pinboard_bookmarks(self):
-        bookmarks = Bookmark.public_objects.all()[:self.pinboard_bookmarks]
+        quantity = self._get_section_quantity('pinboard_bookmarks')
+        if quantity > 0:
+            bookmarks = Bookmark.public_objects.all()[:quantity]
+        else:
+            bookmarks = Bookmar.objects.none()
         return {'pinboard_bookmark_list': bookmarks}
 
 
@@ -296,7 +322,7 @@ class PaginatedListView(ListView):
     allow_empty = False
 
     # See hines.core.paginator for what these mean:
-    paginator_body = 5 
+    paginator_body = 5
     paginator_margin = 2
     paginator_padding = 2
     paginator_tail = 2
@@ -379,7 +405,7 @@ class TemplateSetMixin(object):
         HINES_TEMPLATE_SETS = (
             {'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
             {'name': 'london', 'start': '2000-12-31', 'end': '2003-03-15'},
-        ) 
+        )
 
     By default, and with this setting, if `self.object.date` falls between
     2000-03-01 and 2000-12-31 inclusive, it will use the template

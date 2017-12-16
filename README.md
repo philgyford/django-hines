@@ -127,3 +127,16 @@ Any Post on the Blog with slug `writing` between those two dates will use the
 request object isn't available.
 
 
+``HINES_HOME_PAGE_DISPLAY``: Defines how many of different kinds of thing to
+display on the sites's home page. The `'weblog_posts'` uses the `slug` of each
+Blog to indicate how many posts of each to display. e.g.:
+
+	HINES_HOME_PAGE_DISPLAY = {
+		'flickr_photos': 3,
+		'pinboard_bookmarks': 3,
+		'weblog_posts': {
+			'writing': 3,
+			'comments': 1,
+		},
+	}
+

@@ -214,6 +214,16 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title',],
 }
 
+# How many of each thing do we want displayed on the home page?
+HINES_HOME_PAGE_DISPLAY = {
+    'flickr_photos': 3,
+    'pinboard_bookmarks': 3,
+    'weblog_posts': {
+        'writing': 3,
+        'comments': 1,
+    },
+}
+
 HINES_TEMPLATE_SETS = (
     # Colourful:
     {'name': '2000', 'start': '2000-03-01', 'end': '2000-12-31'},

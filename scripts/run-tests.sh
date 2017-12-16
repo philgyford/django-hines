@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ev
+set -e
 
 # You can optionally pass in a test, or test module or class, as an argument.
 # e.g.
