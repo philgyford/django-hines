@@ -12,9 +12,10 @@ matrix:
     - python: "3.6"
 install:
   - pip install coverage coveralls
-  - pip install -r requirements/tests.txt
-script:
+  - pip install -r ./requirements/tests.txt
+before_script:
   - ./manage.py collectstatic --noinput --settings=config.settings.tests
+script:
   - ./scripts/run-tests.sh
 after_success:
   - coveralls
