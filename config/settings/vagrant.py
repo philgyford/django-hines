@@ -4,21 +4,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*",]
 
-
-MEDIA_ROOT = os.path.join(APPS_DIR, 'media')
-MEDIA_URL = '/media/'
-
-DATABASES = {
-    'default': {
-        'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     get_env_variable('DB_NAME'),
-        'USER':     get_env_variable('DB_USERNAME'),
-        'PASSWORD': get_env_variable('DB_PASSWORD'),
-        'HOST':     get_env_variable('DB_HOST'),
-        'PORT':     '',
-    }
-}
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CACHES = {

@@ -115,11 +115,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE':   'django.db.backends.postgresql',
+        'NAME':     get_env_variable('DB_NAME'),
+        'USER':     get_env_variable('DB_USERNAME'),
+        'PASSWORD': get_env_variable('DB_PASSWORD'),
+        'HOST':     get_env_variable('DB_HOST'),
+        'PORT':     '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -156,9 +159,7 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 
-
-MEDIA_ROOT = os.path.join(APPS_DIR, 'media/')
-
+MEDIA_ROOT = os.path.join(APPS_DIR, 'media')
 MEDIA_URL = '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
