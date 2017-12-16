@@ -8,11 +8,12 @@ branches:
   only:
   - master
 env:
-  - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
-  - DB_NAME='test_db'
-  - DB_USER='postgres'
-  - DB_PASSWORD=''
-  - DB_HOST='localhost'
+  global:
+    - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
+    - DB_NAME='test_db'
+    - DB_USER='postgres'
+    - DB_PASSWORD=''
+    - DB_HOST='localhost'
 #matrix:
   #include:
     #- python: "3.6"
