@@ -18,7 +18,7 @@ matrix:
   #- pip install tox tox-travis coverage coveralls
 # command to run tests
 script:
-  - ./run-tests.sh
+  - ./scripts/run-tests.sh
 #after_success:
   #- coveralls
 # containers
