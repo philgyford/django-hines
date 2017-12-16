@@ -74,9 +74,11 @@ Run tests:
 
 	vagrant$ ./scripts/run-tests.sh
 
-To see coverage do this and then open `htmlcov/index.html` in a browser:
+To see coverage, run the tests then do:
 
 	vagrant$ coverage html
+
+and then open `htmlcov/index.html` in a browser.
 
 
 #### Restarting postgresql

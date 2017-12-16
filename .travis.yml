@@ -8,19 +8,19 @@ branches:
 # across all our specified python versions:
 env:
   - DJANGO=1.11
-matrix:
-  include:
+#matrix:
+  #include:
     # This will also run the coverage test only on this python version:
-    - python: "3.6.3"
+    #- python: "3.6.3"
       #env: TOXENV="coverage"
 # command to install dependencies
-#install:
-  #- pip install tox tox-travis coverage coveralls
+install:
+  - pip install coverage coveralls
 # command to run tests
 script:
   - ./scripts/run-tests.sh
-#after_success:
-  #- coveralls
+after_success:
+  - coveralls
 # containers
 sudo: false
 
