@@ -21,12 +21,12 @@ class CustomCommentAdminTestCase(TestCase):
         self.assertEqual(cca.post_title(c), 'My post title')
 
     def test_flag(self):
-        "It should return the text of the first flag"
+        "It should return the text of the most recent flag"
         c = CustomCommentFactory()
         flag1 = CommentFlagFactory(comment=c, flag='This is spam')
         flag2 = CommentFlagFactory(comment=c, flag='Hello')
         cca = CustomCommentAdmin(c, self.site)
-        self.assertEqual(cca.flag(c), 'This is spam')
+        self.assertEqual(cca.flag(c), 'Hello')
 
     def test_flag_none(self):
         "It should return an empty string if there are no flags."

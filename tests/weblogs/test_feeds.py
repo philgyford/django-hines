@@ -1,5 +1,6 @@
 from xml.dom import minidom
 
+from django.contrib.sites.models import Site
 from django.utils.feedgenerator import rfc2822_date
 
 from hines.core.utils import make_datetime
@@ -44,6 +45,11 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.draft_post = DraftPostFactory(blog=self.blog)
         self.other_blogs_post = LivePostFactory()
 
+        # To ensure our requests for the feed always use a specific domain:
+        site = Site.objects.get()
+        site.domain = 'example.com'
+        site.save()
+
     def test_response_200(self):
         response = self.client.get('/terry/my-blog/feeds/posts/rss/')
         self.assertEqual(response.status_code, 200)
@@ -86,7 +92,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.assertChildNodeContent(chan, {
             'title': 'My Feed Title',
             'description': 'My feed description.',
-            'link': 'http://127.0.0.1:8000/terry/my-blog/',
+            'link': 'http://example.com/terry/my-blog/',
             'language': 'en-gb',
             'lastBuildDate': last_build_date,
         })
@@ -100,9 +106,9 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.assertChildNodeContent(image_el, {
             # This gets a hash on the end from WhiteNoise, so leaving it off
             # the test for now:
-            # 'url': 'http://127.0.0.1:8000/static/img/site_icon.jpg',
+            # 'url': 'http://example.com/static/img/site_icon.jpg',
             'title': 'Site icon',
-            'link': 'http://127.0.0.1:8000'
+            'link': 'http://example.com'
         })
 
         # TEST THE item ELEMENTS
@@ -115,8 +121,8 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.assertChildNodeContent(items[0], {
             'title': 'My latest post',
             'description': 'This is my excerpt.',
-            'link': 'http://127.0.0.1:8000/terry/my-blog/2017/04/25/my-latest-post/',
-            'guid': 'http://127.0.0.1:8000/terry/my-blog/2017/04/25/my-latest-post/',
+            'link': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',
+            'guid': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',
             'pubDate': rfc2822_date(self.post2.time_published),
             'author': 'bob@example.org (Bob Ferris)',
             'content:encoded': '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p>'
