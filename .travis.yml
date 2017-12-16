@@ -11,7 +11,7 @@ env:
   global:
     - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
     - DB_NAME='test_db'
-    - DB_USER='postgres'
+    - DB_USERNAME='postgres'
     - DB_PASSWORD=''
     - DB_HOST='localhost'
 #matrix:
@@ -19,7 +19,7 @@ env:
     #- python: "3.6"
 install:
   - pip install coverage coveralls
-  - pip install -r ./requirements/tests.txt
+  - pip install -q -r ./requirements/tests.txt
 before_script:
   - ./manage.py collectstatic --noinput --settings=config.settings.tests --verbosity=0
   - psql -c 'CREATE DATABASE test_db;' -U postgres
