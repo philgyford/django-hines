@@ -4,23 +4,16 @@ python:
 branches:
   only:
   - master
-# This, with tox-travis, and our tox.ini, will test on these Django versions
-# across all our specified python versions:
 env:
   - DJANGO=1.11
-#matrix:
-  #include:
-    # This will also run the coverage test only on this python version:
-    #- python: "3.6.3"
-      #env: TOXENV="coverage"
-# command to install dependencies
+matrix:
+  include:
+    - python: "3.6.3"
 install:
   - pip install coverage coveralls
-# command to run tests
 script:
   - ./scripts/run-tests.sh
 after_success:
   - coveralls
-# containers
 sudo: false
 
