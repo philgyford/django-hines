@@ -1,3 +1,4 @@
+dist: trusty
 language: python
 python:
   - "3.6"
@@ -8,9 +9,10 @@ env:
   - DJANGO=1.11
 matrix:
   include:
-    - python: "3.6.3"
+    - python: "3.6"
 install:
   - pip install coverage coveralls
+  - pip install -r requirements.txt
 script:
   - ./scripts/run-tests.sh
 after_success:
