@@ -1,9 +1,12 @@
 {% extends 'hines_core/layouts/sidebar_right.html' %}
+{% load hines_core %}
 
-{% block head_page_title %}{{ flatpage.title }}{% endblock %}
-{% block content_title %}{{ flatpage.title }}{% endblock %}
+{% block head_page_title %}{{ flatpage.title|smartypants|safe }}{% endblock %}
+{% block content_title %}{{ flatpage.title|smartypants|safe }}{% endblock %}
 
 {% block content %}
-{{ flatpage.content }}
+  <article>
+    {{ flatpage.content|smartypants|safe }}
+  </article>
 {% endblock %}
 

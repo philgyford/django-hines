@@ -3,25 +3,38 @@
 
 {% block about_nav_active %}is-active{% endblock %}
 
+{# We put the heading within <article> #}
+{% block content_heading %}{% endblock content_heading %}
+
+{% block content %}
+  <article class="bodytext">
+    <header class="pagehead">
+      <h1>{{ flatpage.title|smartypants|safe }}</h1>
+    </header>
+
+    {{ flatpage.content }}
+  </article>
+{% endblock %}
+
 {% block sidebar %}
 	{% current_url_name as url_name %}
-	<div class="card mb-3">
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">
+	<nav class="card">
+		<ul>
+			<li>
 				{% if url_name == 'hines:about' %}
 					About me
 				{% else %}
 					<a href="{% url 'hines:about' %}">About me</a>
 				{% endif %}
 			</li>
-			<li class="list-group-item">
+			<li>
 				{% if url_name == 'hines:about_work' %}
 					About my work
 				{% else %}
 					<a href="{% url 'hines:about_work' %}">About my work</a>
 				{% endif %}
 			</li>
-			<li class="list-group-item">
+			<li>
 				{% if url_name == 'hines:timeline' %}
 					Timeline of things I’ve done
 				{% else %}
@@ -29,7 +42,7 @@
 				{% endif %}
 			</li>
 		</ul>
-	</div>
+	</nav>
 
   {% render_block "elsewhere" %}
 

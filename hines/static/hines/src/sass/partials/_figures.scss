@@ -29,6 +29,11 @@ figcaption {
 
 .figure--img {
 
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
   figcaption {
     margin-top: $paragraph-margin-bottom-sm;
   }
@@ -45,11 +50,6 @@ figcaption {
   &.figure--right {
     margin-top: 0.3em;
     max-width: 100%;
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
   }
 
   &.figure--left {

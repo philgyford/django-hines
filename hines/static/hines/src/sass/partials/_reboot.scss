@@ -57,7 +57,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 //    the `inherit` value on things like `<th>` elements.
 
 body {
-  margin: 0; // 1
+  margin: 0 0 2em 0; // 1
   @include text-style-default;
   font-size: $font-size-base;
   line-height: $line-height-base;
@@ -492,4 +492,8 @@ template {
 // Needed for proper display in IE 10-.
 [hidden] {
   display: none !important;
+}
+
+main {
+  margin-bottom: 2em;
 }

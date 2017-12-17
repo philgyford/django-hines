@@ -1,4 +1,13 @@
 {% extends 'flatpages/layouts/base.html' %}
+{% load blocks %}
 
 {% block misc_nav_active %}is-active{% endblock %}
 
+
+{% block sidebar %}
+
+	{% render_block "other-sites" %}
+
+	{% render_block "other-sites-mothballed" %}
+
+{% endblock %}
