@@ -25,7 +25,7 @@
           {{ comment.comment|clean|safe|linebreaks }}
 
           {% if perms.custom_comments.can_change_customcomment %}
-            <br><br><a class="admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
+            <br><br><a class="u-admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
           {% endif %}
         </div> <!-- .media__body -->
       </li>

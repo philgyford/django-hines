@@ -31,17 +31,20 @@ Expects:
 
           <div class="meta meta--inline">
             <ul class="meta__inner">
-            <li>
-              {% if view == 'day' %}
-                {% display_time post.time_published show='date' link_to_day=False %}
-              {% else %}
-                {% display_time post.time_published show='date' link_to_day=True %}
-              {% endif %}
-            </li>
+              <li>
+                {% if view == 'day' %}
+                  {% display_time post.time_published show='date' link_to_day=False %}
+                {% else %}
+                  {% display_time post.time_published show='date' link_to_day=True %}
+                {% endif %}
+              </li>
 
-            {% if post.comment_count > 0 %}
-              <li>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</li>
-            {% endif %}
+              {% if post.comment_count > 0 %}
+                <li>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</li>
+              {% endif %}
+              {% if perms.weblogs.can_change_post %}
+                <li><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>

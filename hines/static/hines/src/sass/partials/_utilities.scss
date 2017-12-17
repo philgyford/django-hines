@@ -9,6 +9,10 @@
   text-align: right;
 }
 
+// For 'Edit' links when logged in with permissions.
+.u-admin {
+  background: $yellow;
+}
 
 // Make everything within it inline, and bold sanserif.
 .u-inline-container {

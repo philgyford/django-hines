@@ -29,7 +29,7 @@
     </header>
 
     {% if is_preview %}
-      <p class="admin">
+      <p class="u-admin">
         This is a preview. This Post’s status is {{ post.status_str }}.
       </p>
     {% endif %}
@@ -38,15 +38,15 @@
 
     <aside class="meta meta--right">
       <ul class="meta__inner">
-        {% if perms.weblogs.can_change_post %}
-          <li><a class="admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
-        {% endif %}
-
         <li>{% display_time post.time_published link_to_day=True %}</li>
 
         {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
 
         <li>{% include 'hines_core/includes/next_prev.html' with previous=post.get_previous_post next=post.get_next_post %}</li>
+
+        {% if perms.weblogs.can_change_post %}
+          <li><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
+        {% endif %}
       </ul>
     </aside>
 
@@ -66,7 +66,7 @@
     </section>
 
     {% comment %}
-      
+
       Not currently going to have any trackbacks for posts that would use
       this template set.
       The below HTML hasn't been styled correctly, but just in case...
@@ -102,7 +102,7 @@
       {% endif %}
 
     {% endcomment %}
-    
+
   </article>
 
 {% endblock %}

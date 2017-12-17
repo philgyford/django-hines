@@ -15,10 +15,6 @@ Expects:
 
   <aside class="meta">
     <ul class="meta__inner">
-      {% if perms.pinboard.can_change_bookmark %}
-        <li><a href="{% url 'admin:pinboard_bookmark_change' bookmark.id %}">Edit</a></li>
-      {% endif %}
-
       {% include 'hines_core/includes/tags.html' with tag_list=bookmark.tags.all format='inline' tag_type='bookmark' only %}
 
       <li>
@@ -32,6 +28,10 @@ Expects:
       </li>
 
       {% include 'hines_core/includes/next_prev.html' with previous=bookmark.get_previous next=bookmark.get_next %}
+
+      {% if perms.pinboard.can_change_bookmark %}
+        <li><a class="u-admin" href="{% url 'admin:pinboard_bookmark_change' bookmark.id %}">Edit</a></li>
+      {% endif %}
     </ul>
   </aside>
 
@@ -39,10 +39,6 @@ Expects:
 
   <aside class="meta meta--inline">
     <ul class="meta__inner">
-      {% if perms.pinboard.can_change_bookmark %}
-        <li><a href="{% url 'admin:pinboard_bookmark_change' bookmark.id %}">Edit</a></li>
-      {% endif %}
-
       <li>
         {% if view == 'day' %}
           {% display_time bookmark.post_time show='date' link_to_day=False %}
@@ -53,6 +49,9 @@ Expects:
       <li>
         <a href="{{ bookmark.get_absolute_url }}" title="See only this link">Permalink</a>
       </li>
+      {% if perms.pinboard.can_change_bookmark %}
+        <li><a class="u-admin" href="{% url 'admin:pinboard_bookmark_change' bookmark.id %}">Edit</a></li>
+      {% endif %}
     </ul>
   </aside>
 
