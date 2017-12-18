@@ -65,11 +65,12 @@ Then in another:
 
 Export:
 
-	vagrant$ pg_dump hines =U hines -h localhost -Fc > hines.pgsql
+	vagrant$ pg_dump hines -U hines -h localhost -Fc > hines.pgsql
 
 Import:
 
 	vagrant$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U hines -d hines.pgsql
+
 
 #### Tests
 
