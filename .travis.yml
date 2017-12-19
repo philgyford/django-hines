@@ -1,12 +1,16 @@
 dist: trusty
+
 language: python
+
 python:
-  - "3.6"
+  - 3.6
+
 services:
   - postgresql
-branches:
-  only:
-  - master
+
+addons:
+  postgresql: "10"
+
 env:
   global:
     - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
@@ -14,16 +18,21 @@ env:
     - DB_USERNAME='postgres'
     - DB_PASSWORD=''
     - DB_HOST='localhost'
+
 install:
   - pip install -q coverage coveralls
   - pip install -q -r ./requirements/tests.txt
+
 before_script:
   - ./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput 
   - psql -c 'CREATE DATABASE test_db;' -U postgres
   - ./manage.py migrate --settings=config.settings.tests --verbosity=0
+
 script:
   - ./scripts/run-tests.sh
+
 after_success:
   - coveralls
+
 sudo: false
 
