@@ -213,6 +213,20 @@ class PostDetailView(TemplateSetMixin, DateDetailView):
             return self.model.public_objects.all()
 
 
+class PostRedirectView(RedirectView):
+    """
+    Redirect from old Movable Type URLs.
+    Remove the '.php'.
+    Replace any underscores with hyphens.
+    """
+    def get_redirect_url(self, blog_slug, year, month, day, post_slug):
+        post_slug = post_slug.replace('_', '-')
+        return reverse('hines:post_detail', kwargs={
+            'blog_slug': blog_slug,
+            'year': year, 'month': month, 'day': day,
+            'post_slug': post_slug, })
+
+
 class PostDatedArchiveMixin(object):
     """
     A mixin for the month/year archive views that restricts results to a

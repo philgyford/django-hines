@@ -305,6 +305,26 @@ class PostDetailViewTestCase(ViewTestCase):
         self.assertEqual(response.context_data['blog'], self.blog)
 
 
+class PostRedirectViewTestCase(ViewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.blog = BlogFactory(slug='my-blog')
+        LivePostFactory(blog=self.blog,
+                    time_published=make_datetime('2017-02-20 12:15:00'))
+
+    def test_redirect(self):
+        response = views.PostRedirectView.as_view()(self.request,
+                                                    blog_slug='my-blog',
+                                                    year='2017',
+                                                    month='02',
+                                                    day='20',
+                                                    post_slug='my_old_post')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url,
+                        '/terry/my-blog/2017/02/20/my-old-post/')
+
+
 class PostDayArchiveViewTestCase(ViewTestCase):
 
     def setUp(self):
