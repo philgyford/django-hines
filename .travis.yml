@@ -14,6 +14,7 @@ addons:
 env:
   global:
     - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
+    - ALLOWED_HOSTS='*'
     - DB_NAME='test_db'
     - DB_USERNAME='postgres'
     - DB_PASSWORD=''
