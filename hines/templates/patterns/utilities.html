@@ -5,12 +5,30 @@
 {% block content %}
 
 
-<h2>Warning</h2>
+<h2>Text styles</h2>
+
+
+<h3>Admin</h3>
+
+<p>For links that only authorised users can see.</p>
+
+{% include 'patterns/includes/utilities/admin.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/utilities/admin.html' %}</pre></code>
+
+
+<h3>Note</h3>
+
+<p>For notes in text.</p>
+
+{% include 'patterns/includes/utilities/note.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/utilities/note.html' %}</pre></code>
+
+
+<h3>Warning</h3>
 
 <p>Used in forms.</p>
-
-
-<h2>List</h2>
 
 {% include 'patterns/includes/utilities/warning.html' %}
 
