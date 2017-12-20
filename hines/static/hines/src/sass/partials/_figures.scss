@@ -55,16 +55,18 @@ figcaption {
   &.figure--left {
     @include media-breakpoint-up(sm) {
       float: left;
+	  clear: left;
       margin-right: ($grid-gutter-width / 2);
-      max-width: 50%
+      max-width: 50%;
     }
   }
 
   &.figure--right {
     @include media-breakpoint-up(sm) {
       float: right;
+	  clear: right;
       margin-left: ($grid-gutter-width / 2);
-      max-width: 50%
+      max-width: 50%;
     }
   }
 }
