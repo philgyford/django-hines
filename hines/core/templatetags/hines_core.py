@@ -50,8 +50,11 @@ def current_url_name(context):
 
     """
     url_name = False
-    if context.request.resolver_match:
-        url_name = "{}:{}".format(
+
+    # In 400 and 500 error templates context has no 'request':
+    if hasattr(context, 'request'):
+        if context.request.resolver_match:
+            url_name = "{}:{}".format(
                                 context.request.resolver_match.namespace,
                                 context.request.resolver_match.url_name
                             )

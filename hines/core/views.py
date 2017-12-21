@@ -7,6 +7,7 @@ from django.http import Http404
 from django.utils import timezone
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import ListView, TemplateView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 

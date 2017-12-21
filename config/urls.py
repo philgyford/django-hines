@@ -1,9 +1,11 @@
 from django.conf import settings
-from django.conf.urls import include, static, url
+from django.conf.urls import handler400, handler403, handler404, handler500,\
+        include, static, url
 from django.contrib import admin
 from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemaps_views
 from django.templatetags.static import static as static_tag
+from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
@@ -98,11 +100,6 @@ urlpatterns = [
     # Used in the weblogs app:
     url(r'^comments/', include('django_comments.urls')),
 
-    # So we can test these templates when DEBUG=True.
-    url(r'^400/$', TemplateView.as_view(template_name='400.html')),
-    url(r'^403/$', TemplateView.as_view(template_name='403.html')),
-    url(r'^404/$', TemplateView.as_view(template_name='404.html')),
-    url(r'^500/$', TemplateView.as_view(template_name='500.html')),
 ]
 
 
@@ -111,16 +108,28 @@ admin.site.site_header = 'Gyford.com admin'
 
 if settings.DEBUG:
 
-    import debug_toolbar
-
+    # This allows the error pages to be debugged during development, just visit
+    # these url in browser to see how these error pages look like.
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        url(r'^400/$',
+            default_views.bad_request,
+            kwargs={'exception': Exception('Bad Request!')}),
+        url(r'^403/$',
+            default_views.permission_denied,
+            kwargs={'exception': Exception('Permission Denied')}),
+        url(r'^404/$',
+            default_views.page_not_found,
+            kwargs={'exception': Exception('Page not Found')}),
+        url(r'^500/$',
+            default_views.server_error),
     ]
 
     urlpatterns += \
         static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-    # Don't think we need this now we use Whitenoise in development too:
-    # urlpatterns += \
-        # static.static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    if 'debug_toolbar' in settings.INSTALLED_APPS:
+        import debug_toolbar
+        urlpatterns = [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns
 
