@@ -3,7 +3,10 @@ import datetime
 
 from django.conf import settings
 from django.core.paginator import InvalidPage
-from django.http import Http404
+from django.http import (Http404, HttpResponseNotFound,
+            HttpResponseBadRequest, HttpResponseForbidden,   
+            HttpResponseServerError)
+from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
@@ -17,6 +20,50 @@ from ditto.twitter.models import Tweet
 from hines.core.utils import make_date
 from hines.weblogs.models import Blog, Post
 from .paginator import DiggPaginator
+
+
+@requires_csrf_token
+def bad_request(request, *args, **kwargs):
+    """
+    Adds ``STATIC_URL`` to the context.
+    """
+    context = {"STATIC_URL": settings.STATIC_URL}
+    t = get_template(kwargs.get("template_name", "errors/400.html"))
+    return HttpResponseBadRequest(t.render(context, request))
+
+
+@requires_csrf_token
+def permission_denied(request, *args, **kwargs):
+    """
+    Adds ``STATIC_URL`` to the context.
+    """
+    context = {"STATIC_URL": settings.STATIC_URL}
+    t = get_template(kwargs.get("template_name", "errors/403.html"))
+    return HttpResponseForbidden(t.render(context, request))
+
+
+@requires_csrf_token
+def page_not_found(request, *args, **kwargs):
+    """
+    Mimics Django's 404 handler but with a different template path.
+    """
+    context = {
+        "STATIC_URL": settings.STATIC_URL,
+        "request_path": request.path,
+    }
+    t = get_template(kwargs.get("template_name", "errors/404.html"))
+    return HttpResponseNotFound(t.render(context, request))
+
+
+@requires_csrf_token
+def server_error(request, template_name="errors/500.html"):
+    """
+    Mimics Django's error handler but adds ``STATIC_URL`` to the
+    context.
+    """
+    context = {"STATIC_URL": settings.STATIC_URL}
+    t = get_template(template_name)
+    return HttpResponseServerError(t.render(context, request))
 
 
 class HomeView(TemplateView):

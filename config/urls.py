@@ -102,6 +102,12 @@ urlpatterns = [
 
 ]
 
+# Use our custom error view so that the error template gets context.
+handler400 = core_views.bad_request
+handler403 = core_views.permission_denied
+handler404 = core_views.page_not_found
+handler500 = core_views.server_error
+
 
 admin.site.site_header = 'Gyford.com admin'
 
@@ -112,16 +118,16 @@ if settings.DEBUG:
     # these url in browser to see how these error pages look like.
     urlpatterns += [
         url(r'^400/$',
-            default_views.bad_request,
+            core_views.bad_request,
             kwargs={'exception': Exception('Bad Request!')}),
         url(r'^403/$',
-            default_views.permission_denied,
+            core_views.permission_denied,
             kwargs={'exception': Exception('Permission Denied')}),
         url(r'^404/$',
-            default_views.page_not_found,
+            core_views.page_not_found,
             kwargs={'exception': Exception('Page not Found')}),
         url(r'^500/$',
-            default_views.server_error),
+            core_views.server_error),
     ]
 
     urlpatterns += \
