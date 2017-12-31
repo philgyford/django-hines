@@ -43,7 +43,7 @@ spectator_patterns = ([
 
     url(r'^{}/creators/'.format(ROOT_DIR),
         include('spectator.core.urls.creators', namespace='creators')),
-], 'specatator')
+], 'spectator')
 
 
 # We might in future have a photos app, in which case we'd include

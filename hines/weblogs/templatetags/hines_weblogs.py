@@ -8,7 +8,7 @@ from ..models import Blog, Post
 register = template.Library()
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_all_blogs():
     """
     Returns a QuerySet of Blog objects.
@@ -16,7 +16,7 @@ def get_all_blogs():
     return Blog.objects.all()
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_all_blogs_by_slug():
     """
     Returns a dict of all Blog objects, with their slugs as the dict keys.
@@ -27,7 +27,7 @@ def get_all_blogs_by_slug():
     return blogs
 
 
-@register.assignment_tag
+@register.simple_tag
 def recent_posts(blog, num=5):
     """
     Returns a QuerySet of `num` recently-published Posts for `blog`.
@@ -46,7 +46,7 @@ def recent_posts_card(blog, num=5):
             }
 
 
-@register.assignment_tag
+@register.simple_tag
 def blog_years(blog):
     """
     Returns a QuerySet of dates, one per year this blog has published Posts in.
@@ -70,7 +70,7 @@ def blog_years_card(blog, current_year=None):
             }
 
 
-@register.assignment_tag
+@register.simple_tag
 def blog_popular_tags(blog, num=10):
     """
     Returns a QuerySet of Tags, in descending order of popularity within

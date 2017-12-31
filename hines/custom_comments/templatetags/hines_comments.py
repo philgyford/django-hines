@@ -10,7 +10,7 @@ def clean(value):
     return clean_comment(value)
 
 
-@register.assignment_tag
+@register.simple_tag
 def allowed_tags():
     """
     Returns a list of tags that are allowed in comments.
