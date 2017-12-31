@@ -7,6 +7,8 @@ from . import feeds
 from . import views as core_views
 
 
+app_name = 'hines'
+
 urlpatterns = [
 
     # Send anyone going to '/phil/' to the home page at '/'.
@@ -56,8 +58,7 @@ urlpatterns = [
     ),
 
     # Components pattern library.
-    url(r'^patterns/',
-        include('hines.patterns.urls', namespace='patterns')),
+    url(r'^patterns/', include('hines.patterns.urls')),
 
     url(r'^', include('hines.weblogs.urls')),
 ]

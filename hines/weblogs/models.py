@@ -83,7 +83,7 @@ class TaggedPost(TaggedItemBase):
     with tagged Posts, like get the most popular tags filtered by Blog, Status,
     etc.
     """
-    content_object = models.ForeignKey('Post')
+    content_object = models.ForeignKey('Post', on_delete=models.CASCADE)
 
 
 class Post(TimeStampedModelMixin, models.Model):
@@ -156,7 +156,7 @@ class Post(TimeStampedModelMixin, models.Model):
                 choices=FEATURED_CHOICES, default=NOT_FEATURED)
 
     blog = models.ForeignKey('Blog', null=True, blank=False, default=1,
-                related_name='posts')
+                related_name='posts', on_delete=models.CASCADE)
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, default=1,
                 on_delete=models.CASCADE, null=True, blank=False,
@@ -306,7 +306,7 @@ class Trackback(TimeStampedModelMixin, models.Model):
     time_modified
     """
     post = models.ForeignKey('Post', null=False, blank=False,
-            related_name='trackbacks')
+            related_name='trackbacks', on_delete=models.CASCADE)
     title = models.CharField(blank=False, max_length=255)
     excerpt = models.TextField(blank=True, default='')
     url = models.URLField(blank=True, default='', verbose_name='URL')

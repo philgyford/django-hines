@@ -33,7 +33,8 @@ sitemaps = {
 }
 
 
-spectator_patterns = [
+# These URLs will be in namespaces like 'spectator:reading':
+spectator_patterns = ([
     url(r'^{}/spectator/'.format(ROOT_DIR),
         include('spectator.core.urls.core', namespace='core')),
 
@@ -42,7 +43,14 @@ spectator_patterns = [
 
     url(r'^{}/creators/'.format(ROOT_DIR),
         include('spectator.core.urls.creators', namespace='creators')),
-]
+], 'specatator')
+
+
+# We might in future have a photos app, in which case we'd include
+# its urlconf here. But for now, just one view in the core app:
+photos_patterns = ([
+    url(r'^$', core_views.PhotosHomeView.as_view(), name='home'),
+], 'photos')
 
 
 urlpatterns = [
@@ -75,24 +83,13 @@ urlpatterns = [
 
     url(r'^backstage/', admin.site.urls),
 
-    url(r'^{}/photos/'.format(ROOT_DIR),
-        # We might in future have a photos app, in which case we'd include
-        # its urlconf here. But for now, just one view in the core app:
-        include([
-            url(r'^$', core_views.PhotosHomeView.as_view(), name='home'),
-        ],
-        namespace='photos')
-    ),
+    url(r'^{}/photos/'.format(ROOT_DIR), include(photos_patterns)),
 
-    url(r'^{}/links/'.format(ROOT_DIR),
-        include('hines.links.urls', namespace='pinboard')),
+    url(r'^{}/links/'.format(ROOT_DIR), include('hines.links.urls')),
 
-    # So these URLs will be in namespaces like 'spectator:reading':
-    url(r'^',
-        include (spectator_patterns, namespace='spectator')),
+    url(r'^', include(spectator_patterns)),
 
-    url(r'^{}/'.format(ROOT_DIR),
-        include('hines.core.urls', namespace='hines')),
+    url(r'^{}/'.format(ROOT_DIR), include('hines.core.urls')),
 
     # Used in the weblogs app for the Admin:
     url(r'^markdownx/', include('markdownx.urls')),
