@@ -1,39 +1,33 @@
 dist: trusty
-
 language: python
-
 python:
-  - 3.6
-
+- 3.6
 services:
-  - postgresql
-
+- postgresql
 addons:
-  postgresql: "9.6"
-
+  postgresql: '9.6'
 env:
   global:
-    - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
-    - ALLOWED_HOSTS='*'
-    - DB_NAME='test_db'
-    - DB_USERNAME='postgres'
-    - DB_PASSWORD=''
-    - DB_HOST='localhost'
-
+  - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
+  - ALLOWED_HOSTS='*'
+  - DB_NAME='test_db'
+  - DB_USERNAME='postgres'
+  - DB_PASSWORD=''
+  - DB_HOST='localhost'
 install:
-  - pip install -q coverage coveralls
-  - pip install -q -r ./requirements/tests.txt
-
+- pip install -q coverage coveralls
+- pip install -q -r ./requirements/tests.txt
 before_script:
-  - ./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput 
-  - psql -c 'CREATE DATABASE test_db;' -U postgres
-  - ./manage.py migrate --settings=config.settings.tests --verbosity=0
-
+- "./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput"
+- psql -c 'CREATE DATABASE test_db;' -U postgres
+- "./manage.py migrate --settings=config.settings.tests --verbosity=0"
 script:
-  - ./scripts/run-tests.sh
-
+- "./scripts/run-tests.sh"
 after_success:
-  - coveralls
-
+- coveralls
 sudo: false
-
+notifications:
+  email:
+    false
+  slack:
+    secure: macxg7Xfzlv9ZPaSEDxz5rnWsTyLPlDrNvEgV9ozhMoPWLoJNlrcgQz24d6mB1Agllix9RikorjMM3adNHj/GilMURt4XcMKNerhLAPMxoOTb9+GW5TueI7ooVmvarwjE45gJNkF3tkbJSrhtPcqZ22j6c4vLRbVaK5fNnvFb9ZcDZKU3jx4riBqkMQnZgIuPX2TA6InNQlMdlR93+V6nvx10EMiijjgxYgQTkvEkDqCakRVg+ZUy3mOJTRm+3oAGSS4wQN2Lx6fxs5MLUj78MZS76vLT7R1I6MK9KQFNLxmsGwfLpm9YXYxm7jFYeRCyJuuSnpsvc0I29Rdye9SctAgTXipX9ZDadzYJ0uK2tKgZHo7pIPmYJBLD05e6RieIOrl/IetTKVt3enNe0Tycdb4r+5hMl/iY9opwhbX+Eskawm8ewofWTRrnLe9qtvG1I3qxboENyneiCKN5RU8khRkISqHEKH/OuFrwHXmwS4VRqeTUfq37y7U5+3wKjZNAxE35Pvf25uu87CDS3Go0mgSt79ekUefqBWygNIbbmxaOciFR3sZcmzWfG8J8oAy5x9b53ipOvncJVBYU2V5aVuwJd6Q5k0803PN58d74E5CcEKSIdoR535vFdJ+a5VEwBiq9XRFGPW2FeIpKy99PpE3m/7kQFpUpJ78uUXU3nA=
