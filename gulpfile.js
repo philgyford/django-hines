@@ -57,10 +57,10 @@ var PATHS = {
   },
   templates: {
     files:          [TEMPLATES_DIR + '/hines_core/layouts/base.html',
-                     TEMPLATES_DIR + '/400.html',
-                     TEMPLATES_DIR + '/403.html',
-                     TEMPLATES_DIR + '/404.html',
-                     TEMPLATES_DIR + '/500.html']
+                     TEMPLATES_DIR + '/errors/400.html',
+                     TEMPLATES_DIR + '/errors/403.html',
+                     TEMPLATES_DIR + '/errors/404.html',
+                     TEMPLATES_DIR + '/errors/500.html']
   }
 };
 

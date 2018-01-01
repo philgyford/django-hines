@@ -1,7 +1,7 @@
 // From Bootstrap v4.
 // NO CHANGES MADE.
 
-// Grid system
+/// Grid system
 //
 // Generate semantic grid columns with these mixins.
 
@@ -53,3 +53,4 @@
   $num: $size / $columns;
   margin-left: if($num == 0, 0, percentage($num));
 }
+
