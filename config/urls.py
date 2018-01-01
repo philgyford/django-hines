@@ -52,6 +52,22 @@ photos_patterns = ([
 ], 'photos')
 
 
+# All of these will be under the /ROOT_DIR/ directory.
+# e.g. /phil/photos/blah/blah/
+root_dir_patterns = ([
+    path('photos/', include(photos_patterns)),
+
+    path('links/', include('hines.links.urls')),
+
+    path('patterns/', include('hines.patterns.urls')),
+
+    path('', include(spectator_patterns)),
+
+    path('', include('hines.weblogs.urls')),
+
+    path('', include('hines.core.urls')),
+])
+
 urlpatterns = [
 
     # REDIRECTS
@@ -77,17 +93,7 @@ urlpatterns = [
 
     path('', core_views.HomeView.as_view(), name='home'),
 
-    path('{}/photos/'.format(ROOT_DIR), include(photos_patterns)),
-
-    path('{}/links/'.format(ROOT_DIR), include('hines.links.urls')),
-
-    path('{}/patterns/'.format(ROOT_DIR), include('hines.patterns.urls')),
-
-    path('{}/'.format(ROOT_DIR), include(spectator_patterns)),
-
-    path('{}/'.format(ROOT_DIR), include('hines.weblogs.urls')),
-
-    path('{}/'.format(ROOT_DIR), include('hines.core.urls')),
+    path('{}/'.format(ROOT_DIR), include(root_dir_patterns)),
 
     # Used in the weblogs app for the Admin:
     path('markdownx/', include('markdownx.urls')),
