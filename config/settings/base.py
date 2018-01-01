@@ -195,6 +195,15 @@ TAGGIT_CASE_INSENSITIVE = True
 
 MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
 
+from datetime import datetime
+MARKDOWNX_MEDIA_PATH = datetime.now().strftime('weblogs/%Y/%m/%d')
+
+MARKDOWNX_IMAGE_MAX_SIZE = {
+    'size': (1000, 1000),
+    'quality': 90
+}
+
+
 ## DJANGO-HINES-SPECIFIC SETTINGS
 
 # Most hines-related pages will be within this root directory:
