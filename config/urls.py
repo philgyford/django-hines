@@ -60,11 +60,6 @@ urlpatterns = [
         url=static_tag('hines/img/favicons/favicon.ico'), permanent=True)),
 
 
-    # PAGES
-
-    path('', core_views.HomeView.as_view(), name='home'),
-
-
     # SITEMAP
 
     path('sitemap.xml', sitemaps_views.index, {'sitemaps': sitemaps}),
@@ -72,7 +67,15 @@ urlpatterns = [
     path('sitemap-<slug:section>.xml', sitemaps_views.sitemap,
         {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
+
+    # ADMIN
+
     path('backstage/', admin.site.urls),
+
+
+    # EVERYTHING ELSE
+
+    path('', core_views.HomeView.as_view(), name='home'),
 
     path('{}/photos/'.format(ROOT_DIR), include(photos_patterns)),
 
