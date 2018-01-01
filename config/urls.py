@@ -35,13 +35,13 @@ sitemaps = {
 
 # These URLs will be in namespaces like 'spectator:reading':
 spectator_patterns = ([
-    url(r'^{}/spectator/'.format(ROOT_DIR),
+    url(r'^spectator/',
         include('spectator.core.urls.core', namespace='core')),
 
-    url(r'^{}/reading/'.format(ROOT_DIR),
+    url(r'^reading/',
         include('spectator.reading.urls', namespace='reading')),
 
-    url(r'^{}/creators/'.format(ROOT_DIR),
+    url(r'^creators/',
         include('spectator.core.urls.creators', namespace='creators')),
 ], 'spectator')
 
@@ -87,7 +87,7 @@ urlpatterns = [
 
     url(r'^{}/links/'.format(ROOT_DIR), include('hines.links.urls')),
 
-    url(r'^', include(spectator_patterns)),
+    url(r'^{}/'.format(ROOT_DIR), include(spectator_patterns)),
 
     url(r'^{}/'.format(ROOT_DIR), include('hines.core.urls')),
 

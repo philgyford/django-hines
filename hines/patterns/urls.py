@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
@@ -6,11 +6,11 @@ from . import views
 app_name = 'patterns'
 
 urlpatterns = [
-    url(r'^$',
+    path(r'',
         views.PatternsView.as_view(),
         name='pattern_list'),
 
-    url(r'^(?P<slug>[\w-]+)/$',
+    path('<slug:slug>/',
         views.PatternsView.as_view(),
         name='pattern_detail'),
 ]
