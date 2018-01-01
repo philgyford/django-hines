@@ -76,9 +76,16 @@
     float: right;
   }
 
-  .form--inline .form__control {
-    width: 8em;
-    margin-right: ($nav-border-width / 2);
+  .form--inline {
+    .form__control {
+      width: 8em;
+      margin-right: ($nav-border-width / 2);
+      margin-bottom: 0;
+    }
+
+    .button {
+      margin-bottom: 0;
+    }
   }
 
   // Hide the form at narrow widths if the JS is enabled:
