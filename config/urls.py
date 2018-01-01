@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import handler400, handler403, handler404, handler500,\
-        include, static, url
+        static
+from django.urls import include, path
 from django.contrib import admin
 from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemaps_views
@@ -35,21 +36,19 @@ sitemaps = {
 
 # These URLs will be in namespaces like 'spectator:reading':
 spectator_patterns = ([
-    url(r'^spectator/',
-        include('spectator.core.urls.core', namespace='core')),
+    path('spectator/', include('spectator.core.urls.core', namespace='core')),
 
-    url(r'^reading/',
-        include('spectator.reading.urls', namespace='reading')),
+    path('reading/', include('spectator.reading.urls', namespace='reading')),
 
-    url(r'^creators/',
-        include('spectator.core.urls.creators', namespace='creators')),
+    path('creators/', include('spectator.core.urls.creators',
+        namespace='creators')),
 ], 'spectator')
 
 
 # We might in future have a photos app, in which case we'd include
 # its urlconf here. But for now, just one view in the core app:
 photos_patterns = ([
-    url(r'^$', core_views.PhotosHomeView.as_view(), name='home'),
+    path('', core_views.PhotosHomeView.as_view(), name='home'),
 ], 'photos')
 
 
@@ -57,45 +56,37 @@ urlpatterns = [
 
     # REDIRECTS
 
-    url(r'^favicon.ico$', RedirectView.as_view(
-        url=static_tag('hines/img/favicons/favicon.ico'), permanent=True)
-    ),
+    path('favicon.ico', RedirectView.as_view(
+        url=static_tag('hines/img/favicons/favicon.ico'), permanent=True)),
 
 
     # PAGES
 
-    url(r'^$',
-        view=core_views.HomeView.as_view(),
-        name='home'
-    ),
+    path('', core_views.HomeView.as_view(), name='home'),
+
 
     # SITEMAP
 
-    url(r'^sitemap\.xml$',
-        sitemaps_views.index,
-        {'sitemaps': sitemaps}
-    ),
-    url(r'^sitemap-(?P<section>.+)\.xml$',
-        sitemaps_views.sitemap,
-        {'sitemaps': sitemaps},
-        name='django.contrib.sitemaps.views.sitemap'
-    ),
+    path('sitemap.xml', sitemaps_views.index, {'sitemaps': sitemaps}),
 
-    url(r'^backstage/', admin.site.urls),
+    path('sitemap-<slug:section>.xml', sitemaps_views.sitemap,
+        {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
-    url(r'^{}/photos/'.format(ROOT_DIR), include(photos_patterns)),
+    path('backstage/', admin.site.urls),
 
-    url(r'^{}/links/'.format(ROOT_DIR), include('hines.links.urls')),
+    path('{}/photos/'.format(ROOT_DIR), include(photos_patterns)),
 
-    url(r'^{}/'.format(ROOT_DIR), include(spectator_patterns)),
+    path('{}/links/'.format(ROOT_DIR), include('hines.links.urls')),
 
-    url(r'^{}/'.format(ROOT_DIR), include('hines.core.urls')),
+    path('{}/'.format(ROOT_DIR), include(spectator_patterns)),
+
+    path('{}/'.format(ROOT_DIR), include('hines.core.urls')),
 
     # Used in the weblogs app for the Admin:
-    url(r'^markdownx/', include('markdownx.urls')),
+    path('markdownx/', include('markdownx.urls')),
 
     # Used in the weblogs app:
-    url(r'^comments/', include('django_comments.urls')),
+    path('comments/', include('django_comments.urls')),
 
 ]
 
@@ -114,17 +105,16 @@ if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
     urlpatterns += [
-        url(r'^400/$',
-            core_views.bad_request,
+        path('400/', core_views.bad_request,
             kwargs={'exception': Exception('Bad Request!')}),
-        url(r'^403/$',
-            core_views.permission_denied,
+
+        path('403/', core_views.permission_denied,
             kwargs={'exception': Exception('Permission Denied')}),
-        url(r'^404/$',
-            core_views.page_not_found,
+
+        path('404/', core_views.page_not_found,
             kwargs={'exception': Exception('Page not Found')}),
-        url(r'^500/$',
-            core_views.server_error),
+
+        path('500/', core_views.server_error),
     ]
 
     urlpatterns += \
@@ -133,6 +123,6 @@ if settings.DEBUG:
     if 'debug_toolbar' in settings.INSTALLED_APPS:
         import debug_toolbar
         urlpatterns = [
-            url(r'^__debug__/', include(debug_toolbar.urls)),
+            path('__debug__/', include(debug_toolbar.urls)),
         ] + urlpatterns
 
