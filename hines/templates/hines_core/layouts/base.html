@@ -186,24 +186,14 @@
     </footer>
 
     <!-- inject:js -->
-    <script src="/static/hines/js/site-6da62fe8ed.min.js"></script>
+    <script src="/static/hines/js/site-afdfceda6d.min.js"></script>
     <!-- endinject -->
 
     <script>
-      var ready = function (callback) {
-        if (document.readyState === 'complete') {
-          return callback();
-        };
-
-        // If not loaded, wait until it is.
-        document.addEventListener('DOMContentLoaded', callback, false);
-      };
-
-      ready(function() {
+      domready(function() {
         var navbar = hines.navbar();
         navbar.init();
       });
-
     </script>
 
     {% include 'hines_core/includes/analytics.html' %}
