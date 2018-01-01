@@ -282,7 +282,7 @@ class PostTagAutocomplete(autocomplete.Select2QuerySetView):
     Using django-autocomplete-light.
     """
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             raise Http404("Not found")
 
         qs = Tag.objects.all()
