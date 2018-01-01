@@ -316,9 +316,9 @@ class PostRedirectViewTestCase(ViewTestCase):
     def test_redirect(self):
         response = views.PostRedirectView.as_view()(self.request,
                                                     blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='02',
-                                                    day='20',
+                                                    year=2017,
+                                                    month=2,
+                                                    day=20,
                                                     post_slug='my_old_post')
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url,
@@ -336,9 +336,9 @@ class PostDayArchiveViewTestCase(ViewTestCase):
     def test_redirect(self):
         response = views.PostDayArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
-                                                        year='2017',
-                                                        month='02',
-                                                        day='20')
+                                                        year=2017,
+                                                        month=2,
+                                                        day=20)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/terry/2017/02/20/')
 
@@ -355,8 +355,8 @@ class PostMonthArchiveViewTestCase(ViewTestCase):
         "It should respond with 200."
         response = views.PostMonthArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
-                                                        year='2017',
-                                                        month='02')
+                                                        year=2017,
+                                                        month=2)
         self.assertEqual(response.status_code, 200)
 
     def test_response_404_invalid_blog(self):
@@ -364,16 +364,16 @@ class PostMonthArchiveViewTestCase(ViewTestCase):
         with self.assertRaises(Http404):
             views.PostMonthArchiveView.as_view()(self.request,
                                                     blog_slug='OTHER-BLOG',
-                                                    year='2017',
-                                                    month='02')
+                                                    year=2017,
+                                                    month=2)
 
     def test_response_404_invalid_date(self):
         "It should raise 404 if there's no matching posts in that month"
         with self.assertRaises(Http404):
             views.PostMonthArchiveView.as_view()(self.request,
                                                     blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='03')
+                                                    year=2017,
+                                                    month=3)
 
     def test_response_404_invalid_status(self):
         "It should raise 404 if there's no matching published post"
@@ -382,14 +382,14 @@ class PostMonthArchiveViewTestCase(ViewTestCase):
         with self.assertRaises(Http404):
             views.PostMonthArchiveView.as_view()(self.request,
                                                     blog_slug='my-blog',
-                                                    year='2017',
-                                                    month='03')
+                                                    year=2017,
+                                                    month=3)
 
     def test_templates(self):
         response = views.PostMonthArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
-                                                        year='2017',
-                                                        month='02')
+                                                        year=2017,
+                                                        month=2)
         self.assertEqual(response.template_name[0],
                          'weblogs/post_archive_month.html')
 
@@ -397,8 +397,8 @@ class PostMonthArchiveViewTestCase(ViewTestCase):
         "The blog should be in the context"
         response = views.PostMonthArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
-                                                        year='2017',
-                                                        month='02')
+                                                        year=2017,
+                                                        month=2)
         self.assertIn('blog', response.context_data)
         self.assertEqual(response.context_data['blog'], self.blog)
 
@@ -415,7 +415,7 @@ class PostYearArchiveViewTestCase(ViewTestCase):
         "It should respond with 200."
         response = views.PostYearArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
-                                                        year='2017')
+                                                        year=2017)
         self.assertEqual(response.status_code, 200)
 
     def test_response_404_invalid_blog(self):
@@ -423,14 +423,14 @@ class PostYearArchiveViewTestCase(ViewTestCase):
         with self.assertRaises(Http404):
             views.PostYearArchiveView.as_view()(self.request,
                                                     blog_slug='OTHER-BLOG',
-                                                    year='2017')
+                                                    year=2017)
 
     def test_response_404_invalid_date(self):
         "It should raise 404 if there's no matching posts in that month"
         with self.assertRaises(Http404):
             views.PostYearArchiveView.as_view()(self.request,
                                                     blog_slug='my-blog',
-                                                    year='2016')
+                                                    year=2016)
 
     def test_response_404_invalid_status(self):
         "It should raise 404 if there's no matching published post"
@@ -439,12 +439,12 @@ class PostYearArchiveViewTestCase(ViewTestCase):
         with self.assertRaises(Http404):
             views.PostYearArchiveView.as_view()(self.request,
                                                     blog_slug='my-blog',
-                                                    year='2016')
+                                                    year=2016)
 
     def test_templates(self):
         response = views.PostYearArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
-                                                        year='2017')
+                                                        year=2017)
         self.assertEqual(response.template_name[0],
                          'weblogs/post_archive_year.html')
 
@@ -452,6 +452,6 @@ class PostYearArchiveViewTestCase(ViewTestCase):
         "The blog should be in the context"
         response = views.PostYearArchiveView.as_view()(self.request,
                                                         blog_slug='my-blog',
-                                                        year='2017')
+                                                        year=2017)
         self.assertIn('blog', response.context_data)
         self.assertEqual(response.context_data['blog'], self.blog)

@@ -1,10 +1,15 @@
-from django.conf.urls import include, url
+from django.urls import include, path, register_converter
 from django.contrib.flatpages import views as flatpages_views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
-from . import feeds
+from . import converters, feeds
 from . import views as core_views
+
+
+register_converter(converters.FourDigitYearConverter, 'yyyy')
+register_converter(converters.TwoDigitMonthConverter, 'mm')
+register_converter(converters.TwoDigitDayConverter, 'dd')
 
 
 app_name = 'hines'
@@ -12,54 +17,38 @@ app_name = 'hines'
 urlpatterns = [
 
     # Send anyone going to '/phil/' to the home page at '/'.
-    url(
-        regex=r"^$",
-        view=RedirectView.as_view(url='/', permanent=False)
-    ),
+    path('', RedirectView.as_view(url='/', permanent=False)),
 
-    url(
-        regex=r"^feeds/everything/rss/$",
-        view=feeds.EverythingFeedRSS(),
-        name='everything_feed_rss'
-    ),
+    path('feeds/everything/rss/', feeds.EverythingFeedRSS(),
+        name='everything_feed_rss'),
+
+    path('patterns/', include('hines.patterns.urls')),
+
 
     # Flatpages with names:
 
-    url(r'^about/$', flatpages_views.flatpage,
-        {'url': '/phil/about/'},
-        name='about'),
+    path('about/', flatpages_views.flatpage,
+        {'url': '/phil/about/'}, name='about'),
 
-    url(r'^archive/$', flatpages_views.flatpage,
-        {'url': '/phil/archive/'},
-        name='archive'),
+    path('archive/', flatpages_views.flatpage,
+        {'url': '/phil/archive/'}, name='archive'),
 
-    url(r'^work/$', flatpages_views.flatpage,
-        {'url': '/phil/work/'},
-        name='about_work'),
+    path('work/', flatpages_views.flatpage,
+        {'url': '/phil/work/'}, name='about_work'),
 
-    url(r'^timeline/$', flatpages_views.flatpage,
-        {'url': '/phil/timeline/'},
-        name='timeline'),
+    path('timeline/', flatpages_views.flatpage,
+        {'url': '/phil/timeline/'}, name='timeline'),
 
-    url(r'^misc/$', flatpages_views.flatpage,
-        {'url': '/phil/misc/'},
-        name='misc'),
+    path('misc/', flatpages_views.flatpage,
+        {'url': '/phil/misc/'}, name='misc'),
 
-    url(r'^feeds/$', flatpages_views.flatpage,
-        {'url': '/phil/feeds/'},
-        name='feeds'),
+    path('feeds/', flatpages_views.flatpage,
+        {'url': '/phil/feeds/'}, name='feeds'),
 
 
-    url(
-        # /2016/04/18/twitter/favorites
-        regex=r"^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$",
-        view=core_views.DayArchiveView.as_view(),
-        name='day_archive'
-    ),
+    path('<yyyy:year>/<mm:month>/<dd:day>/',
+        core_views.DayArchiveView.as_view(), name='day_archive'),
 
-    # Components pattern library.
-    url(r'^patterns/', include('hines.patterns.urls')),
-
-    url(r'^', include('hines.weblogs.urls')),
+    path('', include('hines.weblogs.urls')),
 ]
 

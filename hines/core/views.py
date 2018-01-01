@@ -4,7 +4,7 @@ import datetime
 from django.conf import settings
 from django.core.paginator import InvalidPage
 from django.http import (Http404, HttpResponseNotFound,
-            HttpResponseBadRequest, HttpResponseForbidden,   
+            HttpResponseBadRequest, HttpResponseForbidden,
             HttpResponseServerError)
 from django.template.loader import get_template
 from django.utils import timezone
@@ -569,17 +569,21 @@ def timezone_today():
     else:
         return datetime.date.today()
 
+
 def _date_from_string(year, year_format, month='', month_format='', day='', day_format='', delim='__'):
     """
     Helper: get a datetime.date object given a format string and a year,
     month, and day (only year is mandatory). Raise a 404 for an invalid date.
+
+    Copied from https://github.com/django/django/blob/2.0/django/views/generic/dates.py#L609
     """
-    format = delim.join((year_format, month_format, day_format))
-    datestr = delim.join((year, month, day))
+    format = year_format + delim + month_format + delim + day_format
+    datestr = str(year) + delim + str(month) + delim + str(day)
     try:
-        return datetime.datetime.strptime(force_str(datestr), format).date()
+        return datetime.datetime.strptime(datestr, format).date()
     except ValueError:
         raise Http404(_("Invalid date string '%(datestr)s' given format '%(format)s'") % {
             'datestr': datestr,
             'format': format,
         })
+
