@@ -78,6 +78,8 @@ urlpatterns = [
 
     path('{}/links/'.format(ROOT_DIR), include('hines.links.urls')),
 
+    path('{}/patterns/'.format(ROOT_DIR), include('hines.patterns.urls')),
+
     path('{}/'.format(ROOT_DIR), include(spectator_patterns)),
 
     path('{}/'.format(ROOT_DIR), include('hines.weblogs.urls')),

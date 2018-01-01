@@ -18,7 +18,7 @@
           {% if slug == current_page %}
             {{ slug|title }}
           {% else %}
-            <a href="{% url 'hines:patterns:pattern_detail' slug=slug %}">{{ slug|title }}</a></li>
+            <a href="{% url 'patterns:pattern_detail' slug=slug %}">{{ slug|title }}</a></li>
         {% endif %}
       {% endfor %}
     </ul>

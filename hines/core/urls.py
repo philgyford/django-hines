@@ -22,8 +22,6 @@ urlpatterns = [
     path('feeds/everything/rss/', feeds.EverythingFeedRSS(),
         name='everything_feed_rss'),
 
-    path('patterns/', include('hines.patterns.urls')),
-
 
     # Flatpages with names:
 
