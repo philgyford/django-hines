@@ -2,7 +2,7 @@ bleach==2.1.2
 Django==2.0
 django-autocomplete-light==3.3.0-rc1
 django-contrib-comments==1.8.0
-django-ditto==0.7.0
+django-ditto==0.7.1
 django-markdownx==2.0.21
 django-spectator==4.1.0
 django-taggit==0.22.2

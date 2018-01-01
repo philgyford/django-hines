@@ -185,6 +185,9 @@ SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.User'
 
+# Monday:
+FIRST_DAY_OF_WEEK = 1
+
 COMMENTS_APP = 'hines.custom_comments'
 
 # We don't want to allow duplicate tags like 'Fish' and 'fish':
