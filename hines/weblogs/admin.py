@@ -43,7 +43,7 @@ class PostAdminForm(autocomplete.FutureModelForm):
             'body': AdminMarkdownxWidget,
             # The django-autocomplete-light tag widget:
             'tags': autocomplete.TaggitSelect2(
-                                reverse_lazy('hines:post_tag_autocomplete')),
+                                reverse_lazy('weblogs:post_tag_autocomplete')),
         }
         fields = '__all__'
 
