@@ -41,7 +41,7 @@
 
       init: function() {
         // Indicate to the CSS that this is running:
-        addClass(document.body, 'js-can-navbar');
+        $.addClass(document.body, 'js-can-navbar');
 
         createSearchLink();
 
@@ -66,19 +66,19 @@
 
       li.appendChild(button);
 
-      var nav = getElByClass(navClass);
+      var nav = $.getElByClass(navClass);
 
       nav.appendChild(li);
     };
 
     function initListener() {
-      getElByClass(buttonClass).addEventListener('click', function(event) {
+      $.getElByClass(buttonClass).addEventListener('click', function(event) {
         event.preventDefault();
 
-        hideEl(liClass);
-        showEl(formClass, 'block');
+        $.hideEl(liClass);
+        $.showEl(formClass, 'block');
 
-        var button = getElByClass(buttonClass);
+        var button = $.getElByClass(buttonClass);
         button.setAttribute('aria-expanded', 'true');
       });
     };
