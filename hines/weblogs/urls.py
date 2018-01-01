@@ -9,6 +9,8 @@ register_converter(converters.TwoDigitMonthConverter, 'mm')
 register_converter(converters.TwoDigitDayConverter, 'dd')
 
 
+app_name = 'weblogs'
+
 urlpatterns = [
     path('post-tag-autocomplete/', views.PostTagAutocomplete.as_view(),
         name='post_tag_autocomplete',),

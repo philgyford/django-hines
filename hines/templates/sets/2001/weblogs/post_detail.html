@@ -35,7 +35,7 @@
 	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'home' %}">Home</a></td></tr>
 	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'hines:timeline' %}">Timeline</a></td></tr>
 	<tr><td nowrap="nowrap" class="menu-off"><a href="{% url 'photos:home' %}">Photos</a></td></tr>
-	<tr><td nowrap="nowrap" class="menu-on"><a href="{% url 'hines:blog_detail' blog_slug='writing' %}">Writing</a></td></tr>
+	<tr><td nowrap="nowrap" class="menu-on"><a href="{% url 'weblogs:blog_detail' blog_slug='writing' %}">Writing</a></td></tr>
 	<tr><td nowrap="nowrap" class="menu-off"><a href="/phil/paintings/1993/college/">Paintings</a></td></tr>
 	<tr><td nowrap="nowrap" class="menu-off"><a href="/phil/drawings/1999/lifedrawings/">Drawings</a></td></tr>
 	<tr><td nowrap="nowrap" class="menu-off"><a href="/phil/uhcl/">Futures</a></td></tr>
@@ -70,7 +70,7 @@
 <td colspan="3" class="head2">{{ blog.short_name }}</td>
 </tr>
 <tr>
-	<td>{% with post.get_previous_post as previous_post %}{% if previous_post %}<a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.time_created|date:"Y-m-d" }}: {{ previous_post.title }}"><img src="{% static 'hines/sets/2001/images/nav/prev1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev"></a>{% else %}<img src="{% static 'hines/sets/2001/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">{% endif %}{% endwith %}<a href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=post.time_created|date:"Y" %}" title="Index"><img src="{% static 'hines/sets/2001/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index"></a>{% with post.get_next_post as next_post %}{% if next_post %}<a href="{{ next_post.get_absolute_url }}" title="{{ next_post.time_created|date:"Y-m-d" }}: {{ next_post.title }}"><img src="{% static 'hines/sets/2001/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next"></a>{% else %}<img src="{% static 'hines/sets/2001/images/nav/next_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next">{% endif %}{% endwith %}&nbsp;</td>
+	<td>{% with post.get_previous_post as previous_post %}{% if previous_post %}<a href="{{ previous_post.get_absolute_url }}" title="{{ previous_post.time_created|date:"Y-m-d" }}: {{ previous_post.title }}"><img src="{% static 'hines/sets/2001/images/nav/prev1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev"></a>{% else %}<img src="{% static 'hines/sets/2001/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">{% endif %}{% endwith %}<a href="{% url 'weblogs:post_year_archive' blog_slug=blog.slug year=post.time_created|date:"Y" %}" title="Index"><img src="{% static 'hines/sets/2001/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index"></a>{% with post.get_next_post as next_post %}{% if next_post %}<a href="{{ next_post.get_absolute_url }}" title="{{ next_post.time_created|date:"Y-m-d" }}: {{ next_post.title }}"><img src="{% static 'hines/sets/2001/images/nav/next1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next"></a>{% else %}<img src="{% static 'hines/sets/2001/images/nav/next_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Next">{% endif %}{% endwith %}&nbsp;</td>
 	<td colspan="2"><span class="head1">{{ post.title }} </span><span class="smaller">{{ post.time_created|date:"D, j M Y" }}</span></td>
 </tr>
 </table>

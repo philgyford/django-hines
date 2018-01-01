@@ -15,13 +15,13 @@
 
 {% block head_extra %}
     <link rel="start" href="{% url 'home' %}" title="Home"/>
-    <link rel="index" href="{% url 'hines:blog_archive' blog_slug=blog.slug %}" title="Phil Gyford's {{ blog.short_name }} Archive"/>
+    <link rel="index" href="{% url 'weblogs:blog_archive' blog_slug=blog.slug %}" title="Phil Gyford's {{ blog.short_name }} Archive"/>
     
     <link href="{% url 'hines:everything_feed_rss' %}" rel="alternate" title="Writing, links, comments and photos combined" type="application/rss+xml"/>
-    <link href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}" rel="alternate" title="Writing only" type="application/rss+xml"/>
+    <link href="{% url 'weblogs:blog_feed_posts_rss' blog_slug='writing' %}" rel="alternate" title="Writing only" type="application/rss+xml"/>
     <link href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&amp;format=rss_200" rel="alternate" title="Photos only (at Flickr)" type="application/rss+xml"/>
     <link href="http://feeds.pinboard.in/rss/u:philgyford/" rel="alternate" title="Links only (at Pinboard)" type="application/rss+xml" />
-    <link href="{% url 'hines:blog_feed_posts_rss' blog_slug='comments' %}" rel="alternate" title="Comments written on other sites only" type="application/rss+xml"/>
+    <link href="{% url 'weblogs:blog_feed_posts_rss' blog_slug='comments' %}" rel="alternate" title="Comments written on other sites only" type="application/rss+xml"/>
 {% endblock head_extra %}
 
 {% block start_body %}
@@ -35,13 +35,13 @@
         <ul id="mainnav">
 			<li class="nav-1 first"><a href="{% url 'home' %}" title="The front page of the site">Home</a></li>
 
-			<li class="nav-2 on"><a href="{% url 'hines:blog_detail' blog_slug='writing' %}" title="Things that I've written">Writing</a></li>
+			<li class="nav-2 on"><a href="{% url 'weblogs:blog_detail' blog_slug='writing' %}" title="Things that I've written">Writing</a></li>
 
 			<li class="nav-3"><a href="{% url 'photos:home' %}" title="Recent photos">Photos</a></li>
 			
 			<li class="nav-4"><a href="{% url 'pinboard:home' %}" title="Links to interesting stuff elsewhere">Links</a></li>
 
-			<li class="nav-5 split-after"><a href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments written on other sites">Comments</a></li>
+			<li class="nav-5 split-after"><a href="{% url 'weblogs:blog_detail' blog_slug='comments' %}" title="Comments written on other sites">Comments</a></li>
 
 			<li class="nav-6 split-before"><a href="{% url 'spectator:reading:home' %}" title="Books and magazines read">Reading</a></li>
 	 

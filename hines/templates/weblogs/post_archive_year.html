@@ -11,10 +11,10 @@
 		<nav>
 			<p>
 				{% if previous_year %}
-					<a class="btn btn-outline-primary" href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=previous_year|date:"Y" %}">&larr; {{ previous_year|date:"Y" }}</a>
+					<a class="btn btn-outline-primary" href="{% url 'weblogs:post_year_archive' blog_slug=blog.slug year=previous_year|date:"Y" %}">&larr; {{ previous_year|date:"Y" }}</a>
 				{% endif %}
 				{% if next_year %}
-					<a class="btn btn-outline-primary float-right" href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=next_year|date:"Y" %}">{{ next_year|date:"Y" }} &rarr;</a>
+					<a class="btn btn-outline-primary float-right" href="{% url 'weblogs:post_year_archive' blog_slug=blog.slug year=next_year|date:"Y" %}">{{ next_year|date:"Y" }} &rarr;</a>
 				{% endif %}
 			</p>
 		</nav>
@@ -30,7 +30,7 @@
       <ul>
         {% for month in date_list %}
           <li>
-            <a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=month|date:"Y" month=month|date:"m" %}">{{ month|date:"F" }}</a>
+            <a href="{% url 'weblogs:post_month_archive' blog_slug=blog.slug year=month|date:"Y" month=month|date:"m" %}">{{ month|date:"F" }}</a>
           </li>
         {% endfor %}
       </ul>

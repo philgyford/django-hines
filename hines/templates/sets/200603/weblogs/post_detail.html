@@ -15,7 +15,7 @@
 
 {% block head_extra %}
 	<link rel="home" title="Home" href="{% url 'home' %}"/>
-	<link rel="index" title="In all of {{ blog.short_name }}" href="{% url 'hines:blog_archive' blog_slug=blog.slug %}"/>
+	<link rel="index" title="In all of {{ blog.short_name }}" href="{% url 'weblogs:blog_archive' blog_slug=blog.slug %}"/>
 {% endblock head_extra %}
 
 {% block start_body %}
@@ -27,7 +27,7 @@
 
 	<ul id="mainnav">
 		<li><a href="{% url 'home' %}">Home</a></li>
-		<li class="on split"><a href="{% url 'hines:blog_detail' blog_slug='writing' %}">Writing</a></li>
+		<li class="on split"><a href="{% url 'weblogs:blog_detail' blog_slug='writing' %}">Writing</a></li>
 		<li><a href="{% url 'photos:home' %}">Photos</a></li>
 		<li><a href="{% url 'pinboard:home' %}">Links</a></li>
 		<li><a href="{% url 'spectator:reading:home' %}">Reading</a></li>

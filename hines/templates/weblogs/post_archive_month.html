@@ -11,10 +11,10 @@
 		<nav>
 			<p>
 				{% if previous_month %}
-					<a class="btn btn-outline-primary" href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=previous_month|date:"Y" month=previous_month|date:"m" %}">&larr; {{ previous_month|date:"F Y" }}</a>
+					<a class="btn btn-outline-primary" href="{% url 'weblogs:post_month_archive' blog_slug=blog.slug year=previous_month|date:"Y" month=previous_month|date:"m" %}">&larr; {{ previous_month|date:"F Y" }}</a>
 				{% endif %}
 				{% if next_month %}
-					<a class="btn btn-outline-primary float-right" href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=next_month|date:"Y" month=next_month|date:"m" %}">{{ next_month|date:"F Y" }} &rarr;</a>
+					<a class="btn btn-outline-primary float-right" href="{% url 'weblogs:post_month_archive' blog_slug=blog.slug year=next_month|date:"Y" month=next_month|date:"m" %}">{{ next_month|date:"F Y" }} &rarr;</a>
 				{% endif %}
 			</p>
 		</nav>

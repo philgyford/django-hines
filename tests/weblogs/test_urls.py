@@ -12,7 +12,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_blog_detail_url(self):
         self.assertEqual(
-                reverse('hines:blog_detail', kwargs={'blog_slug': 'my-blog'}),
+                reverse('weblogs:blog_detail', kwargs={'blog_slug': 'my-blog'}),
                 '/terry/my-blog/')
 
     def test_blog_detail_view(self):
@@ -23,7 +23,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_blog_archive_url(self):
         self.assertEqual(
-                reverse('hines:blog_archive', kwargs={'blog_slug': 'my-blog'}),
+                reverse('weblogs:blog_archive', kwargs={'blog_slug': 'my-blog'}),
                 '/terry/my-blog/archive/')
 
     def test_blog_archive_view(self):
@@ -34,7 +34,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_blog_feed_rss_url(self):
         self.assertEqual(
-            reverse('hines:blog_feed_posts_rss', kwargs={'blog_slug': 'my-blog'}),
+            reverse('weblogs:blog_feed_posts_rss', kwargs={'blog_slug': 'my-blog'}),
             '/terry/my-blog/feeds/posts/rss/')
 
     def test_blog_feed_rss_view(self):
@@ -45,7 +45,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_blog_tag_detail_url(self):
         self.assertEqual(
-                reverse('hines:blog_tag_detail',
+                reverse('weblogs:blog_tag_detail',
                         kwargs={'blog_slug': 'my-blog',
                                 'tag_slug': 'my-tag'}),
                 '/terry/my-blog/tags/my-tag/')
@@ -58,7 +58,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_post_detail_url(self):
         self.assertEqual(
-                reverse('hines:post_detail', kwargs={
+                reverse('weblogs:post_detail', kwargs={
                                 'blog_slug': 'my-blog',
                                 'year': '2017',
                                 'month': '02',
@@ -75,7 +75,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_post_redirect_url(self):
         self.assertEqual(
-                reverse('hines:post_redirect', kwargs={
+                reverse('weblogs:post_redirect', kwargs={
                                 'blog_slug': 'my-blog',
                                 'year': '2017',
                                 'month': '02',
@@ -92,7 +92,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_post_day_archive_url(self):
         self.assertEqual(
-                reverse('hines:post_day_archive', kwargs={
+                reverse('weblogs:post_day_archive', kwargs={
                                 'blog_slug': 'my-blog',
                                 'year': '2017',
                                 'month': '02',
@@ -108,7 +108,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_post_month_archive_url(self):
         self.assertEqual(
-                reverse('hines:post_month_archive', kwargs={
+                reverse('weblogs:post_month_archive', kwargs={
                                 'blog_slug': 'my-blog',
                                 'year': '2017',
                                 'month': '02'}),
@@ -123,7 +123,7 @@ class WeblogsUrlsTestCase(TestCase):
 
     def test_post_year_archive_url(self):
         self.assertEqual(
-                reverse('hines:post_year_archive', kwargs={
+                reverse('weblogs:post_year_archive', kwargs={
                                 'blog_slug': 'my-blog',
                                 'year': '2017'}),
                 '/terry/my-blog/2017/')

@@ -220,7 +220,7 @@ class PostRedirectView(RedirectView):
     """
     def get_redirect_url(self, blog_slug, year, month, day, post_slug):
         post_slug = post_slug.replace('_', '-')
-        return reverse('hines:post_detail', kwargs={
+        return reverse('weblogs:post_detail', kwargs={
             'blog_slug': blog_slug,
             'year': year, 'month': month, 'day': day,
             'post_slug': post_slug, })

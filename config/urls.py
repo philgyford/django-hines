@@ -80,6 +80,8 @@ urlpatterns = [
 
     path('{}/'.format(ROOT_DIR), include(spectator_patterns)),
 
+    path('{}/'.format(ROOT_DIR), include('hines.weblogs.urls')),
+
     path('{}/'.format(ROOT_DIR), include('hines.core.urls')),
 
     # Used in the weblogs app for the Admin:

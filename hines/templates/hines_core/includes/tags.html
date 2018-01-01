@@ -27,7 +27,7 @@ Optional:
         {% for tag in tag_list %}
           <li>
             <a href="{% if tag_type == 'post' %}
-              {% url 'hines:blog_tag_detail' blog_slug=blog_slug tag_slug=tag.slug %}
+              {% url 'weblogs:blog_tag_detail' blog_slug=blog_slug tag_slug=tag.slug %}
             {% else %}
               {% url 'pinboard:tag_detail' slug=tag.slug %}
             {% endif %}" title="More tagged with {{ tag.name }}">{{ tag.name }}</a>

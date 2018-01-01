@@ -15,7 +15,7 @@
 	{% with post.get_next_post as next_post %}{% if next_post %}
 	<link rel="next" title="{{ next_post.get_absolute_url }}" href="{{ next_post.title }}"/>
 	{% endif %}{% endwith %}
-	<link rel="up" title="Archive for {{ post.time_created|date:"F Y" }}" href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}"/>
+	<link rel="up" title="Archive for {{ post.time_created|date:"F Y" }}" href="{% url 'weblogs:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}"/>
 	<!-- skin: default -->
 	<link rel="stylesheet" href="{% static 'hines/sets/2002/style/default/global.css' %}" type="text/css"/>
 	<style type="text/css">
@@ -44,7 +44,7 @@
 				<img src="{% static 'hines/sets/2002/images/nav/prev_off.gif' %}" width="14" height="18" border="0" align="baseline" alt="Prev">
 			{% endif %}
 		{% endwith %}
-		<a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}" title="Index">
+		<a href="{% url 'weblogs:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}" title="Index">
 			<img src="{% static 'hines/sets/2002/images/nav/menu1.gif' %}" width="14" height="18" border="0" align="baseline" alt="Index">
 		</a>
 		{% with post.get_next_post as next_post %}
@@ -215,13 +215,13 @@ We don't have categories any more, so can't really link to these...
 <div id="menubar">
 <div id="nav">
 	<ul id="menu">
-	<li><a href="{% url 'hines:blog_detail' blog_slug='writing' %}" title="The front page of the site"><span class="menu-on">Writing</span></a>
+	<li><a href="{% url 'weblogs:blog_detail' blog_slug='writing' %}" title="The front page of the site"><span class="menu-on">Writing</span></a>
 		<ul>
-		<li><a href="{% url 'hines:blog_archive' blog_slug='writing' %}" title="An archive of writing organised by date">By date</a></li>
+		<li><a href="{% url 'weblogs:blog_archive' blog_slug='writing' %}" title="An archive of writing organised by date">By date</a></li>
 		<li><a href="/phil/writing/cats/" title="An archive of writing organised by category">By category</a></li>
 		</ul></li>
 	<li><a href="{% url 'pinboard:home' %}" title="Links I've found interesting">Links</a></li>
-	<li><a href="{% url 'hines:blog_tag_detail' blog_slug='writing' tag_slug='notes' %}" title="Notes I've taken">Notes</a></li>
+	<li><a href="{% url 'weblogs:blog_tag_detail' blog_slug='writing' tag_slug='notes' %}" title="Notes I've taken">Notes</a></li>
 	<li><a href="{% url 'photos:home' %}" title="Collections of my photos">Photos</a></li>
 	<li><a href="/phil/uhcl/" title="Work I did for a Future Studies MSc">Futures</a></li>
 	<li class="rule"><a href="{% url 'hines:timeline' %}" title="A chronological summary of my life">Timeline</a></li>

@@ -17,7 +17,7 @@
       <ul class="list--inline">
     {% endifchanged %}
     <li>
-      <a href="{% url 'hines:post_month_archive' blog_slug=blog.slug year=d|date:"Y" month=d|date:"m" %}">{{ d|date:"M" }}</a>
+      <a href="{% url 'weblogs:post_month_archive' blog_slug=blog.slug year=d|date:"Y" month=d|date:"m" %}">{{ d|date:"M" }}</a>
     </li>
   {% endfor %}
   </ul>
@@ -28,7 +28,7 @@
 
 	{% if blog %}
 		{% current_url_name as url_name %}
-		{% if url_name != 'hines:blog_tag_list' %}
+		{% if url_name != 'weblogs:blog_tag_list' %}
 			{% blog_popular_tags_card blog=blog num=10 %}
 		{% endif %}
 	{% endif %}

@@ -48,8 +48,8 @@
         {% current_url_name as url_name %}
         <ul class="nav js-navbar-nav">
           <li class="nav__item{% if blog.slug == 'writing' %} is-active{% endif %}">
-            {% if url_name != 'hines:blog_detail' or page_obj.number > 1 or blog.slug != 'writing' %}
-              <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='writing' %}">Writing</a>
+            {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'writing' %}
+              <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='writing' %}">Writing</a>
             {% else %}
               <span class="nav__link">Writing</span>
             {% endif %}
@@ -69,8 +69,8 @@
             {% endif %}
           </li>
           <li class="nav__item{% if blog.slug == 'comments' %} is-active{% endif %}">
-            {% if url_name != 'hines:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
-              <a class="nav__link" href="{% url 'hines:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
+            {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
+              <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
             {% else %}
               <span class="nav__link">Comments</span>
             {% endif %}

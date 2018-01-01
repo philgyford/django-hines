@@ -48,7 +48,5 @@ urlpatterns = [
 
     path('<yyyy:year>/<mm:month>/<dd:day>/',
         core_views.DayArchiveView.as_view(), name='day_archive'),
-
-    path('', include('hines.weblogs.urls')),
 ]
 

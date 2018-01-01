@@ -17,7 +17,7 @@ Expects:
           {% if current_year == year %}
             {{ year|date:"Y" }}
           {% else %}
-            <a href="{% url 'hines:post_year_archive' blog_slug=blog.slug year=year|date:"Y" %}" title="See all posts in {{ year|date:"Y" }}">{{ year|date:"Y" }}</a>
+            <a href="{% url 'weblogs:post_year_archive' blog_slug=blog.slug year=year|date:"Y" %}" title="See all posts in {{ year|date:"Y" }}">{{ year|date:"Y" }}</a>
           {% endif %}
         </li>
       {% endfor %}

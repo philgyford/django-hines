@@ -24,10 +24,10 @@
 		<div class="col3">
 			<h2>Individual RSS feeds</h2>
 			<ul class="rss">
-				<li><a href="{% url 'hines:blog_feed_posts_rss' blog_slug='writing' %}" title="Things I've written on this site">Writing on Gyford.com</a></li>
+				<li><a href="{% url 'weblogs:blog_feed_posts_rss' blog_slug='writing' %}" title="Things I've written on this site">Writing on Gyford.com</a></li>
 				<li><a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&amp;format=rss_200" title="Photos by me">Photos at Flickr</a></li>
 				<li>Links <a href="http://feeds.pinboard.in/rss/u:philgyford/" title="Links to things I've found interesting">at Pinboard</a></li>
-				<li class="split"><a href="{% url 'hines:blog_feed_posts_rss' blog_slug='comments' %}" title="Things I've written about other people's blog posts etc">Comments on other sites</a></li>
+				<li class="split"><a href="{% url 'weblogs:blog_feed_posts_rss' blog_slug='comments' %}" title="Things I've written about other people's blog posts etc">Comments on other sites</a></li>
 
 				<li><a href="http://feeds2.feedburner.com/Septivium" title="My site about learning everything">Septivium</a></li>
 				<li><a href="http://feeds.feedburner.com/Overmorgen" title="My site about the future">Overmorgen</a></li>

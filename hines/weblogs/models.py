@@ -55,11 +55,11 @@ class Blog(TimeStampedModelMixin, models.Model):
         return Post.public_objects.filter(blog=self)
 
     def get_absolute_url(self):
-        return reverse('hines:blog_detail',
+        return reverse('weblogs:blog_detail',
                             kwargs={'blog_slug': self.slug,})
 
     def get_rss_feed_url(self):
-        return reverse('hines:blog_feed_posts_rss',
+        return reverse('weblogs:blog_feed_posts_rss',
                             kwargs={'blog_slug': self.slug,})
 
     def get_feed_title(self):
@@ -198,7 +198,7 @@ class Post(TimeStampedModelMixin, models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('hines:post_detail',
+        return reverse('weblogs:post_detail',
                             kwargs={
                                 'blog_slug': self.blog.slug,
                                 'year': self.time_published.strftime("%Y"),

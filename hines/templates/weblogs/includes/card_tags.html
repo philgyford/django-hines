@@ -14,7 +14,7 @@ Expects:
     {% include 'hines_core/includes/tags.html' with tag_list=tag_list format='chart' tag_type='post' blog_slug=blog.slug only %}
 
     <p>
-      <a href="{% url 'hines:blog_tag_list' blog_slug=blog.slug %}">More tags</a>
+      <a href="{% url 'weblogs:blog_tag_list' blog_slug=blog.slug %}">More tags</a>
     </p>
   </aside>
 {% endif %}
