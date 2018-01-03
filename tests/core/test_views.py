@@ -6,6 +6,7 @@ from ditto.pinboard.factories import BookmarkFactory
 from ditto.twitter.factories import TweetFactory,\
         AccountFactory as TwitterAccountFactory,\
         UserFactory as TwitterUserFactory
+from spectator.core.factories import IndividualCreatorFactory
 from spectator.reading.factories import PublicationFactory
 from hines.core import views
 from hines.core.utils import make_date, make_datetime
@@ -37,6 +38,31 @@ class HomeViewTestCase(ViewTestCase):
         self.assertEqual(response.template_name[0], 'hines_core/home.html')
 
 
+class AuthorRedirectViewTestCase(ViewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.creator = IndividualCreatorFactory(id=123)
+
+    def test_redirect(self):
+        request = self.factory.get('/fake-path/', {'id': 123})
+        response = views.AuthorRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url, '/terry/creators/9g5o8/')
+
+    def test_missing_id(self):
+        "No id supplied in query string"
+        request = self.factory.get('/fake-path/')
+        with self.assertRaises(Http404):
+            response = views.AuthorRedirectView.as_view()(request)
+
+    def test_wrong_id(self):
+        "There's no creator with this id"
+        request = self.factory.get('/fake-path/', {'id': 456})
+        with self.assertRaises(Http404):
+            response = views.AuthorRedirectView.as_view()(request)
+
+
 class PublicationRedirectViewTestCase(ViewTestCase):
 
     def setUp(self):
@@ -50,7 +76,7 @@ class PublicationRedirectViewTestCase(ViewTestCase):
         self.assertEqual(response.url, '/terry/reading/publications/9g5o8/')
 
     def test_missing_id(self):
-        "No id supplied in query setring"
+        "No id supplied in query string"
         request = self.factory.get('/fake-path/')
         with self.assertRaises(Http404):
             response = views.PublicationRedirectView.as_view()(request)

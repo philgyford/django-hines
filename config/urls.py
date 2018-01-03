@@ -61,7 +61,8 @@ root_dir_patterns = ([
 
     path('patterns/', include('hines.patterns.urls')),
 
-    # Redirecting legacy publication detail URLs that have ?id=123.
+    # Redirecting legacy author/publication detail URLs that have ?id=123.
+    path('reading/author/', core_views.AuthorRedirectView.as_view()),
     path('reading/publication/', core_views.PublicationRedirectView.as_view()),
 
     path('', include(spectator_patterns)),

@@ -19,6 +19,7 @@ from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 from ditto.flickr.models import Photo, Photoset
 from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
+from spectator.core.models import Creator
 from spectator.reading.models import Publication
 from hines.core.utils import make_date
 from hines.weblogs.models import Blog, Post
@@ -184,6 +185,28 @@ class HomeView(TemplateView):
         else:
             bookmarks = Bookmar.objects.none()
         return {'pinboard_bookmark_list': bookmarks}
+
+
+class AuthorRedirectView(RedirectView):
+    """
+    Redirecting old PHP/MT Author URLs that are like
+    /phil/reading/author/?id=123
+
+    Redirect to the new creator_detail view with the creator's new slug.
+    """
+    permanent = True
+    pattern_name = 'spectator:creators:creator_detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        creator_id = self.request.GET.get('id', False)
+
+        if creator_id is False:
+            raise Http404("No creator ID supplied.")
+
+        creator = get_object_or_404(Creator, pk=creator_id)
+        kwargs['slug'] = creator.slug
+
+        return super().get_redirect_url(*args, **kwargs)
 
 
 class PublicationRedirectView(RedirectView):
