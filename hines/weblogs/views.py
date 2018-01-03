@@ -294,39 +294,43 @@ class PostTagAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
-class PostImageUploadView(ImageUploadView):
-    """
-    Just replacing the form_valid() method so we can provide our own HTML.
+# Generating errors:
+# https://github.com/neutronX/django-markdownx/issues/101
+# So not using this for the moment.
+#
+# class PostImageUploadView(ImageUploadView):
+    # """
+    # Just replacing the form_valid() method so we can provide our own HTML.
 
-    Based on https://github.com/neutronX/django-markdownx/blob/master/markdownx/views.py#L55
-    """
-    def form_valid(self, form):
-        """
-        If the form is valid, the contents are saved.
-        If the **POST** request is AJAX (image uploads), a JSON response will be
-        produced containing the Markdown encoded image insertion tag with the URL
-        using which the uploaded image may be accessed.
-        JSON response would be as follows:
-        .. code-block:: bash
-            { image_code: "![](/media/image_directory/123-4e6-ga3.png)" }
-        :param form: Django form instance.
-        :type form: django.forms.Form
-        :return: JSON encoded Markdown tag for AJAX requests, and an appropriate
-                 response for HTTP requests.
-        :rtype: django.http.JsonResponse, django.http.HttpResponse
-        """
-        response = super().form_valid(form)
+    # Based on https://github.com/neutronX/django-markdownx/blob/master/markdownx/views.py#L55
+    # """
+    # def form_valid(self, form):
+        # """
+        # If the form is valid, the contents are saved.
+        # If the **POST** request is AJAX (image uploads), a JSON response will be
+        # produced containing the Markdown encoded image insertion tag with the URL
+        # using which the uploaded image may be accessed.
+        # JSON response would be as follows:
+        # .. code-block:: bash
+            # { image_code: "![](/media/image_directory/123-4e6-ga3.png)" }
+        # :param form: Django form instance.
+        # :type form: django.forms.Form
+        # :return: JSON encoded Markdown tag for AJAX requests, and an appropriate
+                 # response for HTTP requests.
+        # :rtype: django.http.JsonResponse, django.http.HttpResponse
+        # """
+        # response = super().form_valid(form)
 
-        if self.request.is_ajax():
-            image_path = form.save(commit=True)
-            image_code = '![]({})'.format(image_path)
-            # image_code = """<figure class="figure figure--img figure--full">
-  # <a href="{}" title="See larger version"><img src="{}" alt=""></a>
-# </figure>
-# """.format(image_path, image_path)
-            return JsonResponse({'image_code': image_code})
+        # if self.request.is_ajax():
+            # image_path = form.save(commit=True)
+            # image_code = '![]({})'.format(image_path)
+            # # image_code = """<figure class="figure figure--img figure--full">
+  # # <a href="{}" title="See larger version"><img src="{}" alt=""></a>
+# # </figure>
+# # """.format(image_path, image_path)
+            # return JsonResponse({'image_code': image_code})
 
-        return response
+        # return response
 
 
 def _date_from_string(year, year_format, month='', month_format='', day='', day_format='', delim='__'):
