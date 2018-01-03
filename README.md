@@ -12,7 +12,7 @@ Very much a work in progress.
 
 ### Setup
 
-We're using [this Vagrant setup](https://github.com/philgyford/vagrant-heroku-cedar-16-python).
+We're using [this Vagrant setup](https://github.com/philgyford/vagrant-heroku-cedar-16-python). Media files are stored in an S3 bucket.
 
 	$ vagrant up
 
@@ -20,6 +20,7 @@ Once done, then, for a fresh install:
 
 	$ vagrant ssh
 	vagrant$ cd /vagrant
+	vagrant$ source .env
 	vagrant$ ./manage.py migrate
 	vagrant$ ./manage.py collectstatic
 	vagrant$ ./manage.py createsuperuser
@@ -143,4 +144,90 @@ Blog to indicate how many posts of each to display. e.g.:
 			'comments': 1,
 		},
 	}
+
+## Environment variables
+
+We expect some variables to be set in the environment. In Vagrant we have
+a `.env` file which can be `source`d to do this.
+
+These variables are used on both local/Vagrant and production/Heroku sites:
+
+    ALLOWED_HOSTS
+	DJANGO_SECRET_KEY
+	DJANGO_SETTINGS_MODULE
+	DATABASE_URL
+	AWS_ACCESS_KEY_ID
+	AWS_SECRET_ACCESS_KEY
+	AWS_STORAGE_BUCKET_NAME
+
+	
+## Media files
+
+Whether using Vagrant or Heroku, we need an S3 bucket to store Media files in
+(Static files are served using Whitenoise).
+
+1. Go to the IAM service, Users, and 'Add User'.
+
+2. Enter a name and check 'Programmatic access'.
+
+3. 'Attach existing policies directly', and select 'AmazonS3FullAccess'.
+
+4. Create user.
+
+5. Save the Access key and Secret key.
+
+6. On the list of Users, click the user you just made and note the User ARN.
+
+7. Go to the S3 service and 'Create Bucket'. Name it, select the region, and click through to create the bucket.
+
+8. Click the bucket just created and then the 'Permissions' tab. Add this
+   policy, replacing `BUCKET-NAME` and `USER-ARN` with yours:
+
+    ```
+{
+	"Statement": [
+		{
+		  "Sid":"PublicReadForGetBucketObjects",
+		  "Effect":"Allow",
+		  "Principal": {
+				"AWS": "*"
+			 },
+		  "Action":["s3:GetObject"],
+		  "Resource":["arn:aws:s3:::BUCKET-NAME/*"
+		  ]
+		},
+		{
+			"Action": "s3:*",
+			"Effect": "Allow",
+			"Resource": [
+				"arn:aws:s3:::BUCKET-NAME",
+				"arn:aws:s3:::BUCKET-NAME/*"
+			],
+			"Principal": {
+				"AWS": [
+					"USER-ARN"
+				]
+			}
+		}
+	]
+}
+    ```
+
+9. Click on 'CORS configuration' and add this:
+
+    ```
+<CORSConfiguration>
+	<CORSRule>
+		<AllowedOrigin>*</AllowedOrigin>
+		<AllowedMethod>GET</AllowedMethod>
+		<MaxAgeSeconds>3000</MaxAgeSeconds>
+		<AllowedHeader>Authorization</AllowedHeader>
+	</CORSRule>
+</CORSConfiguration>
+    ```
+
+10. Upload all the files to the bucket in the required location.
+
+11. Update the server's environment variables for `AWS_ACCESS_KEY_ID`,
+    `AWS_SECRET_ACCESS_KEY` and `AWS_STORAGE_BUCKET_NAME`.
 

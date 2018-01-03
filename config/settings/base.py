@@ -4,6 +4,8 @@ Should be extended by settings for specific environments.
 import os
 from os import environ
 
+import dj_database_url
+
 from django.core.exceptions import ImproperlyConfigured
 
 
@@ -14,6 +16,10 @@ def get_env_variable(var_name):
     except KeyError:
         error_msg = 'Set the {} environemnt variable.'.format(var_name)
         raise ImproperlyConfigured(error_msg)
+
+
+# Most hines-related pages will be within this root directory:
+HINES_ROOT_DIR = 'phil'
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -110,19 +116,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+# Uses DATABASE_URL environment variable:
+DATABASES = {'default': dj_database_url.config()}
+DATABASES['default']['CONN_MAX_AGE'] = 500
 
-DATABASES = {
-    'default': {
-        'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     get_env_variable('DB_NAME'),
-        'USER':     get_env_variable('DB_USERNAME'),
-        'PASSWORD': get_env_variable('DB_PASSWORD'),
-        'HOST':     get_env_variable('DB_HOST'),
-        'PORT':     '',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -159,8 +156,9 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 
+# I think this is only used if we're NOT using S3:
 MEDIA_ROOT = os.path.join(APPS_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = '/{}/'.format(HINES_ROOT_DIR)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -188,16 +186,60 @@ AUTH_USER_MODEL = 'users.User'
 # Monday:
 FIRST_DAY_OF_WEEK = 1
 
+
+####################################################################
+# THIRD-PARTY APPS
+
+
 COMMENTS_APP = 'hines.custom_comments'
 
 # We don't want to allow duplicate tags like 'Fish' and 'fish':
 TAGGIT_CASE_INSENSITIVE = True
 
 
+# Storing Media files on AWS.
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
+
+AWS_QUERYSTRING_AUTH = False
+
+S3_URL = 'https://{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+
+MEDIA_URL = S3_URL + MEDIA_URL
+
+
+# Markdownx settings
+
+MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
+
+from datetime import datetime
+MARKDOWNX_MEDIA_PATH = datetime.now().strftime('weblogs/%Y/%m/%d')
+
+MARKDOWNX_IMAGE_MAX_SIZE = {
+    'size': (1000, 1000),
+    'quality': 90
+}
+
+# URL for where Markdown text is sent for formatting.
+MARKDOWNX_URLS_PATH = '/{}/markdownx/markdownify/'.format(HINES_ROOT_DIR)
+
+# URL for where images are sent for uploading, returning JSON of the HTML
+# for the image tag.
+MARKDOWNX_UPLOAD_URLS_PATH = '/{}/markdownx/upload/'.format(HINES_ROOT_DIR)
+
+
+# END THIRD-PARTY APPS
+####################################################################
+
+
+####################################################################
 ## DJANGO-HINES-SPECIFIC SETTINGS
 
-# Most hines-related pages will be within this root directory:
-HINES_ROOT_DIR = 'phil'
+# Also see HINES_ROOT_DIR at top of file.
 
 # We won't show Day Archive pages before this YYYY-MM-DD date:
 HINES_FIRST_DATE = '2000-03-15'
@@ -251,19 +293,3 @@ MT_MYSQL_DB_NAME = os.environ.get('MT_MYSQL_DB_NAME', None)
 MT_MYSQL_DB_PORT = os.environ.get('MT_MYSQL_DB_PORT', None)
 
 
-# Markdownx settings
-# (Must be after HINES settings because we need HINES_ROOT_DIR)
-
-MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
-
-from datetime import datetime
-MARKDOWNX_MEDIA_PATH = datetime.now().strftime('weblogs/%Y/%m/%d')
-
-MARKDOWNX_IMAGE_MAX_SIZE = {
-    'size': (1000, 1000),
-    'quality': 90
-}
-
-MARKDOWNX_URLS_PATH = '/{}/markdownx/markdownify/'.format(HINES_ROOT_DIR)
-
-MARKDOWNX_UPLOAD_URLS_PATH = '/{}/markdownx/upload/'.format(HINES_ROOT_DIR)

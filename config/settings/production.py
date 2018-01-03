@@ -1,5 +1,4 @@
 from base import *
-import dj_database_url
 
 
 DEBUG = False
@@ -9,10 +8,6 @@ ADMINS = [
 ]
 
 MANAGERS = ADMINS
-
-# Uses DATABASE_URL environment variable:
-DATABASES = {'default': dj_database_url.config()}
-DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # If you *don't* want to prepend www to the URL, remove the setting from
 # the environment entirely. Otherwise, set to 'True' (or anything tbh).
