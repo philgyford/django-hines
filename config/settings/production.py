@@ -13,6 +13,21 @@ MANAGERS = ADMINS
 # the environment entirely. Otherwise, set to 'True' (or anything tbh).
 PREPEND_WWW = True
 
+
+# Storing Media files on AWS.
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
+
+AWS_QUERYSTRING_AUTH = False
+
+MEDIA_URL = 'https://media.gyford.com{}'.format(MEDIA_URL)
+
+
+
 # See https://devcenter.heroku.com/articles/memcachier#django
 environ['MEMCACHE_SERVERS'] = get_env_variable('MEMCACHIER_SERVERS').replace(',', ';')
 environ['MEMCACHE_USERNAME'] = get_env_variable('MEMCACHIER_USERNAME')

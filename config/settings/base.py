@@ -171,14 +171,6 @@ STATICFILES_DIRS = [
 ]
 
 
-# A directory of static files to be served in the root directory.
-# e.g. 'robots.txt'.
-WHITENOISE_ROOT = os.path.join(APPS_DIR, 'static_html/')
-
-# Visiting /example/ will serve /example/index.html:
-WHITENOISE_INDEX_FILE = True
-
-
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.User'
@@ -197,19 +189,12 @@ COMMENTS_APP = 'hines.custom_comments'
 TAGGIT_CASE_INSENSITIVE = True
 
 
-# Storing Media files on AWS.
+# A directory of static files to be served in the root directory.
+# e.g. 'robots.txt'.
+WHITENOISE_ROOT = os.path.join(APPS_DIR, 'static_html/')
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
-
-AWS_QUERYSTRING_AUTH = False
-
-S3_URL = 'https://{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
-
-MEDIA_URL = S3_URL + MEDIA_URL
+# Visiting /example/ will serve /example/index.html:
+WHITENOISE_INDEX_FILE = True
 
 
 # Markdownx settings
