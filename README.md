@@ -184,46 +184,46 @@ Whether using Vagrant or Heroku, we need an S3 bucket to store Media files in
    policy, replacing `BUCKET-NAME` and `USER-ARN` with yours:
 
     ```
-{
-	"Statement": [
-		{
-		  "Sid":"PublicReadForGetBucketObjects",
-		  "Effect":"Allow",
-		  "Principal": {
-				"AWS": "*"
-			 },
-		  "Action":["s3:GetObject"],
-		  "Resource":["arn:aws:s3:::BUCKET-NAME/*"
-		  ]
-		},
-		{
-			"Action": "s3:*",
-			"Effect": "Allow",
-			"Resource": [
-				"arn:aws:s3:::BUCKET-NAME",
-				"arn:aws:s3:::BUCKET-NAME/*"
-			],
-			"Principal": {
-				"AWS": [
-					"USER-ARN"
-				]
+	{
+		"Statement": [
+			{
+			  "Sid":"PublicReadForGetBucketObjects",
+			  "Effect":"Allow",
+			  "Principal": {
+					"AWS": "*"
+				 },
+			  "Action":["s3:GetObject"],
+			  "Resource":["arn:aws:s3:::BUCKET-NAME/*"
+			  ]
+			},
+			{
+				"Action": "s3:*",
+				"Effect": "Allow",
+				"Resource": [
+					"arn:aws:s3:::BUCKET-NAME",
+					"arn:aws:s3:::BUCKET-NAME/*"
+				],
+				"Principal": {
+					"AWS": [
+						"USER-ARN"
+					]
+				}
 			}
-		}
-	]
-}
+		]
+	}
     ```
 
 9. Click on 'CORS configuration' and add this:
 
     ```
-<CORSConfiguration>
-	<CORSRule>
-		<AllowedOrigin>*</AllowedOrigin>
-		<AllowedMethod>GET</AllowedMethod>
-		<MaxAgeSeconds>3000</MaxAgeSeconds>
-		<AllowedHeader>Authorization</AllowedHeader>
-	</CORSRule>
-</CORSConfiguration>
+	<CORSConfiguration>
+		<CORSRule>
+			<AllowedOrigin>*</AllowedOrigin>
+			<AllowedMethod>GET</AllowedMethod>
+			<MaxAgeSeconds>3000</MaxAgeSeconds>
+			<AllowedHeader>Authorization</AllowedHeader>
+		</CORSRule>
+	</CORSConfiguration>
     ```
 
 10. Upload all the files to the bucket in the required location.
