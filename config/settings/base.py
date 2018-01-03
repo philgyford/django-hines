@@ -193,16 +193,6 @@ COMMENTS_APP = 'hines.custom_comments'
 # We don't want to allow duplicate tags like 'Fish' and 'fish':
 TAGGIT_CASE_INSENSITIVE = True
 
-MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
-
-from datetime import datetime
-MARKDOWNX_MEDIA_PATH = datetime.now().strftime('weblogs/%Y/%m/%d')
-
-MARKDOWNX_IMAGE_MAX_SIZE = {
-    'size': (1000, 1000),
-    'quality': 90
-}
-
 
 ## DJANGO-HINES-SPECIFIC SETTINGS
 
@@ -260,3 +250,20 @@ MT_MYSQL_DB_PASSWORD = os.environ.get('MT_MYSQL_DB_PASSWORD', None)
 MT_MYSQL_DB_NAME = os.environ.get('MT_MYSQL_DB_NAME', None)
 MT_MYSQL_DB_PORT = os.environ.get('MT_MYSQL_DB_PORT', None)
 
+
+# Markdownx settings
+# (Must be after HINES settings because we need HINES_ROOT_DIR)
+
+MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
+
+from datetime import datetime
+MARKDOWNX_MEDIA_PATH = datetime.now().strftime('weblogs/%Y/%m/%d')
+
+MARKDOWNX_IMAGE_MAX_SIZE = {
+    'size': (1000, 1000),
+    'quality': 90
+}
+
+MARKDOWNX_URLS_PATH = '/{}/markdownx/markdownify/'.format(HINES_ROOT_DIR)
+
+MARKDOWNX_UPLOAD_URLS_PATH = '/{}/markdownx/upload/'.format(HINES_ROOT_DIR)

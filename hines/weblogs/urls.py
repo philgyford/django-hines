@@ -1,4 +1,6 @@
-from django.urls import path, register_converter
+from django.urls import include, path, register_converter
+
+from markdownx.views import MarkdownifyView
 
 from hines.core import converters
 from . import feeds, views
@@ -14,6 +16,12 @@ app_name = 'weblogs'
 urlpatterns = [
     path('post-tag-autocomplete/', views.PostTagAutocomplete.as_view(),
         name='post_tag_autocomplete',),
+
+    # Used in the Admin:
+    path('markdownx/upload/', views.PostImageUploadView.as_view(),
+        name='markdownx_upload'),
+    path('markdownx/markdownify/', MarkdownifyView.as_view(),
+        name='markdownx_markdownify'),
 
     path(
         '<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>.php',

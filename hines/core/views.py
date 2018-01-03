@@ -6,17 +6,20 @@ from django.core.paginator import InvalidPage
 from django.http import (Http404, HttpResponseNotFound,
             HttpResponseBadRequest, HttpResponseForbidden,
             HttpResponseServerError)
+from django.shortcuts import get_object_or_404
 from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import ListView, TemplateView
+from django.views.generic.base import RedirectView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 
 from ditto.flickr.models import Photo, Photoset
 from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
+from spectator.reading.models import Publication
 from hines.core.utils import make_date
 from hines.weblogs.models import Blog, Post
 from .paginator import DiggPaginator
@@ -181,6 +184,28 @@ class HomeView(TemplateView):
         else:
             bookmarks = Bookmar.objects.none()
         return {'pinboard_bookmark_list': bookmarks}
+
+
+class PublicationRedirectView(RedirectView):
+    """
+    Redirecting old PHP/MT Publication URLs that are like
+    /phil/reading/publication/?id=123
+
+    Redirect to the new publication_detail view with the publication's new slug.
+    """
+    permanent = True
+    pattern_name = 'spectator:reading:publication_detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        publication_id = self.request.GET.get('id', False)
+
+        if publication_id is False:
+            raise Http404("No publication ID supplied.")
+
+        publication = get_object_or_404(Publication, pk=publication_id)
+        kwargs['slug'] = publication.slug
+
+        return super().get_redirect_url(*args, **kwargs)
 
 
 class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):

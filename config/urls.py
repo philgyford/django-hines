@@ -61,6 +61,9 @@ root_dir_patterns = ([
 
     path('patterns/', include('hines.patterns.urls')),
 
+    # Redirecting legacy publication detail URLs that have ?id=123.
+    path('reading/publication/', core_views.PublicationRedirectView.as_view()),
+
     path('', include(spectator_patterns)),
 
     path('', include('hines.weblogs.urls')),
@@ -74,6 +77,7 @@ urlpatterns = [
 
     path('favicon.ico', RedirectView.as_view(
         url=static_tag('hines/img/favicons/favicon.ico'), permanent=True)),
+
 
 
     # SITEMAP
@@ -94,9 +98,6 @@ urlpatterns = [
     path('', core_views.HomeView.as_view(), name='home'),
 
     path('{}/'.format(ROOT_DIR), include(root_dir_patterns)),
-
-    # Used in the weblogs app for the Admin:
-    path('markdownx/', include('markdownx.urls')),
 
     # Used in the weblogs app:
     path('comments/', include('django_comments.urls')),
