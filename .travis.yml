@@ -10,10 +10,7 @@ env:
   global:
   - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
   - ALLOWED_HOSTS='*'
-  - DB_NAME='test_db'
-  - DB_USERNAME='postgres'
-  - DB_PASSWORD=''
-  - DB_HOST='localhost'
+  - DATABASE_URL='postgres://postgres:@localhost:5432/test_db'
 install:
 - pip install -q coverage coveralls
 - pip install -q -r ./requirements/tests.txt
