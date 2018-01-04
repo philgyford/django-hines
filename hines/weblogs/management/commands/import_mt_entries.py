@@ -40,12 +40,12 @@ DB_PORT = os.environ.get('MT_OLD_DB_PORT')
 
 # If True, this won't insert/update into our local database, and will output a
 # load of stuff to the command line instead:
-DRY_RUN = False
+DRY_RUN = True
 
 
 # Which blog are we importing for:
-# BLOG_SETTINGS = 'writing'
-BLOG_SETTINGS = 'comments'
+BLOG_SETTINGS = 'writing'
+# BLOG_SETTINGS = 'comments'
 
 # We'll associate all imported Posts with this Django User ID:
 # If importing comments, and a comment is from this User's email address,
