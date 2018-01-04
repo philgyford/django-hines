@@ -5,6 +5,7 @@
   background-color: transparent; // Remove the gray background on active links in IE 10.
   -webkit-text-decoration-skip: ink;
   text-decoration-skip: ink;
+  text-decoration-skip-ink: auto;
 
   &:active {
     color: $link-active-color;
