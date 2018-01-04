@@ -44,8 +44,8 @@ DRY_RUN = False
 
 
 # Which blog are we importing for:
-BLOG_SETTINGS = 'writing'
-# BLOG_SETTINGS = 'comments'
+# BLOG_SETTINGS = 'writing'
+BLOG_SETTINGS = 'comments'
 
 # We'll associate all imported Posts with this Django User ID:
 # If importing comments, and a comment is from this User's email address,
