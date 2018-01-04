@@ -4,17 +4,6 @@ DEBUG = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-CACHES = {
-    'default': {
-        # Use dummy cache (ie, no caching):
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-
-        # Or use local memcached:
-        #'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        #'LOCATION': '127.0.0.1:11211',
-        #'TIMEOUT': 500, # millisecond
-    }
-}
 
 
 # Storing Media files on AWS.
@@ -30,6 +19,18 @@ AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = 'https://{}.s3.amazonaws.com{}'.format(
                                             AWS_STORAGE_BUCKET_NAME, MEDIA_URL)
 
+
+CACHES = {
+    'default': {
+        # Use dummy cache (ie, no caching):
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+
+        # Or use local memcached:
+        #'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        #'LOCATION': '127.0.0.1:11211',
+        #'TIMEOUT': 500, # millisecond
+    }
+}
 
 # Debug Toolbar settings.
 if DEBUG:

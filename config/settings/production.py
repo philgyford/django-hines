@@ -1,5 +1,4 @@
-from base import *
-
+from .base import *
 
 DEBUG = False
 
@@ -24,7 +23,8 @@ AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
 
 AWS_QUERYSTRING_AUTH = False
 
-MEDIA_URL = 'https://media.gyford.com{}'.format(MEDIA_URL)
+MEDIA_URL = 'https://{}.s3.amazonaws.com{}'.format(
+                                            AWS_STORAGE_BUCKET_NAME, MEDIA_URL)
 
 
 
