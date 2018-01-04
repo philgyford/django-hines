@@ -39,7 +39,7 @@ Make sure Blogs 1 (Writing) and 2 (Comments) have been added in admin.
 Install requirements (might only need the last):
 
 	vagrant$ sudo apt-get install libmysqlclient-dev
-	vagrant$ pip install mysqlclient
+	vagrant$ pip install pymysql
 
 In one window:
 
@@ -51,10 +51,7 @@ Then in another:
 
 #### Importing old Reading
 
-Install `libmysqlclient-dev` as above. Then (yes I used a different python
-module for MySQL, grr):
-
-	vagrant$ pip install pymysql
+Install `libmysqlclient-dev` and `pymysql` as above.
 
 Open SSH connection in one window as above.
 

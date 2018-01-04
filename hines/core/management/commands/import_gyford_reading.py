@@ -43,7 +43,7 @@ class Command(BaseCommand):
                              user=DB_USER,
                              password=DB_PASSWORD,
                              db=DB_NAME,
-                             port=DB_PORT,
+                             port=int(DB_PORT),
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor,
                              conv=new_conv)

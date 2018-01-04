@@ -1,10 +1,11 @@
 # coding: utf-8
 import html
-import MySQLdb
+import os
 import pprint
 import pytz
 
-from django.conf import settings
+import pymysql.cursors
+
 from django.db.utils import IntegrityError
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.html import strip_tags
@@ -29,6 +30,12 @@ from hines.users.models import User
 # NOTE: There are some quite bespoke things in this (eg `extra_cats`) so
 # don't expect it to work as some magic generic MT -> Django script.
 # But it might be a good basis if you need something similar.
+
+DB_USER = os.environ.get('MT_OLD_DB_USER')
+DB_PASSWORD = os.environ.get('MT_OLD_DB_PASSWORD')
+DB_NAME = os.environ.get('MT_OLD_DB_NAME')
+DB_HOST = os.environ.get('MT_OLD_DB_HOST')
+DB_PORT = os.environ.get('MT_OLD_DB_PORT')
 
 
 # If True, this won't insert/update into our local database, and will output a
@@ -129,16 +136,16 @@ class Command(BaseCommand):
             raise CommandError(
                     "There's no User with an id of {}.".format(USER_ID))
 
-        db = MySQLdb.connect(host=settings.MT_MYSQL_DB_HOST,
-                            user=settings.MT_MYSQL_DB_USER,
-                            passwd=settings.MT_MYSQL_DB_PASSWORD,
-                            db=settings.MT_MYSQL_DB_NAME,
-                            port=int(settings.MT_MYSQL_DB_PORT),
-                            charset='utf8',
-                            use_unicode=True)
+        connection = pymysql.connect(host=DB_HOST,
+                             user=DB_USER,
+                             password=DB_PASSWORD,
+                             db=DB_NAME,
+                             port=int(DB_PORT),
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
 
-        cursor = db.cursor(MySQLdb.cursors.DictCursor)
-        cursor2 = db.cursor(MySQLdb.cursors.DictCursor)
+        cursor = connection.cursor()
+        cursor2 = connection.cursor()
 
         cursor.execute(
             "SELECT "
@@ -147,11 +154,11 @@ class Command(BaseCommand):
                 "entry_status, entry_allow_comments, entry_convert_breaks, "
                 "entry_basename "
             "FROM mt_entry "
-            "WHERE entry_blog_id='{}' "
+            "WHERE entry_blog_id=%s "
             "AND entry_class='entry' "
             # "AND entry_id=233 "
             # "ORDER BY entry_id DESC LIMIT 15 "
-            "".format(MT_BLOG_ID))
+            "", (MT_BLOG_ID))
 
         for entry in cursor.fetchall():
 
@@ -208,9 +215,9 @@ class Command(BaseCommand):
 
                 cursor2.execute(
                     "SELECT entry_meta_vchar FROM mt_entry_meta "
-                    "WHERE entry_meta_entry_id='{}' "
-                    "AND entry_meta_type='field.remote_url'".format(
-                                                            entry['entry_id']))
+                    "WHERE entry_meta_entry_id=%s "
+                    "AND entry_meta_type='field.remote_url'",
+                    (entry['entry_id']))
                 row = cursor2.fetchone()
                 if row is not None and row['entry_meta_vchar'] is not None:
                     post_kwargs['remote_url'] = row['entry_meta_vchar']
@@ -242,9 +249,9 @@ class Command(BaseCommand):
                     "FROM mt_objecttag, mt_tag "
                     "WHERE objecttag_tag_id=tag_id "
                     "AND objecttag_object_datasource='entry' "
-                    "AND objecttag_blog_id='{}' "
-                    "AND objecttag_object_id='{}'".format(
-                                                MT_BLOG_ID, entry['entry_id']))
+                    "AND objecttag_blog_id=%s "
+                    "AND objecttag_object_id=%s",
+                    (MT_BLOG_ID, entry['entry_id']))
 
                 for tag in cursor2.fetchall():
                     tags.append(tag['tag_name'])
@@ -274,9 +281,9 @@ class Command(BaseCommand):
                     "FROM mt_category, mt_placement "
                     "WHERE placement_category_id=category_id "
                     "AND category_class='category' "
-                    "AND placement_blog_id='{}' "
-                    "AND placement_entry_id='{}' ".format(
-                                            MT_BLOG_ID, entry['entry_id']))
+                    "AND placement_blog_id=%s "
+                    "AND placement_entry_id=%s",
+                    (MT_BLOG_ID, entry['entry_id']))
 
                 for cat in cursor2.fetchall():
                     label = cat['category_label']
@@ -304,9 +311,9 @@ class Command(BaseCommand):
                         "comment_url, comment_text, comment_created_on, "
                         "comment_visible "
                     "FROM mt_comment "
-                    "WHERE comment_blog_id='{}' "
-                    "AND comment_entry_id={} ".format(
-                                            MT_BLOG_ID, entry['entry_id']))
+                    "WHERE comment_blog_id=%s "
+                    "AND comment_entry_id=%s ",
+                    (MT_BLOG_ID, entry['entry_id']))
 
                 comment_count = 0
 
@@ -352,9 +359,9 @@ class Command(BaseCommand):
                         "tbping_visible "
                     "FROM mt_tbping, mt_trackback "
                     "WHERE tbping_tb_id=trackback_id "
-                    "AND trackback_blog_id='{}' "
-                    "AND trackback_entry_id={} ".format(
-                                            MT_BLOG_ID, entry['entry_id']))
+                    "AND trackback_blog_id=%s "
+                    "AND trackback_entry_id=%s ",
+                    (MT_BLOG_ID, entry['entry_id']))
 
                 for tb in cursor2.fetchall():
                     is_visible = True if tb['tbping_visible'] == 1 else False
@@ -389,5 +396,5 @@ class Command(BaseCommand):
 
         cursor.close()
         cursor2.close()
-        db.close()
+        connection.close()
 
