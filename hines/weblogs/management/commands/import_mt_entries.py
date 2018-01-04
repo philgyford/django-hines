@@ -40,7 +40,7 @@ DB_PORT = os.environ.get('MT_OLD_DB_PORT')
 
 # If True, this won't insert/update into our local database, and will output a
 # load of stuff to the command line instead:
-DRY_RUN = True
+DRY_RUN = False
 
 
 # Which blog are we importing for:
