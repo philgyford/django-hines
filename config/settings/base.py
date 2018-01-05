@@ -143,7 +143,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-gb'
+# Using 'en-gb' caused the select2 included with autocomplete_light, that's
+# used on admin screens for editing a weblog Post, to complain with:
+# ValueError: Missing staticfiles manifest entry for 'autocomplete_light/vendor/select2/dist/js/i18n/en-GB.js'
+# (2018-01-05)
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
