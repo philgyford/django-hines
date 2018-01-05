@@ -249,7 +249,7 @@ HINES_HOME_PAGE_DISPLAY = {
     'flickr_photos': 3,
     'pinboard_bookmarks': 3,
     'weblog_posts': {
-        'writing': 3,
+        'writing': 2,
         'comments': 1,
     },
 }
@@ -266,7 +266,7 @@ HINES_TEMPLATE_SETS = (
     # Sight & Sound theme plus a few tweaks:
     {'name': '200608', 'start': '2006-08-30', 'end': '2009-02-09'},
     # Same but a bit wider and (later) responsive:
-    {'name': '2009', 'start': '2009-02-10', 'end': '2015-11-08'},
+    {'name': '2009', 'start': '2009-02-10', 'end': '2018-01-04'},
 )
 
 HINES_GOOGLE_ANALYTICS_ID = os.environ.get('HINES_GOOGLE_ANALYTICS_ID', None)
