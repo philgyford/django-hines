@@ -61,7 +61,9 @@
         <h2>Post a comment</h2>
         {% render_comment_form for post %}
       {% else %}
-        <p>Comments are closed for this post.</p>
+		{% comment %}
+			<p>Comments are closed for this post.</p>
+		{% endcomment %}
       {% endif %}
     </section>
 
