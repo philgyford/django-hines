@@ -2,7 +2,7 @@ bleach==2.1.2
 boto3==1.5.8
 dj-database-url==0.4.2
 Django==2.0.1
-django-autocomplete-light==3.3.0-rc1
+django-autocomplete-light==3.3.0-rc3
 django-contrib-comments==1.8.0
 django-ditto==0.7.2
 # Until this is merged into neutronX/django-markdownx:
