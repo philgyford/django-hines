@@ -2,8 +2,6 @@
 
 Code for http://www.gyford.com
 
-Very much a work in progress.
-
 [![Build Status](https://travis-ci.org/philgyford/django-hines.svg?branch=master)](https://travis-ci.org/philgyford/django-hines)
 [![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=master)](https://coveralls.io/github/philgyford/django-hines?branch=master)
 
@@ -30,34 +28,91 @@ Then visit http://localhost:5000 or http://127.0.0.1:5000.
 
 In the Django Admin set the Domain Name of the one Site.
 
+
 ### Other local dev tasks
 
-#### Importing old MT weblog
+#### Importing old Movable Type weblog and Reading
 
-Make sure Blogs 1 (Writing) and 2 (Comments) have been added in admin.
+We're importing from a remote MySQL database so we have to SSH tunnel to its
+server to make a connection.
 
-Install requirements (might only need the last):
+Make sure Blogs with IDs 1 (Writing) and 2 (Comments) have been added in admin.
 
+##### On Vagrant
+
+Install MySQL requirements (not 100% sure this is needed now we're using
+`pymysql` instead of MySQLdb):
+
+	vagrant$ cd /vagrant
 	vagrant$ sudo apt-get install libmysqlclient-dev
+
+If `pymysql` isn't already installed as part of requirements, then:
+
 	vagrant$ pip install pymysql
 
-In one window:
+Check the environment variables needed by both scripts are set in `.env` and `source`d. For both, the database host should be `'127.0.0.1'` and the port `'3307'`.
 
-	vagrant$ ssh -L 3307:127.0.0.1:3306 MYUSERNAME@MYHOSTNAME
+In one window (replace username and domain with correct ones):
 
-Then in another:
+	vagrant$ ssh -L 3307:127.0.0.1:3306 username@server.example.org
 
-	vagrant$ ./vagrant/manage.py import_mt_entries
+Then in another (for importing MT entries, set the `BLOG_SETTINGS` in the script
+is set to whichever blog you're importing):
 
-#### Importing old Reading
+	vagrant$ ./manage.py import_mt_entries
+	vagrant$ ./manage.py import_gyford_reading
 
-Install `libmysqlclient-dev` and `pymysql` as above.
+##### On Heroku
 
-Open SSH connection in one window as above.
+The process is similar on Heroku, but because each shell session starts afresh,
+creating the SSH tunnel is more fiddly.
 
-Then in another:
+First, I *think* we need to add this buildpack in addition to the python one:
 
-	vagrant$ ./vagrant/manage.py import_gyford_reading
+	$ heroku buildpacks:add https://github.com/din-co/heroku-buildpack-mysql
+
+And make a script in the repo at `.profile.d/ssh_setup.sh` containing this (via
+[here](https://stackoverflow.com/a/27361295/250962)):
+
+	#!/bin/bash
+
+	# Creates an SSH tunnel to the remote host where our old MySQL database runs.
+
+	SSH_CMD="ssh -fN -L 3307:127.0.0.1:3306 ${REMOTE_HOST_USER}@${REMOTE_HOST_NAME}"
+
+	PID=`pgrep -f "${SSH_CMD}"`
+	if [ $PID ] ; then
+		echo $0: tunnel already running on ${PID}
+	else
+		echo $0 launching tunnel
+		$SSH_CMD
+	fi
+
+Commit this script and push it to Heroku.
+
+Use `heroku config:set` to set all the environment variables required by the two
+scripts. Again, the database host should be `'127.0.0.1'` and the port `'3307'`.
+
+Also set `REMOTE_HOST_USER` and `REMOTE_HOST_NAME` used by `ssh_setup.sh`.
+
+Then:
+
+	$ heroku run bash
+
+You should be promted to connect to the remote server and enter your password.
+The tunnel should then run in the background.
+
+If `pymysql` isn't already installed:
+
+	~ $ pip install pymysql
+
+And run the scripts, again checking `BLOG_SETTINGS` is set appropriately in the first.
+
+	~ $ ./manage.py import_mt_entries
+	~ $ ./manage.py import_gyford_reading
+
+Then you can log out and remove `.profiled.d/ssh_setup.sh`.
+
 
 #### Postgresql export/import
 
@@ -116,7 +171,7 @@ front page and admin will live uner this directory.
 
 ``HINES_TEMPLATE_SETS``: A set of dicts describing different sets of
 templates that can be used for PostDetails between certain dates. e.g.:
-	
+
 	HINES_TEMPLATE_SETS = (
 		{'name': 'houston', 'start': '2000-03-01', 'end': '2000-12-31'},
     )
@@ -142,6 +197,7 @@ Blog to indicate how many posts of each to display. e.g.:
 		},
 	}
 
+
 ## Environment variables
 
 We expect some variables to be set in the environment. In Vagrant we have
@@ -157,7 +213,7 @@ These variables are used on both local/Vagrant and production/Heroku sites:
 	AWS_SECRET_ACCESS_KEY
 	AWS_STORAGE_BUCKET_NAME
 
-	
+
 ## Media files
 
 Whether using Vagrant or Heroku, we need an S3 bucket to store Media files in
