@@ -2,7 +2,7 @@ from datetime import datetime
 import pytz
 
 from django.http.response import Http404
-from django.test import Client, TestCase
+from django.test import Client, override_settings, TestCase
 
 from hines.core.utils import make_date, make_datetime
 from hines.users.models import User
@@ -294,8 +294,20 @@ class PostDetailViewTestCase(ViewTestCase):
 
         self.assertEquals(response.status_code, 200)
 
-    def test_templates(self):
+    @override_settings(HINES_TEMPLATE_SETS=({'name':'2009', 'start': '2009-02-10', 'end': '2018-01-04'},))
+    def test_templates_old(self):
+        "Uses a template from the appropriate template set."
         response = self.client.get('/terry/my-blog/2017/02/20/my-post/')
+        self.assertEqual(response.template_name[0],
+                        'sets/2009/weblogs/post_detail.html')
+
+    @override_settings(HINES_TEMPLATE_SETS=({'name':'2009', 'start': '2009-02-10', 'end': '2018-01-04'},))
+    def test_templates_current(self):
+        "Uses the current post_detail template"
+        LivePostFactory(blog=self.blog,
+                        slug='my-new-post',
+                        time_published=make_datetime('2018-01-05 12:00:00'))
+        response = self.client.get('/terry/my-blog/2018/01/05/my-new-post/')
         self.assertEqual(response.template_name[0], 'weblogs/post_detail.html')
 
     def test_context_blog(self):

@@ -112,7 +112,7 @@
 					{% endwith %}
 				</span>
 				<span class="index">
-					<a href="{% url 'hines:blog_archive' blog_slug=blog.slug %}">In all of {{ blog.short_name }}</a>
+					<a href="{% url 'weblogs:blog_archive' blog_slug=blog.slug %}">In all of {{ blog.short_name }}</a>
 				</span>
 				<span class="next">
 					{% with post.get_next_post as next_post %}

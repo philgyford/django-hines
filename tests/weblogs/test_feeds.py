@@ -93,7 +93,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
             'title': 'My Feed Title',
             'description': 'My feed description.',
             'link': 'http://example.com/terry/my-blog/',
-            'language': 'en-gb',
+            'language': 'en',
             'lastBuildDate': last_build_date,
         })
 
