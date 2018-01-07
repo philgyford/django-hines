@@ -10,7 +10,7 @@
 // Default bulleted list item.
 @mixin list-item-bullet() {
   // Also see the exception to this background positioning in .asides.scss:
-  background: url('#{$img-path}bullet.png') 0 0.5em no-repeat;
+  background: url('#{$img-path}bullet.png') 0 0.4em no-repeat;
   padding-left: ($border-width + $list-inline-padding);
 }
 

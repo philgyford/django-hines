@@ -63,6 +63,9 @@ $meta-offset-bottom: 0.5rem;
 
     & > li {
       @include list-item-bullet;
+
+      // Adjusting for the larger line height than normal:
+      background-position: 0 0.5em;
     }
   }
 }
