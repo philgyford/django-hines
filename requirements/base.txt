@@ -6,7 +6,8 @@ django-autocomplete-light==3.3.0-rc3
 django-contrib-comments==1.8.0
 django-ditto==0.7.3
 # Until django-ditto includes twython > 3.6.0:
--e git://github.com/ryanmcgrath/twython.git@354e31b914bfcd496c68f401df21f220977e5d5b#egg=twython
+# (And twython includes this fix)
+-e git://github.com/philgyford/twython.git@2cfdaaf6e44ced237edc493147c16a38a60926eb#egg=twython
 # Until this is merged into neutronX/django-markdownx:
 git+git://github.com/aaugustin/django-markdownx.git@django-2.0
 #django-markdownx==2.0.21
