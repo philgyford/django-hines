@@ -187,6 +187,18 @@ class HomeView(TemplateView):
         return {'pinboard_bookmark_list': bookmarks}
 
 
+class ArchiveRedirectView(RedirectView):
+    """
+    Redirecting old /archive/* URLs to archive.gyford.com.
+    """
+    permanent = True
+    pattern_name = 'spectator:creators:creator_detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        path = kwargs.get('path', '')
+        return 'http://archive.gyford.com/{}'.format(path)
+
+
 class AuthorRedirectView(RedirectView):
     """
     Redirecting old PHP/MT Author URLs that are like

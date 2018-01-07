@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls import handler400, handler403, handler404, handler500,\
         static
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.contrib import admin
 from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemaps_views
@@ -79,6 +79,8 @@ urlpatterns = [
     path('favicon.ico', RedirectView.as_view(
         url=static_tag('hines/img/favicons/favicon.ico'), permanent=True)),
 
+    re_path(r'archive/(?P<path>.*)$',
+                                core_views.ArchiveRedirectView.as_view()),
 
 
     # SITEMAP

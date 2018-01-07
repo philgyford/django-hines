@@ -38,6 +38,21 @@ class HomeViewTestCase(ViewTestCase):
         self.assertEqual(response.template_name[0], 'hines_core/home.html')
 
 
+class ArchiveRedirectViewTestCase(ViewTestCase):
+
+    def test_redirects(self):
+        response = views.ArchiveRedirectView.as_view()(self.request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url, 'http://archive.gyford.com/')
+
+    def test_redirects_with_path(self):
+        response = views.ArchiveRedirectView.as_view()(
+                                        self.request, path='my/archive/path/')
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url,
+                        'http://archive.gyford.com/my/archive/path/')
+
+
 class AuthorRedirectViewTestCase(ViewTestCase):
 
     def setUp(self):
