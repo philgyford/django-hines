@@ -29,7 +29,7 @@
 
 // Used for things like form help text, form errors, figcaptions, some text in sidebar cards, etc.
 @mixin text-style-alt() {
-	@include text-style-nav;
+  @include text-style-nav;
   text-transform: none;
   font-size: $font-size-sm;
   line-height: $line-height-sm;

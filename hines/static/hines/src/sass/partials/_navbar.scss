@@ -81,6 +81,7 @@
       width: 8em;
       margin-right: ($nav-border-width / 2);
       margin-bottom: 0;
+	  @include text-style-alt();
     }
 
     .button {
