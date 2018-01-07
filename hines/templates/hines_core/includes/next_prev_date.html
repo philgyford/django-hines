@@ -4,8 +4,9 @@ The same HTML as plain next_prev.html but with slightly different inputs.
 
 Expects:
 
-* date_type - 'year' or 'day' (default).
+* date_type - 'year', 'month' or 'day' (default).
 * url_name - The name of the URL to link to, including namespace, if any.
+* blog_slug - If this is a blog-related page, the slug of the Blog (optional).
 * next - Date object (optional).
 * previous - Date object (optional).
 * current - Date object (optional).
@@ -17,21 +18,81 @@ Expects:
     <ul class="nav">
       {% if previous %}
         <li class="nav__item nav__item--split">
-          <a class="nav__link nextprev" href="{% if date_type == 'year' %}{% url url_name year=previous|date:'Y' %}{% else %}{% url url_name year=previous|date:'Y' month=previous|date:'m' day=previous|date:'d' %}{% endif %}">
+          <a class="nav__link nextprev" href="{% spaceless %}
+            {% if blog_slug %}
+              {% if date_type == 'year' %}
+                {% url url_name year=previous|date:'Y' blog_slug=blog_slug %}
+              {% elif date_type == 'month' %}
+                {% url url_name year=previous|date:'Y' month=previous|date:'m' blog_slug=blog_slug %}
+              {% else %}
+                {% url url_name year=previous|date:'Y' month=previous|date:'m' day=previous|date:'d' blog_slug=blog_slug %}
+              {% endif %}
+            {% else %}
+              {% if date_type == 'year' %}
+                {% url url_name year=previous|date:'Y' %}
+              {% elif date_type == 'month' %}
+                {% url url_name year=previous|date:'Y' month=previous|date:'m' %}
+              {% else %}
+                {% url url_name year=previous|date:'Y' month=previous|date:'m' day=previous|date:'d' %}
+              {% endif %}
+            {% endif %}
+          {% endspaceless %}">
             <span aria-hidden="true">&larr;</span>
-            <span class="nextprev__inner">{% if date_type == 'year' %}{{ previous|date:'Y' }}{% else %}{{ previous|date:'j M Y' }}{% endif %}</span>
+            <span class="nextprev__inner">{% spaceless %}
+              {% if date_type == 'year' %}
+                {{ previous|date:'Y' }}
+              {% elif date_type == 'month' %}
+                {{ previous|date:'M' }}
+              {% else %}
+                {{ previous|date:'j M Y' }}
+              {% endif %}
+            {% endspaceless %}</span>
           </a>
         </li>
       {% endif %}
       {% if current %}
         <li class="nav__item nav__item--split is-active">
-          <span class="nav__link">{% if date_type == 'year' %}{{ current|date:'Y' }}{% else %}{{ current|date:'j M Y' }}{% endif %} <span class="u-sr-only">(current)</span></span>
+          <span class="nav__link">{% spaceless %}
+            {% if date_type == 'year' %}
+              {{ current|date:'Y' }}
+            {% elif date_type == 'month' %}
+              {{ current|date:'M' }}
+            {% else %}
+              {{ current|date:'j M Y' }}
+            {% endif %}
+          {% endspaceless %} <span class="u-sr-only">(current)</span></span>
         </li>
       {% endif %}
       {% if next %}
         <li class="nav__item nav__item--split">
-          <a class="nav__link nextprev" href="{% if date_type == 'year' %}{% url url_name year=next|date:'Y' %}{% else %}{% url url_name year=next|date:'Y' month=next|date:'m' day=next|date:'d' %}{% endif %}">
-            <span class="nextprev__inner">{% if date_type == 'year' %}{{ next|date:'Y' }}{% else %}{{ next|date:'j M Y' }}{% endif %}</span>
+          <a class="nav__link nextprev" href="{% spaceless %}
+            {% if blog_slug %}
+              {% if date_type == 'year' %}
+                {% url url_name year=next|date:'Y' blog_slug=blog_slug %}
+              {% elif date_type == 'month' %}
+                {% url url_name year=next|date:'Y' month=next|date:'m' blog_slug=blog_slug %}
+              {% else %}
+                {% url url_name year=next|date:'Y' month=next|date:'m' day=next|date:'d' blog_slug=blog_slug %}
+              {% endif %}
+            {% else %}
+              {% if date_type == 'year' %}
+                {% url url_name year=next|date:'Y' %}
+              {% elif date_type == 'month' %}
+                {% url url_name year=next|date:'Y' month=next|date:'m' %}
+              {% else %}
+                {% url url_name year=next|date:'Y' month=next|date:'m' day=next|date:'d' %}
+              {% endif %}
+            {% endif %}
+          {% endspaceless %}">
+            <span class="nextprev__inner">{% spaceless %}
+              {% if date_type == 'year' %}
+                {{ next|date:'Y' }}
+              {% elif date_type == 'month' %}
+                {{ next|date:'M' }}
+              {% else %}
+                {{ next|date:'j M Y' }}
+              {% endif %}
+            {% endspaceless %}</span>
             <span aria-hidden="true">&rarr;</span>
           </a>
         </li>
