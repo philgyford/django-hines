@@ -102,10 +102,12 @@ Another line.""")
         "If excerpt is not set, it should be created on save."
         post = LivePostFactory(html_format=Post.NO_FORMAT,
                 intro='<p><a href="http://example.org">Hello.</a></p>',
-                body='<p>The body goes on for a bit so we can check the excerpt is truncated and working correctly as we would really expect it to do.</p>',
+                body='<p>The "body" goes on for a bit so we can check the excerpt is truncated and working correctly as we would really expect it to do.</p>',
                 excerpt='')
+        # Note: curly quotes created by Smartypants, and decoded in
+        # Post.make_excerpt():
         self.assertEqual(post.excerpt,
-            'Hello. The body goes on for a bit so we can check the excerpt is truncated and working correctly as…')
+            'Hello. The “body” goes on for a bit so we can check the excerpt is truncated and working correctly…')
 
     def test_existing_excerpt(self):
         "If the excerpt it set, it isnt overwritten on save."

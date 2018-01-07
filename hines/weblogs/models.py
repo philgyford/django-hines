@@ -1,3 +1,5 @@
+import html.parser
+
 from django.conf import settings
 from django.db import models
 from django.db.models import Count
@@ -271,11 +273,16 @@ class Post(TimeStampedModelMixin, models.Model):
         using intro and body if they're in, say, Markdown).
         """
         if self.excerpt:
-            return strip_tags(self.excerpt)
+            text = strip_tags(self.excerpt)
         else:
             text = '{} {}'.format(self.intro_html, self.body_html)
-            return truncate_string(
+            # The HTML texts will contain entities like '&#8217;' which we
+            # don't want in an excerpt, so:
+            html_parser = html.parser.HTMLParser()
+            text = html_parser.unescape(text)
+            text = truncate_string(
                     text, strip_html=True, chars=100, at_word_boundary=True)
+        return text
 
     @property
     def comments_allowed(self):
