@@ -67,9 +67,9 @@ root_dir_patterns = ([
 
     path('', include(spectator_patterns)),
 
-    path('', include('hines.weblogs.urls')),
-
     path('', include('hines.core.urls')),
+
+    path('', include('hines.weblogs.urls')),
 ])
 
 urlpatterns = [
