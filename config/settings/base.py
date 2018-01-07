@@ -275,10 +275,3 @@ HINES_TEMPLATE_SETS = (
 
 HINES_GOOGLE_ANALYTICS_ID = os.environ.get('HINES_GOOGLE_ANALYTICS_ID', None)
 
-MT_MYSQL_DB_HOST = os.environ.get('MT_MYSQL_DB_HOST', None)
-MT_MYSQL_DB_USER = os.environ.get('MT_MYSQL_DB_USER', None)
-MT_MYSQL_DB_PASSWORD = os.environ.get('MT_MYSQL_DB_PASSWORD', None)
-MT_MYSQL_DB_NAME = os.environ.get('MT_MYSQL_DB_NAME', None)
-MT_MYSQL_DB_PORT = os.environ.get('MT_MYSQL_DB_PORT', None)
-
-
