@@ -173,7 +173,7 @@ class Post(TimeStampedModelMixin, models.Model):
 
 
     # But you might want to use self.get_tags() instead, so they're in order.
-    tags = TaggableManager(through=TaggedPost)
+    tags = TaggableManager(through=TaggedPost, blank=True)
 
     objects = models.Manager()
 
