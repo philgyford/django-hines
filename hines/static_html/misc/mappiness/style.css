@@ -1,0 +1,573 @@
+/***************************************************************************
+ * html5doctor.com Reset v1.6.1 - http://cssreset.com 
+ */
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}nav ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent}ins{background-color:#ff9;color:#000;text-decoration:none}mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold}del{text-decoration:line-through}abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}table{border-collapse:collapse;border-spacing:0}hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}input,select{vertical-align:middle}
+
+/***************************************************************************
+/* CLEARFIX
+ */
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+.cf:after {
+    clear: both;
+}
+.cf {
+    *zoom: 1;
+}
+
+/***************************************************************************
+/* jQuery Modal */
+/* https://github.com/kylefox/jquery-modal */
+.modal {
+  display: none;
+  width: 80%;
+  background: #fff;
+  padding: 15px 30px;
+  -webkit-box-shadow: 0 0 10px #000;
+  -moz-box-shadow: 0 0 10px #000;
+  -o-box-shadow: 0 0 10px #000;
+  -ms-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000;
+}
+.modal a.close-modal {
+  position: absolute;
+  top: -12.5px;
+  right: -12.5px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-indent: -9999px;
+  background: url(close.png) no-repeat 0 0;
+}
+.modal-spinner {
+  display: none;
+  width: 64px;
+  height: 64px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-right: -32px;
+  margin-top: -32px;
+  background: url(spinner.gif) #111 no-repeat center center;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+}
+
+/* More custom styles for the modals */
+.modal {
+  height: 80%;
+  position: relative;
+  overflow: hidden;
+}
+.modal-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1.5em 30px;
+  width: 100%;
+  height: 100%;
+}
+.modal-buttons {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 63px;
+  padding: 10px 30px 10px 30px;
+  background: #f9f9f9;
+  border-top: 3px solid #999; 
+}
+
+/***************************************************************************
+ * GENERIC ELEMENTS.
+ */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+input, option, select {
+  font-size: 1em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+p, li, dt, dd {
+  line-height: 1.5em;
+}
+p, li {
+  margin-bottom: 1em;
+}
+ol li {
+  margin-left: 2em;
+}
+hr {
+  border: none;
+  border-bottom: 1px solid #eee;
+  margin: 1.5em 0 1em 0;
+}
+a {
+  color: #09c;
+}
+.hide {
+  display: none;
+}
+.list-unstyled {
+  list-style-type: none;
+}
+.disabled,
+.text-muted {
+  color: #999;
+}
+.text-error {
+  color: #c00;
+}
+input[type=text] {
+  padding: 0.2em 5px 0.3em 5px;
+}
+code {
+  background: #f6f6f6;
+}
+.align-center {
+  text-align: center;
+}
+.align-center * {
+  text-align: left;
+}
+.nobr {
+  white-space: nowrap;
+}
+
+/***************************************************************************
+ * BUTTONS.
+ */
+.button {
+  display: inline-block;
+  text-align center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 0.5em 15px;
+  font-size: 1em;
+  line-height: 1em;
+  border-radius: 0px;
+  color: #fff;
+  background: #666;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.button:hover {
+  text-decoration: none;
+  background: #f00;
+}
+.button:active {
+  outline: 0;
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+.button-cancel {
+  background: #999999;
+}
+.button-submit {
+  background: #60BD68;
+}
+.button-cancel:hover {
+  background: #7D7D7D;
+}
+.button-submit:hover {
+  background: #48A851;
+}
+.button-group {
+  clear: both;
+  text-align: right;
+}
+.button-group .button {
+  margin-right: 20px;
+}
+
+/***************************************************************************
+ * LOADING SPINNER.
+ * via https://github.com/lukehaas/css-loaders
+ */
+.no-js #loader {
+  display: none;
+}
+#loader {
+  /* Needs to be big enough for #loader-slow to show. */
+  width: 25em;
+  height: 7em;
+  overflow: hidden;
+  margin: 5em auto;
+  position: relative;
+}
+#loader-spinner {
+  font-size: 10px;
+  margin: 0 auto;
+  text-indent: -9999em;
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  background: #ffffff;
+  background: -moz-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+}
+#loader-spinner:before {
+  width: 50%;
+  height: 50%;
+  background: #ccc;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+#loader-spinner:after {
+  background: #fff;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+#loader-slow {
+  display: none;
+  margin: 2em auto 0 auto;
+  width: 24em;
+  text-align: center;
+  color: #999;
+}
+
+/***************************************************************************
+ * GENERAL STRUCTURE.
+ */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 1em 20px;
+}
+.js #no-js-content {
+  display: none;
+}
+.no-js #no-js-content {
+  display: block;
+}
+#loaded {
+  display: none;
+}
+#chart {
+  margin: 1em 0 1.5em 0;
+}
+.title {
+  font-size: 1.5em;
+  color: #999;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+.subtitle {
+  margin-bottom: 1em;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5em;
+}
+.links {
+  position: absolute;
+  top: 1.5em;
+  right: 30px;
+  font-size: 0.8125em;
+}
+/* About page main content: */
+.content {
+  max-width: 32em;
+}
+.example-constraints {
+  width: 330px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.content .subtitle {
+  margin-top: 2em;
+}
+
+/***************************************************************************
+ * IMPORTER FORM.
+ */
+#importer {
+  display: none;
+  max-width: 35em;
+  min-width: 26em;
+  width: 80%;
+  margin: 2em auto 0 auto;
+}
+@media only screen and (max-width: 480px) {
+  #importer {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+#importer-secret {
+  width: 12em;
+}
+#importer .text-error {
+  display: none;
+}
+
+/***************************************************************************
+ * CHART
+ */
+.axes {
+  color: #aaa;
+  font-size: 11px;
+}
+.axis path,
+.axis line,
+.line.grid {
+  fill: none;
+  stroke: #eee;
+  shape-rendering: crispEdges;
+  stroke-width: 1px;
+}
+.line.grid {
+  stroke: #f6f6f6;
+}
+.axis text {
+  fill: #999;
+}
+.line {
+  fill: none;
+  stroke-width: 0.5px;
+  clip-path: url(#clip);
+  stroke: #000;
+}
+.context .line {
+  stroke-width: 0.2px;
+}
+
+.brush .extent {
+  stroke: #ddd;
+  fill-opacity: .01;
+  shape-rendering: crispEdges;
+}
+
+/* Tooltips */
+.dot {
+  fill: transparent;
+}
+.dot:hover {
+  stroke: #000;
+}
+.tooltip {
+  white-space: nowrap;
+  position: absolute;           
+  min-width: 150px;                  
+  padding: 1em 12px 0.2em 12px;             
+  border: 1px solid #ddd;
+  font-size: 0.8125em;
+  pointer-events: none;         
+  background: #fff;
+}
+.tooltip h1,
+.tooltip h2,
+.tooltip ul,
+.tooltip p {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.tooltip h1,
+.tooltip h2 {
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 0.2em;
+}
+.tooltip li {
+  margin-bottom: 0;
+}
+.tooltip ul {
+  margin-bottom: 1em;
+}
+.tooltip .label {
+  width: 4.3em;
+  display: inline-block;
+}
+.tooltip .field {
+  width: 1.7em;
+  text-align: right;
+  display: inline-block;
+}
+.tooltip .notes {
+  white-space: normal;
+}
+
+
+/***************************************************************************
+/* KEY
+ */
+#key {
+  font-size: 0.8125em;
+}
+.key-line {
+  float: left;
+  margin: 0 15px 3em 15px;
+  width: 240px;
+}
+
+/* So they line up with left of the 'Show' checkbox. */
+.key-no-data,
+.key-all-data,
+.key-title,
+.key-subtitle,
+.key-line ul,
+.notes-content {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.key-no-data,
+.key-all-data {
+  margin-top: 0.3em;
+  display: none;
+}
+.key-title {
+  width: 100%;
+	border-top-width: 2px;
+  border-top-style: solid;
+  padding-top: 0.3em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid #eee;
+  margin: 0.2em 0 0 0;
+  display: inline-block;
+  color: #333;
+  font-weight: bold;
+}
+.key-subtitle {
+  border-bottom: 1px solid #eee;
+  margin: 1.2em 0 0.2em 0;
+  padding-bottom: 0.3em;
+  font-weight: bold;
+  color: #333;
+}
+.key-controls a {
+  text-decoration: none;
+}
+.key-controls a:hover {
+  text-decoration: underline;
+}
+.key-controls .sep {
+  color: #ccc;
+}
+.key-label {
+  display: inline-block;
+  width: 88%;
+}
+.key-field {
+  display: inline-block;
+  width: 10%;
+  text-align: right;
+}
+#key p,
+#key li {
+  margin-bottom: 0;
+}
+
+
+/***************************************************************************
+ * ABOUT POP-UP
+ */
+#about h1 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+/***************************************************************************
+/* LINE-EDITING POP-UP FORM.
+ */
+
+
+.line-edit-col {
+  float: left;
+}
+
+/* Defaults at really wide widths.
+ * Activities list is split into two columns. */
+#line-edit     { width: 1130px; }
+#line-edit-col-1 { width: 330px; margin-right: 30px; }
+#line-edit-col-2 { width: 690px; }
+#le-activities-list ul { float: left; margin: 0 30px 0 0; }
+#le-activities-list ul.last { margin-right: 0; }
+#le-activities-list li { width: 330px; }
+
+/* At more sensible desktop widths.
+ * Collapse activities into a single column. */
+@media only screen and (max-width: 1200px) {
+  #line-edit     { width: 770px; }
+  #le-activities-list ul { float: none; margin-right: 0; }
+  #line-edit-col-2 { width: 330px; }
+}
+
+/* At narrower widths, collapse the two columns into a single one. */
+@media only screen and (max-width: 820px) {
+  /* Collapse columns. */
+  #line-edit     { width: 420px; }
+  .line-edit-col { float: none; }
+}
+#line-edit .subtitle {
+  margin: 0 0 0.7em 0;
+}
+#line-edit hr {
+  border-width: 0;
+}
+#line-edit li {
+  margin-bottom: 0;
+}
+#le-people-with-list {
+  display: none;
+}
+#le-notes {
+  width: 95%;
+}
+ul.muted-labels label {
+  margin-left: 5px;
+}
+.le-select-label {
+  display: inline-block;
+  width: 75%;
+}
+.le-select-field {
+  display: inline-block;
+  width: 20%;
+}
+

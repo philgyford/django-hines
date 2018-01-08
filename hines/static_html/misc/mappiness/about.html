@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>About the Mappiness chart</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1 class="title">About the Mappiness chart</h1>
+    </header>
+
+    <div class="content">
+      <p>This site lets users of the <a href="http://www.mappiness.org.uk/">Mappiness</a> iPhone app analyse their data in more detail than the app's built-in charts&nbsp;allow.</p>
+
+      <p>This has no official connection to Mappiness and was built by <a href="http://www.gyford.com/">Phil&nbsp;Gyford</a>. <a href="http://www.gyford.com/phil/writing/2014/07/24/mappiness-chart.php">I wrote more about the chart on my website</a> and <a href="https://github.com/philgyford/mappiness-chart">the code is available on&nbsp;GitHub</a>.</p>
+
+      <p>Get in touch <a href="mailto:phil@gyford.com">via email</a> or&nbsp;<a href="https://twitter.com/philgyford">Twitter</a>.</p>
+
+      <h2 class="subtitle">About the random data</h2>
+
+      <p>If you don’t use Mappiness, and so can’t load your own data, you can try the site out using some randomly-generated data.</p>
+      
+      <p>The values aren’t entirely random but are slightly weighted to create <em>one example</em> of a more believable personality than truly random data would allow. For example, they’re slightly less happy at work than at home with their partner and children, and they’re a little more tired at the start and end of the day.</p>
+
+      <p>There will be some things that are odd or unbelievable, but this generated data should be good enough for a quick play.</p> 
+
+      <h2 class="subtitle">Using the edit form</h2>
+
+      <p>The edit form will make more sense to those familiar with Mappiness than those who aren’t, as its options mirror those in the app.</p>
+
+      <p>Each line represents a user’s own ratings of their happiness, relaxedness or their awakeness.</p>
+
+      <p>You can then filter the points shown on the chart according to what the user was doing, where they were, or who they were with, on each occasion.</p>
+
+      <p>The options may be a little confusing. In summary, setting a constraint to have a tick like this…</p>
+
+      <p class="example-constraints">
+        <label class="le-select-label" for="test-field-1">Cooking, preparing food</label>
+        <span class="le-select-field">
+          <select name="le-activities" id="test-field-1">                         
+            <option value="ignore">✓ or ✕</option>
+            <option value="1" selected="selected">✓</option>
+            <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✕</option>
+          </select>
+        </span>
+      </p>
+
+      <p>…means that only points where there user was doing that activity will be shown on the chart.</p>
+
+      <p>While selecting a cross for an activity, like this…</p>
+
+      <p class="example-constraints">
+        <label class="le-select-label" for="test-field-2">Cooking, preparing food</label>
+        <span class="le-select-field">
+          <select name="le-activities" id="test-field-2">                         
+            <option value="ignore">✓ or ✕</option>
+            <option value="1">✓</option>
+            <option value="0" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✕</option>
+          </select>
+        </span>
+      </p>
+
+      <p>…means that only points where the user <em>wasn’t</em> doing that activity will be shown.</p>
+
+      <p>So, combining options, like this…</p>
+
+      <p class="example-constraints">
+        <label class="le-select-label" for="test-field-3">Cooking, preparing food</label>
+        <span class="le-select-field">
+          <select name="le-activities" id="test-field-3">                         
+            <option value="ignore">✓ or ✕</option>
+            <option value="1" selected="selected">✓</option>
+            <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✕</option>
+          </select>
+        </span>
+        <br>
+        <label class="le-select-label" for="test-field-3">Listening to music</label>
+        <span class="le-select-field">
+          <select name="le-activities" id="test-field-3">                         
+            <option value="ignore">✓ or ✕</option>
+            <option value="1">✓</option>
+            <option value="0" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✕</option>
+          </select>
+        </span>
+      </p>
+
+      <p>…means that, in this case, the chart would show all points where the user <em>was</em> cooking but <em>was not</em> listening to music.</p>
+
+
+    </div>
+
+  </body>
+</html>

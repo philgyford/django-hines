@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Mappiness chart</title>
+    <script>
+      // Replace .no-js with .js
+      (function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)
+    </script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  <header>
+    <h1 id="site-title" class="title">Mappiness chart</h1>
+    <p class="links"><a href="about.html" class="links-about">About</a></p>
+  </header>
+
+  <div id="no-js-content">
+    <p>This site lets users of the <a href="http://www.mappiness.org.uk/">Mappiness</a> iPhone app analyse their data.</p>
+
+    <p>It requires JavaScript.</p>
+
+    <p><a href="about.html">Read more.</a></p>
+  </div>
+
+	<div id="loader">
+    <div id="loader-spinner">Loading…</div>
+    <div id="loader-slow">Please be patient, this can take a while…</div>
+  </div>
+
+	<div id="loaded">
+		<div id="chart"></div>
+		<div id="key"></div>
+  </div>
+
+  <form id="importer" method="get" action="#">
+    <h2 class="subtitle">Explore your Mappiness data</h2>
+
+    <p>This website allows you to explore your data from the <a href="http://www.mappiness.org.uk/">Mappiness iPhone app</a>.</p>
+
+    <p>(Or you can <a href="#" id="importer-random">try it out with some semi-random data</a>.)</p>
+
+    <hr>
+
+    <p id="importer-error" class="text-error"></p>
+
+    <p>You will need your Mappiness data secret code. To&nbsp;find&nbsp;it…</p>
+    <ol>
+      <li>Open the app on your phone, and go to “My&nbsp;happiness”.</li>
+      <li>Tap the download icon at top&nbsp;right.</li>
+      <li>If “data download” is turned off, turn it&nbsp;on.</li>
+      <li>
+          Your data download link will look something like this: <code>https://mappiness.me/3kkq.pk7d.23wb</code><br>
+          The secret code in that link is <code>3kkq.pk7d.23wb</code>
+      </li>
+      <li>
+        <label for="importer-code">Enter the code from <em>your</em> link:</label>
+        <span class="nobr">
+          <input type="text" name="code" value="" maxlength="50" id="importer-code">
+          <button class="button button-submit" type="submit">Submit</button>
+        </span>
+        <p class="text-error">That doesn’t seem to be a valid secret code</p>
+      </li>
+    </ol>
+
+    <hr>
+
+    <p class="text-muted">Note: This site does not save your data anywhere. Your data is only loaded within your own browser and forgotten once you leave this&nbsp;page.</p>
+
+  </form>
+
+
+  <div id="about" class="modal">
+    <div id="about-body" class="modal-body">
+    </div>
+    <div id="about-buttons" class="button-group modal-buttons">
+      <button class="button button-submit" type="button">Close</button>
+    </div>
+  </div>
+
+
+	<form id="line-edit" class="modal" method="get" action="#">
+    <div id="line-edit-body" class="modal-body">	
+
+      <div id="line-edit-col-1" class="line-edit-col">
+      </div>
+
+      <div id="line-edit-col-2" class="line-edit-col last">
+      </div>
+    </div>
+    <div id="line-edit-buttons" class="button-group modal-buttons">
+      <button class="button button-cancel" type="button">Cancel</button>
+      <button class="button button-submit" type="submit">Submit</button>
+    </div>
+	</form>
+
+    <script data-main="js/mappiness.js" src="js/require.js"></script>
+  </body>
+</html>
