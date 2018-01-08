@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>Chords</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		body {
+			font-size: 1.5em;
+			padding: 0 1em;
+		}
+		p {
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+		}
+	</style>
+
+</head>
+<body>
+
+<script>
+	var roots = [     'C', 'C♯',
+				'D♭', 'D', 'D♯',
+				'E♭', 'E',
+					  'F', 'F♯',
+				'G♭', 'G', 'G♯',
+				'A♭', 'A', 'A♯',
+				'B♭', 'B'];
+
+	var types = [' ',          'm',	         'dim',         '+',
+				 '7 (w.5th)',  'm7 (w.5th)',
+				 '6 (w.5th)',  'm6 (w.5th)', 'dim6 (w.5th)',
+				 'M7'
+				 ];
+
+	var chords = [];
+
+	roots.forEach(function(r){
+		types.forEach(function(t){
+			chords.push(r + t);
+		});
+	});
+
+	shuffle(chords).forEach(function(c){
+		var p = document.createElement('p');
+		p.innerHTML = c;
+		document.body.appendChild(p);
+	});
+
+
+	function shuffle(array) {
+	  var currentIndex = array.length
+		, temporaryValue
+		, randomIndex
+		;
+
+	  // While there remain elements to shuffle...
+	  while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	  }
+
+	  return array;
+	}
+</script>
+</body>
+</html>
