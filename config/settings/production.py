@@ -26,7 +26,8 @@ AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = 'https://{}.s3.amazonaws.com{}'.format(
                                             AWS_STORAGE_BUCKET_NAME, MEDIA_URL)
 
-
+# Test:
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # See https://devcenter.heroku.com/articles/memcachier#django
 environ['MEMCACHE_SERVERS'] = get_env_variable('MEMCACHIER_SERVERS').replace(',', ';')
