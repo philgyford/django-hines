@@ -37,8 +37,8 @@ urlpatterns = [
     path('timeline/', flatpages_views.flatpage,
         {'url': '/phil/timeline/'}, name='timeline'),
 
-    path('misc/', flatpages_views.flatpage,
-        {'url': '/phil/misc/'}, name='misc'),
+    path('more/', flatpages_views.flatpage,
+        {'url': '/phil/more/'}, name='misc'),
 
     path('feeds/', flatpages_views.flatpage,
         {'url': '/phil/feeds/'}, name='feeds'),
