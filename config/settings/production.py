@@ -10,7 +10,7 @@ MANAGERS = ADMINS
 
 # If you *don't* want to prepend www to the URL, remove the setting from
 # the environment entirely. Otherwise, set to 'True' (or anything tbh).
-# PREPEND_WWW = True
+PREPEND_WWW = True
 
 
 # Storing Media files on AWS.
