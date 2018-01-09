@@ -79,6 +79,10 @@ urlpatterns = [
     path('favicon.ico', RedirectView.as_view(
         url=static_tag('hines/img/favicons/favicon.ico'), permanent=True)),
 
+    path('apple-touch-icon.png', RedirectView.as_view(
+        url=static_tag('hines/img/favicons/apple-touch-icon.png'),
+        permanent=True)),
+
     re_path(r'^archive/(?P<path>.*)$',
                                 core_views.ArchiveRedirectView.as_view()),
 
