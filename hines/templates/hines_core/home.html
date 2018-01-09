@@ -12,32 +12,24 @@
     {% if object_list|length > 0 %}
       {% if key|slice:"12" == 'weblog_posts' %}
         {% with object_list.0.blog as blog %}
-          <h2>{{ blog.name }}</h2>
+          <h2><a href="{{ blog.get_absolute_url }}" title="See more writing">{{ blog.name }}</a></h2>
 
           {% include 'weblogs/includes/posts.html' with post_list=object_list only %}
-
-          <ul class="nav">
-            <li class="nav__item"><a href="{{ blog.get_absolute_url }}">More {{ blog.short_name }}</a></li>
-          </ul>
         {% endwith %}
 
       {% elif key == 'flickr_photo_list' %}
-        <h2>Photos</h2>
+        <h2><a href="{% url 'photos:home' %}" title="See more photos">Photos</a></h2>
+
+        <hr class="hr--sm">
 
         {% include 'hines_core/includes/photos.html' with photo_list=object_list order='uploaded' only %}
 
-        <ul class="nav">
-          <li class="nav__item"><a href="{% url 'photos:home' %}">More Photos</a></li>
-        </ul>
+        <hr class="hr--sm">
 
       {% elif key == 'pinboard_bookmark_list' %}
-        <h2>Links</h2>
+        <h2><a href="{% url 'pinboard:home' %}" title="See more links">Links</a></h2>
 
         {% include 'links/includes/bookmarks.html' with bookmark_list=object_list only %}
-
-        <ul class="nav">
-          <li class="nav__item"><a href="{% url 'pinboard:home' %}">More Links</a></li>
-        </ul>
 
       {% endif %}
     {% endif %}
