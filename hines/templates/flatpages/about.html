@@ -1,5 +1,5 @@
 {% extends 'flatpages/layouts/base.html' %}
-{% load hines_core blocks %}
+{% load hines_core %}
 
 {% block about_nav_active %}is-active{% endblock %}
 
@@ -44,10 +44,7 @@
 		</ul>
 	</nav>
 
-  {% render_block "elsewhere" %}
-
-	{% render_block "other-sites" %}
-
-	{% lastfm_top_artists_card limit=10 %}
+  {% block sidebar_about_more %}
+  {% endblock %}
 
 {% endblock %}
