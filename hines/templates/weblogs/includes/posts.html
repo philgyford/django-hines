@@ -27,7 +27,7 @@ Expects:
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
           </h2>
 
-          <p>{{ post.excerpt }}</p>
+          <p>{{ post.excerpt|smartypants }}</p>
 
           <div class="meta meta--inline">
             <ul class="meta__inner">

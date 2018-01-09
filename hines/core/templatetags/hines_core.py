@@ -132,7 +132,7 @@ def smartypants(text):
     """
     Processes the text with smartypants.
     """
-    return _smartypants.smartypants(text)
+    return mark_safe(_smartypants.smartypants(text))
 
 
 @register.inclusion_tag('hines_core/includes/card_lastfm_scrobbles.html')
