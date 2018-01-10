@@ -137,7 +137,9 @@ class ExtendedFeed(Feed):
                 pass
 
         if content_tmp:
-            content = content_tmp.render({'obj': item,})
+            context = {'obj': item,
+                       'site_url': get_site_url(),}
+            content = content_tmp.render(context)
         else:
             content = self.item_content(item)
 
@@ -148,6 +150,11 @@ class ExtendedFeed(Feed):
         Only used if self.content_template is None.
         """
         return ''
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['foo'] = 'bar'
+        return context
 
 
 class EverythingFeedRSS(ExtendedFeed):
@@ -190,7 +197,7 @@ class EverythingFeedRSS(ExtendedFeed):
             return item['object'].title
 
         elif item['kind'] == 'pinboard_bookmark':
-            return item['object'].title
+            return "[Link] {}".format(item['object'].title)
 
         elif item['kind'] == 'flickr_photos':
             return 'Photos from {}'.format(item['time'].strftime('%-d %B %Y'))
@@ -202,6 +209,12 @@ class EverythingFeedRSS(ExtendedFeed):
                                                     'year': t.year,
                                                     'month': t.strftime('%m'),
                                                     'day': t.strftime('%d') })
+        elif item['kind'] == 'blog_post' and item['object'].remote_url:
+            # e.g. A comment on another site; link to it there.
+            return item['object'].remote_url
+        elif item['kind'] == 'pinboard_bookmark':
+            # Link to the bookmark's URL itself, not to our permalink.
+            return item['object'].url
         else:
             return item['object'].get_absolute_url()
 

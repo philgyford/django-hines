@@ -1,10 +1,19 @@
 {% spaceless %}
 {% if obj.kind == 'blog_post' %}
+  <p><em>From <a href="{{ site_url }}{{ obj.object.blog.get_absolute_url }}">{{ obj.object.blog.name }}</a>.</em></p>
+
 	{{ obj.object.intro_html|safe }}
-	{{ obj.object.body_html|safe }}
+  {% if obj.object_body_html %}
+    {{ obj.object.body_html|safe }}
+  {% endif %}
+
+  {% if obj.object.remote_url %}
+    <p><a href="{{ site_url }}{{ obj.object.get_absolute_url }}">Permalink</a></p>
+  {% endif %}
 
 {% elif obj.kind == 'pinboard_bookmark' %}
-	{{ obj.object.description|safe }}
+  <p>{{ obj.object.description|safe }}</p>
+  <p><a href="{{ site_url }}{{ obj.object.get_absolute_url }}">Permalink</a></p>
 
 {% elif obj.kind == 'flickr_photos' %}
 	<table border="0" cellspacing="10">
