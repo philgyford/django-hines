@@ -13,7 +13,7 @@
 
 {% block content %}
 
-<h2>Recent photos <small>by time {% if order|default:"uploaded" == "uploaded" %}uploaded{% else %}taken{% endif %}</small></h2>
+<h2>Recent photos <small>by&nbsp;time&nbsp;{% if order|default:"uploaded" == "uploaded" %}uploaded{% else %}taken{% endif %}</small></h2>
 
   {% include 'hines_core/includes/photos.html' with photo_list=photo_list page_obj=page_obj perms=perms only %}
 
