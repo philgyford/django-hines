@@ -71,6 +71,12 @@ figcaption {
   }
 }
 
+.figure--img--border {
+  img {
+    border: 1px solid $gray-light;
+  }
+}
+
 // At wider widths, expand a .figure--full almost to the right-hand edge.
 @include media-breakpoint-up(md) {
   .grid__col--main--only {
