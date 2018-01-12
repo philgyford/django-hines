@@ -16,7 +16,7 @@
 // 1. Styles for ALL browsers.
 .gallery {
   @include list-unstyled;
-  margin-bottom: 0;
+  margin-bottom: $paragraph-margin-bottom;
 
   .gallery__item {
     // So we can re-order the contents of each item.
