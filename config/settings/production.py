@@ -99,6 +99,6 @@ if SENTRY_DSN:
         'release': os.environ.get('HEROKU_SLUG_COMMIT', ''),
     }
 
-    
+
 #############################################################################
 # HINES-SPECIFIC SETTINGS.
