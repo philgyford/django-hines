@@ -103,6 +103,50 @@ class PublicationRedirectViewTestCase(ViewTestCase):
             response = views.PublicationRedirectView.as_view()(request)
 
 
+class MTSearchRedirectViewTestCase(ViewTestCase):
+
+    def test_mary_redirect(self):
+        request = self.factory.get('/fake-path/', {
+            'IncludeBlogs': 14,
+            'tag': 'test this tag(brackets)',
+            'limit': 1000,
+        })
+        response = views.MTSearchRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url,
+            'https://www.sparklytrainers.com/blog/tag/test-this-tag-brackets/')
+
+    def test_overmorgen_redirect(self):
+        request = self.factory.get('/fake-path/', {
+            'IncludeBlogs': 10,
+            'search': 'bye for now',
+            'limit': 1000,
+        })
+        response = views.MTSearchRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url,
+            'https://www.google.com/search?as_sitesearch=www.overmorgen.com&q=bye+for+now')
+
+    def test_wrong_blog_404(self):
+        "404s if the IncludeBlogs is wrong"
+        request = self.factory.get('/fake-path/', {
+            'IncludeBlogs': 9,
+            'search': 'bye for now',
+            'limit': 1000,
+        })
+        with self.assertRaises(Http404):
+            response = views.MTSearchRedirectView.as_view()(request)
+
+    def test_no_tag_or_search_404(self):
+        "404s if there's no tag or search"
+        request = self.factory.get('/fake-path/', {
+            'IncludeBlogs': 14,
+            'limit': 1000,
+        })
+        with self.assertRaises(Http404):
+            response = views.MTSearchRedirectView.as_view()(request)
+
+
 class DayArchiveViewTestCase(ViewTestCase):
 
     def setUp(self):

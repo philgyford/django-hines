@@ -86,6 +86,9 @@ urlpatterns = [
     re_path(r'^archive/(?P<path>.*)$',
                                 core_views.ArchiveRedirectView.as_view()),
 
+    path('cgi-bin/mt/mt-search.cgi',
+                                core_views.MTSearchRedirectView.as_view()),
+
 
     # SITEMAP
 

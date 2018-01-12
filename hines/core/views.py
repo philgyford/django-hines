@@ -243,6 +243,55 @@ class PublicationRedirectView(RedirectView):
         return super().get_redirect_url(*args, **kwargs)
 
 
+class MTSearchRedirectView(RedirectView):
+    """
+    Redirecting old MT CGI requests, which were for tags or searches.
+    404 everything else.
+
+    e.g. a tag on Mary's site (blog 14):
+    FROM: www.gyford.com/cgi-bin/mt/mt-search.cgi?IncludeBlogs=14&tag=test%20this%20tag%28brackets%29&limit=1000
+    TO: https://www.sparklytrainers.com/blog/tag/test-this-tag-brackets/
+
+    e.g. a search on Overmorgen (blog 10):
+    FROM: /cgi-bin/mt/mt-search.cgi?search=test+search&IncludeBlogs=10&limit=1000
+    TO: https://www.google.com/search?as_sitesearch=www.overmorgen.com&q=test+search
+    """
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        blog_ids = self.request.GET.get('IncludeBlogs', False)
+        tag = self.request.GET.get('tag', False)
+        search = self.request.GET.get('search', False)
+
+        if blog_ids is False:
+            raise Http404("No Blog IDs supplied.")
+
+        if tag is False and search is False:
+            raise Http404("No tag or search string supplied.")
+
+        blog_ids = blog_ids.split(' ')
+
+        if len(blog_ids) == 0:
+            raise Http404("No Blog IDs supplied.")
+
+        blog_id = int(blog_ids[0])
+
+        if blog_id == 14:
+            tag_str = "".join([ c if c.isalnum() else "-" for c in tag ])
+            tag_str = tag_str.rstrip('-')
+            url = 'https://www.sparklytrainers.com/blog/tag/{}/'.format(tag_str)
+
+        elif blog_id == 10:
+            search_str = "".join([ c if c.isalnum() else "+" for c in search ])
+            url = 'https://www.google.com/search?as_sitesearch=www.overmorgen.com&q={}'.format(search_str)
+
+        else:
+            raise Http404(
+                    "Not the right combination of Blog ID, tag or search.")
+
+        return url
+
+
 class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
     """
     Trying to keep things a bit consistent with BaseDateListView, except we
