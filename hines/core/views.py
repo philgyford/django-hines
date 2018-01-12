@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import datetime
+import re
 
 from django.conf import settings
 from django.core.paginator import InvalidPage
@@ -260,13 +261,13 @@ class MTSearchRedirectView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         blog_ids = self.request.GET.get('IncludeBlogs', False)
-        tag = self.request.GET.get('tag', False)
-        search = self.request.GET.get('search', False)
+        tag_str = self.request.GET.get('tag', False)
+        search_str = self.request.GET.get('search', False)
 
         if blog_ids is False:
             raise Http404("No Blog IDs supplied.")
 
-        if tag is False and search is False:
+        if tag_str is False and search_str is False:
             raise Http404("No tag or search string supplied.")
 
         blog_ids = blog_ids.split(' ')
@@ -277,12 +278,21 @@ class MTSearchRedirectView(RedirectView):
         blog_id = int(blog_ids[0])
 
         if blog_id == 14:
-            tag_str = "".join([ c if c.isalnum() else "-" for c in tag ])
+            # Removes things like apostrophes. Leaves spaces and brackets:
+            tag_str = re.sub(r'[^a-zA-Z0-9 \(\)]+', '', tag_str)
+            # Turns the spaces and brackets into hyphens:
+            tag_str = "".join([ c if c.isalnum() else "-" for c in tag_str ])
+            # Remove any duplicate hyphens:
+            tag_str = re.sub('-+', '-', tag_str)
+            # Remove any trailing hyphen: 
             tag_str = tag_str.rstrip('-')
+            # Everything to lowercase:
+            tag_str = tag_str.lower()
+
             url = 'https://www.sparklytrainers.com/blog/tag/{}/'.format(tag_str)
 
         elif blog_id == 10:
-            search_str = "".join([ c if c.isalnum() else "+" for c in search ])
+            search_str = "".join([ c if c.isalnum() else "+" for c in search_str ])
             url = 'https://www.google.com/search?as_sitesearch=www.overmorgen.com&q={}'.format(search_str)
 
         else:

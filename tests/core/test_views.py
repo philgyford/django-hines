@@ -106,15 +106,28 @@ class PublicationRedirectViewTestCase(ViewTestCase):
 class MTSearchRedirectViewTestCase(ViewTestCase):
 
     def test_mary_redirect(self):
+        "Lowercases, and replaces spaces and brackets"
         request = self.factory.get('/fake-path/', {
             'IncludeBlogs': 14,
-            'tag': 'test this tag(brackets)',
+            'tag': 'Test this tag (brackets)',
             'limit': 1000,
         })
         response = views.MTSearchRedirectView.as_view()(request)
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response.url,
             'https://www.sparklytrainers.com/blog/tag/test-this-tag-brackets/')
+
+    def test_mary_redirect_apostrophes(self):
+        "Removes apostrophes."
+        request = self.factory.get('/fake-path/', {
+            'IncludeBlogs': 14,
+            'tag': "Val's tour",
+            'limit': 1000,
+        })
+        response = views.MTSearchRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url,
+            'https://www.sparklytrainers.com/blog/tag/vals-tour/')
 
     def test_overmorgen_redirect(self):
         request = self.factory.get('/fake-path/', {
