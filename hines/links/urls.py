@@ -20,4 +20,3 @@ urlpatterns = [
     path('<word:username>/<word:hash>/', views.BookmarkDetailView.as_view(),
         name='bookmark_detail'),
 ]
-
