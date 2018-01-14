@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.utils.html import strip_tags
+from django.utils.html import escape, strip_tags
 
 from hines.core.feeds import ExtendedFeed, ExtendedRSSFeed
 from .models import Blog, Post
@@ -37,7 +37,8 @@ class BlogPostsFeedRSS(ExtendedFeed):
         return strip_tags(item.excerpt)
 
     def item_title(self, item):
-        return item.title
+        # Need to be encoded https://code.djangoproject.com/ticket/6533
+        return escape(item.title)
 
     def item_author_name(self, item):
         return item.author.display_name

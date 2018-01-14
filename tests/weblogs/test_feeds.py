@@ -119,7 +119,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         # Test the content of the most recent Post:
 
         self.assertChildNodeContent(items[0], {
-            'title': 'My "latest" post',
+            'title': 'My &quot;latest&quot; post',
             'description': 'This is my excerpt.',
             'link': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',
             'guid': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',

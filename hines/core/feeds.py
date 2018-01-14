@@ -5,6 +5,7 @@ from django.contrib.syndication.views import Feed
 from django.template import Context, loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
+from django.utils.html import escape
 
 from .recent import RecentObjects
 
@@ -204,7 +205,8 @@ class EverythingFeedRSS(ExtendedFeed):
         else:
             title = item.title
 
-        return title
+        # Titles should be double escaped by default (see #6533)
+        return escape(title)
 
     def item_link(self, item):
         if item['kind'] == 'flickr_photos':
