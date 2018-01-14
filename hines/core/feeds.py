@@ -194,13 +194,17 @@ class EverythingFeedRSS(ExtendedFeed):
 
     def item_title(self, item):
         if item['kind'] == 'blog_post':
-            return item['object'].title
+            title = item['object'].title
 
         elif item['kind'] == 'pinboard_bookmark':
-            return "[Link] {}".format(item['object'].title)
+            title = "[Link] {}".format(item['object'].title)
 
         elif item['kind'] == 'flickr_photos':
-            return 'Photos from {}'.format(item['time'].strftime('%-d %B %Y'))
+            title = 'Photos from {}'.format(item['time'].strftime('%-d %B %Y'))
+        else:
+            title = item.title
+
+        return title
 
     def item_link(self, item):
         if item['kind'] == 'flickr_photos':
@@ -241,4 +245,3 @@ class EverythingFeedRSS(ExtendedFeed):
                 if dt is None or photo.last_update_time > dt:
                     dt = photo.last_update_time
             return dt
-

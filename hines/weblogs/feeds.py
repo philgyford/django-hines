@@ -36,6 +36,9 @@ class BlogPostsFeedRSS(ExtendedFeed):
     def item_description(self, item):
         return strip_tags(item.excerpt)
 
+    def item_title(self, item):
+        return item.title
+
     def item_author_name(self, item):
         return item.author.display_name
 
@@ -55,4 +58,3 @@ class BlogPostsFeedRSS(ExtendedFeed):
     def item_content(self, item):
         "For content:encoded"
         return item.intro_html + item.body_html
-

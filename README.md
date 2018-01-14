@@ -283,4 +283,3 @@ Whether using Vagrant or Heroku, we need an S3 bucket to store Media files in
 
 11. Update the server's environment variables for `AWS_ACCESS_KEY_ID`,
     `AWS_SECRET_ACCESS_KEY` and `AWS_STORAGE_BUCKET_NAME`.
-

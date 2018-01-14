@@ -31,7 +31,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
                             tags=['Dogs']
                         )
         self.post2 = LivePostFactory(
-                            title='My latest post',
+                            title='My "latest" post',
                             slug='my-latest-post',
                             excerpt='This is my excerpt.',
                             intro="The post intro.",
@@ -119,7 +119,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         # Test the content of the most recent Post:
 
         self.assertChildNodeContent(items[0], {
-            'title': 'My latest post',
+            'title': 'My "latest" post',
             'description': 'This is my excerpt.',
             'link': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',
             'guid': 'http://example.com/terry/my-blog/2017/04/25/my-latest-post/',
@@ -162,4 +162,3 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.assertEqual(
             items[0].getElementsByTagName('dc:creator')[0].firstChild.wholeText,
             'Bob Ferris')
-
