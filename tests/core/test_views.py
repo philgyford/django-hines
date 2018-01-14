@@ -108,7 +108,7 @@ class MTSearchRedirectViewTestCase(ViewTestCase):
     def test_mary_redirect(self):
         "Lowercases, and replaces spaces and brackets"
         request = self.factory.get('/fake-path/', {
-            'IncludeBlogs': 14,
+            'IncludeBlogs': '14',
             'tag': 'Test this tag (brackets)',
             'limit': 1000,
         })
@@ -117,17 +117,29 @@ class MTSearchRedirectViewTestCase(ViewTestCase):
         self.assertEqual(response.url,
             'https://www.sparklytrainers.com/blog/tag/test-this-tag-brackets/')
 
-    def test_mary_redirect_apostrophes(self):
-        "Removes apostrophes."
+    def test_mary_tag(self):
+        "Test a real-world tag example, with apostrophe"
         request = self.factory.get('/fake-path/', {
-            'IncludeBlogs': 14,
-            'tag': "Val's tour",
+            'IncludeBlogs': '14',
+            'tag': "Val Pitkethly's Cordillera Blanca (Peru)",
             'limit': 1000,
         })
         response = views.MTSearchRedirectView.as_view()(request)
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response.url,
-            'https://www.sparklytrainers.com/blog/tag/vals-tour/')
+            'https://www.sparklytrainers.com/blog/tag/val-pitkethlys-cordillera-blanca-peru/')
+
+    def test_mary_search(self):
+        "Test a real-world search example"
+        request = self.factory.get('/fake-path/', {
+            'IncludeBlogs': '14,18',
+            'search': "Cordillera Huayhuash Circuit plus Inca Trail to Machu Picchu",
+            'limit': 1000,
+        })
+        response = views.MTSearchRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url,
+            'https://www.sparklytrainers.com/?s=Cordillera+Huayhuash+Circuit+plus+Inca+Trail+to+Machu+Picchu')
 
     def test_overmorgen_redirect(self):
         request = self.factory.get('/fake-path/', {

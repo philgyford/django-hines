@@ -253,6 +253,10 @@ class MTSearchRedirectView(RedirectView):
     FROM: www.gyford.com/cgi-bin/mt/mt-search.cgi?IncludeBlogs=14&tag=test%20this%20tag%28brackets%29&limit=1000
     TO: https://www.sparklytrainers.com/blog/tag/test-this-tag-brackets/
 
+    e.g. a search on both Mary's blogs (blogs 14 and 18):
+    FROM: http://www.gyford.com/cgi-bin/mt/mt-search.cgi?IncludeBlogs=14,18&search=Cordillera+Huayhuash+Circuit+plus+Inca+Trail+to+Machu+Picchu
+    TO: https://www.sparklytrainers.com/?s=Cordillera+Huayhuash+Circuit+plus+Inca+Trail+to+Machu+Picchu
+
     e.g. a search on Overmorgen (blog 10):
     FROM: /cgi-bin/mt/mt-search.cgi?search=test+search&IncludeBlogs=10&limit=1000
     TO: https://www.google.com/search?as_sitesearch=www.overmorgen.com&q=test+search
@@ -260,39 +264,34 @@ class MTSearchRedirectView(RedirectView):
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        blog_ids = self.request.GET.get('IncludeBlogs', False)
-        tag_str = self.request.GET.get('tag', False)
-        search_str = self.request.GET.get('search', False)
+        blog_ids = self.request.GET.get('IncludeBlogs', None)
+        tag_str = self.request.GET.get('tag', None)
+        search_str = self.request.GET.get('search', None)
 
-        if blog_ids is False:
+        if blog_ids is None:
             raise Http404("No Blog IDs supplied.")
 
-        if tag_str is False and search_str is False:
+        if tag_str is None and search_str is None:
             raise Http404("No tag or search string supplied.")
 
-        blog_ids = blog_ids.split(' ')
+        blog_ids = blog_ids.split(',')
 
         if len(blog_ids) == 0:
             raise Http404("No Blog IDs supplied.")
 
-        blog_id = int(blog_ids[0])
+        if '14' in blog_ids or '18' in blog_ids:
+            # One of Mary's blogs.
+            tag_str = self._get_wp_tag_str(tag_str)
+            search_str = self._get_wp_search_str(search_str)
 
-        if blog_id == 14:
-            # Removes things like apostrophes. Leaves spaces and brackets:
-            tag_str = re.sub(r'[^a-zA-Z0-9 \(\)]+', '', tag_str)
-            # Turns the spaces and brackets into hyphens:
-            tag_str = "".join([ c if c.isalnum() else "-" for c in tag_str ])
-            # Remove any duplicate hyphens:
-            tag_str = re.sub('-+', '-', tag_str)
-            # Remove any trailing hyphen: 
-            tag_str = tag_str.rstrip('-')
-            # Everything to lowercase:
-            tag_str = tag_str.lower()
+            if tag_str:
+                url = 'https://www.sparklytrainers.com/blog/tag/{}/'.format(tag_str)
+            else:
+                url = 'https://www.sparklytrainers.com/?s={}'.format(search_str)
 
-            url = 'https://www.sparklytrainers.com/blog/tag/{}/'.format(tag_str)
-
-        elif blog_id == 10:
-            search_str = "".join([ c if c.isalnum() else "+" for c in search_str ])
+        elif '10' in blog_ids:
+            # Overmorgen.
+            search_str = self._get_google_search_str(search_str)
             url = 'https://www.google.com/search?as_sitesearch=www.overmorgen.com&q={}'.format(search_str)
 
         else:
@@ -300,6 +299,46 @@ class MTSearchRedirectView(RedirectView):
                     "Not the right combination of Blog ID, tag or search.")
 
         return url
+
+    def _get_wp_tag_str(self, tag_str):
+        """
+        Turns a tag string from a Movable Type URL into a WordPress tag string.
+        e.g. from "Val-Pitkethly-s-Cordillera-Blanca--Peru"
+        to "val-pitkethlys-cordillera-blanca-peru"
+
+        """
+        if tag_str is None:
+            return None
+
+        # Removes things like apostrophes. Leaves spaces and brackets:
+        tag_str = re.sub(r'[^a-zA-Z0-9 \(\)]+', '', tag_str)
+        # Turns the spaces and brackets into hyphens:
+        tag_str = "".join([ c if c.isalnum() else "-" for c in tag_str ])
+        # Remove any duplicate hyphens:
+        tag_str = re.sub('-+', '-', tag_str)
+        # Remove any trailing hyphen:
+        tag_str = tag_str.rstrip('-')
+        # Everything to lowercase:
+        tag_str = tag_str.lower()
+
+        return tag_str
+
+    def _get_wp_search_str(self, search_str):
+        if search_str is None:
+            return None
+        search_str = search_str.replace(' ', '+')
+        return search_str
+
+    def _get_google_search_str(self, search_str):
+        """
+        Turns a search string from a Movable Type URL into a Google search string.
+        """
+        if search_str is None:
+            return None
+
+        search_str = "".join([ c if c.isalnum() else "+" for c in search_str ])
+        return search_str
+
 
 
 class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
