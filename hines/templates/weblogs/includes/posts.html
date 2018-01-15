@@ -24,7 +24,7 @@ Expects:
       <li class="media">
         <div class="media__body">
           <h2 class="media__header">
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            <a href="{{ post.get_absolute_url }}">{{ post.title|smartypants }}</a>
           </h2>
 
           <p>{{ post.excerpt|smartypants }}</p>
@@ -59,4 +59,3 @@ Expects:
 {% else %}
   <p>There are no posts to show.</p>
 {% endif %}
-
