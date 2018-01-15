@@ -49,18 +49,22 @@
 
 	<div id="main">
 
+    {% if perms.weblogs.can_change_post %}
+      <p><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
+    {% endif %}
+
 		<div id="intro" class="intro">
 	{{ post.intro_html|safe }}
 		</div>
-		
+
 		<div id="more">
 	{{ post.body_html|safe }}
 		</div>
-		
+
 	{% get_comment_list for post as comment_list %}
 	{% if comment_list %}
 		<h2 id="comments">Comments</h2>
-		
+
 		<ul class="comments">
 			{% for comment in comment_list %}
 				<li id="c{{ comment.id|unlocalize }}">
@@ -100,7 +104,7 @@
 					{{ post.time_created|date:"l j F Y, g:i" }}{{ post.time_created|date:"A"|lower }}
 				{% endif %}
 			{% endspaceless %}</p>
-			
+
 			<p class="nextprev">{% spaceless %}
 				<span class="prev">
 					{% with post.get_previous_post as previous_post %}
@@ -166,7 +170,7 @@
 				{% endif %}
 			</div> <!-- .block -->
 		{% endif %}
-		
+
 		{% day_tweets post.time_created as tweet_list %}
 		{% if tweet_list %}
 			<div class="block">
