@@ -68,6 +68,11 @@ root_dir_patterns = ([
     re_path(r'^writing/resources/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<path>.*?)$',
                         core_views.WritingResourcesRedirectView.as_view()),
 
+
+    # Just the reading home page:
+    path('reading/', core_views.ReadingHomeView.as_view()),
+
+    # All other Spectator URLs, including other /reading/ URLs:
     path('', include(spectator_patterns)),
 
     path('', include('hines.core.urls')),

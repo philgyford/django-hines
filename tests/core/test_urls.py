@@ -36,6 +36,10 @@ class CoreUrlsTestCase(TestCase):
         self.assertEqual(resolve('/terry/2017/04/03/').func.__name__,
                         views.DayArchiveView.__name__)
 
+    def test_reading_home_view(self):
+        self.assertEqual(resolve('/terry/reading/').func.__name__,
+                        views.ReadingHomeView.__name__)
+
     def test_author_redirect_view(self):
         self.assertEqual(resolve('/terry/reading/author/').func.__name__,
                         views.AuthorRedirectView.__name__)

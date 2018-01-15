@@ -38,6 +38,40 @@ class HomeViewTestCase(ViewTestCase):
         self.assertEqual(response.template_name[0], 'hines_core/home.html')
 
 
+class ReadingHomeViewTestCase(ViewTestCase):
+
+    def test_redirects(self):
+        "It redirects if there's like a y=[\d\d\d\d] in the querystring."
+        request = self.factory.get('/fake-path/', {'y': 2017})
+        response = views.ReadingHomeView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url, '/terry/reading/2017/')
+
+    def test_no_redirect(self):
+        "It doesn't redirect if there's no y=2017 in the querystring."
+        request = self.factory.get('/fake-path/')
+        response = views.ReadingHomeView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_handles_text(self):
+        "It does nothing special if the 'y' value is not a number."
+        request = self.factory.get('/fake-path/', {'y': 'bad'})
+        response = views.ReadingHomeView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_handles_small_number(self):
+        "It does nothing special if the 'y' value is < 1000."
+        request = self.factory.get('/fake-path/', {'y': 999})
+        response = views.ReadingHomeView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_handles_big_number(self):
+        "It does nothing special if the 'y' value is > 9999."
+        request = self.factory.get('/fake-path/', {'y': 10000})
+        response = views.ReadingHomeView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+
 @override_settings(MEDIA_URL='https://my-bucket.s3.amazonaws.com/terry/')
 class WritingResourcesRedirectViewTestCase(ViewTestCase):
 

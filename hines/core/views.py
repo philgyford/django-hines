@@ -7,7 +7,7 @@ from django.core.paginator import InvalidPage
 from django.http import (Http404, HttpResponseNotFound,
             HttpResponseBadRequest, HttpResponseForbidden,
             HttpResponseServerError)
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.encoding import force_str
@@ -22,6 +22,7 @@ from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
 from spectator.core.models import Creator
 from spectator.reading.models import Publication
+from spectator.reading.views import ReadingHomeView as SpectatorReadingHomeView
 from hines.core.utils import make_date
 from hines.weblogs.models import Blog, Post
 from .paginator import DiggPaginator
@@ -186,6 +187,34 @@ class HomeView(TemplateView):
         else:
             bookmarks = Bookmar.objects.none()
         return {'pinboard_bookmark_list': bookmarks}
+
+
+class ReadingHomeView(SpectatorReadingHomeView):
+    """
+    A wrapper around Spectator's ReadingHomeView so that we can redirect any
+    legacy requests for /phil/reading/?y=2017 which we will redirect to
+    /phil/reading/2017/.
+    """
+
+    def get(self, request, *args, **kwargs):
+        year = request.GET.get('y', None)
+
+        try:
+            year = int(year)
+        except (TypeError, ValueError):
+            # It was missing or a string.
+            year = None
+        else:
+            if year < 1000 or year > 9999:
+                # Because the reading year archive URL expects a 4-digit number.
+                year = None
+
+        if year is not None:
+            # We have a 4-digit number, so try redirecting.
+            return redirect('spectator:reading:reading_year_archive',
+                            year=int(year), permanent=True)
+
+        return super().get(request, args, kwargs)
 
 
 class WritingResourcesRedirectView(RedirectView):
