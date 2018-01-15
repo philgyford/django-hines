@@ -188,12 +188,33 @@ class HomeView(TemplateView):
         return {'pinboard_bookmark_list': bookmarks}
 
 
+class WritingResourcesRedirectView(RedirectView):
+    """
+    Redirecting old /writing/resources/* URLs to new location.
+    e.g.
+    FROM: http://www.gyford.com/phil/writing/resources/2016/02/02/test.png
+    TO: https://MY-BUCKET.s3.amazonaws.com/phil/weblogs/2016/02/02/test.png
+    """
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        year = kwargs.get('year', None)
+        month = kwargs.get('month', None)
+        day = kwargs.get('day', None)
+        path = kwargs.get('path', None)
+
+        if path is None:
+            raise Http404("No path supplied.")
+        else:
+            return '{}weblogs/{}/{}/{}/{}'.format(
+                settings.MEDIA_URL, year, month, day, path)
+
+
 class ArchiveRedirectView(RedirectView):
     """
     Redirecting old /archive/* URLs to archive.gyford.com.
     """
     permanent = True
-    pattern_name = 'spectator:creators:creator_detail'
 
     def get_redirect_url(self, *args, **kwargs):
         path = kwargs.get('path', '')
@@ -744,4 +765,3 @@ def _date_from_string(year, year_format, month='', month_format='', day='', day_
             'datestr': datestr,
             'format': format,
         })
-

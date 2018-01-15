@@ -38,6 +38,21 @@ class HomeViewTestCase(ViewTestCase):
         self.assertEqual(response.template_name[0], 'hines_core/home.html')
 
 
+@override_settings(MEDIA_URL='https://my-bucket.s3.amazonaws.com/terry/')
+class WritingResourcesRedirectViewTestCase(ViewTestCase):
+
+    def test_404s_with_no_path(self):
+        with self.assertRaises(Http404):
+            response = views.WritingResourcesRedirectView.as_view()(self.request)
+
+    def test_redirects_with_path(self):
+        response = views.WritingResourcesRedirectView.as_view()(self.request,
+                    year='2017', month='12', day='03', path='folder/test.png')
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url,
+        'https://my-bucket.s3.amazonaws.com/terry/weblogs/2017/12/03/folder/test.png')
+
+
 class ArchiveRedirectViewTestCase(ViewTestCase):
 
     def test_redirects(self):
@@ -340,4 +355,3 @@ class DayArchiveViewTestCase(ViewTestCase):
         # self.assertIn('twitter_tweet_list', context)
         # self.assertEqual(len(context['twitter_tweet_list']), 1)
         # self.assertEqual(context['twitter_tweet_list'][0], tweet)
-

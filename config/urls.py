@@ -65,6 +65,9 @@ root_dir_patterns = ([
     path('reading/author/', core_views.AuthorRedirectView.as_view()),
     path('reading/publication/', core_views.PublicationRedirectView.as_view()),
 
+    re_path(r'^writing/resources/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<path>.*?)$',
+                        core_views.WritingResourcesRedirectView.as_view()),
+
     path('', include(spectator_patterns)),
 
     path('', include('hines.core.urls')),
@@ -149,4 +152,3 @@ if settings.DEBUG:
         urlpatterns = [
             path('__debug__/', include(debug_toolbar.urls)),
         ] + urlpatterns
-

@@ -36,6 +36,19 @@ class CoreUrlsTestCase(TestCase):
         self.assertEqual(resolve('/terry/2017/04/03/').func.__name__,
                         views.DayArchiveView.__name__)
 
+    def test_author_redirect_view(self):
+        self.assertEqual(resolve('/terry/reading/author/').func.__name__,
+                        views.AuthorRedirectView.__name__)
+
+    def test_publication_redirect_view(self):
+        self.assertEqual(resolve('/terry/reading/publication/').func.__name__,
+                        views.PublicationRedirectView.__name__)
+
+    def test_writing_resources_redirect_view(self):
+        self.assertEqual(resolve(
+        '/terry/writing/resources/2017/03/31/folder/test.png').func.__name__,
+                    views.WritingResourcesRedirectView.__name__)
+
     def test_archive_redirect_view(self):
         self.assertEqual(resolve('/archive/').func.__name__,
                         views.ArchiveRedirectView.__name__)
@@ -43,4 +56,3 @@ class CoreUrlsTestCase(TestCase):
     def test_archive_redirect_view_with_path(self):
         self.assertEqual(resolve('/archive/my/path/here/').func.__name__,
                         views.ArchiveRedirectView.__name__)
-
