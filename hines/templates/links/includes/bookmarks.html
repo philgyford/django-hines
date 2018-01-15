@@ -8,6 +8,8 @@ Expects:
 
 {% endcomment %}
 
+{% load hines_core %}
+
 {% if bookmark_list|length > 0 %}
 
   {% if page_obj|default:False and page_obj.number > 1 %}
@@ -19,12 +21,12 @@ Expects:
       <li class="media">
         <div class="media__body">
           <h2 class="media__header">
-            <a href="{{ bookmark.url }}">{{ bookmark.title }}</a>
+            <a href="{{ bookmark.url }}">{{ bookmark.title|smartypants }}</a>
           </h2>
 
           {% if bookmark.description %}
             <p>
-            {{ bookmark.description }}
+            {{ bookmark.description|smartypants }}
             </p>
           {% endif %}
 
@@ -41,5 +43,3 @@ Expects:
 {% else %}
   <p>There are no links to show.</p>
 {% endif %}
-
-

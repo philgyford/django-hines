@@ -1,5 +1,7 @@
 {% extends 'links/layouts/base.html' %}
 
+{% load hines_core %}
+
 {% block head_page_title %}A link{% endblock %}
 {% block content_title %}A link{% endblock %}
 
@@ -8,11 +10,11 @@
   <hr class="hr--sm">
 
   <article class="bodytext">
-    <h2 class="h3"><a href="{{ bookmark.url }}">{{ bookmark.title }}</a></h2>
+    <h2 class="h3"><a href="{{ bookmark.url }}">{{ bookmark.title|smartypants }}</a></h2>
 
     {% if bookmark.description %}
       <p>
-        {{ bookmark.description }}
+        {{ bookmark.description|smartypants }}
       </p>
     {% endif %}
 
@@ -26,4 +28,3 @@
 
 {% block sidebar %}
 {% endblock %}
-
