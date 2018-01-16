@@ -114,4 +114,3 @@ class TrackbackAdmin(admin.ModelAdmin):
 
     raw_id_fields = ('post',)
     readonly_fields = ('time_created', 'time_modified', )
-
