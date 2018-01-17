@@ -206,7 +206,8 @@ WHITENOISE_INDEX_FILE = True
 MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
 
 from datetime import datetime
-MARKDOWNX_MEDIA_PATH = datetime.now().strftime('weblogs/%Y/%m/%d')
+MARKDOWNX_MEDIA_PATH = '{}/weblogs/{}'.format(
+                        HINES_ROOT_DIR, datetime.now().strftime('%Y/%m/%d'))
 
 MARKDOWNX_IMAGE_MAX_SIZE = {
     'size': (1000, 1000),
