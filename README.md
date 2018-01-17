@@ -212,6 +212,7 @@ These variables are used on both local/Vagrant and production/Heroku sites:
 	AWS_ACCESS_KEY_ID
 	AWS_SECRET_ACCESS_KEY
 	AWS_STORAGE_BUCKET_NAME
+	SPECTATOR_GOOGLE_MAPS_API_KEY
 
 
 ## Media files
