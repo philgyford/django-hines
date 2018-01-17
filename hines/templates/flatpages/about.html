@@ -17,6 +17,8 @@
 {% endblock %}
 
 {% block sidebar %}
+  {{ block.super }}
+
 	{% current_url_name as url_name %}
 	<nav class="card">
 		<ul>

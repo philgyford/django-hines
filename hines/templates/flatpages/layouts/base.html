@@ -10,3 +10,16 @@
   </article>
 {% endblock %}
 
+{% block sidebar %}
+  {% if perms.flatpages.can_change_flatpage %}
+    <aside class="card">
+      <ul>
+        <li>
+          <a class="u-admin" href="{% url 'admin:flatpages_flatpage_change' flatpage.id %}" title="Edit this page in the Django Admin">Edit</a>
+        </li>
+      </ul>
+    </aside>
+  {% endif %}
+
+  {{ block.super }}
+{% endblock %}

@@ -7,10 +7,19 @@
 {% block content_heading %}{% endblock content_heading %}
 
 {% block content %}
-  <div class="bodytext">
-    <h1>{{ flatpage.title|smartypants|safe }}</h1>
-  </div>
+  <article>
+    <div class="bodytext">
+      <h1>{{ flatpage.title|smartypants|safe }}</h1>
+    </div>
 
-  {{ flatpage.content|smartypants|safe }}
+    {% if perms.flatpages.can_change_flatpage %}
+      <aside>
+        <p>
+          <a class="u-admin" href="{% url 'admin:flatpages_flatpage_change' flatpage.id %}" title="Edit this page in the Django Admin">Edit</a>
+        </p>
+      </aside>
+    {% endif %}
+
+    {{ flatpage.content|smartypants|safe }}
+  </article>
 {% endblock %}
-
