@@ -11,6 +11,7 @@ env:
   - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
   - ALLOWED_HOSTS='*'
   - DATABASE_URL='postgres://postgres:@localhost:5432/test_db'
+  - SPECTATOR_GOOGLE_MAPS_API_KEY='1234'
 install:
 - pip install -q coverage coveralls
 - pip install -q -r ./requirements/tests.txt
