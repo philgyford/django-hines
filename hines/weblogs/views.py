@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from dal import autocomplete
 from taggit.models import Tag
@@ -8,7 +9,7 @@ from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views.generic import DateDetailView, DetailView,\
-        ListView, MonthArchiveView, RedirectView, YearArchiveView
+        ListView, MonthArchiveView, RedirectView, TemplateView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
 from hines.core.views import PaginatedListView, TemplateSetMixin
@@ -331,6 +332,284 @@ class PostTagAutocomplete(autocomplete.Select2QuerySetView):
             # return JsonResponse({'image_code': image_code})
 
         # return response
+
+
+class RandomPhilView(TemplateView):
+    """
+    Replicating an old /cgi-bin/random_phil.cgi script.
+
+    If sets='2002' is passed into the view, we use the 2002 template set.
+    Otherwise the default is the 2001 (generally displayed in a little pop-up window).
+
+    GET: Display a random photo, getting its data from the photos array.
+
+    POST: The form submits an `idx` field which is a string of photo indexes
+    like "4+2+17". We display a photo whose index is not in that string. And
+    we add this photo's index to that string for next time. When all the
+    photos have been used `idx` is set back to empty and it starts again.
+    """
+    template_name = 'sets/2001/weblogs/random_phil.html'
+    http_method_names = ['get', 'post',]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update( self.get_random_phil() )
+        return context
+
+    def post(self, request, *args, **kwargs):
+        "The image form has been submitted. Get another image."
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+    def get_template_names(self):
+        "Use the 2002 template, or the default 2001?"
+        if self.kwargs.get('set', False) == '2002':
+            return ['sets/2002/weblogs/random_phil.html']
+        else:
+            return self.template_name
+
+    def get_random_phil(self):
+        """
+        Returns a dict of stuff for context_data.
+
+        Looks for an `idx` POST argument, which is a string of numbers in
+        the format '1+5+12+3'.
+
+        This is all a bit nasty but was adapted from a 2001-era perl cgi
+        script so.
+
+        The returned dict has these elements:
+
+        'idx1': An int, the 1-based number of the image. 1 the first time an
+                image is displayed. 2 when the user requests the next. Then 3,
+                etc.
+        'idx_list': A list of all the 0-based indexes of the images already
+                    displayed, including the current one. Indexes based on
+                    the `photos` list, not the order in which they were
+                    displayed to the user. The list is a string like '1+5+12+3'.
+        'total_images': An int, the total number of photos there are to display.
+        'image': A dict of data about the image to display. Pulled directly
+                 from the `photos` list.
+        """
+        photos = [
+            {
+                "file":    "stuart_1998.jpg",
+                "width":    "200",
+                "height":    "207",
+                "credit":    "Stuart",
+                "url":    "http://www.subatomic.com/",
+                "caption":    "London, 1998.",
+            },
+            {
+                "file":    "nick_1999.jpg",
+                "width":    "200",
+                "height":    "255",
+                "credit":    "Nick",
+                "url":    "http://if.only.org/",
+                "caption":    "Amsterdam, 1999.",
+            },
+            {
+                "file":    "sam_1999.jpg",
+                "width":    "235",
+                "height":    "200",
+                "credit":    "Sam",
+                "url":    "http://www.haddock.org/directory/society/haddocks/samurquhart/",
+                "caption":    "Me and Sam, Amsterdam, 1999.",
+            },
+            {
+                "file":    "mia_2000.jpg",
+                "width":    "200",
+                "height":    "200",
+                "credit":    "",
+                "url":    "",
+                "caption":    "<a href='http://www.geocities.com/sorgim/' target='opener'>Mia</a> and me, New York, 2000.",
+            },
+            {
+                "file":    "chippinghill_small.jpg",
+                "width":    "258",
+                "height":    "212",
+                "credit":    "<cite>Witham and Braintree Times</cite>",
+                "url":    "",
+                "caption":    "At school, mid-1970s.",
+            },
+            {
+                "file":    "bryan_2000.jpg",
+                "width":    "180",
+                "height":    "273",
+                "credit":    "Bryan",
+                "url":    "http://www.bryanboyer.com/",
+                "caption":    "Austin, Texas, 2000.",
+            },
+            {
+                "file":    "brad_2000.jpg",
+                "width":    "173",
+                "height":    "208",
+                "credit":    "Brad",
+                "url":    "http://www.bradlands.com/",
+                "caption":    "Austin, Texas, 2000.",
+            },
+            {
+                "file":    "connected_1997.jpg",
+                "width":    "202",
+                "height":    "260",
+                "credit":    "",
+                "url":    "",
+                "caption":    "<cite>Daily Telegraph</cite>, 1997.",
+            },
+            {
+                "file":    "des_1998.jpg",
+                "width":    "240",
+                "height":    "205",
+                "credit":    "Des",
+                "url":    "http://www.kfs.org/~desiree/",
+                "caption":    "Stef and me, London, 1998.",
+            },
+            {
+                "file":    "mac_1997.jpg",
+                "width":    "250",
+                "height":    "189",
+                "credit":    "Mac",
+                "url":    "http://www.incline.co.uk/mac/",
+                "caption":    "A bad mood, London, 1997.",
+            },
+            {
+                "file":    "pouneh_2000.jpg",
+                "width":    "180",
+                "height":    "213",
+                "credit":    "Pouneh",
+                "url":    "",
+                "caption":    "San Francisco, 2000.",
+            },
+            {
+                "file":    "janelle_2000.jpg",
+                "width":    "185",
+                "height":    "205",
+                "credit":    "Janelle",
+                "url":    "http://www.salon.com/directory/topics/janelle_brown/",
+                "caption":    "San Francisco, 2000.",
+            },
+            {
+                "file":    "peter_2000.jpg",
+                "width":    "200",
+                "height":    "184",
+                "credit":    "Peter",
+                "url":    "http://www.peterme.com/",
+                "caption":    "San Francisco, 2000.",
+            },
+            {
+                "file":    "andy_2000.jpg",
+                "width":    "180",
+                "height":    "252",
+                "credit":    "Andy",
+                "url":    "",
+                "caption":    "Beaconsfield, 2000.",
+            },
+            {
+                "file":    "mattj_2000.jpg",
+                "width":    "200",
+                "height":    "231",
+                "credit":    "Matt J",
+                "url":    "http://www.blackbeltjones.com/",
+                "caption":    "London, 2000.",
+            },
+            {
+                "file":    "mattl_2000.jpg",
+                "width":    "180",
+                "height":    "231",
+                "credit":    "Matt L",
+                "url":    "",
+                "caption":    "Fingers by <a href='http://if.only.org/' target='opener'>Nick</a>, London, 2000.",
+            },
+            {
+                "file":    "bryan_2001.jpg",
+                "width":    "260",
+                "height":    "183",
+                "credit":    "Bryan",
+                "url":    "http://www.bryanboyer.com/",
+                "caption":    "<a href='http://www.blackbeltjones.com/' target='opener'>Matt</a> and me, London, 2001",
+            },
+            {
+                "file":    "james_2001.jpg",
+                "width":    "200",
+                "height":    "206",
+                "credit":    "James",
+                "url":    "",
+                "caption":    "Burning Man, 2001",
+            },
+            {
+                "file":    "kay_2001.jpg",
+                "width":    "191",
+                "height":    "191",
+                "credit":    "Kay",
+                "url":    "",
+                "caption":    "Burning Man, 2001",
+            },
+            {
+                "file":    "yoz_20011121.jpg",
+                "width":    "220",
+                "height":    "250",
+                "credit":    "Yoz",
+                "url":    "http://www.yoz.com/",
+                "caption":    "Me and Alice, London, 2001",
+            },
+            {
+                "file":    "mary_2002062201.jpg",
+                "width":    "172",
+                "height":    "250",
+                "credit":    "Mary",
+                "url":    "http://www.sparklytrainers.com/",
+                "caption":    "Grays, Essex, 2002",
+            },
+            {
+                "file":    "mary_2002062202.jpg",
+                "width":    "184",
+                "height":    "260",
+                "credit":    "Mary",
+                "url":    "http://www.sparklytrainers.com/",
+                "caption":    "Grays, Essex, 2002",
+            },
+            {
+                "file":    "yoz_20020227.jpg",
+                "width":    "199",
+                "height":    "240",
+                "credit":    "Yoz",
+                "url":    "http://www.yoz.com/",
+                "caption":    "Me and Mary, London, 2002",
+            }
+        ]
+
+        # Was a string containing a list of indexes submitted?
+        idx_list = self.request.POST.get('idx', '')
+        if idx_list == '':
+            used_pics = []
+        else:
+            # Will be like ['3', '15', '0']:
+            used_pics = idx_list.split('+')
+
+        if len(used_pics) > 0:
+            # This isn't the first time here, so find a new photo.
+
+            if len(used_pics) == len(photos):
+                # We've now used all the pics, so start again.
+                new_idx = random.randint(0, len(photos) - 1)
+                used_pics = []
+            else:
+                new_idx = used_pics[0]
+                while str(new_idx) in used_pics:
+                    new_idx = random.randint(0, len(photos) - 1)
+
+        else:
+            # This is the first time here so find any old random pic.
+            new_idx = random.randint(0, len(photos) - 1)
+
+        used_pics.append(str(new_idx))
+
+        return {
+            'idx1': new_idx + 1,
+            'idx_list': ('+').join(used_pics),
+            'total_images': len(photos),
+            'image': photos[new_idx],
+        }
 
 
 def _date_from_string(year, year_format, month='', month_format='', day='', day_format='', delim='__'):

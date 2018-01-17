@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>{% block head_title %}{% endblock %}</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content="Phil Gyford's website."/>
+	<meta name="keywords" content="Phil Gyford, Philip Gyford, London, Houston, Bristol, Witham, Essex, Fabius, {{ blog.short_name }}, {{ post.title }}, "/>
+
+	<link rel="author" title="Send feedback to Phil" href="mailto:phil@gyford.com"/>
+	<link rel="Shortcut Icon" href="{% static 'hines/sets/2002/favicon.ico' %}"/>
+	<link rel="home" title="Home" href="{% url 'home' %}"/>
+
+  {% block head_extra %}
+  {% endblock %}
+
+	<!-- skin: default -->
+	<link rel="stylesheet" href="{% static 'hines/sets/2002/style/default/global.css' %}" type="text/css"/>
+	<style type="text/css">
+		@import url({% static 'hines/sets/2002/style/default/global_non_ns4.css' %});
+	</style>
+	<link rel="stylesheet" href="{% static 'hines/sets/2002/style/default/screen.css' %}" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="{% static 'hines/sets/2002/style/default/print.css' %}" type="text/css" media="print"/>
+</head>
+
+<body>
+
+<h1 class="off"><a href="{% url 'home' %}">Phil Gyford</a></h1>
+
+<div id="main-b">
+	<a name="startcontent"></a>
+	{% block subheadings %}
+	{% endblock subheadings %}
+
+	{% block content %}
+	{% endblock content %}
+
+		<div class="break">&nbsp;</div>
+</div>
+<!-- end main -->
+
+<div id="sidebar">
+	<div{% if image %} class="hilite"{% endif %}>
+	<strong>Hire me!</strong>
+	<p>I'm available for freelance <acronym title="Information Architecture">IA</acronym>, <acronym title="PHP: Hypertext Preprocessor">PHP</acronym>, <acronym title="HyperText Markup Language">HTML</acronym>, and other web work. <a href="{% url 'hines:about_work' %}" title="More information about what I do"><strong>Read more</strong></a></p>
+	</div>
+	<div>
+	<strong>My other sites</strong>
+	<ul>
+		<li><a href="http://www.pepysdiary.com/" title="Pepys' diary in weblo form">Pepys&#8217; Diary</a></li>
+		<li><a href="http://www.byliner.com/" title="Track your favourite web authors">Byliner</a></li>
+		<li><a href="http://www.haddock.org/directory/" title="Something fishy every day">Haddock Directory</a></li>
+		<li><a href="http://www.haddock.org/blogs/" title="Aggregated fishy weblogs">Haddock Blogs</a></li>
+		<!-- <li><a href="http://www.haddock.org/review/" title="Book and music reviews by fish">Haddock Review</a></li> -->
+	</ul>
+	</div>
+	<div>
+	<strong>Search</strong>
+	<form method="get" action="http://www.google.com/search">
+	<input id="search" name="q" size="15" maxlength="255" accesskey="4"/><br/>
+	<input type="hidden" name="as_sitesearch" value="www.gyford.com">
+	<input type="submit" value="Search" class="button"/>
+	</form>
+	</div>
+	<div{% if post %} class="hilite"{% endif %}>
+		<a href="{% url 'hines:everything_feed_rss' %}" title="An RSS feed of my latest writing, photos, links, notes, etc."><strong>RSS</strong></a> (<a href="/phil/writing/2003/01/05/an-introduction-/#whatisrss" title="'An introduction to weblog terms for weblog readers: What is RSS?', 2003-01-05">?</a>)
+
+		<ul>
+			<li><a href="{% url 'hines:feeds' %}" title="A list of other RSS and Atom feeds available">More feeds</a></li>
+		</ul>
+
+	</div>
+	<div>
+	<ul>
+		<li><a href="http://www.audioscrobbler.com/user/gyford/" title="See what music I've been listening to recently">My Audioscrobbler page</a></li>
+
+		<li><a href="/phil/blogroll/" title="A list of sites I read frequently">Blogroll</a></li>
+
+		<li><a href="/phil/foaf.rdf" title="Some of my friends captured in XML">FOAF</a> (<a href="http://rdfweb.org/foaf/" title="FOAF: the 'friend of a friend' project">?</a>)</li>
+		<li><a href="http://www.amazon.co.uk/exec/obidos/redirect?tag=haddockorg-21&amp;path=registry/3JJHI0G9TKGTX/" title="Buy me nice things">Amazon Wish List</a></li>
+		<li><a href="/misc/accessibility.php" accesskey="0">Accessibility statement</a></li>
+		<li><a href="http://www.movabletype.org/" title="to movabletype.org">Moveable Type powered</a></li>
+		<li>Work on this page is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/1.0" title="Creative Commons Attribution Non-Commercial Share Alike license">Creative Commons License</a></li>
+	</ul>
+	</div>
+</div> <!-- end sidebar -->
+
+<div id="menubar">
+<div id="nav">
+	<ul id="menu">
+	<li>
+		{% if post %}
+			<a href="{% url 'weblogs:blog_detail' blog_slug='writing' %}" title="The front page of the site" accesskey="1"><span class="menu-on">Writing</span></a>
+			<ul>
+			<li><a href="{% url 'weblogs:blog_archive' blog_slug='writing' %}" title="An archive of writing organised by date">By date</a></li>
+			<li><a href="/phil/writing/cats/" title="An archive of writing organised by category">By category</a></li>
+			</ul>
+		{% else %}
+			<a href="{% url 'weblogs:blog_detail' blog_slug='writing' %}" title="The front page of the site" accesskey="1">Writing</a>
+		{% endif %}
+	</li>
+	<li><a href="{% url 'pinboard:home' %}" title="Links I've found interesting">Links</a></li>
+	<li><a href="{% url 'weblogs:blog_tag_detail' blog_slug='writing' tag_slug='notes' %}" title="Notes I've taken">Notes</a></li>
+	<li><a href="{% url 'photos:home' %}" title="Collections of my photos">Photos</a></li>
+	<li><a href="/phil/uhcl/" title="Work I did for a Future Studies MSc">Futures</a></li>
+	<li class="rule"><a href="{% url 'hines:timeline' %}" title="A chronological summary of my life">Timeline</a></li>
+	<li>
+		{% if image %}
+			<span class="menu-on">Random Phil</span>
+		{% else %}
+			<a href="/phil/random/" title="Random photos of me by other people">Random Phil</a>
+		{% endif %}
+	</li>
+	<li><a href="{% url 'hines:misc' %}" title="Things on this site that don't fit anywhere else">Other stuff</a></li>
+	<li><a href="mailto:phil@gyford.com" title="Send me email" accesskey="9">Email</a></li>
+	</ul>
+</div> <!-- end nav -->
+</div> <!-- end menubar -->
+
+{% include 'hines_core/includes/analytics.html' %}
+
+</body>
+</html>

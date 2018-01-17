@@ -1,0 +1,27 @@
+{% extends 'sets/2002/weblogs/base.html' %}
+
+{% block head_title %}Phil Gyford: Random Phil{% endblock %}
+
+{% block subheadings %}
+	<h2 class="one">Random Phil</h2>
+{% endblock subheadings %}
+
+{% block content %}
+	<div class="image">
+		<form method="post" action="{% url 'weblogs:random_phil_2002' %}" name="photoForm">
+			<input class="image" type="image" src="/phil/images/phils/{{ image.file }}" width="{{ image.width }}" height="{{ image.height }}" alt="Click for another">
+			<br>
+			{{ image.caption|safe }}
+			{% if image.url != '' %}
+			  <br>By <a href="{{ image.url }}">{{ image.credit|safe }}</a>
+			{% elif image.credit != '' %}
+			  <br>By {{ image.credit|safe }}
+			{% endif %}
+			<br>
+			<br>
+			<small>Click image for another</small>
+			<input type="hidden" name="idx" value="{{ idx_list }}">
+			{% csrf_token %}
+		</form>
+	</div>
+{% endblock content %}

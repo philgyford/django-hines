@@ -1,0 +1,33 @@
+<html>{% load static %}
+<head>
+  <title>Pop-up Phil</title>
+  <LINK REL=STYLESHEET HREF="{% static 'hines/sets/2001/style/global.css' %}" TYPE="text/css">
+  <script language="javascript">
+    function AnotherPhoto() {
+      document.photoForm.submit();
+    }
+  </script>
+</head>
+<body bgcolor="#FFFFFF">
+
+  <form method="post" action="{% url 'weblogs:random_phil_2001' %}" name="photoForm">
+    <center>
+      <table border="0">
+        <tr><td><table align=center border=0 cellpadding=1 cellspacing=0 bgcolor="#000000"><tr><td><input type="image" src="/phil/images/phils/{{ image.file }}" width={{ image.width }} height={{ image.height }} alt="{{ idx1 }}/{{ total_images }} Click for another"></td></tr></table></td></tr>
+        <tr><td align=center>{{ image.caption|safe }}
+        {% if image.url %}
+          <br>By <a href="{{ image.url }}" target="opener">{{ image.credit|safe }}</a></td></tr>
+        {% elif image.credit %}
+          <br>By {{ image.credit|safe }}</td></tr>
+        {% else %}
+          </td></tr>
+        {% endif %}
+        <tr><td align=center class="smaller"><img src="/images/pixel.gif" width=1 height=8><br>[<a href="javascript:AnotherPhoto()">Click for another</a>]</td></tr>
+      </table>
+    </center>
+    <input type="hidden" name="idx" value="{{ idx_list }}">
+    {% csrf_token %}
+  </form>
+
+</body>
+</html>

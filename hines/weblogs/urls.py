@@ -14,6 +14,7 @@ register_converter(converters.TwoDigitDayConverter, 'dd')
 app_name = 'weblogs'
 
 urlpatterns = [
+
     path('post-tag-autocomplete/', views.PostTagAutocomplete.as_view(),
         name='post_tag_autocomplete',),
 
@@ -24,6 +25,11 @@ urlpatterns = [
         name='markdownx_upload'),
     path('markdownx/markdownify/', MarkdownifyView.as_view(),
         name='markdownx_markdownify'),
+
+    # 2001 version in a pop-up window:
+    path('random-phil/', views.RandomPhilView.as_view(), {'set': '2001'}, name='random_phil_2001'),
+    # 2002 version in the main window:
+    path('random/', views.RandomPhilView.as_view(), {'set': '2002'}, name='random_phil_2002'),
 
     path(
         '<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>.php',
