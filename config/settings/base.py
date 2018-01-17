@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django_comments',
 
     'spectator.core',
+    'spectator.events',
     'spectator.reading',
 
     'sortedm2m',
@@ -199,6 +200,10 @@ WHITENOISE_ROOT = os.path.join(APPS_DIR, 'static_html/')
 
 # Visiting /example/ will serve /example/index.html:
 WHITENOISE_INDEX_FILE = True
+
+
+SPECTATOR_GOOGLE_MAPS_API_KEY = get_env_variable('SPECTATOR_GOOGLE_MAPS_API_KEY')
+
 
 
 # Markdownx settings

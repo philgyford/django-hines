@@ -40,6 +40,8 @@ spectator_patterns = ([
 
     path('reading/', include('spectator.reading.urls', namespace='reading')),
 
+    path('events/', include('spectator.events.urls', namespace='events')),
+
     path('creators/', include('spectator.core.urls.creators',
         namespace='creators')),
 ], 'spectator')
