@@ -467,3 +467,37 @@ class PostYearArchiveViewTestCase(ViewTestCase):
                                                         year=2017)
         self.assertIn('blog', response.context_data)
         self.assertEqual(response.context_data['blog'], self.blog)
+
+
+class RandomPhilViewTestCase(ViewTestCase):
+
+    def test_templates_default(self):
+        response = views.RandomPhilView.as_view()(self.request)
+        self.assertEqual(response.template_name[0],
+                         'sets/2001/weblogs/random_phil.html')
+
+    def test_templates_2001(self):
+        "Same as default"
+        response = views.RandomPhilView.as_view()(self.request, set='2001')
+        self.assertEqual(response.template_name[0],
+                         'sets/2001/weblogs/random_phil.html')
+
+    def test_templates_2002(self):
+        response = views.RandomPhilView.as_view()(self.request, set='2002')
+        self.assertEqual(response.template_name[0],
+                         'sets/2002/weblogs/random_phil.html')
+
+    def test_context(self):
+        response = views.RandomPhilView.as_view()(self.request)
+        context = response.context_data
+        self.assertIn('idx1', context)
+        self.assertEqual(context['idx1'], 1)
+        self.assertIn('idx_list', context)
+        self.assertIn('total_images', context)
+        self.assertEqual(context['total_images'], 23)
+        self.assertIn('image', context)
+        self.assertIn('file', context['image'])
+        self.assertIn('width', context['image'])
+        self.assertIn('height', context['image'])
+        self.assertIn('credit', context['image'])
+        self.assertIn('caption', context['image'])

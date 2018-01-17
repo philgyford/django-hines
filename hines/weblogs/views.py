@@ -364,9 +364,9 @@ class RandomPhilView(TemplateView):
     def get_template_names(self):
         "Use the 2002 template, or the default 2001?"
         if self.kwargs.get('set', False) == '2002':
-            return ['sets/2002/weblogs/random_phil.html']
+            return ['sets/2002/weblogs/random_phil.html',]
         else:
-            return self.template_name
+            return [self.template_name,]
 
     def get_random_phil(self):
         """
@@ -605,7 +605,7 @@ class RandomPhilView(TemplateView):
         used_pics.append(str(new_idx))
 
         return {
-            'idx1': new_idx + 1,
+            'idx1': len(used_pics),
             'idx_list': ('+').join(used_pics),
             'total_images': len(photos),
             'image': photos[new_idx],

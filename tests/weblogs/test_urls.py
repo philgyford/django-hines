@@ -134,3 +134,25 @@ class WeblogsUrlsTestCase(TestCase):
                 resolve('/terry/my-blog/2017/').func.__name__,
                          views.PostYearArchiveView.__name__)
 
+
+    def test_random_phil_2001_url(self):
+        self.assertEqual(
+                reverse('weblogs:random_phil_2001'),
+                '/terry/random-phil/')
+
+    def test_random_phil_2001_view(self):
+        "Should use the correct view."
+        self.assertEqual(
+                resolve('/terry/random-phil/').func.__name__,
+                         views.RandomPhilView.__name__)
+
+    def test_random_phil_2002_url(self):
+        self.assertEqual(
+                reverse('weblogs:random_phil_2002'),
+                '/terry/random/')
+
+    def test_random_phil_2002_view(self):
+        "Should use the correct view."
+        self.assertEqual(
+                resolve('/terry/random/').func.__name__,
+                         views.RandomPhilView.__name__)
