@@ -126,6 +126,12 @@ class AuthorRedirectViewTestCase(ViewTestCase):
         with self.assertRaises(Http404):
             response = views.AuthorRedirectView.as_view()(request)
 
+    def test_invalid_id(self):
+        "If the id supplied isn't int-able, it should 404."
+        request = self.factory.get('/fake-path/', {'id': "a string"})
+        with self.assertRaises(Http404):
+            response = views.AuthorRedirectView.as_view()(request)
+
 
 class PublicationRedirectViewTestCase(ViewTestCase):
 
@@ -148,6 +154,12 @@ class PublicationRedirectViewTestCase(ViewTestCase):
     def test_wrong_id(self):
         "There's no publication with this id"
         request = self.factory.get('/fake-path/', {'id': 456})
+        with self.assertRaises(Http404):
+            response = views.PublicationRedirectView.as_view()(request)
+
+    def test_invalid_id(self):
+        "If the id supplied isn't int-able, it should 404."
+        request = self.factory.get('/fake-path/', {'id': "897'A=0"})
         with self.assertRaises(Http404):
             response = views.PublicationRedirectView.as_view()(request)
 

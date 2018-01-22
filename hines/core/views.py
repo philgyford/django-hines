@@ -266,7 +266,11 @@ class AuthorRedirectView(RedirectView):
         if creator_id is False:
             raise Http404("No creator ID supplied.")
 
-        creator = get_object_or_404(Creator, pk=creator_id)
+        try:
+            creator = get_object_or_404(Creator, pk=creator_id)
+        except ValueError:
+            raise Http404("Invalid creator ID supplied.")
+
         kwargs['slug'] = creator.slug
 
         return super().get_redirect_url(*args, **kwargs)
@@ -288,7 +292,11 @@ class PublicationRedirectView(RedirectView):
         if publication_id is False:
             raise Http404("No publication ID supplied.")
 
-        publication = get_object_or_404(Publication, pk=publication_id)
+        try:
+            publication = get_object_or_404(Publication, pk=publication_id)
+        except ValueError:
+            raise Http404("Invalid publication ID supplied.")
+
         kwargs['slug'] = publication.slug
 
         return super().get_redirect_url(*args, **kwargs)
