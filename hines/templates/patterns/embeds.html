@@ -1,0 +1,43 @@
+{% extends 'patterns/base.html' %}
+
+{% load patterns_tags %}
+
+{% block content %}
+
+<p>Responsive embeds go inside a <code>&lt;figure class="figure figure--embed"&gt;</code> with an additional element inside indicating the aspect ratio:</p>
+
+{% include 'patterns/includes/embeds/main.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/embeds/main.html' %}</pre></code>
+
+<p>This works for <code>iframe</code>, <code>embed</code>, <code>object</code> and <code>video</code> elements.</p>
+
+<p>Aspect ratio classes are:</p>
+
+  <ul>
+    <li><code>.figure--embed__21by9</code></li>
+    <li><code>.figure--embed__16by9</code></li>
+    <li><code>.figure--embed__4by3</code></li>
+    <li><code>.figure--embed__1by1</code></li>
+  </ul>
+
+
+<h2>Aligned left or right</h2>
+
+<p><code>.figure--left</code> and <code>.figure--right</code> float the embed to one side at wider widths, with text wrapping around.</p>
+
+{% include 'patterns/includes/embeds/aligned.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/embeds/aligned.html' %}</pre></code>
+
+
+<h2>Captions</h2>
+
+<p>They can include a <code>&lt;figcaption&gt;</code> element:
+
+{% include 'patterns/includes/embeds/caption.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/embeds/caption.html' %}</pre></code>
+
+
+{% endblock content %}

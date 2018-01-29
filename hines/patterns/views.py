@@ -7,6 +7,7 @@ class PatternsView(TemplateView):
 
     valid_slugs = [
                     'cards',
+                    'embeds',
                     'forms',
                     'galleries',
                     'grid',
@@ -35,5 +36,3 @@ class PatternsView(TemplateView):
         context['pages'] = self.valid_slugs
         context['current_page'] = self.kwargs.get('slug', None)
         return context
-
-

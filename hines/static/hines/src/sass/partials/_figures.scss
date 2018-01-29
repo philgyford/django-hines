@@ -11,32 +11,6 @@
 
 .figure {
   margin: 0 0 $paragraph-margin-bottom 0;
-}
-
-figcaption {
-  @include text-style-alt;
-}
-
-.figure--blockquote {
-  p:last-child {
-    margin-bottom: 0;
-  }
-
-  figcaption {
-    padding: 0 ($border-width * 2);
-  }
-}
-
-.figure--img {
-
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  figcaption {
-    margin-top: $paragraph-margin-bottom-sm;
-  }
 
   &.figure--full {
     img {
@@ -55,7 +29,7 @@ figcaption {
   &.figure--left {
     @include media-breakpoint-up(sm) {
       float: left;
-	  clear: left;
+      clear: left;
       margin-right: ($grid-gutter-width / 2);
       max-width: 50%;
     }
@@ -64,10 +38,40 @@ figcaption {
   &.figure--right {
     @include media-breakpoint-up(sm) {
       float: right;
-	  clear: right;
+      clear: right;
       margin-left: ($grid-gutter-width / 2);
       max-width: 50%;
     }
+  }
+}
+
+figcaption {
+  @include text-style-alt;
+  margin-top: $paragraph-margin-bottom-sm;
+}
+
+
+// BLOCKQUOTE
+
+.figure--blockquote {
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  figcaption {
+    margin-top: 0;
+    padding: 0 ($border-width * 2);
+  }
+}
+
+
+// IMG
+
+.figure--img {
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -102,3 +106,76 @@ figcaption {
   }
 }
 
+
+// IFRAMES, VIDEO, ETC.
+
+// From Bootstrap v4.
+// Credit: Nicolas Gallagher and SUIT CSS.
+
+.figure--embed {
+
+  &.figure--left {
+    @include media-breakpoint-up(sm) {
+      width: 50%;
+    }
+  }
+
+  &.figure--right {
+    @include media-breakpoint-up(sm) {
+      width: 50%;
+    }
+  }
+
+  .figure--embed__21by9,
+  .figure--embed__16by9,
+  .figure--embed__4by3,
+  .figure--embed__1by1 {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+
+    &::before {
+      display: block;
+      content: "";
+    }
+
+    iframe,
+    embed,
+    object,
+    video {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+}
+
+.figure--embed__21by9 {
+  &::before {
+    padding-top: percentage(9 / 21);
+  }
+}
+
+.figure--embed__16by9 {
+  &::before {
+    padding-top: percentage(9 / 16);
+  }
+}
+
+.figure--embed__4by3 {
+  &::before {
+    padding-top: percentage(3 / 4);
+  }
+}
+
+.figure--embed__1by1 {
+  &::before {
+    padding-top: percentage(1 / 1);
+  }
+}
