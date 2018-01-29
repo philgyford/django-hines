@@ -11,7 +11,7 @@ django-ditto==0.7.6
 # Until this is merged into neutronX/django-markdownx:
 git+git://github.com/aaugustin/django-markdownx.git@django-2.0
 #django-markdownx==2.0.21
-django-spectator==7.1.0
+django-spectator==7.1.1
 django-storages==1.6.5
 django-taggit==0.22.2
 psycopg2==2.7.3.2
