@@ -65,6 +65,7 @@ hr {
   margin-bottom: $hr-margin;
   border: 0;
   border-top: $hr-border-width solid $hr-border-color;
+  clear: both;
 
   &:first-child {
     margin-top: 0;
@@ -114,11 +115,11 @@ blockquote {
  * Patterns pages. DO NOT use these anywher on the actual site.
  **/
 .demo-text-style-default {
-  @include text-style-default; 
+  @include text-style-default;
 }
 .demo-text-style-alt {
-  @include text-style-alt; 
+  @include text-style-alt;
 }
 .demo-text-style-nav {
-  @include text-style-nav; 
+  @include text-style-nav;
 }
