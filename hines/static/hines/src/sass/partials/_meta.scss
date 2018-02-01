@@ -60,6 +60,8 @@ $meta-offset-bottom: 0.5rem;
 
   .meta__inner {
     @include list-inline();
+    // So it has normal space if used inline under a blog post etc:
+    margin-bottom: $paragraph-margin-bottom;
 
     & > li {
       @include list-item-bullet;
@@ -70,6 +72,14 @@ $meta-offset-bottom: 0.5rem;
   }
 }
 
+.media {
+  .meta--inline {
+    .meta__inner {
+      // Remove that normal bottom margin when used in .media.
+      margin-bottom: -$meta-offset-bottom;
+    }
+  }
+}
 
 .meta--right {
   // Otherwise a line of article text will go immediately underneath,
@@ -83,4 +93,3 @@ $meta-offset-bottom: 0.5rem;
     margin-left: ($grid-gutter-width / 2);
   }
 }
-
