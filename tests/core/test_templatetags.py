@@ -5,7 +5,7 @@ from freezegun import freeze_time
 from django.test import TestCase
 
 from hines.core.templatetags.hines_core import get_item, display_time,\
-        smartypants, linebreaks_first
+        smartypants, linebreaks_first, domain_urlize
 from hines.core.utils import make_datetime
 
 
@@ -94,3 +94,12 @@ class LinebreaksFirstTestCase(TestCase):
             """<p class="first">This is the<br />first par.</p>\n\n<p>And a second.</p>"""
         )
 
+
+
+class DomainUrlizeTestCase(TestCase):
+
+    def test_domain_urlize(self):
+        self.assertEqual(
+            domain_urlize('http://www.example.org/foo/'),
+            '<a href="http://www.example.org/foo/" rel="nofollow">www.example.org</a>'
+        )

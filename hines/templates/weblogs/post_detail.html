@@ -51,6 +51,10 @@
 		{% with body_length=post.body|length body_cutoff=500 %}
 			{% if body_length <= body_cutoff %}
 				{{ post.body_html|safe }}
+
+				{% if post.remote_url %}
+					<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
+				{% endif %}
 			{% endif %}
 
 	    <aside class="meta {% if body_length > body_cutoff %}meta--right{% else %}meta--inline{% endif %}">
@@ -69,6 +73,9 @@
 
 			{% if body_length > body_cutoff %}
 		    {{ post.body_html|safe }}
+				{% if post.remote_url %}
+					<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
+				{% endif %}
 			{% endif %}
 		{% endwith %}
 
