@@ -1,0 +1,16 @@
+{% comment %}
+Displays a list of Events.
+
+Expects:
+* event_list - List or Queryset of children of Event.
+* style: 'bullets' (default) or 'unstyled'.
+
+{% endcomment %}
+
+{% if event_list|length > 0 %}
+  <ol class="media-list">
+    {% for event in event_list %}
+      {% include 'spectator_events/includes/event.html' with event=event style=style|default:'bullets' only %}
+    {% endfor %}
+  </ol>
+{% endif %}

@@ -1,0 +1,39 @@
+{% comment %}
+Not included in Spectator's templates, but we use it in Hines.
+
+Expects:
+
+* event - An Event object.
+* style: 'bullets' (default, for main part of page) or 'unstyled' (for cards).
+
+
+{% endcomment %}
+
+{% load hines_core %}
+
+<li class="media">
+  <div class="media__body">
+    <h2 class="media__header">
+      <a href="{{ event.get_absolute_url }}">
+        {{ event }}
+        {% if event.venue and style == 'bullets' %}
+          <small>at {{ event.venue_name }}</small>
+        {% endif %}
+      </a>
+    </h2>
+    {% if style == 'bullets' %}
+      <div class="meta meta--inline">
+        <ul class="meta__inner">
+          <li>{% display_time event.date show='date' link_to_day=True %}</li>
+          <li>{{ event.kind_name }}</li>
+        </ul>
+      </div>
+    {% else %}
+      <p>
+        {% if event.venue %}
+          at {{ event.venue_name }}
+        {% endif %}
+        on {{ event.date }}
+    {% endif %}
+  </div>
+</li>
