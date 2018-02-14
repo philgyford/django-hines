@@ -11,7 +11,7 @@ Expects:
 {% if date_list|length > 0 %}
   <aside class="card">
     <h2 class="card__header">{{ card_title }}</h2>
-    <ul class="list--inline list--unstyled">
+    <ol class="list--inline list--unstyled">
       {% for year in date_list %}
         <li>
           {% if current_year == year %}
@@ -21,7 +21,6 @@ Expects:
           {% endif %}
         </li>
       {% endfor %}
-    </ul>
+    </ol>
   </aside>
 {% endif %}
-
