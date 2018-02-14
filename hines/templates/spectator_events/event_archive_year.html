@@ -1,5 +1,7 @@
 {% extends 'spectator_events/event_archive_year.html' %}
 
+{% block head_page_title %}Events in {{ year|date:"Y" }}{% endblock %}
+{% block content_title %}Events in {{ year|date:"Y" }}{% endblock %}
 
 {% block content %}
   {% include 'hines_core/includes/next_prev_date.html' with url_name='spectator:events:event_year_archive' previous=previous_year next=next_year current=year date_type='year' only %}
