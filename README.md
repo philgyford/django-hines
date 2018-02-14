@@ -122,7 +122,7 @@ Export:
 
 Import:
 
-	vagrant$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U hines -d hines.pgsql
+	vagrant$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U hines -d hines hines.pgsql
 
 
 #### Tests
