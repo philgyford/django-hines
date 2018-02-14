@@ -14,14 +14,13 @@ Expects:
 <li class="media">
   <div class="media__body">
     <h2 class="media__header">
-      <a href="{{ event.get_absolute_url }}">
-        {{ event }}
-        {% if event.venue and style == 'bullets' %}
-          <small>at {{ event.venue_name }}</small>
-        {% endif %}
-      </a>
+      <a href="{{ event.get_absolute_url }}">{{ event }}</a>
     </h2>
+
     {% if style == 'bullets' %}
+      {% if event.venue %}
+        <p>at {{ event.venue_name }}</p>
+      {% endif %}
       <div class="meta meta--inline">
         <ul class="meta__inner">
           <li>{% display_time event.date show='date' link_to_day=True %}</li>
@@ -34,6 +33,7 @@ Expects:
           at {{ event.venue_name }}
         {% endif %}
         on {{ event.date }}
+      </p>
     {% endif %}
   </div>
 </li>
