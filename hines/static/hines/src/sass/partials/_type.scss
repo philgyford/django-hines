@@ -34,11 +34,21 @@ h1, h2, h3, h4, h5, h6,
   @include text-style-nav;
 }
 
-h1, h2, h3,
-.h1, .h2, .h3 {
-  small {
-    font-size: $nav-font-size;
-  }
+h1 small,
+.h1 small {
+  font-size: $h2-font-size;
+}
+h2 small,
+.h2 small {
+  font-size: $h3-font-size;
+}
+h2 small,
+.h3 small {
+  font-size: $h4-font-size;
+}
+h4 small,
+.h4 small {
+  font-size: $h5-font-size;
 }
 
 h1, .h1 { font-size: $h1-font-size; }
@@ -56,6 +66,11 @@ h6, .h6 { font-size: $h6-font-size; }
 
 .pagehead h1 {
   margin-bottom: 1em;
+
+  cite {
+    // Don't want italics in Helvetica caps.
+    font-style: normal;
+  }
 }
 
 // Other things
@@ -107,6 +122,10 @@ blockquote {
   border-left: $border-width solid $black;
   padding-left: $border-width;
   padding-right: ($border-width * 2);
+}
+
+cite {
+  font-style: $cite-font-style;
 }
 
 /**

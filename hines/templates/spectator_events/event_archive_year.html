@@ -1,0 +1,43 @@
+{% extends 'spectator_events/event_archive_year.html' %}
+
+{% block head_page_title %}Events in {{ year|date:"Y" }}{% endblock %}
+{% block content_title %}Events in {{ year|date:"Y" }}{% endblock %}
+
+{% block content %}
+  {% include 'hines_core/includes/next_prev_date.html' with url_name='spectator:events:event_year_archive' previous=previous_year next=next_year current=year date_type='year' only %}
+
+  {% if event_list|length > 0 %}
+
+    {% for event in event_list %}
+        {% ifchanged event.date|date:"m" %}
+            {% if not forloop.first %}
+            </ol>
+            {% endif %}
+            <h2>{{ event.date|date:"F"}}</h2>
+            <ol class="media-list">
+        {% endifchanged %}
+
+        {% include 'spectator_events/includes/event.html' with event=event style='bullets' %}
+    {% endfor %}
+    </ol>
+
+    {% include 'hines_core/includes/next_prev_date.html' with url_name='spectator:events:event_year_archive' previous=previous_year next=next_year current=year date_type='year' only %}
+
+  {% else %}
+    <p>No events in {{ year|date:"Y" }}.</p>
+  {% endif %}
+
+{% endblock content %}
+
+
+{% block sidebar %}
+
+  <aside class="card">
+    <div class="card__body">
+      <p>Movies, plays, exhibitions etc I went to in {{ year|date:"Y" }}.</p>
+    </div>
+  </aside>
+
+  {{ block.super }}
+
+{% endblock sidebar %}

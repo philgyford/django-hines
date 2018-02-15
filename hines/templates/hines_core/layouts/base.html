@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-60e35c3c56.css">
+    <link rel="stylesheet" href="/static/hines/css/site-17ad733bf0.css">
     <!-- endinject -->
 
     <link rel="alternate" type="application/rss+xml" title="Writing, photos, links, and my comments combined" href="{% url 'hines:everything_feed_rss' %}">
@@ -75,21 +75,28 @@
               <span class="nav__link">Comments</span>
             {% endif %}
           </li>
-          <li class="nav__item {% block reading_nav_active %}{% endblock %}">
+          <li class="nav__item nav__item--split {% block reading_nav_active %}{% endblock %}">
             {% if url_name != 'spectator:reading:home' %}
               <a class="nav__link" href="{% url 'spectator:reading:home' %}">Reading</a>
             {% else %}
               <span class="nav__link">Reading</span>
             {% endif %}
           </li>
-          <li class="nav__item {% block misc_nav_active %}{% endblock %}">
-            {% if url_name == 'hines:misc' %}
-              <span class="nav__link">More</span>
+          <li class="nav__item {% block events_nav_active %}{% endblock %}">
+            {% if url_name != 'spectator:events:home' %}
+              <a class="nav__link" href="{% url 'spectator:events:home' %}">Events</a>
             {% else %}
-              <a class="nav__link" href="{% url 'hines:misc' %}">More</a>
+              <span class="nav__link">Events</span>
             {% endif %}
           </li>
-          <li class="nav__item nav__item--split {% block about_nav_active %}{% endblock %}">
+          <li class="nav__item nav__item--split {% block misc_nav_active %}{% endblock %}">
+            {% if url_name == 'hines:misc' %}
+              <span class="nav__link">More…</span>
+            {% else %}
+              <a class="nav__link" href="{% url 'hines:misc' %}">More…</a>
+            {% endif %}
+          </li>
+          <li class="nav__item {% block about_nav_active %}{% endblock %}">
             {% if url_name != 'hines:about' %}
               <a class="nav__link" href="{% url 'hines:about' %}">About me</a>
             {% else %}

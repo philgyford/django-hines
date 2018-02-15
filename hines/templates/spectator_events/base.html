@@ -1,0 +1,23 @@
+{% extends 'spectator_events/base.html' %}
+
+{% comment %}
+The only different to the default spectator_events/base.html template is that
+we're displaying a different number of recent events.
+{% endcomment %}
+
+{% load spectator_core spectator_events %}
+
+{% block sidebar %}
+
+    {% include 'spectator_events/includes/card_nav.html' %}
+    {% include 'spectator_core/includes/card_nav.html' %}
+
+    {% current_url_name as url_name %}
+
+    {% if url_name != 'spectator:events:home' and url_name != 'spectator:events:event_year_archive'%}
+        {% recent_events_card num=2 %}
+    {% endif %}
+
+    {% events_years_card current_year=year %}
+
+{% endblock sidebar %}

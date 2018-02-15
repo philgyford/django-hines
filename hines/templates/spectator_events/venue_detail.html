@@ -1,0 +1,13 @@
+{% extends 'spectator_events/venue_detail.html' %}
+
+{% block sidebar %}
+
+  <aside class="card">
+    <div class="card__body">
+      <p>This is a venue I’ve visited for {% if event_list|length == 1 %}an event{% else %}some events{% endif %}.</p>
+    </div>
+  </aside>
+
+  {{ block.super }}
+
+{% endblock sidebar %}
