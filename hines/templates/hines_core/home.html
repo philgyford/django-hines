@@ -1,8 +1,6 @@
 {% extends 'hines_core/layouts/sidebar_right.html' %}
 
-{% load hines_core %}
-{% load blocks %}
-{% load spectator_reading %}
+{% load blocks hines_core spectator_events spectator_reading %}
 
 {% block head_title %}{{ site_name }}{% endblock %}
 
@@ -42,6 +40,8 @@
 	{% render_block "about-me" %}
 
 	{% in_progress_publications_card %}
+
+	{% recent_events_card num=2 %}
 
 	{% lastfm_recent_scrobbles_card limit=10 %}
 
