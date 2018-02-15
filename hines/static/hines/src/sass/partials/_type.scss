@@ -56,6 +56,11 @@ h6, .h6 { font-size: $h6-font-size; }
 
 .pagehead h1 {
   margin-bottom: 1em;
+
+  cite {
+    // Don't want italics in Helvetica caps.
+    font-style: normal;
+  }
 }
 
 // Other things
@@ -107,6 +112,10 @@ blockquote {
   border-left: $border-width solid $black;
   padding-left: $border-width;
   padding-right: ($border-width * 2);
+}
+
+cite {
+  font-style: $cite-font-style;
 }
 
 /**

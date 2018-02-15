@@ -17,6 +17,10 @@
 .bodytext .pagehead h1 {
   margin-bottom: $paragraph-margin-bottom;
 
+  cite {
+    // Undo the font-style:normal we have for the Helvetica headings.
+    font-style: $cite-font-style;
+  }
+
   @include text-style-default;
 }
-

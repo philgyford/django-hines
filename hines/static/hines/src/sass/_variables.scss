@@ -158,6 +158,8 @@ $text-style-alt-font-weight:        $font-weight-bold;
 
 $list-inline-padding:         $border-width;
 
+$cite-font-style:             italic;
+
 
 // Tables
 //
@@ -166,7 +168,7 @@ $list-inline-padding:         $border-width;
 $table-cell-padding:          .75rem;
 $table-cell-padding-sm:       .3rem;
 
-$table-border-width:          $border-width-sm; 
+$table-border-width:          $border-width-sm;
 $table-border-color:          $border-color;
 
 
@@ -239,7 +241,7 @@ $form-text-margin-top:                  .375rem;
 
 $form-group-margin-bottom:              $paragraph-margin-bottom;
 
-$form-feedback-invalid-color:           $red; 
+$form-feedback-invalid-color:           $red;
 
 
 // Nav
