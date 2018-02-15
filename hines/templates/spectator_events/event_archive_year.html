@@ -28,3 +28,16 @@
   {% endif %}
 
 {% endblock content %}
+
+
+{% block sidebar %}
+
+  <aside class="card" style="width: 13rem;">
+    <div class="card__body">
+      <p>Movies, plays, exhibitions etc I went to in {{ year|date:"Y" }}.</p>
+    </div>
+  </aside>
+
+  {{ block.super }}
+
+{% endblock sidebar %}
