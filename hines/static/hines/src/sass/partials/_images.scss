@@ -11,3 +11,10 @@
   height: auto;
 }
 
+
+// Override inline styles for Spectator Events map.
+// Not sure where else to put it...
+.venue-map {
+  border: $border-width-sm solid $border-color !important;
+  margin-bottom: $paragraph-margin-bottom !important;
+}
