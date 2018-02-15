@@ -14,7 +14,7 @@ Expects:
 <li class="media">
   <div class="media__body">
     <h2 class="media__header">
-      <a href="{{ event.get_absolute_url }}">{{ event }}</a>
+      <a href="{{ event.get_absolute_url }}">{{ event.title_html }}</a>
     </h2>
 
     {% if style == 'bullets' %}
