@@ -112,6 +112,15 @@ figcaption {
 // From Bootstrap v4.
 // Credit: Nicolas Gallagher and SUIT CSS.
 
+// In case we need to use these outside of our .figure--embed class:
+iframe,
+embed,
+object,
+video {
+  margin-bottom: $paragraph-margin-bottom;
+}
+
+
 .figure--embed {
 
   &.figure--left {
@@ -126,7 +135,6 @@ figcaption {
     }
   }
 
-  .figure--embed__74by15,
   .figure--embed__21by9,
   .figure--embed__16by9,
   .figure--embed__4by3,
@@ -154,14 +162,6 @@ figcaption {
       height: 100%;
       border: 0;
     }
-  }
-}
-
-// For Bandcamp 'Standard' embeds with 'Small' artwork.
-// 592 x 120 px
-.figure--embed__74by15 {
-  &::before {
-    padding-top: percentage(15 / 74);
   }
 }
 
