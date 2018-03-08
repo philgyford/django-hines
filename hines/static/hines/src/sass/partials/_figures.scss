@@ -156,6 +156,15 @@ figcaption {
   }
 }
 
+// For Bandcamp 'Standard' embeds with 'Small' artwork.
+// 592 x 120 px
+.figure--embed__74by15 {
+  &::before {
+    padding-top: percentage(15 / 74);
+  }
+}
+
+
 .figure--embed__21by9 {
   &::before {
     padding-top: percentage(9 / 21);
