@@ -6,6 +6,12 @@
   margin: 0.5rem auto 36px auto;
   text-rendering: optimizeLegibility;
   @include hyphens(none);
+
+  .nav__item:first-child {
+    // Undo the split we add at the start of generic .navs:
+    margin-left: 0;
+    padding-left: 0;
+  }
 }
 
 .navbar__inner {
@@ -170,4 +176,3 @@
     //background: yellow;
   //}
 }
-

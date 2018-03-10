@@ -23,6 +23,7 @@
   margin-bottom: $nav-border-width;
 }
 
+.nav__item:first-child,
 .nav__item--split {
   margin-left: $nav-border-width;
   padding-left: $nav-link-padding-x;
@@ -67,4 +68,3 @@
     padding-right: ($nav-link-padding-x * 2);
   }
 }
-
