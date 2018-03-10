@@ -8,15 +8,21 @@
 
   {% for key, object_list in sections.items %}
     {% if object_list|length > 0 %}
+
       {% if key|slice:"12" == 'weblog_posts' %}
         {% with object_list.0.blog as blog %}
-          <h2><a href="{{ blog.get_absolute_url }}" title="See more writing">{{ blog.name }}</a></h2>
+          <h2>{{ blog.name }}</h2>
 
           {% include 'weblogs/includes/posts.html' with post_list=object_list only %}
+
+          <p><a href="{{ blog.get_absolute_url }}" title="See more writing">See more posts</a></p>
+
+          <hr>
+
         {% endwith %}
 
       {% elif key == 'flickr_photo_list' %}
-        <h2><a href="{% url 'photos:home' %}" title="See more photos">Photos</a></h2>
+        <h2>Photos</h2>
 
         <hr class="hr--sm">
 
@@ -24,14 +30,22 @@
 
         <hr class="hr--sm">
 
+        <p><a href="{% url 'photos:home' %}" title="See more photos">See more photos</a></p>
+
+        <hr>
+
       {% elif key == 'pinboard_bookmark_list' %}
-        <h2><a href="{% url 'pinboard:home' %}" title="See more links">Links</a></h2>
+        <h2>Links</h2>
 
         {% include 'links/includes/bookmarks.html' with bookmark_list=object_list only %}
 
-      {% endif %}
-    {% endif %}
+        <p><a href="{% url 'pinboard:home' %}" title="See more links">See more links</a></p>
 
+        <hr>
+
+      {% endif %}
+
+    {% endif %}
   {% endfor %}
 
 {% endblock %}
