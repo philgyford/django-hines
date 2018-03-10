@@ -24,8 +24,8 @@
 // Hopefully, the size of the bit of line height that is above/below the
 // text itself:
 
-$meta-offset-top: 0.4rem;
-$meta-offset-bottom: 0.5rem;
+$meta-offset-top: 0.5rem;
+$meta-offset-bottom: 0.4rem;
 
 .meta {
   @include text-style-nav;
