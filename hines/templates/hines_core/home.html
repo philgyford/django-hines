@@ -15,9 +15,13 @@
 
           {% include 'weblogs/includes/posts.html' with post_list=object_list only %}
 
-          <p><a href="{{ blog.get_absolute_url }}" title="See more writing">See more posts</a></p>
-
-          <hr>
+          <nav>
+            <ul class="nav">
+              <li class="nav__item">
+                <a class="nav__link" href="{{ blog.get_absolute_url }}" title="See more writing">See more posts</a>
+              </li>
+            </ul>
+          </nav>
 
         {% endwith %}
 
@@ -30,18 +34,28 @@
 
         <hr class="hr--sm">
 
-        <p><a href="{% url 'photos:home' %}" title="See more photos">See more photos</a></p>
-
-        <hr>
+        <nav>
+          <ul class="nav">
+            <li class="nav__item">
+              <a class="nav__link" href="{% url 'photos:home' %}" title="See more photos">See more photos</a>
+            </li>
+          </ul>
+        </nav>
 
       {% elif key == 'pinboard_bookmark_list' %}
         <h2>Links</h2>
 
         {% include 'links/includes/bookmarks.html' with bookmark_list=object_list only %}
 
-        <p><a href="{% url 'pinboard:home' %}" title="See more links">See more links</a></p>
+        <p></p>
 
-        <hr>
+        <nav>
+          <ul class="nav">
+            <li class="nav__item">
+              <a class="nav__link" href="{% url 'pinboard:home' %}" title="See more links">See more links</a>
+            </li>
+          </ul>
+        </nav>
 
       {% endif %}
 
