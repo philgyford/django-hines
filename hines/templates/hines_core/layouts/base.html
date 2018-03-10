@@ -135,6 +135,10 @@
           {% block sidebar_column %}
             <div class="grid__col grid__col--sub{% if sidebar_position == 'left' %} grid__col--first{% endif %}">
               {% block sidebar %}
+                {% block sidebar_nav %}
+                {% endblock sidebar_nav %}
+                {% block sidebar_content %}
+                {% endblock sidebar_content %}
               {% endblock sidebar %}
             </div> <!-- .grid__col -->
           {% endblock sidebar_column %}

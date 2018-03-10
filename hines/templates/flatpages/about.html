@@ -16,7 +16,7 @@
   </article>
 {% endblock %}
 
-{% block sidebar %}
+{% block sidebar_nav %}
   {{ block.super }}
 
 	{% current_url_name as url_name %}
@@ -45,8 +45,4 @@
 			</li>
 		</ul>
 	</nav>
-
-  {% block sidebar_about_more %}
-  {% endblock %}
-
-{% endblock %}
+{% endblock sidebar_nav %}

@@ -36,7 +36,7 @@
 
 {% endblock %}
 
-{% block sidebar %}
+{% block sidebar_content %}
 
 	{% render_block "about-me" %}
 
@@ -46,4 +46,4 @@
 
 	{% lastfm_recent_scrobbles_card limit=10 %}
 
-{% endblock %}
+{% endblock sidebar_content %}

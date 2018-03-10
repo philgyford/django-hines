@@ -10,7 +10,7 @@
   </article>
 {% endblock %}
 
-{% block sidebar %}
+{% block sidebar_nav %}
   {% if perms.flatpages.can_change_flatpage %}
     <aside class="card">
       <ul>
@@ -22,4 +22,4 @@
   {% endif %}
 
   {{ block.super }}
-{% endblock %}
+{% endblock sidebar_nav %}

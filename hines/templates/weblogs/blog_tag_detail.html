@@ -1,5 +1,7 @@
 {% extends 'hines_core/layouts/sidebar_right.html' %}
 
+{% load hines_weblogs %}
+
 {% block head_page_title %}{{ blog.name }} tagged {{ tag.name }}{% endblock %}
 {% block content_title %}{{ blog.name }} tagged {{ tag.name }}{% endblock %}
 
@@ -9,5 +11,6 @@
 
 {% endblock %}
 
-{% block sidebar %}
-{% endblock %}
+{% block sidebar_content %}
+  {% blog_popular_tags_card blog=blog num=10 %}
+{% endblock sidebar_content %}

@@ -7,11 +7,14 @@ we're displaying a different number of recent events.
 
 {% load spectator_core spectator_events %}
 
-{% block sidebar %}
+{% block sidebar_nav %}
 
     {% include 'spectator_events/includes/card_nav.html' %}
     {% include 'spectator_core/includes/card_nav.html' %}
 
+{% endblock sidebar_nav %}
+
+{% block sidebar_content %}
     {% current_url_name as url_name %}
 
     {% if url_name != 'spectator:events:home' and url_name != 'spectator:events:event_year_archive'%}
@@ -20,4 +23,4 @@ we're displaying a different number of recent events.
 
     {% events_years_card current_year=year %}
 
-{% endblock sidebar %}
+{% endblock sidebar_content %}

@@ -1,4 +1,4 @@
-{% extends 'hines_core/layouts/sidebar_right.html' %}
+{% extends 'hines_core/layouts/sidebar_left.html' %}
 
 {% block head_page_title %}{{ blog.name }}: {{ year|date:"Y" }}{% endblock %}
 {% block content_title %}{{ blog.name }}:  {{ year|date:"Y" }}{% endblock %}
@@ -10,10 +10,9 @@
 
   {% include 'hines_core/includes/next_prev_date.html' with date_type='year' url_name='weblogs:post_year_archive' blog_slug=blog.slug previous=previous_year next=next_year current=year only %}
 
-
 {% endblock content %}
 
-{% block sidebar %}
+{% block sidebar_content %}
 	{% if date_list|length > 1 %}
 		{# Don't both showing it if there's only one month #}
 		<aside class="card">
@@ -29,4 +28,4 @@
 	{% endif %}
 
 	{{ block.super }}
-{% endblock sidebar %}
+{% endblock sidebar_content %}

@@ -55,10 +55,10 @@
 {% endblock %}
 
 
-{% block sidebar %}
+{% block sidebar_content %}
 	{% day_publications_card day %}
 
 	{% day_events_card day %}
 
 	{% lastfm_top_artists_card limit=3 date=day period='day' %}
-{% endblock %}
+{% endblock sidebar_content %}

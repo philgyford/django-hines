@@ -11,7 +11,7 @@
 
 {% endblock %}
 
-{% block sidebar %}
+{% block sidebar_content %}
 
 	{% if blog %}
 		{% current_url_name as url_name %}
@@ -23,4 +23,4 @@
 	{% endif %}
 
 	{{ block.super }}
-{% endblock sidebar %}
+{% endblock sidebar_content %}

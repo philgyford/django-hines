@@ -1,4 +1,4 @@
-{% extends 'hines_core/layouts/sidebar_right.html' %}
+{% extends 'hines_core/layouts/sidebar_left.html' %}
 
 {% block head_page_title %}{{ blog.name }}: {{ month|date:"F Y" }}{% endblock %}
 {% block content_title %}{{ blog.name }}:  {{ month|date:"F Y" }}{% endblock %}
@@ -12,7 +12,7 @@
 
 {% endblock %}
 
-{% block sidebar %}
+{% block sidebar_content %}
 	{% if date_list|length > 1 %}
 		{# Don't both showing it if there's only one day #}
 		<aside class="card">
@@ -28,4 +28,4 @@
 	{% endif %}
 
 	{{ block.super }}
-{% endblock sidebar %}
+{% endblock sidebar_content %}
