@@ -258,7 +258,7 @@ MARKDOWNX_UPLOAD_URLS_PATH = '/{}/markdownx/upload/'.format(HINES_ROOT_DIR)
 # Also see HINES_ROOT_DIR at top of file.
 
 # We won't show Day Archive pages before this YYYY-MM-DD date:
-HINES_FIRST_DATE = '2000-03-15'
+HINES_FIRST_DATE = '1989-06-02'
 
 # Used to generate URLs when we don't have access to a request object:
 HINES_USE_HTTPS = False
