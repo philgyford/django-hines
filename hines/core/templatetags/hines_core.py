@@ -225,7 +225,10 @@ def domain_urlize(value):
 @register.inclusion_tag('spectator_core/includes/card_chart.html')
 def most_seen_directors_card(num=10):
     """
-    Custom wrapper around
+    Custom wrapper around spectator_events' most_seen_creators_by_works_card().
+
+    This is purely so that we can group the Coen Brothers together into a
+    single list item.
     """
     num = num + 1
     data = most_seen_creators_by_works_card(
@@ -235,25 +238,34 @@ def most_seen_directors_card(num=10):
     coens = ['Joel Coen', 'Ethan Coen']
     coen_position = None
 
+    # Original list, with the Coens occupying two adjacent positions:
     creators = data['object_list']
 
     for n, creator in enumerate(creators):
         if prev_creator:
             if prev_creator.name in coens and creator.name in coens:
+                # Both this item and the previous are Coen brothers.
+                # This is the position they should both be at:
                 coen_position = (n - 1)
                 break
         prev_creator = creator
 
     if coen_position is not None:
+        # The Coen brothers were in the list.
+        # So, get both of the Creator objects:
         coen1 = creators[coen_position]
         coen2 = creators[coen_position + 1]
+        # Put them both in a list at the first position a Coen occupied:
         creators[coen_position] = [ coen1, coen2 ]
+        # And delete the second position:
         del( creators[coen_position + 1] )
 
+    # Now we need to improve the positions of all subsequent people
+    # because we just removed a position:
     for m in range(coen_position + 1, len(creators)):
         creators[m].chart_position = creators[m].chart_position - 1
 
-
+    # While we're here, a better title:
     data['card_title'] = 'Most seen film directors'
 
     data['object_list'] = creators
