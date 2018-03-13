@@ -79,6 +79,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Must be first:
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -91,6 +93,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Can go at the end of the list:
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    # Must be last:
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -120,6 +124,23 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Uses DATABASE_URL environment variable:
 DATABASES = {'default': dj_database_url.config()}
 DATABASES['default']['CONN_MAX_AGE'] = 500
+
+# We override this in production settings:
+CACHES = {
+    'default': {
+        # Use dummy cache (ie, no caching):
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+
+        # Or use local memcached:
+        #'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        #'LOCATION': '127.0.0.1:11211',
+        #'TIMEOUT': 500, # millisecond
+    }
+}
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_KEY_PREFIX = 'hines'
 
 
 # Password validation

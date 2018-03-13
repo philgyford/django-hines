@@ -20,18 +20,6 @@ MEDIA_URL = 'https://{}.s3.amazonaws.com{}'.format(
                                             AWS_STORAGE_BUCKET_NAME, MEDIA_URL)
 
 
-CACHES = {
-    'default': {
-        # Use dummy cache (ie, no caching):
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-
-        # Or use local memcached:
-        #'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        #'LOCATION': '127.0.0.1:11211',
-        #'TIMEOUT': 500, # millisecond
-    }
-}
-
 # Debug Toolbar settings.
 if DEBUG:
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
@@ -48,4 +36,3 @@ if DEBUG:
             new_apps.append('whitenoise.runserver_nostatic')
         new_apps.append(app)
     INSTALLED_APPS[:] = new_apps
-
