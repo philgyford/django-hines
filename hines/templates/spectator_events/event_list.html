@@ -1,4 +1,5 @@
 {% extends 'spectator_events/event_list.html' %}
+{% load hines_core %}
 
 {% block sidebar_nav %}
 
@@ -10,3 +11,16 @@
 
   {{ block.super }}
 {% endblock sidebar_nav %}
+
+
+{% block sidebar_content %}
+
+  {% if event_kind is None %}
+    {% most_seen_directors_card num=10 %}
+  {% elif event_kind == 'cinema' %}
+    {% most_seen_directors_card num=30 %}
+  {% endif %}
+
+  {{ block.super }}
+
+{% endblock %}

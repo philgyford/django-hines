@@ -1,9 +1,11 @@
 {% extends 'spectator_core/creator_list.html' %}
+{% load hines_core spectator_core %}
 
 {% comment %}
 Differences between this and the standard creator_list.html:
-The .nav block is pretty different.
-The list of creators is currently identical.
+* The .nav block is pretty different.
+* The list of creators is currently identical.
+* Sidebar additions
 {% endcomment %}
 
 {% block content %}
@@ -59,3 +61,14 @@ The list of creators is currently identical.
 
   {% endif %}
 {% endblock content %}
+
+
+{% block sidebar_content %}
+
+  {% most_read_creators_card num=10 %}
+
+  {% most_seen_directors_card num=20 %}
+
+  {{ block.super }}
+
+{% endblock sidebar_content %}

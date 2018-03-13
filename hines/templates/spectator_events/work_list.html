@@ -1,0 +1,10 @@
+{% extends 'spectator_events/work_list.html' %}
+{% load hines_core %}
+
+{% block sidebar_content %}
+
+  {% most_seen_directors_card num=30 %}
+
+  {{ block.super }}
+
+{% endblock sidebar_content %}

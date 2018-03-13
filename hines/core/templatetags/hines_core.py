@@ -11,8 +11,13 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 
-from ditto.lastfm.templatetags.ditto_lastfm import recent_scrobbles,\
-        top_artists
+from ditto.lastfm.templatetags.ditto_lastfm import (
+    recent_scrobbles, top_artists
+)
+
+from spectator.events.templatetags.spectator_events import (
+    most_seen_creators_by_works_card
+)
 
 
 register = template.Library()
@@ -215,3 +220,42 @@ def domain_urlize(value):
             value,
             domain
         )
+
+
+@register.inclusion_tag('spectator_core/includes/card_chart.html')
+def most_seen_directors_card(num=10):
+    """
+    Custom wrapper around
+    """
+    num = num + 1
+    data = most_seen_creators_by_works_card(
+                            num=num, work_kind='movie', role_name='Director')
+
+    prev_creator = None
+    coens = ['Joel Coen', 'Ethan Coen']
+    coen_position = None
+
+    creators = data['object_list']
+
+    for n, creator in enumerate(creators):
+        if prev_creator:
+            if prev_creator.name in coens and creator.name in coens:
+                coen_position = (n - 1)
+                break
+        prev_creator = creator
+
+    if coen_position is not None:
+        coen1 = creators[coen_position]
+        coen2 = creators[coen_position + 1]
+        creators[coen_position] = [ coen1, coen2 ]
+        del( creators[coen_position + 1] )
+
+    for m in range(coen_position + 1, len(creators)):
+        creators[m].chart_position = creators[m].chart_position - 1
+
+
+    data['card_title'] = 'Most seen film directors'
+
+    data['object_list'] = creators
+
+    return data
