@@ -34,7 +34,7 @@ memcache_servers = get_env_variable('MEMCACHIER_SERVERS')
 
 CACHES = {
     'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
 
         # TIMEOUT is not the connection timeout! It's the default expiration
         # timeout that should be applied to keys! Setting it to `None`
