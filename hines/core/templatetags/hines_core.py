@@ -266,7 +266,7 @@ def most_seen_directors_card(num=10):
         creators[m].chart_position = creators[m].chart_position - 1
 
     # While we're here, a better title:
-    data['card_title'] = 'Most seen film directors'
+    data['card_title'] = 'Directors by number of movies'
 
     data['object_list'] = creators
 
