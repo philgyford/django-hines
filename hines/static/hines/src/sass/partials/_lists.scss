@@ -40,3 +40,9 @@ ol {
 dd:last-child {
   margin-bottom: 0;
 }
+
+
+// Makes spacing better if we have p's in li's and also nested lists.
+li > p {
+  margin-top: $paragraph-margin-bottom;
+}
