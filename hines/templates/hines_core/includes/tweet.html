@@ -24,7 +24,7 @@ Expects:
     </span>
     {{ tweet.user }}
     •
-    {% display_time tweet.post_time False %}
+    {% display_time tweet.post_time show='both' link_to_day=False %}
 
     {% if tweet.is_reply %}
       • <a href="{{ tweet.in_reply_to_url }}" title="See their Tweet">In reply to…</a>
@@ -72,4 +72,3 @@ Expects:
 
   {% endif %}
 </div><!-- .media__body -->
-
