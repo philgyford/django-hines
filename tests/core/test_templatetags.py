@@ -25,26 +25,26 @@ class DisplayTimeTestCase(TestCase):
     def test_returns_datetime_by_default(self):
         self.assertEqual(
             display_time(make_datetime('2015-08-14 13:34:56')),
-            '<time datetime="2015-08-14 13:34:56">13:34 on 14&nbsp;Aug&nbsp;2015</time>'
+            '<time datetime="2015-08-14 13:34:56">13:34 on 14 Aug 2015</time>'
         )
 
     @freeze_time("2015-08-14 13:34:56", tz_offset=0)
     def test_uses_now_if_no_datetime_supplied(self):
         self.assertEqual(
             display_time(),
-            '<time datetime="2015-08-14 13:34:56">13:34 on 14&nbsp;Aug&nbsp;2015</time>'
+            '<time datetime="2015-08-14 13:34:56">13:34 on 14 Aug 2015</time>'
         )
 
     def test_returns_datetime(self):
         self.assertEqual(
             display_time(make_datetime('2015-08-14 13:34:56'), show='both'),
-            '<time datetime="2015-08-14 13:34:56">13:34 on 14&nbsp;Aug&nbsp;2015</time>'
+            '<time datetime="2015-08-14 13:34:56">13:34 on 14 Aug 2015</time>'
         )
 
     def test_returns_date(self):
         self.assertEqual(
             display_time(make_datetime('2015-08-14 13:34:56'), show='date'),
-            '<time datetime="2015-08-14 13:34:56">14&nbsp;Aug&nbsp;2015</time>'
+            '<time datetime="2015-08-14 13:34:56">14 Aug 2015</time>'
         )
 
     def test_returns_time(self):
@@ -58,7 +58,7 @@ class DisplayTimeTestCase(TestCase):
         reverse.return_value = '/2015/08/14/'
         self.assertEqual(
             display_time(make_datetime('2015-08-14 13:34:56'), show='both', link_to_day=True),
-            '<time datetime="2015-08-14 13:34:56">13:34 on <a href="/2015/08/14/" title="All items from this day">14&nbsp;Aug&nbsp;2015</a></time>'
+            '<time datetime="2015-08-14 13:34:56">13:34 on <a href="/2015/08/14/" title="All items from this day">14 Aug 2015</a></time>'
         )
 
     @patch('hines.core.templatetags.hines_core.reverse')
@@ -66,7 +66,7 @@ class DisplayTimeTestCase(TestCase):
         reverse.return_value = '/2015/08/14/'
         self.assertEqual(
             display_time(make_datetime('2015-08-14 13:34:56'), show='date', link_to_day=True),
-            '<time datetime="2015-08-14 13:34:56"><a href="/2015/08/14/" title="All items from this day">14&nbsp;Aug&nbsp;2015</a></time>'
+            '<time datetime="2015-08-14 13:34:56"><a href="/2015/08/14/" title="All items from this day">14 Aug 2015</a></time>'
         )
 
     def test_returns_time_with_no_link(self):

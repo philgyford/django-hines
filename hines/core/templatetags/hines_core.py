@@ -11,6 +11,8 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 
+from .. import app_settings
+
 from ditto.lastfm.templatetags.ditto_lastfm import (
     recent_scrobbles, top_artists
 )
@@ -85,8 +87,13 @@ def display_time(dt=None, show='both', granularity=0, link_to_day=False):
         dt = now()
 
     # The date and time formats for display:
-    d_fmt = '%-d&nbsp;%b&nbsp;%Y'
-    t_fmt = '%H:%M'
+
+    # Like '%d %b %Y':
+    d_fmt = app_settings.DATE_FORMAT
+    # Like '%H:%M':
+    t_fmt = app_settings.TIME_FORMAT
+    # Like '[time] on [date]':
+    dt_fmt = app_settings.DATETIME_FORMAT
 
     if granularity == 8:
         visible_str = 'circa %s' % dt.strftime('%Y')
@@ -97,7 +104,8 @@ def display_time(dt=None, show='both', granularity=0, link_to_day=False):
         stamp = dt.strftime('%Y')
 
     elif granularity == 4:
-        visible_str = 'sometime in %s' % dt.strftime('%b&nbsp;%Y')
+        visible_str = 'sometime in %s' % dt.strftime(
+                                        app_settings.DATE_YEAR_MONTH_FORMAT)
         stamp = dt.strftime('%Y-%m')
 
     else:
@@ -105,7 +113,7 @@ def display_time(dt=None, show='both', granularity=0, link_to_day=False):
         if show == 'time':
             visible_str = dt.strftime(t_fmt)
         else:
-            # Date only or time and date:
+            # Date only, or time and date:
 
             if link_to_day:
                 url = reverse('hines:day_archive', kwargs={
@@ -123,7 +131,9 @@ def display_time(dt=None, show='both', granularity=0, link_to_day=False):
 
             if show == 'both':
                 # Add the time:
-                visible_str = '%s on %s' % (dt.strftime(t_fmt), visible_str)
+                visible_str = dt_fmt \
+                                .replace('[date]', visible_str) \
+                                .replace('[time]', dt.strftime(t_fmt))
 
         stamp = dt.strftime('%Y-%m-%d %H:%M:%S')
 

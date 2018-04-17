@@ -159,12 +159,33 @@ Custom settings that can be in the django `settings.py` file:
 
 ``HINES_COMMENTS_ALLOWED_ATTRIBUTES``: A dict of attributes allowed in HTML tags in comments; all others will be stripped. e.g. ``{'a': ['href', 'title',],}``. Default is: ``{'a': ['href', 'title'], 'acronym': ['title'], 'abbr': ['title']}``.
 
+``HINES_DATE_FORMAT`` strftime to use for displaying dates in templates. Default is ``'%-d %b %Y'``.
+
+``HINES_DATE_YEAR_MONTH_FORMAT`` strftime to use for displaying a date when it only has a month and a year, in templates. Default is ``'%b %Y'``.
+
+``HINES_DATETIME_FORMAT`` a string to use when displaying both a date and a time. Default is ``'[time] on [date]'`` The ``[time]`` token will be replaced with ``HINES_TIME_FORMAT`` and the ``[date]`` token will be replaced with the ``HINES_DATE_FORMAT``.
+
 ``HINES_FIRST_DATE``: Day Archive pages will 404 for days before this date. e.g.
 ``2000-03-15``. Default is ``False`` (dates of any age allowed).
 
 ``HINES_GOOGLE_ANALYTICS_ID``: e.g. ``'UA-123456-1'``. If present, the Google
 Analytics Tracking code will be put into every page, using this ID. This value
 is taken from the ``HINES_GOOGLE_ANALYTICS_ID`` environment variable. Default is ``''``.
+
+``HINES_HOME_PAGE_DISPLAY``: Defines how many of different kinds of thing to
+display on the sites's home page. The `'weblog_posts'` uses the `slug` of each
+Blog to indicate how many posts of each to display. e.g.:
+
+	HINES_HOME_PAGE_DISPLAY = {
+		'flickr_photos': 3,
+		'pinboard_bookmarks': 3,
+		'weblog_posts': {
+			'writing': 3,
+			'comments': 1,
+		},
+	}
+
+Default is an empty dict, ``{}``.
 
 ``HINES_ROOT_DIR``: e.g. `'phil'`. All the pages except things like the very
 front page and admin will live under this directory. Default is ``''`` but I
@@ -183,24 +204,11 @@ Any Post on the Blog with slug `writing` between those two dates will use the
 
 Default is ``None``, to disable this behaviour.
 
+``HINES_TIMEFORMAT`` strftime to use for displaying times in templates. Default is ``'%H:%M'``.
+
 ``HINES_USE_HTTPS``: e.g. `False`. Used when generating full URLs and the
 request object isn't available. Default ``False``.
 
-
-``HINES_HOME_PAGE_DISPLAY``: Defines how many of different kinds of thing to
-display on the sites's home page. The `'weblog_posts'` uses the `slug` of each
-Blog to indicate how many posts of each to display. e.g.:
-
-	HINES_HOME_PAGE_DISPLAY = {
-		'flickr_photos': 3,
-		'pinboard_bookmarks': 3,
-		'weblog_posts': {
-			'writing': 3,
-			'comments': 1,
-		},
-	}
-
-Default is an empty dict, ``{}``.
 
 
 ## Environment variables
