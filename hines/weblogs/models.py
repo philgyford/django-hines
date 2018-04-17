@@ -13,6 +13,7 @@ import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
 
+from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
 from hines.core.utils import truncate_string
 from . import managers
@@ -289,13 +290,13 @@ class Post(TimeStampedModelMixin, models.Model):
         """
         Returns a boolean indicating whether new comments are allowed on this.
         """
-        if hasattr(settings, 'HINES_ALLOW_COMMENTS') and settings.HINES_ALLOW_COMMENTS == False:
+        if app_settings.ALLOW_COMMENTS is not True:
             return False
 
-        elif self.blog.allow_comments == False:
+        elif self.blog.allow_comments is False:
             return False
 
-        elif self.allow_comments == False:
+        elif self.allow_comments is False:
             return False
 
         else:
@@ -345,4 +346,3 @@ class Trackback(TimeStampedModelMixin, models.Model):
         post.trackback_count = qs.count()
 
         post.save()
-

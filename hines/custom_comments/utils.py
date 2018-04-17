@@ -4,23 +4,15 @@ import re
 import bleach
 from bleach.linkifier import Linker
 
-from django.conf import settings
+from hines.core import app_settings
 
 
 def get_allowed_tags():
-    "Use our custom list of allowed tags, if any, else Bleach's default."
-    if hasattr(settings, 'HINES_COMMENTS_ALLOWED_TAGS') and settings.HINES_COMMENTS_ALLOWED_TAGS:
-        return settings.HINES_COMMENTS_ALLOWED_TAGS
-    else:
-        return bleach.sanitizer.ALLOWED_TAGS
+    return app_settings.COMMENTS_ALLOWED_TAGS
 
 
 def get_allowed_attributes():
-    "Use our custom dict of allowed attributes, if any, else Bleach's default."
-    if hasattr(settings, 'HINES_COMMENTS_ALLOWED_ATTRIBUTES') and settings.HINES_COMMENTS_ALLOWED_ATTRIBUTES:
-        return settings.HINES_COMMENTS_ALLOWED_ATTRIBUTES
-    else:
-        return bleach.sanitizer.ALLOWED_ATTRIBUTES
+    return app_settings.COMMENTS_ALLOWED_ATTRIBUTES
 
 
 def clean_comment(comment, max_url_length=23):
@@ -70,4 +62,3 @@ def clean_comment(comment, max_url_length=23):
     comment = comment.strip()
 
     return comment
-

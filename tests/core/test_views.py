@@ -12,6 +12,7 @@ from hines.core import views
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post
+from tests import override_app_settings
 
 
 class ViewTestCase(TestCase):
@@ -256,7 +257,7 @@ class DayArchiveViewTestCase(ViewTestCase):
             views.DayArchiveView.as_view()(
                             self.request, year=3000, month=8, day=31)
 
-    @override_settings(HINES_FIRST_DATE='2016-09-01')
+    @override_app_settings(FIRST_DATE='2016-09-01')
     def test_response_old_404(self):
         "It should raise 404 if the date is before HINES_FIRST_DATE"
         with self.assertRaises(Http404):
@@ -281,7 +282,7 @@ class DayArchiveViewTestCase(ViewTestCase):
         self.assertEqual(response.context_data['previous_day'],
                         self.yesterday_date)
 
-    @override_settings(HINES_FIRST_DATE='2016-08-31')
+    @override_app_settings(FIRST_DATE='2016-08-31')
     def test_context_data_dates_first(self):
         "previous_day should be False if it would be before HINES_FIRST_DATE"
         response = views.DayArchiveView.as_view()(

@@ -10,6 +10,7 @@ from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
         LivePostFactory
 from hines.weblogs import views
 from tests.core.test_views import ViewTestCase
+from tests import override_app_settings
 
 
 class BlogDetailViewTestCase(ViewTestCase):
@@ -294,14 +295,14 @@ class PostDetailViewTestCase(ViewTestCase):
 
         self.assertEquals(response.status_code, 200)
 
-    @override_settings(HINES_TEMPLATE_SETS=({'name':'2009', 'start': '2009-02-10', 'end': '2018-01-04'},))
+    @override_app_settings(TEMPLATE_SETS=({'name':'2009', 'start': '2009-02-10', 'end': '2018-01-04'},))
     def test_templates_old(self):
         "Uses a template from the appropriate template set."
         response = self.client.get('/terry/my-blog/2017/02/20/my-post/')
         self.assertEqual(response.template_name[0],
                         'sets/2009/weblogs/post_detail.html')
 
-    @override_settings(HINES_TEMPLATE_SETS=({'name':'2009', 'start': '2009-02-10', 'end': '2018-01-04'},))
+    @override_app_settings(TEMPLATE_SETS=({'name':'2009', 'start': '2009-02-10', 'end': '2018-01-04'},))
     def test_templates_current(self):
         "Uses the current post_detail template"
         LivePostFactory(blog=self.blog,

@@ -23,6 +23,7 @@ from ditto.twitter.models import Tweet
 from spectator.core.models import Creator
 from spectator.reading.models import Publication
 from spectator.reading.views import ReadingHomeView as SpectatorReadingHomeView
+from hines.core import app_settings
 from hines.core.utils import make_date
 from hines.weblogs.models import Blog, Post
 from .paginator import DiggPaginator
@@ -142,12 +143,13 @@ class HomeView(TemplateView):
         """
         section_quantity = 0
 
-        if hasattr(settings, 'HINES_HOME_PAGE_DISPLAY'):
-            if section_name in settings.HINES_HOME_PAGE_DISPLAY:
-                section_quantity = settings.HINES_HOME_PAGE_DISPLAY[section_name]
-                if section_name == 'weblog_posts':
-                    if subsection_name in section_quantity:
-                        section_quantity = section_quantity[subsection_name]
+        display = app_settings.HOME_PAGE_DISPLAY
+
+        if section_name in display:
+            section_quantity = display[section_name]
+            if section_name == 'weblog_posts':
+                if subsection_name in section_quantity:
+                    section_quantity = section_quantity[subsection_name]
 
         return section_quantity
 
@@ -520,9 +522,9 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         Our custom method for getting the date set in HINES_FIRST_DATE, if any.
         If not set, return False.
         """
-        if hasattr(settings, 'HINES_FIRST_DATE'):
+        if app_settings.FIRST_DATE:
             return datetime.datetime.strptime(
-                                settings.HINES_FIRST_DATE, "%Y-%m-%d").date()
+                                app_settings.FIRST_DATE, "%Y-%m-%d").date()
         else:
             return False
 
@@ -764,10 +766,10 @@ class TemplateSetMixin(object):
         Sets the value of self.template_set, if an appropriate template set is
         found.
         """
-        if getattr(settings, 'HINES_TEMPLATE_SETS', None):
+        if app_settings.TEMPLATE_SETS is not None:
             date = self.get_template_set_date()
 
-            for ts in settings.HINES_TEMPLATE_SETS:
+            for ts in app_settings.TEMPLATE_SETS:
                 start = make_date(ts['start'])
                 end = make_date(ts['end'])
                 if date >= start and date <= end:

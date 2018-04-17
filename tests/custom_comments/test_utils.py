@@ -1,14 +1,16 @@
 import bleach
 
 from django.conf import settings
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from hines.custom_comments.utils import clean_comment,\
         get_allowed_attributes, get_allowed_tags
 
+from tests import override_app_settings
 
-@override_settings(HINES_COMMENTS_ALLOWED_TAGS=['b', 'i', 'a',])
-@override_settings(HINES_COMMENTS_ALLOWED_ATTRIBUTES={'a': ['href', 'title',],})
+
+@override_app_settings(COMMENTS_ALLOWED_TAGS=['b', 'i', 'a',])
+@override_app_settings(COMMENTS_ALLOWED_ATTRIBUTES={'a': ['href', 'title',],})
 class CleanCommentTestCase(TestCase):
 
     def test_strips_bad_tags(self):
@@ -55,7 +57,7 @@ class CleanCommentTestCase(TestCase):
     def test_removes_extra_newlines(self):
         s1 = """First line.
 
-   
+
 
 Second line."""
         s2 = """First line.
@@ -69,33 +71,15 @@ Second line."""
 
 class GetAllowedTagsTestCase(TestCase):
 
-    @override_settings(HINES_COMMENTS_ALLOWED_TAGS=['b', 'i', 'a',])
+    @override_app_settings(COMMENTS_ALLOWED_TAGS=['b', 'i', 'a',])
     def test_returns_settings_tags(self):
         "If set, it should return our custom setting."
         self.assertEqual(get_allowed_tags(), ['b', 'i', 'a',])
 
-    @override_settings()
-    def test_returns_bleach_tags(self):
-        "If our custom setting isn't set, should return's Bleach's defaults."
-        if hasattr(settings, 'HINES_COMMENTS_ALLOWED_TAGS'):
-            del settings.HINES_COMMENTS_ALLOWED_TAGS
-
-        self.assertEqual(get_allowed_tags(), bleach.sanitizer.ALLOWED_TAGS)
-
 
 class GetAllowedAttributesTestCase(TestCase):
 
-    @override_settings(HINES_COMMENTS_ALLOWED_ATTRIBUTES={'a': ['href', 'title',],})
+    @override_app_settings(COMMENTS_ALLOWED_ATTRIBUTES={'a': ['href', 'title',],})
     def test_returns_settings_attributes(self):
         "If set, it should return our custom setting."
         self.assertEqual(get_allowed_attributes(), {'a': ['href', 'title',],})
-
-    @override_settings()
-    def test_returns_bleach_attributes(self):
-        "If our custom setting isn't set, should return's Bleach's defaults."
-        if hasattr(settings, 'HINES_COMMENTS_ALLOWED_ATTRIBUTES'):
-            del settings.HINES_COMMENTS_ALLOWED_ATTRIBUTES
-
-        self.assertEqual(get_allowed_attributes(),
-                         bleach.sanitizer.ALLOWED_ATTRIBUTES)
-

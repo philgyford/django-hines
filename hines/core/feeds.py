@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.sites.models import Site
 from django.templatetags.static import static
 from django.contrib.syndication.views import Feed
@@ -7,6 +6,7 @@ from django.urls import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.html import escape
 
+from . import app_settings
 from .recent import RecentObjects
 
 
@@ -18,7 +18,7 @@ def get_site_url():
     protocol = 'http'
 
     try:
-        if settings.HINES_USE_HTTPS:
+        if app_settings.USE_HTTPS:
             protocol = 'https'
     except AttributeError:
         pass

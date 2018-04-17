@@ -1,11 +1,12 @@
 import datetime
 
 from django.conf import settings
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from django.utils import timezone
 
 from freezegun import freeze_time
 
+from tests import override_app_settings
 from hines.core.utils import make_datetime
 from hines.weblogs.models import Post
 from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
@@ -59,10 +60,9 @@ Another line.""")
     def test_intro_html_markdown(self):
         "It should convert markdown to html."
         post = LivePostFactory(html_format=Post.MARKDOWN_FORMAT,
-                intro="""[Hello](http://example.org).  
-*Another* line.""")
+                intro="[Hello](http://example.org). *OK?*")
         self.assertEqual(post.intro_html,
-            '<p><a href="http://example.org">Hello</a>.<br />\n<em>Another</em> line.</p>')
+            '<p><a href="http://example.org">Hello</a>. <em>OK?</em></p>')
 
     def test_intro_html_smartypants(self):
         post = LivePostFactory(html_format=Post.NO_FORMAT,
@@ -87,10 +87,9 @@ Another line.""")
     def test_body_html_markdown(self):
         "It should convert markdown to html."
         post = LivePostFactory(html_format=Post.MARKDOWN_FORMAT,
-                body="""[Hello](http://example.org).  
-*Another* line.""")
+                body="[Hello](http://example.org). *OK?*")
         self.assertEqual(post.body_html,
-            '<p><a href="http://example.org">Hello</a>.<br />\n<em>Another</em> line.</p>')
+            '<p><a href="http://example.org">Hello</a>. <em>OK?</em></p>')
 
     def test_body_html_smartypants(self):
         post = LivePostFactory(html_format=Post.NO_FORMAT,
@@ -219,35 +218,35 @@ Another line.""")
         post = LivePostFactory()
         self.assertEqual(post.status_str, 'Published')
 
-    @override_settings(HINES_ALLOW_COMMENTS=False)
+    @override_app_settings(ALLOW_COMMENTS=False)
     def test_comments_allowed_settings(self):
         "If the setting is False, should return False."
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertFalse(p.comments_allowed)
 
-    @override_settings(HINES_ALLOW_COMMENTS=True)
+    @override_app_settings(ALLOW_COMMENTS=True)
     def test_comments_allowed_blog(self):
         "If the blog doesn't allow comments, it should return False."
         b = BlogFactory(allow_comments=False)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertFalse(p.comments_allowed)
 
-    @override_settings(HINES_ALLOW_COMMENTS=True)
+    @override_app_settings(ALLOW_COMMENTS=True)
     def test_comments_allowed_post(self):
         "If the post doesn't allow comments, it should return False."
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=False)
         self.assertFalse(p.comments_allowed)
 
-    @override_settings(HINES_ALLOW_COMMENTS=True)
+    @override_app_settings(ALLOW_COMMENTS=True)
     def test_comments_allowed_all_true(self):
         "If settings, blog and post are all true, it should return True"
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertTrue(p.comments_allowed)
 
-    @override_settings()
+    @override_app_settings()
     def test_comments_allowed_no_setting(self):
         "If no setting, but blog and post are true, it should return True"
         if hasattr(settings, 'HINES_ALLOW_COMMENTS'):
@@ -255,4 +254,3 @@ Another line.""")
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertTrue(p.comments_allowed)
-

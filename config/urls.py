@@ -13,6 +13,7 @@ from django.views.generic.base import RedirectView
 from spectator.core.sitemaps import CreatorSitemap
 from spectator.reading import sitemaps as reading_sitemaps
 
+from hines.core import app_settings
 from hines.core import views as core_views
 from hines.core.sitemaps import PagesSitemap
 from hines.links.sitemaps import BookmarkSitemap
@@ -20,7 +21,7 @@ from hines.weblogs.sitemaps import PostSitemap
 
 
 # e.g. 'phil':
-ROOT_DIR = settings.HINES_ROOT_DIR
+ROOT_DIR = app_settings.ROOT_DIR
 
 
 sitemaps = {

@@ -155,19 +155,20 @@ Custom settings that can be in the django `settings.py` file:
 ``False``, overrides the settings for individual Blogs and Posts. Default
 ``True``.
 
-``HINES_COMMENTS_ALLOWED_TAGS``: A list of HTML tags allowed in comments; all others will be stripped. e.g. ``['a', 'strong', 'em',]``. Default is the default list used by Bleach.
+``HINES_COMMENTS_ALLOWED_TAGS``: A list of HTML tags allowed in comments; all others will be stripped. e.g. ``['a', 'strong', 'em',]``. Default is: ``[a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul']``.
 
-``HINES_COMMENTS_ALLOWED_ATTRIBUTES``: A dict of attributes allowed in HTML tags in comments; all others will be stripped. e.g. ``{'a': ['href', 'title',],}``. Default is the default dict used by Bleach.
+``HINES_COMMENTS_ALLOWED_ATTRIBUTES``: A dict of attributes allowed in HTML tags in comments; all others will be stripped. e.g. ``{'a': ['href', 'title',],}``. Default is: ``{'a': ['href', 'title'], 'acronym': ['title'], 'abbr': ['title']}``.
 
 ``HINES_FIRST_DATE``: Day Archive pages will 404 for days before this date. e.g.
-``2000-03-15``.
+``2000-03-15``. Default is ``False`` (dates of any age allowed).
 
 ``HINES_GOOGLE_ANALYTICS_ID``: e.g. ``'UA-123456-1'``. If present, the Google
 Analytics Tracking code will be put into every page, using this ID. This value
-is taken from the ``HINES_GOOGLE_ANALYTICS_ID`` environment variable.
+is taken from the ``HINES_GOOGLE_ANALYTICS_ID`` environment variable. Default is ``''``.
 
 ``HINES_ROOT_DIR``: e.g. `'phil'`. All the pages except things like the very
-front page and admin will live uner this directory.
+front page and admin will live under this directory. Default is ``''`` but I
+haven't tried using it with out a root dir set.
 
 ``HINES_TEMPLATE_SETS``: A set of dicts describing different sets of
 templates that can be used for PostDetails between certain dates. e.g.:
@@ -180,8 +181,10 @@ Any Post on the Blog with slug `writing` between those two dates will use the
 `weblogs/sets/houston/post_detail.html` template and any other Post will use
 `weblogs/post_detail.html`.
 
+Default is ``None``, to disable this behaviour.
+
 ``HINES_USE_HTTPS``: e.g. `False`. Used when generating full URLs and the
-request object isn't available.
+request object isn't available. Default ``False``.
 
 
 ``HINES_HOME_PAGE_DISPLAY``: Defines how many of different kinds of thing to
@@ -196,6 +199,8 @@ Blog to indicate how many posts of each to display. e.g.:
 			'comments': 1,
 		},
 	}
+
+Default is an empty dict, ``{}``.
 
 
 ## Environment variables

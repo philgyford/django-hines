@@ -1,11 +1,12 @@
 from freezegun import freeze_time
 
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from django.utils import timezone
 
 from hines.core.utils import make_datetime
 from hines.custom_comments.factories import CustomCommentFactory
 from hines.weblogs.factories import LivePostFactory
+from tests import override_app_settings
 
 
 class CustomCommentTestCase(TestCase):
@@ -14,13 +15,13 @@ class CustomCommentTestCase(TestCase):
     making sure it does it generally here.
     """
 
-    @override_settings(HINES_COMMENTS_ALLOWED_TAGS=['b', 'a',])
+    @override_app_settings(COMMENTS_ALLOWED_TAGS=['b', 'a',])
     def test_clean_comment_tags(self):
         p = LivePostFactory(title='Boo')
         c = CustomCommentFactory(comment='<b><i>Hi</i>', post=p)
         self.assertEqual(c.comment, '<b>Hi</b>')
 
-    @override_settings(HINES_COMMENTS_ALLOWED_TAGS=['b', 'a',])
+    @override_app_settings(COMMENTS_ALLOWED_TAGS=['b', 'a',])
     def test_clean_comment_links(self):
         p = LivePostFactory()
         c = CustomCommentFactory(comment='http://foo.org', post=p)
@@ -67,4 +68,3 @@ class CustomCommentTestCase(TestCase):
         p.refresh_from_db()
         self.assertEqual(p.comment_count, 1)
         self.assertEqual(p.last_comment_time, dt1)
-
