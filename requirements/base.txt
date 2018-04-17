@@ -4,14 +4,13 @@ dj-database-url==0.4.2
 Django==2.0.1
 django-autocomplete-light==3.3.0-rc5
 django-contrib-comments==1.8.0
-django-ditto==0.7.6
+django-ditto==0.8.0
 # Until django-ditto includes twython > 3.6.0:
-# (And twython includes this fix)
--e git://github.com/philgyford/twython.git@2cfdaaf6e44ced237edc493147c16a38a60926eb#egg=twython
+-e git://github.com/ryanmcgrath/twython.git@677849aa756e99a820cd7c8e53ccdf0433839519#egg=twython
 # Until this is merged into neutronX/django-markdownx:
 git+git://github.com/aaugustin/django-markdownx.git@django-2.0
 #django-markdownx==2.0.21
-django-spectator==8.5.2
+django-spectator==8.6.0
 django-storages==1.6.5
 django-taggit==0.22.2
 psycopg2==2.7.3.2
