@@ -105,9 +105,9 @@
     }
   }
 
-  // 3 columns at wider widths.
+  // 3 columns at all but narrowest width.
   .gallery--3 {
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(sm) {
       grid-template-columns: 30% 30% 30%;
       grid-column-gap: 5%;
     }
