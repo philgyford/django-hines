@@ -68,7 +68,7 @@ We don't have categories any more, so can't really link to these...
 
 		{% for comment in comment_list %}
 			<div class="comment"><a name="c{{ comment.id|unlocalize }}"></a>
-				{{ comment.comment|linebreaks_first }}
+				{{ comment.comment|safe|linebreaks_first }}
 				<div class="controls">Posted by {{ comment.name }} on {{ comment.submit_date|date:"j F Y, g:i" }} {{ comment.submit_date|date:"A"|lower }} | <a href="{{ post.get_absolute_url }}#c{{ comment.id|unlocalize }}" title="Permanent link to this comment">Link</a></div>
 			</div>
 		{% endfor %}
