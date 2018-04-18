@@ -28,6 +28,9 @@ urlpatterns = [
     path('about/', flatpages_views.flatpage,
         {'url': '/phil/about/'}, name='about'),
 
+    path('about/site/', flatpages_views.flatpage,
+        {'url': '/phil/about/site/'}, name='about_site'),
+
     path('archive/', flatpages_views.flatpage,
         {'url': '/phil/archive/'}, name='archive'),
 
@@ -47,4 +50,3 @@ urlpatterns = [
     path('<yyyy:year>/<mm:month>/<dd:day>/',
         core_views.DayArchiveView.as_view(), name='day_archive'),
 ]
-

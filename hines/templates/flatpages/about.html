@@ -43,6 +43,13 @@
 					<a href="{% url 'hines:timeline' %}">Timeline of things I’ve done</a>
 				{% endif %}
 			</li>
+			<li>
+				{% if url_name == 'hines:about_site' %}
+					About this site
+				{% else %}
+					<a href="{% url 'hines:about_site' %}">About this site</a>
+				{% endif %}
+			</li>
 		</ul>
 	</nav>
 {% endblock sidebar_nav %}
