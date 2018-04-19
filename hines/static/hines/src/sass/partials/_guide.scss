@@ -1,0 +1,60 @@
+/**
+ * A grid showing columns and baseline over the whole page.
+ * Requires <html> to have the .has-guide class.
+ * And for there to be something like this in the page:
+
+     <div class="grid grid--guide">
+       <div class="grid__row">
+         <div class="grid__col grid__col--main">
+           <div class="grid--guide__col__inner"></div>
+         </div>
+         <div class="grid__col grid__col--sub">
+           <div class="grid--guide__col__inner"></div>
+         </div>
+       </div>
+     </div>
+
+ */
+
+html.has-guide {
+  position: relative;
+}
+
+/**
+ * Variant of .grid that stretches it to cover the whole page.
+ */
+.grid--guide {
+  z-index: 1000;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 100vh;
+
+  /* The baseline grid. */
+  background-image: repeating-linear-gradient(
+                      to bottom,
+                      $guide-color,
+                      $guide-color 1px,
+                      transparent 1px,
+                      transparent $line-height-base-computed
+                    );
+  background-size: 100% 100%;
+
+  .grid__row {
+    height: 100%;
+  }
+}
+
+
+/**
+ * Because the columns have L/R padding, if we give them a background colour,
+ * they merge together. So we have an extra element inside each column, and
+ * give those background colours instead.
+ */
+.grid--guide__col__inner {
+  height: 100%;
+  background-color: $guide-color;
+}

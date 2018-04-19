@@ -7,7 +7,11 @@ from hines.core import app_settings
 
 def core(request):
     current_site = get_current_site(request)
+
+    show_grid = True if request.GET.get('grid', None) else False
+
     return {
         'site_name': current_site.name,
         'google_analytics_id': app_settings.GOOGLE_ANALYTICS_ID,
+        'show_grid': show_grid,
     }

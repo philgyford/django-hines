@@ -1,5 +1,5 @@
 <!doctype html>{% load static hines_core hines_weblogs %}
-<html lang="en-gb">
+<html lang="en-gb"{% if show_grid %} class="has-guide"{% endif %}>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,7 +7,7 @@
     <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-769f873532.css">
+    <link rel="stylesheet" href="/static/hines/css/site-c46e99d7fa.css">
     <!-- endinject -->
 
     <link rel="alternate" type="application/rss+xml" title="Writing, photos, links, and my comments combined" href="{% url 'hines:everything_feed_rss' %}">
@@ -219,5 +219,25 @@
     {% block foot_extra %}
       {# Use this if you need to add JS etc to the foot of the page. #}
     {% endblock %}
+
+    {% if show_grid %}
+      <div class="grid grid--guide">
+        <div class="grid__row">
+          <div class="grid__col grid__col--sub">
+            <div class="grid--guide__col__inner"></div>
+          </div>
+          <div class="grid__col grid__col--sub">
+            <div class="grid--guide__col__inner"></div>
+          </div>
+          <div class="grid__col grid__col--sub">
+            <div class="grid--guide__col__inner"></div>
+          </div>
+          <div class="grid__col grid__col--sub">
+            <div class="grid--guide__col__inner"></div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
   </body>
 </html>
