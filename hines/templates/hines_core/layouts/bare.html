@@ -1,0 +1,52 @@
+<!doctype html>{% load static hines_weblogs %}
+<html lang="en-gb"{% if show_grid %} class="has-guide"{% endif %}>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
+
+    {% block css %}
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/static/hines/css/site-0abcfca2be.css">
+    <!-- endinject -->
+    {% endblock css %}
+
+    <link rel="alternate" type="application/rss+xml" title="Writing, photos, links, and my comments combined" href="{% url 'hines:everything_feed_rss' %}">
+    {% get_all_blogs_by_slug as all_blogs %}
+    {% for blog_slug, blog_obj in all_blogs.items %}
+    <link rel="alternate" type="application/rss+xml" title="{{ blog_obj.get_feed_title }}" href="{{ blog_obj.get_rss_feed_url }}"/>
+    {% endfor %}
+
+    {% block favicons %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'hines/img/favicons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'hines/img/favicons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'hines/img/favicons/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'hines/img/favicons/manifest.json' %}">
+    <link rel="mask-icon" href="{% static 'hines/img/favicons/safari-pinned-tab.svg' %}" color="#ff6600">
+    <link rel="shortcut icon" href="{% static 'hines/img/favicons/favicon.ico' %}">
+    <meta name="msapplication-config" content="{% static 'hines/img/favicons/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    {% endblock favicons %}
+
+    {% block head_extra %}
+      {# Use this if you need to more to the <head> of every page. #}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+    {% endblock body %}
+
+    {% block js %}
+    <!-- inject:js -->
+    <script src="/static/hines/js/site-afdfceda6d.min.js"></script>
+    <!-- endinject -->
+    {% endblock js %}
+
+    {% block body_extra %}
+      {# Use this if you need to add JS etc to the foot of the page. #}
+    {% endblock %}
+
+  </body>
+</html>
