@@ -1,19 +1,6 @@
 /**
  * A grid showing columns and baseline over the whole page.
  * Requires <html> to have the .has-guide class.
- * And for there to be something like this in the page:
-
-     <div class="grid grid--guide">
-       <div class="grid__row">
-         <div class="grid__col grid__col--main">
-           <div class="grid--guide__col__inner"></div>
-         </div>
-         <div class="grid__col grid__col--sub">
-           <div class="grid--guide__col__inner"></div>
-         </div>
-       </div>
-     </div>
-
  */
 
 html.has-guide {
@@ -21,40 +8,85 @@ html.has-guide {
 }
 
 /**
- * Variant of .grid that stretches it to cover the whole page.
- */
-.grid--guide {
-  z-index: 1000;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  min-height: 100vh;
+ * Settings
+ * Defaults at narrowest width.
+ **/
+:root {
+  --offset: ($grid-gutter-width / 2);
+  --max_width: $grid-max-width - $grid-gutter-width;
+  --columns: 1;
+  --gutter: $grid-gutter-width;
+  --baseline: $border-width;
+  --baseline-shift: 0;
+  --color: hsla(0, 80%, 72%, 0.25);
+}
 
-  /* The baseline grid. */
-  background-image: repeating-linear-gradient(
-                      to bottom,
-                      $guide-color,
-                      $guide-color 1px,
-                      transparent 1px,
-                      transparent $line-height-base-computed
-                    );
-  background-size: 100% 100%;
-
-  .grid__row {
-    height: 100%;
+/* Override settings for progressively wider widths. */
+@media (min-width: map-get($grid-breakpoints, sm)) {
+  :root {
+    --color: hsla(43, 94%, 63%, 0.24);
   }
 }
 
+@media (min-width: map-get($grid-breakpoints, md)) {
+  :root {
+    --columns: $grid-columns;
+    --color: hsla(144, 51%, 44%, 0.18);
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, lg)) {
+  :root {
+    --color: hsla(204, 80%, 72%, 0.25);
+  }
+}
+@media (min-width: map-get($grid-breakpoints, xl)) {
+  :root {
+    --color: hsla(277, 80%, 72%, 0.17);
+  }
+}
+
+/* Helper variables for the two backgrounds. */
+:root {
+ --repeating-width: calc(100% / var(--columns));
+ --column-width: calc((100% / var(--columns)) - var(--gutter));
+ --background-width: calc(100% + var(--gutter));
+ --background-columns: repeating-linear-gradient(
+   to right,
+   var(--color),
+   var(--color) var(--column-width),
+   transparent var(--column-width),
+   transparent var(--repeating-width)
+ );
+ --background-baseline: repeating-linear-gradient(
+   to bottom,
+   var(--color),
+   var(--color) 1px,
+   transparent 1px,
+   transparent var(--baseline)
+ );
+}
 
 /**
- * Because the columns have L/R padding, if we give them a background colour,
- * they merge together. So we have an extra element inside each column, and
- * give those background colours instead.
+ * Add a pseudo element to the html tag which will contain the backgrounds
+ * showing the columns.
  */
-.grid--guide__col__inner {
-  height: 100%;
-  background-color: $guide-color;
+html.has-guide {
+  position: relative;
+}
+
+html.has-guide::before {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: calc(100% - (2 * var(--offset)));
+  max-width: var(--max_width);
+  min-height: 100vh;
+  content: '';
+  background-image: var(--background-columns), var(--background-baseline);
+  background-size: var(--background-width) 100%;
+  background-position: 0 var(--baseline-shift);
+  z-index: 1000;
+  pointer-events: none;
 }
