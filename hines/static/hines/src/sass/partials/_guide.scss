@@ -16,31 +16,32 @@ html.has-guide {
   --max_width: $grid-max-width - $grid-gutter-width;
   --columns: 1;
   --gutter: $grid-gutter-width;
-  --baseline: $border-width;
+  --baseline: $base-unit;
   --baseline-shift: 0;
   --color: hsla(0, 80%, 72%, 0.25);
 }
 
 /* Override settings for progressively wider widths. */
-@media (min-width: map-get($grid-breakpoints, sm)) {
+@include media-breakpoint-up(sm) {
   :root {
     --color: hsla(43, 94%, 63%, 0.24);
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, md)) {
+@include media-breakpoint-up(md) {
   :root {
     --columns: $grid-columns;
     --color: hsla(144, 51%, 44%, 0.18);
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, lg)) {
+@include media-breakpoint-up(lg) {
   :root {
     --color: hsla(204, 80%, 72%, 0.25);
   }
 }
-@media (min-width: map-get($grid-breakpoints, xl)) {
+
+@include media-breakpoint-up(xl) {
   :root {
     --color: hsla(277, 80%, 72%, 0.17);
   }

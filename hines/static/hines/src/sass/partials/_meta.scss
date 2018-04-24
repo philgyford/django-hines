@@ -30,7 +30,7 @@ $meta-offset-bottom: 0.4rem;
 .meta {
   @include text-style-nav;
   line-height: $line-height-base-computed;
-  border-left: $border-width solid $black;
+  border-left: $base-unit solid $black;
   margin-top: $meta-offset-top;
   margin-bottom: $meta-offset-bottom;
 
@@ -47,7 +47,7 @@ $meta-offset-bottom: 0.4rem;
 
   .meta__inner {
     @include list-unstyled;
-    padding-left: $border-width;
+    padding-left: $base-unit;
     margin-top: -$meta-offset-top;
     margin-bottom: -$meta-offset-bottom;
   }
@@ -61,7 +61,7 @@ $meta-offset-bottom: 0.4rem;
   .meta__inner {
     @include list-inline();
     // So it has normal space if used inline under a blog post etc:
-    margin-bottom: $paragraph-margin-bottom;
+    margin-bottom: $vertical-space;
 
     & > li {
       @include list-item-bullet;
@@ -84,7 +84,7 @@ $meta-offset-bottom: 0.4rem;
 .meta--right {
   // Otherwise a line of article text will go immediately underneath,
   // which is neat, but a bit too close:
-  margin-bottom: ($meta-offset-bottom + $paragraph-margin-bottom);
+  margin-bottom: ($meta-offset-bottom + $vertical-space);
 
 	@include media-breakpoint-up(md) {
     float: right;

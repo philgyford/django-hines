@@ -4,7 +4,7 @@
 
 .table {
   max-width: 100%;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 
   th,
   td {
@@ -38,7 +38,7 @@
 
 .table--responsive {
   // Allow for bottom scrollbar:
-  margin-bottom: ($paragraph-margin-bottom * 2);
+  margin-bottom: ($vertical-space * 2);
 
   @each $breakpoint in map-keys($grid-breakpoints) {
     $next: breakpoint-next($breakpoint, $grid-breakpoints);

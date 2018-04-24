@@ -18,6 +18,9 @@
   flex-wrap: wrap;
   margin-right: ($grid-gutter-width / -2);
   margin-left: ($grid-gutter-width / -2);
+  // Pushes the main and sub columns apart if there's a column or more of space
+  // between them:
+  justify-content: space-between;
 }
 
 @mixin make-col-ready() {

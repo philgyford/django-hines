@@ -9,7 +9,7 @@ $media-header-size: $h3-font-size;
 .media-list {
   @include list-unstyled;
   border-top: $border-width-sm solid $border-color;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 }
 
 .media {
@@ -27,14 +27,14 @@ $media-header-size: $h3-font-size;
 
 .media__img {
   margin-top: 0.2em;
-  margin-right: $border-width;
+  margin-right: $base-unit;
 }
 
 .media__body {
   flex: 1;
 
   p {
-    margin-bottom: $paragraph-margin-bottom-sm;
+    margin-bottom: $vertical-space-sm;
   }
 
   &>p:last-child,
@@ -49,13 +49,13 @@ $media-header-size: $h3-font-size;
 .media__header {
   @include text-style-default;
   font-size: $media-header-size;
-  margin-bottom: $paragraph-margin-bottom-sm;
+  margin-bottom: $vertical-space-sm;
 }
 
 
 .media__byline {
   @include text-style-nav;
-  margin-bottom: $paragraph-margin-bottom-sm;
+  margin-bottom: $vertical-space-sm;
 }
 
 .media__byline__author {
@@ -72,8 +72,8 @@ $media-header-size: $h3-font-size;
   }
 
   .media {
-    padding-top: $paragraph-margin-bottom-sm;
-    padding-bottom: $paragraph-margin-bottom-sm;
+    padding-top: $vertical-space-sm;
+    padding-bottom: $vertical-space-sm;
     @include text-style-alt;
 
     &:first-child {

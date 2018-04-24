@@ -109,7 +109,7 @@ h1, h2, h3, h4, h5, h6 {
 // bottom margin to use `rem` units instead of `em`.
 p {
   margin-top: 0;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 }
 
 // Abbreviations
@@ -137,7 +137,7 @@ ol,
 ul,
 dl {
   margin-top: 0;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 }
 
 ol ol,
@@ -152,12 +152,12 @@ dt {
 }
 
 dd {
-  margin-bottom: $paragraph-margin-bottom-sm;
+  margin-bottom: $vertical-space-sm;
   margin-left: 0; // Undo browser default
 }
 
 blockquote {
-  margin: 0 0 $paragraph-margin-bottom 0;
+  margin: 0 0 $vertical-space 0;
 }
 
 dfn {
@@ -253,7 +253,7 @@ pre {
 
 figure {
   // Apply a consistent margin strategy (matches our type styles).
-  margin: 0 0 $paragraph-margin-bottom 0;
+  margin: 0 0 $vertical-space 0;
 }
 
 

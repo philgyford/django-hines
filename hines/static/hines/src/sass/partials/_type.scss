@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6,
   clear: both;
 
   &:not(:first-child) {
-    margin-top: ($paragraph-margin-bottom * 2);
+    margin-top: ($vertical-space * 2);
   }
 
   @include text-style-nav;
@@ -96,7 +96,7 @@ hr.hr--sm {
 pre {
   white-space: pre;
   background: $gray-light;
-  padding: 1rem ($border-width * 2);
+  padding: 1rem ($base-unit * 2);
 
   code {
     color: $body-color;
@@ -119,9 +119,9 @@ abbr {
 }
 
 blockquote {
-  border-left: $border-width solid $black;
-  padding-left: $border-width;
-  padding-right: ($border-width * 2);
+  border-left: $base-unit solid $black;
+  padding-left: $base-unit;
+  padding-right: ($base-unit * 2);
 }
 
 cite {

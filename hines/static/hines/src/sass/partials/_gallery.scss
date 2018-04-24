@@ -16,7 +16,7 @@
 // 1. Styles for ALL browsers.
 .gallery {
   @include list-unstyled;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 
   .gallery__item {
     // So we can re-order the contents of each item.
@@ -34,7 +34,7 @@
 
   .gallery__item {
     width: 100%;
-    padding: 0 ($border-width * 2) $paragraph-margin-bottom ($border-width * 2);
+    padding: 0 ($base-unit * 2) $vertical-space ($base-unit * 2);
 
     @include media-breakpoint-up(sm) {
       width: 50%;
@@ -97,7 +97,7 @@
   .gallery {
     // Apply Grid styles:
     display: grid;
-    grid-row-gap: $paragraph-margin-bottom;
+    grid-row-gap: $vertical-space;
 
     @include media-breakpoint-up(sm) {
       grid-template-columns: 47% 47%;
@@ -135,7 +135,7 @@
 
 .gallery__item__img {
   order: 1;
-  margin-bottom: ($border-width / 2);
+  margin-bottom: ($base-unit / 2);
 
   img {
     max-width: 100%;
@@ -181,8 +181,8 @@
   .gallery__item {
     width: 150px;
     max-width: 150px;
-    padding: 0 0 $paragraph-margin-bottom 0;
-    margin-right: $border-width;
+    padding: 0 0 $vertical-space 0;
+    margin-right: $base-unit;
   }
 
   .gallery__item__img {
