@@ -117,6 +117,8 @@ $half-columns:              $grid-columns / 2;
 /////////////////////////////////////////////////////////////////////////
 // Fonts
 
+// Base styles
+
 $font-family-serif:           Georgia, Times, "Times New Roman", serif;
 $font-family-sans-serif:      "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -127,33 +129,49 @@ $font-weight-normal:          400;
 $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 
-$font-size-base:              (1rem * 1.375); // probably 22px
-$font-size-sm:                1rem; // 16px
-$font-size-monospace:         $font-size-sm;
+$font-size-base:              1.375rem;      /* 22px probably */
+$font-size-sm:                1rem;          /* 16 */
+$font-size-monospace:         $font-size-sm; /* 16 */
 
-$line-height-base:            1.6364;
-$line-height-base-computed:   ($font-size-base * $line-height-base); // 36px
-$line-height-sm:              1.5; // 24px if used with font-size-sm
+$line-height-base:            1.63637;       /* 36 */
+$line-height-base-computed:   2.25rem;       /* 36 */
+$line-height-sm:              1.5;           /* 24 if used with font-size-sm */
 
-// TK sizes.
-$h1-font-size:      ($font-size-base * 1.6666667);  /* 30 */
-$h2-font-size:      ($font-size-base * 1.3888889);  /* 25 */
-$h3-font-size:      ($font-size-base * 1.1666667);  /* 21 */
-$h4-font-size:      $font-size-base;                /* 18 */
-$h5-font-size:      $font-size-sm;                  /* 13 */
-$h6-font-size:      $font-size-sm;                  /* 13 */
-
-// Variants for wider screens:
-// TK sizes
-$h1-font-size-md:   ($font-size-base * 2);          /* 36 */
-$h2-font-size-md:   ($font-size-base * 1.611111);   /* 29 */
-$h3-font-size-md:   ($font-size-base * 1.277778);   /* 23 */
-
+// Headings
 
 $headings-margin-bottom:      $vertical-space;
-$headings-line-height:        1.2;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
+
+$h1-font-size:                1.875rem;         /* 30 */
+$h1-line-height:              2.25rem;          /* 36 */
+
+$h2-font-size:                1.5625rem;        /* 25 */
+$h2-line-height:              2.25rem;          /* 36 */
+
+$h3-font-size:                1.5rem;           /* 24 */
+$h3-line-height:              2.25rem;          /* 36 */
+
+$h4-font-size:                $font-size-base;  /* 22 */
+$h4-line-height:              1.5rem;           /* 24 */
+
+$h5-font-size:                $font-size-sm;    /* 16 */
+$h5-line-height:              1.5rem;           /* 24 */
+
+$h6-font-size:                $font-size-sm;    /* 16 */
+$h6-line-height:              1.5rem;           /* 24 */
+
+// Variants for wider screens:
+$h1-font-size-md:             2.5rem;           /* 40 */
+$h1-line-height-md:           3rem;             /* 36 */
+
+$h2-font-size-md:             1.875rem;         /* 25 */
+$h2-line-height-md:           2.25rem;          /* 36 */
+
+$h3-font-size-md:             1.5rem;           /* 24 */
+$h3-line-height-md:           2.25rem;          /* 36 */
+
+// Misc
 
 $lead-font-size:              ($font-size-base * 1.25);
 $lead-font-weight:            300;
