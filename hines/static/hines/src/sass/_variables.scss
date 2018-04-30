@@ -285,26 +285,23 @@ $form-feedback-invalid-color:           $red;
 // Nav
 // e.g. In the .navbar and in pagination.
 
-$nav-link-padding-x:             0.75rem;
+$nav-link-padding-x:             $horizontal-space;
 
 $nav-link-color:                 $link-color;
 $nav-link-hover-color:           $link-hover-color;
 $nav-link-active-color:          $link-active-color;
 
-$nav-disabled-color:         $gray-medium;
+$nav-disabled-color:             $gray-medium;
 
 $nav-text-color:                 $body-color;
 
-$nav-border-width:               $base-unit;
+$nav-border-width:               $border-width;
 
 // These also used for more general 'nav'-type text everywhere:
 
-$nav-font-size:               1rem;
-// Because occasionally we need to add what is probably the size to things like
-// the border-width:
-$nav-font-size-px:            16px;
+$nav-font-size:                  $font-size-sm;
 
 
 // Navbar
 
-$navbar-brand-font-size:            (1rem * 1.25); // probably 20px
+$navbar-brand-font-size:         $font-size-base;
