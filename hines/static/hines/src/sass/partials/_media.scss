@@ -13,8 +13,8 @@ $media-header-size: $h3-font-size;
 }
 
 .media {
-  padding-top: $hr-margin-sm;
-  padding-bottom: $hr-margin-sm;
+  padding-top: $vertical-space;
+  padding-bottom: $vertical-space;
   @include border-bottom();
 
   display: flex;
@@ -77,12 +77,9 @@ $media-header-size: $h3-font-size;
     padding-bottom: $vertical-space-sm;
     @include text-style-alt;
 
-    &:first-child {
-      padding-top: 0;
-    }
-
     &:last-child {
-      border-bottom: none;
+      @include border-none();
+      padding-bottom: 0;
     }
   }
 

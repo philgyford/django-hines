@@ -180,7 +180,7 @@ $hr-border-color:             $border-color;
 $hr-border-width:             $border-width;
 $hr-border-width-sm:          $border-width-sm;
 $hr-margin:                   ($vertical-space * 2);
-$hr-margin-sm:                $vertical-space;
+$hr-margin-sm:                24px; // Needs to be in px:
 
 $dt-font-weight:              $font-weight-bold;
 

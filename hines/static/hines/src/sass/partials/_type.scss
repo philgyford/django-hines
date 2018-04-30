@@ -101,11 +101,11 @@ h6, .h6 {
 // Other things
 
 hr {
-  margin-top: $hr-margin;
-  margin-bottom: $hr-margin;
-  border: 0;
-  border-top: $hr-border-width solid $hr-border-color;
-  clear: both;
+  margin-top:      $hr-margin;
+  margin-bottom:   $hr-margin;
+  border:          0;
+  border-top:      $hr-border-width solid $hr-border-color;
+  clear:           both;
 
   &:first-child {
     margin-top: 0;
@@ -113,9 +113,11 @@ hr {
 }
 
 hr.hr--sm {
-  border-top-width: $hr-border-width-sm;
-  margin-top: $hr-margin-sm;
-  margin-bottom: $hr-margin-sm;
+  border-top:       none;
+  @include border-bottom();
+  margin-top:       ($hr-margin-sm - $border-width-sm);
+  height:           $border-width-sm;
+  margin-bottom:    $hr-margin-sm;
 }
 
 pre {

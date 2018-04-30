@@ -4,30 +4,33 @@
  * up vertical space, unlike actual borders.
  */
 
-@mixin border-top($width: 1px, $color: $border-color) {
+// Add a border to the top of the element.
+@mixin border-top($width: $border-width-sm, $color: $border-color) {
   background-image: repeating-linear-gradient(
                         to bottom,
                         $color,
                         $color $width,
                         transparent $width,
-                        transparent 10000px
+                        transparent 100000px
                       );
   background-size: 100% 100%;
   background-position: 0px 0px;
 }
 
-@mixin border-bottom($width: 1px, $color: $border-color) {
+// Add a border to the bottom of the element.
+@mixin border-bottom($width: $border-width-sm, $color: $border-color) {
   background-image: repeating-linear-gradient(
                         to top,
                         $color,
                         $color $width,
                         transparent $width,
-                        transparent 10000px
+                        transparent 100000px
                       );
   background-size: 100% 100%;
   background-position: 0px 0px;
 }
 
+// Remove either of the above borders.
 @mixin border-none() {
   background-image: none;
 }
