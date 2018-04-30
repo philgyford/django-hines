@@ -50,6 +50,10 @@ $meta-offset-bottom: 0.4rem;
     padding-left: $base-unit;
     margin-top: -$meta-offset-top;
     margin-bottom: -$meta-offset-bottom;
+
+    li {
+      background: none;
+    }
   }
 }
 
@@ -67,7 +71,7 @@ $meta-offset-bottom: 0.4rem;
       @include list-item-bullet;
 
       // Adjusting for the larger line height than normal:
-      background-position: 0 0.5em;
+      background-position: 0 0.75em;
     }
   }
 }
