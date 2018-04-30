@@ -39,11 +39,6 @@ $meta-offset-bottom: 0.4rem;
   float: left;
   width: 100%;
 
-  .list--inline>.list--inline__item--bullet {
-    // Adjusting for the larger line height than normal:
-    background-position: 0 0.465em;
-  }
-
   .meta__inner {
     @include list-unstyled;
     padding-left: $base-unit;
@@ -68,6 +63,7 @@ $meta-offset-bottom: 0.4rem;
 
     & > li {
       @include list-item-bullet;
+      background-position: 0 $list-bullet-position-sm;
     }
   }
 }
