@@ -4,6 +4,8 @@
 
 label {
   @include text-style-nav;
+  margin-bottom: $vertical-space-sm;
+  display: block;
 }
 
 .form__control {
