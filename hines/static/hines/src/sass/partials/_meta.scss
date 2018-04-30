@@ -29,7 +29,7 @@ $meta-offset-bottom: 0.4rem;
 
 .meta {
   @include text-style-nav;
-  border-left: $base-unit solid $black;
+  border-left: $base-unit solid $border-color;
   margin-top: $meta-offset-top;
   margin-bottom: $meta-offset-bottom;
 

@@ -55,7 +55,7 @@ $navbar-title-top-space-wide:   $vertical-space;
   white-space:      nowrap;
   letter-spacing:   0.03em;
   word-spacing:     0.06em;
-  border-bottom:    $nav-border-width solid $black;
+  border-bottom:    $nav-border-width solid $border-color;
 
   a {
     color: $nav-text-color;
@@ -89,7 +89,7 @@ $navbar-title-top-space-wide:   $vertical-space;
   flex-grow: 2;
   align-self: flex-start;
   padding-bottom: $nav-border-width;
-  border-bottom: $nav-border-width solid $black;
+  border-bottom: $nav-border-width solid $border-color;
   margin-bottom: $nav-border-width;
 
   form {

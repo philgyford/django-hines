@@ -3,7 +3,7 @@
 
 .card {
   min-width: 0;
-  border-top: $border-width solid $black;
+  border-top: $border-width solid $border-color;
   padding-top: 0;
   padding-bottom: $vertical-space-sm;
 
@@ -33,7 +33,7 @@ ol li:not(.media) {
   }
 
   &:last-child {
-    border-bottom: $border-width solid $black;
+    border-bottom: $border-width solid $border-color;
   }
 
   & > *:last-child {
