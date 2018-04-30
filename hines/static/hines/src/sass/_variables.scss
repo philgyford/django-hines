@@ -40,9 +40,6 @@ $yiq-text-light:  $white;
 
 $text-color-warning:  $red;
 
-// Spacing
-
-$spacer: 1rem;
 
 // Body
 //
@@ -69,17 +66,19 @@ $link-visited-hover-color:  $red;
 // Base units
 
 // Many other things - borders, line-heights, etc. will be multiples of this.
-$base-unit: 12px;
+$base-unit:                   12px;
 
 // e.g. space below paragraphs:
-$vertical-space:              (1rem * 1.5); // 24px
+$vertical-space:              (1rem * 1.5);   // 24px
+$vertical-space-sm:           (1rem * 0.75);  // 12px
 
-$vertical-space-sm:           (1rem * 0.75); // 12px
+// For horizontal space that should be proportionate to font sizes:
+$horizontal-space:            (1rem * 0.75);  // 12px
+$horizontal-space-sm:         (1rem * 0.375); // 6px
 
 // What we use for hr's, navbar rules, etc:
-$border-width: $base-unit;
-
-$border-width-sm: 1px;
+$border-width:                $base-unit;
+$border-width-sm:             1px;
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -113,6 +112,7 @@ $sub-columns:               5;
 
 // Half width:
 $half-columns:              $grid-columns / 2;
+
 
 /////////////////////////////////////////////////////////////////////////
 // Fonts
@@ -212,14 +212,14 @@ $table-border-color:          $border-color;
 //
 // Shared variables that are reassigned to `$input-` and `$button-` specific variables.
 
-$input-button-padding-y:         .375rem;
-$input-button-padding-x:         .75rem;
+$input-button-padding-y:         0;
+$input-button-padding-x:         $horizontal-space;
 $input-button-line-height:       $line-height-base;
 
 $input-button-focus-width:       .2rem;
 
-$input-button-padding-y-sm:      .1rem;
-$input-button-padding-x-sm:      .5rem;
+$input-button-padding-y-sm:      0;
+$input-button-padding-x-sm:      $horizontal-space-sm;
 $input-button-line-height-sm:    $line-height-sm;
 
 $input-button-border-width:      1px;

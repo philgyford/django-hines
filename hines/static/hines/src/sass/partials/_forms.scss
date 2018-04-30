@@ -118,7 +118,7 @@ select.form__control--sm {
 // <p class="form__text" id="my-text">Some help text.</p>
 .form__text {
   margin-top: $form-text-margin-top;
-  
+
   @include text-style-alt;
 }
 
@@ -167,7 +167,7 @@ select.form__control--sm {
   label,
   .form__control,
   .button {
-    margin-bottom: $form-group-margin-bottom; 
+    margin-bottom: $form-group-margin-bottom;
   }
 
   // Kick in the inline
@@ -177,14 +177,14 @@ select.form__control--sm {
       align-items: center;
       justify-content: center;
       margin-bottom: 0;
-      margin-right: ($spacer / 2);
+      margin-right: $base-unit;
     }
 
     .form__control {
       display: inline-block;
       width: auto; // Prevent labels from stacking above inputs in `.form-group`
       vertical-align: middle;
-      margin-right: ($spacer / 2);
+      margin-right: $base-unit;
       margin-bottom: 0;
 
       &:last-child {
