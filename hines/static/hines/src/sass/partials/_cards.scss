@@ -3,9 +3,9 @@
 
 .card {
   min-width: 0;
-  border-top: $base-unit solid $black;
-  padding-top: ($base-unit / 2);
-  padding-bottom: ($base-unit / 2);
+  border-top: $border-width solid $black;
+  padding-top: 0;
+  padding-bottom: $vertical-space-sm;
 
   @include text-style-nav;
 
@@ -14,16 +14,20 @@
   ul,
   dl {
     margin-bottom: $vertical-space-sm;
+
+    &:first-child {
+      margin-top: $vertical-space-sm;
+    }
   }
 
   hr {
     border-top: $hr-border-width-sm solid $hr-border-color;
-    margin-top: ($base-unit / 2);
-    margin-bottom: ($base-unit / 2);
+    margin-top: $vertical-space-sm;
+    margin-bottom: $vertical-space-sm;
   }
 
   &:last-child {
-    border-bottom: $base-unit solid $black;
+    border-bottom: $border-width solid $black;
   }
 
   & > *:last-child {
@@ -40,21 +44,16 @@
 }
 
 .card__header {
-  margin-top: 0.2em;
+  margin-top: $vertical-space-sm;
   margin-bottom: $vertical-space-sm;
 
   @include text-style-nav;
-
-  &:not(:first-child) {
-    margin-top: 0.2em;
-  }
 }
 
 .card__body {
   @include text-style-alt;
 
   & > *:last-child {
-    // Need a little space to make these look blanaced:
-    margin-bottom: 0.2em;
+    margin-bottom: 0;
   }
 }

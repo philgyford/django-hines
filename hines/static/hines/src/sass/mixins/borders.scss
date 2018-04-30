@@ -1,0 +1,33 @@
+/**
+ * Borders
+ * Using repeating gradients to draw horizontal borders, as they don't take
+ * up vertical space, unlike actual borders.
+ */
+
+@mixin border-top($width: 1px, $color: $border-color) {
+  background-image: repeating-linear-gradient(
+                        to bottom,
+                        $color,
+                        $color $width,
+                        transparent $width,
+                        transparent 10000px
+                      );
+  background-size: 100% 100%;
+  background-position: 0px 0px;
+}
+
+@mixin border-bottom($width: 1px, $color: $border-color) {
+  background-image: repeating-linear-gradient(
+                        to top,
+                        $color,
+                        $color $width,
+                        transparent $width,
+                        transparent 10000px
+                      );
+  background-size: 100% 100%;
+  background-position: 0px 0px;
+}
+
+@mixin border-none() {
+  background-image: none;
+}

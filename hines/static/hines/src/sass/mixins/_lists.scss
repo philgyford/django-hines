@@ -16,6 +16,7 @@
 
 @mixin list-inline-item() {
   display: inline-block;
+  background: none;
 
   &:not(:last-child) {
     margin-right: $list-inline-padding;
@@ -27,7 +28,6 @@
   list-style: none;
 
   & > li {
-    background: none;
     padding-left: 0;
   }
 }

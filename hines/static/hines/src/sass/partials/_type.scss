@@ -121,7 +121,7 @@ hr.hr--sm {
 pre {
   white-space: pre;
   background: $gray-light;
-  padding: 1rem ($base-unit * 2);
+  padding: $vertical-space-sm $horizontal-space;
 
   code {
     color: $body-color;

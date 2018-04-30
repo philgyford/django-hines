@@ -8,20 +8,21 @@ $media-header-size: $h3-font-size;
 
 .media-list {
   @include list-unstyled;
-  border-top: $border-width-sm solid $border-color;
+  @include border-top();
   margin-bottom: $vertical-space;
 }
 
 .media {
   padding-top: $hr-margin-sm;
   padding-bottom: $hr-margin-sm;
-  border-bottom: $border-width-sm solid $border-color;
+  @include border-bottom();
+
   display: flex;
   align-items: flex-start;
 
   .media:last-child {
     padding-bottom: 0;
-    border-bottom: none;
+    @include border-none();
   }
 }
 
@@ -82,7 +83,6 @@ $media-header-size: $h3-font-size;
 
     &:last-child {
       border-bottom: none;
-      padding-bottom: 0.3em; // Just looks about right.
     }
   }
 
