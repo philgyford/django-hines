@@ -127,8 +127,9 @@
 // 4. All other styles for all browsers.
 
 .gallery__item__header {
-  font-size: $nav-font-size;
-  line-height: $line-height-sm;
+  @include text-style-alt();
+  // font-size: $nav-font-size;
+  // line-height: $line-height-sm;
   margin-bottom: 0;
   order: 2;
 }

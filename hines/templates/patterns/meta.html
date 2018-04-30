@@ -8,9 +8,17 @@
 
 <h2>Standard</h2>
 
-{% include 'patterns/includes/meta/standard.html' %}
+<p>Containing one item:</p>
 
-<pre><code>{% verbatim_include 'patterns/includes/meta/standard.html' %}</pre></code>
+{% include 'patterns/includes/meta/standard_one.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/meta/standard_one.html' %}</pre></code>
+
+<p>Or several items:</p>
+
+{% include 'patterns/includes/meta/standard_multiple.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/meta/standard_multiple.html' %}</pre></code>
 
 
 <h2>Aligned right</h2>

@@ -24,12 +24,11 @@
 // Hopefully, the size of the bit of line height that is above/below the
 // text itself:
 
-$meta-offset-top: 0.5rem;
+$meta-offset-top: 0.35rem;
 $meta-offset-bottom: 0.4rem;
 
 .meta {
   @include text-style-nav;
-  line-height: $line-height-base-computed;
   border-left: $base-unit solid $black;
   margin-top: $meta-offset-top;
   margin-bottom: $meta-offset-bottom;
@@ -69,9 +68,6 @@ $meta-offset-bottom: 0.4rem;
 
     & > li {
       @include list-item-bullet;
-
-      // Adjusting for the larger line height than normal:
-      background-position: 0 0.75em;
     }
   }
 }
