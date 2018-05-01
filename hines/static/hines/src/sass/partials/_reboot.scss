@@ -305,8 +305,8 @@ table {
 }
 
 caption {
-  padding-top: $table-cell-padding;
-  padding-bottom: $table-cell-padding;
+  padding-top: $table-cell-padding-y;
+  padding-bottom: $table-cell-padding-y;
   text-align: left;
   caption-side: bottom;
 }

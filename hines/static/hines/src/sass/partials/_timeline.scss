@@ -8,7 +8,7 @@
   th,
   td {
     border: $table-border-width solid $table-border-color;
-    padding: $table-cell-padding-sm;
+    padding: calc(#{$table-cell-padding-sm-y} - #{$table-border-width}) $table-cell-padding-sm-x $table-cell-padding-sm-y $table-cell-padding-sm-x;
     vertical-align: top;
     @include text-style-alt;
   }
@@ -26,7 +26,7 @@
   .tl-work,
   .tl-play,
   .tl-writing {
-    background-color: $gray-light; 
+    background-color: $gray-light;
   }
 
   .tl-place,
