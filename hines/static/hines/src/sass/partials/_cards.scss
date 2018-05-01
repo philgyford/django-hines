@@ -20,10 +20,12 @@
     }
   }
 
-ol li:not(.media) {
-      // Fix position of bullet for the smaller font size:
-      background-position: 0 $list-bullet-position-sm;
-    }
+
+  ol li:not(.media),
+  ul li:not(.media) {
+    // Fix position of bullet for the smaller font size:
+    background-position: 0 $list-bullet-position-sm;
+  }
 
 
   hr {

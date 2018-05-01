@@ -55,11 +55,11 @@ $meta-offset-bottom: 0.4rem;
 
 .meta--inline {
   border-left: none;
+  margin-top: 0;
+  margin-bottom: $vertical-space-sm;
 
   .meta__inner {
     @include list-inline();
-    // So it has normal space if used inline under a blog post etc:
-    margin-bottom: $vertical-space;
 
     & > li {
       @include list-item-bullet;

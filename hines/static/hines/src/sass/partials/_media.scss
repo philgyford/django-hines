@@ -14,9 +14,9 @@ $media-header-size: $h4-font-size;
 }
 
 .media {
-  padding-top: $vertical-space;
+  padding-top: $vertical-space-sm;
   // So the bottom padding and border equal one $vertical-space:
-  padding-bottom: calc(#{$vertical-space} - #{$border-width-sm});
+  padding-bottom: calc(#{$vertical-space-sm} - #{$border-width-sm});
   border-bottom: $border-width-sm solid $border-color;
 
   display: flex;
@@ -24,7 +24,7 @@ $media-header-size: $h4-font-size;
 
   &:first-child {
     // To allow for the .media-list's top border.
-    padding-top: calc(#{$vertical-space} - #{$border-width-sm});
+    padding-top: calc(#{$vertical-space-sm} - #{$border-width-sm});
   }
 
   .media:last-child {
