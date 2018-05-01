@@ -14,10 +14,19 @@
   ul,
   dl {
     margin-bottom: $vertical-space-sm;
+  }
 
-    &:first-child:not(.meta__inner) {
-      margin-top: $vertical-space-sm;
-    }
+  > ol:first-child:not(.meta__inner),
+  > ul:first-child:not(.meta__inner) {
+    // Lists that don't have anything else before them.
+    margin-top: $vertical-space-sm;
+  }
+
+  ol ol,
+  ol ul,
+  ul ol,
+  ul ul, {
+    margin-bottom: 0;
   }
 
   ol li:not(.media),
@@ -59,6 +68,11 @@
 
 .card__body {
   @include text-style-alt;
+
+  &:first-child {
+    // When there's no card__header.
+    margin-top: $vertical-space-sm;
+  }
 
   & > *:last-child {
     margin-bottom: 0;
