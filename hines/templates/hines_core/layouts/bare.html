@@ -34,6 +34,7 @@
       <link rel="canonical" href="{{ request.build_absolute_uri }}">
     {% endblock canonical %}
 
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content="{{ site_name }}" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
     <meta name="twitter:card" content="summary" />
@@ -42,6 +43,7 @@
     {% block meta_social %}
       {% comment %}
         <meta property="og:image" content="" />
+	      <meta property="og:description" content="" />
       	<meta property="og:title" content="" />
       	<meta name="twitter:description" content="" />
         <meta name="twitter:image:src" content="" />

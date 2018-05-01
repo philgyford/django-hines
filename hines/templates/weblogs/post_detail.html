@@ -4,9 +4,10 @@
 {% block head_page_title %}{{ post.title|smartypants|safe }}{% endblock %}
 
 {% block meta_social %}
+	<meta property="og:description" content="{{ post.excerpt }}" />
 	<meta property="og:title" content="{{ post.title|smartypants|safe }}" />
-	<meta name="twitter:title" content="{{ post.title|smartypants|safe }}" />
 	<meta name="twitter:description" content="{{ post.excerpt }}" />
+	<meta name="twitter:title" content="{{ post.title|smartypants|safe }}" />
 {% endblock %}
 
 {# We put the heading within <article> #}
