@@ -136,6 +136,7 @@ $font-size-monospace:         $font-size-sm; /* 16 */
 $line-height-base:            1.63637;       /* 36 */
 $line-height-base-computed:   2.25rem;       /* 36 */
 $line-height-sm:              1.5;           /* 24 if used with font-size-sm */
+$line-height-sm-computed:     1.5rem;        /* 24 */
 
 // Headings
 
@@ -155,7 +156,7 @@ $h3-line-height:              2.25rem;          /* 36 */
 $h4-font-size:                $font-size-base;  /* 22 */
 $h4-line-height:              1.5rem;           /* 24 */
 
-$h5-font-size:                $font-size-sm;    /* 16 */
+$h5-font-size:                1.1875rem;        /* 19 */
 $h5-line-height:              1.5rem;           /* 24 */
 
 $h6-font-size:                $font-size-sm;    /* 16 */

@@ -35,19 +35,23 @@ h1, h2, h3, h4, h5, h6,
 
 h1 small,
 .h1 small {
-  font-size: $h2-font-size;
+  font-size: $h3-font-size;
+  line-height: 1em;
 }
 h2 small,
 .h2 small {
-  font-size: $h3-font-size;
-}
-h2 small,
-.h3 small {
   font-size: $h4-font-size;
+  line-height: 1em;
+}
+h3 small,
+.h3 small {
+  font-size: $h5-font-size;
+  line-height: 1em;
 }
 h4 small,
 .h4 small {
-  font-size: $h5-font-size;
+  font-size: $h6-font-size;
+  line-height: 1em;
 }
 
 h1, .h1 {
@@ -101,11 +105,11 @@ h6, .h6 {
 // Other things
 
 hr {
+  clear:           both;
   margin-top:      $hr-margin;
-  margin-bottom:   $hr-margin;
   border:          0;
   border-top:      $hr-border-width solid $hr-border-color;
-  clear:           both;
+  margin-bottom:   $hr-margin;
 
   &:first-child {
     margin-top: 0;
@@ -113,10 +117,8 @@ hr {
 }
 
 hr.hr--sm {
-  border-top:       none;
-  @include border-bottom();
-  margin-top:       ($hr-margin-sm - $border-width-sm);
-  height:           $border-width-sm;
+  margin-top:       calc(#{$hr-margin-sm} - #{$hr-border-width-sm});
+  border-top-width: $hr-border-width-sm;
   margin-bottom:    $hr-margin-sm;
 }
 
