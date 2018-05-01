@@ -15,11 +15,10 @@
   dl {
     margin-bottom: $vertical-space-sm;
 
-    &:first-child {
+    &:first-child:not(.meta__inner) {
       margin-top: $vertical-space-sm;
     }
   }
-
 
   ol li:not(.media),
   ul li:not(.media) {
