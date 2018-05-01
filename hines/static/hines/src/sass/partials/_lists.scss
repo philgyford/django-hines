@@ -44,5 +44,5 @@ dd:last-child {
 
 // Makes spacing better if we have p's in li's and also nested lists.
 li > p {
-  margin-top: $paragraph-margin-bottom;
+  margin-top: $vertical-space;
 }

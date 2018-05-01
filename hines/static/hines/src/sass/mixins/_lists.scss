@@ -1,3 +1,4 @@
+
 @mixin list-inline() {
   padding-left: 0;
   list-style: none;
@@ -9,9 +10,9 @@
 
 // Default bulleted list item.
 @mixin list-item-bullet() {
-  // Also see the exception to this background positioning in .asides.scss:
-  background: url('#{$img-path}bullet.png') 0 0.4em no-repeat;
-  padding-left: ($border-width + $list-inline-padding);
+  // Also see the exception to this background positioning in .cards.scss:
+  background: url('#{$img-path}bullet.png') 0 $list-bullet-position no-repeat;
+  padding-left: ($base-unit + $list-inline-padding);
 }
 
 @mixin list-inline-item() {
@@ -27,7 +28,7 @@
   list-style: none;
 
   & > li {
-    background: none;
     padding-left: 0;
+    background: none;
   }
 }

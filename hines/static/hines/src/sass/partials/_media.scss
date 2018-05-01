@@ -2,39 +2,57 @@
 // For lists of blog posts, comments, etc.
 
 
-// Used for both .media_header and .media__byline_author:
-$media-header-size: $h3-font-size;
+// Used for both .media__header and .media__byline_author:
+$media-header-size: $h4-font-size;
 
 
 .media-list {
-  @include list-unstyled;
+  padding-left: 0;
+  list-style: none;
   border-top: $border-width-sm solid $border-color;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 }
 
 .media {
-  padding-top: $hr-margin-sm;
-  padding-bottom: $hr-margin-sm;
+  padding-top: $vertical-space-sm;
+  // So the bottom padding and border equal one $vertical-space:
+  padding-bottom: calc(#{$vertical-space-sm} - #{$border-width-sm});
   border-bottom: $border-width-sm solid $border-color;
+
   display: flex;
   align-items: flex-start;
+
+  &:first-child {
+    // To allow for the .media-list's top border.
+    padding-top: calc(#{$vertical-space-sm} - #{$border-width-sm});
+  }
 
   .media:last-child {
     padding-bottom: 0;
     border-bottom: none;
   }
+
+  iframe,
+  embed,
+  object,
+  video {
+    margin-bottom: 0;
+  }
+
+  .meta--inline {
+    margin-bottom: $vertical-space-sm; 
+  }
 }
 
 .media__img {
-  margin-top: 0.2em;
-  margin-right: $border-width;
+  margin-right: ($grid-gutter-width / 2);
 }
 
 .media__body {
   flex: 1;
 
   p {
-    margin-bottom: $paragraph-margin-bottom-sm;
+    margin-bottom: $vertical-space-sm;
   }
 
   &>p:last-child,
@@ -49,19 +67,19 @@ $media-header-size: $h3-font-size;
 .media__header {
   @include text-style-default;
   font-size: $media-header-size;
-  margin-bottom: $paragraph-margin-bottom-sm;
+  margin-bottom: $vertical-space-sm;
 }
 
 
 .media__byline {
   @include text-style-nav;
-  margin-bottom: $paragraph-margin-bottom-sm;
+  margin-bottom: $vertical-space-sm;
 }
 
 .media__byline__author {
   font-size: $media-header-size;
-  // Keep it the same line-height as .media__byline itself:
-  line-height: ($nav-font-size * $line-height-base);
+  // I don't know why, but making it this small keeps things to the grid:
+  line-height: $font-size-sm;
 }
 
 // Media items in a .card.
@@ -72,8 +90,9 @@ $media-header-size: $h3-font-size;
   }
 
   .media {
-    padding-top: $paragraph-margin-bottom-sm;
-    padding-bottom: $paragraph-margin-bottom-sm;
+    padding-top: $vertical-space-sm;
+    // So the bottom padding and border equal one $vertical-space-sm:
+    padding-bottom: calc(#{$vertical-space-sm} - #{$border-width-sm});
     @include text-style-alt;
 
     &:first-child {
@@ -82,7 +101,7 @@ $media-header-size: $h3-font-size;
 
     &:last-child {
       border-bottom: none;
-      padding-bottom: 0.3em; // Just looks about right.
+      padding-bottom: 0;
     }
   }
 

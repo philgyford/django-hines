@@ -1,9 +1,22 @@
 
+// All of these should add up to a whole-number of $vertical-space-sm's:
+$navbar-top-space:              ($vertical-space * 0);
+$navbar-bottom-space:           ($vertical-space * 1);
+$navbar-title-top-space:        ($vertical-space-sm * 1.5);
+$navbar-title-bottom-space:     ($vertical-space-sm * 0.5);
+$navbar-title-line-height:      $vertical-space-sm;
+
+// Variations/additions for the widest width:
+$navbar-form-top-wide:          ($vertical-space-sm * 0.5);
+$navbar-bottom-space-wide:      ($vertical-space + $navbar-form-top-wide);
+$navbar-title-top-space-wide:   $vertical-space;
+
+
 .navbar {
   position: relative;
   width: 100%;
   max-width: $grid-max-width;
-  margin: 0.5rem auto 36px auto;
+  margin: $navbar-top-space auto $navbar-bottom-space auto;
   text-rendering: optimizeLegibility;
   @include hyphens(none);
 
@@ -31,18 +44,18 @@
 //}
 
 .navbar__title {
-  order: 1;
-  width: 100%;
-  white-space: nowrap;
-  border-bottom: $nav-border-width solid $black;
-  padding-bottom: 1px;
-  margin-top: 11px;
-  margin-right: auto;
-  font-size: $navbar-brand-font-size;
-  text-transform: uppercase;
-  line-height: 1.2em;
-  letter-spacing: 0.03em;
-  word-spacing: 0.06em;
+  order:            1;
+  width:            100%;
+  margin-right:     auto;
+  margin-top:       $navbar-title-top-space;
+  padding-bottom:   $navbar-title-bottom-space;
+  font-size:        $navbar-brand-font-size;
+  line-height:      $navbar-title-line-height;
+  text-transform:   uppercase;
+  white-space:      nowrap;
+  letter-spacing:   0.03em;
+  word-spacing:     0.06em;
+  border-bottom:    $nav-border-width solid $border-color;
 
   a {
     color: $nav-text-color;
@@ -76,7 +89,7 @@
   flex-grow: 2;
   align-self: flex-start;
   padding-bottom: $nav-border-width;
-  border-bottom: $nav-border-width solid $black;
+  border-bottom: $nav-border-width solid $border-color;
   margin-bottom: $nav-border-width;
 
   form {
@@ -88,7 +101,7 @@
       width: 8em;
       margin-right: ($nav-border-width / 2);
       margin-bottom: 0;
-	  @include text-style-alt();
+	    @include text-style-alt();
     }
 
     .button {
@@ -101,9 +114,9 @@
     display: none;
   }
 
-  //input {
-    //background: blue;
-  //}
+  // input {
+  //   background: blue;
+  // }
 }
 
 .js-navbar-nav-item-search {
@@ -124,6 +137,7 @@
 
   .navbar__form {
     order: 2;
+    margin-top: ($nav-border-width - ($input-button-border-width * 2));
     margin-bottom: 0;
     padding-bottom: $nav-border-width;
 
@@ -136,24 +150,25 @@
     display: none;
   }
 
-  //.navbar__form input {
-    //background: green;
-  //}
+  // .navbar__form input {
+  //   background: green;
+  // }
 
 }
 
-@media (min-width: 890px) {
+@media (min-width: 1030px) {
   /* Form is to right of title. Nav is in line with title's bottom border. */
 
   .navbar {
     /* Replace margin we're taking off the nav__item by adding it to the .navbar's, which is usually $nav-border-width. */
-    margin-bottom: (36px + $nav-border-width);
+    // margin-bottom: (36px + $nav-border-width);
+    margin-bottom: $navbar-bottom-space-wide;
   }
 
   .navbar__title {
     width: auto;
     margin-right: $nav-link-padding-x;
-    margin-top: 10px;
+    margin-top:   $navbar-title-top-space-wide;
   }
 
   .navbar .nav {
@@ -167,13 +182,13 @@
 
   .navbar__form {
     position: absolute;
-    top: 0;
+    top: $navbar-form-top-wide;
     right: ($grid-gutter-width / 2);
     border-bottom: none;
-    padding-top: 0;
+    margin-top: 0;
   }
 
-  //.navbar__form input {
-    //background: yellow;
-  //}
+  // .navbar__form input {
+  //   background: yellow;
+  // }
 }

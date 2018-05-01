@@ -109,7 +109,7 @@ h1, h2, h3, h4, h5, h6 {
 // bottom margin to use `rem` units instead of `em`.
 p {
   margin-top: 0;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 }
 
 // Abbreviations
@@ -128,7 +128,7 @@ abbr[data-original-title] { // 4
 }
 
 address {
-  margin-bottom: 1rem;
+  margin-bottom: $vertical-space;
   font-style: normal;
   line-height: inherit;
 }
@@ -137,7 +137,7 @@ ol,
 ul,
 dl {
   margin-top: 0;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 }
 
 ol ol,
@@ -152,12 +152,12 @@ dt {
 }
 
 dd {
-  margin-bottom: $paragraph-margin-bottom-sm;
+  margin-bottom: $vertical-space-sm;
   margin-left: 0; // Undo browser default
 }
 
 blockquote {
-  margin: 0 0 $paragraph-margin-bottom 0;
+  margin: 0 0 $vertical-space 0;
 }
 
 dfn {
@@ -238,12 +238,14 @@ pre {
   // Remove browser default top margin
   margin-top: 0;
   // Reset browser default of `1em` to use `rem`s
-  margin-bottom: 1rem;
+  margin-bottom: $vertical-space;
   // Don't allow content to break outside
   overflow: auto;
   // We have @viewport set which causes scrollbars to overlap content in IE11 and Edge, so
   // we force a non-overlapping, non-auto-hiding scrollbar to counteract.
   -ms-overflow-style: scrollbar;
+
+  line-height: $line-height-sm;
 }
 
 
@@ -253,7 +255,7 @@ pre {
 
 figure {
   // Apply a consistent margin strategy (matches our type styles).
-  margin: 0 0 $paragraph-margin-bottom 0;
+  margin: 0 0 $vertical-space 0;
 }
 
 
@@ -303,8 +305,8 @@ table {
 }
 
 caption {
-  padding-top: $table-cell-padding;
-  padding-bottom: $table-cell-padding;
+  padding-top: $table-cell-padding-y;
+  padding-bottom: $table-cell-padding-y;
   text-align: left;
   caption-side: bottom;
 }

@@ -24,13 +24,12 @@
 // Hopefully, the size of the bit of line height that is above/below the
 // text itself:
 
-$meta-offset-top: 0.5rem;
+$meta-offset-top: 0.35rem;
 $meta-offset-bottom: 0.4rem;
 
 .meta {
   @include text-style-nav;
-  line-height: $line-height-base-computed;
-  border-left: $border-width solid $black;
+  border-left: $base-unit solid $border-color;
   margin-top: $meta-offset-top;
   margin-bottom: $meta-offset-bottom;
 
@@ -40,16 +39,15 @@ $meta-offset-bottom: 0.4rem;
   float: left;
   width: 100%;
 
-  .list--inline>.list--inline__item--bullet {
-    // Adjusting for the larger line height than normal:
-    background-position: 0 0.465em;
-  }
-
   .meta__inner {
     @include list-unstyled;
-    padding-left: $border-width;
+    padding-left: $base-unit;
     margin-top: -$meta-offset-top;
     margin-bottom: -$meta-offset-bottom;
+
+    li {
+      background: none;
+    }
   }
 }
 
@@ -57,17 +55,16 @@ $meta-offset-bottom: 0.4rem;
 
 .meta--inline {
   border-left: none;
+  margin-top: 0;
+  // There's an exception to this for within .media:
+  margin-bottom: $vertical-space;
 
   .meta__inner {
     @include list-inline();
-    // So it has normal space if used inline under a blog post etc:
-    margin-bottom: $paragraph-margin-bottom;
 
     & > li {
       @include list-item-bullet;
-
-      // Adjusting for the larger line height than normal:
-      background-position: 0 0.5em;
+      background-position: 0 $list-bullet-position-sm;
     }
   }
 }
@@ -84,7 +81,7 @@ $meta-offset-bottom: 0.4rem;
 .meta--right {
   // Otherwise a line of article text will go immediately underneath,
   // which is neat, but a bit too close:
-  margin-bottom: ($meta-offset-bottom + $paragraph-margin-bottom);
+  margin-bottom: ($meta-offset-bottom + $vertical-space);
 
 	@include media-breakpoint-up(md) {
     float: right;

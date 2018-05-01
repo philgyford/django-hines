@@ -9,8 +9,19 @@
  * </figure>
  */
 
+// Some things for the left/right floated images:
+// (Which will be max-width: 50%)
+// Assumes they're in the main-1 column.
+
+// Maximum number of columns it should stretch to:
+$fig-max-cols: floor($main-columns / 2);
+
+// That as a percentage of total width:
+$fig-max-cols-percentage: percentage($fig-max-cols / $main-columns);
+
+
 .figure {
-  margin: 0 0 $paragraph-margin-bottom 0;
+  margin: 0 0 $vertical-space 0;
 
   &.figure--full {
     img {
@@ -22,16 +33,19 @@
 
   &.figure--left,
   &.figure--right {
-    margin-top: 0.3em;
+    margin-top: 0.4em; // It just looks about right.
     max-width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      max-width: calc( #{$fig-max-cols-percentage} - #{$grid-gutter-width / 2} );
+    }
   }
 
   &.figure--left {
     @include media-breakpoint-up(sm) {
       float: left;
       clear: left;
-      margin-right: ($grid-gutter-width / 2);
-      max-width: 50%;
+      margin-right: $grid-gutter-width;
     }
   }
 
@@ -39,15 +53,14 @@
     @include media-breakpoint-up(sm) {
       float: right;
       clear: right;
-      margin-left: ($grid-gutter-width / 2);
-      max-width: 50%;
+      margin-left: $grid-gutter-width;
     }
   }
 }
 
 figcaption {
   @include text-style-alt;
-  margin-top: $paragraph-margin-bottom-sm;
+  margin-top: $vertical-space-sm;
 }
 
 
@@ -60,7 +73,7 @@ figcaption {
 
   figcaption {
     margin-top: 0;
-    padding: 0 ($border-width * 2);
+    padding: 0 ($base-unit * 2);
   }
 }
 
@@ -81,25 +94,22 @@ figcaption {
   }
 }
 
-// At wider widths, expand a .figure--full almost to the right-hand edge.
+// e.g. 0.625 which makes the main column 62.5% of the full width:
+$main-col-ratio: $main-columns / $grid-columns;
+
+// At wider widths, expand a .figure--full almost to the left & right-hand edges.
 @include media-breakpoint-up(md) {
   .grid__col--main--only {
     .figure--img {
       &.figure--full {
-        // Not -50vw because that seems to take it *just* over the right-hand
-        // edge and we get a horizontal scrollbar.
-        // As we're adding padding anyway, you don't notice any slight gap.
-        margin-right: calc(50% - 49vw);
-        // Make it line up with right-edge of top navbar:
-        padding-right: ($grid-gutter-width / 2);
-        // We don't want it being TOO big in a massive window:
-        // This seems to make it stretch to same as top nav bar:
-        max-width: ($grid-main-only-max-width * 1.354);
+
+        margin-left: percentage( -( ((1 - $main-col-ratio) / 2) / $main-col-ratio ) );
+        margin-right: percentage( -( ((1 - $main-col-ratio) / 2) / $main-col-ratio ) );
 
         figcaption {
-          // Make it the same width as the main--only column:
-          max-width: $grid-main-only-max-width;
-          padding-right: $grid-gutter-width;
+          width: percentage($main-col-ratio);
+          margin-left: auto;
+          margin-right: auto;
         }
       }
     }
@@ -117,7 +127,7 @@ iframe,
 embed,
 object,
 video {
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 }
 
 

@@ -1,0 +1,12 @@
+{% extends 'hines_core/layouts/base.html' %}
+
+{% comment %}
+The same as sidebar_right, but adds 'grid__row--alt' to the 'grid__row', in
+order to change the column widths.
+{% endcomment %}
+
+{% block content_main %}
+	{% with 'right-alt' as sidebar_position %}
+		{{ block.super }}
+	{% endwith %}
+{% endblock %}

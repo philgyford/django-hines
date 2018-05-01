@@ -34,52 +34,31 @@
       </p>
     {% endif %}
 
+    <aside class="meta meta--inline">
+      <ul class="meta__inner">
+        <li>{% display_time post.time_published link_to_day=True %}</li>
+
+        {% if perms.weblogs.can_change_post %}
+          <li><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
+        {% endif %}
+      </ul>
+    </aside>
+
     {{ post.intro_html|safe }}
 
-		{% comment %}
-			If the blog post body is short then we don't want to float the meta box
-			to the right - it looks odd.
+		{{ post.body_html|safe }}
 
-			So if body is longer than body_cutoff characters:
-				* Meta box goes befor the post body.
-				* Meta box is floated right.
+		{% if post.remote_url %}
+			<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
+		{% endif %}
 
-			If body is shorter than body_cutoff characters:
-				* Meta box goes after the post body.
-				* Meta box is displayed as a horizontal full-width, single-line block.
-		{% endcomment %}
-		{% with body_length=post.body|length body_cutoff=500 %}
-			{% if body_length <= body_cutoff %}
-				{{ post.body_html|safe }}
+    <aside class="meta">
+      <ul class="meta__inner">
+        {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
 
-				{% if post.remote_url %}
-					<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
-				{% endif %}
-			{% endif %}
-
-	    <aside class="meta {% if body_length > body_cutoff %}meta--right{% else %}meta--inline{% endif %}">
-	      <ul class="meta__inner">
-	        <li>{% display_time post.time_published link_to_day=True %}</li>
-
-	        {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
-
-	        <li>{% include 'hines_core/includes/next_prev.html' with previous=post.get_previous_post next=post.get_next_post %}</li>
-
-	        {% if perms.weblogs.can_change_post %}
-	          <li><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
-	        {% endif %}
-	      </ul>
-	    </aside>
-
-			{% if body_length > body_cutoff %}
-		    {{ post.body_html|safe }}
-				{% if post.remote_url %}
-					<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
-				{% endif %}
-			{% endif %}
-		{% endwith %}
-
-    <hr>
+        <li>{% include 'hines_core/includes/next_prev.html' with previous=post.get_previous_post next=post.get_next_post %}</li>
+      </ul>
+    </aside>
 
     <section>
       {% render_comment_list for post %}

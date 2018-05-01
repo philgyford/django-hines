@@ -1,243 +1,186 @@
-<!doctype html>{% load static hines_core hines_weblogs %}
-<html lang="en-gb"{% if show_grid %} class="has-guide"{% endif %}>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block head_title %}{% block head_page_title %}{% endblock %} ({% block head_site_title %}{{ site_name }}{% endblock %}){% endblock %}</title>
+{% extends 'hines_core/layouts/bare.html' %}
+{% load hines_core %}
 
-    <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-c46e99d7fa.css">
-    <!-- endinject -->
+{% block body %}
+  <a class="u-sr-only u-sr-only-focusable" href="#content">Skip to main content</a>
+  <nav class="navbar">
+    <!--
+    <div class="navbar__icon"></div>
+    -->
+    <div class="navbar__inner">
+      <div class="navbar__title">
+        <a href="{% url 'home' %}" title="To the front page of the site">
+          {% block navbar_title %}
+            {{ site_name}}
+          {% endblock %}
+        </a>
+      </div>
+      {% current_url_name as url_name %}
+      <ul class="nav js-navbar-nav">
+        <li class="nav__item{% if blog.slug == 'writing' %} is-active{% endif %}">
+          {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'writing' %}
+            <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='writing' %}">Writing</a>
+          {% else %}
+            <span class="nav__link">Writing</span>
+          {% endif %}
+        </li>
+        <li class="nav__item {% block photos_nav_active %}{% endblock %}">
+          {% if url_name != 'photos:home' or page_obj.number > 1 %}
+            <a class="nav__link" href="{% url 'photos:home' %}">Photos</a>
+          {% else %}
+            <span class="nav__link">Photos</span>
+          {% endif %}
+        </li>
+        <li class="nav__item {% block links_nav_active %}{% endblock %}">
+          {% if url_name != 'pinboard:home' or page_obj.number > 1 %}
+            <a class="nav__link" href="{% url 'pinboard:home' %}">Links</a>
+          {% else %}
+            <span class="nav__link">Links</span>
+          {% endif %}
+        </li>
+        <li class="nav__item{% if blog.slug == 'comments' %} is-active{% endif %}">
+          {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
+            <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
+          {% else %}
+            <span class="nav__link">Comments</span>
+          {% endif %}
+        </li>
+        <li class="nav__item nav__item--split {% block reading_nav_active %}{% endblock %}">
+          {% if url_name != 'spectator:reading:home' %}
+            <a class="nav__link" href="{% url 'spectator:reading:home' %}">Reading</a>
+          {% else %}
+            <span class="nav__link">Reading</span>
+          {% endif %}
+        </li>
+        <li class="nav__item {% block events_nav_active %}{% endblock %}">
+          {% if url_name != 'spectator:events:home' %}
+            <a class="nav__link" href="{% url 'spectator:events:home' %}">Events</a>
+          {% else %}
+            <span class="nav__link">Events</span>
+          {% endif %}
+        </li>
+        <li class="nav__item nav__item--split {% block misc_nav_active %}{% endblock %}">
+          {% if url_name == 'hines:misc' %}
+            <span class="nav__link">More…</span>
+          {% else %}
+            <a class="nav__link" href="{% url 'hines:misc' %}">More…</a>
+          {% endif %}
+        </li>
+        <li class="nav__item {% block about_nav_active %}{% endblock %}">
+          {% if url_name != 'hines:about' %}
+            <a class="nav__link" href="{% url 'hines:about' %}">About</a>
+          {% else %}
+            <span class="nav__link">About</span>
+          {% endif %}
+        </li>
+      </ul>
+      <div class="navbar__form js-navbar-form" id="js-navbar-form">
+        <form action="http://www.google.com/search" method="get" class="form--inline">
+          <input name="q" class="form__control form__control--sm" type="text" placeholder="Search" aria-label="Search" size="12">
+          <input type="hidden" name="as_sitesearch" value="www.gyford.com">
+          <button class="button button--sm button--secondary" type="submit">Go</button>
+        </form>
+      </div>
+    </div> <!-- .navbar__inner -->
+  </nav>
 
-    <link rel="alternate" type="application/rss+xml" title="Writing, photos, links, and my comments combined" href="{% url 'hines:everything_feed_rss' %}">
-    {% get_all_blogs_by_slug as all_blogs %}
-    {% for blog_slug, blog_obj in all_blogs.items %}
-    <link rel="alternate" type="application/rss+xml" title="{{ blog_obj.get_feed_title }}" href="{{ blog_obj.get_rss_feed_url }}"/>
-    {% endfor %}
+  <main id="content" class="grid">
 
-    {% block favicons %}
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'hines/img/favicons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'hines/img/favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'hines/img/favicons/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'hines/img/favicons/manifest.json' %}">
-    <link rel="mask-icon" href="{% static 'hines/img/favicons/safari-pinned-tab.svg' %}" color="#ff6600">
-    <link rel="shortcut icon" href="{% static 'hines/img/favicons/favicon.ico' %}">
-    <meta name="msapplication-config" content="{% static 'hines/img/favicons/browserconfig.xml' %}">
-    <meta name="theme-color" content="#ffffff">
-    {% endblock favicons %}
-
-    {% block head_extra %}
-      {# Use this if you need to more to the <head> of every page. #}
+    {% block content_heading %}
+      <div class="grid__row pagehead">
+        <header class="grid__col grid__col--full">
+          <h1>{% block content_title %}{% endblock %}</h1>
+        </header>
+      </div>
     {% endblock %}
-  </head>
-  <body>
-    <a class="u-sr-only u-sr-only-focusable" href="#content">Skip to main content</a>
-    <nav class="navbar">
-      <!--
-      <div class="navbar__icon"></div>
-      -->
-      <div class="navbar__inner">
-        <div class="navbar__title">
-          <a href="{% url 'home' %}" title="To the front page of the site">
-            {% block navbar_title %}
-              {{ site_name}}
-            {% endblock %}
-          </a>
-        </div>
-        {% current_url_name as url_name %}
-        <ul class="nav js-navbar-nav">
-          <li class="nav__item{% if blog.slug == 'writing' %} is-active{% endif %}">
-            {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'writing' %}
-              <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='writing' %}">Writing</a>
-            {% else %}
-              <span class="nav__link">Writing</span>
-            {% endif %}
-          </li>
-          <li class="nav__item {% block photos_nav_active %}{% endblock %}">
-            {% if url_name != 'photos:home' or page_obj.number > 1 %}
-              <a class="nav__link" href="{% url 'photos:home' %}">Photos</a>
-            {% else %}
-              <span class="nav__link">Photos</span>
-            {% endif %}
-          </li>
-          <li class="nav__item {% block links_nav_active %}{% endblock %}">
-            {% if url_name != 'pinboard:home' or page_obj.number > 1 %}
-              <a class="nav__link" href="{% url 'pinboard:home' %}">Links</a>
-            {% else %}
-              <span class="nav__link">Links</span>
-            {% endif %}
-          </li>
-          <li class="nav__item{% if blog.slug == 'comments' %} is-active{% endif %}">
-            {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
-              <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
-            {% else %}
-              <span class="nav__link">Comments</span>
-            {% endif %}
-          </li>
-          <li class="nav__item nav__item--split {% block reading_nav_active %}{% endblock %}">
-            {% if url_name != 'spectator:reading:home' %}
-              <a class="nav__link" href="{% url 'spectator:reading:home' %}">Reading</a>
-            {% else %}
-              <span class="nav__link">Reading</span>
-            {% endif %}
-          </li>
-          <li class="nav__item {% block events_nav_active %}{% endblock %}">
-            {% if url_name != 'spectator:events:home' %}
-              <a class="nav__link" href="{% url 'spectator:events:home' %}">Events</a>
-            {% else %}
-              <span class="nav__link">Events</span>
-            {% endif %}
-          </li>
-          <li class="nav__item nav__item--split {% block misc_nav_active %}{% endblock %}">
-            {% if url_name == 'hines:misc' %}
-              <span class="nav__link">More…</span>
-            {% else %}
-              <a class="nav__link" href="{% url 'hines:misc' %}">More…</a>
-            {% endif %}
-          </li>
-          <li class="nav__item {% block about_nav_active %}{% endblock %}">
-            {% if url_name != 'hines:about' %}
-              <a class="nav__link" href="{% url 'hines:about' %}">About</a>
-            {% else %}
-              <span class="nav__link">About</span>
-            {% endif %}
-          </li>
-        </ul>
-        <div class="navbar__form js-navbar-form" id="js-navbar-form">
-          <form action="http://www.google.com/search" method="get" class="form--inline">
-            <input name="q" class="form__control form__control--sm" type="text" placeholder="Search" aria-label="Search" size="12">
-            <input type="hidden" name="as_sitesearch" value="www.gyford.com">
-            <button class="button button--sm button--secondary" type="submit">Go</button>
-          </form>
-        </div>
-      </div> <!-- .navbar__inner -->
-    </nav>
 
-    <main id="content" class="grid">
+    {% block content_main %}
+      <div class="grid__row{% if sidebar_position == 'right-alt' %} grid__row--alt{% endif %}">
+        {% block content_column %}
+          <div class="grid__col grid__col--main {% if sidebar_position == 'left' %} grid__col--last{% elif sidebar_position == 'none' %} grid__col--main--only{% endif %}">
+            {% block content %}
+            {% endblock content %}
+          </div> <!-- .grid__col -->
+        {% endblock content_column %}
+        {% block sidebar_column %}
+          <div class="grid__col grid__col--sub{% if sidebar_position == 'left' %} grid__col--first{% endif %}">
+            {% block sidebar %}
+              {% block sidebar_nav %}
+              {% endblock sidebar_nav %}
+              {% block sidebar_content %}
+              {% endblock sidebar_content %}
+            {% endblock sidebar %}
+          </div> <!-- .grid__col -->
+        {% endblock sidebar_column %}
+      </div>
+    {% endblock content_main %}
+  </main>
 
-      {% block content_heading %}
-        <div class="grid__row pagehead">
-          <header class="grid__col {% if sidebar_position == 'none' %}grid__col--main grid__col--main--only{% else %}grid__col--full{% endif %}">
-            <h1>{% block content_title %}{% endblock %}</h1>
-          </header>
-        </div>
-      {% endblock %}
-
-      {% block content_main %}
-        <div class="grid__row">
-          {% block content_column %}
-            <div class="grid__col grid__col--main {% if sidebar_position == 'left' %} grid__col--last{% elif sidebar_position == 'none' %} grid__col--main--only{% endif %}">
-              {% block content %}
-              {% endblock content %}
-            </div> <!-- .grid__col -->
-          {% endblock content_column %}
-          {% block sidebar_column %}
-            <div class="grid__col grid__col--sub{% if sidebar_position == 'left' %} grid__col--first{% endif %}">
-              {% block sidebar %}
-                {% block sidebar_nav %}
-                {% endblock sidebar_nav %}
-                {% block sidebar_content %}
-                {% endblock sidebar_content %}
-              {% endblock sidebar %}
-            </div> <!-- .grid__col -->
-          {% endblock sidebar_column %}
-        </div>
-      {% endblock content_main %}
-    </main>
-
-    <footer class="grid">
-      <div class="grid__row">
-        <div class="grid__col grid__col--full">
-          <hr>
-          <div class="grid">
-            <div class="grid__row">
-              <div class="grid__col grid__col--half">
-                <aside class="card card--no-border">
-                  <h1 class="card__header">RSS feeds</h1>
-                  <ul class="list-unstyled">
+  <footer class="grid">
+    <div class="grid__row">
+      <div class="grid__col grid__col--full">
+        <hr>
+        <div class="grid">
+          <div class="grid__row">
+            <div class="grid__col grid__col--half">
+              <aside class="card card--no-border">
+                <h1 class="card__header">RSS feeds</h1>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>
+                  </li>
+                  {% with all_blogs|get_item:'writing' as b %}
                     <li>
-                      <a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>
+                      <a href="{{ b.get_rss_feed_url }}">{{ b.short_name }}</a>
                     </li>
-                    {% with all_blogs|get_item:'writing' as b %}
-                      <li>
-                        <a href="{{ b.get_rss_feed_url }}">{{ b.short_name }}</a>
-                      </li>
-                    {% endwith %}
+                  {% endwith %}
 
+                  <li>
+                    <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
+                  </li>
+                  <li>
+                    <a href="http://feeds.pinboard.in/rss/u:philgyford/">Links at Pinboard</a>
+                  </li>
+                  {% with all_blogs|get_item:'comments' as b %}
                     <li>
-                      <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
+                      <a href="{{ b.get_rss_feed_url }}">{{ b.name }}</a>
                     </li>
-                    <li>
-                      <a href="http://feeds.pinboard.in/rss/u:philgyford/">Links at Pinboard</a>
-                    </li>
-                    {% with all_blogs|get_item:'comments' as b %}
-                      <li>
-                        <a href="{{ b.get_rss_feed_url }}">{{ b.name }}</a>
-                      </li>
-                    {% endwith %}
-                  </ul>
-                </aside>
-              </div>
-              <div class="grid__col grid__col--half">
-                <aside class="card card--no-border">
-                  <div class="card__body">
-                    <p>
-                      &copy; 1995-{% now "Y" %} Phil Gyford<br>
-                      Email: <a href="mailto:phil@gyford.com">phil@gyford.com</a><Br>
-                      Twitter: <a href="https://twitter.com/philgyford">@philgyford</a>
-                    </p>
-                  </div>
-                </aside>
-                <aside class="card card--no-border">
-                  <div class="card__body">
-                    <p>
-                      All times are <abbr title="Coordinated Universal Time">UTC</abbr>.
-                    </p>
-                  </div>
-                </aside>
-              </div>
+                  {% endwith %}
+                </ul>
+              </aside>
+            </div>
+            <div class="grid__col grid__col--half">
+              <aside class="card card--no-border">
+                <div class="card__body">
+                  <p>
+                    &copy; 1995-{% now "Y" %} Phil Gyford<br>
+                    Email: <a href="mailto:phil@gyford.com">phil@gyford.com</a><Br>
+                    Twitter: <a href="https://twitter.com/philgyford">@philgyford</a>
+                  </p>
+                </div>
+              </aside>
+              <aside class="card card--no-border">
+                <div class="card__body">
+                  <p>
+                    All times are <abbr title="Coordinated Universal Time">UTC</abbr>.
+                  </p>
+                </div>
+              </aside>
             </div>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
+{% endblock body %}
 
-    <!-- inject:js -->
-    <script src="/static/hines/js/site-afdfceda6d.min.js"></script>
-    <!-- endinject -->
+{% block body_extra %}
+  <script>
+    domready(function() {
+      var navbar = hines.navbar();
+      navbar.init();
+    });
+  </script>
 
-    <script>
-      domready(function() {
-        var navbar = hines.navbar();
-        navbar.init();
-      });
-    </script>
-
-    {% include 'hines_core/includes/analytics.html' %}
-
-    {% block foot_extra %}
-      {# Use this if you need to add JS etc to the foot of the page. #}
-    {% endblock %}
-
-    {% if show_grid %}
-      <div class="grid grid--guide">
-        <div class="grid__row">
-          <div class="grid__col grid__col--sub">
-            <div class="grid--guide__col__inner"></div>
-          </div>
-          <div class="grid__col grid__col--sub">
-            <div class="grid--guide__col__inner"></div>
-          </div>
-          <div class="grid__col grid__col--sub">
-            <div class="grid--guide__col__inner"></div>
-          </div>
-          <div class="grid__col grid__col--sub">
-            <div class="grid--guide__col__inner"></div>
-          </div>
-        </div>
-      </div>
-    {% endif %}
-
-  </body>
-</html>
+  {% include 'hines_core/includes/analytics.html' %}
+{% endblock body_extra %}

@@ -9,6 +9,19 @@
  *    <div class="grid__col grid__col--sub"></div>
  *  </div>
  * </div>
+ *
+ * <div class="grid">
+ *  <div class="grid__row grid__row--alt">
+ *    <div class="grid__col grid__col--main"></div>
+ *    <div class="grid__col grid__col--sub"></div>
+ *  </div>
+ * </div>
+ *
+ * <div class="grid">
+ *  <div class="grid__row">
+ *    <div class="grid__col grid__col--main grid__col--main--only"></div>
+ *  </div>
+ * </div>
  */
 
 .grid {
@@ -30,20 +43,29 @@
   }
 }
 
+
 // ...then one of these classes to set the col's width at wider window widths:
 .grid__col--sub {
   @include media-breakpoint-up(md) {
-    @include make-col(1);
+    @include make-col($sub-columns);
+
+    .grid__row--alt & {
+      @include make-col($sub-columns-alt);
+    }
   }
 }
 .grid__col--half {
   @include media-breakpoint-up(md) {
-    @include make-col(2);
+    @include make-col($half-columns);
   }
 }
 .grid__col--main {
   @include media-breakpoint-up(md) {
-    @include make-col(3);
+    @include make-col($main-columns);
+
+    .grid__row--alt & {
+      @include make-col($main-columns-alt);
+    }
   }
 }
 .grid__col--full {
@@ -54,26 +76,26 @@
 // main column:
 .grid__col--offset--sub {
   @include media-breakpoint-up(md) {
-    @include make-col-offset(1)
+    @include make-col-offset($sub-columns)
   }
 }
 .grid__col--offset--half {
   @include media-breakpoint-up(md) {
-    @include make-col-offset(2)
+    @include make-col-offset($half-columns)
   }
 }
 .grid__col--offset--main {
   @include media-breakpoint-up(md) {
-    @include make-col-offset(3)
+    @include make-col-offset($main-columns)
   }
 }
 
-// When there's no sidebar, centre the main column at wider widths, and make
-// sure it doesn't get too wide.
+// When there's no sidebar, centre the main column at wider widths.
 .grid__col--main--only {
-  max-width: $grid-main-only-max-width;
-  margin-left: auto;
-  margin-right: auto;
+  @include media-breakpoint-up(lg) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 
@@ -85,7 +107,7 @@
 }
 .grid__col--last {
   @include media-breakpoint-up(md) {
-    order: 4;
+    order: $grid-columns;
   }
 }
 

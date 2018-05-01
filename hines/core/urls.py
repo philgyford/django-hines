@@ -16,6 +16,8 @@ app_name = 'hines'
 
 urlpatterns = [
 
+    path('test.html', TemplateView.as_view(template_name='hines_core/test.html')),
+
     # Send anyone going to '/phil/' to the home page at '/'.
     path('', RedirectView.as_view(url='/', permanent=False)),
 

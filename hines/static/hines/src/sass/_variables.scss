@@ -5,7 +5,8 @@ $img-path:      "../img/css/";
 
 $browser-prefixes: -webkit-, -moz-, -ms-, '';
 
-//
+
+/////////////////////////////////////////////////////////////////////////
 // Color system
 //
 // https://www.w3.org/TR/2008/NOTE-WCAG20-TECHS-20081211/working-examples/G183/link-contrast.html
@@ -23,8 +24,6 @@ $purple:        #90c;
 $red:           #c00;
 $yellow:        #ff0;
 
-$guide-color:   hsla(204, 80%, 72%, 0.25);
-
 
 $theme-colors: (
   "primary":    $blue,
@@ -41,9 +40,6 @@ $yiq-text-light:  $white;
 
 $text-color-warning:  $red;
 
-// Spacing
-
-$spacer: 1rem;
 
 // Body
 //
@@ -52,6 +48,7 @@ $spacer: 1rem;
 $body-bg:                   $white;
 $body-color:                $gray-darkest;
 
+$border-color:              $black;
 
 // Links
 //
@@ -65,6 +62,27 @@ $link-visited-color:        $purple;
 $link-visited-hover-color:  $red;
 
 
+/////////////////////////////////////////////////////////////////////////
+// Base units
+
+// Many other things - borders, line-heights, etc. will be multiples of this.
+$base-unit:                   12px;
+
+// e.g. space below paragraphs:
+$vertical-space:              (1rem * 1.5);   // 24px
+$vertical-space-sm:           (1rem * 0.75);  // 12px
+
+// For horizontal space that should be proportionate to font sizes:
+$horizontal-space:            (1rem * 0.75);  // 12px
+$horizontal-space-sm:         (1rem * 0.375); // 6px
+
+// What we use for hr's, navbar rules, etc:
+$border-width:                $base-unit;
+$border-width-sm:             1px;
+
+
+/////////////////////////////////////////////////////////////////////////
+// GRID
 
 // Grid breakpoints
 //
@@ -78,68 +96,87 @@ $grid-breakpoints: (
   xl: 1200px
 );
 
-
-// What we use for hr's, navbar rules, etc:
-$border-width: 12px;
-$border-color: $black;
-
-$border-width-sm: 1px;
-
-
 // Grid containers
 
-$grid-columns:              4;
-$grid-gutter-width:         ($border-width * 4);
+$grid-columns:              16;
+$grid-gutter-width:         ($base-unit * 2);
 $grid-max-width:            1140px;
-$grid-main-only-max-width:  40rem;
+
+// Widths of our custom columns:
+
+// Main content:
+$main-columns:              10;
+
+// Sidebar:
+$sub-columns:               5;
+
+// Variants:
+$main-columns-alt:          12;
+$sub-columns-alt:           3;
+
+// Half width:
+$half-columns:              $grid-columns / 2;
 
 
+/////////////////////////////////////////////////////////////////////////
 // Fonts
 
+// Base styles
+
 $font-family-serif:           Georgia, Times, "Times New Roman", serif;
-
 $font-family-sans-serif:      "Helvetica Neue", Helvetica, Arial, sans-serif;
-//$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 $font-family-base:            $font-family-serif;
 
-$font-size-base:              (1rem * 1.125); // probably 18px
-$font-size-lg:                ($font-size-base * 1.33333); // 24px
-$font-size-sm:                ($font-size-base * 0.77778); // 14px
-$font-size-monospace:         $font-size-sm;
-
-//$font-weight-light:           300;
 $font-weight-normal:          400;
 $font-weight-bold:            700;
-
 $font-weight-base:            $font-weight-normal;
-$line-height-base:            1.5;
-$line-height-base-computed:   ($font-size-base * $line-height-base);
 
-$h1-font-size:      ($font-size-base * 1.6666667);  /* 30 */
-$h2-font-size:      ($font-size-base * 1.3888889);  /* 25 */
-$h3-font-size:      ($font-size-base * 1.1666667);  /* 21 */
-$h4-font-size:      $font-size-base;                /* 18 */
-$h5-font-size:      $font-size-sm;                  /* 13 */
-$h6-font-size:      $font-size-sm;                  /* 13 */
+$font-size-base:              1.375rem;      /* 22px probably */
+$font-size-sm:                1rem;          /* 16 */
+$font-size-monospace:         $font-size-sm; /* 16 */
 
-// Variants for wider screens:
-$h1-font-size-md:   ($font-size-base * 2);          /* 36 */
-$h2-font-size-md:   ($font-size-base * 1.611111);   /* 29 */
-$h3-font-size-md:   ($font-size-base * 1.277778);   /* 23 */
+$line-height-base:            1.63637;       /* 36 */
+$line-height-base-computed:   2.25rem;       /* 36 */
+$line-height-sm:              1.5;           /* 24 if used with font-size-sm */
+$line-height-sm-computed:     1.5rem;        /* 24 */
 
-$paragraph-margin-bottom:     $font-size-base;
-// Used for a few things outside of body text. Looks about right:
-$paragraph-margin-bottom-sm:  ($line-height-base-computed - $font-size-base);
+// Headings
 
-$headings-margin-bottom:      $paragraph-margin-bottom;
-$headings-line-height:        1.2;
+$headings-margin-bottom:      $vertical-space;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
 
-$line-height-sm:              1.42857; // 20px if used with 14px $font-size-sm
+$h1-font-size:                2rem;             /* 32 */
+$h1-line-height:              2.25rem;          /* 36 */
+
+$h2-font-size:                1.75rem;          /* 28 */
+$h2-line-height:              2.25rem;          /* 36 */
+
+$h3-font-size:                1.5rem;           /* 24 */
+$h3-line-height:              2.25rem;          /* 36 */
+
+$h4-font-size:                $font-size-base;  /* 22 */
+$h4-line-height:              1.5rem;           /* 24 */
+
+$h5-font-size:                1.1875rem;        /* 19 */
+$h5-line-height:              1.5rem;           /* 24 */
+
+$h6-font-size:                $font-size-sm;    /* 16 */
+$h6-line-height:              1.5rem;           /* 24 */
+
+// Variants for wider screens:
+$h1-font-size-md:             2.25rem;          /* 36 */
+$h1-line-height-md:           3rem;             /* 36 */
+
+$h2-font-size-md:             1.75rem;          /* 28 */
+$h2-line-height-md:           2.25rem;          /* 36 */
+
+$h3-font-size-md:             1.5rem;           /* 24 */
+$h3-line-height-md:           2.25rem;          /* 36 */
+
+// Misc
 
 $lead-font-size:              ($font-size-base * 1.25);
 $lead-font-weight:            300;
@@ -147,8 +184,8 @@ $lead-font-weight:            300;
 $hr-border-color:             $border-color;
 $hr-border-width:             $border-width;
 $hr-border-width-sm:          $border-width-sm;
-$hr-margin:                   ($paragraph-margin-bottom * 2);
-$hr-margin-sm:                $paragraph-margin-bottom;
+$hr-margin:                   ($vertical-space * 2);
+$hr-margin-sm:                24px; // Needs to be in px:
 
 $dt-font-weight:              $font-weight-bold;
 
@@ -158,34 +195,43 @@ $text-style-default-font-weight:    $font-weight-normal;
 $text-style-alt-font-family:        $font-family-sans-serif;
 $text-style-alt-font-weight:        $font-weight-bold;
 
-$list-inline-padding:         $border-width;
+$list-inline-padding:         $base-unit;
 
 $cite-font-style:             italic;
 
+// Vertical position of the bullet (a background image):
+$list-bullet-position:        0.55em;
+// And when used with smaller text:
+$list-bullet-position-sm:     0.4em;
 
+
+/////////////////////////////////////////////////////////////////////////
 // Tables
 //
 // Customizes the `.table` component with basic values, each used across all table variations.
 
-$table-cell-padding:          .75rem;
-$table-cell-padding-sm:       .3rem;
+$table-cell-padding-x:        ($grid-gutter-width);
+$table-cell-padding-y:        $vertical-space;
+$table-cell-padding-sm-x:     ($grid-gutter-width / 2);
+$table-cell-padding-sm-y:     $vertical-space-sm;
 
 $table-border-width:          $border-width-sm;
 $table-border-color:          $border-color;
 
 
-// Buttons + Forms
+/////////////////////////////////////////////////////////////////////////
+// Buttons
 //
 // Shared variables that are reassigned to `$input-` and `$button-` specific variables.
 
-$input-button-padding-y:         .375rem;
-$input-button-padding-x:         .75rem;
+$input-button-padding-y:         0;
+$input-button-padding-x:         $horizontal-space;
 $input-button-line-height:       $line-height-base;
 
 $input-button-focus-width:       .2rem;
 
-$input-button-padding-y-sm:      .1rem;
-$input-button-padding-x-sm:      .5rem;
+$input-button-padding-y-sm:      0;
+$input-button-padding-x-sm:      $horizontal-space-sm;
 $input-button-line-height-sm:    $line-height-sm;
 
 $input-button-border-width:      1px;
@@ -209,6 +255,7 @@ $button-disabled-opacity:        .65;
 $button-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
 
+/////////////////////////////////////////////////////////////////////////
 // Forms
 
 $input-padding-y:                       $input-button-padding-y;
@@ -239,23 +286,24 @@ $input-height-sm:                       calc(#{$input-height-inner-sm} + #{$inpu
 
 $input-transition:                      border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
-$form-text-margin-top:                  .375rem;
+$form-text-margin-top:                  0;
 
-$form-group-margin-bottom:              $paragraph-margin-bottom;
+$form-group-margin-bottom:              $vertical-space;
 
 $form-feedback-invalid-color:           $red;
 
 
+/////////////////////////////////////////////////////////////////////////
 // Nav
 // e.g. In the .navbar and in pagination.
 
-$nav-link-padding-x:             0.75rem;
+$nav-link-padding-x:             $horizontal-space;
 
 $nav-link-color:                 $link-color;
 $nav-link-hover-color:           $link-hover-color;
 $nav-link-active-color:          $link-active-color;
 
-$nav-disabled-color:         $gray-medium;
+$nav-disabled-color:             $gray-medium;
 
 $nav-text-color:                 $body-color;
 
@@ -263,18 +311,9 @@ $nav-border-width:               $border-width;
 
 // These also used for more general 'nav'-type text everywhere:
 
-$nav-font-size:               1rem;
-// Because occasionally we need to add what is probably the size to things like
-// the border-width:
-$nav-font-size-px:            16px;
+$nav-font-size:                  $font-size-sm;
 
 
 // Navbar
 
-$navbar-brand-font-size:            (1rem * 1.25); // probably 20px
-
-
-// Cards
-
-//$card-spacer-y:                     .75rem;
-//$card-spacer-x:                     1.25rem;
+$navbar-brand-font-size:         $font-size-base;

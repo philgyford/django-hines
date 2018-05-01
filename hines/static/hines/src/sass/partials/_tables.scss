@@ -3,12 +3,13 @@
 
 
 .table {
+
   max-width: 100%;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: $vertical-space;
 
   th,
   td {
-    padding: $table-cell-padding;
+    padding: calc(#{$table-cell-padding-y} - #{$table-border-width}) $table-cell-padding-x $table-cell-padding-y $table-cell-padding-x;
     vertical-align: top;
     border-top: $table-border-width solid $table-border-color;
   }
@@ -19,14 +20,32 @@
 
   tbody tr:last-child td {
     border-bottom: $table-border-width solid $table-border-color;
+    padding-bottom: calc(#{$table-cell-padding-y} - #{$table-border-width});
+  }
+
+  caption {
+    @include text-style-alt;
   }
 }
 
 
 .table--sm {
+
   th,
   td {
-    padding: $table-cell-padding-sm;
+    padding: calc(#{$table-cell-padding-sm-y} - #{$table-border-width}) $table-cell-padding-sm-x $table-cell-padding-sm-y $table-cell-padding-sm-x;
+  }
+
+  th {
+    @include text-style-nav;
+  }
+
+  td {
+    @include text-style-alt;
+  }
+
+  tbody tr:last-child td {
+    padding-bottom: calc(#{$table-cell-padding-sm-y} - #{$table-border-width});
   }
 }
 
@@ -37,8 +56,9 @@
 
 
 .table--responsive {
+
   // Allow for bottom scrollbar:
-  margin-bottom: ($paragraph-margin-bottom * 2);
+  margin-bottom: ($vertical-space * 2);
 
   @each $breakpoint in map-keys($grid-breakpoints) {
     $next: breakpoint-next($breakpoint, $grid-breakpoints);
@@ -53,5 +73,48 @@
         -ms-overflow-style: -ms-autohiding-scrollbar; // See https://github.com/twbs/bootstrap/pull/10057
       }
     }
+  }
+}
+
+/**
+ * For the timeline page. Also uses .table--sm and .table--responsive.
+ */
+
+.table--timeline {
+
+  th,
+  td {
+    border: $table-border-width solid $table-border-color;
+  }
+
+  .tl-year,
+  .tl-work,
+  .tl-play,
+  .tl-writing {
+    background-color: $gray-light;
+  }
+
+  .tl-place,
+  .tl-ed,
+  .tl-photos {
+    background-color: $gray-light;
+  }
+
+  .tl-bottomless {
+    border-bottom-color: $body-bg;
+  }
+
+  th.tl-ed,
+  th.tl-play {
+    width: 20%;
+  }
+
+  ul {
+    margin-top: $vertical-space-sm;
+  }
+
+  ul,
+  li {
+    margin-bottom: $vertical-space-sm;
   }
 }

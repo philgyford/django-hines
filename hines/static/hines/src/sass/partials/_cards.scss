@@ -3,9 +3,9 @@
 
 .card {
   min-width: 0;
-  border-top: $border-width solid $black;
-  padding-top: ($border-width / 2);
-  padding-bottom: ($border-width / 2);
+  border-top: $border-width solid $border-color;
+  padding-top: 0;
+  padding-bottom: $vertical-space-sm;
 
   @include text-style-nav;
 
@@ -13,17 +13,37 @@
   ol,
   ul,
   dl {
-    margin-bottom: $paragraph-margin-bottom-sm;
+    margin-bottom: $vertical-space-sm;
   }
+
+  > ol:first-child:not(.meta__inner),
+  > ul:first-child:not(.meta__inner) {
+    // Lists that don't have anything else before them.
+    margin-top: $vertical-space-sm;
+  }
+
+  ol ol,
+  ol ul,
+  ul ol,
+  ul ul, {
+    margin-bottom: 0;
+  }
+
+  ol li:not(.media),
+  ul li:not(.media) {
+    // Fix position of bullet for the smaller font size:
+    background-position: 0 $list-bullet-position-sm;
+  }
+
 
   hr {
     border-top: $hr-border-width-sm solid $hr-border-color;
-    margin-top: ($border-width / 2);
-    margin-bottom: ($border-width / 2);
+    margin-top: $vertical-space-sm;
+    margin-bottom: $vertical-space-sm;
   }
 
   &:last-child {
-    border-bottom: $border-width solid $black;
+    border-bottom: $border-width solid $border-color;
   }
 
   & > *:last-child {
@@ -40,22 +60,21 @@
 }
 
 .card__header {
-  margin-top: 0.2em;
-  margin-bottom: $paragraph-margin-bottom-sm;
+  margin-top: $vertical-space-sm;
+  margin-bottom: $vertical-space-sm;
 
   @include text-style-nav;
-
-  &:not(:first-child) {
-    margin-top: 0.2em;
-  }
 }
 
 .card__body {
   @include text-style-alt;
 
+  &:first-child {
+    // When there's no card__header.
+    margin-top: $vertical-space-sm;
+  }
+
   & > *:last-child {
-    // Need a little space to make these look blanaced:
-    margin-bottom: 0.2em;
+    margin-bottom: 0;
   }
 }
-

@@ -56,7 +56,7 @@ var PATHS = {
     jsFiles:        STATIC_DIR + '/hines/js/**/*.js'
   },
   templates: {
-    files:          [TEMPLATES_DIR + '/hines_core/layouts/base.html',
+    files:          [TEMPLATES_DIR + '/hines_core/layouts/bare.html',
                      TEMPLATES_DIR + '/errors/400.html',
                      TEMPLATES_DIR + '/errors/403.html',
                      TEMPLATES_DIR + '/errors/404.html',
@@ -198,4 +198,3 @@ gulp.task('default', gulp.series(
   ),
   'inject'
 ));
-
