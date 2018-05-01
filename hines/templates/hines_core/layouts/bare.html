@@ -30,6 +30,10 @@
     <meta name="theme-color" content="#ffffff">
     {% endblock favicons %}
 
+    {% block canonical %}
+      <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    {% endblock canonical %}
+
     {% block head_extra %}
       {# Use this if you need to more to the <head> of every page. #}
     {% endblock %}
