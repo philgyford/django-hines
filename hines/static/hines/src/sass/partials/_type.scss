@@ -117,9 +117,9 @@ hr {
 }
 
 hr.hr--sm {
-  margin-top:       calc(#{$hr-margin-sm} - #{$hr-border-width-sm});
+  margin-top:    $hr-margin-sm;
   border-top-width: $hr-border-width-sm;
-  margin-bottom:    $hr-margin-sm;
+  margin-bottom:       calc(#{$hr-margin-sm} - #{$hr-border-width-sm});
 }
 
 pre {
@@ -151,6 +151,7 @@ blockquote {
   border-left: $base-unit solid $border-color;
   padding-left: $base-unit;
   padding-right: ($base-unit * 2);
+  margin-bottom: $vertical-space;
 }
 
 cite {
