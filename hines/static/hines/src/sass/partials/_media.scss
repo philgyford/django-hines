@@ -87,9 +87,13 @@ $media-header-size: $h4-font-size;
 
   .media {
     padding-top: $vertical-space-sm;
-  // So the bottom padding and border equal one $vertical-space-sm:
+    // So the bottom padding and border equal one $vertical-space-sm:
     padding-bottom: calc(#{$vertical-space-sm} - #{$border-width-sm});
     @include text-style-alt;
+
+    &:first-child {
+      padding-top: 0;
+    }
 
     &:last-child {
       border-bottom: none;
