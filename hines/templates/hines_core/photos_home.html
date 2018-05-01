@@ -1,4 +1,4 @@
-{% extends 'hines_core/layouts/sidebar_right.html' %}
+{% extends 'hines_core/layouts/sidebar_right_alt.html' %}
 
 {% block photos_nav_active %}is-active{% endblock %}
 
@@ -15,7 +15,7 @@
 
 <h2>Recent photos <small>by&nbsp;time&nbsp;{% if order|default:"uploaded" == "uploaded" %}uploaded{% else %}taken{% endif %}</small></h2>
 
-  {% include 'hines_core/includes/photos.html' with photo_list=photo_list page_obj=page_obj perms=perms only %}
+  {% include 'hines_core/includes/photos.html' with photo_list=photo_list columns=4 page_obj=page_obj perms=perms only %}
 
 {% endblock %}
 

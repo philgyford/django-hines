@@ -8,6 +8,7 @@ Expects:
  * page_obj - Optional, a DiggPaginator instance or False (default).
  * order - Either 'uploaded' (default) or 'taken'.
  * perms - The Django perms object.
+ * columns -- The number of columns to display photos in (default: 3).
 
 {% endcomment %}
 
@@ -18,7 +19,7 @@ Expects:
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
   {% endif %}
 
-  <ol class="gallery gallery--3">
+  <ol class="gallery gallery--{{ columns|default:3 }}">
     {% for photo in photo_list %}
       <li class="gallery__item">
         <h3 class="gallery__item__header">
@@ -62,4 +63,3 @@ Expects:
 {% else %}
   <p>There are no photos to show.</p>
 {% endif %}
-

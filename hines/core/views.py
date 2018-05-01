@@ -649,7 +649,7 @@ class PhotosHomeView(PaginatedListView):
     """
     template_name = 'hines_core/photos_home.html'
     queryset = Photo.public_objects.all()
-    # Divisible by three columns:
+    # Divisible by four columns:
     paginate_by = 48
 
     def get_context_data(self, **kwargs):

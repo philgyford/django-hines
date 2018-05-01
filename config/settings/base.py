@@ -277,7 +277,7 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 
 # How many of each thing do we want displayed on the home page?
 HINES_HOME_PAGE_DISPLAY = {
-    'flickr_photos': 3,
+    'flickr_photos': 4,
     'pinboard_bookmarks': 3,
     'weblog_posts': {
         'writing': 2,

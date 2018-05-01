@@ -95,7 +95,7 @@
     {% endblock %}
 
     {% block content_main %}
-      <div class="grid__row">
+      <div class="grid__row{% if sidebar_position == 'right-alt' %} grid__row--alt{% endif %}">
         {% block content_column %}
           <div class="grid__col grid__col--main {% if sidebar_position == 'left' %} grid__col--last{% elif sidebar_position == 'none' %} grid__col--main--only{% endif %}">
             {% block content %}
