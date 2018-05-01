@@ -3,6 +3,7 @@
 
 
 .table {
+
   max-width: 100%;
   margin-bottom: $vertical-space;
 
@@ -29,6 +30,7 @@
 
 
 .table--sm {
+
   th,
   td {
     padding: calc(#{$table-cell-padding-sm-y} - #{$table-border-width}) $table-cell-padding-sm-x $table-cell-padding-sm-y $table-cell-padding-sm-x;
@@ -54,6 +56,7 @@
 
 
 .table--responsive {
+
   // Allow for bottom scrollbar:
   margin-bottom: ($vertical-space * 2);
 
@@ -70,5 +73,48 @@
         -ms-overflow-style: -ms-autohiding-scrollbar; // See https://github.com/twbs/bootstrap/pull/10057
       }
     }
+  }
+}
+
+/**
+ * For the timeline page. Also uses .table--sm and .table--responsive.
+ */
+
+.table--timeline {
+
+  th,
+  td {
+    border: $table-border-width solid $table-border-color;
+  }
+
+  .tl-year,
+  .tl-work,
+  .tl-play,
+  .tl-writing {
+    background-color: $gray-light;
+  }
+
+  .tl-place,
+  .tl-ed,
+  .tl-photos {
+    background-color: $gray-light;
+  }
+
+  .tl-bottomless {
+    border-bottom-color: $body-bg;
+  }
+
+  th.tl-ed,
+  th.tl-play {
+    width: 20%;
+  }
+
+  ul {
+    margin-top: $vertical-space-sm;
+  }
+
+  ul,
+  li {
+    margin-bottom: $vertical-space-sm;
   }
 }
