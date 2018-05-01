@@ -34,7 +34,7 @@
 // ...then one of these classes to set the col's width at wider window widths:
 .grid__col--sub {
   @include media-breakpoint-up(md) {
-    @include make-col($sub-columns);
+    @include make-col($sub-columns-1);
   }
 }
 .grid__col--half {
@@ -44,7 +44,7 @@
 }
 .grid__col--main {
   @include media-breakpoint-up(md) {
-    @include make-col($main-columns);
+    @include make-col($main-columns-1);
   }
 }
 .grid__col--full {
@@ -55,7 +55,7 @@
 // main column:
 .grid__col--offset--sub {
   @include media-breakpoint-up(md) {
-    @include make-col-offset($sub-columns)
+    @include make-col-offset($sub-columns-1)
   }
 }
 .grid__col--offset--half {
@@ -65,7 +65,7 @@
 }
 .grid__col--offset--main {
   @include media-breakpoint-up(md) {
-    @include make-col-offset($main-columns)
+    @include make-col-offset($main-columns-1)
   }
 }
 

@@ -9,6 +9,16 @@
  * </figure>
  */
 
+// Some things for the left/right floated images:
+// (Which will be max-width: 50%)
+
+// Maximum number of columns it should stretch to:
+$fig-max-cols: floor($main-columns-1 / 2);
+
+// That as a percentage of total width:
+$fig-max-cols-percentage: percentage($fig-max-cols / $main-columns-1);
+
+
 .figure {
   margin: 0 0 $vertical-space 0;
 
@@ -24,14 +34,17 @@
   &.figure--right {
     margin-top: 0.4em; // It just looks about right.
     max-width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      max-width: calc( #{$fig-max-cols-percentage} - #{$grid-gutter-width / 2} );
+    }
   }
 
   &.figure--left {
     @include media-breakpoint-up(sm) {
       float: left;
       clear: left;
-      margin-right: ($grid-gutter-width / 2);
-      max-width: 50%;
+      margin-right: $grid-gutter-width;
     }
   }
 
@@ -39,8 +52,7 @@
     @include media-breakpoint-up(sm) {
       float: right;
       clear: right;
-      margin-left: ($grid-gutter-width / 2);
-      max-width: 50%;
+      margin-left: $grid-gutter-width;
     }
   }
 }
@@ -82,7 +94,7 @@ figcaption {
 }
 
 // e.g. 0.625 which makes the main column 62.5% of the full width:
-$main-col-ratio: $main-columns / $grid-columns;
+$main-col-ratio: $main-columns-1 / $grid-columns;
 
 // At wider widths, expand a .figure--full almost to the left & right-hand edges.
 @include media-breakpoint-up(md) {

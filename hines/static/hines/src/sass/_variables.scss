@@ -105,10 +105,14 @@ $grid-max-width:            1140px;
 // Widths of our custom columns:
 
 // Main content:
-$main-columns:              10;
+$main-columns-1:           10;
 
 // Sidebar:
-$sub-columns:               5;
+$sub-columns-1:             5;
+
+// Variants:
+$main-columns-2:            12;
+$sub-columns-2:             3;
 
 // Half width:
 $half-columns:              $grid-columns / 2;
