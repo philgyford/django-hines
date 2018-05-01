@@ -9,7 +9,7 @@
 
     {% block css %}
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-d6ba5cca93.css">
+    <link rel="stylesheet" href="/static/hines/css/site-8010d1facb.css">
     <!-- endinject -->
     {% endblock css %}
 
@@ -40,9 +40,36 @@
 
     {% block js %}
     <!-- inject:js -->
-    <script src="/static/hines/js/site-afdfceda6d.min.js"></script>
+    <script src="/static/hines/js/site-340675b4c7.min.js"></script>
     <!-- endinject -->
     {% endblock js %}
+
+    {% if show_grid %}
+      <script>
+        // Add grid=1 to all internal links.
+
+        domready(function(){
+
+          /**
+           * el is an <a> element.
+           * Add grid=1 querystring to its href attribute.
+           */
+          var fix = function(el) {
+            if (el.href && el.href.indexOf('//'+location.hostname) !== -1) {
+              if (el.href.indexOf('?') !== -1) {
+                el.href += '&grid=1'
+              } else {
+                el.href += '?grid=1'
+              };
+            };
+          };
+
+          // Apply the above to every a element:
+          $.each('a', fix);
+
+        });
+      </script>
+    {% endif %}
 
     {% block body_extra %}
       {# Use this if you need to add JS etc to the foot of the page. #}

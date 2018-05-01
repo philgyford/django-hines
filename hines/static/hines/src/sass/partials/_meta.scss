@@ -56,7 +56,8 @@ $meta-offset-bottom: 0.4rem;
 .meta--inline {
   border-left: none;
   margin-top: 0;
-  margin-bottom: $vertical-space-sm;
+  // There's an exception to this for within .media:
+  margin-bottom: $vertical-space;
 
   .meta__inner {
     @include list-inline();

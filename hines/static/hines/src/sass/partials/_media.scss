@@ -38,6 +38,10 @@ $media-header-size: $h4-font-size;
   video {
     margin-bottom: 0;
   }
+
+  .meta--inline {
+    margin-bottom: $vertical-space-sm; 
+  }
 }
 
 .media__img {

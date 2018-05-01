@@ -46,6 +46,21 @@ $.addClass = function(el, className) {
   };
 };
 
+/**
+ * Apply a function to every matching element.
+ *
+ * e.g. This would display every 'a' element in the console:
+ *
+ *     $.each( 'a', function(el) { console.log(el); } );
+ */
+$.each = function(selector, fn) {
+  var elements = document.querySelectorAll(selector);
+
+  Array.prototype.forEach.call(elements, function(el, i){
+    fn.call(i, el);
+  });
+};
+
 
 /**
  * domready (c) Dustin Diaz 2014 - License MIT
