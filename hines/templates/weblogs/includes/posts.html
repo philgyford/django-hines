@@ -19,20 +19,20 @@ Expects:
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
   {% endif %}
 
-  <ol class="media-list">
+  <ol class="media-list h-feed">
     {% for post in post_list %}
-      <li class="media">
+      <li class="media h-entry">
         <div class="media__body">
           <h2 class="media__header">
-            <a href="{{ post.get_absolute_url }}">{{ post.title|smartypants }}</a>
+            <a class="p-name u-url" href="{{ post.get_absolute_url }}">{{ post.title|smartypants }}</a>
           </h2>
 
-          <p>{{ post.excerpt|smartypants }}</p>
+          <p class="p-summary">{{ post.excerpt|smartypants }}</p>
 
           <div class="meta meta--inline">
             <ul class="meta__inner">
               {% spaceless %}
-                <li>
+                <li class="dt-published">
                   {% if view == 'day' %}
                     {% display_time post.time_published show='date' link_to_day=False %}
                   {% else %}

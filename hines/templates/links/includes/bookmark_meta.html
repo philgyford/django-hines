@@ -17,7 +17,7 @@ Expects:
     <ul class="meta__inner">
       {% include 'hines_core/includes/tags.html' with tag_list=bookmark.tags.all format='inline' tag_type='bookmark' only %}
 
-      <li>
+      <li class="dt-published">
         {% if view == 'day' %}
           {% display_time bookmark.post_time show='date' link_to_day=False %}
         {% elif view == 'detail' %}

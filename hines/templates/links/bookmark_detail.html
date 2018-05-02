@@ -9,11 +9,11 @@
 
   <hr class="hr--sm">
 
-  <article class="bodytext">
-    <h2 class="h3"><a href="{{ bookmark.url }}">{{ bookmark.title|smartypants }}</a></h2>
+  <article class="bodytext h-entry">
+    <h2 class="h3"><a class="p-name" href="{{ bookmark.url }}">{{ bookmark.title|smartypants }}</a></h2>
 
     {% if bookmark.description %}
-      <p>
+      <p class="e-content">
         {{ bookmark.description|smartypants }}
       </p>
     {% endif %}

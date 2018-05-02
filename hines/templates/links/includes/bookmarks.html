@@ -16,16 +16,16 @@ Expects:
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
   {% endif %}
 
-  <ol class="media-list">
+  <ol class="media-list h-feed">
     {% for bookmark in bookmark_list %}
-      <li class="media">
+      <li class="media h-entry">
         <div class="media__body">
           <h2 class="media__header">
-            <a href="{{ bookmark.url }}">{{ bookmark.title|smartypants }}</a>
+            <a class="p-name u-url" href="{{ bookmark.url }}">{{ bookmark.title|smartypants }}</a>
           </h2>
 
           {% if bookmark.description %}
-            <p>
+            <p class="e-content">
             {{ bookmark.description|smartypants }}
             </p>
           {% endif %}
