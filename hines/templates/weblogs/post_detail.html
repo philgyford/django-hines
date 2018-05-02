@@ -30,9 +30,9 @@
 
 {% block content %}
 
-  <article class="bodytext">
+  <article class="bodytext h-entry">
     <header class="pagehead">
-      <h1>{{ post.title|smartypants|safe }}</h1>
+      <h1 class="p-name">{{ post.title|smartypants|safe }}</h1>
     </header>
 
     {% if is_preview %}
@@ -43,7 +43,7 @@
 
     <aside class="meta meta--inline">
       <ul class="meta__inner">
-        <li>{% display_time post.time_published link_to_day=True %}</li>
+        <li class="dt-published">{% display_time post.time_published link_to_day=True %}</li>
 
         {% if perms.weblogs.can_change_post %}
           <li><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
@@ -51,13 +51,15 @@
       </ul>
     </aside>
 
-    {{ post.intro_html|safe }}
+		<div class="h-content">
+	    {{ post.intro_html|safe }}
 
-		{{ post.body_html|safe }}
+			{{ post.body_html|safe }}
 
-		{% if post.remote_url %}
-			<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
-		{% endif %}
+			{% if post.remote_url %}
+				<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
+			{% endif %}
+		</div>
 
     <aside class="meta">
       <ul class="meta__inner">
