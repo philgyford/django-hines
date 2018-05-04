@@ -8,6 +8,7 @@
 
 <p>Images within text (like blog posts) should be within <code>&lt;figure class="figure figure--img"&gt;&lt;/figure&gt;</code> tags. These have the <code>.img-fluid</code> styles applied automatically.</p>
 
+
 <h2>Responsive</h2>
 
 <p><code>.img-fluid</code> makes an image be as wide as its container or, if the container is wider than the image, its natural size.</p>
@@ -16,28 +17,30 @@
 
 <pre><code>{% verbatim_include 'patterns/includes/images/responsive.html' %}</pre></code>
 
+
+<h2>Figure</h2>
+
+<p>By default, an image within a <code>.figure--img</code> will be centered, and be a maximum of the width of the container:</p>
+
+{% include 'patterns/includes/images/figure.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/images/figure.html' %}</pre></code>
+
+
 <h2>Figure: Full-width</h2>
 
-<p><code>.figure--full</code> makes the figure be as wide as its container (even if the image within has a narrower natural size).</p>
+<p>Adding <code>.figure--full</code> makes the figure be as wide as its container (even if the image within has a narrower natural size).</p>
+
+<p><strong>Note:</strong> when a <code>.figure--full</code> is used within the centered single grid column <code>.grid__col--main--only</code> then it expands to the left and right, up to the edge of the grid.</p>
 
 {% include 'patterns/includes/images/figure_full.html' %}
 
 <pre><code>{% verbatim_include 'patterns/includes/images/figure_full.html' %}</pre></code>
 
-<p><strong>NOTE:</strong> when a <code>.figure--full</code> is used within the centered single grid column <code>.grid__col--main--only</code> then it expands to the right at wider widths, almost to the right-edge of the window.</p>
-
-<h2>Figure: centered</h2>
-
-<p>If an image isn't wide enough, or is too tall, to be full-width, then add <code>.figure--center</code> to have it centered, with a maximum width of the container's width.</p>
-
-{% include 'patterns/includes/images/figure_center.html' %}
-
-<pre><code>{% verbatim_include 'patterns/includes/images/figure_center.html' %}</pre></code>
-
 
 <h2>Figure: Aligned left or right</h2>
 
-<p><code>.figure--left</code> and <code>.figure--right</code> float the figure and image to one side at wider widths, with text wrapping around.</p>
+<p>Adding <code>.figure--left</code> and <code>.figure--right</code> float the figure and image to one side at wider widths, with text wrapping around.</p>
 
 {% include 'patterns/includes/images/figure_aligned.html' %}
 

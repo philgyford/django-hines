@@ -23,23 +23,18 @@ $fig-max-cols-percentage: percentage($fig-max-cols / $main-columns);
 .figure {
   margin: 0 0 $vertical-space 0;
 
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+
   &.figure--full {
     img {
       display: block;
       width: 100%;
       height: auto;
-    }
-  }
-
-  &.figure--center {
-    clear: both;
-    margin-top: 0.4em; // It just looks about right.
-
-    img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 100%;
     }
   }
 
