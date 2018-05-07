@@ -50,20 +50,16 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 // stylelint-enable selector-list-comma-newline-after
 
 // Body
-//
-// 1. Remove the margin in all browsers.
-// 2. As a best practice, apply a default `background-color`.
-// 3. Set an explicit initial text-align value so that we can later use the
-//    the `inherit` value on things like `<th>` elements.
 
 body {
-  margin: 0 0 2em 0; // 1
+  margin: 0 0 2em 0;
+  padding: 0 $body-horizontal-space;
   @include text-style-default;
   font-size: $font-size-base;
   line-height: $line-height-base;
   color: $body-color;
-  text-align: left; // 3
-  background-color: $body-bg; // 2
+  text-align: left;
+  background-color: $body-bg;
 }
 
 // Suppress the focus outline on elements that cannot be accessed via keyboard.
