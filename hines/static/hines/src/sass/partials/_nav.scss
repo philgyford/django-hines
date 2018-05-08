@@ -66,5 +66,9 @@
   .nav__item {
     // More spaced out because they're so small:
     padding-right: ($nav-link-padding-x * 2);
+
+    &:first-child {
+      padding-left: ($nav-link-padding-x * 2);
+    }
   }
 }
