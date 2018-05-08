@@ -3,7 +3,8 @@
 
 
 // Used for both .media__header and .media__byline_author:
-$media-header-size: $h4-font-size;
+$media-header-font-size: $h4-font-size;
+$media-header-line-height: $line-height-base;
 
 
 .media-list {
@@ -66,7 +67,8 @@ $media-header-size: $h4-font-size;
 
 .media__header {
   @include text-style-default;
-  font-size: $media-header-size;
+  font-size: $media-header-font-size;
+  line-height: $media-header-line-height;
   margin-bottom: $vertical-space-sm;
 }
 
@@ -77,9 +79,8 @@ $media-header-size: $h4-font-size;
 }
 
 .media__byline__author {
-  font-size: $media-header-size;
-  // I don't know why, but making it this small keeps things to the grid:
-  line-height: $font-size-sm;
+  font-size: $media-header-font-size;
+  line-height: $media-header-line-height;
 }
 
 // Media items in a .card.
