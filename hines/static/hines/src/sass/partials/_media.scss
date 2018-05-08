@@ -40,7 +40,7 @@ $media-header-size: $h4-font-size;
   }
 
   .meta--inline {
-    margin-bottom: $vertical-space-sm; 
+    margin-bottom: $vertical-space-sm;
   }
 }
 
@@ -101,7 +101,7 @@ $media-header-size: $h4-font-size;
 
     &:last-child {
       border-bottom: none;
-      padding-bottom: 0;
+      padding-bottom: $vertical-space-sm;
     }
   }
 

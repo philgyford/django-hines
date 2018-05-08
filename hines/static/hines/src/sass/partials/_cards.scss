@@ -5,7 +5,7 @@
   min-width: 0;
   border-top: $border-width solid $border-color;
   padding-top: 0;
-  padding-bottom: $vertical-space-sm;
+  padding-bottom: ($vertical-space-sm / 2);
 
   @include text-style-nav;
 
@@ -19,7 +19,7 @@
   > ol:first-child:not(.meta__inner),
   > ul:first-child:not(.meta__inner) {
     // Lists that don't have anything else before them.
-    margin-top: $vertical-space-sm;
+    margin-top: ($vertical-space-sm / 2);
   }
 
   ol ol,
@@ -60,7 +60,7 @@
 }
 
 .card__header {
-  margin-top: $vertical-space-sm;
+  margin-top: ($vertical-space-sm / 2);
   margin-bottom: $vertical-space-sm;
 
   @include text-style-nav;
@@ -71,7 +71,7 @@
 
   &:first-child {
     // When there's no card__header.
-    margin-top: $vertical-space-sm;
+    margin-top: ($vertical-space-sm / 2);
   }
 
   & > *:last-child {

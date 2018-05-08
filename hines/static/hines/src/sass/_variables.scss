@@ -150,38 +150,35 @@ $headings-margin-bottom:      $vertical-space;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
 
-$h1-font-size:                2rem;             /* 32 */
-$h1-line-height:              2.25rem;          /* 36 */
+$h1-font-size:                2.25rem;          /* 36 */
+$h1-line-height:              2.25rem;          /* 36*/
 
-$h2-font-size:                1.75rem;          /* 28 */
-$h2-line-height:              2.25rem;          /* 36 */
+$h2-font-size:                1.6875rem;        /* 27 */
+$h2-line-height:              1.5rem;           /* 24 */
 
-$h3-font-size:                1.5rem;           /* 24 */
-$h3-line-height:              2.25rem;          /* 36 */
+$h3-font-size:                1.25rem;          /* 20 */
+$h3-line-height:              1.5rem;           /* 24 */
 
-$h4-font-size:                $font-size-base;  /* 22 */
+$h4-font-size:                $font-size-base;  /* 16 */
 $h4-line-height:              1.5rem;           /* 24 */
 
-$h5-font-size:                1.1875rem;        /* 19 */
+$h5-font-size:                $font-size-sm;    /* 14 */
 $h5-line-height:              1.5rem;           /* 24 */
 
-$h6-font-size:                $font-size-sm;    /* 16 */
+$h6-font-size:                0.8125rem;        /* 13 */
 $h6-line-height:              1.5rem;           /* 24 */
 
 // Variants for wider screens:
-$h1-font-size-md:             2.25rem;          /* 36 */
-$h1-line-height-md:           3rem;             /* 36 */
+$h1-font-size-md:             $h1-font-size;
+$h1-line-height-md:           $h1-line-height;
 
-$h2-font-size-md:             1.75rem;          /* 28 */
-$h2-line-height-md:           2.25rem;          /* 36 */
+$h2-font-size-md:             $h2-font-size;
+$h2-line-height-md:           $h2-line-height;
 
-$h3-font-size-md:             1.5rem;           /* 24 */
-$h3-line-height-md:           2.25rem;          /* 36 */
+$h3-font-size-md:             $h3-font-size;
+$h3-line-height-md:           $h3-line-height;
 
 // Misc
-
-$lead-font-size:              ($font-size-base * 1.25);
-$lead-font-weight:            300;
 
 $hr-border-color:             $border-color;
 $hr-border-width:             $border-width;
@@ -318,4 +315,4 @@ $nav-font-size:                  $font-size-sm;
 
 // Navbar
 
-$navbar-brand-font-size:         $font-size-base;
+$navbar-brand-font-size:         $h3-font-size;
