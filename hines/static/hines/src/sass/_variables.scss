@@ -210,9 +210,9 @@ $list-bullet-position-sm:     0.4em;
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 $table-cell-padding-x:        ($grid-gutter-width);
-$table-cell-padding-y:        $vertical-space;
+$table-cell-padding-y:        $vertical-space-sm;
 $table-cell-padding-sm-x:     ($grid-gutter-width / 2);
-$table-cell-padding-sm-y:     $vertical-space-sm;
+$table-cell-padding-sm-y:     0;
 
 $table-border-width:          $border-width-sm;
 $table-border-color:          $border-color;
