@@ -5,7 +5,13 @@
   // So that if there's an .aside at the bottom, it stays within .bodytext:
   @include clearfix;
 
-  &>h1, &>h2, &>h3, &>h4, &>h5, &>h6 {
+  &>h1, &>h2, &>h3, &>h4, &>h5, &>h6,
+  &>.h-content>h1,
+  &>.h-content>h2,
+  &>.h-content>h3,
+  &>.h-content>h4,
+  &>.h-content>h5,
+  &>.h-content>h6 {
   //.h1, .h2, .h3, .h4, .h5, .h6 {
 
     @include text-style-default;
