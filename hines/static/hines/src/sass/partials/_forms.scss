@@ -207,5 +207,5 @@ select.form__control--sm {
 
 .form__buttons .button {
   // Give the buttons some space if they wrap onto more than one line.
-  margin-bottom: 0.5rem;
+  margin-bottom: $vertical-space-sm;
 }

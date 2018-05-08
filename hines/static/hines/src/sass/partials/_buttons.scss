@@ -66,7 +66,7 @@
   text-transform: none;
   text-decoration: $link-decoration;
 
-  @include link_hover();	
+  @include link_hover();
 
   &:hover {
     cursor: pointer;

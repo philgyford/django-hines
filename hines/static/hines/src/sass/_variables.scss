@@ -223,7 +223,7 @@ $table-border-color:          $border-color;
 //
 // Shared variables that are reassigned to `$input-` and `$button-` specific variables.
 
-$input-button-padding-y:         0;
+$input-button-padding-y:         ($line-height-base-computed * 0.25);
 $input-button-padding-x:         $horizontal-space;
 $input-button-line-height:       $line-height-base;
 
@@ -237,7 +237,9 @@ $input-button-border-width:      1px;
 
 // Buttons
 
-$button-padding-y:               $input-button-padding-y;
+$button-border-width:            $input-button-border-width;
+
+$button-padding-y:               calc(#{$input-button-padding-y} - #{$button-border-width});
 $button-padding-x:               $input-button-padding-x;
 $button-line-height:             $input-button-line-height;
 
@@ -245,7 +247,6 @@ $button-padding-y-sm:            $input-button-padding-y-sm;
 $button-padding-x-sm:            $input-button-padding-x-sm;
 $button-line-height-sm:          $input-button-line-height-sm;
 
-$button-border-width:            $input-button-border-width;
 
 $button-focus-width:             $input-button-focus-width;
 
@@ -257,13 +258,6 @@ $button-transition:              color .15s ease-in-out, background-color .15s e
 /////////////////////////////////////////////////////////////////////////
 // Forms
 
-$input-padding-y:                       $input-button-padding-y;
-$input-padding-x:                       $input-button-padding-x;
-$input-line-height:                     $input-button-line-height;
-
-$input-padding-y-sm:                    $input-button-padding-y-sm;
-$input-padding-x-sm:                    $input-button-padding-x-sm;
-$input-line-height-sm:                  $input-button-line-height-sm;
 
 $input-bg:                              $body-bg;
 $input-disabled-bg:                     $gray-light;
@@ -273,12 +267,20 @@ $input-border-color:                    $black;
 $input-border-width:                    $input-button-border-width;
 $input-box-shadow:                      inset 0 1px 1px rgba($black, .075);
 
+$input-padding-y:                       calc(#{$input-button-padding-y} - #{$input-border-width});
+$input-padding-x:                       $input-button-padding-x;
+$input-line-height:                     $input-button-line-height;
+
+$input-padding-y-sm:                    $input-button-padding-y-sm;
+$input-padding-x-sm:                    $input-button-padding-x-sm;
+$input-line-height-sm:                  $input-button-line-height-sm;
+
 $input-placeholder-color:               $gray-medium;
 
 $input-height-border:                   $input-button-border-width * 2;
 
 $input-height-inner:                    ($font-size-base * $input-button-line-height) + ($input-button-padding-y * 2);
-$input-height:                          calc(#{$input-height-inner} + #{$input-height-border});
+$input-height:                          $input-height-inner;
 
 $input-height-inner-sm:                 ($font-size-sm * $input-button-line-height-sm) + ($input-button-padding-y-sm * 2);
 $input-height-sm:                       calc(#{$input-height-inner-sm} + #{$input-height-border});
