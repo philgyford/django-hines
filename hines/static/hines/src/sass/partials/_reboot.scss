@@ -53,13 +53,19 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 
 body {
   margin: 0 0 2em 0;
-  padding: 0 $body-horizontal-space;
+  padding: 0 $body-horizontal-space-sm;
   @include text-style-default;
   font-size: $font-size-base;
   line-height: $line-height-base;
   color: $body-color;
   text-align: left;
   background-color: $body-bg;
+
+  @include media-breakpoint-up(sm) {
+    padding-left: $body-horizontal-space;
+    padding-right: $body-horizontal-space;
+  }
+
 }
 
 // Suppress the focus outline on elements that cannot be accessed via keyboard.

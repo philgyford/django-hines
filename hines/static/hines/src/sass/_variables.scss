@@ -80,8 +80,6 @@ $horizontal-space-sm:         (1rem * 0.375); // 6px
 $border-width:                $base-unit;
 $border-width-sm:             1px;
 
-// Padding on L and R of body:
-$body-horizontal-space:       $base-unit;
 
 /////////////////////////////////////////////////////////////////////////
 // GRID
@@ -97,6 +95,10 @@ $grid-breakpoints: (
   lg: 992px,
   xl: 1200px
 );
+
+// Padding on L and R of body, at wide and narrow widths:
+$body-horizontal-space:       ($base-unit * 2);
+$body-horizontal-space-sm:    $base-unit;
 
 // Grid containers
 
