@@ -17,7 +17,7 @@ Expects:
   <nav>
     <ul class="nav">
       {% if previous %}
-        <li class="nav__item nav__item--split">
+        <li class="nav__item nav__item--prev nav__item--split">
           <a class="nav__link nextprev" href="{% spaceless %}
             {% if blog_slug %}
               {% if date_type == 'year' %}
@@ -64,7 +64,7 @@ Expects:
         </li>
       {% endif %}
       {% if next %}
-        <li class="nav__item nav__item--split">
+        <li class="nav__item nav__item--next nav__item--split">
           <a class="nav__link nextprev" href="{% spaceless %}
             {% if blog_slug %}
               {% if date_type == 'year' %}

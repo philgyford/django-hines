@@ -33,7 +33,13 @@
 
   th,
   td {
-    padding: calc(#{$table-cell-padding-sm-y} - #{$table-border-width}) $table-cell-padding-sm-x $table-cell-padding-sm-y $table-cell-padding-sm-x;
+    // If there is vertical padding, remove the border-height to keep things on
+    // the vertical grid. If there isn't any, then not much we can do.
+    @if $table-cell-padding-sm-y > 0 {
+      padding: calc(#{$table-cell-padding-sm-y} - #{$table-border-width}) $table-cell-padding-sm-x $table-cell-padding-sm-y $table-cell-padding-sm-x;
+    } @else {
+      padding: $table-cell-padding-sm-y $table-cell-padding-sm-x;
+    }
   }
 
   th {
@@ -45,7 +51,13 @@
   }
 
   tbody tr:last-child td {
-    padding-bottom: calc(#{$table-cell-padding-sm-y} - #{$table-border-width});
+    // If there is vertical padding, remove the border-height to keep things on
+    // the vertical grid. If there isn't any, then not much we can do.
+    @if $table-cell-padding-sm-y > 0 {
+      padding-bottom: calc(#{$table-cell-padding-sm-y} - #{$table-border-width});
+    } @else {
+      padding-bottom: $table-cell-padding-sm-y;
+    }
   }
 }
 

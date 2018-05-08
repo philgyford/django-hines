@@ -12,7 +12,7 @@ html.has-guide {
  * Defaults at narrowest width.
  **/
 :root {
-  --offset: ($grid-gutter-width / 2);
+  --offset: ($grid-gutter-width / 2) + $body-horizontal-space;
   --max_width: $grid-max-width - $grid-gutter-width;
   --columns: 1;
   --gutter: $grid-gutter-width;

@@ -63,8 +63,12 @@
 
 .nav--pagination {
 
-  .nav__item {
+  .nav__item:not(.nav__item--next) {
     // More spaced out because they're so small:
     padding-right: ($nav-link-padding-x * 2);
+
+    &:first-child:not(.nav__item--prev) {
+      padding-left: ($nav-link-padding-x * 2);
+    }
   }
 }

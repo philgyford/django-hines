@@ -96,6 +96,10 @@ $grid-breakpoints: (
   xl: 1200px
 );
 
+// Padding on L and R of body, at wide and narrow widths:
+$body-horizontal-space:       ($base-unit * 2);
+$body-horizontal-space-sm:    $base-unit;
+
 // Grid containers
 
 $grid-columns:              16;
@@ -133,13 +137,13 @@ $font-weight-normal:          400;
 $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 
-$font-size-base:              1.375rem;      /* 22px probably */
-$font-size-sm:                1rem;          /* 16 */
-$font-size-monospace:         $font-size-sm; /* 16 */
+$font-size-base:              1rem;          /* 16px probably */
+$font-size-sm:                0.875rem;      /* 14 */
+$font-size-monospace:         $font-size-sm; /* 14 */
 
-$line-height-base:            1.63637;       /* 36 */
-$line-height-base-computed:   2.25rem;       /* 36 */
-$line-height-sm:              1.5;           /* 24 if used with font-size-sm */
+$line-height-base:            1.5;           /* 24 */
+$line-height-base-computed:   1.5rem;        /* 24 */
+$line-height-sm:              1.71429;       /* 24 if used with font-size-sm */
 $line-height-sm-computed:     1.5rem;        /* 24 */
 
 // Headings
@@ -148,38 +152,35 @@ $headings-margin-bottom:      $vertical-space;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
 
-$h1-font-size:                2rem;             /* 32 */
+$h1-font-size:                2.25rem;          /* 36 */
 $h1-line-height:              2.25rem;          /* 36 */
 
-$h2-font-size:                1.75rem;          /* 28 */
+$h2-font-size:                1.6875rem;        /* 27 */
 $h2-line-height:              2.25rem;          /* 36 */
 
-$h3-font-size:                1.5rem;           /* 24 */
-$h3-line-height:              2.25rem;          /* 36 */
+$h3-font-size:                1.25rem;          /* 20 */
+$h3-line-height:              1.5rem;           /* 24 */
 
-$h4-font-size:                $font-size-base;  /* 22 */
+$h4-font-size:                $font-size-base;  /* 16 */
 $h4-line-height:              1.5rem;           /* 24 */
 
-$h5-font-size:                1.1875rem;        /* 19 */
+$h5-font-size:                $font-size-sm;    /* 14 */
 $h5-line-height:              1.5rem;           /* 24 */
 
-$h6-font-size:                $font-size-sm;    /* 16 */
+$h6-font-size:                0.8125rem;        /* 13 */
 $h6-line-height:              1.5rem;           /* 24 */
 
 // Variants for wider screens:
-$h1-font-size-md:             2.25rem;          /* 36 */
-$h1-line-height-md:           3rem;             /* 36 */
+$h1-font-size-md:             $h1-font-size;
+$h1-line-height-md:           $h1-line-height;
 
-$h2-font-size-md:             1.75rem;          /* 28 */
-$h2-line-height-md:           2.25rem;          /* 36 */
+$h2-font-size-md:             $h2-font-size;
+$h2-line-height-md:           $h2-line-height;
 
-$h3-font-size-md:             1.5rem;           /* 24 */
-$h3-line-height-md:           2.25rem;          /* 36 */
+$h3-font-size-md:             $h3-font-size;
+$h3-line-height-md:           $h3-line-height;
 
 // Misc
-
-$lead-font-size:              ($font-size-base * 1.25);
-$lead-font-weight:            300;
 
 $hr-border-color:             $border-color;
 $hr-border-width:             $border-width;
@@ -200,7 +201,7 @@ $list-inline-padding:         $base-unit;
 $cite-font-style:             italic;
 
 // Vertical position of the bullet (a background image):
-$list-bullet-position:        0.55em;
+$list-bullet-position:        0.3em;
 // And when used with smaller text:
 $list-bullet-position-sm:     0.4em;
 
@@ -211,9 +212,9 @@ $list-bullet-position-sm:     0.4em;
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 $table-cell-padding-x:        ($grid-gutter-width);
-$table-cell-padding-y:        $vertical-space;
+$table-cell-padding-y:        $vertical-space-sm;
 $table-cell-padding-sm-x:     ($grid-gutter-width / 2);
-$table-cell-padding-sm-y:     $vertical-space-sm;
+$table-cell-padding-sm-y:     0;
 
 $table-border-width:          $border-width-sm;
 $table-border-color:          $border-color;
@@ -224,7 +225,7 @@ $table-border-color:          $border-color;
 //
 // Shared variables that are reassigned to `$input-` and `$button-` specific variables.
 
-$input-button-padding-y:         0;
+$input-button-padding-y:         ($line-height-base-computed * 0.25);
 $input-button-padding-x:         $horizontal-space;
 $input-button-line-height:       $line-height-base;
 
@@ -238,7 +239,9 @@ $input-button-border-width:      1px;
 
 // Buttons
 
-$button-padding-y:               $input-button-padding-y;
+$button-border-width:            $input-button-border-width;
+
+$button-padding-y:               calc(#{$input-button-padding-y} - #{$button-border-width});
 $button-padding-x:               $input-button-padding-x;
 $button-line-height:             $input-button-line-height;
 
@@ -246,7 +249,6 @@ $button-padding-y-sm:            $input-button-padding-y-sm;
 $button-padding-x-sm:            $input-button-padding-x-sm;
 $button-line-height-sm:          $input-button-line-height-sm;
 
-$button-border-width:            $input-button-border-width;
 
 $button-focus-width:             $input-button-focus-width;
 
@@ -258,13 +260,6 @@ $button-transition:              color .15s ease-in-out, background-color .15s e
 /////////////////////////////////////////////////////////////////////////
 // Forms
 
-$input-padding-y:                       $input-button-padding-y;
-$input-padding-x:                       $input-button-padding-x;
-$input-line-height:                     $input-button-line-height;
-
-$input-padding-y-sm:                    $input-button-padding-y-sm;
-$input-padding-x-sm:                    $input-button-padding-x-sm;
-$input-line-height-sm:                  $input-button-line-height-sm;
 
 $input-bg:                              $body-bg;
 $input-disabled-bg:                     $gray-light;
@@ -274,12 +269,20 @@ $input-border-color:                    $black;
 $input-border-width:                    $input-button-border-width;
 $input-box-shadow:                      inset 0 1px 1px rgba($black, .075);
 
+$input-padding-y:                       calc(#{$input-button-padding-y} - #{$input-border-width});
+$input-padding-x:                       $input-button-padding-x;
+$input-line-height:                     $input-button-line-height;
+
+$input-padding-y-sm:                    $input-button-padding-y-sm;
+$input-padding-x-sm:                    $input-button-padding-x-sm;
+$input-line-height-sm:                  $input-button-line-height-sm;
+
 $input-placeholder-color:               $gray-medium;
 
 $input-height-border:                   $input-button-border-width * 2;
 
 $input-height-inner:                    ($font-size-base * $input-button-line-height) + ($input-button-padding-y * 2);
-$input-height:                          calc(#{$input-height-inner} + #{$input-height-border});
+$input-height:                          $input-height-inner;
 
 $input-height-inner-sm:                 ($font-size-sm * $input-button-line-height-sm) + ($input-button-padding-y-sm * 2);
 $input-height-sm:                       calc(#{$input-height-inner-sm} + #{$input-height-border});
@@ -316,4 +319,4 @@ $nav-font-size:                  $font-size-sm;
 
 // Navbar
 
-$navbar-brand-font-size:         $font-size-base;
+$navbar-brand-font-size:         $h3-font-size;
