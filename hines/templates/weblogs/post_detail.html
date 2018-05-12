@@ -11,7 +11,7 @@
 	{% with url=post.main_image_url %}
 		{% if url %}
 	    <meta property="og:image" content="{{ url }}" />
-	    <meta property="twitter:image" content="{{ url }}" />
+	    <meta name="twitter:image" content="{{ url }}" />
 		{% endif %}
 	{% endwith %}
 {% endblock %}
