@@ -8,6 +8,12 @@
 	<meta property="og:title" content="{{ post.title|smartypants|safe }}" />
 	<meta name="twitter:description" content="{{ post.excerpt }}" />
 	<meta name="twitter:title" content="{{ post.title|smartypants|safe }}" />
+	{% with url=post.main_image_url %}
+		{% if url %}
+	    <meta property="og:image" content="{{ url }}" />
+	    <meta property="twitter:image" content="{{ url }}" />
+		{% endif %}
+	{% endwith %}
 {% endblock %}
 
 {# We put the heading within <article> #}
