@@ -1,4 +1,5 @@
 import html.parser
+import re
 
 from django.conf import settings
 from django.db import models
@@ -284,6 +285,23 @@ class Post(TimeStampedModelMixin, models.Model):
             text = truncate_string(
                     text, strip_html=True, chars=100, at_word_boundary=True)
         return text
+
+    @property
+    def main_image_url(self):
+        pattern = r'<img[^>*?]src="(.*?)"'
+        url = ''
+
+        intro_match = re.search(pattern, self.intro_html)
+
+        if intro_match:
+            url = intro_match.group(1)
+        else:
+            body_match = re.search(pattern, self.body_html)
+
+            if body_match:
+                url = body_match.group(1)
+
+        return url
 
     @property
     def comments_allowed(self):

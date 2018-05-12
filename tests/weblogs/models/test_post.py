@@ -218,6 +218,27 @@ Another line.""")
         post = LivePostFactory()
         self.assertEqual(post.status_str, 'Published')
 
+    def test_main_image_url_none(self):
+        "If there's no image in either intro_html or body_html it should return an empty string."
+        post = LivePostFactory(html_format=Post.NO_FORMAT,
+                                intro="<p>Hello.</p>",
+                                body="<p>Bye.</p>")
+        self.assertEqual(post.main_image_url, '')
+
+    def test_main_image_url_from_intro(self):
+        "It should return the URL of an image from intro_html if there is one."
+        post = LivePostFactory(html_format=Post.NO_FORMAT,
+                intro='<p>Hello. <img src="/dir/img1.jpg">. Bye.</p>',
+                body='<p>Hello. <img src="/dir/img2.jpg">. Bye.</p>')
+        self.assertEqual(post.main_image_url, '/dir/img1.jpg')
+
+    def test_main_image_url_from_body(self):
+        "If there's no image in intro_html, it should return the first from body_html"
+        post = LivePostFactory(html_format=Post.NO_FORMAT,
+                intro='<p>Hello. Bye.</p>',
+                body='<p>Hello. <img src="/dir/img1.jpg"></p><p><img src="/dir/img2.jpg">. Bye.</p>')
+        self.assertEqual(post.main_image_url, '/dir/img1.jpg')
+
     @override_app_settings(ALLOW_COMMENTS=False)
     def test_comments_allowed_settings(self):
         "If the setting is False, should return False."
