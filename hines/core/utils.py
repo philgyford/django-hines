@@ -74,9 +74,8 @@ def expire_view_cache(path, key_prefix=None):
     from django.http import HttpRequest
     from django.utils.cache import get_cache_key
 
-    print("EXPIRE", path)
-
     # Prepare meta data for our fake request.
+    # I'm not sure how 'real' this data needs to be, but still:
 
     domain_parts = Site.objects.get_current().domain.split(':')
     request_meta = {'SERVER_NAME': domain_parts[0],}
@@ -84,8 +83,6 @@ def expire_view_cache(path, key_prefix=None):
         request_meta['SERVER_PORT'] = domain_parts[1]
     else:
         request_meta['SERVER_PORT'] = '80'
-
-    print(request_meta)
 
     # Create a fake request object
 
@@ -101,19 +98,13 @@ def expire_view_cache(path, key_prefix=None):
 
     try:
         cache_key = get_cache_key(request, key_prefix=key_prefix)
-        print("KEY", cache_key)
         if cache_key:
-            print("A")
             if cache.has_key(cache_key):
-                print("B")
                 cache.delete(cache_key)
                 return (True, 'Successfully invalidated')
             else:
-                print("C")
                 return (False, 'Cache_key does not exist in cache')
         else:
-            print("D")
             raise ValueError('Failed to create cache_key')
     except (ValueError, Exception) as e:
-        print("E", e)
         return (False, e)
