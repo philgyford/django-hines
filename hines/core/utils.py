@@ -20,7 +20,7 @@ def make_datetime(dt):
 
 def datetime_now():
     "Just returns a datetime object for now in UTC, with UTC timezone."
-    return datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
+    return datetime.utcnow().replace(tzinfo=pytz.utc)
 
 
 def markdownify(content):
