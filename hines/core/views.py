@@ -86,7 +86,7 @@ class CacheMixin(object):
         return self.cache_timeout
 
     def dispatch(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
+        if hasattr(self.request, 'user') and self.request.user.is_authenticated:
             # Logged-in, return the page without caching.
             return super().dispatch(*args, **kwargs)
         else:
