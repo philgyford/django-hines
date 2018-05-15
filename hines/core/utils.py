@@ -83,6 +83,8 @@ def expire_view_cache(path, key_prefix=None):
     if len(domain_parts) > 1:
         request_meta['SERVER_PORT'] = domain_parts[1]
 
+    print(request_meta)
+
     # Create a fake request object
 
     request = HttpRequest()
@@ -97,13 +99,19 @@ def expire_view_cache(path, key_prefix=None):
 
     try:
         cache_key = get_cache_key(request, key_prefix=key_prefix)
-        if cache_key :
+        print("KEY", cache_key)
+        if cache_key:
+            print("A")
             if cache.has_key(cache_key):
+                print("B")
                 cache.delete(cache_key)
                 return (True, 'Successfully invalidated')
             else:
+                print("C")
                 return (False, 'Cache_key does not exist in cache')
         else:
+            print("D")
             raise ValueError('Failed to create cache_key')
     except (ValueError, Exception) as e:
+        print("E")
         return (False, e)

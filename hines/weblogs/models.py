@@ -203,9 +203,9 @@ class Post(TimeStampedModelMixin, models.Model):
 
         # Expire old detail page, home page, and blog home page.
         # Assumes the things used to generate the absolute_url haven't changed.
-        expire_view_cache(reverse('home'))
-        expire_view_cache(reverse('weblogs:blog_detail',
-                                        kwargs={'blog_slug': self.blog.slug}))
+        # expire_view_cache(reverse('home'))
+        # expire_view_cache(reverse('weblogs:blog_detail',
+        #                                 kwargs={'blog_slug': self.blog.slug}))
         if self.time_published is not None:
             expire_view_cache(self.get_absolute_url())
 
