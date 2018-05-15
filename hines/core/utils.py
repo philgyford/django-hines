@@ -74,7 +74,7 @@ def expire_view_cache(path, key_prefix=None):
     from django.http import HttpRequest
     from django.utils.cache import get_cache_key
 
-    # Prepare meta data for our fake request.
+    # Prepare metadata for our fake request.
     # I'm not sure how 'real' this data needs to be, but still:
 
     domain_parts = Site.objects.get_current().domain.split(':')
