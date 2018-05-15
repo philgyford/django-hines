@@ -82,6 +82,8 @@ def expire_view_cache(path, key_prefix=None):
     request_meta = {'SERVER_NAME': domain_parts[0],}
     if len(domain_parts) > 1:
         request_meta['SERVER_PORT'] = domain_parts[1]
+    else:
+        request_meta['SERVER_PORT'] = '80'
 
     print(request_meta)
 
