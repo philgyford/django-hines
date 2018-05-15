@@ -65,13 +65,16 @@ def expire_view_cache(path, key_prefix=None):
 
         * path: The URL of the view to invalidate, like `/blog/posts/1234/`.
 
-        * key prefix: for the @cache_page decorator for the function (if any)
+        * key prefix: The same as that used for the cache_page()
+          function/decorator (if any).
     """
     from django.conf import settings
     from django.contrib.sites.models import Site
     from django.core.cache import cache
     from django.http import HttpRequest
     from django.utils.cache import get_cache_key
+
+    print("EXPIRE", path)
 
     # Prepare meta data for our fake request.
 
