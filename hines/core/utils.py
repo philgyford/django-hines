@@ -7,6 +7,7 @@ from django.utils.text import Truncator
 
 from markdownx.utils import markdownify as markdownifyx
 
+
 def make_date(d):
     "For convenience."
     return datetime.strptime(d, "%Y-%m-%d").date()
@@ -15,6 +16,11 @@ def make_date(d):
 def make_datetime(dt):
     "For convenience."
     return datetime.strptime(dt, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc)
+
+
+def datetime_now():
+    "Just returns a datetime object for now in UTC, with UTC timezone."
+    return datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
 
 
 def markdownify(content):
