@@ -113,5 +113,5 @@ def expire_view_cache(path, key_prefix=None):
             print("D")
             raise ValueError('Failed to create cache_key')
     except (ValueError, Exception) as e:
-        print("E")
+        print("E", e)
         return (False, e)
