@@ -46,38 +46,55 @@ def truncate_string(text, strip_html=True, chars=255, truncate=u'…', at_word_b
     return text
 
 
-def expire_view_cache(view_name, args=[], namespace=None, key_prefix=None, method="GET"):
+def expire_view_cache(path, key_prefix=None):
     """
-    This function allows you to invalidate any view-level cache.
-        view_name: view function you wish to invalidate or it's named url pattern
-        args: any arguments passed to the view function
-        namepace: optioal, if an application namespace is needed
-        key prefix: for the @cache_page decorator for the function (if any)
-        from: https://gist.github.com/1223933
-        which said:
-        from: http://stackoverflow.com/questions/2268417/expire-a-view-cache-in-django
-        added: method to request to get the key generating properly
+    This function allows you to invalidate any item from the per-view cache.
 
-    (Also used on pepysdiary.)
+    It probably won't work with things cached using the per-site cache
+    middleware (because that takes account of the Vary: Cookie header).
+
+    This assumes you're using the Sites framework.
+
+    Arguments:
+
+        * path: The URL of the view to invalidate, like `/blog/posts/1234/`.
+
+        * key prefix: for the @cache_page decorator for the function (if any)
     """
-    from django.urls import reverse
+    from django.conf import settings
+    from django.contrib.sites.models import Site
+    from django.core.cache import cache
     from django.http import HttpRequest
     from django.utils.cache import get_cache_key
-    from django.core.cache import cache
-    from django.conf import settings
-    # create a fake request object
+
+    # Prepare meta data for our fake request.
+
+    domain_parts = Site.objects.get_current().domain.split(':')
+    request_meta = {'SERVER_NAME': domain_parts[0],}
+    if len(domain_parts) > 1:
+        request_meta['SERVER_PORT'] = domain_parts[1]
+
+    # Create a fake request object
+
     request = HttpRequest()
-    request.method = method
+    request.method = 'GET'
+    request.META = request_meta
+    request.path = path
+
     if settings.USE_I18N:
         request.LANGUAGE_CODE = settings.LANGUAGE_CODE
-    # Loookup the request path:
-    if namespace:
-        view_name = namespace + ":" + view_name
-    request.path = reverse(view_name, args=args)
-    # get cache key, expire if the cached item exists:
-    key = get_cache_key(request, key_prefix=key_prefix)
-    if key:
-        if cache.get(key):
-            cache.set(key, None, 0)
-        return True
-    return False
+
+    # If this key is in the cache, delete it:
+
+    try:
+        cache_key = get_cache_key(request, key_prefix=key_prefix)
+        if cache_key :
+            if cache.has_key(cache_key):
+                cache.delete(cache_key)
+                return (True, 'Successfully invalidated')
+            else:
+                return (False, 'Cache_key does not exist in cache')
+        else:
+            raise ValueError('Failed to create cache_key')
+    except (ValueError, Exception) as e:
+        return (False, e)

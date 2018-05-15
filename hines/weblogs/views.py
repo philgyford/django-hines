@@ -12,7 +12,7 @@ from django.views.generic import DateDetailView, DetailView,\
         ListView, MonthArchiveView, RedirectView, TemplateView, YearArchiveView
 from django.views.generic.detail import SingleObjectMixin
 
-from hines.core.views import PaginatedListView, TemplateSetMixin
+from hines.core.views import CacheMixin, PaginatedListView, TemplateSetMixin
 from .models import Blog, Post
 
 
@@ -61,7 +61,7 @@ class BlogDetailParentView(SingleObjectMixin, PaginatedListView):
         return context
 
 
-class BlogDetailView(BlogDetailParentView):
+class BlogDetailView(CacheMixin, BlogDetailParentView):
     "Front page of a Blog, listing its recent Posts."
     template_name = 'weblogs/blog_detail.html'
 
@@ -69,7 +69,7 @@ class BlogDetailView(BlogDetailParentView):
         return self.object.public_posts.all()
 
 
-class BlogArchiveView(DetailView):
+class BlogArchiveView(CacheMixin, DetailView):
     "List of all the months in which there are posts."
     template_name = 'weblogs/blog_archive.html'
     model = Blog
@@ -84,7 +84,7 @@ class BlogArchiveView(DetailView):
         return self.object.public_posts.dates('time_created', 'month')
 
 
-class BlogTagDetailView(BlogDetailParentView):
+class BlogTagDetailView(CacheMixin, BlogDetailParentView):
     "Listing Posts with a particular Tag (by 'tag_slug') in a Blog."
     template_name = 'weblogs/blog_tag_detail.html'
 
@@ -98,7 +98,7 @@ class BlogTagDetailView(BlogDetailParentView):
                                 tags__slug__in=[self.kwargs.get('tag_slug')])
 
 
-class BlogTagListView(DetailView):
+class BlogTagListView(CacheMixin, DetailView):
     "Listing the most popular Tags in a Blog."
     model = Blog
     slug_url_kwarg = 'blog_slug'
@@ -110,7 +110,7 @@ class BlogTagListView(DetailView):
         return context
 
 
-class PostDetailView(TemplateSetMixin, DateDetailView):
+class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
     """
     A bit complicated because we need to match the post using its slug,
     its date, and its weblog slug.
@@ -267,12 +267,12 @@ class PostDayArchiveView(RedirectView):
         })
 
 
-class PostMonthArchiveView(PostDatedArchiveMixin, MonthArchiveView):
+class PostMonthArchiveView(CacheMixin, PostDatedArchiveMixin, MonthArchiveView):
     month_format = '%m'
     template_name = 'weblogs/post_archive_month.html'
 
 
-class PostYearArchiveView(PostDatedArchiveMixin, YearArchiveView):
+class PostYearArchiveView(CacheMixin, PostDatedArchiveMixin, YearArchiveView):
     year_format = '%Y'
     make_object_list = True
     template_name = 'weblogs/post_archive_year.html'
@@ -334,7 +334,7 @@ class PostTagAutocomplete(autocomplete.Select2QuerySetView):
         # return response
 
 
-class RandomPhilView(TemplateView):
+class RandomPhilView(CacheMixin, TemplateView):
     """
     Replicating an old /cgi-bin/random_phil.cgi script.
 

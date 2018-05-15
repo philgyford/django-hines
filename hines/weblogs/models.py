@@ -16,7 +16,7 @@ from taggit.models import Tag, TaggedItemBase
 
 from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
-from hines.core.utils import truncate_string
+from hines.core.utils import expire_view_cache, truncate_string
 from . import managers
 
 
@@ -200,6 +200,11 @@ class Post(TimeStampedModelMixin, models.Model):
             self.time_published = timezone.now()
 
         super().save(*args, **kwargs)
+
+        # Expire old detail page, home page, and blog home page.
+        expire_view_cache(self.get_absolute_url())
+        expire_view_cache(reverse('home'))
+        expire_view_cache(reverse('weblogs:blog_detail', kwargs={'blog_slug': self.blog.slug}))
 
     def get_absolute_url(self):
         return reverse('weblogs:post_detail',

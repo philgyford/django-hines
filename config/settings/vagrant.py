@@ -20,10 +20,25 @@ MEDIA_URL = 'https://{}.s3.amazonaws.com{}'.format(
                                             AWS_STORAGE_BUCKET_NAME, MEDIA_URL)
 
 
+CACHES = {
+    'default': {
+        # In-memory caching:
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 400, # seconds before expiring a cached item. None for never expiring.
+
+        # Use dummy cache (ie, no caching):
+        # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
+
 # Debug Toolbar settings.
 if DEBUG:
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-    INSTALLED_APPS += [ 'debug_toolbar', ]
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+
     # 10.0.2.2 is what we need when using Vagrant:
     INTERNAL_IPS = ['127.0.0.1', '10.0.2.2',]
 

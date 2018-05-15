@@ -12,6 +12,7 @@ from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
+from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import ListView, TemplateView
 from django.views.generic.base import RedirectView
@@ -73,7 +74,27 @@ def server_error(request, template_name="errors/500.html"):
     return HttpResponseServerError(t.render(context, request))
 
 
-class HomeView(TemplateView):
+class CacheMixin(object):
+    """
+    Add this mixin to a view to cache it.
+
+    Disables caching for logged-in users.
+    """
+    cache_timeout = 60 * 5 # seconds
+
+    def get_cache_timeout(self):
+        return self.cache_timeout
+
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            # Logged-in, return the page without caching.
+            return super().dispatch(*args, **kwargs)
+        else:
+            # Unauthenticated user; use caching.
+            return cache_page(self.get_cache_timeout())(super().dispatch)(*args, **kwargs)
+
+
+class HomeView(CacheMixin, TemplateView):
     template_name = 'hines_core/home.html'
 
     def get_context_data(self, **kwargs):

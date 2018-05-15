@@ -79,8 +79,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # Must be first:
-    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -93,8 +91,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Can go at the end of the list:
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    # Must be last:
-    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -125,22 +121,19 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {'default': dj_database_url.config()}
 DATABASES['default']['CONN_MAX_AGE'] = 500
 
-# We override this in production settings:
-CACHES = {
-    'default': {
-        # Use dummy cache (ie, no caching):
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
 
-        # Or use local memcached:
-        #'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        #'LOCATION': '127.0.0.1:11211',
-        #'TIMEOUT': 500, # millisecond
-    }
-}
+# Custom setting to enable the site-wide caching.
+# (We must also have set up the CACHES setting, if making this True.)
+USE_PER_SITE_CACHE = False
 
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 600
-CACHE_MIDDLEWARE_KEY_PREFIX = 'hines'
+if USE_PER_SITE_CACHE:
+    # Must be first:
+    MIDDLEWARE = ['django.middleware.cache.UpdateCacheMiddleware',] + MIDDLEWARE
+    # Must be last:
+    MIDDLEWARE += ['django.middleware.cache.FetchFromCacheMiddleware',]
+    CACHE_MIDDLEWARE_ALIAS = 'default'
+    CACHE_MIDDLEWARE_SECONDS = 600
+    CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 
 # Password validation
