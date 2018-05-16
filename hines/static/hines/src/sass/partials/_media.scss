@@ -43,6 +43,7 @@ $media-header-line-height: $line-height-base;
   .meta--inline {
     margin-bottom: $vertical-space-sm;
   }
+
 }
 
 .media__img {
@@ -61,6 +62,13 @@ $media-header-line-height: $line-height-base;
   &>ol:last-child,
   &>.media__header {
     margin-bottom: 0;
+  }
+
+  p + .meta {
+    // Move meta blocks up if immediately after paragraph.
+    // Looks better for situations we currently use them in (Reading), but
+    // might need refinement...
+    margin-top: -($vertical-space-sm / 2);
   }
 }
 
