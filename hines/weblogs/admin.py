@@ -68,8 +68,9 @@ class PostAdminForm(autocomplete.FutureModelForm):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('blog', 'title', 'is_published', 'time_published',
-                    'is_featured', )
+    list_display = ('blog', 'title', 'status_icon', 'time_published',
+                    # 'is_featured',
+                    )
     list_display_links = ('title',)
     list_filter = ('blog', 'time_published', 'status', 'featured',)
     search_fields = ('title', 'excerpt', 'intro', 'body', )
@@ -100,10 +101,16 @@ class PostAdmin(admin.ModelAdmin):
     radio_fields = {'featured': admin.HORIZONTAL}
     readonly_fields = ('time_created', 'time_modified', )
 
-    def is_published(self, obj):
-        return obj.status == Post.LIVE_STATUS
-    is_published.boolean = True
-    is_published.short_description = 'Published?'
+    def status_icon(self, obj):
+        if obj.status == Post.LIVE_STATUS:
+            return "✅"
+        elif obj.status == Post.DRAFT_STATUS:
+            return "…"
+        elif obj.status == Post.SCHEDULED_STATUS:
+            return "🕙"
+        else:
+            return ""
+    status_icon.short_description = 'Status'
 
     def is_featured(self, obj):
         return obj.featured == Post.IS_FEATURED
