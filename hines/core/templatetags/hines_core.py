@@ -55,17 +55,19 @@ def current_url_name(context):
         {% current_url_name as url_name %}
 
         <a href="#"{% if url_name == 'myapp:home' %} class="active"{% endif %}">Home</a>
-
     """
     url_name = False
 
     # In 400 and 500 error templates context has no 'request':
     if hasattr(context, 'request'):
         if context.request.resolver_match:
-            url_name = "{}:{}".format(
+            if context.request.resolver_match.namespace:
+                url_name = '{}:{}'.format(
                                 context.request.resolver_match.namespace,
                                 context.request.resolver_match.url_name
                             )
+            else:
+                url_name = context.request.resolver_match.url_name
     return url_name
 
 

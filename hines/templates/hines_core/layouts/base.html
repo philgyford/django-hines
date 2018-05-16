@@ -46,8 +46,8 @@
           {% endif %}
         </li>
         <li class="nav__item nav__item--split {% block reading_nav_active %}{% endblock %}">
-          {% if url_name != 'spectator:reading:home' %}
-            <a class="nav__link" href="{% url 'spectator:reading:home' %}">Reading</a>
+          {% if url_name != 'reading_home' %}
+            <a class="nav__link" href="{% url 'reading_home' %}">Reading</a>
           {% else %}
             <span class="nav__link">Reading</span>
           {% endif %}

@@ -72,8 +72,8 @@ root_dir_patterns = ([
                         core_views.WritingResourcesRedirectView.as_view()),
 
 
-    # Just the reading home page:
-    path('reading/', core_views.ReadingHomeView.as_view()),
+    # Just the reading home page (our custom version):
+    path('reading/', core_views.ReadingHomeView.as_view(), name='reading_home'),
 
     # All other Spectator URLs, including other /reading/ URLs:
     path('', include(spectator_patterns)),
