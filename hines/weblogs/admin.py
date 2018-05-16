@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 
 from markdownx.widgets import AdminMarkdownxWidget
 
+from hines.core.utils import datetime_now
 from .models import Blog, Post, Trackback
 
 
@@ -35,7 +36,10 @@ class BlogAdmin(admin.ModelAdmin):
 
 
 class PostAdminForm(autocomplete.FutureModelForm):
-    "So we can use Markdownx for two specific Post fields."
+    """
+    So we can use Markdownx for two specific Post fields.
+    And add custom validation.
+    """
     class Meta:
         model = Post
         widgets = {
@@ -46,6 +50,17 @@ class PostAdminForm(autocomplete.FutureModelForm):
                                 reverse_lazy('weblogs:post_tag_autocomplete')),
         }
         fields = '__all__'
+
+    def clean(self):
+        status = self.cleaned_data.get('status')
+        time_published = self.cleaned_data.get('time_published')
+
+        if status == Post.SCHEDULED_STATUS:
+            if time_published == None:
+                raise forms.ValidationError("If this post is Scheduled it should have a Time Published.")
+            elif time_published <= datetime_now():
+                raise forms.ValidationError("This post is Scheduled but its Time Published is in the past.")
+        return self.cleaned_data
 
 
 @admin.register(Post)
