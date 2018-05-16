@@ -98,6 +98,7 @@
   td {
     border: $table-border-width solid $table-border-color;
     @include text-style-tiny;
+    background-color: $gray-light;
   }
   th {
     font-weight: $font-weight-bold;
@@ -107,17 +108,17 @@
   .tl-work,
   .tl-play,
   .tl-writing {
-    background-color: $gray-light;
+    background-color: $body-bg;
   }
 
   .tl-place,
   .tl-ed,
   .tl-photos {
-    background-color: $gray-light;
+    background-color: $body-bg;
   }
 
   .tl-bottomless {
-    border-bottom-color: $body-bg;
+    border-bottom-color: $gray-light;
   }
 
   th.tl-ed,
