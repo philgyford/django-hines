@@ -9,8 +9,10 @@ from freezegun import freeze_time
 from tests import override_app_settings
 from hines.core.utils import make_datetime
 from hines.weblogs.models import Post
-from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
-        LivePostFactory, TrackbackFactory
+from hines.weblogs.factories import (
+    BlogFactory, DraftPostFactory, LivePostFactory, ScheduledPostFactory,
+    TrackbackFactory
+)
 
 
 class PostTestCase(TestCase):
@@ -141,16 +143,18 @@ Another line.""")
         self.assertEqual(post.time_published, time_published)
 
     def test_default_manager(self):
-        "It should include published and draft posts."
+        "It should include posts of all statuses."
         live_post = LivePostFactory()
         draft_post = DraftPostFactory()
+        scheduled_post = ScheduledPostFactory()
         posts = Post.objects.all()
-        self.assertEqual(len(posts), 2)
+        self.assertEqual(len(posts), 3)
 
     def test_public_posts_manager(self):
         "It should only include published posts."
         live_post = LivePostFactory()
         draft_post = DraftPostFactory()
+        scheduled_post = ScheduledPostFactory()
         posts = Post.public_objects.all()
         self.assertEqual(len(posts), 1)
         self.assertEqual(posts[0], live_post)

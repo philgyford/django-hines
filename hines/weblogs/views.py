@@ -115,6 +115,8 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
     A bit complicated because we need to match the post using its slug,
     its date, and its weblog slug.
     """
+    # True, because we want to be able to preview scheduled posts:
+    allow_future = True
     date_field = 'time_published'
     model = Post
     month_format = '%m'
@@ -172,7 +174,7 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
                 "Future %(verbose_name_plural)s not available because "
                 "%(class_name)s.allow_future is False."
             ) % {
-                'verbose_name_plural': qs.model._meta.verbose_name_plural,
+                'verbose_name_plural': queryset.model._meta.verbose_name_plural,
                 'class_name': self.__class__.__name__,
             })
 
@@ -205,8 +207,8 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
 
     def get_queryset(self):
         """
-        Allow a Superuser to see draft Posts.
-        Everyone else can only see public Posts.
+        Allow a Superuser to see draft and scheduled Posts.
+        Everyone else can only see live Posts.
         """
         if self.request.user.is_superuser:
             return self.model.objects.all()

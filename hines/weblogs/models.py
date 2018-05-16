@@ -100,11 +100,11 @@ class Post(TimeStampedModelMixin, models.Model):
 
     DRAFT_STATUS = 1
     LIVE_STATUS = 2
-    # SCHEDULED_STATUS = 4
+    SCHEDULED_STATUS = 4
     STATUS_CHOICES = (
         (DRAFT_STATUS, 'Draft'),
         (LIVE_STATUS, 'Published'),
-        # (SCHEDULED_STATUS, 'Scheduled'),
+        (SCHEDULED_STATUS, 'Scheduled'),
     )
 
     NO_FORMAT = 0

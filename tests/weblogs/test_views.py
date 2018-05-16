@@ -6,8 +6,9 @@ from django.test import Client, override_settings, TestCase
 
 from hines.core.utils import make_date, make_datetime
 from hines.users.models import User
-from hines.weblogs.factories import BlogFactory, DraftPostFactory,\
-        LivePostFactory
+from hines.weblogs.factories import (
+    BlogFactory, DraftPostFactory, LivePostFactory, ScheduledPostFactory
+)
 from hines.weblogs import views
 from tests.core.test_views import ViewTestCase
 from tests import override_app_settings
@@ -41,6 +42,7 @@ class BlogDetailViewTestCase(ViewTestCase):
         "It should include the post_list, of public posts, in the context."
         other_blogs_post = LivePostFactory()
         draft_post = DraftPostFactory(blog=self.blog)
+        scheduled_post = ScheduledPostFactory(blog=self.blog)
         response = views.BlogDetailView.as_view()(
                                             self.request, blog_slug='my-blog')
         self.assertIn('post_list', response.context_data)
@@ -113,6 +115,9 @@ class BlogArchiveViewTestCase(ViewTestCase):
         draft_post = DraftPostFactory(blog=self.blog)
         draft_post.time_created = make_datetime('2016-05-01 12:00:00')
         draft_post.save()
+        scheduled_post = ScheduledPostFactory(blog=self.blog)
+        scheduled_post.time_created = make_datetime('2016-05-01 12:00:00')
+        scheduled_post.save()
 
         response = views.BlogArchiveView.as_view()(
                                             self.request, blog_slug='my-blog')
@@ -161,6 +166,7 @@ class BlogTagDetailViewTestCase(ViewTestCase):
         # None of these should be listed:
         other_blogs_post = LivePostFactory()
         draft_post = DraftPostFactory(blog=self.blog)
+        scheduled_post = ScheduledPostFactory(blog=self.blog)
         other_tag_post = LivePostFactory(blog=self.blog)
         other_tag_post.tags.add('Cats')
 
@@ -205,6 +211,7 @@ class BlogTagListViewTestCase(ViewTestCase):
 
         # These shouldn't be used in the tag list:
         DraftPostFactory(blog=self.blog, tags=['Skate',])
+        ScheduledPostFactory(blog=self.blog, tags=['Skate',])
         LivePostFactory(tags=['Skate',])
 
     def test_response_200(self):
@@ -275,12 +282,20 @@ class PostDetailViewTestCase(ViewTestCase):
         response = self.client.get('/terry/my-blog/2017/02/20/OTHER-POST/')
         self.assertEqual(response.status_code, 404)
 
-    def test_response_404_invalid_status(self):
+    def test_response_404_draft_status(self):
         "It should raise 404 if there's no matching published post"
         DraftPostFactory(blog=self.blog,
                          slug='draft-post',
                          time_published=make_datetime('2017-02-20 12:15:00'))
         response = self.client.get('/terry/my-blog/2017/02/20/draft-post/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_response_404_scheduled_status(self):
+        "It should raise 404 if there's no matching published post"
+        ScheduledPostFactory(blog=self.blog,
+                         slug='scheduled-post',
+                         time_published=make_datetime('2100-02-20 12:15:00'))
+        response = self.client.get('/terry/my-blog/2100/02/20/scheduled-post/')
         self.assertEqual(response.status_code, 404)
 
     def test_response_preview_draft_status(self):
@@ -292,6 +307,18 @@ class PostDetailViewTestCase(ViewTestCase):
 
         self.client.login(username='admin', password='pass')
         response = self.client.get('/terry/my-blog/2017/02/20/draft-post/')
+
+        self.assertEquals(response.status_code, 200)
+
+    def test_response_preview_scheduled_status(self):
+        "A superuser should be able to see a scheduled post."
+        ScheduledPostFactory(blog=self.blog,
+                         slug='scheduled-post',
+                         time_published=make_datetime('2100-02-20 12:15:00'))
+        User.objects.create_superuser('admin', 'admin@test.com', 'pass')
+
+        self.client.login(username='admin', password='pass')
+        response = self.client.get('/terry/my-blog/2100/02/20/scheduled-post/')
 
         self.assertEquals(response.status_code, 200)
 

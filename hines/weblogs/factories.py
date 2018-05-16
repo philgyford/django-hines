@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 import factory
 import factory.fuzzy
 
@@ -52,6 +54,11 @@ class DraftPostFactory(PostFactory):
 class LivePostFactory(PostFactory):
     status = models.Post.LIVE_STATUS
     time_published = datetime_now()
+
+
+class ScheduledPostFactory(PostFactory):
+    status = models.Post.SCHEDULED_STATUS
+    time_published = datetime_now() + timedelta(days=1)
 
 
 class TrackbackFactory(factory.DjangoModelFactory):
