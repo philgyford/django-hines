@@ -97,6 +97,10 @@
   th,
   td {
     border: $table-border-width solid $table-border-color;
+    @include text-style-tiny;
+  }
+  th {
+    font-weight: $font-weight-bold;
   }
 
   .tl-year,

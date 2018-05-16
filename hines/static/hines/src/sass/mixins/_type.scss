@@ -25,7 +25,6 @@
   font-weight: $text-style-alt-font-weight;
   text-transform: uppercase;
   font-size:    $nav-font-size;
-
   line-height: $line-height-sm;
 }
 
@@ -34,4 +33,12 @@
   @include text-style-nav;
   text-transform: none;
   font-size: $font-size-sm;
+}
+
+@mixin text-style-tiny() {
+  @include text-style-nav;
+  text-transform: none;
+  font-size: $font-size-xs;
+  line-height: $line-height-xs;
+  font-weight: $font-weight-normal;
 }

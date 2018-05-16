@@ -139,12 +139,15 @@ $font-weight-base:            $font-weight-normal;
 
 $font-size-base:              1rem;          /* 16px probably */
 $font-size-sm:                0.875rem;      /* 14 */
+$font-size-xs:                0.75rem;       /* 12 */
 $font-size-monospace:         $font-size-sm; /* 14 */
 
 $line-height-base:            1.5;           /* 24 */
 $line-height-base-computed:   1.5rem;        /* 24 */
 $line-height-sm:              1.71429;       /* 24 if used with font-size-sm */
 $line-height-sm-computed:     1.5rem;        /* 24 */
+$line-height-xs:              1.5;           /* 18 if used with font-size-xs */
+$line-height-xs-computed:     1.125rem;      /* 18 */
 
 // Headings
 
@@ -214,7 +217,7 @@ $list-bullet-position-sm:     0.4em;
 $table-cell-padding-x:        ($grid-gutter-width);
 $table-cell-padding-y:        $vertical-space-sm;
 $table-cell-padding-sm-x:     ($grid-gutter-width / 2);
-$table-cell-padding-sm-y:     0;
+$table-cell-padding-sm-y:     ($vertical-space-sm / 2);
 
 $table-border-width:          $border-width-sm;
 $table-border-color:          $border-color;
