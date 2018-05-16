@@ -11,6 +11,7 @@ from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
 from spectator.core.sitemaps import CreatorSitemap
+from spectator.events import sitemaps as event_sitemaps
 from spectator.reading import sitemaps as reading_sitemaps
 
 from hines.core import app_settings
@@ -30,6 +31,9 @@ sitemaps = {
     'flatpages': FlatPageSitemap,
     'publications': reading_sitemaps.PublicationSitemap,
     'publicationseries': reading_sitemaps.PublicationSeriesSitemap,
+    'events': event_sitemaps.EventSitemap,
+    'works': event_sitemaps.WorkSitemap,
+    'venues': event_sitemaps.VenueSitemap,
     'creators': CreatorSitemap,
     'links': BookmarkSitemap,
 }
