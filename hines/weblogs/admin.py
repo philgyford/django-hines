@@ -52,6 +52,9 @@ class PostAdminForm(autocomplete.FutureModelForm):
         fields = '__all__'
 
     def clean(self):
+        """
+        A Post that's Scheduled should have a time_published that's in the future.
+        """
         status = self.cleaned_data.get('status')
         time_published = self.cleaned_data.get('time_published')
 
