@@ -40,6 +40,21 @@
   font-weight: $text-style-alt-font-weight;
 }
 
+.nav--right {
+  justify-content: flex-end;
+
+  .nav__item {
+    padding-right: 0;
+    padding-left: $nav-link-padding-x;
+  }
+  .nav__item:last-child,
+  .nav__item--split {
+    margin-left: 0;
+    margin-right: $nav-border-width;
+    padding-right: $nav-link-padding-x;
+  }
+}
+
 // .active is used in Spectator.
 .active > .nav__link,
 .is-active > .nav__link {
