@@ -5,6 +5,7 @@ Expects:
  * page_obj, optional, a DiggPaginator instance or False (default).
  * perms - The Django perms object.
  * view - 'list' (a generic list), 'detail' or 'day'.
+* list_style - 'open' (no top/bottom border) or None (default).
 
 {% endcomment %}
 
@@ -16,7 +17,7 @@ Expects:
     {% include 'hines_core/includes/pagination.html' with page_obj=page_obj only %}
   {% endif %}
 
-  <ol class="media-list h-feed">
+  <ol class="media-list{% if list_style == 'open' %} media-list--open{% endif %} h-feed">
     {% for bookmark in bookmark_list %}
       <li class="media h-entry">
         <div class="media__body">

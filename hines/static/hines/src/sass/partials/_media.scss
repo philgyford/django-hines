@@ -29,6 +29,7 @@ $media-header-line-height: $line-height-base;
   }
 
   .media:last-child {
+    // Nested items, like a quoted tweet.
     padding-bottom: 0;
     border-bottom: none;
   }
@@ -43,7 +44,21 @@ $media-header-line-height: $line-height-base;
   .meta--inline {
     margin-bottom: $vertical-space-sm;
   }
+}
 
+.media-list--open {
+  // No top/bottom borders on the list; still borders between items.
+  border-top: none;
+  margin-bottom: 0;
+
+  & > .media:first-child {
+    padding-top: $vertical-space-sm;
+  }
+
+  & > .media:last-child {
+    border-bottom: none;
+    padding-bottom: $vertical-space-sm;
+  }
 }
 
 .media__img {
@@ -62,13 +77,6 @@ $media-header-line-height: $line-height-base;
   &>ol:last-child,
   &>.media__header {
     margin-bottom: 0;
-  }
-
-  p + .meta {
-    // Move meta blocks up if immediately after paragraph.
-    // Looks better for situations we currently use them in (Reading), but
-    // might need refinement...
-    margin-top: -($vertical-space-sm / 2);
   }
 }
 

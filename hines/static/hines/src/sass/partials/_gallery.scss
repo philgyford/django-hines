@@ -16,6 +16,7 @@
 // 1. Styles for ALL browsers.
 .gallery {
   @include list-unstyled;
+  margin-top: $vertical-space-sm;
   margin-bottom: $vertical-space;
 
   .gallery__item {

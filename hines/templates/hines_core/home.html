@@ -11,9 +11,9 @@
 
       {% if key|slice:"12" == 'weblog_posts' %}
         {% with object_list.0.blog as blog %}
-          <h2>{{ blog.name }}</h2>
+          <h2 class="h--bordered">{{ blog.name }}</h2>
 
-          {% include 'weblogs/includes/posts.html' with post_list=object_list only %}
+          {% include 'weblogs/includes/posts.html' with post_list=object_list list_style='open' only %}
 
           <nav>
             <ul class="nav nav--right">
@@ -26,13 +26,9 @@
         {% endwith %}
 
       {% elif key == 'flickr_photo_list' %}
-        <h2>Photos</h2>
-
-        <hr class="hr--sm">
+        <h2 class="h--bordered">Photos</h2>
 
         {% include 'hines_core/includes/photos.html' with photo_list=object_list columns=4 order='uploaded' only %}
-
-        <hr class="hr--sm">
 
         <nav>
           <ul class="nav nav--right">
@@ -43,9 +39,9 @@
         </nav>
 
       {% elif key == 'pinboard_bookmark_list' %}
-        <h2>Links</h2>
+        <h2 class="h--bordered">Links</h2>
 
-        {% include 'links/includes/bookmarks.html' with bookmark_list=object_list only %}
+        {% include 'links/includes/bookmarks.html' with bookmark_list=object_list list_style='open' only %}
 
         <nav>
           <ul class="nav nav--right">
