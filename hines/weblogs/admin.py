@@ -5,8 +5,6 @@ from django.contrib import admin
 from django.db import models
 from django.urls import reverse_lazy
 
-from markdownx.widgets import AdminMarkdownxWidget
-
 from hines.core.utils import datetime_now
 from .models import Blog, Post, Trackback
 
@@ -37,14 +35,11 @@ class BlogAdmin(admin.ModelAdmin):
 
 class PostAdminForm(autocomplete.FutureModelForm):
     """
-    So we can use Markdownx for two specific Post fields.
-    And add custom validation.
+    So we can add custom validation and autocomplete for tags.
     """
     class Meta:
         model = Post
         widgets = {
-            'intro': AdminMarkdownxWidget,
-            'body': AdminMarkdownxWidget,
             # The django-autocomplete-light tag widget:
             'tags': autocomplete.TaggitSelect2(
                                 reverse_lazy('weblogs:post_tag_autocomplete')),

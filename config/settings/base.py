@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'django.contrib.sitemaps',
 
-    'markdownx',
     'taggit',
     'django_comments',
 
@@ -217,28 +216,6 @@ WHITENOISE_INDEX_FILE = True
 
 
 SPECTATOR_GOOGLE_MAPS_API_KEY = get_env_variable('SPECTATOR_GOOGLE_MAPS_API_KEY')
-
-
-
-# Markdownx settings
-
-MARKDOWNX_MARKDOWNIFY_FUNCTION = 'hines.core.utils.markdownify'
-
-from datetime import datetime
-MARKDOWNX_MEDIA_PATH = '{}/weblogs/{}'.format(
-                        HINES_ROOT_DIR, datetime.now().strftime('%Y/%m/%d'))
-
-MARKDOWNX_IMAGE_MAX_SIZE = {
-    'size': (1000, 1000),
-    'quality': 90
-}
-
-# URL for where Markdown text is sent for formatting.
-MARKDOWNX_URLS_PATH = '/{}/markdownx/markdownify/'.format(HINES_ROOT_DIR)
-
-# URL for where images are sent for uploading, returning JSON of the HTML
-# for the image tag.
-MARKDOWNX_UPLOAD_URLS_PATH = '/{}/markdownx/upload/'.format(HINES_ROOT_DIR)
 
 
 # END THIRD-PARTY APPS

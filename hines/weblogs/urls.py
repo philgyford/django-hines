@@ -1,7 +1,5 @@
 from django.urls import include, path, register_converter
 
-from markdownx.views import ImageUploadView, MarkdownifyView
-
 from hines.core import converters
 from . import feeds, views
 
@@ -17,14 +15,6 @@ urlpatterns = [
 
     path('post-tag-autocomplete/', views.PostTagAutocomplete.as_view(),
         name='post_tag_autocomplete',),
-
-    # Used in the Admin:
-    # path('markdownx/upload/', views.PostImageUploadView.as_view(),
-        # name='markdownx_upload'),
-    path('markdownx/upload/', ImageUploadView.as_view(),
-        name='markdownx_upload'),
-    path('markdownx/markdownify/', MarkdownifyView.as_view(),
-        name='markdownx_markdownify'),
 
     # 2001 version in a pop-up window:
     path('random-phil/', views.RandomPhilView.as_view(), {'set': '2001'}, name='random_phil_2001'),

@@ -9,14 +9,13 @@ from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils import timezone
 
-from markdownx.utils import markdownify
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
 
 from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
-from hines.core.utils import expire_view_cache, truncate_string
+from hines.core.utils import expire_view_cache, markdownify, truncate_string
 from . import managers
 
 

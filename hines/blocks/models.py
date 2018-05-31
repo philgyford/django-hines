@@ -1,7 +1,7 @@
 from django.db import models
-from markdownx.utils import markdownify
 
 from hines.core.models import TimeStampedModelMixin
+from hines.core.utils import markdownify
 
 
 class Block(TimeStampedModelMixin, models.Model):
@@ -32,4 +32,3 @@ class Block(TimeStampedModelMixin, models.Model):
     def save(self, *args, **kwargs):
         self.content_html = markdownify(self.content)
         super().save(*args, **kwargs)
-

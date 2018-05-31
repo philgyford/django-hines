@@ -5,7 +5,7 @@ import pytz
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 
-from markdownx.utils import markdownify as markdownifyx
+from markdown import markdown
 
 
 def make_date(d):
@@ -25,8 +25,7 @@ def datetime_now():
 
 def markdownify(content):
     "Wrap the method, just in case we need to do something extray in future."
-    md = markdownifyx(content)
-    return md
+    return markdown(text=content)
 
 
 def truncate_string(text, strip_html=True, chars=255, truncate=u'…', at_word_boundary=False):
