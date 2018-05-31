@@ -3,19 +3,6 @@
 
 {% block about_nav_active %}is-active{% endblock %}
 
-{# We put the heading within <article> #}
-{% block content_heading %}{% endblock content_heading %}
-
-{% block content %}
-  <article class="bodytext">
-    <header class="pagehead">
-      <h1>{{ flatpage.title|smartypants|safe }}</h1>
-    </header>
-
-    {{ flatpage.content }}
-  </article>
-{% endblock %}
-
 {% block sidebar_nav %}
   {{ block.super }}
 

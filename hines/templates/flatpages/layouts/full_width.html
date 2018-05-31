@@ -4,13 +4,8 @@
 {% block head_page_title %}{{ flatpage.title|smartypants|safe }}{% endblock %}
 {% block content_title %}{{ flatpage.title|smartypants|safe }}{% endblock %}
 
-{% block content_heading %}{% endblock content_heading %}
-
 {% block content %}
   <article>
-    <div class="bodytext">
-      <h1>{{ flatpage.title|smartypants|safe }}</h1>
-    </div>
 
     {% if perms.flatpages.can_change_flatpage %}
       <aside>
