@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  </script>
+
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+  <main class="container">
+    <h1 class="page-title">UK Parliament Demographics</h1>
+
+    <form class="form">
+      <p class="intro">Select what to display on each side of the charts:</p>
+      <div class="row">
+        <p class="col">
+          <label for="choices-left" class="u-sr-only">Left-hand charts</label>
+          <select class="choices-left" id="choices-left"></select>
+        </p>
+        <p class="col">
+          <label for="choices-right" class="u-sr-only">Right-hand charts</label>
+          <select class="choices-right" id="choices-right"></select>
+        </p>
+      </div>
+    </form>
+
+    <section id="gender">
+      <h2 class="title title--chart">Gender</h2>
+      <div class="row lr-titles">
+        <span class="col js-title-left"></span>
+        <span class="col js-title-right"></span>
+      </div>
+      <div class="chart chart--genders js-chart-genders"></div>
+    </section>
+
+    <section id="age">
+      <h2 class="title title--chart">Age</h2>
+      <div class="row lr-titles">
+        <span class="col js-title-left"></span>
+        <span class="col js-title-right"></span>
+      </div>
+      <div class="chart chart--ages js-chart-ages"></div>
+    </section>
+
+    <section>
+      <h2 class="title title--sub">Notes</h2>
+      <ul>
+        <li>Parties/groups with very few members are omitted from the above lists.</li>
+        <li>Parliament data is from the <a href="http://data.parliament.uk/membersdataplatform/memberquery.aspx">Members Names Information Service</a>. Last fetched 2018-06-21.</li>
+        <li>UK population data is from <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections/bulletins/nationalpopulationprojections/2016basedstatisticalbulletin">this Office for National Statistics 2016-based bulletin</a>.</li>
+        <li><a href="https://github.com/philgyford/uk-parliament-demographics">Code on GitHub.</a></li>
+        <li>By <a href="https://www.gyford.com/">Phil Gyford</a> at <a href="https://www.well-formed.co.uk">Well-Formed</a>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="js/d3.min.js"></script>
+  <script src="js/pop.chart.js"></script>
+  <script src="js/pop.controller.js"></script>
+
+  <script>
+    pop.controller();
+  </script>
+
+</body>
+</html>
