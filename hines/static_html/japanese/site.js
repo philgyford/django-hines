@@ -17,7 +17,7 @@ Array.prototype.equals = function(array) {
         return false;
     };
 
-    // Compare lengths - can save a lot of time 
+    // Compare lengths - can save a lot of time
     if (this.length != array.length) {
         return false;
     }
@@ -27,14 +27,14 @@ Array.prototype.equals = function(array) {
         if (this[i] instanceof Array && array[i] instanceof Array) {
             // recurse into the nested arrays
             if (!this[i].equals(array[i])) {
-                return false;       
+                return false;
             };
-        }           
-        else if (this[i] != array[i]) { 
+        }
+        else if (this[i] != array[i]) {
             // Warning - two different object instances will never be equal: {x:20} != {x:20}
-            return false;   
-        }           
-    }       
+            return false;
+        }
+    }
     return true;
 }
 // Hide method from for-in loops
@@ -116,12 +116,12 @@ function hideEl(classname) {
     // Populated by loadCharacters().
     var characters = {
       'hiragana': [],
-      'katakana': [] 
+      'katakana': []
     };
 
     // Will be characters the user has guessed correctly.
     var usedCharacters = [];
- 
+
     var totalAttempts = 0;
 
     var correctCount = 0;
@@ -278,7 +278,7 @@ function hideEl(classname) {
         getElByClass('js-guessform-input').focus();
 
         totalAttempts += 1;
-      
+
       } else {
         // 'empty' or 'correct'.
         hideEl('js-answer-wrong');
@@ -292,11 +292,11 @@ function hideEl(classname) {
 
         getElByClass('js-answer-letter-jp').innerText = currentLetter[1];
         getElByClass('js-answer-letter-en').innerHTML = romaji;
-        
+
         if (result === 'empty') {
           showEl('js-answer-pass');
           hideEl('js-answer-correct');
-        
+
         } else if (result === 'correct') {
           hideEl('js-answer-pass');
           showEl('js-answer-correct');
@@ -311,7 +311,7 @@ function hideEl(classname) {
           hideEl('js-guessform');
           showEl('js-complete');
           clearStorage();
-        
+
         } else {
           showNewLetter();
           storeProgressInStorage();
@@ -338,7 +338,7 @@ function hideEl(classname) {
      * The 'Start again' BUTTON has been clicked.
      */
     function handleRestartConfirm(event) {
-      if (window.confirm("Restarting will erase your score. Are you sure?")) { 
+      if (window.confirm("Restarting will erase your score. Are you sure?")) {
         doRestart();
       };
     };
@@ -409,7 +409,7 @@ function hideEl(classname) {
       getElByClass('js-letter').innerText = letter[1];
       getElByClass('js-guessform-input').focus();
     };
-  
+
     /**
      * Returns a string of either:
      *  'empty'   - `guess` contains nothing.
@@ -427,7 +427,7 @@ function hideEl(classname) {
       } else if (guess === answer) {
         return 'correct';
       } else {
-        return 'wrong'; 
+        return 'wrong';
       };
     };
 
@@ -542,13 +542,13 @@ function hideEl(classname) {
         [['o', 'wo'], 'を'],
 
         ['n', 'ん'],
-        
+
         ['ga', 'が'],
         ['gi', 'ぎ'],
         ['gu', 'ぐ'],
         ['ge', 'げ'],
         ['go', 'ご'],
-        
+
         ['za', 'ざ'],
         [['zi','ji'], 'じ'],
         ['zu', 'ず'],
@@ -596,11 +596,11 @@ function hideEl(classname) {
         ['mya', 'みゃ'],
         ['myu', 'みゅ'],
         ['myo', 'みょ'],
-        
+
         ['rya', 'りゃ'],
         ['ryu', 'りゅ'],
         ['ryo', 'りょ'],
-        
+
         ['gya', 'ぎゃ'],
         ['gyu', 'ぎゅ'],
         ['gyo', 'ぎょ'],
@@ -677,9 +677,9 @@ function hideEl(classname) {
 
         ['wa', 'ワ'],
         [['o', 'wo'], 'ヲ'],
-        
+
         ['n', 'ン'],
-            
+
         ['ga', 'ガ'],
         ['gi', 'ギ'],
         ['gu', 'グ'],
@@ -709,7 +709,7 @@ function hideEl(classname) {
         ['pu', 'プ'],
         ['pe', 'ペ'],
         ['po', 'ポ'],
-        
+
         ['kya', 'キャ'],
         ['kyu', 'キュ'],
         ['kyo', 'キョ'],
@@ -733,11 +733,11 @@ function hideEl(classname) {
         ['mya', 'ミャ'],
         ['myu', 'ミュ'],
         ['myo', 'ミョ'],
-        
+
         ['rya', 'リャ'],
         ['ryu', 'リュ'],
         ['ryo', 'リョ'],
-        
+
         ['gya', 'ギャ'],
         ['gyu', 'ギュ'],
         ['gyo', 'ギョ'],
@@ -753,10 +753,12 @@ function hideEl(classname) {
         ['pya', 'ピャ'],
         ['pyu', 'ピュ'],
         ['pyo', 'ピョ'],
-        
+
         [['dya', 'ja', 'dja'], 'ヂャ'],
         [['dyu', 'ju', 'dju'], 'ヂュ'],
-        [['dyo', 'jo', 'djo'], 'ヂョ']
+        [['dyo', 'jo', 'djo'], 'ヂョ'],
+
+        ['vu', 'ヴ']
       ];
 
     };
