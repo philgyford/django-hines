@@ -758,7 +758,7 @@ function hideEl(classname) {
         [['dyu', 'ju', 'dju'], 'ヂュ'],
         [['dyo', 'jo', 'djo'], 'ヂョ'],
 
-        ['vu', 'ヴ']
+        // ['vu', 'ヴ']
       ];
 
     };
