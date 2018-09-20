@@ -23,11 +23,11 @@ MEDIA_URL = 'https://{}.s3.amazonaws.com{}'.format(
 CACHES = {
     'default': {
         # In-memory caching:
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': 400, # seconds before expiring a cached item. None for never expiring.
+        # 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        # 'TIMEOUT': 400, # seconds before expiring a cached item. None for never expiring.
 
         # Use dummy cache (ie, no caching):
-        # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
 
