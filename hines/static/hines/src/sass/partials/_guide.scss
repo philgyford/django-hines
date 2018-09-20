@@ -12,7 +12,7 @@ html.has-guide {
  * Defaults at narrowest width.
  **/
 :root {
-  --offset: ($grid-gutter-width / 2) + $body-horizontal-space;
+  --offset: ($grid-gutter-width / 2) + $body-horizontal-space-sm;
   --max_width: $grid-max-width - $grid-gutter-width;
   --columns: 1;
   --gutter: $grid-gutter-width;
@@ -24,6 +24,7 @@ html.has-guide {
 /* Override settings for progressively wider widths. */
 @include media-breakpoint-up(sm) {
   :root {
+    --offset: ($grid-gutter-width / 2) + $body-horizontal-space;
     --color: hsla(43, 94%, 63%, 0.24);
   }
 }
@@ -90,4 +91,5 @@ html.has-guide::before {
   background-position: 0 var(--baseline-shift);
   z-index: 1000;
   pointer-events: none;
+
 }
