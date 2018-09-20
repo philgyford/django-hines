@@ -31,6 +31,15 @@ In the Django Admin set the Domain Name of the one Site.
 
 ### Other local dev tasks
 
+#### Editing CSS and JS
+
+We use gulp, running in the VM, to process Sass and JavaScript:
+
+	$ vagrant ssh
+	vagrant$ cd /vagrant
+	vagrant$ gulp watch
+
+
 #### Postgresql export/import
 
 Export:
