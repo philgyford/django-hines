@@ -97,7 +97,7 @@
 
   // Make it 2 columns wider at the intermediate width:
   @include media-breakpoint-up(md) {
-    @include make-col(($main-columns + 2));
+    @include make-col($main-columns-md);
   }
   // And back to standard number of columns at wider widths:
   @include media-breakpoint-up(lg) {
