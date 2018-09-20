@@ -114,20 +114,20 @@ h6, .h6 {
 
 hr {
   clear:           both;
-  margin-top:      $hr-margin;
   border:          0;
-  border-top:      $hr-border-width solid $hr-border-color;
-  margin-bottom:   $hr-margin;
+  margin-top:    $hr-margin-sm;
+  border-top:      $hr-border-width-sm solid $hr-border-color;
+  margin-bottom:       calc(#{$hr-margin-sm} - #{$hr-border-width-sm});
 
   &:first-child {
     margin-top: 0;
   }
 }
 
-hr.hr--sm {
-  margin-top:    $hr-margin-sm;
-  border-top-width: $hr-border-width-sm;
-  margin-bottom:       calc(#{$hr-margin-sm} - #{$hr-border-width-sm});
+hr.hr--lg {
+  margin-top:      $hr-margin;
+  border-top-width: $hr-border-width;
+  margin-bottom:   $hr-margin;
 }
 
 pre {
