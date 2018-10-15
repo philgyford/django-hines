@@ -16,7 +16,9 @@
     "url": "https://github.com/philgyford/django-hines/issues"
   },
   "homepage": "https://github.com/philgyford/django-hines",
-  "dependencies": {},
+  "dependencies": {
+    "node-sass": "^4.9.4"
+  },
   "devDependencies": {
     "del": "^3.0.0",
     "gulp": "github:gulpjs/gulp#4.0",
@@ -31,4 +33,3 @@
     "watch": "^1.0.2"
   }
 }
-
