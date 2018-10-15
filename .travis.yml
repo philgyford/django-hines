@@ -13,8 +13,9 @@ env:
   - DATABASE_URL='postgres://postgres:@localhost:5432/test_db'
   - SPECTATOR_GOOGLE_MAPS_API_KEY='1234'
 install:
-- pip install -q coverage coveralls
-- pip install -q -r ./requirements/tests.txt
+- pip install pipenv
+- pipenv install
+- pipenv install coverage coveralls factory-boy freezegun
 before_script:
 - "./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput"
 - psql -c 'CREATE DATABASE test_db;' -U postgres
