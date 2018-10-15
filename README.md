@@ -22,11 +22,12 @@ In the Django Admin set the Domain Name of the one Site.
 Create a database user with the required privileges:
 
 	$ psql
+	# create database hines;
 	# create user hines with password 'hines';
 	# grant all privileges on database "django-hines" to hines;
 	# alter user hines createdb;
 
-I got a permissions error later so also did this:
+I got an error ("permission denied for relation django_migrations") later:
 
 	$ psql "django-hines" -c "GRANT ALL ON ALL TABLES IN SCHEMA public to hines;"
 	$ psql "django-hines" -c "GRANT ALL ON ALL SEQUENCES IN SCHEMA public to hines;"
@@ -39,9 +40,9 @@ Probably need to do this for a fresh install:
 	$ ./manage.py collectstatic
 	$ ./manage.py createsuperuser
 
-*OR* to import the Heroku database into our new local database (assuming we're running where `$DATABASE_URL` is set for our Heroku app):
+*OR*, download the database backup file from Heroku and do this:
 
-	$ heroku run 'pg_dump -xO $DATABASE_URL' | psql django-hines
+	$ pg_restore -d django-hines my_dump_file
 
 Then run the webserver:
 
