@@ -19,10 +19,12 @@ Install python requirements:
 
 In the Django Admin set the Domain Name of the one Site.
 
+Create a database user with the required privileges:
 
 	$ psql
 	# create user hines with password 'hines';
 	# grant all privileges on database "django-hines" to hines;
+	# alter user hines createdb;
 
 I got a permissions error later so also did this:
 
