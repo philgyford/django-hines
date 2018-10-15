@@ -140,7 +140,7 @@ request object isn't available. Default ``False``.
 ## Environment variables
 
 We expect some variables to be set in the environment. For local development we
-have a `.env` file which can be `source`d to do this.
+have a `.env` file which is used by pipenv.
 
 These variables are used on both local development and production/Heroku sites:
 
@@ -152,6 +152,12 @@ These variables are used on both local development and production/Heroku sites:
 	AWS_SECRET_ACCESS_KEY
 	AWS_STORAGE_BUCKET_NAME
 	SPECTATOR_GOOGLE_MAPS_API_KEY
+
+For local development, a couple of them should be like this in the `.env` file:
+
+	export DJANGO_SETTINGS_MODULE='config.settings.development'
+
+	export DATABASE_URL='postgres://hines:hines@localhost:5432/django-hines'
 
 
 ## Media files
