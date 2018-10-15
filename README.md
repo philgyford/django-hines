@@ -139,10 +139,10 @@ request object isn't available. Default ``False``.
 
 ## Environment variables
 
-We expect some variables to be set in the environment. In Vagrant we have
-a `.env` file which can be `source`d to do this.
+We expect some variables to be set in the environment. For local development we
+have a `.env` file which can be `source`d to do this.
 
-These variables are used on both local/Vagrant and production/Heroku sites:
+These variables are used on both local development and production/Heroku sites:
 
     ALLOWED_HOSTS
 	DJANGO_SECRET_KEY
@@ -156,7 +156,7 @@ These variables are used on both local/Vagrant and production/Heroku sites:
 
 ## Media files
 
-Whether using Vagrant or Heroku, we need an S3 bucket to store Media files in
+Whether in local dev or Heroku, we need an S3 bucket to store Media files in
 (Static files are served using Whitenoise).
 
 1. Go to the IAM service, Users, and 'Add User'.
