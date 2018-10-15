@@ -46,9 +46,9 @@ Probably need to do this for a fresh install:
 
 Then run the webserver:
 
-	$ ./manage.py runserver 0.0.0.0:5000
+	$ pipenv run ./manage.py runserver
 
-Then visit http://localhost:5000 or http://127.0.0.1:5000.
+Then visit http://localhost:8000 or http://127.0.0.1:8000.
 
 
 
