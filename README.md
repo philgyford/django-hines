@@ -6,27 +6,47 @@ Code for http://www.gyford.com
 [![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=master)](https://coveralls.io/github/philgyford/django-hines?branch=master)
 
 
+Pushing to `master` will run the commit through [Travis](https://travis-ci.org) and [Coveralls](https://coveralls.io). If it passes, and coverage doesn't decrease, it will be deployed automatically to Heroku.
+
+
 ## Local development
 
 ### Setup
 
-We're using [this Vagrant setup](https://github.com/philgyford/vagrant-heroku-cedar-16-python). Media files are stored in an S3 bucket.
+Install python requirements:
 
-	$ vagrant up
+	$ pipenv install --dev
 
-Once done, then, for a fresh install:
+In the Django Admin set the Domain Name of the one Site.
 
-	$ vagrant ssh
-	vagrant$ cd /vagrant
-	vagrant$ source .env
-	vagrant$ ./manage.py migrate
-	vagrant$ ./manage.py collectstatic
-	vagrant$ ./manage.py createsuperuser
-	vagrant$ ./manage.py runserver 0.0.0.0:5000
+
+	$ psql
+	# create user hines with password 'hines';
+	# grant all privileges on database "django-hines" to hines;
+
+I got a permissions error later so also did this:
+
+	$ psql "django-hines" -c "GRANT ALL ON ALL TABLES IN SCHEMA public to hines;"
+	$ psql "django-hines" -c "GRANT ALL ON ALL SEQUENCES IN SCHEMA public to hines;"
+	$ psql "django-hines" -c "GRANT ALL ON ALL FUNCTIONS IN SCHEMA public to hines;"
+
+Probably need to do this for a fresh install:
+
+	$ pipenv shell
+	$ ./manage.py migrate
+	$ ./manage.py collectstatic
+	$ ./manage.py createsuperuser
+
+*OR* to import the Heroku database into our new local database (assuming we're running where `$DATABASE_URL` is set for our Heroku app):
+
+	$ heroku run 'pg_dump -xO $DATABASE_URL' | psql django-hines
+
+Then run the webserver:
+
+	$ ./manage.py runserver 0.0.0.0:5000
 
 Then visit http://localhost:5000 or http://127.0.0.1:5000.
 
-In the Django Admin set the Domain Name of the one Site.
 
 
 ### Other local dev tasks
@@ -35,42 +55,20 @@ In the Django Admin set the Domain Name of the one Site.
 
 We use gulp, running in the VM, to process Sass and JavaScript:
 
-	$ vagrant ssh
-	vagrant$ cd /vagrant
-	vagrant$ gulp watch
-
-
-#### Postgresql export/import
-
-Export:
-
-	vagrant$ pg_dump hines -U hines -h localhost -Fc > hines.pgsql
-
-Import:
-
-	vagrant$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U hines -d hines hines.pgsql
+	$ gulp watch
 
 
 #### Tests
 
 Run tests:
 
-	vagrant$ ./scripts/run-tests.sh
+	$ pipenv run ./scripts/run-tests.sh
 
 To include coverage, do:
 
-	vagrant$ ./scripts/coverage.sh
+	$ pipenv run ./scripts/coverage.sh
 
 and then open `htmlcov/index.html` in a browser.
-
-
-#### Restarting postgresql
-
-Sometimes it seems to stop.
-
-	vagrant$ /etc/init.d/postgresql start
-
-Password is `vagrant`.
 
 
 ## Django Settings
