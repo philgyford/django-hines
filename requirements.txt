@@ -1,3 +1,0 @@
-# Heroku requires a requirements file in the root.
--r requirements/production.txt
-
