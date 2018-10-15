@@ -99,7 +99,7 @@ class LinebreaksFirstTestCase(TestCase):
     def test_linebreaks_first(self):
         self.assertEqual(
             linebreaks_first("This is the\nfirst par.\n\nAnd a second."),
-            """<p class="first">This is the<br />first par.</p>\n\n<p>And a second.</p>"""
+            """<p class="first">This is the<br>first par.</p>\n\n<p>And a second.</p>"""
         )
 
 

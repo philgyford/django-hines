@@ -52,12 +52,12 @@ class PostTestCase(TestCase):
         self.assertEqual(post.intro_html, html)
 
     def test_intro_html_convert_line_breaks(self):
-        "It should add <p> and <br /> tags when converting line breaks."
+        "It should add <p> and <br> tags when converting line breaks."
         post = LivePostFactory(html_format=Post.CONVERT_LINE_BREAKS_FORMAT,
                 intro="""<a href="http://example.org">Hello</a>.
 Another line.""")
         self.assertEqual(post.intro_html,
-            '<p><a href="http://example.org">Hello</a>.<br />Another line.</p>')
+            '<p><a href="http://example.org">Hello</a>.<br>Another line.</p>')
 
     def test_intro_html_markdown(self):
         "It should convert markdown to html."
@@ -79,12 +79,12 @@ Another line.""")
         self.assertEqual(post.body_html, html)
 
     def test_body_html_convert_line_breaks(self):
-        "It should add <p> and <br /> tags when converting line breaks."
+        "It should add <p> and <br> tags when converting line breaks."
         post = LivePostFactory(html_format=Post.CONVERT_LINE_BREAKS_FORMAT,
                 body="""<a href="http://example.org">Hello</a>.
 Another line.""")
         self.assertEqual(post.body_html,
-            '<p><a href="http://example.org">Hello</a>.<br />Another line.</p>')
+            '<p><a href="http://example.org">Hello</a>.<br>Another line.</p>')
 
     def test_body_html_markdown(self):
         "It should convert markdown to html."
