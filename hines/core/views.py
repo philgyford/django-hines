@@ -142,7 +142,7 @@ class HomeView(CacheMixin, TemplateView):
 
         # Filter out any that have empty QueryStrings, or else we get an error
         # when comparing their by_time_key's below.
-        # items = {k: v for k, v in items.items() if len(v) > 0}
+        items = {k: v for k, v in items.items() if len(v) > 0}
 
         sorted_items = OrderedDict(
                     sorted(items.items(), key=by_time_key, reverse=True))
