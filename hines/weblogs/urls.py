@@ -26,6 +26,12 @@ urlpatterns = [
         views.PostRedirectView.as_view(),
         name='post_redirect'),
 
+    # Same as above but with index.php instead.
+    path(
+        '<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>/index.php',
+        views.PostRedirectView.as_view(),
+        name='post_redirect_index'),
+
     path('<slug:blog_slug>/', views.BlogDetailView.as_view(),
         name='blog_detail'),
 

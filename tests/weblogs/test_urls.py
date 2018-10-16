@@ -89,6 +89,21 @@ class WeblogsUrlsTestCase(TestCase):
             resolve('/terry/my-blog/2017/02/20/my_old_post.php').func.__name__,
                          views.PostRedirectView.__name__)
 
+    def test_post_redirect_index_url(self):
+        self.assertEqual(
+                reverse('weblogs:post_redirect_index', kwargs={
+                                'blog_slug': 'my-blog',
+                                'year': '2017',
+                                'month': '02',
+                                'day': '20',
+                                'post_slug': 'my_old_post'}),
+                '/terry/my-blog/2017/02/20/my_old_post/index.php')
+
+    def test_post_redirect_index_view(self):
+        "Should use the correct view."
+        self.assertEqual(
+            resolve('/terry/my-blog/2017/02/20/my_old_post/index.php').func.__name__,
+                         views.PostRedirectView.__name__)
 
     def test_post_day_archive_url(self):
         self.assertEqual(
