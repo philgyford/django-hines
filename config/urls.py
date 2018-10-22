@@ -66,7 +66,7 @@ root_dir_patterns = ([
 
     path('links/', include('hines.links.urls')),
 
-    path('data/', include('hines.data.urls')),
+    path('stats/', include('hines.stats.urls')),
 
     path('patterns/', include('hines.patterns.urls')),
 
