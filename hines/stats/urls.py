@@ -9,8 +9,8 @@ urlpatterns = [
     path(r'',
         views.HomeView.as_view(),
         name='stats_home'),
-    #
-    # path('<slug:slug>/',
-    #     views.PatternsView.as_view(),
-    #     name='pattern_detail'),
+
+    path('<slug:slug>/',
+        views.StatsView.as_view(),
+        name='stats_detail'),
 ]

@@ -52,8 +52,10 @@ var PATHS = {
     cssDir:         STATIC_DIR + '/hines/css',
     cssFiles:       STATIC_DIR + '/hines/css/**/*.css',
     jsDir:          STATIC_DIR + '/hines/js',
+    jsVendorDir:    STATIC_DIR + '/hines/js/vendor',
     // All generated JS files:
-    jsFiles:        STATIC_DIR + '/hines/js/**/*.js'
+    // NOTE: Doesn't include those in subdirectories like /vendor/
+    jsFiles:        STATIC_DIR + '/hines/js/*.js'
   },
   templates: {
     files:          [TEMPLATES_DIR + '/hines_core/layouts/bare.html',
@@ -111,6 +113,15 @@ gulp.task('sass', gulp.series('clean:css', function buildSass() {
  * Minify and combine all the JS files used for all browsers.
  */
 gulp.task('js', gulp.series('clean:js', function buildJS() {
+
+  // First just copy our already-minified and not-used-everywhere
+  // 3rd-party JS files:
+  gulp.src([
+    PATHS.src.jsVendorDir + '/d3.v5.min.js'
+  ])
+    .pipe(gulp.dest(PATHS.dest.jsVendorDir));
+
+
   // A stream of our custom JS files, minified.
   var customStream = gulp.src(PATHS.src.jsSiteFiles)
     .pipe(uglify())
