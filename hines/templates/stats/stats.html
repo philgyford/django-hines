@@ -1,0 +1,36 @@
+{% extends 'stats/base.html' %}
+
+{% block content %}
+
+  {% for chart in charts %}
+    <p>{{ chart.title }}</p>
+
+    <div class="chart js-chart-{{ chart.name }}"></div>
+
+    {% if chart.description %}
+      <p>{{ chart.description }}</p>
+    {% endif %}
+  {% endfor %}
+
+{% endblock content %}
+
+
+{% block body_extra %}
+
+  {{ block.super }}
+
+  <script>
+    domready(function() {
+
+      {% for chart in charts %}
+        var data = {{ chart.data|safe }};
+
+        chart = hines.chart().kind('bar');
+
+        d3.select('.js-chart-{{ chart.name }}').datum(data).call(chart);
+      {% endfor %}
+
+    });
+  </script>
+
+{% endblock body_extra %}

@@ -1,8 +1,8 @@
 {% extends 'hines_core/layouts/sidebar_left.html' %}
 
 
-{% block head_page_title %}Stats{% if current_page %}: {{ current_page|title }}{% endif %}{% endblock %}
-{% block content_title %}Stats{% if current_page %}: {{ current_page|title }}{% endif %}{% endblock %}
+{% block head_page_title %}Stats{% if current_page %}: {{ current_page.title }}{% endif %}{% endblock %}
+{% block content_title %}Stats{% if current_page %}: {{ current_page.title }}{% endif %}{% endblock %}
 
 
 {% block sidebar_nav %}
@@ -10,12 +10,12 @@
   <aside class="card">
     <h2 class="card__header">Pages</h2>
     <ul>
-      {% for slug in pages %}
+      {% for page in pages %}
         <li>
-          {% if slug == current_page %}
-            {{ slug|title }}
+          {% if page.slug == current_page.slug %}
+            {{ page.title }}
           {% else %}
-            <a href="{% url 'stats:stats_detail' slug=slug %}">{{ slug|title }}</a></li>
+            <a href="{% url 'stats:stats_detail' slug=page.slug %}">{{ page.title }}</a></li>
         {% endif %}
       {% endfor %}
     </ul>
