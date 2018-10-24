@@ -13,7 +13,7 @@
     /**
      * Can be changed using the chart.margin() method.
      */
-    var margin = {top: 20, bottom: 40, left: 40, right: 10};
+    var margin = {top: 5, bottom: 30, left: 30, right: 10};
 
     /**
      * Can be changed using the chart.tooltipFormat() method.
@@ -26,7 +26,8 @@
     var xScale = d3.scaleBand();
     var yScale = d3.scaleLinear();
     var xAxis = d3.axisBottom(xScale)
-                  .tickSize(0);
+                  .tickSize(0)
+                  .tickPadding(6);
     var yAxis = d3.axisLeft(yScale);
     var barPadding = 0.1;
     // The tooltip that appears when hovering over a bar or span.
@@ -37,7 +38,6 @@
     function chart(selection) {
 
       selection.each(function(data) {
-        console.log(data);
 
         var container = d3.select(this);
 
@@ -55,16 +55,6 @@
         // Need to be in a scope available to all the render methods.
         var chartW;
         var chartH;
-        // What happens when the cursor moves over a bar or span.
-        var mouseMove = function(){
-            tooltip
-                .style('top', (event.pageY-10)+'px')
-                .style('left',(event.pageX+15)+'px');
-        };
-        // What happens when the cursor leaves a bar or span.
-        var mouseOut = function(){
-            tooltip.style('visibility', 'hidden');
-        };
 
         /**
          * Sets scales/domains, renders axes and chart contents.
@@ -131,17 +121,37 @@
           bars.enter()
               .append("rect")
               .classed('chart__bar', true)
+              .classed('chart__bar--clickable', function(d, i) {
+                if ('url' in d && d['url']) {
+                  return true;
+                } else {
+                  return false;
+                };
+              })
               // Not sure why these 4 lines have to be here as well as below:
               .attr("x", barX)
               .attr("y", barY)
               .attr("width", barW)
               .attr("height", barH)
-              .on('mouseover', function(d, i){
-                  tooltip.html( tooltipFormat(d) );
-                  tooltip.style('visibility', 'visible');
+              .on('mouseover', function(d, i) {
+                tooltip.html( tooltipFormat(d) );
+                tooltip.style('visibility', 'visible');
               })
-              .on('mousemove', mouseMove)
-              .on('mouseout', mouseOut);
+              .on('mousemove', function() {
+                tooltip
+                  .style('top', (event.pageY-10)+'px')
+                  .style('left',(event.pageX+15)+'px');
+              })
+              .on('mouseout', function() {
+                tooltip.style('visibility', 'hidden');
+              })
+              .on('click', function(d, i) {
+                if ('url' in d && d['url']) {
+                  window.location.href = d['url'];
+                } else {
+                  return false;
+                };
+              });
 
           // Remove un-wanted bars.
           bars.exit().remove();

@@ -1,5 +1,21 @@
+from django.urls import reverse
+
 from spectator.reading.utils import annual_reading_counts
 
+# The methods in these generators should return dicts of this form:
+#
+# {
+#   'title': 'My chart title',
+#   'description: 'My optional description of the chart',
+#   'data': [
+#       {
+#           'label': '2001',
+#           'value': 37,
+#           'url': '/optional/link/to/a/page/',
+#       },
+#       etc...
+#   ]
+# }
 
 class ReadingGenerator:
     """
@@ -42,7 +58,10 @@ class ReadingGenerator:
             if syear in counts:
                 year_data = {
                     'label': syear,
-                    'value': counts[syear]
+                    'value': counts[syear],
+                    'url': reverse(
+                        'spectator:reading:reading_year_archive',
+                        kwargs={'year':year, 'kind':'{}s'.format(self.kind)})
                 }
             else:
                 year_data = {

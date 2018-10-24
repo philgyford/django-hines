@@ -1,3 +1,7 @@
+/**
+ * Chart
+ * For the stats d3 charts.
+ */
 
 
 .chart {
@@ -6,12 +10,28 @@
 }
 
 .chart__bar {
-  fill: $black;
+  fill: $border-color;
   shape-rendering: crispEdges;
+
 }
 
-.chart__axis path {
-  stroke: $black;
+.chart__bar--clickable:hover {
+  fill: $link-color;
+  cursor: pointer;
+}
+
+.chart__axis {
+  font-size: $font-size-xs;
+  font-family: $font-family-sans-serif;
+
+  line,
+  path {
+    stroke: $border-color;
+  }
+
+  text {
+    fill: $body-color;
+  }
 }
 
 .chart-tooltip {
@@ -22,4 +42,9 @@
   padding: $vertical-space-sm $horizontal-space;
   font-family: $font-family-sans-serif;
   font-size: $font-size-xs;
+  border: 1px solid $border-color;
+}
+
+.chart-description {
+  @include text-style-alt;
 }
