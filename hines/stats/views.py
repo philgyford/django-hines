@@ -1,6 +1,8 @@
 from django.http import Http404
 from django.views.generic import TemplateView
 
+from spectator.reading.utils import annual_reading_counts
+
 
 class HomeView(TemplateView):
     template_name = 'stats/home.html'
@@ -15,6 +17,7 @@ class StatsView(TemplateView):
             'title': 'Music',
             'charts': [
                 'reading_books_per_year',
+                'reading_periodicals_per_year',
             ]
         },
     ]
@@ -58,22 +61,59 @@ class StatsView(TemplateView):
         """
         chart_data = {'name': chart_name,}
 
-        if chart_name == 'reading_books_per_year':
-            chart_data['title'] = 'Reading books per year'
-            chart_data['description'] = 'My description'
-            chart_data['data'] = [
-                {
-                  'label': '2001',
-                  'value': 30
-                },
-                {
-                  'label': '2002',
-                  'value': 40
-                },
-                {
-                  'label': '2003',
-                  'value': 20
+        data_method = getattr(self, 'get_data_{}'.format(chart_name))
+
+        chart_data.update( data_method() )
+
+        return chart_data
+
+    def get_data_reading_books_per_year(self):
+        return self.get_data_reading_per_year(kind='book')
+
+    def get_data_reading_periodicals_per_year(self):
+        return self.get_data_reading_per_year(kind='periodical')
+
+    def get_data_reading_per_year(self, kind):
+        """
+        Used for books and periodicals.
+        kind is either 'book' or 'periodical'.
+        """
+        chart_data = {
+            'data': [],
+            'title': '{}s read per year'.format(kind).capitalize(),
+            'description': "Determined by date finished"
+        }
+
+        # The first years we have complete data for each kind:
+        if kind == 'periodical':
+            min_year = 2005
+        else:
+            min_year = 1998
+
+        # counts will be like
+        # [ {'year': date(2005, 1, 1), 'book': 37}, ... ]
+        counts = annual_reading_counts(kind=kind)
+        max_year = counts[-1]['year'].year
+
+        # Make it like
+        # {'2005': 37, '2006': 23'}
+        counts = {str(c['year'].year):c[kind] for c in counts}
+
+        # In case the counts have a missing year, we manually go through from
+        # first to last year so we cover all years, even if there's no
+        # readings.
+        for year in range(min_year, max_year+1):
+            syear = str(year)
+            if syear in counts:
+                year_data = {
+                    'label': syear,
+                    'value': counts[syear]
                 }
-            ]
+            else:
+                year_data = {
+                    'label': syear,
+                    'value': 0
+                }
+            chart_data['data'].append(year_data)
 
         return chart_data

@@ -3,7 +3,7 @@
 {% block content %}
 
   {% for chart in charts %}
-    <p>{{ chart.title }}</p>
+    <h2>{{ chart.title }}</h2>
 
     <div class="chart js-chart-{{ chart.name }}"></div>
 
