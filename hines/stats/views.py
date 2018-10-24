@@ -1,7 +1,9 @@
 from django.http import Http404
 from django.views.generic import TemplateView
 
-from spectator.reading.utils import annual_reading_counts
+from .generators import (
+    ReadingGenerator, StaticGenerator
+)
 
 
 class HomeView(TemplateView):
@@ -18,6 +20,7 @@ class StatsView(TemplateView):
             'charts': [
                 'reading_books_per_year',
                 'reading_periodicals_per_year',
+                'headaches_per_year',
             ]
         },
     ]
@@ -68,52 +71,10 @@ class StatsView(TemplateView):
         return chart_data
 
     def get_data_reading_books_per_year(self):
-        return self.get_data_reading_per_year(kind='book')
+        return ReadingGenerator(kind='book').get_reading_per_year()
 
     def get_data_reading_periodicals_per_year(self):
-        return self.get_data_reading_per_year(kind='periodical')
+        return ReadingGenerator(kind='periodical').get_reading_per_year()
 
-    def get_data_reading_per_year(self, kind):
-        """
-        Used for books and periodicals.
-        kind is either 'book' or 'periodical'.
-        """
-        chart_data = {
-            'data': [],
-            'title': '{}s read per year'.format(kind).capitalize(),
-            'description': "Determined by date finished"
-        }
-
-        # The first years we have complete data for each kind:
-        if kind == 'periodical':
-            min_year = 2005
-        else:
-            min_year = 1998
-
-        # counts will be like
-        # [ {'year': date(2005, 1, 1), 'book': 37}, ... ]
-        counts = annual_reading_counts(kind=kind)
-        max_year = counts[-1]['year'].year
-
-        # Make it like
-        # {'2005': 37, '2006': 23'}
-        counts = {str(c['year'].year):c[kind] for c in counts}
-
-        # In case the counts have a missing year, we manually go through from
-        # first to last year so we cover all years, even if there's no
-        # readings.
-        for year in range(min_year, max_year+1):
-            syear = str(year)
-            if syear in counts:
-                year_data = {
-                    'label': syear,
-                    'value': counts[syear]
-                }
-            else:
-                year_data = {
-                    'label': syear,
-                    'value': 0
-                }
-            chart_data['data'].append(year_data)
-
-        return chart_data
+    def get_data_headaches_per_year(self):
+        return StaticGenerator().get_headaches_per_year()
