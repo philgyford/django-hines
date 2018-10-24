@@ -10,6 +10,42 @@ Overriding the content block of spectator_reading/reading_archive_year.html so:
 {% block content %}
   {% include 'hines_core/includes/next_prev_date.html' with date_type='year' url_name='spectator:reading:reading_year_archive' previous=previous_year next=next_year current=year only %}
 
+  {% if book_count > 0 or periodical_count > 0 %}
+    <ul class="nav">
+      <li class="nav__item nav__item--split{% if publication_kind is None %} is-active{% endif %}">
+        {% if publication_kind is None %}
+          <span class="nav__link">All ({{ publication_count }})</span>
+        {% else %}
+          <a class="nav__link" href="{% url 'spectator:reading:reading_year_archive' year=year|date:'Y' %}">
+            All ({{ publication_count }})
+          </a>
+        {% endif %}
+      </li>
+      {% if book_count > 0 %}
+        <li class="nav__item nav__item--split{% if publication_kind == 'book' %} is-active{% endif %}">
+          {% if publication_kind == 'book' %}
+            <span class="nav__link">Books ({{ book_count }})</span>
+          {% else %}
+            <a class="nav__link" href="{% url 'spectator:reading:reading_year_archive' year=year|date:'Y' kind='books' %}">
+              Books ({{ book_count }})
+            </a>
+          {% endif %}
+        </li>
+      {% endif %}
+      {% if periodical_count > 0 %}
+        <li class="nav__item nav__item--split{% if publication_kind == 'periodical' %} is-active{% endif %}">
+          {% if publication_kind == 'periodical' %}
+            <span class="nav__link">Periodicals ({{ periodical_count }})</span>
+          {% else %}
+            <a class="nav__link" href="{% url 'spectator:reading:reading_year_archive' year=year|date:'Y' kind='periodicals' %}">
+              Periodicals ({{ periodical_count }})
+            </a>
+          {% endif %}
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
   {% if reading_list|length > 0 %}
 
     {% for reading in reading_list %}
