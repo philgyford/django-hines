@@ -3,7 +3,9 @@
 {% block content %}
 
   {% for chart in charts %}
-    <h2>{{ chart.title }}</h2>
+    {% with chart.name|cut:"_" as header_id %}
+      <h2 id="{{ header_id }}">{{ chart.title }}</h2>
+    {% endwith %}
 
     <div class="chart js-chart-{{ chart.name }}"></div>
 
@@ -19,11 +21,19 @@
 
   {{ block.super }}
 
+  {# Outputs the chart data as JSON in <script> tags with the ID of chart.name #}
+  {% for chart in charts %}
+    {{ chart.data|json_script:chart.name }}
+  {% endfor %}
+
   <script>
     domready(function() {
 
+      var data;
+      var chart;
+
       {% for chart in charts %}
-        var data = {{ chart.data|safe }};
+        data = JSON.parse(document.getElementById('{{ chart.name}}').textContent);
 
         chart = hines.chart().kind('bar');
 

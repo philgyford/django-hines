@@ -18,8 +18,8 @@ class StatsView(TemplateView):
             'slug': 'music',
             'title': 'Music',
             'charts': [
-                'reading_books_per_year',
-                'reading_periodicals_per_year',
+                'books_per_year',
+                'periodicals_per_year',
                 'headaches_per_year',
             ]
         },
@@ -56,7 +56,7 @@ class StatsView(TemplateView):
 
     def get_chart_data(self, chart_name):
         """
-        Passed a chart_name (like 'reading_per_year') it returns a dict of
+        Passed a chart_name (like 'books_per_year') it returns a dict of
         data for its chart, including:
             'title'
             'description'
@@ -70,10 +70,10 @@ class StatsView(TemplateView):
 
         return chart_data
 
-    def get_data_reading_books_per_year(self):
+    def get_data_books_per_year(self):
         return ReadingGenerator(kind='book').get_reading_per_year()
 
-    def get_data_reading_periodicals_per_year(self):
+    def get_data_periodicals_per_year(self):
         return ReadingGenerator(kind='periodical').get_reading_per_year()
 
     def get_data_headaches_per_year(self):
