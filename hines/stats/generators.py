@@ -5,6 +5,9 @@ from django.db.models.functions import TruncYear
 from django.urls import reverse
 
 from ditto.flickr.models import Photo
+from ditto.flickr.models import User as FlickrUser
+from ditto.twitter.models import Tweet
+from ditto.twitter.models import User as TwitterUser
 
 from spectator.events.models import Event
 from spectator.reading.utils import annual_reading_counts
@@ -84,6 +87,9 @@ class Generator:
             # Assume years are integers.
             counts = OrderedDict((c['year'], c[value_key]) for c in qs)
 
+        if len(counts) == 0:
+            return data
+
         if start_year is None:
             start_year = list(counts.items())[0][0]
 
@@ -149,6 +155,7 @@ class EventsGenerator(Generator):
 class FlickrGenerator(Generator):
 
     def get_photos_per_year(self):
+        nsid = '35034346050@N01'
 
         data = {
             'data': [],
@@ -156,8 +163,14 @@ class FlickrGenerator(Generator):
             'description': 'Number of photos posted <a href="https://www.flickr.com/photos/philgyford/">on Flickr</a>.',
         }
 
+        try:
+            user = FlickrUser.objects.get(nsid=nsid)
+        except FlickrUser.DoesNotExist:
+            return data
+
         # Converting Photos' 'post_year' field into our required 'year':
-        qs = Photo.public_objects.annotate(year=F('post_year')) \
+        qs = Photo.public_objects.filter(user=user) \
+                                    .annotate(year=F('post_year')) \
                                     .values('year') \
                                     .annotate(total=Count('id')) \
                                     .order_by('year')
@@ -233,6 +246,34 @@ class StaticGenerator(Generator):
             'title': 'Headaches per year',
             'description': "Those that require, or are defeated by, prescription medication."
         }
+
+        return data
+
+
+class TwitterGenerator(Generator):
+
+    def get_tweets_per_year(self):
+        screen_name = 'philgyford'
+
+        data = {
+            'data': [],
+            'title': 'Tweets per year',
+            'description': 'Number of tweets posted by <a href="https://twitter.com/philgyford/">@philgyford</a>.',
+        }
+
+        try:
+            user = TwitterUser.objects.get(screen_name=screen_name)
+        except TwitterUser.DoesNotExist:
+            return data
+
+        # Converting Tweets' 'post_year' field into our required 'year':
+        qs = Tweet.public_tweet_objects.filter(user=user) \
+                                        .annotate(year=F('post_year')) \
+                                        .values('year') \
+                                        .annotate(total=Count('id')) \
+                                        .order_by('year')
+
+        data['data'] = self._queryset_to_list(qs)
 
         return data
 

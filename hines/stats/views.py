@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 from .generators import (
     EventsGenerator, FlickrGenerator, ReadingGenerator, StaticGenerator,
-    WritingGenerator
+    TwitterGenerator, WritingGenerator
 )
 
 
@@ -34,7 +34,9 @@ class StatsView(TemplateView):
                 # 'misc_events_per_year',
 
                 'writing_per_year',
+
                 'flickr_photos_per_year',
+                'twitter_tweets_per_year',
             ]
         },
     ]
@@ -125,3 +127,6 @@ class StatsView(TemplateView):
 
     def get_data_flickr_photos_per_year(self):
         return FlickrGenerator().get_photos_per_year()
+
+    def get_data_twitter_tweets_per_year(self):
+        return TwitterGenerator().get_tweets_per_year()
