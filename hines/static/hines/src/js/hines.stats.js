@@ -13,7 +13,7 @@
     /**
      * Can be changed using the chart.margin() method.
      */
-    var margin = {top: 5, bottom: 30, left: 40, right: 10};
+    var margin = {top: 5, bottom: 30, left: 50, right: 10};
 
     /**
      * Can be changed using the chart.tooltipFormat() method.
@@ -28,7 +28,15 @@
     var xAxis = d3.axisBottom(xScale)
                   .tickSize(0)
                   .tickPadding(6);
-    var yAxis = d3.axisLeft(yScale);
+    var yAxis = d3.axisLeft(yScale)
+                    .ticks(5)
+                    .tickSize(0)
+                    .tickPadding(6)
+                    .tickFormat(d3.format(','));
+    // The horizontal lines:
+    var yAxisGrid = d3.axisLeft(yScale)
+                      .ticks(5)
+                      .tickFormat('');
     var barPadding = 0.1;
     // The tooltip that appears when hovering over a bar or span.
     var tooltip = d3.select('body')
@@ -51,6 +59,9 @@
 
         inner.append("g")
               .classed("chart__axis chart__axis--y", true);
+
+        inner.append("g")
+              .classed("chart__axis chart__axis--y--grid", true);
 
         // Need to be in a scope available to all the render methods.
         var chartW;
@@ -107,6 +118,9 @@
 
           svg.select('.chart__axis--y')
               .call(yAxis);
+
+          svg.select('.chart__axis--y--grid')
+              .call(yAxisGrid.tickSize(-chartW));
         };
 
         function renderBars() {

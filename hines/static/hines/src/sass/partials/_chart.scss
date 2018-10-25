@@ -24,13 +24,23 @@
 
   line,
   path {
-    stroke: $border-color;
+    stroke: transparent;
   }
 
   text {
     fill: $body-color;
   }
 }
+
+.chart__axis--y--grid {
+  line {
+    stroke: $gray-light;
+  }
+  path {
+    stroke: transparent;
+  }
+}
+
 
 .chart-tooltip {
   background: $white;
