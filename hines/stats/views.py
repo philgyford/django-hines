@@ -2,7 +2,7 @@ from django.http import Http404
 from django.views.generic import TemplateView
 
 from .generators import (
-    EventsGenerator, ReadingGenerator, StaticGenerator
+    EventsGenerator, ReadingGenerator, StaticGenerator, WritingGenerator
 )
 
 
@@ -31,6 +31,8 @@ class StatsView(TemplateView):
                 # 'concerts_per_year',
                 # 'dance_per_year',
                 # 'misc_events_per_year',
+
+                'writing_per_year',
             ]
         },
     ]
@@ -81,10 +83,10 @@ class StatsView(TemplateView):
         return chart_data
 
     def get_data_books_per_year(self):
-        return ReadingGenerator(kind='book').get_reading_per_year()
+        return ReadingGenerator(kind='book').get_per_year()
 
     def get_data_periodicals_per_year(self):
-        return ReadingGenerator(kind='periodical').get_reading_per_year()
+        return ReadingGenerator(kind='periodical').get_per_year()
 
 
     def get_data_headaches_per_year(self):
@@ -92,25 +94,28 @@ class StatsView(TemplateView):
 
 
     def get_data_movies_per_year(self):
-        return EventsGenerator(kind='cinema').get_events_per_year()
+        return EventsGenerator(kind='cinema').get_per_year()
 
     def get_data_concerts_per_year(self):
-        return EventsGenerator(kind='concert').get_events_per_year()
+        return EventsGenerator(kind='concert').get_per_year()
 
     def get_data_comedy_per_year(self):
-        return EventsGenerator(kind='comedy').get_events_per_year()
+        return EventsGenerator(kind='comedy').get_per_year()
 
     def get_data_dance_per_year(self):
-        return EventsGenerator(kind='dance').get_events_per_year()
+        return EventsGenerator(kind='dance').get_per_year()
 
     def get_data_museums_per_year(self):
-        return EventsGenerator(kind='museum').get_events_per_year()
+        return EventsGenerator(kind='museum').get_per_year()
 
     def get_data_gigs_per_year(self):
-        return EventsGenerator(kind='gig').get_events_per_year()
+        return EventsGenerator(kind='gig').get_per_year()
 
     def get_data_theatres_per_year(self):
-        return EventsGenerator(kind='theatre').get_events_per_year()
+        return EventsGenerator(kind='theatre').get_per_year()
 
     def get_data_misc_events_per_year(self):
-        return EventsGenerator(kind='misc').get_events_per_year()
+        return EventsGenerator(kind='misc').get_per_year()
+
+    def get_data_writing_per_year(self):
+        return WritingGenerator().get_per_year()

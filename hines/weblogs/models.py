@@ -178,8 +178,10 @@ class Post(TimeStampedModelMixin, models.Model):
     # But you might want to use self.get_tags() instead, so they're in order.
     tags = TaggableManager(through=TaggedPost, blank=True)
 
+    # All posts, no matter what their status.
     objects = models.Manager()
 
+    # Posts that have been published.
     public_objects = managers.PublicPostsManager()
 
     class Meta:
