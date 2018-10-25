@@ -1,6 +1,8 @@
-from django.db.models import Count, Min, Max
+from django.db.models import Count, F, Min, Max
 from django.db.models.functions import TruncYear
 from django.urls import reverse
+
+from ditto.flickr.models import Photo
 
 from spectator.events.models import Event
 from spectator.reading.utils import annual_reading_counts
@@ -138,6 +140,25 @@ class EventsGenerator(Generator):
         return data
 
 
+class FlickrGenerator(Generator):
+
+    def get_photos_per_year(self):
+
+        data = {
+            'data': [],
+            'title': 'Flickr photos per year',
+            'description': 'Number of photos posted <a href="https://www.flickr.com/photos/philgyford/">on Flickr</a>.',
+        }
+
+        qs = Photo.public_objects.annotate(year=TruncYear('post_time')) \
+                                    .values('year') \
+                                    .annotate(total=Count('id')) \
+                                    .order_by('post_year')
+
+        data['data'] = self._queryset_to_list(qs)
+
+        return data
+
 
 class ReadingGenerator(Generator):
     """
@@ -236,7 +257,7 @@ class WritingGenerator(Generator):
         # Go through and add URLs for each year of writing.
         for year in data['data']:
             year['url'] = reverse('weblogs:post_year_archive', kwargs={
-                                'blog_slug': blog_slug,
-                                'year': year['label'] })
+                                    'blog_slug': blog_slug,
+                                    'year': year['label'] })
 
         return data

@@ -2,7 +2,8 @@ from django.http import Http404
 from django.views.generic import TemplateView
 
 from .generators import (
-    EventsGenerator, ReadingGenerator, StaticGenerator, WritingGenerator
+    EventsGenerator, FlickrGenerator, ReadingGenerator, StaticGenerator,
+    WritingGenerator
 )
 
 
@@ -33,6 +34,7 @@ class StatsView(TemplateView):
                 # 'misc_events_per_year',
 
                 'writing_per_year',
+                'flickr_photos_per_year',
             ]
         },
     ]
@@ -119,3 +121,7 @@ class StatsView(TemplateView):
 
     def get_data_writing_per_year(self):
         return WritingGenerator().get_per_year()
+
+
+    def get_data_flickr_photos_per_year(self):
+        return FlickrGenerator().get_photos_per_year()
