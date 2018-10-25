@@ -353,8 +353,8 @@ class TwitterGenerator(Generator):
     def get_favorites_per_year(self):
         data = {
             'data': [],
-            'title': 'Favorited tweets per year',
-            'description': 'Number of tweets favorited by <a href="https://twitter.com/{}/">@{}</a>.'.format(
+            'title': 'Liked tweets per year',
+            'description': 'Number of tweets liked by <a href="https://twitter.com/{}/">@{}</a>.'.format(
                                         self.screen_name, self.screen_name),
         }
 
