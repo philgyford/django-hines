@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.db.models import Count, F, Min, Max
 from django.db.models.functions import TruncYear
 from django.urls import reverse
@@ -33,7 +35,7 @@ class Generator:
 
     def _queryset_to_list(self, qs, start_year=None, end_year=None, value_key='total'):
         """
-        Takes a Queryset that's of this form:
+        Takes a Queryset that's of this form (or years can be integers):
 
             [
                 {
@@ -74,25 +76,29 @@ class Generator:
         """
         data = []
 
-        # Put into a dict keyed by str(year):
-        counts = {str(c['year'].year):c[value_key] for c in qs}
+        # Put into a dict keyed by year:
+        try:
+            # Years are datetime.date's.
+            counts = OrderedDict((c['year'].year, c[value_key]) for c in qs)
+        except AttributeError:
+            # Assume years are integers.
+            counts = OrderedDict((c['year'], c[value_key]) for c in qs)
 
         if start_year is None:
-            start_year = qs.first()['year'].year
+            start_year = list(counts.items())[0][0]
 
         if end_year is None:
-            end_year = qs.last ()['year'].year
+            end_year = list(counts.items())[-1][0]
 
         # In case there are years with no data, we go through ALL the possible
         # years and fill in empty years with 0 visits:
         for year in range(start_year, end_year+1):
-            syear = str(year)
             year_data = {
-                'label': syear,
+                'label': str(year),
                 'value': 0,
             }
-            if syear in counts:
-                year_data['value'] = counts[syear]
+            if year in counts:
+                year_data['value'] = counts[year]
 
             data.append(year_data)
 
@@ -150,10 +156,11 @@ class FlickrGenerator(Generator):
             'description': 'Number of photos posted <a href="https://www.flickr.com/photos/philgyford/">on Flickr</a>.',
         }
 
-        qs = Photo.public_objects.annotate(year=TruncYear('post_time')) \
+        # Converting Photos' 'post_year' field into our required 'year':
+        qs = Photo.public_objects.annotate(year=F('post_year')) \
                                     .values('year') \
                                     .annotate(total=Count('id')) \
-                                    .order_by('post_year')
+                                    .order_by('year')
 
         data['data'] = self._queryset_to_list(qs)
 
