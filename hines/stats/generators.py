@@ -154,17 +154,19 @@ class EventsGenerator(Generator):
 
 class FlickrGenerator(Generator):
 
-    def get_photos_per_year(self):
-        nsid = '35034346050@N01'
+    def __init__(self, nsid):
+        "nsid is like '35034346050@N01'."
+        self.nsid = nsid
 
+    def get_photos_per_year(self):
         data = {
             'data': [],
             'title': 'Flickr photos per year',
-            'description': 'Number of photos posted <a href="https://www.flickr.com/photos/philgyford/">on Flickr</a>.',
+            'description': 'Number of photos posted <a href="https://www.flickr.com/photos/{}/">on Flickr</a>.'.format(self.nsid),
         }
 
         try:
-            user = FlickrUser.objects.get(nsid=nsid)
+            user = FlickrUser.objects.get(nsid=self.nsid)
         except FlickrUser.DoesNotExist:
             return data
 
@@ -252,17 +254,20 @@ class StaticGenerator(Generator):
 
 class TwitterGenerator(Generator):
 
-    def get_tweets_per_year(self):
-        screen_name = 'philgyford'
+    def __init__(self, screen_name):
+        "screen_name is like 'philgyford'."
+        self.screen_name = screen_name
 
+    def get_tweets_per_year(self):
         data = {
             'data': [],
             'title': 'Tweets per year',
-            'description': 'Number of tweets posted by <a href="https://twitter.com/philgyford/">@philgyford</a>.',
+            'description': 'Number of tweets posted by <a href="https://twitter.com/{}/">@{}</a>.'.format(
+                                        self.screen_name, self.screen_name),
         }
 
         try:
-            user = TwitterUser.objects.get(screen_name=screen_name)
+            user = TwitterUser.objects.get(screen_name=self.screen_name)
         except TwitterUser.DoesNotExist:
             return data
 
@@ -277,6 +282,29 @@ class TwitterGenerator(Generator):
 
         return data
 
+    def get_favorites_per_year(self):
+        data = {
+            'data': [],
+            'title': 'Favorited tweets per year',
+            'description': 'Number of tweets favorited by <a href="https://twitter.com/{}/">@{}</a>.'.format(
+                                        self.screen_name, self.screen_name),
+        }
+
+        try:
+            user = TwitterUser.objects.get(screen_name=self.screen_name)
+        except TwitterUser.DoesNotExist:
+            return data
+
+        # Converting Tweets' 'post_year' field into our required 'year':
+        qs = user.favorites\
+                                        .annotate(year=F('post_year')) \
+                                        .values('year') \
+                                        .annotate(total=Count('id')) \
+                                        .order_by('year')
+
+        data['data'] = self._queryset_to_list(qs)
+
+        return data
 
 class WritingGenerator(Generator):
 

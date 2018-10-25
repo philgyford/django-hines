@@ -13,7 +13,7 @@
     /**
      * Can be changed using the chart.margin() method.
      */
-    var margin = {top: 5, bottom: 30, left: 30, right: 10};
+    var margin = {top: 5, bottom: 30, left: 40, right: 10};
 
     /**
      * Can be changed using the chart.tooltipFormat() method.

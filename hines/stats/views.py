@@ -37,6 +37,7 @@ class StatsView(TemplateView):
 
                 'flickr_photos_per_year',
                 'twitter_tweets_per_year',
+                'twitter_favorites_per_year',
             ]
         },
     ]
@@ -126,7 +127,10 @@ class StatsView(TemplateView):
 
 
     def get_data_flickr_photos_per_year(self):
-        return FlickrGenerator().get_photos_per_year()
+        return FlickrGenerator(nsid='35034346050@N01').get_photos_per_year()
 
     def get_data_twitter_tweets_per_year(self):
-        return TwitterGenerator().get_tweets_per_year()
+        return TwitterGenerator(screen_name='philgyford').get_tweets_per_year()
+
+    def get_data_twitter_favorites_per_year(self):
+        return TwitterGenerator(screen_name='philgyford').get_favorites_per_year()
