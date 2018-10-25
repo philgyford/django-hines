@@ -6,6 +6,10 @@ from django.urls import reverse
 
 from ditto.flickr.models import Photo
 from ditto.flickr.models import User as FlickrUser
+from ditto.lastfm.models import Scrobble
+from ditto.lastfm.models import Account as LastfmAccount
+from ditto.pinboard.models import Bookmark
+from ditto.pinboard.models import Account as PinboardAccount
 from ditto.twitter.models import Tweet
 from ditto.twitter.models import User as TwitterUser
 
@@ -172,6 +176,70 @@ class FlickrGenerator(Generator):
 
         # Converting Photos' 'post_year' field into our required 'year':
         qs = Photo.public_objects.filter(user=user) \
+                                    .annotate(year=F('post_year')) \
+                                    .values('year') \
+                                    .annotate(total=Count('id')) \
+                                    .order_by('year')
+
+        data['data'] = self._queryset_to_list(qs)
+
+        return data
+
+
+class LastfmGenerator(Generator):
+
+    def __init__(self, username):
+        "username is like 'gyford'."
+        self.username = username
+
+    def get_scrobbles_per_year(self, start_year=None):
+        "start_year is like 2006."
+
+        data = {
+            'data': [],
+            'title': 'Tracks listened to per year',
+            'description': 'Number of scrobbles <a href="https://www.last.fm/user/{}">on Last.fm</a>.'.format(
+                                                                self.username),
+        }
+
+        try:
+            account = LastfmAccount.objects.get(username=self.username)
+        except LastfmAccount.DoesNotExist:
+            return data
+
+        # Converting Scrobbles' 'post_year' field into our required 'year':
+        qs = Scrobble.public_objects.filter(account=account) \
+                                    .annotate(year=F('post_year')) \
+                                    .values('year') \
+                                    .annotate(total=Count('id')) \
+                                    .order_by('year')
+
+        data['data'] = self._queryset_to_list(qs, start_year=start_year)
+
+        return data
+
+
+class PinboardGenerator(Generator):
+
+    def __init__(self, username):
+        "username is like 'philgyford'."
+        self.username = username
+
+    def get_bookmarks_per_year(self):
+        data = {
+            'data': [],
+            'title': 'Links per year',
+            'description': 'Number of links posted <a href="https://pinboard.in/u:{}">on Pinboard</a>.'.format(
+                                                                self.username),
+        }
+
+        try:
+            account = PinboardAccount.objects.get(username=self.username)
+        except PinboardAccount.DoesNotExist:
+            return data
+
+        # Converting Bookmarks' 'post_year' field into our required 'year':
+        qs = Bookmark.public_objects.filter(account=account) \
                                     .annotate(year=F('post_year')) \
                                     .values('year') \
                                     .annotate(total=Count('id')) \

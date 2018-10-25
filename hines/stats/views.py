@@ -2,8 +2,8 @@ from django.http import Http404
 from django.views.generic import TemplateView
 
 from .generators import (
-    EventsGenerator, FlickrGenerator, ReadingGenerator, StaticGenerator,
-    TwitterGenerator, WritingGenerator
+    EventsGenerator, FlickrGenerator, LastfmGenerator, PinboardGenerator,
+    ReadingGenerator, StaticGenerator, TwitterGenerator, WritingGenerator
 )
 
 
@@ -38,6 +38,8 @@ class StatsView(TemplateView):
                 'flickr_photos_per_year',
                 'twitter_tweets_per_year',
                 'twitter_favorites_per_year',
+                'pinboard_bookmarks_per_year',
+                'lastfm_scrobbles_per_year',
             ]
         },
     ]
@@ -134,3 +136,9 @@ class StatsView(TemplateView):
 
     def get_data_twitter_favorites_per_year(self):
         return TwitterGenerator(screen_name='philgyford').get_favorites_per_year()
+
+    def get_data_pinboard_bookmarks_per_year(self):
+        return PinboardGenerator(username='philgyford').get_bookmarks_per_year()
+
+    def get_data_lastfm_scrobbles_per_year(self):
+        return LastfmGenerator(username='gyford').get_scrobbles_per_year(start_year=2006)
