@@ -23,6 +23,15 @@
     };
 
     // Internal things that can't be overridden:
+
+    var yAxisTickFormat = function(d){
+      // Adds a comma to numbers of 5 or more digits.
+      if ((''+d3.format('.0f')(d)).length > 4) {
+        return d3.format(',')(d);
+      } else {
+        return d3.format('d')(d);
+      };
+    };
     var xScale = d3.scaleBand();
     var yScale = d3.scaleLinear();
     var xAxis = d3.axisBottom(xScale)
@@ -32,7 +41,7 @@
                     .ticks(5)
                     .tickSize(0)
                     .tickPadding(6)
-                    .tickFormat(d3.format(','));
+                    .tickFormat(yAxisTickFormat);
     // The horizontal lines:
     var yAxisGrid = d3.axisLeft(yScale)
                       .ticks(5)
