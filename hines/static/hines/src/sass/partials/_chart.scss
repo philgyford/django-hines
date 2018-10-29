@@ -1,0 +1,149 @@
+/**
+ * Chart
+ * For the stats d3 charts.
+ */
+
+
+.chart {
+  width: 100%;
+  height: 200px;
+}
+
+.chart__bar {
+  fill: $border-color;
+}
+
+.chart__bar--clickable:hover {
+  fill: $link-color;
+  cursor: pointer;
+}
+
+.chart__axis {
+  font-size: $font-size-xs;
+  font-family: $font-family-sans-serif;
+
+  line,
+  path {
+    stroke: transparent;
+  }
+
+  text {
+    fill: $body-color;
+  }
+}
+
+// We have different classes for the x-axis depending on the number of
+// ticks on it. We then hide/show different quantities of ticks at
+// different browser widths, so that their labels should never overlap.
+
+// > 20 ticks
+.chart__axis--x--20 .tick {
+  display: none;
+
+  &:nth-child(5n) {
+    display: inline;
+  }
+
+  @media (min-width: 400px) {
+    &:nth-child(5n) {
+      display: none;
+    }
+    &:nth-child(3n) {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 580px) {
+    &:nth-child(3n),
+    &:nth-child(5n) {
+      display: none;
+    }
+    &:nth-child(2n) {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    &,
+    &:nth-child(3n),
+    &:nth-child(5n) {
+      display: inline;
+    }
+  }
+}
+
+// 16-20 ticks
+.chart__axis--x--15 .tick {
+  display: none;
+
+  &:nth-child(3n) {
+    display: inline;
+  }
+
+  @media (min-width: 400px) {
+    &:nth-child(3n) {
+      display: none;
+    }
+    &:nth-child(2n) {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 720px) {
+    &,
+    &:nth-child(3n) {
+      display: inline;
+    }
+  }
+}
+
+// 11-15 ticks
+.chart__axis--x--10 .tick {
+  display: none;
+
+  &:nth-child(3n) {
+    display: inline;
+  }
+
+  @media (min-width: 380px) {
+    &:nth-child(3n) {
+      display: none;
+    }
+    &:nth-child(2n) {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 650px) {
+    &,
+    &:nth-child(3n) {
+      display: inline;
+    }
+  }
+}
+
+
+.chart__axis--y--grid {
+  line {
+    stroke: $gray-light;
+  }
+  path {
+    stroke: transparent;
+  }
+}
+
+
+.chart-tooltip {
+  background: $white;
+  position: absolute;
+  z-index: 20;
+  visibility: hidden;
+  padding: $vertical-space-sm $horizontal-space;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-xs;
+  border: 1px solid $border-color;
+}
+
+.chart-description {
+  @include text-style-alt;
+}

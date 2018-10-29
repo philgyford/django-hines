@@ -66,6 +66,8 @@ root_dir_patterns = ([
 
     path('links/', include('hines.links.urls')),
 
+    path('stats/', include('hines.stats.urls')),
+
     path('patterns/', include('hines.patterns.urls')),
 
     # Redirecting legacy author/publication detail URLs that have ?id=123.
