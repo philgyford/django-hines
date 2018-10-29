@@ -62,21 +62,7 @@ $navbar-form-top:   ($border-width - ($input-border-width * 2));
   border-bottom:    $nav-border-width solid $border-color;
 
   a {
-    color: $nav-text-color;
     text-decoration: none;
-
-    &:focus,
-    &:hover,
-    &:visited {
-      color: $nav-text-color;
-      text-decoration: none;
-    }
-    &:visited {
-      color: $nav-text-color;
-    }
-    &:hover {
-      color: $nav-link-hover-color;
-    }
   }
 }
 
