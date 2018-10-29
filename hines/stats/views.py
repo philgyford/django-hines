@@ -34,6 +34,8 @@ class StatsView(TemplateView):
                 # 'misc_events_per_year',
 
                 'writing_per_year',
+                'github_contributions_per_year',
+                'emails_received_per_year',
 
                 'flickr_photos_per_year',
                 'twitter_tweets_per_year',
@@ -126,6 +128,12 @@ class StatsView(TemplateView):
 
     def get_data_writing_per_year(self):
         return WritingGenerator().get_per_year()
+
+    def get_data_github_contributions_per_year(self):
+        return StaticGenerator().get_github_contributions_per_year()
+
+    def get_data_emails_received_per_year(self):
+        return StaticGenerator().get_emails_received_per_year()
 
 
     def get_data_flickr_photos_per_year(self):

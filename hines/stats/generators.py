@@ -297,6 +297,132 @@ class StaticGenerator(Generator):
     For all kinds of hard-coded data.
     """
 
+    def get_emails_received_per_year(self):
+        # From Archive by year folders:
+        personal = {
+            '1995': 541,
+            '1996': 792,
+            '1997': 1889,
+            '1998': 1702,
+            '1999': 1446,
+            '2000': 1898,
+            '2001': 1723,
+            '2002': 2719,
+            '2003': 3060,
+            '2004': 3255,
+            '2005': 2415,
+            '2006': 1813,
+            '2007': 1919,
+            '2008': 2464,
+            '2009': 3079,
+            '2010': 2423,
+            '2011': 2623,
+            '2012': 1523,
+            '2013': 2003,
+            '2014': 2145,
+            '2015': 2169,
+            '2016': 1996,
+            '2017': 1807,
+        }
+        # Pepys Feedback:
+        pepys = {
+            '2002': 10,
+            '2003': 866,
+            '2004': 464,
+            '2005': 554,
+            '2006': 558,
+            '2007': 389,
+            '2008': 359,
+            '2009': 253,
+            '2010': 329,
+            '2011': 508,
+            '2012': 450,
+            '2013': 266,
+            '2014': 205,
+            '2015': 212,
+            '2016': 315,
+            '2017': 251,
+        }
+
+        barbicantalk = {
+            '2009': 53,
+            '2010': 57,
+            '2011': 44,
+            '2012': 34,
+            '2013': 64,
+            '2014': 18,
+            '2015': 12,
+            '2016': 1,
+            '2017': 8,
+        }
+
+        whitstillman = {
+            '2002': 31,
+            '2003': 29,
+            '2004': 26,
+            '2005': 25,
+            '2006': 58,
+            '2007': 60,
+            '2008': 12,
+            '2009': 26,
+            '2010': 35,
+            '2011': 40,
+            '2012': 79,
+            '2013': 22,
+            '2014': 20,
+            '2015': 16,
+            '2016': 5,
+            '2017': 0,
+        }
+
+        byliner = {
+            '1999': 2,
+            '2000': 35,
+            '2001': 19,
+            '2002': 33,
+            '2003': 49,
+            '2004': 58,
+            '2005': 52,
+            '2006': 78,
+            '2007': 34,
+            '2008': 40,
+            '2009': 8,
+            '2010': 49,
+            '2011': 10,
+        }
+
+        # Add all the above together into a single dict:
+        totals = {}
+
+        for k, v in personal.items():
+            totals[k] = v
+
+        for k, v in pepys.items():
+            totals[k] += v
+
+        for k, v in barbicantalk.items():
+            totals[k] += v
+
+        for k, v in whitstillman.items():
+            totals[k] += v
+
+        for k, v in byliner.items():
+            totals[k] += v
+
+        data = {
+            'data': [],
+            'title': 'Emails received per year',
+            'description': "Not counting: work, discussion lists, most newsletters, spam, or anything else I threw away."
+        }
+
+        # Put totals dict into correct format for charts:
+        for k, v in totals.items():
+            data['data'].append({
+                'label': k, 'value': v,
+            })
+
+        return data
+
     def get_headaches_per_year(self):
         data = {
             'data': [
@@ -315,6 +441,26 @@ class StaticGenerator(Generator):
             ],
             'title': 'Headaches per year',
             'description': "Those that require, or are defeated by, prescription medication."
+        }
+
+        return data
+
+    def get_github_contributions_per_year(self):
+        # From https://github.com/philgyford
+        data = {
+            'data': [
+                {'label': '2009', 'value': 11},
+                {'label': '2010', 'value': 168},
+                {'label': '2011', 'value': 97},
+                {'label': '2012', 'value': 296},
+                {'label': '2013', 'value': 620},
+                {'label': '2014', 'value': 626},
+                {'label': '2015', 'value': 1061},
+                {'label': '2016', 'value': 1533},
+                {'label': '2017', 'value': 1762},
+            ],
+            'title': 'GitHub activity per year',
+            'description':'Contributions listed for <a href="https://github.com/philgyford">philgyford</a>.',
         }
 
         return data
