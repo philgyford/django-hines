@@ -160,6 +160,16 @@
                   return false;
                 };
               })
+              .style('opacity', function(d, i) {
+                // If the bar is for the current year, make its opacity
+                // in proportion to how far through the year we are.
+                var currentYear = new Date().getFullYear();
+                if (parseInt(d['label']) == currentYear) {
+                  return (dayOfYear() / 366);
+                } else {
+                  return 1;
+                };
+              })
               // Not sure why these 4 lines have to be here as well as below:
               .attr("x", barX)
               .attr("y", barY)
@@ -201,6 +211,20 @@
          */
         function translation(x,y) {
           return 'translate(' + x + ',' + y + ')';
+        };
+
+        /**
+         * Utility function to return the day of the year, as a number
+         * from 1-366.
+         * From https://stackoverflow.com/a/8619946/250962
+         */
+        function dayOfYear() {
+          var now = new Date();
+          var start = new Date(now.getFullYear(), 0, 0);
+          var diff = now - start;
+          var oneDay = 1000 * 60 * 60 * 24;
+          var day = Math.floor(diff / oneDay);
+          return day;
         };
 
         render();

@@ -1,4 +1,5 @@
 {% extends 'hines_core/layouts/full_width.html' %}
+{% load static %}
 
 {% block head_page_title %}Stats{% if current_page %}: {{ current_page.title }}{% endif %}{% endblock %}
 {% block content_title %}Stats{% if current_page %}: {{ current_page.title }}{% endif %}{% endblock %}
@@ -43,7 +44,7 @@
 
   {{ block.super }}
 
-  <script src="/static/hines/js/vendor/d3.v5.min.js"></script>
+  <script src="{% static 'hines/js/vendor/d3.v5.min.js' %}"></script>
 
   {# Outputs the chart data as JSON in <script> tags with the ID of chart.name #}
   {% for chart in charts %}

@@ -34,7 +34,7 @@ class StatsView(TemplateView):
                 'periodicals_per_year',
 
                 'emails_received_per_year',
-                
+
                 'lastfm_scrobbles_per_year',
                 'twitter_favorites_per_year',
 
@@ -68,7 +68,6 @@ class StatsView(TemplateView):
 
         slug = self.kwargs.get('slug', None)
 
-        print(slug)
         # Include the data for the current page in addition, separately:
         for page in self.pages:
             if page['slug'] == slug:
