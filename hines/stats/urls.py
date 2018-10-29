@@ -16,7 +16,7 @@ urlpatterns = [
     path(r'creating/',
         views.StatsView.as_view(),
         {'slug': 'creating',},
-        name='stats_home'),
+        name='home'),
 
     path('<slug:slug>/',
         views.StatsView.as_view(),

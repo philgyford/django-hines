@@ -1,6 +1,8 @@
 {% extends 'hines_core/layouts/full_width.html' %}
 {% load static %}
 
+{% block about_nav_active %}is-active{% endblock %}
+
 {% block head_page_title %}Stats{% if current_page %}: {{ current_page.title }}{% endif %}{% endblock %}
 {% block content_title %}Stats{% if current_page %}: {{ current_page.title }}{% endif %}{% endblock %}
 
