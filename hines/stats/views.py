@@ -1,16 +1,22 @@
 from django.http import Http404
 from django.views.generic import TemplateView
 
+from hines.core.views import CacheMixin
+
 from .generators import (
     EventsGenerator, FlickrGenerator, LastfmGenerator, PinboardGenerator,
     ReadingGenerator, StaticGenerator, TwitterGenerator, WritingGenerator
 )
 
 
-class StatsView(TemplateView):
+class StatsView(CacheMixin, TemplateView):
+    """
+    For showing bar charts.
     """
 
-    """
+    # Heavy pages; no need to be up-to-the-minute.
+    cache_timeout = 86400 # seconds
+
     template_name = 'stats/stats.html'
 
     pages = [
