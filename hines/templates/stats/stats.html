@@ -60,7 +60,7 @@
       {% for chart in charts %}
         data = JSON.parse(document.getElementById('{{ chart.name}}').textContent);
 
-        chart = hines.chart().kind('bar');
+        chart = hines.chart();
 
         d3.select('.js-chart-{{ chart.name }}').datum(data).call(chart);
       {% endfor %}

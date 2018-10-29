@@ -1,14 +1,30 @@
+/**
+ * Bar charts.
+ * Requires D3.js (v5).
+ *
+ * Example usage:
+ *
+ *  <div class="js-chart"></div>
+ *
+ *  <script>
+ *    var data = [
+ *      {'label': '2012', 'value': 32},
+ *      {'label': '2013', 'value': 46},
+ *      {'label': '2014', 'value': 25}
+ *    ];
+ *
+ *    var chart = hines.chart();
+ *
+ *    d3.select('.js-chart').datum(data).call(chart);
+ *
+ *  </script>
+ */
 ;(function() {
   'use strict';
 
   window.hines = window.hines || {};
 
   window.hines.chart = function(selection) {
-
-    /**
-     * Can be changed using the chart.kind() method.
-     */
-    var kind = 'bar';
 
     /**
      * Can be changed using the chart.margin() method.
@@ -50,7 +66,7 @@
     // The tooltip that appears when hovering over a bar or span.
     var tooltip = d3.select('body')
                     .append('div')
-                    .classed('chart-tooltip', true);
+                    .classed('chart-tooltip js-chart-tooltip', true);
 
     function chart(selection) {
 
@@ -179,10 +195,21 @@
                 tooltip.html( tooltipFormat(d) );
                 tooltip.style('visibility', 'visible');
               })
-              .on('mousemove', function() {
+              .on('mousemove', function(d, i) {
+                // Bit hacky. Keep the tooltip onscreen when it's at
+                // the right-most edge.
+
+                // Default, slightly to right of cursor:
+                var tooltipLeft = event.pageX + 15;
+
+                if (window.innerWidth - event.pageX < 120) {
+                  // Close to edge; put it to left of cursor:
+                  tooltipLeft = event.pageX - 90;
+                };
+
                 tooltip
                   .style('top', (event.pageY-10)+'px')
-                  .style('left',(event.pageX+15)+'px');
+                  .style('left', tooltipLeft+'px');
               })
               .on('mouseout', function() {
                 tooltip.style('visibility', 'hidden');
@@ -237,16 +264,6 @@
     chart.margin = function(value) {
       if (!arguments.length) return margin;
       margin = value;
-      return chart;
-    };
-
-    /**
-     * Could be 'bar'.
-     */
-    chart.kind = function(value) {
-      if (!arguments.length) return kind;
-      kind = value;
-      // if (typeof render === 'function') render();
       return chart;
     };
 
