@@ -27,11 +27,13 @@
       <h2 id="{{ header_id }}">{{ chart.title }}</h2>
     {% endwith %}
 
-    <div class="chart js-chart-{{ chart.name }}"></div>
+    <figure class="figure figure--chart">
+      <div class="chart js-chart-{{ chart.name }}"></div>
 
-    {% if chart.description %}
-      <p class="chart-description">{{ chart.description|safe }}</p>
-    {% endif %}
+      {% if chart.description %}
+        <figcaption class="chart-description">{{ chart.description|safe }}</figcaption>
+      {% endif %}
+    </figure>
   {% endfor %}
 
 {% endblock content %}

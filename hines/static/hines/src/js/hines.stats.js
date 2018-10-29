@@ -13,7 +13,7 @@
     /**
      * Can be changed using the chart.margin() method.
      */
-    var margin = {top: 5, bottom: 30, left: 50, right: 10};
+    var margin = {top: 5, bottom: 20, left: 50, right: 5};
 
     /**
      * Can be changed using the chart.tooltipFormat() method.
@@ -63,8 +63,17 @@
         var inner = svg.append('g').classed('chart__inner', true);
 
         // Set up axes.
-        inner.append("g")
-              .classed("chart__axis chart__axis--x", true);
+        var xAxisG = inner.append("g")
+                            .classed("chart__axis chart__axis--x", true);
+
+        // Add extra classes depending on the number of ticks on x-axis:
+        if (data.length > 20) {
+          xAxisG.classed('chart__axis--x--20', true);
+        } else if (data.length > 15) {
+          xAxisG.classed('chart__axis--x--15', true);
+        } else if (data.length > 10) {
+          xAxisG.classed('chart__axis--x--10', true);
+        };
 
         inner.append("g")
               .classed("chart__axis chart__axis--y", true);

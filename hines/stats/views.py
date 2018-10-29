@@ -23,7 +23,6 @@ class StatsView(TemplateView):
                 'twitter_tweets_per_year',
                 'flickr_photos_per_year',
                 'github_contributions_per_year',
-                'emails_received_per_year',
                 'headaches_per_year',
             ]
         },
@@ -34,6 +33,8 @@ class StatsView(TemplateView):
                 'books_per_year',
                 'periodicals_per_year',
 
+                'emails_received_per_year',
+                
                 'lastfm_scrobbles_per_year',
                 'twitter_favorites_per_year',
 

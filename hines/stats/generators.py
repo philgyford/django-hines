@@ -137,7 +137,7 @@ class EventsGenerator(Generator):
 
         data = {
             'data': [],
-            'title': '{} per year'.format(kind_title)
+            'title': '{}'.format(kind_title)
         }
 
         qs = Event.objects.filter(kind=self.kind) \
@@ -165,8 +165,8 @@ class FlickrGenerator(Generator):
     def get_photos_per_year(self):
         data = {
             'data': [],
-            'title': 'Flickr photos per year',
-            'description': 'Number of photos posted <a href="https://www.flickr.com/photos/{}/">on Flickr</a>.'.format(self.nsid),
+            'title': 'Flickr photos',
+            'description': 'Number of photos posted <a href="https://www.flickr.com/photos/{}/">on Flickr</a> per year.'.format(self.nsid),
         }
 
         try:
@@ -197,8 +197,8 @@ class LastfmGenerator(Generator):
 
         data = {
             'data': [],
-            'title': 'Tracks listened to per year',
-            'description': 'Number of scrobbles <a href="https://www.last.fm/user/{}">on Last.fm</a>.'.format(
+            'title': 'Tracks listened to',
+            'description': 'Number of scrobbles <a href="https://www.last.fm/user/{}">on Last.fm</a> per year.'.format(
                                                                 self.username),
         }
 
@@ -228,8 +228,8 @@ class PinboardGenerator(Generator):
     def get_bookmarks_per_year(self):
         data = {
             'data': [],
-            'title': 'Links per year',
-            'description': 'Number of links posted <a href="https://pinboard.in/u:{}">on Pinboard</a>.'.format(
+            'title': 'Links posted',
+            'description': 'Number of links posted <a href="https://pinboard.in/u:{}">on Pinboard</a> per year.'.format(
                                                                 self.username),
         }
 
@@ -264,8 +264,8 @@ class ReadingGenerator(Generator):
     def get_per_year(self):
         data = {
             'data': [],
-            'title': '{}s read per year'.format(self.kind).capitalize(),
-            'description': "Determined by date finished."
+            'title': '{}s read'.format(self.kind).capitalize(),
+            'description': "Per year, determined by date finished."
         }
 
         # counts will be like
@@ -411,8 +411,8 @@ class StaticGenerator(Generator):
 
         data = {
             'data': [],
-            'title': 'Emails received per year',
-            'description': "Not counting: work, discussion lists, most newsletters, spam, or anything else I threw away."
+            'title': 'Emails received',
+            'description': "Per year. Not counting: work, discussion lists, most newsletters, spam, or anything else I threw away."
         }
 
         # Put totals dict into correct format for charts:
@@ -439,8 +439,8 @@ class StaticGenerator(Generator):
                 {'label': '2016', 'value': 59},
                 {'label': '2017', 'value': 53},
             ],
-            'title': 'Headaches per year',
-            'description': "Those that require, or are defeated by, prescription medication."
+            'title': 'Headaches',
+            'description': "Per year. Those that require, or are defeated by, prescription medication."
         }
 
         return data
@@ -459,8 +459,8 @@ class StaticGenerator(Generator):
                 {'label': '2016', 'value': 1533},
                 {'label': '2017', 'value': 1762},
             ],
-            'title': 'GitHub activity per year',
-            'description':'Contributions listed for <a href="https://github.com/philgyford">philgyford</a>.',
+            'title': 'GitHub activity',
+            'description':'Contributions listed per year for <a href="https://github.com/philgyford">philgyford</a>.',
         }
 
         return data
@@ -475,8 +475,8 @@ class TwitterGenerator(Generator):
     def get_tweets_per_year(self):
         data = {
             'data': [],
-            'title': 'Tweets per year',
-            'description': 'Number of tweets posted by <a href="https://twitter.com/{}/">@{}</a>.'.format(
+            'title': 'Tweets posted',
+            'description': 'Number of tweets posted by <a href="https://twitter.com/{}/">@{}</a> per year.'.format(
                                         self.screen_name, self.screen_name),
         }
 
@@ -499,8 +499,8 @@ class TwitterGenerator(Generator):
     def get_favorites_per_year(self):
         data = {
             'data': [],
-            'title': 'Liked tweets per year',
-            'description': 'Number of tweets liked by <a href="https://twitter.com/{}/">@{}</a>.'.format(
+            'title': 'Tweets liked',
+            'description': 'Number of tweets liked by <a href="https://twitter.com/{}/">@{}</a> per year.'.format(
                                         self.screen_name, self.screen_name),
         }
 
@@ -529,8 +529,8 @@ class WritingGenerator(Generator):
         blog_slug = 'writing'
 
         data = {
-            'title': "Writing posts per year",
-            'description': 'From <a href="{}">Writing</a>.'.format(
+            'title': 'Writing posts',
+            'description': 'Posts per year in <a href="{}">Writing</a>.'.format(
                     reverse('weblogs:blog_detail', kwargs={'blog_slug': blog_slug})
             ),
             'data': [],
