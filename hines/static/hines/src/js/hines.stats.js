@@ -27,6 +27,17 @@
   window.hines.chart = function(selection) {
 
     /**
+     * Utility function: Adds a comma to numbers of 5 or more digits.
+     */
+    var numberFormat = function(d){
+      if ((''+d3.format('.0f')(d)).length > 4) {
+        return d3.format(',')(d);
+      } else {
+        return d3.format('d')(d);
+      };
+    };
+
+    /**
      * Can be changed using the chart.margin() method.
      */
     var margin = {top: 5, bottom: 20, left: 50, right: 5};
@@ -35,19 +46,11 @@
      * Can be changed using the chart.tooltipFormat() method.
      */
     var tooltipFormat = function(d) {
-      return '<strong>' + d.label + ':</strong> ' + d.value;
+      return '<strong>' + d.label + ':</strong> ' + numberFormat(d.value);
     };
 
     // Internal things that can't be overridden:
 
-    var yAxisTickFormat = function(d){
-      // Adds a comma to numbers of 5 or more digits.
-      if ((''+d3.format('.0f')(d)).length > 4) {
-        return d3.format(',')(d);
-      } else {
-        return d3.format('d')(d);
-      };
-    };
     var xScale = d3.scaleBand();
     var yScale = d3.scaleLinear();
     var xAxis = d3.axisBottom(xScale)
@@ -57,7 +60,7 @@
                     .ticks(5)
                     .tickSize(0)
                     .tickPadding(6)
-                    .tickFormat(yAxisTickFormat);
+                    .tickFormat(numberFormat);
     // The horizontal lines:
     var yAxisGrid = d3.axisLeft(yScale)
                       .ticks(5)
