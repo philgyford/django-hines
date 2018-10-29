@@ -7,41 +7,44 @@ from .generators import (
 )
 
 
-class HomeView(TemplateView):
-    template_name = 'stats/home.html'
-
-
 class StatsView(TemplateView):
+    """
+
+    """
     template_name = 'stats/stats.html'
 
     pages = [
         {
-            'slug': 'music',
-            'title': 'Music',
+            'slug': 'creating',
+            'title': 'Creating',
+            'charts': [
+                'writing_per_year',
+                'pinboard_bookmarks_per_year',
+                'twitter_tweets_per_year',
+                'flickr_photos_per_year',
+                'github_contributions_per_year',
+                'emails_received_per_year',
+                'headaches_per_year',
+            ]
+        },
+        {
+            'slug': 'consuming',
+            'title': 'Consuming',
             'charts': [
                 'books_per_year',
                 'periodicals_per_year',
 
-                'headaches_per_year',
+                'lastfm_scrobbles_per_year',
+                'twitter_favorites_per_year',
 
                 'movies_per_year',
                 'theatres_per_year',
                 'gigs_per_year',
-                'comedy_per_year',
                 'museums_per_year',
+                'comedy_per_year',
                 # 'concerts_per_year',
                 # 'dance_per_year',
                 # 'misc_events_per_year',
-
-                'writing_per_year',
-                'github_contributions_per_year',
-                'emails_received_per_year',
-
-                'flickr_photos_per_year',
-                'twitter_tweets_per_year',
-                'twitter_favorites_per_year',
-                'pinboard_bookmarks_per_year',
-                'lastfm_scrobbles_per_year',
             ]
         },
     ]
@@ -52,7 +55,7 @@ class StatsView(TemplateView):
 
         valid_slugs = [p['slug'] for p in self.pages]
 
-        if slug in valid_slugs:
+        if slug is None or slug in valid_slugs:
             return super().get(request, *args, **kwargs)
         else:
             raise Http404(("'{}' is not a valid slug.").format(slug))
@@ -62,9 +65,12 @@ class StatsView(TemplateView):
 
         context['pages'] = self.pages
 
+        slug = self.kwargs.get('slug', None)
+
+        print(slug)
         # Include the data for the current page in addition, separately:
         for page in self.pages:
-            if page['slug'] == self.kwargs.get('slug'):
+            if page['slug'] == slug:
                 context['current_page'] = page
                 break
 
