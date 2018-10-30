@@ -229,7 +229,7 @@ class PinboardGenerator(Generator):
         data = {
             'data': [],
             'title': 'Links posted',
-            'description': 'Number of links posted <a href="https://pinboard.in/u:{}">on Pinboard</a> per year.'.format(
+            'description': 'Number of links posted on Delicious, then <a href="https://pinboard.in/u:{}">on Pinboard</a>, per year.'.format(
                                                                 self.username),
         }
 
