@@ -65,6 +65,11 @@
   margin-bottom: $vertical-space-sm;
 
   @include text-style-nav;
+
+  .card--no-border & {
+    margin-top: 0;
+    margin-bottom: ($vertical-space-sm / 2);
+  }
 }
 
 .card__body {
