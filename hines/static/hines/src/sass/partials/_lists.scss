@@ -30,8 +30,15 @@ ol {
 
 // Unstyled lists
 
+// For the entire list.
 .list--unstyled {
   @include list-unstyled;
+}
+
+// For an individual list item.
+.list__item--unstyled {
+  padding-left: 0;
+  background: none;
 }
 
 
