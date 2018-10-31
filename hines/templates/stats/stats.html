@@ -15,8 +15,8 @@
         {% if page.slug == current_page.slug %}
           <span class="nav__link">{{ page.title }}</span>
         {% else %}
-          {% if page.slug == 'home' %}
-            <a class="nav__link" href="{% url 'stats:stats_home' %}">{{ page.title }}</a>
+          {% if page.slug == 'creating' %}
+            <a class="nav__link" href="{% url 'stats:home' %}">{{ page.title }}</a>
           {% else %}
             <a class="nav__link" href="{% url 'stats:stats_detail' slug=page.slug %}">{{ page.title }}</a>
           {% endif %}
