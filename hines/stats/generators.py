@@ -531,23 +531,27 @@ class TwitterGenerator(Generator):
         return data
 
 
-class WritingGenerator(Generator):
+class WeblogGenerator(Generator):
 
-    def get_per_year(self):
+    def __init__(self, blog_slug):
+        "slug is the slug of the Blog, like 'writing'."
+        self.blog_slug = blog_slug
+
+    def get_posts_per_year(self):
         """
         Writing blog posts per year.
         """
-        blog_slug = 'writing'
 
         data = {
             'title': 'Writing posts',
             'description': 'Posts per year in <a href="{}">Writing</a>.'.format(
-                    reverse('weblogs:blog_detail', kwargs={'blog_slug': blog_slug})
+                    reverse('weblogs:blog_detail',
+                            kwargs={'blog_slug': self.blog_slug})
             ),
             'data': [],
         }
 
-        qs = Post.public_objects.filter(blog__slug=blog_slug) \
+        qs = Post.public_objects.filter(blog__slug=self.blog_slug) \
                                 .annotate(year=TruncYear('time_published')) \
                                 .values('year') \
                                 .annotate(total=Count('id')) \
@@ -559,7 +563,7 @@ class WritingGenerator(Generator):
         for year in data['data']:
             if year['value'] > 0:
                 year['url'] = reverse('weblogs:post_year_archive', kwargs={
-                                    'blog_slug': blog_slug,
+                                    'blog_slug': self.blog_slug,
                                     'year': year['label'] })
 
         return data

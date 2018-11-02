@@ -5,7 +5,7 @@ from hines.core.views import CacheMixin
 
 from .generators import (
     EventsGenerator, FlickrGenerator, LastfmGenerator, PinboardGenerator,
-    ReadingGenerator, StaticGenerator, TwitterGenerator, WritingGenerator
+    ReadingGenerator, StaticGenerator, TwitterGenerator, WeblogGenerator
 )
 
 
@@ -139,7 +139,7 @@ class StatsView(CacheMixin, TemplateView):
         return EventsGenerator(kind='misc').get_per_year()
 
     def get_data_writing_per_year(self):
-        return WritingGenerator().get_per_year()
+        return WeblogGenerator(blog_slug='writing').get_posts_per_year()
 
     def get_data_github_contributions_per_year(self):
         return StaticGenerator().get_github_contributions_per_year()

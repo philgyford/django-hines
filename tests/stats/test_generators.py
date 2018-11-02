@@ -19,7 +19,7 @@ from spectator.reading.factories import PublicationFactory, ReadingFactory
 from hines.core.utils import make_date, make_datetime
 from hines.stats.generators import (
     EventsGenerator, FlickrGenerator, LastfmGenerator, PinboardGenerator,
-    ReadingGenerator, StaticGenerator, TwitterGenerator, WritingGenerator
+    ReadingGenerator, StaticGenerator, TwitterGenerator, WeblogGenerator
 )
 from hines.weblogs.factories import (
     BlogFactory, DraftPostFactory, LivePostFactory
@@ -472,10 +472,10 @@ class TwitterGeneratorTestCase(TestCase):
         ])
 
 
-class WritingGeneratorTestCase(TestCase):
+class WeblogGeneratorTestCase(TestCase):
 
     def test_title_description(self):
-        result = WritingGenerator().get_per_year()
+        result = WeblogGenerator(blog_slug='writing').get_posts_per_year()
 
         self.assertIn('title', result)
         self.assertEqual(result['title'], 'Writing posts')
@@ -490,7 +490,7 @@ class WritingGeneratorTestCase(TestCase):
                         blog=blog,
                         time_published=make_datetime('2018-01-01 12:00:00'))
 
-        result = WritingGenerator().get_per_year()
+        result = WeblogGenerator(blog_slug='writing').get_posts_per_year()
 
         self.assertIn('data', result)
         self.assertEqual(len(result['data']), 1)
@@ -514,7 +514,7 @@ class WritingGeneratorTestCase(TestCase):
         DraftPostFactory(blog=blog,
                         time_published=make_datetime('2018-01-01 12:00:00'))
 
-        result = WritingGenerator().get_per_year()
+        result = WeblogGenerator(blog_slug='writing').get_posts_per_year()
 
         self.assertIn('data', result)
         self.assertEqual(result['data'], [
