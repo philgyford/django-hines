@@ -14,7 +14,7 @@ urlpatterns = [
         {'slug': 'creating',},
         name='home'),
 
-    # Redirect the /stats//creating/ URL that I shared, to the home page.
+    # Redirect the /stats/creating/ URL that I shared, to the home page.
     path(r'creating/',
         RedirectView.as_view(pattern_name='stats:home', permanent=False)),
 

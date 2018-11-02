@@ -86,7 +86,8 @@ class Generator:
         # Put into a dict keyed by year:
         try:
             # Years are datetime.date's.
-            counts = OrderedDict((c['year'].year, c[value_key]) for c in qs)
+            counts = OrderedDict(
+                            (c['year'].year, c[value_key]) for c in qs)
         except AttributeError:
             # Assume years are integers.
             counts = OrderedDict((c['year'], c[value_key]) for c in qs)
@@ -148,8 +149,14 @@ class EventsGenerator(Generator):
 
         # We want all the event charts to span the full possible years:
         dates = Event.objects.aggregate(Min('date'), Max('date'))
-        start_year = dates['date__min'].year
-        end_year = dates['date__max'].year
+        try:
+            start_year = dates['date__min'].year
+        except AttributeError:
+            start_year = None
+        try:
+            end_year = dates['date__max'].year
+        except AttributeError:
+            end_year = None
 
         data['data'] = self._queryset_to_list(qs, start_year, end_year)
 
@@ -278,14 +285,18 @@ class ReadingGenerator(Generator):
         else:
             start_year = 1998
 
-        end_year = counts[-1]['year'].year
+        try:
+            end_year = counts[-1]['year'].year
+        except IndexError:
+            end_year = None
 
         data['data'] = self._queryset_to_list(
                             counts, start_year, end_year, value_key=self.kind)
 
         # Go through and add in URLs to each year.
         for year in data['data']:
-            year['url'] = reverse('spectator:reading:reading_year_archive',
+            if year['value'] > 0:
+                year['url'] = reverse('spectator:reading:reading_year_archive',
                                     kwargs={'year': year['label'],
                                             'kind': '{}s'.format(self.kind)})
 
@@ -510,15 +521,15 @@ class TwitterGenerator(Generator):
             return data
 
         # Converting Tweets' 'post_year' field into our required 'year':
-        qs = user.favorites\
-                                        .annotate(year=F('post_year')) \
-                                        .values('year') \
-                                        .annotate(total=Count('id')) \
-                                        .order_by('year')
+        qs = user.favorites.annotate(year=F('post_year')) \
+                            .values('year') \
+                            .annotate(total=Count('id')) \
+                            .order_by('year')
 
         data['data'] = self._queryset_to_list(qs)
 
         return data
+
 
 class WritingGenerator(Generator):
 
@@ -546,7 +557,8 @@ class WritingGenerator(Generator):
 
         # Go through and add URLs for each year of writing.
         for year in data['data']:
-            year['url'] = reverse('weblogs:post_year_archive', kwargs={
+            if year['value'] > 0:
+                year['url'] = reverse('weblogs:post_year_archive', kwargs={
                                     'blog_slug': blog_slug,
                                     'year': year['label'] })
 
