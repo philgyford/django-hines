@@ -15,4 +15,3 @@ def verbatim_include(name):
     """
     template = get_template(name)
     return escape(template.render())
-
