@@ -26,18 +26,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:4c45dc363daba811baeb7b6307ddf5c60beb9a43e1d0707d0786cd9acb20b563",
-                "sha256:767bc7273d4a3580d87b605bfe240745dcbdd7828e1dc85fa69ae692f56cfd00"
+                "sha256:0daae195b2b2f7a7ae6b888ff9dd3f9bf6c339522924f5d73f1ddfc44f07a3f5",
+                "sha256:d97f89a8d1a50377cbb7eca15040e65cd1a97d049e7396757fef00d08db9f285"
             ],
             "index": "pypi",
-            "version": "==1.9.37"
+            "version": "==1.9.40"
         },
         "botocore": {
             "hashes": [
-                "sha256:a256dbe50b05111a53640ac5defd71aa589d1fab27bd7df7310d7f0da72447a7",
-                "sha256:eed1b39027ee882ebd0df10dcb7307db20fc4b468debae513dc183743e850d17"
+                "sha256:ad7f7e11aa5927a41e00b398b2c77f49d9f04da3fc509c0378f54973bb8a3421",
+                "sha256:cd01d12bd983c132d53b839097f6d7a9bda0d31d9dd0cb9b86566680efdad24a"
             ],
-            "version": "==1.12.37"
+            "version": "==1.12.40"
         },
         "certifi": {
             "hashes": [
@@ -120,10 +120,10 @@
         },
         "django-spectator": {
             "hashes": [
-                "sha256:6d47895bf14f5300d5b805ccc3f3c9ac18651e378f2f9d12a300fa203f847fd5"
+                "sha256:82489d9f67d6957be671d7d59bd5794b51df4e60043664c2131eb3cc51cd8059"
             ],
             "index": "pypi",
-            "version": "==8.7.0"
+            "version": "==8.7.1"
         },
         "django-storages": {
             "hashes": [
