@@ -301,6 +301,22 @@ class ReadingGeneratorTestCase(TestCase):
 
 class StaticGeneratorTestCase(TestCase):
 
+    def test_diary_title_description(self):
+        result = StaticGenerator().get_diary_words_per_year()
+
+        self.assertIn('title', result)
+        self.assertEqual(result['title'], 'Words written in diary')
+        self.assertNotIn('description', result)
+        # self.assertEqual(result['description'], '')
+
+    def test_diary_data(self):
+        "Not testing the details as it's all hard-coded."
+        result = StaticGenerator().get_diary_words_per_year()
+
+        self.assertIn('data', result)
+        self.assertIn('label', result['data'][0])
+        self.assertIn('value', result['data'][0])
+
     def test_emails_title_description(self):
         result = StaticGenerator().get_emails_received_per_year()
 

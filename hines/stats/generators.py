@@ -308,6 +308,38 @@ class StaticGenerator(Generator):
     For all kinds of hard-coded data.
     """
 
+    def get_diary_words_per_year(seelf):
+        data = {
+            'data': [
+                # {'label': '1996', 'value': 46696}, # Partial year
+                {'label': '1997', 'value': 125643},
+                {'label': '1998', 'value': 103359},
+                {'label': '1999', 'value': 88432},
+                {'label': '2000', 'value': 108429},
+                {'label': '2001', 'value': 75226},
+                {'label': '2002', 'value': 40419},
+                {'label': '2003', 'value': 31648},
+                {'label': '2004', 'value': 44537},
+                {'label': '2005', 'value': 77280},
+                {'label': '2006', 'value': 89983},
+                {'label': '2007', 'value': 38911},
+                {'label': '2008', 'value': 74180},
+                {'label': '2009', 'value': 85464},
+                {'label': '2010', 'value': 88061},
+                {'label': '2011', 'value': 74305},
+                {'label': '2012', 'value': 50409},
+                {'label': '2013', 'value': 80000},
+                {'label': '2014', 'value': 85572},
+                {'label': '2015', 'value': 57049},
+                {'label': '2016', 'value': 72438},
+                {'label': '2017', 'value': 30978},
+            ],
+            'title': 'Words written in diary',
+            # 'description': "Per year."
+        }
+
+        return data
+
     def get_emails_received_per_year(self):
         # From Archive by year folders:
         personal = {

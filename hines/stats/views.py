@@ -29,6 +29,7 @@ class StatsView(CacheMixin, TemplateView):
                 'twitter_tweets_per_year',
                 'flickr_photos_per_year',
                 'github_contributions_per_year',
+                'diary_words_per_year',
                 'headaches_per_year',
             ]
         },
@@ -143,6 +144,9 @@ class StatsView(CacheMixin, TemplateView):
 
     def get_data_github_contributions_per_year(self):
         return StaticGenerator().get_github_contributions_per_year()
+
+    def get_data_diary_words_per_year(self):
+        return StaticGenerator().get_diary_words_per_year()
 
     def get_data_emails_received_per_year(self):
         return StaticGenerator().get_emails_received_per_year()
