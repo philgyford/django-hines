@@ -43,10 +43,13 @@ var INJECT_IGNORE_PATH  = 'hines';
 var PATHS = {
   src: {
     sassFiles:      SRC_DIR + '/sass/**/*.scss',
+    sassWatchFiles: SRC_DIR + '/sass/**/*.scss',
     jsDir:          SRC_DIR + '/js',
     jsVendorDir:    SRC_DIR + '/js/vendor',
+    jsWatchFiles:   SRC_DIR + '/js/**/*.js',
     // Our custom file(s):
     jsSiteFiles:    SRC_DIR + '/js/*.js',
+    jsAdminFiles:   SRC_DIR + '/js/admin/*.js',
   },
   dest: {
     cssDir:         STATIC_DIR + '/hines/css',
@@ -114,7 +117,14 @@ gulp.task('sass', gulp.series('clean:css', function buildSass() {
  */
 gulp.task('js', gulp.series('clean:js', function buildJS() {
 
-  // First just copy our already-minified and not-used-everywhere
+  gulp.src([
+    PATHS.src.jsAdminFiles
+  ])
+    .pipe(concat('admin.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(PATHS.dest.jsDir));
+
+  // First, just copy our already-minified and not-used-everywhere
   // 3rd-party JS files:
   gulp.src([
     PATHS.src.jsVendorDir + '/d3.v5.min.js'
@@ -173,7 +183,7 @@ gulp.task('inject', function doInjection() {
 gulp.task('js:watch', function () {
   // Must have usePolling if running this in a VM, and editing the files on
   // the host, because changes won't be noticed otherwise.
-  gulp.watch(PATHS.src.jsSiteFiles, {usePolling: true}, gulp.series(
+  gulp.watch(PATHS.src.jsWatchFiles, {usePolling: true}, gulp.series(
     'js',
     'inject'
   ));
@@ -183,7 +193,7 @@ gulp.task('js:watch', function () {
 gulp.task('sass:watch', function () {
   // Must have usePolling if running this in a VM, and editing the files on
   // the host, because changes won't be noticed otherwise.
-  gulp.watch(PATHS.src.sassFiles, {usePolling: true}, gulp.series(
+  gulp.watch(PATHS.src.sassWatchFiles, {usePolling: true}, gulp.series(
     'sass',
     'inject'
   ));

@@ -43,6 +43,8 @@ class PostAdminForm(autocomplete.FutureModelForm):
             # The django-autocomplete-light tag widget:
             'tags': autocomplete.TaggitSelect2(
                                 reverse_lazy('weblogs:post_tag_autocomplete')),
+            'body': forms.Textarea(
+                        attrs={'class': 'vLargeTextField js-patterns'}),
         }
         fields = '__all__'
 
@@ -96,6 +98,9 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     radio_fields = {'featured': admin.HORIZONTAL}
     readonly_fields = ('time_created', 'time_modified', )
+
+    class Media:
+        js = ('hines/js/admin.min.js',)
 
     def status_icon(self, obj):
         if obj.status == Post.LIVE_STATUS:
