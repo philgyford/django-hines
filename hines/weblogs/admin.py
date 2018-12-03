@@ -35,16 +35,28 @@ class BlogAdmin(admin.ModelAdmin):
 
 class PostAdminForm(autocomplete.FutureModelForm):
     """
-    So we can add custom validation and autocomplete for tags.
+    So we can add custom validation and autocomplete for tags, and tweak
+    formatting of other inputs.
     """
     class Meta:
         model = Post
         widgets = {
+            'title': forms.TextInput(attrs={'class': 'vLargeTextField'}),
+            'intro': forms.Textarea(attrs={
+                            'class': 'vLargeTextField',
+                            'rows': 6,
+                        }),
+            'body': forms.Textarea(attrs={
+                            'class': 'vLargeTextField js-patterns',
+                            'rows': 20,
+                        }),
+            'excerpt': forms.Textarea(attrs={
+                            'class': 'vLargeTextField',
+                            'rows': 3,
+                        }),
             # The django-autocomplete-light tag widget:
             'tags': autocomplete.TaggitSelect2(
                                 reverse_lazy('weblogs:post_tag_autocomplete')),
-            'body': forms.Textarea(
-                        attrs={'class': 'vLargeTextField js-patterns'}),
         }
         fields = '__all__'
 
@@ -77,12 +89,14 @@ class PostAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('blog', 'author', 'title', 'slug', 'status',
-                        'time_published', 'featured',)
+            'fields': ('blog', 'title', 'slug', 'status', 'time_published',)
         }),
         ('The post', {
-            'fields': ('html_format', 'intro', 'body', 'excerpt', 'remote_url',
-                'tags',),
+            'fields': ('html_format', 'intro', 'body', 'excerpt', 'tags',),
+        }),
+        ('Extra', {
+            'classes': ('collapse',),
+            'fields': ('author', 'featured', 'remote_url',)
         }),
         ('Comments', {
             'classes': ('collapse',),
