@@ -1,11 +1,36 @@
+/**
+ * Adds some buttons above textareas in Django Admin that, when clicked, insert
+ * our custom HTML patterns into the textarea.
+ *
+ * To use, include this JS in the Admin change page for a model, and add the
+ * 'js-patterns' class to the textarea. eg:
+ *
+ * from django import forms
+ * from django.contrib import admin
+ * from myapp.models import Post
+ *
+ * class PostAdminForm(forms.ModelForm):
+ *     class Meta:
+ *         model = Post
+ *         widgets = {
+ *             'body': forms.Textarea(attrs={
+ *                         'class': 'vLargeTextField js-patterns',
+ *              })
+ *         }
+ *         fields = '__all__'
+ *
+ * @admin.register(Post)
+ * class PostAdmin(admin.ModelAdmin):
+ *     form = PostAdminForm
+ *     # more here...
+ */
 ;(function($) {
   'use strict';
 
   $(document).ready(function() {
+    // GO!
     hines.admin.patternsField().init();
   });
-
-
 
   window.hines = window.hines || {};
 
@@ -15,25 +40,34 @@
 
     var exports = {
 
+      /**
+       * Call this method to set everything up.
+       */
       init: function() {
         if ($('.js-patterns').length === 0) {
+          // No appropriate fields to prepare.
           return;
         };
 
         $('.js-patterns').each(function(idx) {
           initField($(this));
         });
-
       }
     };
 
+    /**
+     * Prepare a single textarea.
+     * $field is the jQuery object representing the textarea.
+     */
     function initField($field) {
-
       addButtons($field);
       initListeners($field);
-
     };
 
+    /**
+     * Add the buttons/links above the textarea.
+     * $field is the jQuery object representing the textarea.
+     */
     function addButtons($field) {
       $field.before('\
         <div style="margin-bottom: 0.5em;">\
@@ -58,6 +92,10 @@
       ');
     };
 
+    /**
+     * Start listening for clicks on the buttons, and insert the appropriate
+     * HTML when one is clicked.
+     */
     function initListeners() {
       $('.js-patterns-button').on('click', function(ev) {
         ev.preventDefault();
