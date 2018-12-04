@@ -143,7 +143,7 @@ class Post(TimeStampedModelMixin, models.Model):
     remote_url = models.URLField(blank=True,
             help_text="If this post is reposted from elsewhere, add the URL for the original and it will be used for the post's permalink")
 
-    time_published = models.DateTimeField(null=True, blank=True)
+    time_published = models.DateTimeField(null=True, blank=False)
 
     slug = models.SlugField(max_length=255, unique_for_date='time_published',
             help_text='Must be unique within its date of publication')
