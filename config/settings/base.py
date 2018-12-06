@@ -251,7 +251,7 @@ HINES_HOME_PAGE_DISPLAY = {
     'flickr_photos': 4,
     'pinboard_bookmarks': 3,
     'weblog_posts': {
-        'writing': 2,
+        'writing': 3,
         'comments': 1,
     },
 }
