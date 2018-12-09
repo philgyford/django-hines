@@ -276,10 +276,14 @@ class Post(TimeStampedModelMixin, models.Model):
     def make_excerpt(self):
         """
         For generating the excerpt on a Post.
-        If the excerpt is not set, we use a truncated version of intro + body.
+
+        We allow HTML if self.excerpt is set, assuming it uses sensible tags.
+
+        If the excerpt is not set, we use a truncated version of intro + body,
+        with no HTML tags.
 
         Note: This should be done AFTER making the intro_html and body_html
-        elements, in case we need to strip the HTML (which we can't do by
+        elements, as we need to strip the HTML (which we can't do by
         using intro and body if they're in, say, Markdown).
         """
         if self.excerpt:
@@ -291,7 +295,7 @@ class Post(TimeStampedModelMixin, models.Model):
             html_parser = html.parser.HTMLParser()
             text = html_parser.unescape(text)
             text = truncate_string(
-                    text, strip_html=False, chars=100, at_word_boundary=True)
+                    text, strip_html=True, chars=100, at_word_boundary=True)
         return text
 
     @property
