@@ -80,6 +80,7 @@
           Image: \
           &nbsp; \
           <a href="#" class="js-patterns-button" data-pattern="img" data-options="left">Left</a> &nbsp;\
+          <a href="#" class="js-patterns-button" data-pattern="img" data-options="">Standard</a> &nbsp;\
           <a href="#" class="js-patterns-button" data-pattern="img" data-options="full">Full</a> &nbsp;\
           <a href="#" class="js-patterns-button" data-pattern="img" data-options="right">Right</a> &nbsp;\
           • \
