@@ -33,7 +33,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.post2 = LivePostFactory(
                             title='My "latest" post',
                             slug='my-latest-post',
-                            excerpt='This is my excerpt.',
+                            excerpt='This is my <b>excerpt</b>.',
                             intro="The post intro.",
                             body="This is the post <b>body</b>.\n\nOK?",
                             author=self.user,

@@ -126,7 +126,7 @@ class Post(TimeStampedModelMixin, models.Model):
     title = models.CharField(blank=False, max_length=255)
 
     excerpt = models.TextField(blank=True,
-            help_text="Brief summary, no HTML. If not set, it will be a truncated version of the Intro.")
+            help_text="Brief summary, HTML allowed. If not set, it will be a truncated version of the Intro.")
 
     intro = models.TextField(blank=False,
             help_text="First paragraph or so of the post.")
@@ -276,15 +276,14 @@ class Post(TimeStampedModelMixin, models.Model):
     def make_excerpt(self):
         """
         For generating the excerpt on a Post.
-        If the excerpt is not set, we use a truncated version of intro + body,
-        with no HTML tags.
+        If the excerpt is not set, we use a truncated version of intro + body.
 
         Note: This should be done AFTER making the intro_html and body_html
-        elements, as we need to strip the HTML (which we can't do by
+        elements, in case we need to strip the HTML (which we can't do by
         using intro and body if they're in, say, Markdown).
         """
         if self.excerpt:
-            text = strip_tags(self.excerpt)
+            text = self.excerpt
         else:
             text = '{} {}'.format(self.intro_html, self.body_html)
             # The HTML texts will contain entities like '&#8217;' which we
@@ -292,7 +291,7 @@ class Post(TimeStampedModelMixin, models.Model):
             html_parser = html.parser.HTMLParser()
             text = html_parser.unescape(text)
             text = truncate_string(
-                    text, strip_html=True, chars=100, at_word_boundary=True)
+                    text, strip_html=False, chars=100, at_word_boundary=True)
         return text
 
     @property
