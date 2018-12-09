@@ -108,7 +108,7 @@
       $('.js-patterns-button').on('click', function(ev) {
         ev.preventDefault();
 
-        var $field = $(this).parent().siblings('.js-patterns');
+        var $field = $(this).parent().parent().siblings('.js-patterns');
         var pattern = $(this).data('pattern');
         var options = $(this).data('options');
 
