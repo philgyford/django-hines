@@ -121,7 +121,7 @@
       var end = $field.prop('selectionEnd');
 
       var startText = text.substr(0, start);
-      var selectedText = text.substr(start, end);
+      var selectedText = text.substr(start, (end-start));
       var endText = text.substr(end);
 
       // What we'll insert at selection point, if any:
