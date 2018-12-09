@@ -71,24 +71,31 @@
     function addButtons($field) {
       $field.before('\
         <div style="margin-bottom: 0.5em;">\
-          Video: \
-          &nbsp; \
-          <a href="#" class="js-patterns-button" data-pattern="video" data-options="left">Left</a> &nbsp;\
-          <a href="#" class="js-patterns-button" data-pattern="video">Full</a> &nbsp;\
-          <a href="#" class="js-patterns-button" data-pattern="video" data-options="right">Right</a> &nbsp;\
-          &nbsp; \
-          Image: \
-          &nbsp; \
-          <a href="#" class="js-patterns-button" data-pattern="img" data-options="left">Left</a> &nbsp;\
-          <a href="#" class="js-patterns-button" data-pattern="img" data-options="">Standard</a> &nbsp;\
-          <a href="#" class="js-patterns-button" data-pattern="img" data-options="full">Full</a> &nbsp;\
-          <a href="#" class="js-patterns-button" data-pattern="img" data-options="right">Right</a> &nbsp;\
-          • \
-          &nbsp; \
-          <a href="#" class="js-patterns-button" data-pattern="quote">Quote</a> &nbsp;\
-          • \
-          &nbsp; \
-          <a href="#" class="js-patterns-button" data-pattern="code">Code</a> &nbsp;\
+          <span style="white-space:nowrap">\
+            Video: \
+            &nbsp; \
+            <a href="#" class="js-patterns-button" data-pattern="video" data-options="left">Left</a> &nbsp;\
+            <a href="#" class="js-patterns-button" data-pattern="video">Full</a> &nbsp;\
+            <a href="#" class="js-patterns-button" data-pattern="video" data-options="right">Right</a> &nbsp;\
+            • \
+            &nbsp; \
+          </span>\
+          <span style="white-space:nowrap">\
+            Image: \
+            &nbsp; \
+            <a href="#" class="js-patterns-button" data-pattern="img" data-options="left">Left</a> &nbsp;\
+            <a href="#" class="js-patterns-button" data-pattern="img" data-options="">Standard</a> &nbsp;\
+            <a href="#" class="js-patterns-button" data-pattern="img" data-options="full">Full</a> &nbsp;\
+            <a href="#" class="js-patterns-button" data-pattern="img" data-options="right">Right</a> &nbsp;\
+            • \
+            &nbsp; \
+          </span>\
+          <span style="white-space:nowrap">\
+            <a href="#" class="js-patterns-button" data-pattern="quote">Quote</a> &nbsp;\
+            • \
+            &nbsp; \
+            <a href="#" class="js-patterns-button" data-pattern="code">Code</a> &nbsp;\
+          </span>\
         </div>\
       ');
     };
