@@ -251,15 +251,13 @@
     <iframe src=\"\" allowfullscreen></iframe>\n\
     <figcaption></figcaption>\n\
   </div>\n\
-</figure>\n\
-";
+</figure>";
       } else if (pattern === 'img') {
         html = "\
 <figure class=\"figure figure--img\">\n\
   <img src=\"\" alt=\"\">\n\
   <figcaption></figcaption>\n\
-</figure>\n\
-";
+</figure>";
       } else if (pattern === 'quote') {
         html = "\
 <figure class=\"figure figure--blockquote\">\n\
@@ -267,12 +265,10 @@
     <p></p>\n\
   </blockquote>\n\
   <figcaption></figcaption>\n\
-</figure>\n\
-";
+</figure>";
       } else if (pattern === 'code') {
         html = "\
-<pre><code></code></pre>\n\
-";
+<pre><code></code></pre>";
       };
 
       return html;
