@@ -28,6 +28,7 @@ var sass        = require('gulp-sass');
 var series      = require('stream-series');
 var sourcemaps  = require('gulp-sourcemaps');
 var uglify      = require('gulp-uglify');
+var autoprefixer  = require('gulp-autoprefixer');
 
 
 /******************************************************************************
@@ -93,6 +94,7 @@ gulp.task('clean', gulp.parallel('clean:css', 'clean:js'));
 
 /**
  * Create CSS file from Sass files.
+ * Autoprefix the CSS.
  * Create a sourcemap file.
  * Add a revision code to each file.
  */
@@ -107,6 +109,7 @@ gulp.task('sass', gulp.series('clean:css', function buildSass() {
       .pipe(sass(sassOptions).on('error', sass.logError))
       .pipe(rev())
       .pipe(gulp.dest(PATHS.dest.cssDir))
+    .pipe(autoprefixer())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(PATHS.dest.cssDir));
 }));
