@@ -37,8 +37,7 @@ class BlogPostsFeedRSS(ExtendedFeed):
         return strip_tags(item.excerpt)
 
     def item_title(self, item):
-        # Need to be encoded https://code.djangoproject.com/ticket/6533
-        return escape(item.title)
+        return item.title
 
     def item_author_name(self, item):
         return item.author.display_name

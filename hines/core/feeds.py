@@ -205,8 +205,7 @@ class EverythingFeedRSS(ExtendedFeed):
         else:
             title = item.title
 
-        # Need to be encoded https://code.djangoproject.com/ticket/6533
-        return escape(title)
+        return title
 
     def item_link(self, item):
         if item['kind'] == 'flickr_photos':
