@@ -333,6 +333,7 @@ class StaticGenerator(Generator):
                 {'label': '2015', 'value': 57049},
                 {'label': '2016', 'value': 72438},
                 {'label': '2017', 'value': 30978},
+                {'label': '2018', 'value': 37442},
             ],
             'title': 'Words written in diary',
             # 'description': "Per year."
