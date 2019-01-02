@@ -366,6 +366,7 @@ class StaticGenerator(Generator):
             '2015': 2169,
             '2016': 1996,
             '2017': 1807,
+            '2018': 1410,
         }
         # Pepys Feedback:
         pepys = {
@@ -385,6 +386,7 @@ class StaticGenerator(Generator):
             '2015': 212,
             '2016': 315,
             '2017': 251,
+            '2018': 170,
         }
 
         barbicantalk = {
@@ -397,6 +399,7 @@ class StaticGenerator(Generator):
             '2015': 12,
             '2016': 1,
             '2017': 8,
+            '2018': 20,
         }
 
         whitstillman = {
@@ -416,6 +419,7 @@ class StaticGenerator(Generator):
             '2015': 16,
             '2016': 5,
             '2017': 0,
+            '2018': 3,
         }
 
         byliner = {
@@ -481,6 +485,7 @@ class StaticGenerator(Generator):
                 {'label': '2015', 'value': 51},
                 {'label': '2016', 'value': 59},
                 {'label': '2017', 'value': 53},
+                {'label': '2018', 'value': 43},
             ],
             'title': 'Headaches',
             'description': "Per year. Those that require, or are defeated by, prescription medication."
@@ -501,6 +506,7 @@ class StaticGenerator(Generator):
                 {'label': '2015', 'value': 1061},
                 {'label': '2016', 'value': 1533},
                 {'label': '2017', 'value': 1762},
+                {'label': '2018', 'value': 2089},
             ],
             'title': 'GitHub activity',
             'description':'Contributions listed per year for <a href="https://github.com/philgyford">philgyford</a>.',
