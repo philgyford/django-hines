@@ -86,12 +86,13 @@ class CacheMixin(object):
         return self.cache_timeout
 
     def dispatch(self, *args, **kwargs):
-        if hasattr(self.request, 'user') and self.request.user.is_authenticated:
-            # Logged-in, return the page without caching.
-            return super().dispatch(*args, **kwargs)
-        else:
-            # Unauthenticated user; use caching.
-            return cache_page(self.get_cache_timeout())(super().dispatch)(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
+        # if hasattr(self.request, 'user') and self.request.user.is_authenticated:
+        #     # Logged-in, return the page without caching.
+        #     return super().dispatch(*args, **kwargs)
+        # else:
+        #     # Unauthenticated user; use caching.
+        #     return cache_page(self.get_cache_timeout())(super().dispatch)(*args, **kwargs)
 
 
 class HomeView(CacheMixin, TemplateView):
