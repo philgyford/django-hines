@@ -219,6 +219,9 @@ WHITENOISE_INDEX_FILE = True
 SPECTATOR_GOOGLE_MAPS_API_KEY = get_env_variable('SPECTATOR_GOOGLE_MAPS_API_KEY')
 
 
+AWS_DEFAULT_ACL = None
+
+
 # END THIRD-PARTY APPS
 ####################################################################
 

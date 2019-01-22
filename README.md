@@ -22,7 +22,7 @@ In the Django Admin set the Domain Name of the one Site.
 Create a database user with the required privileges:
 
 	$ psql
-	# create database hines;
+	# create database django-hines;
 	# create user hines with password 'hines';
 	# grant all privileges on database "django-hines" to hines;
 	# alter user hines createdb;
@@ -55,7 +55,7 @@ Then visit http://localhost:8000 or http://127.0.0.1:8000.
 
 #### Editing CSS and JS
 
-We use gulp, running in the VM, to process Sass and JavaScript:
+We use gulp to process Sass and JavaScript:
 
 	$ gulp watch
 
