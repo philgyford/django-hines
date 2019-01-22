@@ -77,7 +77,6 @@ and then open `htmlcov/index.html` in a browser.
 
 For hosting on Heroku, we use these add-ons:
 
-	* Deploy Hooks (for sending a deploy notification to Slack)
 	* Heroku Postgres
 	* Heroku Redis (for caching)
 	* Heroku Scheduler
