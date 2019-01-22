@@ -26,49 +26,16 @@ AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = 'https://{}.s3.amazonaws.com{}'.format(
                                             AWS_STORAGE_BUCKET_NAME, MEDIA_URL)
 
-
-# See https://devcenter.heroku.com/articles/memcachier#django
-memcache_username = get_env_variable('MEMCACHIER_USERNAME')
-memcache_password = get_env_variable('MEMCACHIER_PASSWORD')
-memcache_servers = get_env_variable('MEMCACHIER_SERVERS')
-
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-
-        # TIMEOUT is not the connection timeout! It's the default expiration
-        # timeout that should be applied to keys! Setting it to `None`
-        # disables expiration.
-        'TIMEOUT': None,
-
-        'LOCATION': memcache_servers,
-
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': get_env_variable('REDIS_URL'),
+        'KEY_PREFIX': 'hines',
         'OPTIONS': {
-             # Use binary memcache protocol (needed for authentication)
-            'binary': True,
-            'username': memcache_username,
-            'password': memcache_password,
-            'behaviors': {
-                # Enable faster IO
-                'no_block': True,
-                'tcp_nodelay': True,
-
-                # Keep connection alive
-                'tcp_keepalive': True,
-
-                # Timeout settings
-                'connect_timeout': 2000, # ms
-                'send_timeout': 750 * 1000, # us
-                'receive_timeout': 750 * 1000, # us
-                '_poll_timeout': 2000, # ms
-
-                # Better failover
-                'ketama': True,
-                'remove_failed': 1,
-                'retry_timeout': 2,
-                'dead_timeout': 30,
-            }
-        }
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            # If Redis is down, ignore exceptions:
+            'IGNORE_EXCEPTIONS': True,
+        },
     }
 }
 
