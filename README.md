@@ -51,7 +51,6 @@ Then run the webserver:
 Then visit http://localhost:8000 or http://127.0.0.1:8000.
 
 
-
 ### Other local dev tasks
 
 #### Editing CSS and JS
@@ -72,6 +71,18 @@ To include coverage, do:
 	$ pipenv run ./scripts/coverage.sh
 
 and then open `htmlcov/index.html` in a browser.
+
+
+## Heroku set-up
+
+For hosting on Heroku, we use these add-ons:
+
+	* Deploy Hooks (for sending a deploy notification to Slack)
+	* Heroku Postgres
+	* Heroku Redis (for caching)
+	* Heroku Scheduler
+	* Papertrail (for viewing/filtering logs)
+	* Sentry (for error reporting)
 
 
 ## Django Settings
@@ -152,6 +163,7 @@ These variables are used on both local development and production/Heroku sites:
 	AWS_ACCESS_KEY_ID
 	AWS_SECRET_ACCESS_KEY
 	AWS_STORAGE_BUCKET_NAME
+	REDIS_URL
 	SPECTATOR_GOOGLE_MAPS_API_KEY
 
 For local development, a couple of them should be like this in the `.env` file:
@@ -159,6 +171,10 @@ For local development, a couple of them should be like this in the `.env` file:
 	export DJANGO_SETTINGS_MODULE='config.settings.development'
 
 	export DATABASE_URL='postgres://hines:hines@localhost:5432/django-hines'
+
+`REDIS_URL` is used on prodution and _can be_ used on development, if there's
+a redis server running and we set the `CACHES` setting to use it in
+`config/settings/development.py`.
 
 
 ## Media files
