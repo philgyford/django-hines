@@ -83,6 +83,10 @@ For hosting on Heroku, we use these add-ons:
 	* Papertrail (for viewing/filtering logs)
 	* Sentry (for error reporting)
 
+To clear the Redis cache, use our `clear_cache` management command:
+
+	$ heroku run python ./manage.py clear_cache
+
 
 ## Django Settings
 
