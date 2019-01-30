@@ -69,3 +69,8 @@
     clip-path: none;
   }
 }
+
+// e.g. for images that aren't within figures.
+.u-border {
+  border: 1px solid $gray-light;
+}

@@ -14,6 +14,7 @@
 
 
 // 1. Styles for ALL browsers.
+
 .gallery {
   @include list-unstyled;
   margin-top: $vertical-space-sm;
@@ -29,6 +30,7 @@
 
 
 // 2. Styles for browsers that DON'T support CSS Grid layouts:
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -58,6 +60,7 @@
 
 
 // 3. Styles for browsers that DO support CSS Grid layouts:
+
 @supports (display: grid) {
 
   // 3a. Undo the non-Grid styles:
@@ -134,6 +137,12 @@
   margin-bottom: 0;
   order: 2;
 }
+.gallery__item__header--lg {
+  @include text-style-default;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
 
 .gallery__item__img {
   order: 1;
@@ -154,9 +163,16 @@
 }
 
 .gallery__item .meta {
-  order: 3;
+  order: 4;
 }
 
+.gallery__item__desc {
+  order: 3;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
 
 // Gallery Flow.
 

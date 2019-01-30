@@ -17,6 +17,20 @@
 				{% endif %}
 			</li>
 			<li>
+				{% if url_name == 'hines:about_projects' %}
+          Personal projects
+				{% else %}
+					<a href="{% url 'hines:about_projects' %}">Personal projects</a>
+				{% endif %}
+			</li>
+			<li>
+				{% if url_name == 'hines:about_cv' %}
+					CV / Resumé
+				{% else %}
+					<a href="{% url 'hines:about_cv' %}">CV / Resumé</a>
+				{% endif %}
+			</li>
+			<li>
 				{% if url_name == 'hines:timeline' %}
 					Timeline of things I’ve done
 				{% else %}
@@ -35,4 +49,5 @@
 			</li>
 		</ul>
 	</nav>
+
 {% endblock sidebar_nav %}

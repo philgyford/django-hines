@@ -30,6 +30,12 @@ urlpatterns = [
     path('about/', flatpages_views.flatpage,
         {'url': '/phil/about/'}, name='about'),
 
+    path('about/cv/', flatpages_views.flatpage,
+        {'url': '/phil/about/cv/'}, name='about_cv'),
+
+    path('about/projects/', flatpages_views.flatpage,
+        {'url': '/phil/about/projects/'}, name='about_projects'),
+
     path('about/site/', flatpages_views.flatpage,
         {'url': '/phil/about/site/'}, name='about_site'),
 
