@@ -61,14 +61,7 @@
             <span class="nav__link">Events</span>
           {% endif %}
         </li>
-        <li class="nav__item nav__item--split {% block misc_nav_active %}{% endblock %}">
-          {% if url_name == 'hines:misc' %}
-            <span class="nav__link">More…</span>
-          {% else %}
-            <a class="nav__link" href="{% url 'hines:misc' %}">More…</a>
-          {% endif %}
-        </li>
-        <li class="nav__item {% block about_nav_active %}{% endblock %}">
+        <li class="nav__item nav__item--split {% block about_nav_active %}{% endblock %}">
           {% if url_name != 'hines:about' %}
             <a class="nav__link" href="{% url 'hines:about' %}">About</a>
           {% else %}
