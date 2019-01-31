@@ -8,7 +8,7 @@
 {% endblock start_html %}
 
 {% block head_title %}{{ post.title }} (Phil Gyford: {{ blog.short_name }}){% endblock head_title %}
-	
+
 {% block css %}
 	<link rel="stylesheet" href="{% static 'hines/sets/200603/style/default/global.css' %}" type="text/css"/>
 {% endblock css %}
@@ -31,7 +31,7 @@
 		<li><a href="{% url 'photos:home' %}">Photos</a></li>
 		<li><a href="{% url 'pinboard:home' %}">Links</a></li>
 		<li><a href="{% url 'spectator:reading:home' %}">Reading</a></li>
-		<li><a href="{% url 'hines:misc' %}">More&#8230;</a></li>
+		<li><a href="#">More&#8230;</a></li>
 		<li class=" split"><a href="{% url 'hines:about' %}">About me</a></li>
 	</ul>
 {% endblock nav %}
@@ -58,7 +58,7 @@
 							<span class="label"><label for="email">Email address:</label></span><span class="formfield"><input type="text" class="text" name="email" id="email"/> <small>(required)</small></span>
 						</p>
 					</div> <!-- #name-email -->
-		
+
 					<p class="row">
 						<span class="label"><label for="url">Your URL:</label></span><span class="formfield"><input type="text" class="text" name="url" id="url"/> <small>(optional)</small></span>
 					</p>
@@ -67,7 +67,7 @@
 						<span class="label"><label for="comment-bake-cookie">Remember your info?</label></span><span class="formfield"><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="if (!this.checked) forgetMe(document.comments_form)" value="1"/></span>
 					</p>
 				</div> <!-- #comments-open-data -->
-		
+
 				<p class="textarea" id="comments-open-text">
 					<label for="text" class="hide">Comment:<br/></label>
 					<textarea name="text" id="text" rows="10" cols="40"></textarea><br/><small>Allowed tags: a href, blockquote, strong, em, ul, ol, li. URLs will be turned into links.</small></span>
@@ -78,11 +78,11 @@
 				</p>
 			</div> <!-- #comments-open-content -->
 		</div> <!-- #comments-open -->
-		
+
 		</form>
 	{% endcomment %}
 {% endblock comment_form %}
-	
+
 {% block end_body %}
 </div> <!-- #container -->
 {% endblock end_body %}

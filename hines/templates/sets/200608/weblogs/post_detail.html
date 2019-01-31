@@ -16,7 +16,7 @@
 {% block head_extra %}
     <link rel="start" href="{% url 'home' %}" title="Home"/>
     <link rel="index" href="{% url 'weblogs:blog_archive' blog_slug=blog.slug %}" title="Phil Gyford's {{ blog.short_name }} Archive"/>
-    
+
     <link href="{% url 'hines:everything_feed_rss' %}" rel="alternate" title="Writing, links, comments and photos combined" type="application/rss+xml"/>
     <link href="{% url 'weblogs:blog_feed_posts_rss' blog_slug='writing' %}" rel="alternate" title="Writing only" type="application/rss+xml"/>
     <link href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&amp;format=rss_200" rel="alternate" title="Photos only (at Flickr)" type="application/rss+xml"/>
@@ -38,14 +38,14 @@
 			<li class="nav-2 on"><a href="{% url 'weblogs:blog_detail' blog_slug='writing' %}" title="Things that I've written">Writing</a></li>
 
 			<li class="nav-3"><a href="{% url 'photos:home' %}" title="Recent photos">Photos</a></li>
-			
+
 			<li class="nav-4"><a href="{% url 'pinboard:home' %}" title="Links to interesting stuff elsewhere">Links</a></li>
 
 			<li class="nav-5 split-after"><a href="{% url 'weblogs:blog_detail' blog_slug='comments' %}" title="Comments written on other sites">Comments</a></li>
 
 			<li class="nav-6 split-before"><a href="{% url 'spectator:reading:home' %}" title="Books and magazines read">Reading</a></li>
-	 
-			<li class="nav-7"><a href="{% url 'hines:misc' %}" title="More odds and ends">More&#8230;</a></li>
+
+			<li class="nav-7"><a href="#" title="More odds and ends">More&#8230;</a></li>
 
 			<li class="nav-8 last"><a href="{% url 'hines:about' %}" title="More about who I am and what I've done">About me</a></li>
         </ul> <!-- #mainnav -->
@@ -79,7 +79,7 @@
                     <input type="hidden" name="armor" value="1"/>
                     <input type="hidden" name="preview" value=""/>
                     <input type="hidden" name="sid" value=""/>
-                    
+
                     <div id="comments-open-data">
                         <p id="comment-form-name" class="row">
                             <span class="label"><label for="comment-author">Your name:</label></span><span class="formfield"><input type="text" class="text" name="author" id="comment-author" value="" onfocus="mtCommentFormOnFocus()"/> <small>(required)</small></span>
@@ -93,11 +93,11 @@
                             <span class="label"><label for="comment-url">Your URL:</label></span><span class="formfield"><input type="text" class="text" name="url" id="comment-url" value="" onfocus="mtCommentFormOnFocus()"/> <small>(optional)</small></span>
                         </p>
 
-                    
+
                         <p id="comment-form-remember-me" class="row">
                             <span class="label"><label for="comment-bake-cookie">Remember your info?</label></span><span class="formfield"><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="mtRememberMeOnClick(this)" value="1" accesskey="r"/></span>
                         </p>
-                    
+
                     </div>
                     <p id="comments-open-text" class="textarea">
                         <label for="comment-text" class="hide">Comment:<br/></label>
@@ -106,7 +106,7 @@
                     </p>
                     <div id="comments-open-captcha"></div>
                     <p class="right" id="comments-open-footer">
-                    
+
                         <input type="submit" accesskey="v" name="preview_button" id="comment-preview" value="Preview" onclick="this.form.preview.value='1';"/>
                         <input type="submit" accesskey="s" name="post" id="comment-submit" value="Publish"/>
                     </p>
