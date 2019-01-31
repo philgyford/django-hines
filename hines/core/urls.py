@@ -33,6 +33,9 @@ urlpatterns = [
     path('about/cv/', flatpages_views.flatpage,
         {'url': '/phil/about/cv/'}, name='about_cv'),
 
+    path('about/press/', flatpages_views.flatpage,
+        {'url': '/phil/about/press/'}, name='about_press'),
+
     path('about/projects/', flatpages_views.flatpage,
         {'url': '/phil/about/projects/'}, name='about_projects'),
 
@@ -50,7 +53,6 @@ urlpatterns = [
 
     path('feeds/', flatpages_views.flatpage,
         {'url': '/phil/feeds/'}, name='feeds'),
-
 
     path('<yyyy:year>/<mm:month>/<dd:day>/',
         core_views.DayArchiveView.as_view(), name='day_archive'),

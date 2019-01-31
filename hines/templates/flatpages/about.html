@@ -27,7 +27,7 @@
 				{% if url_name == 'hines:about_cv' %}
 					CV / Resumé
 				{% else %}
-					<a href="{% url 'hines:about_cv' %}">CV / Resumé</a>
+					<a href="{% url 'hines:about_cv' %}">CV / Résumé</a>
 				{% endif %}
 			</li>
 			<li>
@@ -35,6 +35,13 @@
 					Timeline of things I’ve done
 				{% else %}
 					<a href="{% url 'hines:timeline' %}">Timeline of things I’ve done</a>
+				{% endif %}
+			</li>
+			<li>
+				{% if url_name == 'hines:about_press' %}
+          Press
+				{% else %}
+					<a href="{% url 'hines:about_press' %}">Press</a>
 				{% endif %}
 			</li>
 			<li>
