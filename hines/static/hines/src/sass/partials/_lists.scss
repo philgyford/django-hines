@@ -28,6 +28,18 @@ ol {
 }
 
 
+.list--spaced {
+  & > li {
+    margin-bottom: $vertical-space;
+  }
+
+  & > li > ul,
+  & > li > ol {
+    margin-top: $vertical-space;
+  }
+}
+
+
 // Unstyled lists
 
 // For the entire list.
