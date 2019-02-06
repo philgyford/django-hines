@@ -16,4 +16,5 @@ def core(request):
         'show_grid': show_grid,
         'author_name': app_settings.AUTHOR_NAME,
         'author_email': app_settings.AUTHOR_EMAIL,
+        'site_icon': app_settings.SITE_ICON,
     }

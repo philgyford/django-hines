@@ -235,6 +235,10 @@ AWS_DEFAULT_ACL = None
 HINES_AUTHOR_NAME = 'Phil Gyford'
 HINES_AUTHOR_EMAIL = 'phil@gyford.com'
 
+# Location within the static directory of an image.
+# Used for RSS feeds and Structured Data.
+HINES_SITE_ICON = 'hines/img/site_icon.jpg'
+
 # We won't show Day Archive pages before this YYYY-MM-DD date:
 HINES_FIRST_DATE = '1989-06-02'
 

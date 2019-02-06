@@ -28,6 +28,8 @@ AUTHOR_NAME = getattr(settings, 'HINES_AUTHOR_NAME', '')
 
 AUTHOR_EMAIL = getattr(settings, 'HINES_AUTHOR_EMAIL', '')
 
+SITE_ICON = getattr(settings, 'HINES_SITE_ICON', '')
+
 DATE_FORMAT = getattr(settings, 'HINES_DATE_FORMAT', '%-d %b %Y')
 
 DATE_YEAR_MONTH_FORMAT = getattr(settings, 'HINES_DATE_YEAR_MONTH_FORMAT', '%b %Y')

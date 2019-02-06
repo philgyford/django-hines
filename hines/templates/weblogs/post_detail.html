@@ -1,5 +1,5 @@
 {% extends 'hines_core/layouts/no_sidebar.html' %}
-{% load comments hines_core hines_weblogs spectator_reading %}
+{% load comments static hines_core hines_weblogs spectator_reading %}
 
 {% block head_page_title %}{{ post.title|smartypants|safe }}{% endblock %}
 
@@ -136,9 +136,13 @@
 			"@type": "BlogPosting",
 			"headline": "{{ post.title|smartypants|safe|escapejs }}",
 			"description": "{{ post.excerpt|smartypants|safe|escapejs }}",
-			{% with url=post.main_image_url %}
-				{% if url %}
-			"image": "{{ url|add_domain }}",
+			{% with image_url=post.main_image_url %}
+				{% if image_url %}
+			"image": "{{ image_url|add_domain }}",
+				{% else %}
+					{% with domain=''|add_domain %}
+			"image": "{{ domain }}{% static site_icon %}",
+					{% endwith %}
 				{% endif %}
 			{% endwith %}
 			"url": "{{ request.build_absolute_uri }}",
@@ -149,8 +153,12 @@
 			"datePublished": "{{ post.time_published|date:'c' }}",
 			"dateModified": "{{ post.time_modified|date:'c' }}",
 			"publisher": {
-				"@type": "Person",
-				"name": "{{ author_name|escapejs }}"
+				// Must be "Organization" for Google for some reason:
+				"@type": "Organization",
+				"name": "{{ author_name|escapejs }}",
+				{% with domain=''|add_domain %}
+					"logo": "{{ domain }}{% static site_icon %}"
+				{% endwith %}
 			},
 			"editor": "{{ author_name|escapejs }}",
 			"author": {

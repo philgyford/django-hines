@@ -7,6 +7,7 @@ from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.html import escape
 
 from .recent import RecentObjects
+from . import app_settings
 from .utils import get_site_url
 
 
@@ -74,8 +75,8 @@ class ExtendedRSSFeed(Rss201rev2Feed):
 
     def channel_image_url(self):
         "URL of the image to use for the feed."
-        return '{}{}'.format(get_site_url(), static(
-                                            'hines/img/site_icon.jpg'))
+        url = static(app_settings.SITE_ICON)
+        return '{}{}'.format(get_site_url(), url)
 
     def channel_image_title(self):
         "Might be used for image alt tag."
