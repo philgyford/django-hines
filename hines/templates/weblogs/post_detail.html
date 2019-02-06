@@ -156,9 +156,12 @@
 				// Must be "Organization" for Google for some reason:
 				"@type": "Organization",
 				"name": "{{ author_name|escapejs }}",
-				{% with domain=''|add_domain %}
-					"logo": "{{ domain }}{% static site_icon %}"
-				{% endwith %}
+				"logo": {
+					"@type": "ImageObject",
+					{% with domain=''|add_domain %}
+						"url": "{{ domain }}{% static site_icon %}"
+					{% endwith %}
+				}
 			},
 			"editor": "{{ author_name|escapejs }}",
 			"author": {
