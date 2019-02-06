@@ -6,10 +6,10 @@
 
 {% block head_extra %}
 	{% with post.get_previous_post as previous_post %}{% if previous_post %}
-	<link rel="prev" title="{{ previous_post.get_absolute_url }}" href="{{ previous_post.title }}"/>
+	<link rel="prev" title="{{ previous_post.title }}" href="{{ previous_post.get_absolute_url }}"/>
 	{% endif %}{% endwith %}
 	{% with post.get_next_post as next_post %}{% if next_post %}
-	<link rel="next" title="{{ next_post.get_absolute_url }}" href="{{ next_post.title }}"/>
+	<link rel="next" title="{{ next_post.title }}" href="{{ next_post.get_absolute_url }}"/>
 	{% endif %}{% endwith %}
 	<link rel="up" title="Archive for {{ post.time_created|date:"F Y" }}" href="{% url 'weblogs:post_month_archive' blog_slug=blog.slug year=post.time_created|date:"Y" month=post.time_created|date:"m" %}"/>
 
