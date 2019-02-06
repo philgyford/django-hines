@@ -14,4 +14,6 @@ def core(request):
         'site_name': current_site.name,
         'google_analytics_id': app_settings.GOOGLE_ANALYTICS_ID,
         'show_grid': show_grid,
+        'author_name': app_settings.AUTHOR_NAME,
+        'author_email': app_settings.AUTHOR_EMAIL,
     }

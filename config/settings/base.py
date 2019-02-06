@@ -231,6 +231,10 @@ AWS_DEFAULT_ACL = None
 
 # Also see HINES_ROOT_DIR at top of file.
 
+# Used in templates (although a Post author overrides it in places):
+HINES_AUTHOR_NAME = 'Phil Gyford'
+HINES_AUTHOR_EMAIL = 'phil@gyford.com'
+
 # We won't show Day Archive pages before this YYYY-MM-DD date:
 HINES_FIRST_DATE = '1989-06-02'
 

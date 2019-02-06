@@ -2,10 +2,13 @@
 from datetime import datetime
 import pytz
 
+from django.contrib.sites.models import Site
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 
 from markdown import markdown
+
+from . import app_settings
 
 
 def make_date(d):
@@ -107,3 +110,21 @@ def expire_view_cache(path, key_prefix=None):
             raise ValueError('Failed to create cache_key')
     except (ValueError, Exception) as e:
         return (False, e)
+
+
+def get_site_url():
+    """
+    Returns the full domain of the website.
+    Shouldn't end in a slash, so it can be used with static() etc.
+    """
+    protocol = 'http'
+
+    try:
+        if app_settings.USE_HTTPS:
+            protocol = 'https'
+    except AttributeError:
+        pass
+
+    domain = Site.objects.get_current().domain
+
+    return '{}://{}'.format(protocol, domain)

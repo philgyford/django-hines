@@ -10,8 +10,8 @@
 	<meta name="twitter:title" content="{{ post.title|smartypants|safe }}" />
 	{% with url=post.main_image_url %}
 		{% if url %}
-	    <meta property="og:image" content="{{ url }}" />
-	    <meta name="twitter:image" content="{{ url }}" />
+	    <meta property="og:image" content="{{ url|add_domain }}" />
+	    <meta name="twitter:image" content="{{ url|add_domain }}" />
 		{% endif %}
 	{% endwith %}
 {% endblock %}
@@ -129,5 +129,34 @@
     {% endcomment %}
 
   </article>
+
+	<script type="application/ld+json">
+		{
+			"@context": "http://schema.org",
+			"@type": "BlogPosting",
+			"headline": "{{ post.title|smartypants|safe|escapejs }}",
+			"description": "{{ post.excerpt|smartypants|safe|escapejs }}",
+			{% with url=post.main_image_url %}
+				{% if url %}
+			"image": "{{ url|add_domain }}",
+				{% endif %}
+			{% endwith %}
+			"url": "{{ request.build_absolute_uri }}",
+			"mainEntityOfPage": {
+				"@type": "WebPage",
+				"@id": "{{ request.build_absolute_uri }}"
+			},
+			"datePublished": "{{ post.time_published|date:'c' }}",
+			"dateModified": "{{ post.time_modified|date:'c' }}",
+			"publisher": {
+				"@type": "Person",
+				"name": "{{ author_name|escapejs }}"
+			},
+			"editor": "{{ author_name|escapejs }}",
+			"author": {
+				"@type": "Person",
+				"name": "{{ post.author.display_name|escapejs }}"
+			}
+	</script>
 
 {% endblock %}

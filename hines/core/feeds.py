@@ -6,26 +6,8 @@ from django.urls import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.html import escape
 
-from . import app_settings
 from .recent import RecentObjects
-
-
-def get_site_url():
-    """
-    Returns the full domain of the website.
-    Shouldn't end in a slash, so it can be used with static() etc.
-    """
-    protocol = 'http'
-
-    try:
-        if app_settings.USE_HTTPS:
-            protocol = 'https'
-    except AttributeError:
-        pass
-
-    domain = Site.objects.get_current().domain
-
-    return '{}://{}'.format(protocol, domain)
+from .utils import get_site_url
 
 
 class ExtendedRSSFeed(Rss201rev2Feed):

@@ -12,6 +12,7 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 
 from .. import app_settings
+from ..utils import get_site_url
 
 from ditto.lastfm.templatetags.ditto_lastfm import (
     recent_scrobbles, top_artists
@@ -236,6 +237,21 @@ def domain_urlize(value):
             value,
             domain
         )
+
+@register.filter
+def add_domain(value):
+    """
+    Adds 'https://www.mydomain.com' or whatever to the start of the supplied
+    string, to make URLs absolute.
+
+    value should start with a / . If it starts with 'http' then it just gets returned.
+    """
+    if value.startswith('http'):
+        return value
+    else:
+        start = get_site_url()
+
+        return '{}{}'.format(start, value)
 
 
 @register.inclusion_tag('spectator_core/includes/card_chart.html')

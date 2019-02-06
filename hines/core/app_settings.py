@@ -24,6 +24,10 @@ COMMENTS_ALLOWED_ATTRIBUTES = getattr(settings, 'HINES_COMMENTS_ALLOWED_ATTRIBUT
     'abbr': ['title'],
 })
 
+AUTHOR_NAME = getattr(settings, 'HINES_AUTHOR_NAME', '')
+
+AUTHOR_EMAIL = getattr(settings, 'HINES_AUTHOR_EMAIL', '')
+
 DATE_FORMAT = getattr(settings, 'HINES_DATE_FORMAT', '%-d %b %Y')
 
 DATE_YEAR_MONTH_FORMAT = getattr(settings, 'HINES_DATE_YEAR_MONTH_FORMAT', '%b %Y')
