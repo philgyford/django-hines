@@ -1,34 +1,36 @@
 {% load hines_comments hines_core %}
 
 {% if post.comment_count > 0 %}
-  <h2>
-    {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
-  </h2>
+  <section>
+    <h2>
+      {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+    </h2>
 
-  <ol class="media-list">
-    {% for comment in comment_list %}
-      <li class="media" id="c{{ comment.id }}">
-        <div class="media__body">
-          <p class="media__byline"{% if forloop.last %} id="latest"{% endif %}>
-            <span class="media__byline__author">
-              {% if comment.user_url %}
-                <a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
-              {% else %}
-                {{ comment.name }}
-              {% endif %}
-            </span>
+    <ol class="media-list">
+      {% for comment in comment_list %}
+        <li class="media" id="c{{ comment.id }}">
+          <div class="media__body">
+            <p class="media__byline"{% if forloop.last %} id="latest"{% endif %}>
+              <span class="media__byline__author">
+                {% if comment.user_url %}
+                  <a href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
+                {% else %}
+                  {{ comment.name }}
+                {% endif %}
+              </span>
 
-            at {% display_time comment.submit_date %}
-            <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
-          </p>
+              at {% display_time comment.submit_date %}
+              <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
+            </p>
 
-          {{ comment.comment|clean|safe|linebreaks }}
+            {{ comment.comment|clean|safe|linebreaks }}
 
-          {% if perms.custom_comments.can_change_customcomment %}
-            <br><br><a class="u-admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
-          {% endif %}
-        </div> <!-- .media__body -->
-      </li>
-    {% endfor %}
-  </ol>
+            {% if perms.custom_comments.can_change_customcomment %}
+              <br><br><a class="u-admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
+            {% endif %}
+          </div> <!-- .media__body -->
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
 {% endif %}

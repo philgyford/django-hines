@@ -77,18 +77,18 @@
       </ul>
     </aside>
 
-    <section>
-      {% render_comment_list for post %}
+    {% render_comment_list for post %}
 
-      {% if post.comments_allowed %}
-        <h2>Post a comment</h2>
-        {% render_comment_form for post %}
-      {% else %}
-		{% comment %}
-			<p>Comments are closed for this post.</p>
-		{% endcomment %}
-      {% endif %}
-    </section>
+    {% if post.comments_allowed %}
+			<section>
+	      <h2>Post a comment</h2>
+	      {% render_comment_form for post %}
+			</section>
+    {% else %}
+	{% comment %}
+		<p>Comments are closed for this post.</p>
+	{% endcomment %}
+    {% endif %}
 
     {% comment %}
 
