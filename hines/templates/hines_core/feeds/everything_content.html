@@ -3,7 +3,7 @@
   <p><em>From <a href="{{ site_url }}{{ obj.object.blog.get_absolute_url }}">{{ obj.object.blog.name }}</a>.</em></p>
 
 	{{ obj.object.intro_html|safe }}
-  {% if obj.object_body_html %}
+  {% if obj.object.body_html %}
     {{ obj.object.body_html|safe }}
   {% endif %}
 
