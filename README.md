@@ -135,6 +135,16 @@ Blog to indicate how many posts of each to display. e.g.:
 
 Default is an empty dict, ``{}``.
 
+``HINES_EVERYTHING_FEED_KINDS``: Which blogs, accounts, etc should be featured
+in the 'everything combined' RSS feed? A set of sets, e.g.:
+
+    HINES_EVERYTHING_FEED_KINDS = (
+        ('blog_posts', 'writing'),
+        ('blog_posts', 'comments'),
+        ('flickr_photos', '35034346050@N01'),
+        ('pinboard_bookmarks', 'philgyford'),
+    )
+
 ``HINES_ROOT_DIR``: e.g. `'phil'`. All the pages except things like the very
 front page and admin will live under this directory. Default is ``''`` but I
 haven't tried using it with out a root dir set.

@@ -42,6 +42,8 @@ GOOGLE_ANALYTICS_ID = getattr(settings, 'HINES_GOOGLE_ANALYTICS_ID', '')
 
 HOME_PAGE_DISPLAY = getattr(settings, 'HINES_HOME_PAGE_DISPLAY', {})
 
+EVERYTHING_FEED_KINDS = getattr(settings, 'HINES_EVERYTHING_FEED_KINDS', ())
+
 ROOT_DIR = getattr(settings, 'HINES_ROOT_DIR', '')
 
 TEMPLATE_SETS = getattr(settings, 'HINES_TEMPLATE_SETS', None)

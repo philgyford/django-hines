@@ -1,5 +1,3 @@
-from xml.dom import minidom
-
 from django.contrib.sites.models import Site
 from django.utils.feedgenerator import rfc2822_date
 
@@ -54,7 +52,6 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         response = self.client.get('/terry/my-blog/feeds/posts/rss/')
         self.assertEqual(response.status_code, 200)
 
-
     def test_response_404(self):
         response = self.client.get('/terry/not-my-blog/feeds/posts/rss/')
         self.assertEqual(response.status_code, 404)
@@ -64,14 +61,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         Borrowing a lot from
         https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
         """
-        response = self.client.get('/terry/my-blog/feeds/posts/rss/')
-        doc = minidom.parseString(response.content)
-
-        feed_elem = doc.getElementsByTagName('rss')
-        feed = feed_elem[0]
-
-        chan_elem = feed.getElementsByTagName('channel')
-        chan = chan_elem[0]
+        channel = self.get_feed_channel('/terry/my-blog/feeds/posts/rss/')
 
         d = self.blog.public_posts.latest('time_modified').time_modified
         last_build_date = rfc2822_date(d)
@@ -80,16 +70,16 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
 
         # We're not currently using 'ttl', 'copyright' or 'category':
         self.assertChildNodes(
-            chan, [
+            channel, [
                 'title', 'link', 'description', 'language', 'lastBuildDate',
                 'item', 'image', 'atom:link',
             ]
         )
 
-        self.assertEqual(chan.attributes['xmlns:content'].value,
+        self.assertEqual(channel.attributes['xmlns:content'].value,
                         'http://purl.org/rss/1.0/modules/content/')
 
-        self.assertChildNodeContent(chan, {
+        self.assertChildNodeContent(channel, {
             'title': 'My Feed Title',
             'description': 'My feed description.',
             'link': 'http://example.com/terry/my-blog/',
@@ -99,7 +89,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
 
         # TEST THE channel image ELEMENT
 
-        image_el = chan.getElementsByTagName('image')[0]
+        image_el = channel.getElementsByTagName('image')[0]
 
         self.assertChildNodes(image_el, ['url', 'title', 'link',])
 
@@ -113,7 +103,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
 
         # TEST THE item ELEMENTS
 
-        items = chan.getElementsByTagName('item')
+        items = channel.getElementsByTagName('item')
         self.assertEqual(len(items), 5)
 
         # Test the content of the most recent Post:
@@ -143,16 +133,9 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.blog.show_author_email_in_feed = False
         self.blog.save()
 
-        response = self.client.get('/terry/my-blog/feeds/posts/rss/')
-        doc = minidom.parseString(response.content)
+        channel = self.get_feed_channel('/terry/my-blog/feeds/posts/rss/')
 
-        feed_elem = doc.getElementsByTagName('rss')
-        feed = feed_elem[0]
-
-        chan_elem = feed.getElementsByTagName('channel')
-        chan = chan_elem[0]
-
-        items = chan.getElementsByTagName('item')
+        items = channel.getElementsByTagName('item')
         self.assertEqual(len(items), 5)
 
         # It should have a <dc:creator> instead of <author>:

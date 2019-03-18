@@ -166,12 +166,7 @@ class EverythingFeedRSS(ExtendedFeed):
         return 'Things written, created, linked to or liked by Phil Gyford'
 
     def items(self, obj):
-        kinds = (
-            ('blog_posts', 'writing'),
-            ('blog_posts', 'comments'),
-            ('flickr_photos', '35034346050@N01'),
-            ('pinboard_bookmarks', 'philgyford'),
-        )
+        kinds = app_settings.EVERYTHING_FEED_KINDS
         return RecentObjects(kinds).get_objects(num=self.num_items)
 
     # Getting details for each post in the feed:
@@ -229,3 +224,13 @@ class EverythingFeedRSS(ExtendedFeed):
                 if dt is None or photo.last_update_time > dt:
                     dt = photo.last_update_time
             return dt
+
+    def item_author_name(self, item):
+        "We could show authors for other kinds of things, but we don't currently."
+        if item['kind'] == 'blog_post':
+            return item['object'].author.display_name
+
+    def item_author_email(self, item):
+        if item['kind'] == 'blog_post':
+            if item['object'].blog.show_author_email_in_feed:
+                return item['object'].author.email

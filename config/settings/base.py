@@ -267,6 +267,13 @@ HINES_HOME_PAGE_DISPLAY = {
     },
 }
 
+HINES_EVERYTHING_FEED_KINDS = (
+    ('blog_posts', 'writing'),
+    ('blog_posts', 'comments'),
+    ('flickr_photos', '35034346050@N01'),
+    ('pinboard_bookmarks', 'philgyford'),
+)
+
 HINES_TEMPLATE_SETS = (
     # Colourful:
     {'name': '2000', 'start': '2000-03-01', 'end': '2000-12-31'},
