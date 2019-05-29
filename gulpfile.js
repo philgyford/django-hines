@@ -45,8 +45,12 @@ var PATHS = {
   src: {
     sassFiles:      SRC_DIR + '/sass/**/*.scss',
     sassWatchFiles: SRC_DIR + '/sass/**/*.scss',
+    // Already minified files to be copies as-is:
+    cssVendorFiles: SRC_DIR + '/css/vendor/**/*.css',
+    cssWatchFiles:  SRC_DIR + '/css/**/*.css',
     jsDir:          SRC_DIR + '/js',
-    jsVendorDir:    SRC_DIR + '/js/vendor',
+    // Already minified files to be copies as-is:
+    jsVendorFiles:  SRC_DIR + '/js/vendor/**/*.js',
     jsWatchFiles:   SRC_DIR + '/js/**/*.js',
     // Our custom file(s):
     jsSiteFiles:    SRC_DIR + '/js/*.js',
@@ -55,6 +59,7 @@ var PATHS = {
   dest: {
     cssDir:         STATIC_DIR + '/hines/css',
     cssFiles:       STATIC_DIR + '/hines/css/**/*.css',
+    cssVendorDir:   STATIC_DIR + '/hines/css/vendor',
     jsDir:          STATIC_DIR + '/hines/js',
     jsVendorDir:    STATIC_DIR + '/hines/js/vendor',
     // All generated JS files:
@@ -62,11 +67,7 @@ var PATHS = {
     jsFiles:        STATIC_DIR + '/hines/js/*.js'
   },
   templates: {
-    files:          [TEMPLATES_DIR + '/hines_core/layouts/bare.html',
-                     TEMPLATES_DIR + '/errors/400.html',
-                     TEMPLATES_DIR + '/errors/403.html',
-                     TEMPLATES_DIR + '/errors/404.html',
-                     TEMPLATES_DIR + '/errors/500.html']
+    files:          [TEMPLATES_DIR + '/hines_core/layouts/bare.html',]
   }
 };
 
@@ -93,12 +94,21 @@ gulp.task('clean', gulp.parallel('clean:css', 'clean:js'));
 
 
 /**
+ * Copy Vendor CSS files.
  * Create CSS file from Sass files.
  * Autoprefix the CSS.
  * Create a sourcemap file.
  * Add a revision code to each file.
  */
 gulp.task('sass', gulp.series('clean:css', function buildSass() {
+
+  // First, just copy our already-minified and not-used-everywhere
+  // 3rd-party CSS files:
+  gulp.src([
+    PATHS.src.cssVendorFiles
+  ])
+    .pipe(gulp.dest(PATHS.dest.cssVendorDir));
+
   var sassOptions = {
     outputStyle: 'compressed',
     sourceComments: false
@@ -130,7 +140,7 @@ gulp.task('js', gulp.series('clean:js', function buildJS() {
   // First, just copy our already-minified and not-used-everywhere
   // 3rd-party JS files:
   gulp.src([
-    PATHS.src.jsVendorDir + '/d3.v5.min.js'
+    PATHS.src.jsVendorFiles
   ])
     .pipe(gulp.dest(PATHS.dest.jsVendorDir));
 
@@ -182,10 +192,10 @@ gulp.task('inject', function doInjection() {
  * The Tasks we're most likely to call from the command line.
  */
 
+// For all the below, we must have usePolling if running this in a VM, and
+// editing the files on the host, because changes won't be noticed otherwise.
 
 gulp.task('js:watch', function () {
-  // Must have usePolling if running this in a VM, and editing the files on
-  // the host, because changes won't be noticed otherwise.
   gulp.watch(PATHS.src.jsWatchFiles, {usePolling: true}, gulp.series(
     'js',
     'inject'
@@ -194,8 +204,6 @@ gulp.task('js:watch', function () {
 
 
 gulp.task('sass:watch', function () {
-  // Must have usePolling if running this in a VM, and editing the files on
-  // the host, because changes won't be noticed otherwise.
   gulp.watch(PATHS.src.sassWatchFiles, {usePolling: true}, gulp.series(
     'sass',
     'inject'
