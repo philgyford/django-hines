@@ -6,42 +6,11 @@
   'use strict';
 
   $(document).ready(function() {
-    // Enable SimpleMDE on the Weblog Post Body element.
-    // Requires the SimpleMDE JS and CSS to be loaded too.
+    // Enable the Markdown editor.
+    // Requires the MDE JS and CSS to be loaded too.
 
     hines.admin.markdownEditor().init();
-
-    //if ($("body.app-weblogs.model-post.change-form #id_body").length > 0) {
-      //var bodyMDE = new SimpleMDE({
-        //element: document.getElementById("id_body"),
-        //autosave: {
-          //enabled: true,
-          //uniqueId: "weblogs-post-body",
-          //delay: 1000, // milliseconds
-        //},
-        //indentWithTabs: false, // Use spaces
-        //promptURLs: true, // Show pop-up for URL when adding a link
-        //toolbar: [{
-			//name: "bold",
-			//action: SimpleMDE.toggleBold,
-			//className: "fa fa-bold",
-			//title: "Bold",
-		//},
-		//{
-			//name: "custom",
-			//action: function customFunction(editor){
-				//// Add your own code
-        //console.log(editor.codemirror.state.markedSelection);
-			//},
-			//className: "fa fa-star",
-			//title: "Custom Button",
-		//},
-		//"|", // Separator
-	//]
-      //});
-    //};
-
-  });
+   });
 
   window.hines = window.hines || {};
 
@@ -261,7 +230,7 @@
 <figure class=\"figure figure--img";
 
       if (["left", "right", "full"].indexOf(alignment) > -1) {
-        startStr += " figure-" + alignment;
+        startStr += " figure--" + alignment;
       };
 
       startStr += "\">\n\
