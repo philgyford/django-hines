@@ -120,9 +120,9 @@ class PostAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            "all": ("hines/css/vendor/simplemde.min.css",)
+            "all": ("hines/css/vendor/inscrybmde.min.css",)
         }
-        js = ("hines/js/vendor/simplemde.min.js", "hines/js/admin.min.js",)
+        js = ("hines/js/vendor/inscrybmde.min.js", "hines/js/admin.min.js",)
 
     def status_icon(self, obj):
         if obj.status == Post.LIVE_STATUS:
