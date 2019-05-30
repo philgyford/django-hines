@@ -11,6 +11,11 @@ class MarkdownifyTestCase(TestCase):
         self.assertEqual(html,
             "<p>Hello</p>\n<p>Bye</p>")
 
+    def test_markdownify_fenced_code(self):
+        "It should mark up code blocks correctly."
+        html = markdownify("```\nCode line 1\n\nCode line 2\n```")
+        self.assertEqual(html,
+            "<pre><code>Code line 1\n\nCode line 2\n</code></pre>")
 
 class TruncateStringTestCase(TestCase):
 

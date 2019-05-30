@@ -27,8 +27,8 @@ def datetime_now():
 
 
 def markdownify(content):
-    "Wrap the method, just in case we need to do something extray in future."
-    return markdown(text=content)
+    "Wrap the method, just in case we need to do something extra in future."
+    return markdown(text=content, extensions=['fenced_code'])
 
 
 def truncate_string(text, strip_html=True, chars=255, truncate=u'…', at_word_boundary=False):
