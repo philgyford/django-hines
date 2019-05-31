@@ -10,10 +10,31 @@
 @import "mixins/type";
 
 
+// For the Post add/edit form, make the elements around the Markdown fields
+// look better.
+.app-weblogs.model-post.change-form {
+
+  .field-intro,
+  .field-body {
+    label {
+      float: none;
+    }
+
+    .help {
+      margin-top: -25px;
+      margin-left: 0;
+    }
+  }
+}
+
+
+// The Markdown editor previews.
 .editor-preview-side,
 .editor-preview {
 
+  // A bit nicer than default.
   padding: 1rem 20px;
+
 
   // Things that we want to look similar in EasyMDE preview:
   @import "partials/reboot";
@@ -21,6 +42,7 @@
   @import "partials/images";
   @import "partials/lists";
   @import "partials/type";
+
 
   // The styles that make it blog-post-y, serif text etc.
   @include bodytext;
