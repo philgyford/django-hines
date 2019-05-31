@@ -1,1 +1,49 @@
 // Custom CSS only used for the Django Admin.
+
+@import "variables";
+@import "functions";
+@import "mixins/bootstrap/breakpoints";
+@import "mixins/bootstrap/clearfix";
+@import "mixins/bodytext";
+@import "mixins/links";
+@import "mixins/lists";
+@import "mixins/type";
+
+
+.editor-preview-side,
+.editor-preview {
+
+  padding: 1rem 20px;
+
+  // Things that we want to look similar in EasyMDE preview:
+  @import "partials/reboot";
+  @import "partials/figures";
+  @import "partials/images";
+  @import "partials/lists";
+  @import "partials/type";
+
+  // The styles that make it blog-post-y, serif text etc.
+  @include bodytext;
+
+
+  // Fixing styles that Django's admin applies:
+
+  ul {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .form-row & {
+    p, li, dt, dd {
+      @include text-style-default;
+      font-size: $font-size-base;
+      line-height: $line-height-base;
+      color: $body-color;
+    }
+  }
+
+  .module & h2 {
+    background: none;
+  }
+}
+

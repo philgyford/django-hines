@@ -119,10 +119,8 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ("time_created", "time_modified")
 
     class Media:
-        css = {
-            "all": ("hines/css/vendor/easymde.min.css",)
-        }
-        js = ("hines/js/vendor/easymde.min.js", "hines/js/admin.min.js",)
+        css = {"all": ("hines/css/vendor/easymde.min.css", "hines/css/admin.css")}
+        js = ("hines/js/vendor/easymde.min.js", "hines/js/admin.min.js")
 
     def status_icon(self, obj):
         if obj.status == Post.LIVE_STATUS:
