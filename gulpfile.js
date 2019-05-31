@@ -60,11 +60,15 @@ var PATHS = {
     cssDir:         STATIC_DIR + '/hines/css',
     cssFiles:       STATIC_DIR + '/hines/css/**/*.css',
     cssVendorDir:   STATIC_DIR + '/hines/css/vendor',
+    // The one CSS file to inject into templates:
+    cssSiteFile:    STATIC_DIR + '/hines/css/site-*',
     jsDir:          STATIC_DIR + '/hines/js',
     jsVendorDir:    STATIC_DIR + '/hines/js/vendor',
     // All generated JS files:
     // NOTE: Doesn't include those in subdirectories like /vendor/
-    jsFiles:        STATIC_DIR + '/hines/js/*.js'
+    jsFiles:        STATIC_DIR + '/hines/js/*.js',
+    // The one JS file to inject into templates:
+    jsSiteFile:     STATIC_DIR + '/hines/js/site-*'
   },
   templates: {
     files:          [TEMPLATES_DIR + '/hines_core/layouts/bare.html',]
@@ -173,8 +177,8 @@ gulp.task('js', gulp.series('clean:js', function buildJS() {
  */
 gulp.task('inject', function doInjection() {
   var sources = gulp.src([
-    PATHS.dest.cssFiles,
-    PATHS.dest.jsFiles
+    PATHS.dest.cssSiteFile,
+    PATHS.dest.jsSiteFile
   ], {read: false});
 
   var options = {
