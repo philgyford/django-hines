@@ -9,6 +9,28 @@
 @import "mixins/lists";
 @import "mixins/type";
 
+// Make the editor narrower...
+.editor-toolbar,
+.CodeMirror,
+.editor-statusbar {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.editor-toolbar {
+  // Allow for padding and borders:
+  max-width: 578px;
+}
+
+// But put it back to normal at full-width or side-by-side:
+.editor-toolbar.fullscreen,
+.CodeMirror-fullscreen,
+.CodeMirror-sided {
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
 // For the Post add/edit form, make the elements around the Markdown fields
 // look better.
 .app-weblogs.model-post.change-form {
