@@ -71,8 +71,9 @@
         ];
       } else if (field['buttons'] == 'full') {
         config['toolbar'] = [
-          "bold", "italic", "strikethrough", "heading", "link",
+          "bold", "italic", "strikethrough", "link",
           "|",
+          "heading",
           "code",
           {
             name: "quote-with-caption",
@@ -80,9 +81,9 @@
             className: "fa fa-quote-left",
             title: "Quote with caption",
           },
-          "unordered-list",
-          "ordered-list",
-          "horizontal-rule",
+          //"unordered-list",
+          //"ordered-list",
+          //"horizontal-rule",
           "|",
           {
             name: "image-left",
