@@ -43,10 +43,15 @@ var INJECT_IGNORE_PATH  = 'hines';
 
 var PATHS = {
   src: {
-    sassFiles:      SRC_DIR + '/sass/**/*.scss',
+    sassSiteFile:   SRC_DIR + '/sass/**/site.scss',
+    sassAdminFile:   SRC_DIR + '/sass/**/admin.scss',
     sassWatchFiles: SRC_DIR + '/sass/**/*.scss',
+    // Already minified files to be copies as-is:
+    cssVendorFiles: SRC_DIR + '/css/vendor/**/*.css',
+    cssWatchFiles:  SRC_DIR + '/css/**/*.css',
     jsDir:          SRC_DIR + '/js',
-    jsVendorDir:    SRC_DIR + '/js/vendor',
+    // Already minified files to be copies as-is:
+    jsVendorFiles:  SRC_DIR + '/js/vendor/**/*.js',
     jsWatchFiles:   SRC_DIR + '/js/**/*.js',
     // Our custom file(s):
     jsSiteFiles:    SRC_DIR + '/js/*.js',
@@ -55,18 +60,19 @@ var PATHS = {
   dest: {
     cssDir:         STATIC_DIR + '/hines/css',
     cssFiles:       STATIC_DIR + '/hines/css/**/*.css',
+    cssVendorDir:   STATIC_DIR + '/hines/css/vendor',
+    // The one CSS file to inject into templates:
+    cssSiteFile:    STATIC_DIR + '/hines/css/site-*',
     jsDir:          STATIC_DIR + '/hines/js',
     jsVendorDir:    STATIC_DIR + '/hines/js/vendor',
     // All generated JS files:
     // NOTE: Doesn't include those in subdirectories like /vendor/
-    jsFiles:        STATIC_DIR + '/hines/js/*.js'
+    jsFiles:        STATIC_DIR + '/hines/js/*.js',
+    // The one JS file to inject into templates:
+    jsSiteFile:     STATIC_DIR + '/hines/js/site-*'
   },
   templates: {
-    files:          [TEMPLATES_DIR + '/hines_core/layouts/bare.html',
-                     TEMPLATES_DIR + '/errors/400.html',
-                     TEMPLATES_DIR + '/errors/403.html',
-                     TEMPLATES_DIR + '/errors/404.html',
-                     TEMPLATES_DIR + '/errors/500.html']
+    files:          [TEMPLATES_DIR + '/hines_core/layouts/bare.html',]
   }
 };
 
@@ -92,19 +98,52 @@ gulp.task('clean:js', function() {
 gulp.task('clean', gulp.parallel('clean:css', 'clean:js'));
 
 
+
 /**
- * Create CSS file from Sass files.
+ * Just copy our already-minified and not-used-everywhere 3rd-party CSS files.
+ */
+gulp.task('sass:vendor:copy', function copyVendorSass() {
+  return gulp.src([
+    PATHS.src.cssVendorFiles
+  ])
+    .pipe(gulp.dest(PATHS.dest.cssVendorDir));
+});
+
+
+/**
+ * Create Admin CSS file from Sass files.
  * Autoprefix the CSS.
  * Create a sourcemap file.
- * Add a revision code to each file.
  */
-gulp.task('sass', gulp.series('clean:css', function buildSass() {
+gulp.task('sass:admin:build', function buildAdminSass() {
   var sassOptions = {
     outputStyle: 'compressed',
     sourceComments: false
   };
 
-  return gulp.src(PATHS.src.sassFiles)
+  return gulp.src(PATHS.src.sassAdminFile)
+    .pipe(sourcemaps.init())
+      .pipe(sass(sassOptions).on('error', sass.logError))
+      .pipe(gulp.dest(PATHS.dest.cssDir))
+    .pipe(autoprefixer())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(PATHS.dest.cssDir));
+});
+
+
+/**
+ * Create Site CSS file from Sass files.
+ * Autoprefix the CSS.
+ * Create a sourcemap file.
+ * Add a revision code to each file.
+ */
+gulp.task('sass:site:build', function buildSiteSass() {
+  var sassOptions = {
+    outputStyle: 'compressed',
+    sourceComments: false
+  };
+
+  return gulp.src(PATHS.src.sassSiteFile)
     .pipe(sourcemaps.init())
       .pipe(sass(sassOptions).on('error', sass.logError))
       .pipe(rev())
@@ -112,29 +151,45 @@ gulp.task('sass', gulp.series('clean:css', function buildSass() {
     .pipe(autoprefixer())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(PATHS.dest.cssDir));
-}));
+});
+
+
+gulp.task('sass', gulp.series(
+  'clean:css',
+  gulp.parallel(
+    'sass:vendor:copy',
+    'sass:admin:build',
+    'sass:site:build'
+  )
+));
 
 
 /**
- * Minify and combine all the JS files used for all browsers.
+ * Just copy our already-minified and not-used-everywhere 3rd-party JS files.
  */
-gulp.task('js', gulp.series('clean:js', function buildJS() {
+gulp.task('js:vendor:copy', function copyVendorJS() {
+  return gulp.src([
+    PATHS.src.jsVendorFiles
+  ])
+    .pipe(gulp.dest(PATHS.dest.jsVendorDir));
+});
 
-  gulp.src([
+/**
+ * Combine and minify our Admin JS file(s).
+ */
+gulp.task('js:admin:build', function buildAdminJS() {
+  return gulp.src([
     PATHS.src.jsAdminFiles
   ])
     .pipe(concat('admin.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest(PATHS.dest.jsDir));
+});
 
-  // First, just copy our already-minified and not-used-everywhere
-  // 3rd-party JS files:
-  gulp.src([
-    PATHS.src.jsVendorDir + '/d3.v5.min.js'
-  ])
-    .pipe(gulp.dest(PATHS.dest.jsVendorDir));
-
-
+/**
+ * Combine and minify our Site JS file(s).
+ */
+gulp.task('js:site:build', function buildSiteJS() {
   // A stream of our custom JS files, minified.
   var customStream = gulp.src(PATHS.src.jsSiteFiles)
     .pipe(uglify())
@@ -152,7 +207,20 @@ gulp.task('js', gulp.series('clean:js', function buildJS() {
     .pipe(concat('site.min.js'))
     .pipe(rev())
     .pipe(gulp.dest(PATHS.dest.jsDir));
-}));
+});
+
+
+/**
+ * Minify and combine all the JS files used for all browsers.
+ */
+gulp.task('js', gulp.series(
+  'clean:js',
+  gulp.parallel(
+    'js:vendor:copy',
+    'js:admin:build',
+    'js:site:build'
+  )
+));
 
 
 /**
@@ -163,8 +231,8 @@ gulp.task('js', gulp.series('clean:js', function buildJS() {
  */
 gulp.task('inject', function doInjection() {
   var sources = gulp.src([
-    PATHS.dest.cssFiles,
-    PATHS.dest.jsFiles
+    PATHS.dest.cssSiteFile,
+    PATHS.dest.jsSiteFile
   ], {read: false});
 
   var options = {
@@ -182,10 +250,10 @@ gulp.task('inject', function doInjection() {
  * The Tasks we're most likely to call from the command line.
  */
 
+// For all the below, we must have usePolling if running this in a VM, and
+// editing the files on the host, because changes won't be noticed otherwise.
 
 gulp.task('js:watch', function () {
-  // Must have usePolling if running this in a VM, and editing the files on
-  // the host, because changes won't be noticed otherwise.
   gulp.watch(PATHS.src.jsWatchFiles, {usePolling: true}, gulp.series(
     'js',
     'inject'
@@ -194,8 +262,6 @@ gulp.task('js:watch', function () {
 
 
 gulp.task('sass:watch', function () {
-  // Must have usePolling if running this in a VM, and editing the files on
-  // the host, because changes won't be noticed otherwise.
   gulp.watch(PATHS.src.sassWatchFiles, {usePolling: true}, gulp.series(
     'sass',
     'inject'
