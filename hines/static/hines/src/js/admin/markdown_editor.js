@@ -1,6 +1,5 @@
 /**
- * We use InscrybMDE, which is a fork of SimpleMDE.
- * Also see EasyMDE, which is another fork of SimpleMDE.
+ * We use EasyMDE, which is a fork of SimpleMDE.
  */
 ;(function($) {
   'use strict';
@@ -131,7 +130,7 @@
       
       };
 
-      var editor = new InscrybMDE(config);
+      var editor = new EasyMDE(config);
     };
 
     /**
