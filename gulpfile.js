@@ -43,7 +43,8 @@ var INJECT_IGNORE_PATH  = 'hines';
 
 var PATHS = {
   src: {
-    sassFiles:      SRC_DIR + '/sass/**/*.scss',
+    sassSiteFile:   SRC_DIR + '/sass/**/site.scss',
+    sassAdminFile:   SRC_DIR + '/sass/**/admin.scss',
     sassWatchFiles: SRC_DIR + '/sass/**/*.scss',
     // Already minified files to be copies as-is:
     cssVendorFiles: SRC_DIR + '/css/vendor/**/*.css',
@@ -97,28 +98,52 @@ gulp.task('clean:js', function() {
 gulp.task('clean', gulp.parallel('clean:css', 'clean:js'));
 
 
-/**
- * Copy Vendor CSS files.
- * Create CSS file from Sass files.
- * Autoprefix the CSS.
- * Create a sourcemap file.
- * Add a revision code to each file.
- */
-gulp.task('sass', gulp.series('clean:css', function buildSass() {
 
-  // First, just copy our already-minified and not-used-everywhere
-  // 3rd-party CSS files:
-  gulp.src([
+/**
+ * Just copy our already-minified and not-used-everywhere 3rd-party CSS files.
+ */
+gulp.task('sass:vendor:copy', function copyVendorSass() {
+  return gulp.src([
     PATHS.src.cssVendorFiles
   ])
     .pipe(gulp.dest(PATHS.dest.cssVendorDir));
+});
 
+
+/**
+ * Create Admin CSS file from Sass files.
+ * Autoprefix the CSS.
+ * Create a sourcemap file.
+ */
+gulp.task('sass:admin:build', function buildAdminSass() {
   var sassOptions = {
     outputStyle: 'compressed',
     sourceComments: false
   };
 
-  return gulp.src(PATHS.src.sassFiles)
+  return gulp.src(PATHS.src.sassAdminFile)
+    .pipe(sourcemaps.init())
+      .pipe(sass(sassOptions).on('error', sass.logError))
+      .pipe(gulp.dest(PATHS.dest.cssDir))
+    .pipe(autoprefixer())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(PATHS.dest.cssDir));
+});
+
+
+/**
+ * Create Site CSS file from Sass files.
+ * Autoprefix the CSS.
+ * Create a sourcemap file.
+ * Add a revision code to each file.
+ */
+gulp.task('sass:site:build', function buildSiteSass() {
+  var sassOptions = {
+    outputStyle: 'compressed',
+    sourceComments: false
+  };
+
+  return gulp.src(PATHS.src.sassSiteFile)
     .pipe(sourcemaps.init())
       .pipe(sass(sassOptions).on('error', sass.logError))
       .pipe(rev())
@@ -126,29 +151,45 @@ gulp.task('sass', gulp.series('clean:css', function buildSass() {
     .pipe(autoprefixer())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(PATHS.dest.cssDir));
-}));
+});
+
+
+gulp.task('sass', gulp.series(
+  'clean:css',
+  gulp.parallel(
+    'sass:vendor:copy',
+    'sass:admin:build',
+    'sass:site:build'
+  )
+));
 
 
 /**
- * Minify and combine all the JS files used for all browsers.
+ * Just copy our already-minified and not-used-everywhere 3rd-party JS files.
  */
-gulp.task('js', gulp.series('clean:js', function buildJS() {
+gulp.task('js:vendor:copy', function copyVendorJS() {
+  return gulp.src([
+    PATHS.src.jsVendorFiles
+  ])
+    .pipe(gulp.dest(PATHS.dest.jsVendorDir));
+});
 
-  gulp.src([
+/**
+ * Combine and minify our Admin JS file(s).
+ */
+gulp.task('js:admin:build', function buildAdminJS() {
+  return gulp.src([
     PATHS.src.jsAdminFiles
   ])
     .pipe(concat('admin.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest(PATHS.dest.jsDir));
+});
 
-  // First, just copy our already-minified and not-used-everywhere
-  // 3rd-party JS files:
-  gulp.src([
-    PATHS.src.jsVendorFiles
-  ])
-    .pipe(gulp.dest(PATHS.dest.jsVendorDir));
-
-
+/**
+ * Combine and minify our Site JS file(s).
+ */
+gulp.task('js:site:build', function buildSiteJS() {
   // A stream of our custom JS files, minified.
   var customStream = gulp.src(PATHS.src.jsSiteFiles)
     .pipe(uglify())
@@ -166,7 +207,20 @@ gulp.task('js', gulp.series('clean:js', function buildJS() {
     .pipe(concat('site.min.js'))
     .pipe(rev())
     .pipe(gulp.dest(PATHS.dest.jsDir));
-}));
+});
+
+
+/**
+ * Minify and combine all the JS files used for all browsers.
+ */
+gulp.task('js', gulp.series(
+  'clean:js',
+  gulp.parallel(
+    'js:vendor:copy',
+    'js:admin:build',
+    'js:site:build'
+  )
+));
 
 
 /**
