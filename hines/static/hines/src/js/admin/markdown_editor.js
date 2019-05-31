@@ -23,12 +23,14 @@
         'elementId': 'id_intro',
         'autosaveId': 'weblogs-post-intro',
         'buttons': 'minimal',
+        'minHeight': '100px',
       },
       {
         'selector': 'body.app-weblogs.model-post.change-form #id_body',
         'elementId': 'id_body',
         'autosaveId': 'weblogs-post-body',
         'buttons': 'full',
+        'minHeight': '300px',
       },
     ];
 
@@ -58,6 +60,7 @@
         },
         indentWithTabs: false, // Use spaces
         promptURLs: true, // Show pop-up for URL when adding a link
+        minHeight: field['minHeight']
       };
 
       if (field['buttons'] == 'minimal') {
