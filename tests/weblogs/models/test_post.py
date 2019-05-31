@@ -146,12 +146,9 @@ Another line.""",
         self.assertEqual(post.excerpt, "The excerpt")
 
     @freeze_time("2017-07-01 12:00:00", tz_offset=-8)
-    def test_time_published_is_set(self):
-        "time_published is set when we first publish."
+    def test_default_time_published(self):
+        "time_published should be set to now by default"
         post = DraftPostFactory()
-        self.assertIsNone(post.time_published)
-        post.status = Post.LIVE_STATUS
-        post.save()
         self.assertEqual(post.time_published, timezone.now())
 
     def test_time_published_does_not_change(self):

@@ -253,10 +253,6 @@ class Post(TimeStampedModelMixin, models.Model):
         self.body_html = self.htmlize_text(self.body)
         self.excerpt = self.make_excerpt()
 
-        if self.time_published is None and self.status == self.LIVE_STATUS:
-            # Published for the first time!
-            self.time_published = timezone.now()
-
         super().save(*args, **kwargs)
 
         # Expire old detail page, home page, and blog home page.
