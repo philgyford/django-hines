@@ -22,9 +22,11 @@
 		{% blog_years_card blog=blog current_year=year|default_if_none:None %}
 	{% endif %}
 
-	{% render_block "blogroll" %}
+  {% if blog.slug == "writing" %}
+    {% render_block "blogroll" %}
 
-	{% render_block "newsletters" %}
+    {% render_block "newsletters" %}
+  {% endif %}
 
 	{{ block.super }}
 {% endblock sidebar_content %}
