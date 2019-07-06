@@ -1,0 +1,12 @@
+{% extends 'flatpages/about.html' %}
+
+{% load hines_core blocks %}
+
+{% block sidebar_content %}
+  {% render_block "elsewhere" %}
+
+  {# render_block "other-sites" #}
+
+  {# lastfm_top_artists_card limit=10 #}
+
+{% endblock sidebar_content %}
