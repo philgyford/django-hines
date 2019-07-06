@@ -32,7 +32,7 @@ Expects:
         {% if event.venue %}
           at {{ event.venue_name }}
         {% endif %}
-        <span class="u-nowrap">on {{ event.date|date:"j M Y" }}</span>
+        <span class="u-nowrap">on {% display_time event.date show='date' link_to_day=True %}</span>
       </p>
     {% endif %}
   </div>
