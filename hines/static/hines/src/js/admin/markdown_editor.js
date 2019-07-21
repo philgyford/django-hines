@@ -34,17 +34,24 @@
       },
     ];
 
+    // The value of the "HTML format" select field that indicates whether
+    // this post is in Markdown format or not.
+    var HTML_FORMAT_MARKDOWN = "2";
+
     var exports = {
 
       /**
        * Call this method to set everything up.
        */
       init: function() {
-        $.each(fields, function(idx, field) {
-          if ($(field['selector']).length > 0) {
-            initField(field);
-          };
-        });
+        // Only for Markdown posts.
+        if ($("#id_html_format").val() == HTML_FORMAT_MARKDOWN) {
+          $.each(fields, function(idx, field) {
+            if ($(field['selector']).length > 0) {
+              initField(field);
+            };
+          });
+        };
       }
     };
 
