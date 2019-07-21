@@ -78,7 +78,16 @@
         ];
       } else if (field['buttons'] == 'full') {
         config['toolbar'] = [
-          "bold", "italic", "strikethrough", "link",
+          "bold",
+          "italic",
+          //"strikethrough",
+          {
+            name: "cite",
+            action: makeCite,
+            className: "fa fa-angle-double-left",
+            title: "Cite",
+          },
+          "link",
           "|",
           "heading",
           "code",
@@ -183,6 +192,11 @@
     };
 
 
+    function makeCite(editor) {
+      _addInlineTag(editor, "<cite>", "</cite>");
+    };
+
+
     /**
      * Insert a blockquote in a figure with a figcaption.
      */
@@ -229,6 +243,7 @@
       makeVideo(editor, 'full');
     };
 
+
     /**
      * Insert the HTML for an image.
      * If a URL is selected, that will be used as the image URL.
@@ -252,6 +267,7 @@
 
       _formatBlock(editor, startStr, endStr);
     };
+
 
     /**
      * Insert the HTML for an embedded video.
@@ -289,6 +305,46 @@
       _formatBlock(editor, startStr, endStr);
     };
 
+
+    /**
+     * Wrap a piece of text in HTML tags.
+     * Caniblaised from _toggleBlock() in
+     * https://github.com/Ionaru/easy-markdown-editor/blob/master/src/js/easymde.js
+     *
+     * Suppy the editor instance and the start/end tags to wrap in.
+     * e.g.  _addInlineTag(editor, "<cite>", "</cite>")
+     */
+    function _addInlineTag(editor, start_chars, end_chars) {
+      if (/editor-preview-active/.test(editor.codemirror.getWrapperElement().lastChild.className)) {
+        return;
+      };
+
+      end_chars = (typeof end_chars === 'undefined') ? start_chars : end_chars;
+      var cm = editor.codemirror;
+      var stat = editor.getState(cm);
+
+      var text;
+      var start = start_chars;
+      var end = end_chars;
+
+      var startPoint = cm.getCursor('start');
+      var endPoint = cm.getCursor('end');
+
+      text = cm.getSelection();
+
+      text = text.split(start_chars).join('');
+      text = text.split(end_chars).join('');
+
+      cm.replaceSelection(start + text + end);
+
+      startPoint.ch += start_chars.length;
+      endPoint.ch = startPoint.ch + text.length;
+
+      cm.setSelection(startPoint, endPoint);
+      cm.focus();
+    };
+
+
     /**
      * Replace selected text with a different string, and re-set the selection
      * to cover the new string.
@@ -309,6 +365,7 @@
       cm.setSelection(startPoint, endPoint);
       cm.focus();
     };
+
 
     /**
      * Mostly copied from bits of toggleCodeBlock() in
