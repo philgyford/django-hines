@@ -178,9 +178,7 @@ class Post(TimeStampedModelMixin, models.Model):
         "URL for the original and it will be used for the post's permalink",
     )
 
-    time_published = models.DateTimeField(
-        null=True, blank=False, default=timezone.now
-    )
+    time_published = models.DateTimeField(null=True, blank=False, default=timezone.now)
 
     slug = models.SlugField(
         max_length=255,
