@@ -1,11 +1,11 @@
-dist: trusty
+dist: xenial   # required for Python >= 3.7
 language: python
 python:
-- 3.6
+- 3.7
 services:
 - postgresql
 addons:
-  postgresql: '9.6'
+  postgresql: '11'
 env:
   global:
   - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
