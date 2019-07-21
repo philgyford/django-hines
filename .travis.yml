@@ -5,7 +5,7 @@ python:
 services:
 - postgresql
 addons:
-  postgresql: '11'
+  postgresql: '10'
 env:
   global:
   - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
