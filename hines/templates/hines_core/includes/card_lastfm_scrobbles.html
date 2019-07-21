@@ -15,7 +15,12 @@ Expects:
     <ol class="card__body">
       {% for scrobble in scrobble_list %}
         <li>
-          <a href="{{ scrobble.artist.permalink }}">{{ scrobble.artist.name }}</a> - <a href="{{ scrobble.track.permalink}}"><cite>{{ scrobble.track.name }}</cite></a>
+          {% ifchanged scrobble.artist.name %}
+            <a href="{{ scrobble.artist.permalink }}">{{ scrobble.artist.name }}</a>
+          {% else %}
+            &nbsp;〃
+          {% endifchanged %}
+          - <a href="{{ scrobble.track.permalink}}"><cite>{{ scrobble.track.name }}</cite></a>
         </li>
       {% endfor %}
     </ol>
