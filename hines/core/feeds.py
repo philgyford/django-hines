@@ -4,7 +4,6 @@ from django.contrib.syndication.views import Feed
 from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
-from django.utils.html import escape
 
 from .recent import RecentObjects
 from . import app_settings
@@ -171,7 +170,7 @@ class EverythingFeedRSS(ExtendedFeed):
 
     def item_title(self, item):
         if item["kind"] == "blog_post":
-            title = item["object"].title
+            title = item["object"].feed_title
 
         elif item["kind"] == "pinboard_bookmark":
             title = "[Link] {}".format(item["object"].title)

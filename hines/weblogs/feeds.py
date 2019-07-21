@@ -35,7 +35,7 @@ class BlogPostsFeedRSS(ExtendedFeed):
         return strip_tags(item.excerpt)
 
     def item_title(self, item):
-        return item.title
+        return item.feed_title
 
     def item_author_name(self, item):
         return item.author.display_name

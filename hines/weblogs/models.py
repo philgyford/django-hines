@@ -7,6 +7,7 @@ from django.db.models import Count
 from django.template.defaultfilters import linebreaks
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.html import strip_tags
 
 import smartypants
 from taggit.managers import TaggableManager
@@ -145,7 +146,7 @@ class Post(TimeStampedModelMixin, models.Model):
     FEATURED_CHOICES = ((NOT_FEATURED, "Not featured"), (IS_FEATURED, "Featured"))
 
     # Basic fields.
-    title = models.CharField(blank=False, max_length=255)
+    title = models.CharField(blank=False, max_length=255, help_text="Can use HTML tags")
 
     excerpt = models.TextField(
         blank=True,
@@ -315,6 +316,17 @@ class Post(TimeStampedModelMixin, models.Model):
             return choices[self.status]
         else:
             return None
+
+    @property
+    def feed_title(self):
+        """A Post title suitable for use in an RSS feed's <title>
+        Replaces <cite> tags with curly single quotes.
+        Strips any other HTML tags.
+        """
+        title = self.title
+        title = title.replace("<cite>", "‘").replace("</cite>", "’")
+        title = strip_tags(title)
+        return title
 
     def htmlize_text(self, text):
         """

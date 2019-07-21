@@ -126,8 +126,8 @@ Another line.""",
             html_format=Post.NO_FORMAT,
             intro='<p><a href="http://example.org">Hello.</a></p>',
             body='<p>The "body" goes on for a bit so we can check the '
-            'excerpt is truncated and working correctly as we would '
-            'really expect it to do.</p>',
+            "excerpt is truncated and working correctly as we would "
+            "really expect it to do.</p>",
             excerpt="",
         )
         # Note: curly quotes created by Smartypants, and decoded in
@@ -200,12 +200,8 @@ Another line.""",
         post = LivePostFactory(
             blog=blog, time_published=make_datetime("2017-04-03 12:00:00")
         )
-        DraftPostFactory(
-            blog=blog, time_published=make_datetime("2017-04-04 12:00:00")
-        )
-        LivePostFactory(
-            time_published=make_datetime("2017-04-04 12:00:00")
-        )
+        DraftPostFactory(blog=blog, time_published=make_datetime("2017-04-04 12:00:00"))
+        LivePostFactory(time_published=make_datetime("2017-04-04 12:00:00"))
         next_post = LivePostFactory(
             blog=blog, time_published=make_datetime("2017-04-05 12:00:00")
         )
@@ -217,12 +213,8 @@ Another line.""",
         post = LivePostFactory(
             blog=blog, time_published=make_datetime("2017-04-05 12:00:00")
         )
-        DraftPostFactory(
-            blog=blog, time_published=make_datetime("2017-04-04 12:00:00")
-        )
-        LivePostFactory(
-            time_published=make_datetime("2017-04-04 12:00:00")
-        )
+        DraftPostFactory(blog=blog, time_published=make_datetime("2017-04-04 12:00:00"))
+        LivePostFactory(time_published=make_datetime("2017-04-04 12:00:00"))
         previous_post = LivePostFactory(
             blog=blog, time_published=make_datetime("2017-04-03 12:00:00")
         )
@@ -257,6 +249,12 @@ Another line.""",
     def test_status_str(self):
         post = LivePostFactory()
         self.assertEqual(post.status_str, "Published")
+
+    def test_feed_title(self):
+        post = LivePostFactory(
+            title="This is <cite>Cited</cite> and <strong>Bold</strong>"
+        )
+        self.assertEqual(post.feed_title, "This is ‘Cited’ and Bold")
 
     def test_main_image_url_none(self):
         """If there's no image in either intro_html or body_html it
