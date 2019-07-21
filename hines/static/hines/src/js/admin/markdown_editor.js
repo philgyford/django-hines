@@ -138,7 +138,7 @@
           "|",
           "preview", "side-by-side", "fullscreen"
         ]
-      
+
       };
 
       var editor = new EasyMDE(config);
@@ -182,7 +182,7 @@
       };
     };
 
-  
+
     /**
      * Insert a blockquote in a figure with a figcaption.
      */
@@ -200,7 +200,7 @@
       _formatBlock(editor, startStr, endStr);
     };
 
-  
+
     function makeImageLeft(editor) {
       makeImage(editor, 'left');
     };
@@ -390,7 +390,7 @@
 
     return exports;
   };
-  
+
   /**
    * Turns a video URL into the embed version of it.
    *
