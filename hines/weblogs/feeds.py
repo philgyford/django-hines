@@ -1,8 +1,7 @@
-from django.urls import reverse
-from django.utils.html import escape, strip_tags
+from django.utils.html import strip_tags
 
 from hines.core.feeds import ExtendedFeed, ExtendedRSSFeed
-from .models import Blog, Post
+from .models import Blog
 
 
 class BlogPostsFeedRSS(ExtendedFeed):
@@ -28,8 +27,7 @@ class BlogPostsFeedRSS(ExtendedFeed):
         return obj.feed_description
 
     def items(self, obj):
-        return obj.public_posts[:self.num_items]
-
+        return obj.public_posts[: self.num_items]
 
     # Getting details for each post in the feed:
 
