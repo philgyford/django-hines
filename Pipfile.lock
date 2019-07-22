@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "50111c91f2d2a22a652688df6eb673a2ed9fe35f772fdf00616121a230e6bf12"
+            "sha256": "f271a2d7be4dd6bc73193cb8be367c22887d2ba97ee6bf1e68087cf1d98bab6e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -26,18 +26,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:312de7c034d0563394bf9c5445c91b8d309ae2bdd9cbbfe7b53a54cefd370012",
-                "sha256:c964b25803718062614b2b3131a0d0051c079a3a53cb69d125a47ddd7de95d61"
+                "sha256:04a32520a546ceb4bd97b4dea87d7c079b01c6ec55280bce86ca12fc80ac7e32",
+                "sha256:24aa9be2a87bb0a7ac1dff2dc5471dde837fcb96ffc30876d688971171889301"
             ],
             "index": "pypi",
-            "version": "==1.9.191"
+            "version": "==1.9.192"
         },
         "botocore": {
             "hashes": [
-                "sha256:6f609214e358d602a927af375e851af8edff0fb7dcdc0f9790416936eded0442",
-                "sha256:971bfcce68b0c92cb8ff6c43a080a2baa07f0f6809582d758da19c14fc039da0"
+                "sha256:ecf8d872baec661e292e01d45f666fdc4a4eca716bbc6a7876223899a1a9d9d8",
+                "sha256:fbb621329cb41f3fcaa996ab938837ad78a4db6ad1d1a8ef48ec59a56f379049"
             ],
-            "version": "==1.12.191"
+            "version": "==1.12.192"
         },
         "certifi": {
             "hashes": [
@@ -78,10 +78,10 @@
         },
         "django-autocomplete-light": {
             "hashes": [
-                "sha256:69a34f97a5b8ab3aac6baaea36f627ef09eaa5791c60f881b2000b1b813268d0"
+                "sha256:29ce2626a11eab2333e5aa9f95166a6d4400f11b5a05e8f23fa77017b1a9089a"
             ],
             "index": "pypi",
-            "version": "==3.3.5"
+            "version": "==3.4.1"
         },
         "django-contrib-comments": {
             "hashes": [
@@ -143,11 +143,11 @@
         },
         "docutils": {
             "hashes": [
-                "sha256:54a349c622ff31c91cbec43b0b512f113b5b24daf00e2ea530bb1bd9aac14849",
-                "sha256:d2ddba74835cb090a1b627d3de4e7835c628d07ee461f7b4480f51af2fe4d448",
-                "sha256:fa2e604dc8a1fe5676a6342d86aa410779df206eec24ebaf16b85687263d3ece"
+                "sha256:02aec4bd92ab067f6ff27a38a38a41173bf01bed8f89157768c1573f53e474a6",
+                "sha256:51e64ef2ebfb29cae1faa133b3710143496eca21c530f3f71424d77687764274",
+                "sha256:7a4bd47eaf6596e1295ecb11361139febe29b084a87bf005bf899f9a42edc3c6"
             ],
-            "version": "==0.15"
+            "version": "==0.14"
         },
         "flickrapi": {
             "hashes": [
