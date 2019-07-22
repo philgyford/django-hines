@@ -9,20 +9,42 @@
 @import "mixins/lists";
 @import "mixins/type";
 
-// Make the editor narrower...
 .editor-toolbar,
 .CodeMirror,
 .editor-statusbar {
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.editor-toolbar {
-  // Allow for padding and borders:
-  max-width: 578px;
+  width: 100%;
 }
 
-// But put it back to normal at full-width or side-by-side:
+// Make width of editor, toolbar and statusbar work better.
+@media (min-width: 768px) {
+  .editor-toolbar,
+  .CodeMirror,
+  .editor-statusbar {
+    max-width: 518px;
+    margin-left: 170px;
+  }
+  .editor-statusbar,
+  .editor-toolbar {
+    // Allow for padding and borders:
+    max-width: 496px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .editor-toolbar,
+  .CodeMirror,
+  .editor-statusbar {
+    max-width: 622px;
+    margin-left: 170px;
+  }
+  .editor-statusbar,
+  .editor-toolbar {
+    // Allow for padding and borders:
+    max-width: 600px;
+  }
+}
+
+// But put things back to normal at full-screen or side-by-side:
 .editor-toolbar.fullscreen,
 .CodeMirror-fullscreen,
 .CodeMirror-sided {
@@ -43,7 +65,6 @@
 
     .help {
       margin-top: -25px;
-      margin-left: 0;
     }
   }
 }
@@ -94,7 +115,7 @@
 // as textareas.
 .select2-container {
   width: 100% !important;
-  max-width: 610px;
+  max-width: 622px;
 }
 
 @media (max-width: 1024px) {
