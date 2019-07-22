@@ -156,9 +156,9 @@ abbr {
 }
 
 blockquote {
-  border-left: $base-unit solid $border-color;
-  padding-left: $base-unit;
-  padding-right: ($base-unit * 2);
+  border-left: $border-width solid $border-color;
+  padding-left: $border-width;
+  padding-right: ($border-width * 2);
   margin-bottom: $vertical-space;
 }
 
