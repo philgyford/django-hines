@@ -93,10 +93,10 @@
         },
         "django-ditto": {
             "hashes": [
-                "sha256:c02073c168079d5922deea23cf710463dbca904805f01f03fa68df55a00beaa8"
+                "sha256:8155f4e47aa540a7f692dab460b60d2031f3392fe09aee21d5aeda9f327de13a"
             ],
             "index": "pypi",
-            "version": "==0.10.0"
+            "version": "==0.10.2"
         },
         "django-imagekit": {
             "hashes": [
