@@ -7,18 +7,28 @@ html.has-guide {
   position: relative;
 }
 
+// Replacement for make-container-max-widths() which sets the --max_width
+// variable correctly for our guides.
+@mixin make-guides-max-width($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      --max_width: calc(#{$container-max-width} - #{$grid-gutter-width});
+    }
+  }
+}
+
 /**
  * Settings
  * Defaults at narrowest width.
  **/
 :root {
   --offset: (#{$grid-gutter-width} / 2) + #{$body-horizontal-space-sm};
-  --max_width: #{$grid-max-width} - #{$grid-gutter-width};
   --columns: 1;
   --gutter: #{$grid-gutter-width};
   --baseline: #{$base-unit};
   --baseline-shift: 0;
   --color: hsla(0, 80%, 72%, 0.25);
+  @include make-guides-max-width();
 }
 
 /* Override settings for progressively wider widths. */
@@ -92,4 +102,36 @@ html.has-guide::before {
   z-index: 1000;
   pointer-events: none;
 
+}
+
+/**
+ * Add a pseudo element to display the current breakpoint at the top-right.
+ */
+html.has-guide::after {
+  position: fixed;
+  top: 0.2em;
+  right: 0.2em;
+  content: "Width: xs";
+  background: #fff;
+  color: #666;
+  padding: 0.2em 0.4em;
+  border: 1px solid #ccc;
+  font-size: 0.8rem;
+  font-family: $font-family-sans-serif;
+
+  @include media-breakpoint-up(sm) {
+    content: "Width: sm";
+  }
+
+  @include media-breakpoint-up(md) {
+    content: "Width: md";
+  }
+
+  @include media-breakpoint-up(lg) {
+    content: "Width: lg";
+  }
+
+  @include media-breakpoint-up(xl) {
+    content: "Width: xl";
+  }
 }

@@ -19,7 +19,7 @@ $navbar-form-top:   ($border-width - ($input-border-width * 2));
 .navbar {
   position: relative;
   width: 100%;
-  max-width: $grid-max-width;
+  @include make-container-max-widths();
   margin: $navbar-top-space auto $navbar-bottom-space auto;
   text-rendering: optimizeLegibility;
   @include hyphens(none);

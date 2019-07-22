@@ -26,7 +26,7 @@
 
 .grid {
   @include make-container();
-  max-width: $grid-max-width;
+  @include make-container-max-widths();
 }
 
 .grid__row {
