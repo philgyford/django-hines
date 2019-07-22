@@ -72,7 +72,15 @@
 
       if (field['buttons'] == 'minimal') {
         config['toolbar'] = [
-          "bold", "italic", "link",
+          "bold",
+          "italic",
+          {
+            name: "cite",
+            action: makeCite,
+            className: "fa fa-angle-double-left",
+            title: "Cite",
+          },
+          "link",
           "|",
           "preview", "side-by-side", "fullscreen"
         ];
@@ -80,7 +88,6 @@
         config['toolbar'] = [
           "bold",
           "italic",
-          //"strikethrough",
           {
             name: "cite",
             action: makeCite,
