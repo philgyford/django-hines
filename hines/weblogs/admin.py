@@ -49,7 +49,7 @@ class PostAdminForm(autocomplete.FutureModelForm):
             "excerpt": forms.Textarea(attrs={"class": "vLargeTextField", "rows": 3}),
             # The django-autocomplete-light tag widget:
             "tags": autocomplete.TaggitSelect2(
-                reverse_lazy("weblogs:post_tag_autocomplete")
+                url=reverse_lazy("weblogs:post_tag_autocomplete")
             ),
         }
         fields = "__all__"

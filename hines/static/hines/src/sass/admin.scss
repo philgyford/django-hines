@@ -90,3 +90,21 @@
   }
 }
 
+// Make the django-autocomplete-light select2 input field the same width
+// as textareas.
+.select2-container {
+  width: 100% !important;
+  max-width: 610px;
+}
+
+@media (max-width: 1024px) {
+  .select2-container {
+    max-width: 518px;
+  }
+}
+
+@media (max-width: 767px) {
+  .select2-container {
+    max-width: none;
+  }
+}
