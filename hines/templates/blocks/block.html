@@ -2,6 +2,8 @@
 Default block template, for rendering some HTML, such as <p>s, in a card.
 {% endcomment %}
 
+{% load hines_core %}
+
 {% if block %}
   <aside class="card flatblock-{{ block.slug }}">
     {% if block.title%}

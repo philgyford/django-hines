@@ -8,6 +8,7 @@ from hines.core.templatetags.hines_core import (
     get_item,
     display_time,
     smartypants,
+    widont,
     linebreaks_first,
     domain_urlize,
 )
@@ -102,11 +103,76 @@ class SmartypantsTestCase(TestCase):
         )
 
 
+class WidontTestCase(TestCase):
+    "From https://github.com/chrisdrackett/django-typogrify"
+    def test_simple(self):
+        self.assertEqual(widont("A very simple test"), "A very simple&nbsp;test")
+
+    def test_single_word(self):
+        self.assertEqual(widont("Test"), "Test")
+
+    def test_single_word_leading_space(self):
+        self.assertEqual(widont(" Test"), " Test")
+
+    def test_html(self):
+        self.assertEqual(
+            widont("<ul><li>Test</p></li><ul>"), "<ul><li>Test</p></li><ul>"
+        )
+
+    def test_html_leading_space(self):
+        self.assertEqual(
+            widont("<ul><li> Test</p></li><ul>"), "<ul><li> Test</p></li><ul>"
+        )
+
+    def test_two_paragraphs(self):
+        self.assertEqual(
+            widont("<p>In a couple of paragraphs</p><p>paragraph two</p>"),
+            "<p>In a couple of&nbsp;paragraphs</p><p>paragraph&nbsp;two</p>",
+        )
+
+    def test_link_in_heading(self):
+        self.assertEqual(
+            widont('<h1><a href="#">In a link inside a heading</i> </a></h1>'),
+            '<h1><a href="#">In a link inside a&nbsp;heading</i> </a></h1>',
+        )
+
+    def test_link_followed_by_other_text(self):
+        self.assertEqual(
+            widont('<h1><a href="#">In a link</a> followed by other text</h1>'),
+            '<h1><a href="#">In a link</a> followed by other&nbsp;text</h1>',
+        )
+
+    def test_empty_html(self):
+        "Shouldn't error"
+        self.assertEqual(
+            widont('<h1><a href="#"></a></h1>'), '<h1><a href="#"></a></h1>'
+        )
+
+    def test_div(self):
+        "Shouldn't work in <div>s"
+        self.assertEqual(
+            widont("<div>Divs get no love!</div>"), "<div>Divs get no love!</div>"
+        )
+
+    def test_pre(self):
+        "Shouldn't work in <pre>s"
+        self.assertEqual(
+            widont("<pre>Neither do PREs</pre>"), "<pre>Neither do PREs</pre>"
+        )
+
+    def test_paragraph_in_div(self):
+        "Should work here"
+        self.assertEqual(
+            widont("<div><p>But divs with paragraphs do!</p></div>"),
+            "<div><p>But divs with paragraphs&nbsp;do!</p></div>",
+        )
+
+
 class LinebreaksFirstTestCase(TestCase):
     def test_linebreaks_first(self):
         self.assertEqual(
             linebreaks_first("This is the\nfirst par.\n\nAnd a second."),
-            """<p class="first">This is the<br>first par.</p>\n\n<p>And a second.</p>""",   # noqa: E501
+            """<p class="first">This is the<br>first par.</p>\n\n<p>And a second.</p>""",  # noqa: E501
         )
 
 
