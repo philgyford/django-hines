@@ -227,11 +227,18 @@ class EverythingFeedRSS(ExtendedFeed):
             return dt
 
     def item_author_name(self, item):
-        "We could show authors for other kinds of things, but we don't currently."
+        name = None
         if item["kind"] == "blog_post":
-            return item["object"].author.display_name
+            name = item["object"].author.display_name
+        elif app_settings.AUTHOR_NAME:
+            name = app_settings.AUTHOR_NAME
+        return name
 
     def item_author_email(self, item):
+        email = None
         if item["kind"] == "blog_post":
             if item["object"].blog.show_author_email_in_feed:
-                return item["object"].author.email
+                email = item["object"].author.email
+        elif app_settings.AUTHOR_EMAIL:
+            email = app_settings.AUTHOR_EMAIL
+        return email

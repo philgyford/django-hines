@@ -231,7 +231,8 @@ AWS_DEFAULT_ACL = None
 
 # Also see HINES_ROOT_DIR at top of file.
 
-# Used in templates (although a Post author overrides it in places):
+# Used in templates and the Everything RSS Feed, for things that don't
+# have authors (so, not Blog Posts).
 HINES_AUTHOR_NAME = 'Phil Gyford'
 HINES_AUTHOR_EMAIL = 'phil@gyford.com'
 
