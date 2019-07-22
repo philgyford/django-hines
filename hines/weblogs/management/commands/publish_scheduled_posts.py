@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from hines.core.utils import datetime_now
 from ...models import Post
@@ -19,6 +19,7 @@ class Command(BaseCommand):
 
             for post in posts:
                 post.status = Post.LIVE_STATUS
+                post.time_published = datetime_now()
                 post.save()
 
             noun = 'Post' if num_posts == 1 else 'Posts'
