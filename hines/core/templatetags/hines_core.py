@@ -14,12 +14,10 @@ from django.utils.timezone import now
 from .. import app_settings
 from ..utils import get_site_url
 
-from ditto.lastfm.templatetags.ditto_lastfm import (
-    recent_scrobbles, top_artists
-)
+from ditto.lastfm.templatetags.ditto_lastfm import recent_scrobbles, top_artists
 
 from spectator.events.templatetags.spectator_events import (
-    most_seen_creators_by_works_card
+    most_seen_creators_by_works_card,
 )
 
 
@@ -60,20 +58,20 @@ def current_url_name(context):
     url_name = False
 
     # In 400 and 500 error templates context has no 'request':
-    if hasattr(context, 'request'):
+    if hasattr(context, "request"):
         if context.request.resolver_match:
             if context.request.resolver_match.namespace:
-                url_name = '{}:{}'.format(
-                                context.request.resolver_match.namespace,
-                                context.request.resolver_match.url_name
-                            )
+                url_name = "{}:{}".format(
+                    context.request.resolver_match.namespace,
+                    context.request.resolver_match.url_name,
+                )
             else:
                 url_name = context.request.resolver_match.url_name
     return url_name
 
 
 @register.simple_tag
-def display_time(dt=None, show='both', granularity=0, link_to_day=False):
+def display_time(dt=None, show="both", granularity=0, link_to_day=False):
     """Return the HTML to display a datetime nicely, wrapped in a <time> tag.
 
     dt -- The datetime. If None, then the current time is used.
@@ -99,51 +97,55 @@ def display_time(dt=None, show='both', granularity=0, link_to_day=False):
     dt_fmt = app_settings.DATETIME_FORMAT
 
     if granularity == 8:
-        visible_str = 'circa %s' % dt.strftime('%Y')
-        stamp = dt.strftime('%Y')
+        visible_str = "circa %s" % dt.strftime("%Y")
+        stamp = dt.strftime("%Y")
 
     elif granularity == 6:
-        visible_str = 'sometime in %s' % dt.strftime('%Y')
-        stamp = dt.strftime('%Y')
+        visible_str = "sometime in %s" % dt.strftime("%Y")
+        stamp = dt.strftime("%Y")
 
     elif granularity == 4:
-        visible_str = 'sometime in %s' % dt.strftime(
-                                        app_settings.DATE_YEAR_MONTH_FORMAT)
-        stamp = dt.strftime('%Y-%m')
+        visible_str = "sometime in %s" % dt.strftime(
+            app_settings.DATE_YEAR_MONTH_FORMAT
+        )
+        stamp = dt.strftime("%Y-%m")
 
     else:
 
-        if show == 'time':
+        if show == "time":
             visible_str = dt.strftime(t_fmt)
         else:
             # Date only, or time and date:
 
             if link_to_day:
-                url = reverse('hines:day_archive', kwargs={
-                            'year':     dt.strftime('%Y'),
-                            'month':    dt.strftime('%m'),
-                            'day':      dt.strftime('%d'),
-                        })
+                url = reverse(
+                    "hines:day_archive",
+                    kwargs={
+                        "year": dt.strftime("%Y"),
+                        "month": dt.strftime("%m"),
+                        "day": dt.strftime("%d"),
+                    },
+                )
 
-                visible_str = '<a href="%(url)s" title="All items from this day">%(date)s</a>' % {
-                        'url': url,
-                        'date': dt.strftime(d_fmt),
-                    }
+                visible_str = (
+                    '<a href="%(url)s" title="All items from this day">%(date)s</a>'
+                    % {"url": url, "date": dt.strftime(d_fmt)}
+                )
             else:
                 visible_str = dt.strftime(d_fmt)
 
-            if show == 'both':
+            if show == "both":
                 # Add the time:
-                visible_str = dt_fmt \
-                                .replace('[date]', visible_str) \
-                                .replace('[time]', dt.strftime(t_fmt))
+                visible_str = dt_fmt.replace("[date]", visible_str).replace(
+                    "[time]", dt.strftime(t_fmt)
+                )
 
-        stamp = dt.strftime('%Y-%m-%d %H:%M:%S')
+        stamp = dt.strftime("%Y-%m-%d %H:%M:%S")
 
-    return format_html('<time datetime="%(stamp)s">%(visible)s</time>' % {
-                'stamp': stamp,
-                'visible': visible_str
-            })
+    return format_html(
+        '<time datetime="%(stamp)s">%(visible)s</time>'
+        % {"stamp": stamp, "visible": visible_str}
+    )
 
 
 @register.filter
@@ -154,46 +156,44 @@ def smartypants(text):
     return mark_safe(_smartypants.smartypants(text))
 
 
-@register.inclusion_tag('hines_core/includes/card_lastfm_scrobbles.html')
+@register.inclusion_tag("hines_core/includes/card_lastfm_scrobbles.html")
 def lastfm_recent_scrobbles_card(limit=10):
     """
     Displays the most recent Scrobbles for all accounts.
     """
-    more = {'text': 'More at Last.fm',
-            'url': 'https://www.last.fm/user/gyford',}
+    more = {"text": "More at Last.fm", "url": "https://www.last.fm/user/gyford"}
 
     return {
-            'card_title': 'Recently played',
-            'scrobble_list': recent_scrobbles(limit=limit),
-            'more': more,
-            }
+        "card_title": "Recently played",
+        "scrobble_list": recent_scrobbles(limit=limit),
+        "more": more,
+    }
 
 
-@register.inclusion_tag('hines_core/includes/card_lastfm_artists.html')
-def lastfm_top_artists_card(limit=10, date=None, period='day'):
+@register.inclusion_tag("hines_core/includes/card_lastfm_artists.html")
+def lastfm_top_artists_card(limit=10, date=None, period="day"):
     """
     Displays the most listened-to Artists for all accounts.
     """
-    card_title = 'Most listened-to artists'
+    card_title = "Most listened-to artists"
     more = None
 
     if date is None:
-        more = {'text': 'More at Last.fm',
-                'url': 'https://www.last.fm/user/gyford',}
+        more = {"text": "More at Last.fm", "url": "https://www.last.fm/user/gyford"}
     else:
-        if period == 'day':
+        if period == "day":
             pass
             # card_title += ' on this day'
-        elif period == 'month':
-            card_title += ' this month'
-        elif period == 'year':
-            card_title += ' this year'
+        elif period == "month":
+            card_title += " this month"
+        elif period == "year":
+            card_title += " this year"
 
     return {
-            'card_title': card_title,
-            'artist_list': top_artists(limit=limit, date=date, period=period),
-            'more': more,
-            }
+        "card_title": card_title,
+        "artist_list": top_artists(limit=limit, date=date, period=period),
+        "more": more,
+    }
 
 
 @register.filter
@@ -210,7 +210,7 @@ def linebreaks_first(text):
     Used for old Weblog post_detail templates.
     """
     text = linebreaks_filter(text)
-    text = re.sub(r'^<p>', '<p class="first">', text)
+    text = re.sub(r"^<p>", '<p class="first">', text)
     return mark_safe(text)
 
 
@@ -228,15 +228,13 @@ def domain_urlize(value):
         <a href="http://www.example.org/foo/" rel="nofollow">example.org</a>
     """
     parsed_uri = urlparse(value)
-    domain = '{uri.netloc}'.format(uri=parsed_uri)
+    domain = "{uri.netloc}".format(uri=parsed_uri)
 
-    if domain.startswith('www.'):
+    if domain.startswith("www."):
         domain = domain[4:]
 
-    return format_html('<a href="{}" rel="nofollow">{}</a>',
-            value,
-            domain
-        )
+    return format_html('<a href="{}" rel="nofollow">{}</a>', value, domain)
+
 
 @register.filter
 def add_domain(value):
@@ -246,15 +244,15 @@ def add_domain(value):
 
     value should start with a / . If it starts with 'http' then it just gets returned.
     """
-    if value.startswith('http'):
+    if value.startswith("http"):
         return value
     else:
         start = get_site_url()
 
-        return '{}{}'.format(start, value)
+        return "{}{}".format(start, value)
 
 
-@register.inclusion_tag('spectator_core/includes/card_chart.html')
+@register.inclusion_tag("spectator_core/includes/card_chart.html")
 def most_seen_directors_card(num=10):
     """
     Custom wrapper around spectator_events' most_seen_creators_by_works_card().
@@ -264,21 +262,22 @@ def most_seen_directors_card(num=10):
     """
     num = num + 1
     data = most_seen_creators_by_works_card(
-                            num=num, work_kind='movie', role_name='Director')
+        num=num, work_kind="movie", role_name="Director"
+    )
 
     prev_creator = None
-    coens = ['Joel Coen', 'Ethan Coen']
+    coens = ["Joel Coen", "Ethan Coen"]
     coen_position = None
 
     # Original list, with the Coens occupying two adjacent positions:
-    creators = data['object_list']
+    creators = data["object_list"]
 
     for n, creator in enumerate(creators):
         if prev_creator:
             if prev_creator.name in coens and creator.name in coens:
                 # Both this item and the previous are Coen brothers.
                 # This is the position they should both be at:
-                coen_position = (n - 1)
+                coen_position = n - 1
                 break
         prev_creator = creator
 
@@ -288,9 +287,9 @@ def most_seen_directors_card(num=10):
         coen1 = creators[coen_position]
         coen2 = creators[coen_position + 1]
         # Put them both in a list at the first position a Coen occupied:
-        creators[coen_position] = [ coen1, coen2 ]
+        creators[coen_position] = [coen1, coen2]
         # And delete the second position:
-        del( creators[coen_position + 1] )
+        del creators[coen_position + 1]
 
     # Now we need to improve the positions of all subsequent people
     # because we just removed a position:
@@ -298,8 +297,8 @@ def most_seen_directors_card(num=10):
         creators[m].chart_position = creators[m].chart_position - 1
 
     # While we're here, a better title:
-    data['card_title'] = 'Directors by number of movies'
+    data["card_title"] = "Directors by number of movies"
 
-    data['object_list'] = creators
+    data["object_list"] = creators
 
     return data
