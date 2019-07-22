@@ -296,8 +296,8 @@
     <iframe src=\"";
 
       var endStr = "\" allowfullscreen></iframe>\n\
-    <figcaption></figcaption>\n\
   </div>\n\
+  <figcaption></figcaption>\n\
 </figure>";
 
       // First, replace the URL with the embed version, if necessary.
