@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'taggit',
     'django_comments',
 
+    'imagekit',
     'spectator.core',
     'spectator.events',
     'spectator.reading',
