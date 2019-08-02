@@ -57,7 +57,7 @@ Overriding the content block of spectator_reading/reading_archive_year.html so:
         <ol class="media-list">
       {% endifchanged %}
       <li class="media">
-        {% include 'spectator_reading/includes/publication.html' with publication=reading.publication show_readings='none' only %}
+        {% include 'spectator_reading/includes/publication.html' with publication=reading.publication show_readings='none' show_thumbnail=True only %}
       </li>
     {% endfor %}
 		</ol> <!-- .media-list -->
