@@ -13,7 +13,7 @@ Expects:
 {% generateimage 'spectator:detail_thumbnail2x' source=field as img2x %}
 
 {% with link_url=url|default:field.url %}
-  <figure class="figure figure--right figure--img figure--img--border">
+  <figure class="figure figure--right figure--img">
     <a href="{{ link_url }}">
       <img src="{{ img.url }}" srcset="{{ img.url }} 1x, {{ img2x.url }} 2x" width="{{ img.width }}" height="{{ img.height }}" alt="{{ alt_text }}">
     </a>
