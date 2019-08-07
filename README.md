@@ -77,15 +77,20 @@ and then open `htmlcov/index.html` in a browser.
 
 For hosting on Heroku, we use these add-ons:
 
-	* Heroku Postgres
-	* Heroku Redis (for caching)
-	* Heroku Scheduler
-	* Papertrail (for viewing/filtering logs)
-	* Sentry (for error reporting)
+* Heroku Postgres
+* Heroku Redis (for caching)
+* Heroku Scheduler
+* Papertrail (for viewing/filtering logs)
+* Sentry (for error reporting)
 
 To clear the Redis cache, use our `clear_cache` management command:
 
 	$ heroku run python ./manage.py clear_cache
+
+To clear the cached thumbnail images created by django-imagekit (used by django-spectator):
+
+1. Delete all the images from the `CACHES` directories on S3.
+2. Clear the Redis cache, as above.
 
 
 ## Django Settings
