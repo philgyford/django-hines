@@ -101,46 +101,12 @@ figcaption {
   }
 }
 
-// e.g. 0.625 which makes the main column 62.5% of the full width:
-$main-col-ratio:      $main-columns / $grid-columns;
-// Main col has different number of columns at the md width:
-$main-col-ratio-md:   $main-columns-md / $grid-columns;
-
-// At wider widths, expand a .figure--full almost to the left & right-hand edges.
-@include media-breakpoint-up(md) {
-  .grid__col--main--only {
-    .figure--img {
-      &.figure--full {
-
-        margin-left: percentage( -( ((1 - $main-col-ratio-md) / 2) / $main-col-ratio-md ) );
-        margin-right: percentage( -( ((1 - $main-col-ratio-md) / 2) / $main-col-ratio-md ) );
-
-
-        figcaption {
-          width: percentage($main-col-ratio-md);
-          margin-left: auto;
-          margin-right: auto;
-        }
-      }
-    }
-  }
-}
-
-// And then for the different number of grid__col--main--only columns at lg and
-// wider:
-@include media-breakpoint-up(lg) {
-  .grid__col--main--only {
-    .figure--img {
-      &.figure--full {
-
-        margin-left: percentage( -( ((1 - $main-col-ratio) / 2) / $main-col-ratio ) );
-        margin-right: percentage( -( ((1 - $main-col-ratio) / 2) / $main-col-ratio ) );
-
-
-        figcaption {
-          width: percentage($main-col-ratio);
-        }
-      }
+.grid__col--main--only {
+  .figure--img {
+    &.figure--full {
+      @include figure-full(md);
+      @include figure-full(lg);
+      @include figure-full(xl);
     }
   }
 }

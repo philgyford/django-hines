@@ -127,7 +127,16 @@ $grid-gutter-width:         ($base-unit * 2);
 
 // Main content:
 $main-columns:              10;
-$main-columns-md:           12; // Variation for one particular width.
+
+// Variations for when it's only one column, at certain widths:
+$main-only-columns-md:      $grid-columns;
+$main-only-columns-lg:      12;
+$main-only-columns-xl:      $main-columns;
+$main-only-columns: (
+  md: $grid-columns,
+  lg: 12,
+  xl: $main-columns
+);
 
 // Sidebar:
 $sub-columns:               5;
@@ -155,13 +164,13 @@ $font-weight-normal:          400;
 $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 
-$font-size-base:              1rem;          /* 16px probably */
+$font-size-base:              1.25rem;       /* 20px probably */
 $font-size-sm:                0.875rem;      /* 14 */
 $font-size-xs:                0.75rem;       /* 12 */
 $font-size-monospace:         $font-size-sm; /* 14 */
 
-$line-height-base:            1.5;           /* 24 */
-$line-height-base-computed:   1.5rem;        /* 24 */
+$line-height-base:            1.8;           /* 36 if used with font-size-base */
+$line-height-base-computed:   2.25rem;       /* 36 */
 $line-height-sm:              1.71429;       /* 24 if used with font-size-sm */
 $line-height-sm-computed:     1.5rem;        /* 24 */
 $line-height-xs:              1.5;           /* 18 if used with font-size-xs */
@@ -222,7 +231,7 @@ $list-inline-padding:         $base-unit;
 $cite-font-style:             italic;
 
 // Vertical position of the bullet (a background image):
-$list-bullet-position:        0.3em;
+$list-bullet-position:        0.65em;
 // And when used with smaller text:
 $list-bullet-position-sm:     0.4em;
 

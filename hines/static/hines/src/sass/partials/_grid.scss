@@ -97,11 +97,14 @@
 
   // Make it 2 columns wider at the intermediate width:
   @include media-breakpoint-up(md) {
-    @include make-col($main-columns-md);
+    @include make-col(map-get($main-only-columns, md));
+  }
+  @include media-breakpoint-up(lg) {
+    @include make-col(map-get($main-only-columns, lg));
   }
   // And back to standard number of columns at wider widths:
-  @include media-breakpoint-up(lg) {
-    @include make-col($main-columns);
+  @include media-breakpoint-up(xl) {
+    @include make-col(map-get($main-only-columns, xl));
   }
 }
 
