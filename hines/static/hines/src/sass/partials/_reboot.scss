@@ -230,6 +230,7 @@ a:not([href]):not([tabindex]) {
 pre,
 code,
 kbd,
+tt,
 samp {
   font-family: monospace, monospace; // Correct the inheritance and scaling of font size in all browsers.
   font-size: $font-size-monospace; // Correct the odd `em` font sizing in all browsers.
