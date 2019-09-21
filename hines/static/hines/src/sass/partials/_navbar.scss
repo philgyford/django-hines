@@ -1,13 +1,13 @@
 
 // All of these should add up to a whole-number of $vertical-space's:
 $navbar-top-space:              ($vertical-space-sm * 0);
-$navbar-bottom-space:           ($vertical-space-sm * 2);
+$navbar-bottom-space:           ($vertical-space-sm * 3);
 $navbar-title-top-space:        ($vertical-space-sm * 2);
 $navbar-title-bottom-space:     ($vertical-space-sm * 1);
 $navbar-title-line-height:      ($vertical-space-sm * 1);
 
 // Variations/additions for the widest width:
-$navbar-bottom-space-wide:      ($vertical-space-sm * 3);
+$navbar-bottom-space-wide:      ($vertical-space-sm * 4);
 
 // Should be a $vertical-space-sm, but allowing for the width of the input's
 // borders. Because they're in pixels, we need to calculate this in pixels,
