@@ -13,6 +13,10 @@
   // Also see the exception to this background positioning in .cards.scss:
   background: url('#{$img-path}bullet.png') 0 $list-bullet-position no-repeat;
   padding-left: ($base-unit + $list-inline-padding);
+
+  .bodytext & {
+    background-position: 0 $list-bullet-position-lg;
+  }
 }
 
 @mixin list-inline-item() {

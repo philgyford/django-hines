@@ -64,7 +64,7 @@ $meta-offset-bottom: 0.4rem;
 
     & > li {
       @include list-item-bullet;
-      background-position: 0 $list-bullet-position-sm;
+      background-position: 0 $list-bullet-position-sm !important;
     }
   }
 }

@@ -3,6 +3,9 @@
 // In a mixin so that we can use it for the site and an admin preview.
 @mixin bodytext() {
 
+  font-size: $font-size-lg;
+  line-height: $line-height-lg;
+
   // So that if there's an .aside at the bottom, it stays within .bodytext:
   @include clearfix;
 

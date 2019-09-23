@@ -164,13 +164,16 @@ $font-weight-normal:          400;
 $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 
-$font-size-base:              1.25rem;       /* 20px probably */
+$font-size-base:              1rem;          /* 16px */
+$font-size-lg:                1.25rem;       /* 20px for main-col-only copy */
 $font-size-sm:                0.875rem;      /* 14 */
 $font-size-xs:                0.75rem;       /* 12 */
 $font-size-monospace:         1rem;          /* 16 */
 
-$line-height-base:            1.8;           /* 36 if used with font-size-base */
-$line-height-base-computed:   2.25rem;       /* 36 */
+$line-height-base:            1.5;           /* 24 if used w font-size-base */
+$line-height-base-computed:   1.5rem;        /* 24 */
+$line-height-lg:              1.8;           /* 36 if used with font-size-lg*/
+$line-height-lg-computed:     2.25rem;       /* 36 */
 $line-height-sm:              1.71429;       /* 24 if used with font-size-sm */
 $line-height-sm-computed:     1.5rem;        /* 24 */
 $line-height-xs:              1.5;           /* 18 if used with font-size-xs */
@@ -231,8 +234,9 @@ $list-inline-padding:         $base-unit;
 $cite-font-style:             italic;
 
 // Vertical position of the bullet (a background image):
-$list-bullet-position:        0.65em;
-// And when used with smaller text:
+$list-bullet-position:        0.45em;
+// And when used with larger/smaller text:
+$list-bullet-position-lg:     0.65em;
 $list-bullet-position-sm:     0.4em;
 
 
