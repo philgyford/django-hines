@@ -233,7 +233,7 @@ kbd,
 tt,
 samp {
   font-family: monospace, monospace; // Correct the inheritance and scaling of font size in all browsers.
-  font-size: $font-size-monospace; // Correct the odd `em` font sizing in all browsers.
+  font-size: $font-size-monospace-base; // Correct the odd `em` font sizing in all browsers.
 }
 // stylelint-enable font-family-no-duplicate-names
 
@@ -248,7 +248,7 @@ pre {
   // we force a non-overlapping, non-auto-hiding scrollbar to counteract.
   -ms-overflow-style: scrollbar;
 
-  line-height: $line-height-sm;
+  line-height: $line-height-monospace-base;
 }
 
 

@@ -3,8 +3,22 @@
 // In a mixin so that we can use it for the site and an admin preview.
 @mixin bodytext() {
 
-  font-size: $font-size-lg;
-  line-height: $line-height-lg;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+
+  @include media-breakpoint-up(sm) {
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
+
+    pre,
+    code,
+    kbd,
+    tt,
+    samp {
+      font-size: $font-size-monospace-lg;
+      line-height: $line-height-monospace-lg;
+    }
+  }
 
   // So that if there's an .aside at the bottom, it stays within .bodytext:
   @include clearfix;

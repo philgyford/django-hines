@@ -165,19 +165,26 @@ $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 
 $font-size-base:              1rem;          /* 16px */
-$font-size-lg:                1.25rem;       /* 20px for main-col-only copy */
-$font-size-sm:                0.875rem;      /* 14 */
-$font-size-xs:                0.75rem;       /* 12 */
-$font-size-monospace:         1rem;          /* 16 */
-
 $line-height-base:            1.5;           /* 24 if used w font-size-base */
 $line-height-base-computed:   1.5rem;        /* 24 */
+
+$font-size-lg:                1.25rem;       /* 20px for main-col-only copy */
 $line-height-lg:              1.8;           /* 36 if used with font-size-lg*/
 $line-height-lg-computed:     2.25rem;       /* 36 */
+
+$font-size-sm:                0.875rem;      /* 14 */
 $line-height-sm:              1.71429;       /* 24 if used with font-size-sm */
 $line-height-sm-computed:     1.5rem;        /* 24 */
-$line-height-xs:              1.5;           /* 18 if used with font-size-xs */
-$line-height-xs-computed:     1.125rem;      /* 18 */
+
+$font-size-xs:                0.75rem;       /* 12 */
+$line-height-xs:              1.33333;       /* 16 if used with font-size-xs */
+$line-height-xs-computed:     1.33333rem;    /* 16 */
+
+$font-size-monospace-base:    $font-size-xs;
+$line-height-monospace-base:  $line-height-xs;
+
+$font-size-monospace-lg:      $font-size-sm;
+$line-height-monospace-lg:    $line-height-sm;
 
 // Headings
 
@@ -185,13 +192,13 @@ $headings-margin-bottom:      $vertical-space;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
 
-$h1-font-size:                2.0em;            /* 32 */
+$h1-font-size:                2.0rem;           /* 32 */
 $h1-line-height:              2.25rem;          /* 36 */
 
 $h2-font-size:                1.6875rem;        /* 27 */
 $h2-line-height:              2.25rem;          /* 36 */
 
-$h3-font-size:                1.25rem;          /* 20 */
+$h3-font-size:                $font-size-lg;    /* 20 */
 $h3-line-height:              1.5rem;           /* 24 */
 
 $h4-font-size:                $font-size-base;  /* 16 */
