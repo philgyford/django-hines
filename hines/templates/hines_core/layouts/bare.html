@@ -77,11 +77,27 @@
            */
           var fix = function(el) {
             if (el.href && el.href.indexOf('//'+location.hostname) !== -1) {
-              if (el.href.indexOf('?') !== -1) {
-                el.href += '&grid=1'
-              } else {
-                el.href += '?grid=1'
+              var url = el.href;
+              var fragment = "";
+
+              if (url.indexOf('#') !== -1) {
+                // If there's a #fragment on the end, split it off from URL:
+                url = el.href.substring(0, el.href.indexOf('#'));
+                fragment = el.href.substring(el.href.indexOf('#'));
+              }
+              if (url.indexOf("grid=1") === -1) {
+                // If we don't arleady have grid=1, add it:
+                if (url.indexOf('?') !== -1) {
+                  url += '&grid=1'
+                } else {
+                  url += '?grid=1'
+                };
               };
+
+              // Put any fragment back:
+              url += fragment;
+
+              el.href = url;
             };
           };
 
