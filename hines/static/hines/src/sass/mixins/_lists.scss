@@ -10,7 +10,8 @@
 
 // Default bulleted list item.
 @mixin list-item-bullet() {
-  // Also see the exception to this background positioning in .cards.scss:
+  // Also see the exception to this background positioning in _cards.scss
+  // And in .table--timeline in _tables.scss
   background: url('#{$img-path}bullet.png') 0 $list-bullet-position no-repeat;
   padding-left: ($base-unit + $list-inline-padding);
 

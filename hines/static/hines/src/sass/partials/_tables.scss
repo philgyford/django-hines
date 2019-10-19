@@ -99,6 +99,11 @@
     border: $table-border-width solid $table-border-color;
     @include text-style-tiny;
     background-color: $gray-light;
+
+    ul li {
+      background-position: 0 $list-bullet-position-xs;
+    }
+
   }
   th {
     font-weight: $font-weight-bold;
