@@ -26,12 +26,18 @@ def datetime_now():
     return datetime.utcnow().replace(tzinfo=pytz.utc)
 
 
-def markdownify(content):
-    "Wrap the method, just in case we need to do something extra in future."
-    return markdown(text=content, extensions=['fenced_code'])
+def markdownify(content, output_format="xhtml"):
+    """Wrap the method, just in case we need to do something extra in future.
+    output_format is one of "xhtml" or "html5".
+    """
+    return markdown(
+        text=content, extensions=["fenced_code"], output_format=output_format
+    )
 
 
-def truncate_string(text, strip_html=True, chars=255, truncate=u'…', at_word_boundary=False):
+def truncate_string(
+    text, strip_html=True, chars=255, truncate=u"…", at_word_boundary=False
+):
     """Truncate a string to a certain length, removing line breaks and mutliple
     spaces, optionally removing HTML, and appending a 'truncate' string.
 
@@ -44,11 +50,11 @@ def truncate_string(text, strip_html=True, chars=255, truncate=u'…', at_word_b
     """
     if strip_html:
         text = strip_tags(text)
-    text = text.replace('\n', ' ').replace('\r', '')
-    text = ' '.join(text.split())
+    text = text.replace("\n", " ").replace("\r", "")
+    text = " ".join(text.split())
     if at_word_boundary:
         if len(text) > chars:
-            text = text[:chars].rsplit(' ', 1)[0] + truncate
+            text = text[:chars].rsplit(" ", 1)[0] + truncate
     else:
         text = Truncator(text).chars(chars, html=False, truncate=truncate)
     return text
@@ -79,17 +85,17 @@ def expire_view_cache(path, key_prefix=None):
     # Prepare metadata for our fake request.
     # I'm not sure how 'real' this data needs to be, but still:
 
-    domain_parts = Site.objects.get_current().domain.split(':')
-    request_meta = {'SERVER_NAME': domain_parts[0],}
+    domain_parts = Site.objects.get_current().domain.split(":")
+    request_meta = {"SERVER_NAME": domain_parts[0]}
     if len(domain_parts) > 1:
-        request_meta['SERVER_PORT'] = domain_parts[1]
+        request_meta["SERVER_PORT"] = domain_parts[1]
     else:
-        request_meta['SERVER_PORT'] = '80'
+        request_meta["SERVER_PORT"] = "80"
 
     # Create a fake request object
 
     request = HttpRequest()
-    request.method = 'GET'
+    request.method = "GET"
     request.META = request_meta
     request.path = path
 
@@ -103,11 +109,11 @@ def expire_view_cache(path, key_prefix=None):
         if cache_key:
             if cache.has_key(cache_key):
                 cache.delete(cache_key)
-                return (True, 'Successfully invalidated')
+                return (True, "Successfully invalidated")
             else:
-                return (False, 'Cache_key does not exist in cache')
+                return (False, "Cache_key does not exist in cache")
         else:
-            raise ValueError('Failed to create cache_key')
+            raise ValueError("Failed to create cache_key")
     except (ValueError, Exception) as e:
         return (False, e)
 
@@ -117,14 +123,14 @@ def get_site_url():
     Returns the full domain of the website.
     Shouldn't end in a slash, so it can be used with static() etc.
     """
-    protocol = 'http'
+    protocol = "http"
 
     try:
         if app_settings.USE_HTTPS:
-            protocol = 'https'
+            protocol = "https"
     except AttributeError:
         pass
 
     domain = Site.objects.get_current().domain
 
-    return '{}://{}'.format(protocol, domain)
+    return "{}://{}".format(protocol, domain)

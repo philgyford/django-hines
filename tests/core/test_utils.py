@@ -14,13 +14,34 @@ class MarkdownifyTestCase(TestCase):
         html = markdownify("```\nCode line 1\n\nCode line 2\n```")
         self.assertEqual(html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>")
 
+    def test_output_format_default(self):
+        "By default it should produce XHTML-style tags"
+        html = markdownify("Hi\n\n----\n\n![Alt](test.png)")
+        self.assertEqual(
+            html, '<p>Hi</p>\n<hr />\n<p><img alt="Alt" src="test.png" /></p>'
+        )
+
+    def test_output_format_xhtml(self):
+        "It should produce XHTML-style tags when asked"
+        # With trailing slashes on solo tags.
+        html = markdownify("Hi\n\n----\n\n![Alt](test.png)", output_format="xhtml")
+        self.assertEqual(
+            html, '<p>Hi</p>\n<hr />\n<p><img alt="Alt" src="test.png" /></p>'
+        )
+
+    def test_output_format_html5(self):
+        "It should produce HTML5-style tags when asked"
+        # With NO trailing slashes on solo tags.
+        html = markdownify("Hi\n\n----\n\n![Alt](test.png)", output_format="html5")
+        self.assertEqual(html, '<p>Hi</p>\n<hr>\n<p><img alt="Alt" src="test.png"></p>')
+
 
 class TruncateStringTestCase(TestCase):
     def test_strip_html(self):
         "By default, strips HTML"
         self.assertEqual(
             truncate_string(
-                '<p>Some text. '
+                "<p>Some text. "
                 '<a href="http://www.example.com/"><b>A link</b></a>. And more.'
             ),
             "Some text. A link. And more.",
@@ -30,11 +51,11 @@ class TruncateStringTestCase(TestCase):
         "Can be told not to strip HTML"
         self.assertEqual(
             truncate_string(
-                '<p>Some text. '
+                "<p>Some text. "
                 '<a href="http://www.example.com/"><b>A link</b></a>. And more.',
                 strip_html=False,
             ),
-            '<p>Some text. '
+            "<p>Some text. "
             '<a href="http://www.example.com/"><b>A link</b></a>. And more.',
         )
 
