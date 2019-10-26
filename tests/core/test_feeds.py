@@ -102,6 +102,6 @@ class ExtendedFeedTestCase(FeedTestCase):
                 "guid": "http://example.com/terry/my-blog/2017/04/25/my-blog-post/",
                 "pubDate": rfc2822_date(post.time_published),
                 "author": "bob@example.org (Bob Ferris)",
-                "content:encoded": '<p><em>From <a href="http://example.com/terry/my-blog/">My Blog</a>.</em></p><p>The post intro.</p><p>This is the post <b>body</b>.</p><p>OK?</p>',  # noqa:E501
+                "content:encoded": '<p><em>From <a href="http://example.com/terry/my-blog/">My Blog</a>.</em></p><p>The post intro.</p><p>This is the post <b>body</b>.</p><p>OK?</p>\n',  # noqa:E501
             },
         )
