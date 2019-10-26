@@ -103,13 +103,20 @@ Another line.""",
         )
 
     def test_body_html_markdown(self):
-        "It should convert markdown to html."
+        "It should convert markdown to xhtml."
         post = LivePostFactory(
-            html_format=Post.MARKDOWN_FORMAT, body="[Hello](http://example.org). *OK?*"
+            html_format=Post.MARKDOWN_FORMAT,
+            body="""[Hello](http://example.org).
+
+----
+
+*OK?*""",
         )
         self.assertEqual(
             post.body_html,
-            '<p><a href="http://example.org">Hello</a>. <em>OK?</em></p>',
+            """<p><a href="http://example.org">Hello</a>.</p>
+<hr />
+<p><em>OK?</em></p>""",
         )
 
     def test_body_html_smartypants(self):
@@ -118,6 +125,80 @@ Another line.""",
         )
         self.assertEqual(
             post.body_html, "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;."
+        )
+
+    def test_intro_html_hines_markdown(self):
+        """HINES_MARKDOWN_FORMAT should NOT add section markers to the intro."""
+        post = LivePostFactory(
+            html_format=Post.HINES_MARKDOWN_FORMAT,
+            intro="""Dogs
+
+----
+
+Cats""",
+        )
+        self.assertEqual(
+            post.intro_html,
+            """<p>Dogs</p>
+<hr>
+<p>Cats</p>""",
+        )
+
+    def test_body_html_hines_markdown(self):
+        """HINES_MARKDOWN_FORMAT should add section markers to the body."""
+        post = LivePostFactory(
+            html_format=Post.HINES_MARKDOWN_FORMAT,
+            body="""Dogs
+
+----
+
+Cats
+
+----
+
+##Fish
+
+Cod""",
+        )
+        self.assertEqual(
+            post.body_html,
+            """<p>Dogs</p>
+<hr>
+<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Cats</p>
+<hr>
+<h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Fish</h2>
+<p>Cod</p>""",  # noqa: E501
+        )
+
+    def test_body_html_hines_markdown_no_change(self):
+        """Some elements should not have section markers added to them.
+        And it should throw an exception if it comes across one of them.
+        """
+
+        post = LivePostFactory(
+            html_format=Post.HINES_MARKDOWN_FORMAT,
+            body="""Dogs
+
+----
+
+* Cats
+
+----
+
+1. Fish
+""",
+        )
+        self.assertEqual(
+            post.body_html,
+            """<p>Dogs</p>
+<hr>
+<ul>
+<li>Cats</li>
+</ul>
+<hr>
+<ol>
+<li>Fish</li>
+</ol>""",
         )
 
     def test_new_excerpt(self):

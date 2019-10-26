@@ -20,6 +20,7 @@ gunicorn = "*"
 raven = "*"
 "psycopg2-binary" = "*"
 django-redis = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

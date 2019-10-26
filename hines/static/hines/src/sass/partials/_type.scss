@@ -185,6 +185,16 @@ cite {
 }
 
 /**
+ * Our automatically-generated <a> tag at the start of a section
+ * (e.g. in a <p> that immediately follows an <hr>)
+ */
+.section-anchor {
+  @include media-breakpoint-up(sm) {
+    margin-left: -1.2em;
+  }
+}
+
+/**
  * Demo styles.
  * These are *only* used for the demonstration of type styles used in the
  * Patterns pages. DO NOT use these anywher on the actual site.

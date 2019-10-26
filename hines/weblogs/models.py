@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
 
+from bs4 import BeautifulSoup
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
@@ -134,11 +135,15 @@ class Post(TimeStampedModelMixin, models.Model):
 
     NO_FORMAT = 0
     CONVERT_LINE_BREAKS_FORMAT = 1
+    # Markdown, XHTML:
     MARKDOWN_FORMAT = 2
+    # Markdown, HTML5, and with extra custom processing:
+    HINES_MARKDOWN_FORMAT = 3
     FORMAT_CHOICES = (
         (NO_FORMAT, "No formatting"),
         (CONVERT_LINE_BREAKS_FORMAT, "Convert line breaks"),
         (MARKDOWN_FORMAT, "Markdown"),
+        (HINES_MARKDOWN_FORMAT, "Hines Markdown"),
     )
 
     NOT_FEATURED = 0
@@ -189,7 +194,7 @@ class Post(TimeStampedModelMixin, models.Model):
     html_format = models.PositiveSmallIntegerField(
         blank=False,
         choices=FORMAT_CHOICES,
-        default=MARKDOWN_FORMAT,
+        default=HINES_MARKDOWN_FORMAT,
         verbose_name="HTML format",
     )
 
@@ -248,8 +253,8 @@ class Post(TimeStampedModelMixin, models.Model):
 
     def save(self, *args, **kwargs):
         # Format the HTML versions of the body.
-        self.intro_html = self.htmlize_text(self.intro)
-        self.body_html = self.htmlize_text(self.body)
+        self.intro_html = self.htmlize_text(self.intro, "intro")
+        self.body_html = self.htmlize_text(self.body, "body")
         self.excerpt = self.make_excerpt()
 
         super().save(*args, **kwargs)
@@ -326,19 +331,62 @@ class Post(TimeStampedModelMixin, models.Model):
         title = strip_tags(title)
         return title
 
-    def htmlize_text(self, text):
+    def htmlize_text(self, text, field):
         """
         Given a piece of text (the intro or body), return an HTML version,
         based on the object's html_format.
+
+        text - The text/html to htmlize
+        field - Either "intro" or "body".
         """
-        if self.html_format == self.MARKDOWN_FORMAT:
+        if self.html_format == self.HINES_MARKDOWN_FORMAT:
+            html = markdownify(text, output_format="html5")
+            html = self.add_section_markers_to_html(html, field)
+        elif self.html_format == self.MARKDOWN_FORMAT:
             html = markdownify(text)
         elif self.html_format == self.CONVERT_LINE_BREAKS_FORMAT:
             html = linebreaks(text)
         else:
             # No formatting; it's already HTML.
             html = text
+
         html = smartypants.smartypants(html)
+        return html
+
+    def add_section_markers_to_html(self, html, field):
+        """Adds secton links and ids to elements after <hr>s in body.
+
+        For the element immeditaely after an <hr>, it (a) gives it an
+        id attribute and (b) inserts an anchor linking to that id:
+
+            <p id="s2"><a href="#s2" ...>§</a> ...</p>
+        """
+        if field == "body":
+            # We use html.parser as that doesn't add <html> amd <body> tags.
+            soup = BeautifulSoup(html, "html.parser")
+            hrs = soup.find_all("hr")
+            for n, hr in enumerate(hrs):
+                id = "s{}".format(n + 2)
+                # Create the <a> tag:
+                anchor = soup.new_tag(
+                    "a",
+                    href="#{}".format(id),
+                    title="Link to this section",
+                    # Inline style on the off-chance it's used by RSS readers:
+                    style="text-decoration:none;",
+                )
+                anchor["class"] = "section-anchor"
+                anchor.string = "§"
+                # All the elements into which we'll insert an anchor
+                # (assuming it directly follows an <hr>):
+                el = hr.find_next(["p", "h2", "h3", "h4" "h5", "h6"])
+                if el is not None:
+                    # Set the ID of the <p> etc...
+                    el.attrs["id"] = id
+                    # ...prepend spaces, then prepemd the <a>...
+                    el.insert(0, " \xa0 ")
+                    el.insert(0, anchor)
+            html = soup.encode(formatter="html5").decode()
         return html
 
     def make_excerpt(self):
