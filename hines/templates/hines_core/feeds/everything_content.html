@@ -22,7 +22,7 @@
 				<tr>
 					<td valign="top" style="vertical-align: top;" align="center" width="100">
 						<a href="{{ photo.permalink }}" title="See the photo on Flickr">
-							<img src="{{ photo.small_url }}" width="{{ photo.small_width }}" height="{{ photo.small_height }}" border="0" alt="{{ photo.tite }}">
+							<img src="{{ photo.small_url }}" width="{{ photo.small_width }}" height="{{ photo.small_height }}" border="0" alt="{{ photo.title }}">
 						</a>
 					</td>
 					<td>&nbsp;&nbsp;&nbsp;</td>
@@ -31,7 +31,7 @@
 							<strong><a href="{{ photo.permalink }}" title="See the photo on Flickr">{{ photo.title }}</a></strong>
 							{% if photo.description %}
 								<br>
-								{{ photo.description }}
+								{{ photo.description|safe }}
 							{% endif %}
 						</p>
 					</td>
