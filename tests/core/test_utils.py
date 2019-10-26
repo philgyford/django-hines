@@ -4,19 +4,19 @@ from hines.core.utils import markdownify, truncate_string
 
 
 class MarkdownifyTestCase(TestCase):
-    def test_markdownify(self):
+    def test_basic(self):
         "Just test it actually does some Markdowning"
         html = markdownify("Hello\n\nBye")
         self.assertEqual(html, "<p>Hello</p>\n<p>Bye</p>")
 
-    def test_markdownify_fenced_code(self):
+    def test_fenced_code(self):
         "It should mark up code blocks correctly."
         html = markdownify("```\nCode line 1\n\nCode line 2\n```")
         self.assertEqual(html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>")
 
 
 class TruncateStringTestCase(TestCase):
-    def test_truncate_string_strip_html(self):
+    def test_strip_html(self):
         "By default, strips HTML"
         self.assertEqual(
             truncate_string(
@@ -26,7 +26,7 @@ class TruncateStringTestCase(TestCase):
             "Some text. A link. And more.",
         )
 
-    def test_truncate_string_strip_html_false(self):
+    def test_strip_html_false(self):
         "Can be told not to strip HTML"
         self.assertEqual(
             truncate_string(
@@ -38,7 +38,7 @@ class TruncateStringTestCase(TestCase):
             '<a href="http://www.example.com/"><b>A link</b></a>. And more.',
         )
 
-    def test_truncate_string_default_chars(self):
+    def test_default_chars(self):
         "By default, trims to 255 characters"
         self.assertEqual(
             truncate_string(
@@ -54,7 +54,7 @@ class TruncateStringTestCase(TestCase):
             "lacus. Fusce ullamcorper nunc vitae tincidunt sodales. Ve…",
         )
 
-    def test_truncate_string_custom_chars(self):
+    def test_custom_chars(self):
         "Can be told to truncate to other lengths"
         self.assertEqual(
             truncate_string(
@@ -69,7 +69,7 @@ class TruncateStringTestCase(TestCase):
             "odio eget odio porttitor accums…",
         )
 
-    def test_truncate_string_truncate(self):
+    def test_truncate(self):
         "Can be given a custom 'truncate' string"
         self.assertEqual(
             truncate_string(
@@ -114,7 +114,7 @@ class TruncateStringTestCase(TestCase):
             "This is my string.",
         )
 
-    def test_truncate_string_all(self):
+    def test_all(self):
         """Will strip HTML, truncate to specified length, at a word boundary,
         and add custom string.
         """
