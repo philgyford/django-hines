@@ -36,7 +36,10 @@
 
     // The value of the "HTML format" select field that indicates whether
     // this post is in Markdown format or not.
-    var HTML_FORMAT_MARKDOWN = "2";
+    var markdown_formats = [
+      "2",  // Markdown
+      "3"   // Hines Markdown
+    ];
 
     var exports = {
 
@@ -45,7 +48,7 @@
        */
       init: function() {
         // Only for Markdown posts.
-        if ($("#id_html_format").val() == HTML_FORMAT_MARKDOWN) {
+        if (markdown_formats.indexOf($("#id_html_format").val()) >= 0) {
           $.each(fields, function(idx, field) {
             if ($(field['selector']).length > 0) {
               initField(field);
