@@ -170,6 +170,25 @@ Cod""",
 <p>Cod</p>""",  # noqa: E501
         )
 
+    def test_body_html_hines_markdown_figure(self):
+        """If the first element is a <figure> it should add marker to next <p>."""
+        post = LivePostFactory(
+            html_format=Post.HINES_MARKDOWN_FORMAT,
+            body="""Dogs
+
+----
+
+<figure src="test.png"></figure>
+
+Cats""")
+        self.assertEqual(
+            post.body_html,
+            """<p>Dogs</p>
+<hr>
+<figure src="test.png"></figure>
+<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Cats</p>""",  # noqa: E501
+        )
+
     def test_body_html_hines_markdown_no_change(self):
         """Some elements should not have section markers added to them.
         And it should throw an exception if it comes across one of them.
