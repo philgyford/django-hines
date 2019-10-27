@@ -180,7 +180,8 @@ Cod""",
 
 <figure src="test.png"></figure>
 
-Cats""")
+Cats""",
+        )
         self.assertEqual(
             post.body_html,
             """<p>Dogs</p>
@@ -244,6 +245,19 @@ Cats""")
             intro="The intro", body="The body", excerpt="The excerpt"
         )
         self.assertEqual(post.excerpt, "The excerpt")
+
+    def test_excerpt_no_section_anchors(self):
+        "Section anchors should be removed from the body before making excerpt"
+        post = LivePostFactory(
+            html_format=Post.HINES_MARKDOWN_FORMAT,
+            intro="Hello.",
+            body="----\n\nThis is the body.",
+            excerpt="",
+        )
+        # Make sure it's in the HTML...
+        self.assertIn("&sect;", post.body_html)
+        # ...but not in the excerpt made from it.
+        self.assertEqual(post.excerpt, "Hello. This is the body.")
 
     @freeze_time("2017-07-01 12:00:00", tz_offset=-8)
     def test_default_time_published(self):

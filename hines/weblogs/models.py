@@ -413,6 +413,8 @@ class Post(TimeStampedModelMixin, models.Model):
             text = truncate_string(
                 text, strip_html=True, chars=100, at_word_boundary=True
             )
+            # Remove any section anchors put in by add_section_markers_to_html()
+            text = text.replace("§ ", "")
         return text
 
     @property
