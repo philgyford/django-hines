@@ -360,6 +360,11 @@ class Post(TimeStampedModelMixin, models.Model):
         id attribute and (b) inserts an anchor linking to that id:
 
             <p id="s2"><a href="#s2" ...>§</a> ...</p>
+
+        Keyword arguments:
+        html - String, the HTML to modify and return
+        field -- String, either "intro" or "body". If "intro", the
+            html isn't modified.
         """
         if field == "body":
             # We use html.parser as that doesn't add <html> amd <body> tags.
