@@ -1,48 +1,46 @@
 /**
  * We use EasyMDE, which is a fork of SimpleMDE.
  */
-;(function($) {
-  'use strict';
+(function($) {
+  "use strict";
 
   $(document).ready(function() {
     // Enable the Markdown editor.
     // Requires the MDE JS and CSS to be loaded too.
 
     hines.admin.markdownEditor().init();
-   });
+  });
 
   window.hines = window.hines || {};
 
   window.hines.admin = window.hines.admin || {};
 
   window.hines.admin.markdownEditor = function module() {
-
     var fields = [
       {
-        'selector': 'body.app-weblogs.model-post.change-form #id_intro',
-        'elementId': 'id_intro',
-        'autosaveId': 'weblogs-post-intro',
-        'buttons': 'minimal',
-        'minHeight': '100px',
+        selector: "body.app-weblogs.model-post.change-form #id_intro",
+        elementId: "id_intro",
+        autosaveId: "weblogs-post-intro",
+        buttons: "minimal",
+        minHeight: "100px"
       },
       {
-        'selector': 'body.app-weblogs.model-post.change-form #id_body',
-        'elementId': 'id_body',
-        'autosaveId': 'weblogs-post-body',
-        'buttons': 'full',
-        'minHeight': '300px',
-      },
+        selector: "body.app-weblogs.model-post.change-form #id_body",
+        elementId: "id_body",
+        autosaveId: "weblogs-post-body",
+        buttons: "full",
+        minHeight: "300px"
+      }
     ];
 
     // The value of the "HTML format" select field that indicates whether
     // this post is in Markdown format or not.
     var markdown_formats = [
-      "2",  // Markdown
-      "3"   // Hines Markdown
+      "2", // Markdown
+      "3" // Hines Markdown
     ];
 
     var exports = {
-
       /**
        * Call this method to set everything up.
        */
@@ -50,52 +48,53 @@
         // Only for Markdown posts.
         if (markdown_formats.indexOf($("#id_html_format").val()) >= 0) {
           $.each(fields, function(idx, field) {
-            if ($(field['selector']).length > 0) {
+            if ($(field["selector"]).length > 0) {
               initField(field);
-            };
+            }
           });
-        };
+        }
       }
     };
 
     function initField(field) {
-
       var config = {
-        element: document.getElementById(field['elementId']),
+        element: document.getElementById(field["elementId"]),
         autoDownloadFontAwesome: true,
         autosave: {
           enabled: true,
           uniqueId: getAutosaveId(field),
-          delay: 120000, // milliseconds
+          delay: 120000 // milliseconds
         },
         indentWithTabs: false, // Use spaces
         promptURLs: true, // Show pop-up for URL when adding a link
-        minHeight: field['minHeight']
+        minHeight: field["minHeight"]
       };
 
-      if (field['buttons'] == 'minimal') {
-        config['toolbar'] = [
+      if (field["buttons"] == "minimal") {
+        config["toolbar"] = [
           "bold",
           "italic",
           {
             name: "cite",
             action: makeCite,
             className: "fa fa-angle-double-left",
-            title: "Cite",
+            title: "Cite"
           },
           "link",
           "|",
-          "preview", "side-by-side", "fullscreen"
+          "preview",
+          "side-by-side",
+          "fullscreen"
         ];
-      } else if (field['buttons'] == 'full') {
-        config['toolbar'] = [
+      } else if (field["buttons"] == "full") {
+        config["toolbar"] = [
           "bold",
           "italic",
           {
             name: "cite",
             action: makeCite,
             className: "fa fa-angle-double-left",
-            title: "Cite",
+            title: "Cite"
           },
           "link",
           "|",
@@ -105,7 +104,7 @@
             name: "quote-with-caption",
             action: makeQuoteWithCaption,
             className: "fa fa-quote-left",
-            title: "Quote with caption",
+            title: "Quote with caption"
           },
           //"unordered-list",
           //"ordered-list",
@@ -115,53 +114,54 @@
             name: "image-left",
             action: makeImageLeft,
             className: "fa fa-arrow-left",
-            title: "Image, aligned left",
+            title: "Image, aligned left"
           },
           {
             name: "image-standard",
             action: makeImageStandard,
             className: "fa fa-picture-o",
-            title: "Image, standard",
+            title: "Image, standard"
           },
           {
             name: "image-full",
             action: makeImageFull,
             className: "fa fa-arrows-h",
-            title: "Image, full-width",
+            title: "Image, full-width"
           },
           {
             name: "image-right",
             action: makeImageRight,
             className: "fa fa-arrow-right",
-            title: "Image, aligned right",
+            title: "Image, aligned right"
           },
           "|",
           {
             name: "video-left",
             action: makeVideoLeft,
             className: "fa fa-backward",
-            title: "Video, aligned left",
+            title: "Video, aligned left"
           },
           {
             name: "video-full",
             action: makeVideoFull,
             className: "fa fa-play",
-            title: "Video, full-width",
+            title: "Video, full-width"
           },
           {
             name: "video-right",
             action: makeVideoRight,
             className: "fa fa-forward",
-            title: "Video, aligned right",
+            title: "Video, aligned right"
           },
           "|",
-          "preview", "side-by-side", "fullscreen"
-        ]
-
-      };
+          "preview",
+          "side-by-side",
+          "fullscreen"
+        ];
+      }
 
       var editor = new EasyMDE(config);
-    };
+    }
 
     /**
      * Makes a unique ID for this field that's used for the autosave feature.
@@ -175,15 +175,15 @@
      * @return string
      */
     function getAutosaveId(field) {
-      var autosaveId = field['autosaveId'];
+      var autosaveId = field["autosaveId"];
       var objectId = getObjectId();
 
       if (objectId !== null) {
-        autosaveId += '-' + objectId;
-      };
+        autosaveId += "-" + objectId;
+      }
 
       return autosaveId;
-    };
+    }
 
     /**
      * Return the ID of the Django object that's being edited, if any.
@@ -192,67 +192,65 @@
      * @return string or null
      */
     function getObjectId() {
-      var urlParts = window.location.href.split('/');
+      var urlParts = window.location.href.split("/");
       var len = urlParts.length;
-      if (urlParts[len - 2] == 'change') {
+      if (urlParts[len - 2] == "change") {
         return urlParts[len - 3];
       } else {
         return null;
-      };
-    };
-
+      }
+    }
 
     function makeCite(editor) {
       _addInlineTag(editor, "<cite>", "</cite>");
-    };
-
+    }
 
     /**
      * Insert a blockquote in a figure with a figcaption.
      */
     function makeQuoteWithCaption(editor) {
-      var startStr = "\
-<figure class=\"figure figure--blockquote\">\n\
+      var startStr =
+        '\
+<figure class="figure figure--blockquote">\n\
   <blockquote>\n\
-    <p>";
+    <p>';
 
-      var endStr = "    </p>\n\
+      var endStr =
+        "    </p>\n\
   </blockquote>\n\
   <figcaption></figcaption>\n\
 </figure>";
 
       _formatBlock(editor, startStr, endStr);
-    };
-
+    }
 
     function makeImageLeft(editor) {
-      makeImage(editor, 'left');
-    };
+      makeImage(editor, "left");
+    }
 
     function makeImageStandard(editor) {
-      makeImage(editor, 'standard');
-    };
+      makeImage(editor, "standard");
+    }
 
     function makeImageFull(editor) {
-      makeImage(editor, 'full');
-    };
+      makeImage(editor, "full");
+    }
 
     function makeImageRight(editor) {
-      makeImage(editor, 'right');
-    };
+      makeImage(editor, "right");
+    }
 
     function makeVideoLeft(editor) {
-      makeVideo(editor, 'left');
-    };
+      makeVideo(editor, "left");
+    }
 
     function makeVideoRight(editor) {
-      makeVideo(editor, 'right');
-    };
+      makeVideo(editor, "right");
+    }
 
     function makeVideoFull(editor) {
-      makeVideo(editor, 'full');
-    };
-
+      makeVideo(editor, "full");
+    }
 
     /**
      * Insert the HTML for an image.
@@ -261,23 +259,22 @@
      * @param alignment string "standard", "left", "right" or 'full'.
      */
     function makeImage(editor, alignment) {
-      var startStr = "\
-<figure class=\"figure figure--img";
+      var startStr = '\
+<figure class="figure figure--img';
 
       if (["left", "right", "full"].indexOf(alignment) > -1) {
         startStr += " figure--" + alignment;
-      };
+      }
 
-      startStr += "\">\n\
-  <img src=\"";
+      startStr += '">\n\
+  <img src="';
 
-      var endStr = "\" alt=\"\">\n\
+      var endStr = '" alt="">\n\
   <figcaption></figcaption>\n\
-</figure>";
+</figure>';
 
       _formatBlock(editor, startStr, endStr);
-    };
-
+    }
 
     /**
      * Insert the HTML for an embedded video.
@@ -287,34 +284,35 @@
      * @param alignment string "left", "right" or 'full'.
      */
     function makeVideo(editor, alignment) {
-      var startStr = "\
-<figure class=\"figure figure--embed";
+      var startStr = '\
+<figure class="figure figure--embed';
 
       if (["left", "right"].indexOf(alignment) > -1) {
         startStr += " figure--" + alignment;
       }
 
-      startStr += "\">\n\
-  <div class=\"figure--embed__16by9\">\n\
-    <iframe src=\"";
+      startStr +=
+        '">\n\
+  <div class="figure--embed__16by9">\n\
+    <iframe src="';
 
-      var endStr = "\" allowfullscreen></iframe>\n\
+      var endStr =
+        '" allowfullscreen></iframe>\n\
   </div>\n\
   <figcaption></figcaption>\n\
-</figure>";
+</figure>';
 
       // First, replace the URL with the embed version, if necessary.
       var cm = editor.codemirror;
       var text = cm.getSelection();
-      if (text.startsWith('http')) {
+      if (text.startsWith("http")) {
         var url = _makeVideoEmbedUrl(text);
         _replaceSelectedText(editor, url);
-      };
+      }
 
       // Then wrap the URL with the HTML.
       _formatBlock(editor, startStr, endStr);
-    };
-
+    }
 
     /**
      * Wrap a piece of text in HTML tags.
@@ -325,11 +323,15 @@
      * e.g.  _addInlineTag(editor, "<cite>", "</cite>")
      */
     function _addInlineTag(editor, start_chars, end_chars) {
-      if (/editor-preview-active/.test(editor.codemirror.getWrapperElement().lastChild.className)) {
+      if (
+        /editor-preview-active/.test(
+          editor.codemirror.getWrapperElement().lastChild.className
+        )
+      ) {
         return;
-      };
+      }
 
-      end_chars = (typeof end_chars === 'undefined') ? start_chars : end_chars;
+      end_chars = typeof end_chars === "undefined" ? start_chars : end_chars;
       var cm = editor.codemirror;
       var stat = editor.getState(cm);
 
@@ -337,13 +339,13 @@
       var start = start_chars;
       var end = end_chars;
 
-      var startPoint = cm.getCursor('start');
-      var endPoint = cm.getCursor('end');
+      var startPoint = cm.getCursor("start");
+      var endPoint = cm.getCursor("end");
 
       text = cm.getSelection();
 
-      text = text.split(start_chars).join('');
-      text = text.split(end_chars).join('');
+      text = text.split(start_chars).join("");
+      text = text.split(end_chars).join("");
 
       cm.replaceSelection(start + text + end);
 
@@ -352,8 +354,7 @@
 
       cm.setSelection(startPoint, endPoint);
       cm.focus();
-    };
-
+    }
 
     /**
      * Replace selected text with a different string, and re-set the selection
@@ -366,16 +367,15 @@
       var cm = editor.codemirror;
       var startPoint = {};
       var endPoint = {};
-      Object.assign(startPoint, cm.getCursor('start'));
-      Object.assign(endPoint, cm.getCursor('end'));
+      Object.assign(startPoint, cm.getCursor("start"));
+      Object.assign(endPoint, cm.getCursor("end"));
 
       var selected = cm.getSelection();
       cm.replaceSelection(replacement);
-      endPoint.ch += (replacement.length - selected.length);
+      endPoint.ch += replacement.length - selected.length;
       cm.setSelection(startPoint, endPoint);
       cm.focus();
-    };
-
+    }
 
     /**
      * Mostly copied from bits of toggleCodeBlock() in
@@ -387,52 +387,57 @@
      */
     function _formatBlock(editor, startStr, endStr) {
       var cm = editor.codemirror;
-      var cur_start = cm.getCursor('start');
-      var cur_end = cm.getCursor('end');
+      var cur_start = cm.getCursor("start");
+      var cur_end = cm.getCursor("end");
 
       var start_line_sel = cur_start.line + 1,
-          end_line_sel = cur_end.line + 1,
-          sel_multi = cur_start.line !== cur_end.line,
-          repl_start = startStr,
-          repl_end = endStr;
+        end_line_sel = cur_end.line + 1,
+        sel_multi = cur_start.line !== cur_end.line,
+        repl_start = startStr,
+        repl_end = endStr;
 
       if (sel_multi) {
         end_line_sel++;
-      };
+      }
       // handle last char including \n or not
       if (sel_multi && cur_end.ch === 0) {
-        repl_end = endStr + '\n';
+        repl_end = endStr + "\n";
         end_line_sel--;
-      };
+      }
       _replaceSelection(cm, false, [repl_start, repl_end]);
 
-      cm.setSelection({
-        line: start_line_sel,
-        ch: 0
-      }, {
-        line: end_line_sel,
-        ch: 0
-      });
-    };
+      cm.setSelection(
+        {
+          line: start_line_sel,
+          ch: 0
+        },
+        {
+          line: end_line_sel,
+          ch: 0
+        }
+      );
+    }
 
     /**
      * Copied from _replaceSeletion() in
      * https://github.com/Inscryb/inscryb-markdown-editor/blob/master/src/js/inscrybmde.js
      */
     function _replaceSelection(cm, active, startEnd, url) {
-      if (/editor-preview-active/.test(cm.getWrapperElement().lastChild.className)) {
+      if (
+        /editor-preview-active/.test(cm.getWrapperElement().lastChild.className)
+      ) {
         return;
-      };
+      }
 
       var text;
       var start = startEnd[0];
       var end = startEnd[1];
       var startPoint = {};
       var endPoint = {};
-      Object.assign(startPoint, cm.getCursor('start'));
-      Object.assign(endPoint, cm.getCursor('end'));
+      Object.assign(startPoint, cm.getCursor("start"));
+      Object.assign(endPoint, cm.getCursor("end"));
       if (url) {
-        end = end.replace('#url#', url);
+        end = end.replace("#url#", url);
       }
       if (active) {
         text = cm.getLine(startPoint.line);
@@ -448,12 +453,12 @@
 
         startPoint.ch += start.length;
         if (startPoint !== endPoint) {
-            endPoint.ch += start.length;
+          endPoint.ch += start.length;
         }
       }
       cm.setSelection(startPoint, endPoint);
       cm.focus();
-    };
+    }
 
     return exports;
   };
@@ -474,29 +479,26 @@
    * If url isn't of the correct form, it's returned unchanged.
    */
   function _makeVideoEmbedUrl(url) {
-
     if (url.search(/youtube.com\/watch/) >= 0) {
       var urlObj = new URL(url.trim());
       // Get relevant URL args:
-      var v = urlObj.searchParams.get('v');
-      var t = urlObj.searchParams.get('t');
+      var v = urlObj.searchParams.get("v");
+      var t = urlObj.searchParams.get("t");
 
       if (v) {
-        url = 'https://www.youtube.com/embed/'+v
+        url = "https://www.youtube.com/embed/" + v;
         if (t) {
           // Indication the seconds is different on watch URLs vs embeds:
-          url += '?start='+t;
-        };
-      };
-
+          url += "?start=" + t;
+        }
+      }
     } else if (url.search(/\/\/vimeo.com/) >= 0) {
       var matches = url.match(/vimeo.com\/(\w+)$/);
       if (matches.length > 1) {
-        url = 'https://player.vimeo.com/video/' + matches[1];
-      };
-    };
+        url = "https://player.vimeo.com/video/" + matches[1];
+      }
+    }
 
     return url;
-  };
-
+  }
 })(django.jQuery);

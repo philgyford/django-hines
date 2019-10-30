@@ -12,7 +12,7 @@ $.getElByClass = function(classname) {
   var el = document.getElementsByClassName(classname);
   if (el && el.length === 1) {
     el = el[0];
-  };
+  }
   return el;
 };
 
@@ -24,15 +24,15 @@ $.showEl = function(classname, displayVal) {
   if (displayVal) {
     $.getElByClass(classname).style.display = displayVal;
   } else {
-    $.getElByClass(classname).style.display = '';
-  };
+    $.getElByClass(classname).style.display = "";
+  }
 };
 
 /**
  * Hide the element with a CSS class of `classname`.
  */
 $.hideEl = function(classname) {
-  $.getElByClass(classname).style.display = 'none';
+  $.getElByClass(classname).style.display = "none";
 };
 
 /**
@@ -42,8 +42,8 @@ $.addClass = function(el, className) {
   if (el.classList) {
     el.classList.add(className);
   } else {
-    el.className += ' ' + className;
-  };
+    el.className += " " + className;
+  }
 };
 
 /**
@@ -56,11 +56,10 @@ $.addClass = function(el, className) {
 $.each = function(selector, fn) {
   var elements = document.querySelectorAll(selector);
 
-  Array.prototype.forEach.call(elements, function(el, i){
+  Array.prototype.forEach.call(elements, function(el, i) {
     fn.call(i, el);
   });
 };
-
 
 /**
  * domready (c) Dustin Diaz 2014 - License MIT
@@ -72,30 +71,31 @@ $.each = function(selector, fn) {
  *  console.log("We're ready!");
  * });
  */
-!function (name, definition) {
-
-  if (typeof module != 'undefined') module.exports = definition()
-  else if (typeof define == 'function' && typeof define.amd == 'object') define(definition)
-  else this[name] = definition()
-
-}('domready', function () {
-
-  var fns = [], listener
-    , doc = typeof document === 'object' && document
-    , hack = doc && doc.documentElement.doScroll
-    , domContentLoaded = 'DOMContentLoaded'
-    , loaded = doc && (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState)
-
+!(function(name, definition) {
+  if (typeof module != "undefined") module.exports = definition();
+  else if (typeof define == "function" && typeof define.amd == "object")
+    define(definition);
+  else this[name] = definition();
+})("domready", function() {
+  var fns = [],
+    listener,
+    doc = typeof document === "object" && document,
+    hack = doc && doc.documentElement.doScroll,
+    domContentLoaded = "DOMContentLoaded",
+    loaded =
+      doc && (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
 
   if (!loaded && doc)
-  doc.addEventListener(domContentLoaded, listener = function () {
-    doc.removeEventListener(domContentLoaded, listener)
-    loaded = 1
-    while (listener = fns.shift()) listener()
-  })
+    doc.addEventListener(
+      domContentLoaded,
+      (listener = function() {
+        doc.removeEventListener(domContentLoaded, listener);
+        loaded = 1;
+        while ((listener = fns.shift())) listener();
+      })
+    );
 
-  return function (fn) {
-    loaded ? setTimeout(fn, 0) : fns.push(fn)
-  }
-
+  return function(fn) {
+    loaded ? setTimeout(fn, 0) : fns.push(fn);
+  };
 });

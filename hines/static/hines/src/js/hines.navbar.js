@@ -17,31 +17,29 @@
  *
  * Relies on our utils.js.
  */
-;(function(){
+(function() {
   "use strict";
 
   window.hines = window.hines || {};
 
   window.hines.navbar = function module() {
-
     // The nav <ul> that we'll add an <li> to:
-    var navClass = 'js-navbar-nav';
+    var navClass = "js-navbar-nav";
 
     // The nav <li> that we'll make and hide:
-    var liClass = 'js-navbar-item-search';
+    var liClass = "js-navbar-item-search";
 
     // The mav <button> that we'll make, which will reveal the search form:
-    var buttonClass = 'js-navbar-nav-item-search';
+    var buttonClass = "js-navbar-nav-item-search";
 
     // The search form:
-    var formClass = 'js-navbar-form';
-    var formId = 'js-navbar-form';
+    var formClass = "js-navbar-form";
+    var formId = "js-navbar-form";
 
     var exports = {
-
       init: function() {
         // Indicate to the CSS that this is running:
-        $.addClass(document.body, 'js-can-navbar');
+        $.addClass(document.body, "js-can-navbar");
 
         createSearchLink();
 
@@ -54,35 +52,34 @@
      * the nav <ul>.
      */
     function createSearchLink() {
-      var button = document.createElement('button');
-      button.setAttribute('aria-expanded', 'false');
-      button.setAttribute('aria-controls', formId);
-      button.setAttribute('type', 'button');
-      button.setAttribute('class', 'button--link nav__link ' + buttonClass);
-      button.textContent = 'Search';
+      var button = document.createElement("button");
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-controls", formId);
+      button.setAttribute("type", "button");
+      button.setAttribute("class", "button--link nav__link " + buttonClass);
+      button.textContent = "Search";
 
-      var li = document.createElement('li');
-      li.setAttribute('class', 'nav__item nav__item--split ' + liClass);
+      var li = document.createElement("li");
+      li.setAttribute("class", "nav__item nav__item--split " + liClass);
 
       li.appendChild(button);
 
       var nav = $.getElByClass(navClass);
 
       nav.appendChild(li);
-    };
+    }
 
     function initListener() {
-      $.getElByClass(buttonClass).addEventListener('click', function(event) {
+      $.getElByClass(buttonClass).addEventListener("click", function(event) {
         event.preventDefault();
 
         $.hideEl(liClass);
-        $.showEl(formClass, 'block');
+        $.showEl(formClass, "block");
 
         var button = $.getElByClass(buttonClass);
-        button.setAttribute('aria-expanded', 'true');
+        button.setAttribute("aria-expanded", "true");
       });
-    };
+    }
     return exports;
   };
-
 })();
