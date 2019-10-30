@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "del": "^3.0.0",
-    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-inject": "^4.2.0",
@@ -29,7 +29,6 @@
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8",
     "stream-series": "^0.1.1",
     "watch": "^1.0.2"
   }
