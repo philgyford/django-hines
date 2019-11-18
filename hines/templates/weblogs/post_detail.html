@@ -1,7 +1,7 @@
 {% extends 'hines_core/layouts/no_sidebar.html' %}
 {% load comments static hines_core hines_weblogs spectator_reading %}
 
-{% block head_page_title %}{{ post.title|smartypants|safe }}{% endblock %}
+{% block head_page_title %}{{ post.title_text|smartypants }}{% endblock %}
 
 {% block meta_social %}
 	<meta property="og:title" content="{{ post.title_text|smartypants }}" />
