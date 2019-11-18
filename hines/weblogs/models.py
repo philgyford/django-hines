@@ -435,7 +435,13 @@ class Post(TimeStampedModelMixin, models.Model):
 
     @property
     def main_image_url(self):
-        pattern = r'<img[^>*?]src="(.*?)"'
+        """The URL of the image to use for meta tags, if any.
+        It's the first image from the intro or, if there isn't one, the
+        first image from the body.
+
+        Returns the URL of that image, or an empty string if there isn't one.
+        """
+        pattern = r'<img[^>]*?src="([^"]*?)"'
         url = ""
 
         intro_match = re.search(pattern, self.intro_html)
