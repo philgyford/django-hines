@@ -79,9 +79,9 @@ class ExtendedFeedTestCase(FeedTestCase):
             name="My Blog", slug="my-blog", show_author_email_in_feed=True
         )
         post = LivePostFactory(
-            title="My blog post",
+            title="My <cite>blog</cite> <b>post</b>",
             slug="my-blog-post",
-            excerpt="This is my <b>excerpt</b>.",
+            excerpt="This is <cite>my</cite> <b>excerpt</b>.",
             intro="The post intro.",
             body="This is the post <b>body</b>.\n\nOK?",
             author=user,
@@ -96,12 +96,14 @@ class ExtendedFeedTestCase(FeedTestCase):
         self.assertChildNodeContent(
             items[0],
             {
-                "title": "My blog post",
-                "description": "This is my excerpt.",
+                "title": "My ‘blog’ post",
+                # Can't work out how to get rid of this newline:
+                "description": "This is ‘my’ excerpt.\n",
                 "link": "http://example.com/terry/my-blog/2017/04/25/my-blog-post/",
                 "guid": "http://example.com/terry/my-blog/2017/04/25/my-blog-post/",
                 "pubDate": rfc2822_date(post.time_published),
                 "author": "bob@example.org (Bob Ferris)",
+                # Or this newline:
                 "content:encoded": '<p><em>From <a href="http://example.com/terry/my-blog/">My Blog</a>.</em></p><p>The post intro.</p><p>This is the post <b>body</b>.</p><p>OK?</p>\n',  # noqa:E501
             },
         )

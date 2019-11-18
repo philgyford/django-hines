@@ -1,5 +1,3 @@
-from django.utils.html import strip_tags
-
 from hines.core.feeds import ExtendedFeed, ExtendedRSSFeed
 from .models import Blog
 
@@ -32,10 +30,10 @@ class BlogPostsFeedRSS(ExtendedFeed):
     # Getting details for each post in the feed:
 
     def item_description(self, item):
-        return strip_tags(item.excerpt)
+        return item.excerpt_text
 
     def item_title(self, item):
-        return item.feed_title
+        return item.title_text
 
     def item_author_name(self, item):
         return item.author.display_name

@@ -1,10 +1,8 @@
 {% spaceless %}
 {% if obj.kind == 'blog_post' %}
-	{{ obj.object.excerpt|striptags }}
-
+	{{ obj.object.excerpt_text }}
 {% elif obj.kind == 'pinboard_bookmark' %}
 	{{ obj.object.summary|striptags }}
-
 {% elif obj.kind == 'flickr_photos' %}
 	{{ obj.objects|length }} photo{{ obj.objects|length|pluralize }}.
 {% endif %}

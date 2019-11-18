@@ -364,11 +364,17 @@ Cats""",
         post = LivePostFactory()
         self.assertEqual(post.status_str, "Published")
 
-    def test_feed_title(self):
+    def test_title_text(self):
         post = LivePostFactory(
             title="This is <cite>Cited</cite> and <strong>Bold</strong>"
         )
-        self.assertEqual(post.feed_title, "This is ‘Cited’ and Bold")
+        self.assertEqual(post.title_text, "This is ‘Cited’ and Bold")
+
+    def test_excerpt_text(self):
+        post = LivePostFactory(
+            excerpt="This is <cite>Cited</cite> and <strong>Bold</strong>"
+        )
+        self.assertEqual(post.excerpt_text, "This is ‘Cited’ and Bold")
 
     def test_main_image_url_none(self):
         """If there's no image in either intro_html or body_html it

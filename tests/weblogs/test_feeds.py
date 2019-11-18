@@ -30,7 +30,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.post2 = LivePostFactory(
             title='Bob\'s "latest" <cite>Cited</cite> <strong>post</strong>',
             slug="my-latest-post",
-            excerpt="This is my <b>excerpt</b>.",
+            excerpt="This is <cite>my</cite> <b>excerpt</b>.",
             intro="The post intro.",
             body="This is the post <b>body</b>.\n\nOK?",
             author=self.user,
@@ -126,7 +126,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
             items[0],
             {
                 "title": 'Bob\'s "latest" ‘Cited’ post',
-                "description": "This is my excerpt.",
+                "description": "This is ‘my’ excerpt.",
                 "link": "http://example.com/terry/my-blog/2017/04/25/my-latest-post/",
                 "guid": "http://example.com/terry/my-blog/2017/04/25/my-latest-post/",
                 "pubDate": rfc2822_date(self.post2.time_published),

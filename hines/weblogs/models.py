@@ -321,15 +321,26 @@ class Post(TimeStampedModelMixin, models.Model):
             return None
 
     @property
-    def feed_title(self):
-        """A Post title suitable for use in an RSS feed's <title>
+    def title_text(self):
+        """A Post title containing no HTML.
+        Suitable for RSS feeds, <meta> tags, etc.
         Replaces <cite> tags with curly single quotes.
         Strips any other HTML tags.
         """
-        title = self.title
-        title = title.replace("<cite>", "‘").replace("</cite>", "’")
-        title = strip_tags(title)
+        title = self.title.replace("<cite>", "‘").replace("</cite>", "’")
+        title = strip_tags(title).strip()
         return title
+
+    @property
+    def excerpt_text(self):
+        """A Post excerpt containing no HTML.
+        Suitable for RSS feeds, <meta> tags, etc.
+        Replaces <cite> tags with curly single quotes.
+        Strips any other HTML tags.
+        """
+        excerpt = self.excerpt.replace("<cite>", "‘").replace("</cite>", "’")
+        excerpt = strip_tags(excerpt).strip()
+        return excerpt
 
     def htmlize_text(self, text, field):
         """

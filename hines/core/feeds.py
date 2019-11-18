@@ -170,7 +170,7 @@ class EverythingFeedRSS(ExtendedFeed):
 
     def item_title(self, item):
         if item["kind"] == "blog_post":
-            title = item["object"].feed_title
+            title = item["object"].title_text
 
         elif item["kind"] == "pinboard_bookmark":
             title = "[Link] {}".format(item["object"].title)
