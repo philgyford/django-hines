@@ -4,7 +4,20 @@
 
 {% block content %}
 
-<h2>Type styles</h2>
+<ul>
+  <li><a href="#styles">Type styles</a></li>
+  <li><a href="#headings">Headings</a></li>
+  <li><a href="#bodytext">Bodytext</a></li>
+  <li><a href="#rules">Horizontal rules</a></li>
+  <li><a href="#blockquotes">Blockquotes</a></li>
+  <li><a href="#code">Codeblocks</a></li>
+  <li><a href="#anchors">Section anchors</a></li>
+</ul>
+
+<h2 id="styles">
+  <a class="section-anchor" href="#styles" style="text-decoration:none;" title="Link to this section">§</a>
+  Type styles
+</h2>
 
 <p>There are three main styles of type used across the site.</p>
 
@@ -13,7 +26,10 @@
 <pre><code>{% verbatim_include 'patterns/includes/type/styles.html' %}</pre></code>
 
 
-<h2>Headings</h2>
+<h2 id="headings">
+  <a class="section-anchor" href="#headings" style="text-decoration:none;" title="Link to this section">§</a>
+  Headings
+</h2>
 
 {% include 'patterns/includes/type/headings.html' %}
 
@@ -34,7 +50,10 @@
 <pre><code>{% verbatim_include 'patterns/includes/type/headings_small.html' %}</pre></code>
 
 
-<h2 id="bodytext-headings">Bodytext</h2>
+<h2 id="bodytext">
+  <a class="section-anchor" href="#bodytext" style="text-decoration:none;" title="Link to this section">§</a>
+  Bodytext
+</h2>
 
 <p>All headings within an element with a class of <code>.bodytext</code> will use the serif font.</p>
 
@@ -48,14 +67,20 @@
 &lt;/div&gt;</pre></code>
 
 
-<h2>Horizontal rules</h2>
+<h2 id="rules">
+  <a class="section-anchor" href="#rules" style="text-decoration:none;" title="Link to this section">§</a>
+  Horizontal rules
+</h2>
 
 {% include 'patterns/includes/type/rules.html' %}
 
 <pre><code>{% verbatim_include 'patterns/includes/type/rules.html' %}</pre></code>
 
 
-<h2>Blockquotes</h2>
+<h2 id="blockquotes">
+  <a class="section-anchor" href="#blockquotes" style="text-decoration:none;" title="Link to this section">§</a>
+  Blockquotes
+</h2>
 
 <p>Hello there</p>
 
@@ -64,10 +89,29 @@
 <pre><code>{% verbatim_include 'patterns/includes/type/blockquotes.html' %}</pre></code>
 
 
-<h2>Code blocks</h2>
+<h2 id="code">
+  <a class="section-anchor" href="#code" style="text-decoration:none;" title="Link to this section">§</a>
+  Code blocks
+</h2>
 
 {% include 'patterns/includes/type/code.html' %}
 
 <pre><code>{% verbatim_include 'patterns/includes/type/code.html' %}</pre></code>
+
+
+<h2 id="anchors">
+  <a class="section-anchor" href="#anchors" style="text-decoration:none;" title="Link to this section">§</a>
+  Section anchors
+</h2>
+
+{% include 'patterns/includes/type/anchors_paragraphs.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/type/anchors_paragraphs.html' %}</pre></code>
+
+<p>Anchors can also be added to headings:</p>
+
+{% include 'patterns/includes/type/anchors_headings.html' %}
+
+<pre><code>{% verbatim_include 'patterns/includes/type/anchors_headings.html' %}</pre></code>
 
 {% endblock content %}
