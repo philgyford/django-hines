@@ -7,7 +7,6 @@
 <ul>
   <li><a href="#styles">Type styles</a></li>
   <li><a href="#headings">Headings</a></li>
-  <li><a href="#bodytext">Bodytext</a></li>
   <li><a href="#rules">Horizontal rules</a></li>
   <li><a href="#blockquotes">Blockquotes</a></li>
   <li><a href="#code">Codeblocks</a></li>
@@ -19,11 +18,11 @@
   Type styles
 </h2>
 
-<p>There are three main styles of type used across the site.</p>
+<p>There are four styles of type used across the site.</p>
 
 {% include 'patterns/includes/type/styles.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/styles.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/styles.html' %}</code></pre>
 
 
 <h2 id="headings">
@@ -33,38 +32,21 @@
 
 {% include 'patterns/includes/type/headings.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/headings.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/headings.html' %}</code></pre>
 
 
 <p>Add <code>.h--bordered</code> to add a border beneath:</p>
 
 {% include 'patterns/includes/type/headings_bordered.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/headings_bordered.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/headings_bordered.html' %}</code></pre>
 
 
 <p>You can use <code>&lt;small&gt;</code> in headings:</p>
 
 {% include 'patterns/includes/type/headings_small.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/headings_small.html' %}</pre></code>
-
-
-<h2 id="bodytext">
-  <a class="section-anchor" href="#bodytext" style="text-decoration:none;" title="Link to this section">§</a>
-  Bodytext
-</h2>
-
-<p>All headings within an element with a class of <code>.bodytext</code> will use the serif font.</p>
-
-<div class="bodytext">
-{% include 'patterns/includes/type/headings.html' %}
-</div>
-
-<pre><code>&lt;div class="bodytext"&gt;
-
-{% verbatim_include 'patterns/includes/type/headings.html' %}
-&lt;/div&gt;</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/headings_small.html' %}</code></pre>
 
 
 <h2 id="rules">
@@ -74,7 +56,7 @@
 
 {% include 'patterns/includes/type/rules.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/rules.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/rules.html' %}</code></pre>
 
 
 <h2 id="blockquotes">
@@ -86,7 +68,7 @@
 
 {% include 'patterns/includes/type/blockquotes.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/blockquotes.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/blockquotes.html' %}</code></pre>
 
 
 <h2 id="code">
@@ -96,7 +78,7 @@
 
 {% include 'patterns/includes/type/code.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/code.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/code.html' %}</code></pre>
 
 
 <h2 id="anchors">
@@ -106,12 +88,12 @@
 
 {% include 'patterns/includes/type/anchors_paragraphs.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/anchors_paragraphs.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/anchors_paragraphs.html' %}</code></pre>
 
 <p>Anchors can also be added to headings:</p>
 
 {% include 'patterns/includes/type/anchors_headings.html' %}
 
-<pre><code>{% verbatim_include 'patterns/includes/type/anchors_headings.html' %}</pre></code>
+<pre><code>{% verbatim_include 'patterns/includes/type/anchors_headings.html' %}</code></pre>
 
 {% endblock content %}

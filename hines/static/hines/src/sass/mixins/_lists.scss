@@ -13,11 +13,7 @@
   // Also see the exception to this background positioning in _cards.scss
   // And in .table--timeline in _tables.scss
   background: url('#{$img-path}bullet.png') 0 $list-bullet-position no-repeat;
-  padding-left: ($base-unit + $list-inline-padding);
-
-  .bodytext & {
-    background-position: 0 $list-bullet-position-lg;
-  }
+  padding-left: ($border-width + $list-inline-padding);
 }
 
 @mixin list-inline-item() {

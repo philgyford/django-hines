@@ -79,12 +79,9 @@ $media-header-line-height: $line-height-base;
     margin-bottom: 0;
   }
 
-  p + .meta {
-    // Move meta blocks up if immediately after paragraph.
-    // Looks better for situations we currently use them in (Reading), but
-    // might need refinement...
-    margin-top: -($vertical-space-sm / 2);
-    margin-bottom: ($vertical-space-sm / 2);
+  .media__header + .meta {
+    // Useful for, e.g., a publication.
+    margin-top: $vertical-space-sm;
   }
 }
 

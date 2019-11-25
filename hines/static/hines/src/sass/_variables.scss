@@ -65,19 +65,44 @@ $link-visited-hover-color:  $red;
 /////////////////////////////////////////////////////////////////////////
 // Base units
 
-// Many other things - borders, line-heights, etc. will be multiples of this.
-$base-unit:                   12px;
+// The fundamental base measurement that we tie everything to.
+// Line heights, padding, border widths, etc.
+$base-unit-pixels:        6;
+
+// Our three type sizes, in pixels:
+$font-pixels-base:        20;
+$font-pixels-sm:          14;
+$font-pixels-xs:          12;
+
+// And line-heights to go with the above, in pixels:
+$line-height-pixels-base: $base-unit-pixels * 5; // 30
+$line-height-pixels-sm:   $base-unit-pixels * 4; // 24
+$line-height-pixels-xs:   $base-unit-pixels * 3; // 18
+
+// Heading sizes in pixels, at widest widths:
+// Narrower widths use one step down:
+$h1-font-pixels:          35;
+$h2-font-pixels:          29;
+$h3-font-pixels:          24;
+$h4-font-pixels:          20;
+$h5-font-pixels:          17;
+$h6-font-pixels:          14;
+
+
+// Things like borders, line-heights, etc. will be multiples of this.
+$base-unit:                   $base-unit-pixels * 1px;
+
 
 // e.g. space below paragraphs:
-$vertical-space:              (1rem * 1.5);   // 24px
-$vertical-space-sm:           (1rem * 0.75);  // 12px
+$vertical-space:              ($base-unit-pixels * 4 / 16) * 1rem; // 24px
+$vertical-space-sm:           ($base-unit-pixels * 2 / 16) * 1rem; // 12px
 
 // For horizontal space that should be proportionate to font sizes:
-$horizontal-space:            (1rem * 0.75);  // 12px
-$horizontal-space-sm:         (1rem * 0.375); // 6px
+$horizontal-space:            ($base-unit-pixels * 2 / 16) * 1rem; // 12px
+$horizontal-space-sm:         ($base-unit-pixels / 16) * 1rem;     // 6px
 
 // What we use for hr's, navbar rules, etc:
-$border-width:                $base-unit;
+$border-width:                ($base-unit * 2);
 $border-width-sm:             1px;
 
 
@@ -115,13 +140,13 @@ $container-max-widths: (
 
 
 // Padding on L and R of body, at wide and narrow widths:
-$body-horizontal-space:       ($base-unit * 2);
-$body-horizontal-space-sm:    $base-unit;
+$body-horizontal-space:       ($base-unit * 4);
+$body-horizontal-space-sm:    ($base-unit * 2);
 
 // Grid containers
 
 $grid-columns:              16;
-$grid-gutter-width:         ($base-unit * 2);
+$grid-gutter-width:         ($base-unit * 4);
 
 // Widths of our custom columns:
 
@@ -164,27 +189,22 @@ $font-weight-normal:          400;
 $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 
-$font-size-base:              1rem;          /* 16px */
-$line-height-base:            1.5;           /* 24 if used w font-size-base */
-$line-height-base-computed:   1.5rem;        /* 24 */
+$font-size-base:              ($font-pixels-base / 16) * 1rem;
+$line-height-base:            ($line-height-pixels-base / $font-pixels-base); // 30px
+$line-height-base-computed:   $line-height-base * 1rem;                       // 30px
 
-$font-size-lg:                1.25rem;       /* 20px for main-col-only copy */
-$line-height-lg:              1.8;           /* 36 if used with font-size-lg*/
-$line-height-lg-computed:     2.25rem;       /* 36 */
+$font-size-sm:                ($font-pixels-sm / 16) * 1rem;
+$line-height-sm:              ($line-height-pixels-sm / $font-pixels-sm); // 24px
+$line-height-sm-computed:     $line-height-sm * 1rem;                     // 24px
 
-$font-size-sm:                0.875rem;      /* 14 */
-$line-height-sm:              1.71429;       /* 24 if used with font-size-sm */
-$line-height-sm-computed:     1.5rem;        /* 24 */
+$font-size-xs:                ($font-pixels-xs / 16) * 1rem;
+$line-height-xs:              ($line-height-pixels-xs / $font-pixels-xs); // 18px
+$line-height-xs-computed:     $line-height-xs * 1rem;                     // 18px
 
-$font-size-xs:                0.75rem;       /* 12 */
-$line-height-xs:              1.33333;       /* 16 if used with font-size-xs */
-$line-height-xs-computed:     1.33333rem;    /* 16 */
+// Has to be adjusted to see what looks best with the base font size:
+$font-size-monospace-base:    0.9375rem; // 15px.
+$line-height-monospace-base:  $line-height-sm;
 
-$font-size-monospace-base:    $font-size-xs;
-$line-height-monospace-base:  $line-height-xs;
-
-$font-size-monospace-lg:      $font-size-sm;
-$line-height-monospace-lg:    $line-height-sm;
 
 // Headings
 
@@ -192,23 +212,23 @@ $headings-margin-bottom:      $vertical-space;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
 
-$h1-font-size:                2.0rem;           /* 32 */
-$h1-line-height:              2.25rem;          /* 36 */
+$h1-font-size:                ($h1-font-pixels / 16) * 1rem;
+$h1-line-height:              2 * $line-height-base-computed;
 
-$h2-font-size:                1.6875rem;        /* 27 */
-$h2-line-height:              2.25rem;          /* 36 */
+$h2-font-size:                ($h2-font-pixels / 16) * 1rem;
+$h2-line-height:              2 * $line-height-base-computed;
 
-$h3-font-size:                $font-size-lg;    /* 20 */
-$h3-line-height:              1.5rem;           /* 24 */
+$h3-font-size:                ($h3-font-pixels / 16) * 1rem;
+$h3-line-height:              1.5 * $line-height-base-computed;
 
-$h4-font-size:                $font-size-base;  /* 16 */
-$h4-line-height:              1.5rem;           /* 24 */
+$h4-font-size:                ($h4-font-pixels / 16) * 1rem;
+$h4-line-height:              1.5 * $line-height-base-computed;
 
-$h5-font-size:                $font-size-sm;    /* 14 */
-$h5-line-height:              1.5rem;           /* 24 */
+$h5-font-size:                ($h5-font-pixels / 16) * 1rem;
+$h5-line-height:              $line-height-base-computed;
 
-$h6-font-size:                0.8125rem;        /* 13 */
-$h6-line-height:              1.5rem;           /* 24 */
+$h6-font-size:                ($h6-font-pixels / 16) * 1rem;
+$h6-line-height:              $line-height-base-computed;
 
 // Variants for wider screens:
 $h1-font-size-md:             $h1-font-size;
@@ -236,12 +256,12 @@ $text-style-default-font-weight:    $font-weight-normal;
 $text-style-alt-font-family:        $font-family-sans-serif;
 $text-style-alt-font-weight:        $font-weight-bold;
 
-$list-inline-padding:         $base-unit;
+$list-inline-padding:         ($base-unit * 2);
 
 $cite-font-style:             italic;
 
 // Vertical position of the bullet (a background image):
-$list-bullet-position:        0.45em;
+$list-bullet-position:        0.5em;
 // And when used with larger/smaller text:
 $list-bullet-position-lg:     0.65em;
 $list-bullet-position-sm:     0.4em;
@@ -275,7 +295,7 @@ $input-button-focus-width:       .2rem;
 
 $input-button-padding-y-sm:      0;
 $input-button-padding-x-sm:      $horizontal-space-sm;
-$input-button-line-height-sm:    $line-height-sm;
+$input-button-line-height-sm:    ($line-height-pixels-sm / $font-pixels-sm);
 
 $input-button-border-width:      1px;
 
@@ -289,7 +309,7 @@ $button-line-height:             $input-button-line-height;
 
 $button-padding-y-sm:            $input-button-padding-y-sm;
 $button-padding-x-sm:            $input-button-padding-x-sm;
-$button-line-height-sm:          $input-button-line-height-sm;
+$button-line-height-sm:          calc((#{$input-button-line-height} * 1rem) - (#{$input-button-border-width} * 2)); // Fudgey
 
 
 $button-focus-width:             $input-button-focus-width;
@@ -324,10 +344,11 @@ $input-placeholder-color:               $gray-medium;
 $input-height-border:                   $input-button-border-width * 2;
 
 $input-height-inner:                    ($font-size-base * $input-button-line-height) + ($input-button-padding-y * 2);
-$input-height:                          $input-height-inner;
+$input-height:                          $base-unit * 6; // Fudge
 
 $input-height-inner-sm:                 ($font-size-sm * $input-button-line-height-sm) + ($input-button-padding-y-sm * 2);
-$input-height-sm:                       calc(#{$input-height-inner-sm} + #{$input-height-border});
+//$input-height-sm:                       calc(#{$input-height-inner-sm} + #{$input-height-border});
+$input-height-sm:                       $base-unit * 4; // Fudge
 
 $input-transition:                      border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
@@ -361,4 +382,4 @@ $nav-font-size:                  $font-size-sm;
 
 // Navbar
 
-$navbar-brand-font-size:         $h3-font-size;
+$navbar-brand-font-size:         $font-size-base;

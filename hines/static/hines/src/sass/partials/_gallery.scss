@@ -37,7 +37,7 @@
 
   .gallery__item {
     width: 100%;
-    padding: 0 ($base-unit * 2) $vertical-space ($base-unit * 2);
+    padding: 0 ($base-unit * 4) $vertical-space ($base-unit * 4);
 
     @include media-breakpoint-up(sm) {
       width: 50%;
@@ -146,7 +146,7 @@
 
 .gallery__item__img {
   order: 1;
-  margin-bottom: ($base-unit / 2);
+  margin-bottom: $base-unit;
 
   img {
     max-width: 100%;
@@ -200,7 +200,7 @@
     width: 150px;
     max-width: 150px;
     padding: 0 0 $vertical-space 0;
-    margin-right: $base-unit;
+    margin-right: ($base-unit * 2);
   }
 
   .gallery__item__img {

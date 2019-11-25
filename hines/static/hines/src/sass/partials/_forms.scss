@@ -98,6 +98,7 @@ select.form__control {
   padding: $input-padding-y-sm $input-padding-x-sm;
   line-height: $input-line-height-sm;
   font-size: $font-size-sm;
+  height: $input-height-sm;
 }
 
 select.form__control--sm {
@@ -179,15 +180,15 @@ select.form__control--sm {
       align-items: center;
       justify-content: center;
       margin-bottom: 0;
-      margin-right: $base-unit;
+      margin-right: ($base-unit * 2);
     }
 
     .form__control {
       display: inline-block;
       width: auto; // Prevent labels from stacking above inputs in `.form-group`
       vertical-align: middle;
-      margin-right: $base-unit;
-      margin-bottom: 0;
+      margin-right: ($base-unit * 2);
+      margin-bottom: $vertical-space-sm;
 
       &:last-child {
         margin-right: 0;
@@ -200,7 +201,7 @@ select.form__control--sm {
     }
 
     .button {
-      margin-bottom: 0;
+      margin-bottom: $vertical-space-sm;
     }
   }
 }

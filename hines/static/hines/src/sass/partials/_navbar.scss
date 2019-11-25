@@ -8,12 +8,7 @@ $navbar-title-line-height:      ($vertical-space-sm * 1);
 
 // Variations/additions for the widest width:
 $navbar-bottom-space-wide:      ($vertical-space-sm * 4);
-
-// Should be a $vertical-space-sm, but allowing for the width of the input's
-// borders. Because they're in pixels, we need to calculate this in pixels,
-// hence using $border-width instead of $vertical-space-sm, and assuming
-// they're the same:
-$navbar-form-top:   ($border-width - ($input-border-width * 2));
+$navbar-form-top:               $vertical-space-sm;
 
 
 .navbar {

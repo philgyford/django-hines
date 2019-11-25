@@ -32,7 +32,7 @@ Expects:
   {% endif %}
 
   {% if show_readings == 'all' or show_readings == 'current' %}
-    <div class="meta">
+    <div class="meta meta--inline">
       <ul class="meta__inner">
         {% if show_readings == 'all' %}
           {% with publication.reading_set.all as readings %}
