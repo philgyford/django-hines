@@ -30,7 +30,7 @@ Expects:
     {% else %}
       <p>
         {% if event.venue %}
-          at {{ event.venue_name }}
+          at <a href="{{ event.venue.get_absolute_url }}">{{ event.venue_name }}</a>
         {% endif %}
         <span class="u-nowrap">on {% display_time event.date show='date' link_to_day=True %}</span>
       </p>
