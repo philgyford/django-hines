@@ -188,18 +188,20 @@ cite {
  * Our automatically-generated <a> tag at the start of a section
  * (e.g. in a <p> that immediately follows an <hr>)
  */
-@include media-breakpoint-up(sm) {
-  .section-anchor {
-    // Assuming there's a " &nbsp; " before the first text:
+.section-anchor {
+  // Assuming there's a " &nbsp; " before the first text:
+  @include media-breakpoint-up(md) {
     margin-left: -1.25em;
+  }
 
+  @include media-breakpoint-up(lg) {
     h1 &, .h1 &,
     h2 &, .h2 &,
     h3 &, .h3 &,
     h4 &, .h4 &,
     h5 &, .h5 &,
     h6 &, .h6 & {
-      margin-left: -0.9em;
+      margin-left: -1.39em;
     }
   }
 }
