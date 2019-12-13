@@ -86,7 +86,7 @@ class RecentObjectsTestCase(TestCase):
 
         for obj in objects:
             self.assertEqual(obj['object'].blog, b1)
-            self.assertEqual(obj['object'].status, Post.LIVE_STATUS)
+            self.assertEqual(obj['object'].status, Post.Status.LIVE)
 
     def test_blog_posts_format(self):
         "The returned blog post dicts should be the correct format"

@@ -48,16 +48,16 @@ class PostFactory(factory.DjangoModelFactory):
 
 
 class DraftPostFactory(PostFactory):
-    status = models.Post.DRAFT_STATUS
+    status = models.Post.Status.DRAFT
 
 
 class LivePostFactory(PostFactory):
-    status = models.Post.LIVE_STATUS
+    status = models.Post.Status.LIVE
     time_published = datetime_now()
 
 
 class ScheduledPostFactory(PostFactory):
-    status = models.Post.SCHEDULED_STATUS
+    status = models.Post.Status.SCHEDULED
     time_published = datetime_now() + timedelta(days=1)
 
 

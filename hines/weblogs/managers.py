@@ -7,5 +7,5 @@ class PublicPostsManager(models.Manager):
     """
     def get_queryset(self):
         from .models import Post
-        return super().get_queryset().filter(status=Post.LIVE_STATUS)
+        return super().get_queryset().filter(status=Post.Status.LIVE)
 

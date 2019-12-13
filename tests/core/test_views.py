@@ -294,17 +294,17 @@ class DayArchiveViewTestCase(ViewTestCase):
         "Should include public Posts from that day."
         b1 = BlogFactory(sort_order=1, slug='my-blog-1')
         # Should be included:
-        p1a = PostFactory(blog=b1, status=Post.LIVE_STATUS,
+        p1a = PostFactory(blog=b1, status=Post.Status.LIVE,
                         time_published=self.today_time)
         # Draft; shouldn't be included:
-        p1b = PostFactory(blog=b1, status=Post.DRAFT_STATUS,
+        p1b = PostFactory(blog=b1, status=Post.Status.DRAFT,
                           time_published=self.today_time)
         # Wrong day; shouldn't be included:
-        p1c = PostFactory(blog=b1, status=Post.LIVE_STATUS,
+        p1c = PostFactory(blog=b1, status=Post.Status.LIVE,
                           time_published=self.tomorrow_time)
         b2 = BlogFactory(sort_order=2, slug='my-blog-2')
         # Should be included:
-        p2a = PostFactory(blog=b2, status=Post.LIVE_STATUS,
+        p2a = PostFactory(blog=b2, status=Post.Status.LIVE,
                           time_published=self.today_time)
 
         response = views.DayArchiveView.as_view()(

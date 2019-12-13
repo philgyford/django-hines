@@ -61,7 +61,7 @@ class PostAdminForm(autocomplete.FutureModelForm):
         status = self.cleaned_data.get("status")
         time_published = self.cleaned_data.get("time_published")
 
-        if status == Post.SCHEDULED_STATUS:
+        if status == Post.Status.SCHEDULED:
             if time_published is None:
                 raise forms.ValidationError(
                     "If this post is Scheduled it should have a Time Published."
@@ -123,11 +123,11 @@ class PostAdmin(admin.ModelAdmin):
         js = ("hines/js/vendor/easymde.min.js", "hines/js/admin.min.js")
 
     def status_icon(self, obj):
-        if obj.status == Post.LIVE_STATUS:
+        if obj.status == Post.Status.LIVE:
             return "✅"
-        elif obj.status == Post.DRAFT_STATUS:
+        elif obj.status == Post.Status.DRAFT:
             return "…"
-        elif obj.status == Post.SCHEDULED_STATUS:
+        elif obj.status == Post.Status.SCHEDULED:
             return "🕙"
         else:
             return ""
@@ -135,7 +135,7 @@ class PostAdmin(admin.ModelAdmin):
     status_icon.short_description = "Status"
 
     def is_featured(self, obj):
-        return obj.featured == Post.IS_FEATURED
+        return obj.featured == Post.FeaturedChoices.IS_FEATURED
 
     is_featured.boolean = True
     is_featured.short_description = "Featured?"

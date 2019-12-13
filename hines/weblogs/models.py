@@ -99,7 +99,7 @@ class Blog(TimeStampedModelMixin, models.Model):
         return (
             Tag.objects.filter(
                 weblogs_taggedpost_items__content_object__blog=self,
-                weblogs_taggedpost_items__content_object__status=Post.LIVE_STATUS,
+                weblogs_taggedpost_items__content_object__status=Post.Status.LIVE,
             )
             .annotate(post_count=Count("weblogs_taggedpost_items"))
             .order_by("-post_count", "slug")[:num]
@@ -124,31 +124,22 @@ class Post(TimeStampedModelMixin, models.Model):
     time_modified
     """
 
-    DRAFT_STATUS = 1
-    LIVE_STATUS = 2
-    SCHEDULED_STATUS = 4
-    STATUS_CHOICES = (
-        (DRAFT_STATUS, "Draft"),
-        (LIVE_STATUS, "Published"),
-        (SCHEDULED_STATUS, "Scheduled"),
-    )
+    class Status(models.IntegerChoices):
+        DRAFT = 1, "Draft"
+        LIVE = 2, "Published"
+        SCHEDULED = 4, "Scheduled"
 
-    NO_FORMAT = 0
-    CONVERT_LINE_BREAKS_FORMAT = 1
-    # Markdown, XHTML:
-    MARKDOWN_FORMAT = 2
-    # Markdown, HTML5, and with extra custom processing:
-    HINES_MARKDOWN_FORMAT = 3
-    FORMAT_CHOICES = (
-        (NO_FORMAT, "No formatting"),
-        (CONVERT_LINE_BREAKS_FORMAT, "Convert line breaks"),
-        (MARKDOWN_FORMAT, "Markdown"),
-        (HINES_MARKDOWN_FORMAT, "Hines Markdown"),
-    )
+    class Formats(models.IntegerChoices):
+        NONE = 0, "No formatting"
+        CONVERT_LINE_BREAKS = 1, "Convert line breaks"
+        # Markdown, XHTML:
+        MARKDOWN = 2, "Markdown"
+        # Markdown, HTML5, and with extra custom processing:
+        HINES_MARKDOWN = 3, "Hines Markdown"
 
-    NOT_FEATURED = 0
-    IS_FEATURED = 1
-    FEATURED_CHOICES = ((NOT_FEATURED, "Not featured"), (IS_FEATURED, "Featured"))
+    class FeaturedChoices(models.IntegerChoices):
+        NOT_FEATURED = 0, "Not featued"
+        IS_FEATURED = 1, "Featured"
 
     # Basic fields.
     title = models.CharField(blank=False, max_length=255, help_text="Can use HTML tags")
@@ -193,17 +184,19 @@ class Post(TimeStampedModelMixin, models.Model):
 
     html_format = models.PositiveSmallIntegerField(
         blank=False,
-        choices=FORMAT_CHOICES,
-        default=HINES_MARKDOWN_FORMAT,
+        choices=Formats.choices,
+        default=Formats.HINES_MARKDOWN,
         verbose_name="HTML format",
     )
 
     status = models.PositiveSmallIntegerField(
-        blank=False, choices=STATUS_CHOICES, default=DRAFT_STATUS
+        blank=False, choices=Status.choices, default=Status.DRAFT
     )
 
     featured = models.PositiveSmallIntegerField(
-        blank=False, choices=FEATURED_CHOICES, default=NOT_FEATURED
+        blank=False,
+        choices=FeaturedChoices.choices,
+        default=FeaturedChoices.NOT_FEATURED,
     )
 
     blog = models.ForeignKey(
@@ -314,7 +307,7 @@ class Post(TimeStampedModelMixin, models.Model):
         """
         Returns the text version of the Post's status. e.g. "Draft".
         """
-        choices = {a: b for a, b in self.STATUS_CHOICES}
+        choices = {a: b for a, b in self.Status.choices}
         if self.status in choices:
             return choices[self.status]
         else:
@@ -350,12 +343,12 @@ class Post(TimeStampedModelMixin, models.Model):
         text - The text/html to htmlize
         field - Either "intro" or "body".
         """
-        if self.html_format == self.HINES_MARKDOWN_FORMAT:
+        if self.html_format == self.Formats.HINES_MARKDOWN:
             html = markdownify(text, output_format="html5")
             html = self.add_section_markers_to_html(html, field)
-        elif self.html_format == self.MARKDOWN_FORMAT:
+        elif self.html_format == self.Formats.MARKDOWN:
             html = markdownify(text)
-        elif self.html_format == self.CONVERT_LINE_BREAKS_FORMAT:
+        elif self.html_format == self.Formats.CONVERT_LINE_BREAKS:
             html = linebreaks(text)
         else:
             # No formatting; it's already HTML.

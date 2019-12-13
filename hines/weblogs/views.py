@@ -141,7 +141,7 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
         if self.object:
             context["blog"] = self.object.blog
 
-            if self.object.status != Post.LIVE_STATUS:
+            if self.object.status != Post.Status.LIVE:
                 context["is_preview"] = True
 
         return context

@@ -1,8 +1,9 @@
+from io import StringIO
+
 from freezegun import freeze_time
 
 from django.core.management import call_command
 from django.test import TestCase
-from django.utils.six import StringIO
 
 from hines.core.utils import make_datetime
 from hines.weblogs.factories import DraftPostFactory, ScheduledPostFactory
@@ -30,9 +31,9 @@ class PublishScheduledPostsTestCase(TestCase):
         scheduled_not_ready.refresh_from_db()
         scheduled_ready.refresh_from_db()
 
-        self.assertEqual(draft.status, Post.DRAFT_STATUS)
-        self.assertEqual(scheduled_not_ready.status, Post.SCHEDULED_STATUS)
-        self.assertEqual(scheduled_ready.status, Post.LIVE_STATUS)
+        self.assertEqual(draft.status, Post.Status.DRAFT)
+        self.assertEqual(scheduled_not_ready.status, Post.Status.SCHEDULED)
+        self.assertEqual(scheduled_ready.status, Post.Status.LIVE)
 
     @freeze_time("2018-05-16 12:00:00", tz_offset=0)
     def test_sets_time_published(self):

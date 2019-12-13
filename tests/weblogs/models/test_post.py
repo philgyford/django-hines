@@ -51,13 +51,13 @@ class PostTestCase(TestCase):
     def test_intro_html_no_format(self):
         "With no formmating, intro_html should be the same as intro."
         html = '<p><a href="http://example.org">Hello</a></p>'
-        post = LivePostFactory(html_format=Post.NO_FORMAT, intro=html)
+        post = LivePostFactory(html_format=Post.Formats.NONE, intro=html)
         self.assertEqual(post.intro_html, html)
 
     def test_intro_html_convert_line_breaks(self):
         "It should add <p> and <br> tags when converting line breaks."
         post = LivePostFactory(
-            html_format=Post.CONVERT_LINE_BREAKS_FORMAT,
+            html_format=Post.Formats.CONVERT_LINE_BREAKS,
             intro="""<a href="http://example.org">Hello</a>.
 Another line.""",
         )
@@ -69,7 +69,8 @@ Another line.""",
     def test_intro_html_markdown(self):
         "It should convert markdown to html."
         post = LivePostFactory(
-            html_format=Post.MARKDOWN_FORMAT, intro="[Hello](http://example.org). *OK?*"
+            html_format=Post.Formats.MARKDOWN,
+            intro="[Hello](http://example.org). *OK?*",
         )
         self.assertEqual(
             post.intro_html,
@@ -78,7 +79,7 @@ Another line.""",
 
     def test_intro_html_smartypants(self):
         post = LivePostFactory(
-            html_format=Post.NO_FORMAT, intro="""This... isn't -- "special"."""
+            html_format=Post.Formats.NONE, intro="""This... isn't -- "special"."""
         )
         self.assertEqual(
             post.intro_html, "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;."
@@ -87,13 +88,13 @@ Another line.""",
     def test_body_html_no_format(self):
         "With no formmating, body_html should be the same as body."
         html = '<p><a href="http://example.org">Hello</a></p>'
-        post = LivePostFactory(html_format=Post.NO_FORMAT, body=html)
+        post = LivePostFactory(html_format=Post.Formats.NONE, body=html)
         self.assertEqual(post.body_html, html)
 
     def test_body_html_convert_line_breaks(self):
         "It should add <p> and <br> tags when converting line breaks."
         post = LivePostFactory(
-            html_format=Post.CONVERT_LINE_BREAKS_FORMAT,
+            html_format=Post.Formats.CONVERT_LINE_BREAKS,
             body="""<a href="http://example.org">Hello</a>.
 Another line.""",
         )
@@ -105,7 +106,7 @@ Another line.""",
     def test_body_html_markdown(self):
         "It should convert markdown to xhtml."
         post = LivePostFactory(
-            html_format=Post.MARKDOWN_FORMAT,
+            html_format=Post.Formats.MARKDOWN,
             body="""[Hello](http://example.org).
 
 ----
@@ -121,16 +122,16 @@ Another line.""",
 
     def test_body_html_smartypants(self):
         post = LivePostFactory(
-            html_format=Post.NO_FORMAT, body="""This... isn't -- "special"."""
+            html_format=Post.Formats.NONE, body="""This... isn't -- "special"."""
         )
         self.assertEqual(
             post.body_html, "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;."
         )
 
     def test_intro_html_hines_markdown(self):
-        """HINES_MARKDOWN_FORMAT should NOT add section markers to the intro."""
+        """Formats.HINES_MARKDOWN should NOT add section markers to the intro."""
         post = LivePostFactory(
-            html_format=Post.HINES_MARKDOWN_FORMAT,
+            html_format=Post.Formats.HINES_MARKDOWN,
             intro="""Dogs
 
 ----
@@ -145,9 +146,9 @@ Cats""",
         )
 
     def test_body_html_hines_markdown(self):
-        """HINES_MARKDOWN_FORMAT should add section markers to the body."""
+        """Formats.HINES_MARKDOWN should add section markers to the body."""
         post = LivePostFactory(
-            html_format=Post.HINES_MARKDOWN_FORMAT,
+            html_format=Post.Formats.HINES_MARKDOWN,
             body="""Dogs
 
 ----
@@ -173,7 +174,7 @@ Cod""",
     def test_body_html_hines_markdown_figure(self):
         """If the first element is a <figure> it should add marker to next <p>."""
         post = LivePostFactory(
-            html_format=Post.HINES_MARKDOWN_FORMAT,
+            html_format=Post.Formats.HINES_MARKDOWN,
             body="""Dogs
 
 ----
@@ -196,7 +197,7 @@ Cats""",
         """
 
         post = LivePostFactory(
-            html_format=Post.HINES_MARKDOWN_FORMAT,
+            html_format=Post.Formats.HINES_MARKDOWN,
             body="""Dogs
 
 ----
@@ -224,7 +225,7 @@ Cats""",
     def test_new_excerpt(self):
         "If excerpt is not set, it should be created on save."
         post = LivePostFactory(
-            html_format=Post.NO_FORMAT,
+            html_format=Post.Formats.NONE,
             intro='<p><a href="http://example.org">Hello.</a></p>',
             body='<p>The "body" goes on for a bit so we can check the '
             "excerpt is truncated and working correctly as we would "
@@ -249,7 +250,7 @@ Cats""",
     def test_excerpt_no_section_anchors(self):
         "Section anchors should be removed from the body before making excerpt"
         post = LivePostFactory(
-            html_format=Post.HINES_MARKDOWN_FORMAT,
+            html_format=Post.Formats.HINES_MARKDOWN,
             intro="Hello.",
             body="----\n\nThis is the body.",
             excerpt="",
@@ -272,11 +273,11 @@ Cats""",
         post = LivePostFactory(time_published=time_published)
 
         # Unpublish it:
-        post.status = Post.DRAFT_STATUS
+        post.status = Post.Status.DRAFT
         post.save()
 
         # Republish it:
-        post.status = Post.LIVE_STATUS
+        post.status = Post.Status.LIVE
         post.save()
 
         # Hasn't changed to now:
@@ -381,14 +382,14 @@ Cats""",
         should return an empty string.
         """
         post = LivePostFactory(
-            html_format=Post.NO_FORMAT, intro="<p>Hello.</p>", body="<p>Bye.</p>"
+            html_format=Post.Formats.NONE, intro="<p>Hello.</p>", body="<p>Bye.</p>"
         )
         self.assertEqual(post.main_image_url, "")
 
     def test_main_image_url_from_intro(self):
         "It should return the URL of an image from intro_html if there is one."
         post = LivePostFactory(
-            html_format=Post.NO_FORMAT,
+            html_format=Post.Formats.NONE,
             intro='<p>Hello. <img src="/dir/img1.jpg">. Bye.</p>',
             body='<p>Hello. <img src="/dir/img2.jpg">. Bye.</p>',
         )
@@ -397,7 +398,7 @@ Cats""",
     def test_main_image_url_from_body(self):
         "If there's no image in intro_html, it should return the first from body_html"
         post = LivePostFactory(
-            html_format=Post.NO_FORMAT,
+            html_format=Post.Formats.NONE,
             intro="<p>Hello. Bye.</p>",
             body='<p>Hello. <img src="/dir/img1.jpg"></p><p>'
             '<img src="/dir/img2.jpg">. Bye.</p>',

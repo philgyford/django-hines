@@ -169,15 +169,15 @@ class Command(BaseCommand):
             body = '' if entry['entry_text_more'] is None else entry['entry_text_more']
 
             if entry['entry_status'] == 2:
-                status = Post.LIVE_STATUS
+                status = Post.Status.LIVE
             else:
-                status = Post.DRAFT_STATUS
+                status = Post.Status.DRAFT
 
             mt_format = entry['entry_convert_breaks']
             if  mt_format == '__default__':
-                html_format = Post.CONVERT_LINE_BREAKS_FORMAT
+                html_format = Post.Format.CONVERT_LINE_BREAKS
             elif mt_format in ['markdown', 'markdown_with_smartypants']:
-                html_format = Post.MARKDOWN_FORMAT
+                html_format = Post.Format.MARKDOWN
             # elif mt_format == 'BooterTransform':
                 # Booter Text Transform
             # elif mt_format == 'richtext':
@@ -186,7 +186,7 @@ class Command(BaseCommand):
                 # Textile 2
             else:
                 # mt_format == 0
-                html_format = Post.NO_FORMAT
+                html_format = Post.Format.NONE
 
             allow_comments = True if entry['entry_allow_comments'] == 1 else False
 
