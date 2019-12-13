@@ -1,7 +1,7 @@
 dist: xenial   # required for Python >= 3.7
 language: python
 python:
-- 3.7
+- 3.8
 services:
 - postgresql
 addons:
@@ -11,7 +11,7 @@ env:
   - DJANGO_SECRET_KEY="fake-secret-key-for-tests"
   - ALLOWED_HOSTS='*'
   - DATABASE_URL='postgres://postgres:@localhost:5432/test_db'
-  - SPECTATOR_GOOGLE_MAPS_API_KEY='1234'
+  - HINES_MAPBOX_API_KEY='1234'
 install:
 - pip install pipenv
 - pipenv install
