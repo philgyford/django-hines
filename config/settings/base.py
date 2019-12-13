@@ -204,12 +204,16 @@ WHITENOISE_ROOT = os.path.join(APPS_DIR, "static_html/")
 WHITENOISE_INDEX_FILE = True
 
 
-SPECTATOR_MAPS = {
-    "enable": True,
-    "library": "mapbox",
-    "tile_style": "mapbox://styles/mapbox/light-v10",
-    "api_key": get_env_variable("HINES_MAPBOX_API_KEY")
-}
+try:
+    SPECTATOR_MAPS = {
+        "enable": True,
+        "library": "mapbox",
+        "tile_style": "mapbox://styles/mapbox/light-v10",
+        "api_key": get_env_variable("HINES_MAPBOX_API_KEY"),
+    }
+except ImproperlyConfigured:
+    SPECTATOR_MAPS = {"enable": False}
+
 
 AWS_DEFAULT_ACL = None
 
