@@ -4,11 +4,17 @@ import random
 from dal import autocomplete
 from taggit.models import Tag
 
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-from django.views.generic import DateDetailView, DetailView,\
-        ListView, MonthArchiveView, RedirectView, TemplateView, YearArchiveView
+from django.views.generic import (
+    DateDetailView,
+    DetailView,
+    MonthArchiveView,
+    RedirectView,
+    TemplateView,
+    YearArchiveView,
+)
 from django.views.generic.detail import SingleObjectMixin
 
 from hines.core.views import CacheMixin, PaginatedListView, TemplateSetMixin
@@ -44,9 +50,10 @@ class BlogDetailParentView(SingleObjectMixin, PaginatedListView):
     """
     A parent class for all views that will list Posts from a Blog.
     """
-    slug_url_kwarg = 'blog_slug'
+
+    slug_url_kwarg = "blog_slug"
     paginate_by = 25
-    page_kwarg = 'p'
+    page_kwarg = "p"
     allow_empty = False
 
     def get(self, request, *args, **kwargs):
@@ -55,14 +62,14 @@ class BlogDetailParentView(SingleObjectMixin, PaginatedListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['blog'] = self.object
-        context['post_list'] = context['object_list']
+        context["blog"] = self.object
+        context["post_list"] = context["object_list"]
         return context
 
 
 class BlogDetailView(CacheMixin, BlogDetailParentView):
     "Front page of a Blog, listing its recent Posts."
-    template_name = 'weblogs/blog_detail.html'
+    template_name = "weblogs/blog_detail.html"
 
     def get_queryset(self):
         return self.object.public_posts.all()
@@ -70,42 +77,43 @@ class BlogDetailView(CacheMixin, BlogDetailParentView):
 
 class BlogArchiveView(CacheMixin, DetailView):
     "List of all the months in which there are posts."
-    template_name = 'weblogs/blog_archive.html'
+    template_name = "weblogs/blog_archive.html"
     model = Blog
-    slug_url_kwarg = 'blog_slug'
+    slug_url_kwarg = "blog_slug"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['months'] = self.get_months()
+        context["months"] = self.get_months()
         return context
 
     def get_months(self):
-        return self.object.public_posts.dates('time_created', 'month')
+        return self.object.public_posts.dates("time_created", "month")
 
 
 class BlogTagDetailView(CacheMixin, BlogDetailParentView):
     "Listing Posts with a particular Tag (by 'tag_slug') in a Blog."
-    template_name = 'weblogs/blog_tag_detail.html'
+    template_name = "weblogs/blog_tag_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tag'] = Tag.objects.get(slug=self.kwargs.get('tag_slug'))
+        context["tag"] = Tag.objects.get(slug=self.kwargs.get("tag_slug"))
         return context
 
     def get_queryset(self):
         return self.object.public_posts.filter(
-                                tags__slug__in=[self.kwargs.get('tag_slug')])
+            tags__slug__in=[self.kwargs.get("tag_slug")]
+        )
 
 
 class BlogTagListView(CacheMixin, DetailView):
     "Listing the most popular Tags in a Blog."
     model = Blog
-    slug_url_kwarg = 'blog_slug'
-    template_name = 'weblogs/blog_tag_list.html'
+    slug_url_kwarg = "blog_slug"
+    template_name = "weblogs/blog_tag_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tag_list'] = self.object.popular_tags(num=100)
+        context["tag_list"] = self.object.popular_tags(num=100)
         return context
 
 
@@ -114,15 +122,16 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
     A bit complicated because we need to match the post using its slug,
     its date, and its weblog slug.
     """
+
     # True, because we want to be able to preview scheduled posts:
     allow_future = True
-    date_field = 'time_published'
+    date_field = "time_published"
     model = Post
-    month_format = '%m'
-    slug_url_kwarg = 'post_slug'
+    month_format = "%m"
+    slug_url_kwarg = "post_slug"
     # The default, unless we have a different template set to use for this
     # Post's date:
-    template_name = 'weblogs/post_detail.html'
+    template_name = "weblogs/post_detail.html"
 
     # Not a standard field, but we'll store the date here.
     date = None
@@ -130,10 +139,10 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.object:
-            context['blog'] = self.object.blog
+            context["blog"] = self.object.blog
 
             if self.object.status != Post.LIVE_STATUS:
-                context['is_preview'] = True
+                context["is_preview"] = True
 
         return context
 
@@ -145,9 +154,14 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
             year = self.get_year()
             month = self.get_month()
             day = self.get_day()
-            self.date = _date_from_string(year, self.get_year_format(),
-                                         month, self.get_month_format(),
-                                         day, self.get_day_format())
+            self.date = _date_from_string(
+                year,
+                self.get_year_format(),
+                month,
+                self.get_month_format(),
+                day,
+                self.get_day_format(),
+            )
         return self.date
 
     def get_object(self, queryset=None):
@@ -165,17 +179,20 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
             queryset = self.get_queryset()
 
         date = self.get_date()
-        blog_slug = self.kwargs.get('blog_slug')
+        blog_slug = self.kwargs.get("blog_slug")
         post_slug = self.kwargs.get(self.slug_url_kwarg)
 
         if not self.get_allow_future() and date > datetime.date.today():
-            raise Http404(_(
-                "Future %(verbose_name_plural)s not available because "
-                "%(class_name)s.allow_future is False."
-            ) % {
-                'verbose_name_plural': queryset.model._meta.verbose_name_plural,
-                'class_name': self.__class__.__name__,
-            })
+            raise Http404(
+                _(
+                    "Future %(verbose_name_plural)s not available because "
+                    "%(class_name)s.allow_future is False."
+                )
+                % {
+                    "verbose_name_plural": queryset.model._meta.verbose_name_plural,
+                    "class_name": self.__class__.__name__,
+                }
+            )
 
         # Filter down a queryset from self.queryset using the date from the
         # URL. This'll get passed as the queryset to DetailView.get_object,
@@ -185,15 +202,15 @@ class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
         queryset = queryset.filter(**lookup_kwargs)
 
         if blog_slug is not None and post_slug is not None:
-            blog_slug_field = 'blog__slug'
+            blog_slug_field = "blog__slug"
             post_slug_field = self.get_slug_field()
-            queryset = queryset.filter(**{
-                                            blog_slug_field: blog_slug,
-                                            post_slug_field: post_slug
-                                        })
+            queryset = queryset.filter(
+                **{blog_slug_field: blog_slug, post_slug_field: post_slug}
+            )
         else:
-            raise AttributeError("PostDetailView must be called with "
-                                 "a blog slug and a post slug.")
+            raise AttributeError(
+                "PostDetailView must be called with " "a blog slug and a post slug."
+            )
         try:
             # Get the single item from the filtered queryset
             obj = queryset.get()
@@ -221,12 +238,19 @@ class PostRedirectView(RedirectView):
     Remove the '.php'.
     Replace any underscores with hyphens.
     """
+
     def get_redirect_url(self, blog_slug, year, month, day, post_slug):
-        post_slug = post_slug.replace('_', '-')
-        return reverse('weblogs:post_detail', kwargs={
-            'blog_slug': blog_slug,
-            'year': year, 'month': month, 'day': day,
-            'post_slug': post_slug, })
+        post_slug = post_slug.replace("_", "-")
+        return reverse(
+            "weblogs:post_detail",
+            kwargs={
+                "blog_slug": blog_slug,
+                "year": year,
+                "month": month,
+                "day": day,
+                "post_slug": post_slug,
+            },
+        )
 
 
 class PostDatedArchiveMixin(object):
@@ -235,24 +259,24 @@ class PostDatedArchiveMixin(object):
     Blog defined by the `blog_slug` URL kwarg.
     Also includes `blog` in the context_data.
     """
+
     allow_empty = False
     allow_future = False
-    date_field = 'time_published'
+    date_field = "time_published"
     model = Post
     queryset = Post.public_objects
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(blog__slug=self.kwargs.get('blog_slug'))
+        qs = qs.filter(blog__slug=self.kwargs.get("blog_slug"))
         return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            context['blog'] = Blog.objects.get(
-                                            slug=self.kwargs.get('blog_slug'))
+            context["blog"] = Blog.objects.get(slug=self.kwargs.get("blog_slug"))
         except Blog.DoesNotExist:
-            context['blog'] = None
+            context["blog"] = None
         return context
 
 
@@ -260,23 +284,27 @@ class PostDayArchiveView(RedirectView):
     """
     To keep things simple we redirect to the overall day view.
     """
+
     def get_redirect_url(self, *args, **kwargs):
-        return reverse('hines:day_archive', kwargs={
-            'year': kwargs['year'],
-            'month':kwargs['month'],
-            'day':  kwargs['day']
-        })
+        return reverse(
+            "hines:day_archive",
+            kwargs={
+                "year": kwargs["year"],
+                "month": kwargs["month"],
+                "day": kwargs["day"],
+            },
+        )
 
 
 class PostMonthArchiveView(CacheMixin, PostDatedArchiveMixin, MonthArchiveView):
-    month_format = '%m'
-    template_name = 'weblogs/post_archive_month.html'
+    month_format = "%m"
+    template_name = "weblogs/post_archive_month.html"
 
 
 class PostYearArchiveView(CacheMixin, PostDatedArchiveMixin, YearArchiveView):
-    year_format = '%Y'
+    year_format = "%Y"
     make_object_list = True
-    template_name = 'weblogs/post_archive_year.html'
+    template_name = "weblogs/post_archive_year.html"
 
 
 class PostTagAutocomplete(autocomplete.Select2QuerySetView):
@@ -284,6 +312,7 @@ class PostTagAutocomplete(autocomplete.Select2QuerySetView):
     Used to autocomplete tag suggestions in the Admin Post change view.
     Using django-autocomplete-light.
     """
+
     def get_queryset(self):
         if not self.request.user.is_authenticated:
             raise Http404("Not found")
@@ -291,7 +320,7 @@ class PostTagAutocomplete(autocomplete.Select2QuerySetView):
         qs = Tag.objects.all()
 
         if self.q:
-            qs = qs.filter(name__istartswith=self.q).order_by('name')
+            qs = qs.filter(name__istartswith=self.q).order_by("name")
 
         return qs
 
@@ -310,12 +339,16 @@ class RandomPhilView(CacheMixin, TemplateView):
     we add this photo's index to that string for next time. When all the
     photos have been used `idx` is set back to empty and it starts again.
     """
-    template_name = 'sets/2001/weblogs/random_phil.html'
-    http_method_names = ['get', 'post',]
+
+    template_name = "sets/2001/weblogs/random_phil.html"
+    http_method_names = [
+        "get",
+        "post",
+    ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update( self.get_random_phil() )
+        context.update(self.get_random_phil())
         return context
 
     def post(self, request, *args, **kwargs):
@@ -325,10 +358,14 @@ class RandomPhilView(CacheMixin, TemplateView):
 
     def get_template_names(self):
         "Use the 2002 template, or the default 2001?"
-        if self.kwargs.get('set', False) == '2002':
-            return ['sets/2002/weblogs/random_phil.html',]
+        if self.kwargs.get("set", False) == "2002":
+            return [
+                "sets/2002/weblogs/random_phil.html",
+            ]
         else:
-            return [self.template_name,]
+            return [
+                self.template_name,
+            ]
 
     def get_random_phil(self):
         """
@@ -355,198 +392,207 @@ class RandomPhilView(CacheMixin, TemplateView):
         """
         photos = [
             {
-                "file":    "stuart_1998.jpg",
-                "width":    "200",
-                "height":    "207",
-                "credit":    "Stuart",
-                "url":    "http://www.subatomic.com/",
-                "caption":    "London, 1998.",
+                "file": "stuart_1998.jpg",
+                "width": "200",
+                "height": "207",
+                "credit": "Stuart",
+                "url": "http://www.subatomic.com/",
+                "caption": "London, 1998.",
             },
             {
-                "file":    "nick_1999.jpg",
-                "width":    "200",
-                "height":    "255",
-                "credit":    "Nick",
-                "url":    "http://if.only.org/",
-                "caption":    "Amsterdam, 1999.",
+                "file": "nick_1999.jpg",
+                "width": "200",
+                "height": "255",
+                "credit": "Nick",
+                "url": "http://if.only.org/",
+                "caption": "Amsterdam, 1999.",
             },
             {
-                "file":    "sam_1999.jpg",
-                "width":    "235",
-                "height":    "200",
-                "credit":    "Sam",
-                "url":    "http://www.haddock.org/directory/society/haddocks/samurquhart/",
-                "caption":    "Me and Sam, Amsterdam, 1999.",
+                "file": "sam_1999.jpg",
+                "width": "235",
+                "height": "200",
+                "credit": "Sam",
+                "url": "http://www.haddock.org/directory/society/haddocks/samurquhart/",
+                "caption": "Me and Sam, Amsterdam, 1999.",
             },
             {
-                "file":    "mia_2000.jpg",
-                "width":    "200",
-                "height":    "200",
-                "credit":    "",
-                "url":    "",
-                "caption":    "<a href='http://www.geocities.com/sorgim/' target='opener'>Mia</a> and me, New York, 2000.",
+                "file": "mia_2000.jpg",
+                "width": "200",
+                "height": "200",
+                "credit": "",
+                "url": "",
+                "caption": (
+                    "<a href='http://www.geocities.com/sorgim/' target='opener'>"
+                    "Mia</a> and me, New York, 2000."
+                ),
             },
             {
-                "file":    "chippinghill_small.jpg",
-                "width":    "258",
-                "height":    "212",
-                "credit":    "<cite>Witham and Braintree Times</cite>",
-                "url":    "",
-                "caption":    "At school, mid-1970s.",
+                "file": "chippinghill_small.jpg",
+                "width": "258",
+                "height": "212",
+                "credit": "<cite>Witham and Braintree Times</cite>",
+                "url": "",
+                "caption": "At school, mid-1970s.",
             },
             {
-                "file":    "bryan_2000.jpg",
-                "width":    "180",
-                "height":    "273",
-                "credit":    "Bryan",
-                "url":    "http://www.bryanboyer.com/",
-                "caption":    "Austin, Texas, 2000.",
+                "file": "bryan_2000.jpg",
+                "width": "180",
+                "height": "273",
+                "credit": "Bryan",
+                "url": "http://www.bryanboyer.com/",
+                "caption": "Austin, Texas, 2000.",
             },
             {
-                "file":    "brad_2000.jpg",
-                "width":    "173",
-                "height":    "208",
-                "credit":    "Brad",
-                "url":    "http://www.bradlands.com/",
-                "caption":    "Austin, Texas, 2000.",
+                "file": "brad_2000.jpg",
+                "width": "173",
+                "height": "208",
+                "credit": "Brad",
+                "url": "http://www.bradlands.com/",
+                "caption": "Austin, Texas, 2000.",
             },
             {
-                "file":    "connected_1997.jpg",
-                "width":    "202",
-                "height":    "260",
-                "credit":    "",
-                "url":    "",
-                "caption":    "<cite>Daily Telegraph</cite>, 1997.",
+                "file": "connected_1997.jpg",
+                "width": "202",
+                "height": "260",
+                "credit": "",
+                "url": "",
+                "caption": "<cite>Daily Telegraph</cite>, 1997.",
             },
             {
-                "file":    "des_1998.jpg",
-                "width":    "240",
-                "height":    "205",
-                "credit":    "Des",
-                "url":    "http://www.kfs.org/~desiree/",
-                "caption":    "Stef and me, London, 1998.",
+                "file": "des_1998.jpg",
+                "width": "240",
+                "height": "205",
+                "credit": "Des",
+                "url": "http://www.kfs.org/~desiree/",
+                "caption": "Stef and me, London, 1998.",
             },
             {
-                "file":    "mac_1997.jpg",
-                "width":    "250",
-                "height":    "189",
-                "credit":    "Mac",
-                "url":    "http://www.incline.co.uk/mac/",
-                "caption":    "A bad mood, London, 1997.",
+                "file": "mac_1997.jpg",
+                "width": "250",
+                "height": "189",
+                "credit": "Mac",
+                "url": "http://www.incline.co.uk/mac/",
+                "caption": "A bad mood, London, 1997.",
             },
             {
-                "file":    "pouneh_2000.jpg",
-                "width":    "180",
-                "height":    "213",
-                "credit":    "Pouneh",
-                "url":    "",
-                "caption":    "San Francisco, 2000.",
+                "file": "pouneh_2000.jpg",
+                "width": "180",
+                "height": "213",
+                "credit": "Pouneh",
+                "url": "",
+                "caption": "San Francisco, 2000.",
             },
             {
-                "file":    "janelle_2000.jpg",
-                "width":    "185",
-                "height":    "205",
-                "credit":    "Janelle",
-                "url":    "http://www.salon.com/directory/topics/janelle_brown/",
-                "caption":    "San Francisco, 2000.",
+                "file": "janelle_2000.jpg",
+                "width": "185",
+                "height": "205",
+                "credit": "Janelle",
+                "url": "http://www.salon.com/directory/topics/janelle_brown/",
+                "caption": "San Francisco, 2000.",
             },
             {
-                "file":    "peter_2000.jpg",
-                "width":    "200",
-                "height":    "184",
-                "credit":    "Peter",
-                "url":    "http://www.peterme.com/",
-                "caption":    "San Francisco, 2000.",
+                "file": "peter_2000.jpg",
+                "width": "200",
+                "height": "184",
+                "credit": "Peter",
+                "url": "http://www.peterme.com/",
+                "caption": "San Francisco, 2000.",
             },
             {
-                "file":    "andy_2000.jpg",
-                "width":    "180",
-                "height":    "252",
-                "credit":    "Andy",
-                "url":    "",
-                "caption":    "Beaconsfield, 2000.",
+                "file": "andy_2000.jpg",
+                "width": "180",
+                "height": "252",
+                "credit": "Andy",
+                "url": "",
+                "caption": "Beaconsfield, 2000.",
             },
             {
-                "file":    "mattj_2000.jpg",
-                "width":    "200",
-                "height":    "231",
-                "credit":    "Matt J",
-                "url":    "http://www.blackbeltjones.com/",
-                "caption":    "London, 2000.",
+                "file": "mattj_2000.jpg",
+                "width": "200",
+                "height": "231",
+                "credit": "Matt J",
+                "url": "http://www.blackbeltjones.com/",
+                "caption": "London, 2000.",
             },
             {
-                "file":    "mattl_2000.jpg",
-                "width":    "180",
-                "height":    "231",
-                "credit":    "Matt L",
-                "url":    "",
-                "caption":    "Fingers by <a href='http://if.only.org/' target='opener'>Nick</a>, London, 2000.",
+                "file": "mattl_2000.jpg",
+                "width": "180",
+                "height": "231",
+                "credit": "Matt L",
+                "url": "",
+                "caption": (
+                    "Fingers by <a href='http://if.only.org/' target='opener'>"
+                    "Nick</a>, London, 2000."
+                ),
             },
             {
-                "file":    "bryan_2001.jpg",
-                "width":    "260",
-                "height":    "183",
-                "credit":    "Bryan",
-                "url":    "http://www.bryanboyer.com/",
-                "caption":    "<a href='http://www.blackbeltjones.com/' target='opener'>Matt</a> and me, London, 2001",
+                "file": "bryan_2001.jpg",
+                "width": "260",
+                "height": "183",
+                "credit": "Bryan",
+                "url": "http://www.bryanboyer.com/",
+                "caption": (
+                    "<a href='http://www.blackbeltjones.com/' target='opener'>"
+                    "Matt</a> and me, London, 2001"
+                ),
             },
             {
-                "file":    "james_2001.jpg",
-                "width":    "200",
-                "height":    "206",
-                "credit":    "James",
-                "url":    "",
-                "caption":    "Burning Man, 2001",
+                "file": "james_2001.jpg",
+                "width": "200",
+                "height": "206",
+                "credit": "James",
+                "url": "",
+                "caption": "Burning Man, 2001",
             },
             {
-                "file":    "kay_2001.jpg",
-                "width":    "191",
-                "height":    "191",
-                "credit":    "Kay",
-                "url":    "",
-                "caption":    "Burning Man, 2001",
+                "file": "kay_2001.jpg",
+                "width": "191",
+                "height": "191",
+                "credit": "Kay",
+                "url": "",
+                "caption": "Burning Man, 2001",
             },
             {
-                "file":    "yoz_20011121.jpg",
-                "width":    "220",
-                "height":    "250",
-                "credit":    "Yoz",
-                "url":    "http://www.yoz.com/",
-                "caption":    "Me and Alice, London, 2001",
+                "file": "yoz_20011121.jpg",
+                "width": "220",
+                "height": "250",
+                "credit": "Yoz",
+                "url": "http://www.yoz.com/",
+                "caption": "Me and Alice, London, 2001",
             },
             {
-                "file":    "mary_2002062201.jpg",
-                "width":    "172",
-                "height":    "250",
-                "credit":    "Mary",
-                "url":    "http://www.sparklytrainers.com/",
-                "caption":    "Grays, Essex, 2002",
+                "file": "mary_2002062201.jpg",
+                "width": "172",
+                "height": "250",
+                "credit": "Mary",
+                "url": "http://www.sparklytrainers.com/",
+                "caption": "Grays, Essex, 2002",
             },
             {
-                "file":    "mary_2002062202.jpg",
-                "width":    "184",
-                "height":    "260",
-                "credit":    "Mary",
-                "url":    "http://www.sparklytrainers.com/",
-                "caption":    "Grays, Essex, 2002",
+                "file": "mary_2002062202.jpg",
+                "width": "184",
+                "height": "260",
+                "credit": "Mary",
+                "url": "http://www.sparklytrainers.com/",
+                "caption": "Grays, Essex, 2002",
             },
             {
-                "file":    "yoz_20020227.jpg",
-                "width":    "199",
-                "height":    "240",
-                "credit":    "Yoz",
-                "url":    "http://www.yoz.com/",
-                "caption":    "Me and Mary, London, 2002",
-            }
+                "file": "yoz_20020227.jpg",
+                "width": "199",
+                "height": "240",
+                "credit": "Yoz",
+                "url": "http://www.yoz.com/",
+                "caption": "Me and Mary, London, 2002",
+            },
         ]
 
         # Was a string containing a list of indexes submitted?
-        idx_list = self.request.POST.get('idx', '')
-        if idx_list == '':
+        idx_list = self.request.POST.get("idx", "")
+        if idx_list == "":
             used_pics = []
         else:
             # Will be like ['3', '15', '0']:
-            used_pics = idx_list.split('+')
+            used_pics = idx_list.split("+")
 
         if len(used_pics) > 0:
             # This isn't the first time here, so find a new photo.
@@ -567,26 +613,29 @@ class RandomPhilView(CacheMixin, TemplateView):
         used_pics.append(str(new_idx))
 
         return {
-            'idx1': len(used_pics),
-            'idx_list': ('+').join(used_pics),
-            'total_images': len(photos),
-            'image': photos[new_idx],
+            "idx1": len(used_pics),
+            "idx_list": ("+").join(used_pics),
+            "total_images": len(photos),
+            "image": photos[new_idx],
         }
 
 
-def _date_from_string(year, year_format, month='', month_format='', day='', day_format='', delim='__'):
+def _date_from_string(
+    year, year_format, month="", month_format="", day="", day_format="", delim="__"
+):
     """
     Helper: get a datetime.date object given a format string and a year,
     month, and day (only year is mandatory). Raise a 404 for an invalid date.
 
-    Copied from https://github.com/django/django/blob/2.0/django/views/generic/dates.py#L609
+    Copied from
+    https://github.com/django/django/blob/2.0/django/views/generic/dates.py#L609
     """
     format = year_format + delim + month_format + delim + day_format
     datestr = str(year) + delim + str(month) + delim + str(day)
     try:
         return datetime.datetime.strptime(datestr, format).date()
     except ValueError:
-        raise Http404(_("Invalid date string '%(datestr)s' given format '%(format)s'") % {
-            'datestr': datestr,
-            'format': format,
-        })
+        raise Http404(
+            _("Invalid date string '%(datestr)s' given format '%(format)s'")
+            % {"datestr": datestr, "format": format}
+        )
