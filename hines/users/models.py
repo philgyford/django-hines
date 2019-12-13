@@ -11,11 +11,10 @@ class User(AbstractUser):
     def display_name(self):
         "Shortcut to get the best displayable name of the user."
         if self.first_name and self.last_name:
-            return '{} {}'.format(self.first_name, self.last_name)
+            return "{} {}".format(self.first_name, self.last_name)
         elif self.first_name:
             return self.first_name
         elif self.last_name:
             return self.last_name
         else:
             return self.username
-
