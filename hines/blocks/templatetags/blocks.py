@@ -6,7 +6,7 @@ from ..models import Block
 register = template.Library()
 
 
-@register.inclusion_tag('blocks/block.html')
+@register.inclusion_tag("blocks/block.html")
 def render_block(slug):
     """
     Displays the Block as specified by its `slug`.
@@ -16,5 +16,6 @@ def render_block(slug):
     except Block.DoesNotExist:
         return {}
     else:
-        return {'block': block,}
-
+        return {
+            "block": block,
+        }

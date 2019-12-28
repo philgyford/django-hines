@@ -5,7 +5,7 @@ Default block template, for rendering some HTML, such as <p>s, in a card.
 {% load hines_core %}
 
 {% if block %}
-  <aside class="card flatblock-{{ block.slug }}">
+  <aside class="card flatblock-{{ block.slug }}" id="aside-{{ block.slug}}">
     {% if block.title%}
       <h2 class="card__header">{{ block.title }}</h2>
     {% endif %}
