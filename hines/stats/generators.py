@@ -470,7 +470,7 @@ class StaticGenerator(Generator):
 
         data = {
             "data": [],
-            "title": "Emails received"
+            "title": "Emails received",
             "description": "Per year. Not counting: work, discussion lists, "
             "most newsletters, spam, or anything else I threw away.",
         }
