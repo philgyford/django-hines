@@ -340,6 +340,7 @@ class StaticGenerator(Generator):
                 {"label": "2016", "value": 72438},
                 {"label": "2017", "value": 30978},
                 {"label": "2018", "value": 37442},
+                {"label": "2019", "value": 0},
             ],
             "title": "Words written in diary",
             # 'description': "Per year."
@@ -374,6 +375,7 @@ class StaticGenerator(Generator):
             "2016": 1945,
             "2017": 1806,
             "2018": 1417,
+            "2019": 1480,
         }
         # Pepys Feedback:
         pepys = {
@@ -394,6 +396,7 @@ class StaticGenerator(Generator):
             "2016": 315,
             "2017": 251,
             "2018": 170,
+            "2019": 239,
         }
 
         barbicantalk = {
@@ -407,6 +410,7 @@ class StaticGenerator(Generator):
             "2016": 1,
             "2017": 8,
             "2018": 20,
+            "2019": 103,
         }
 
         whitstillman = {
@@ -427,6 +431,7 @@ class StaticGenerator(Generator):
             "2016": 5,
             "2017": 0,
             "2018": 3,
+            "2019": 6,
         }
 
         byliner = {
@@ -492,6 +497,7 @@ class StaticGenerator(Generator):
                 {"label": "2016", "value": 59},
                 {"label": "2017", "value": 53},
                 {"label": "2018", "value": 43},
+                {"label": "2019", "value": 44},
             ],
             "title": "Headaches",
             "description": "Per year. Those that require, or are defeated by, "
@@ -514,6 +520,7 @@ class StaticGenerator(Generator):
                 {"label": "2016", "value": 1533},
                 {"label": "2017", "value": 1762},
                 {"label": "2018", "value": 2089},
+                {"label": "2018", "value": 2245},
             ],
             "title": "GitHub activity",
             "description": "Contributions listed per year for "
