@@ -470,7 +470,7 @@ class StaticGenerator(Generator):
 
         data = {
             "data": [],
-            "title": "Emails received",
+            "title": "Emails received"
             "description": "Per year. Not counting: work, discussion lists, "
             "most newsletters, spam, or anything else I threw away.",
         }
@@ -520,7 +520,7 @@ class StaticGenerator(Generator):
                 {"label": "2016", "value": 1533},
                 {"label": "2017", "value": 1762},
                 {"label": "2018", "value": 2089},
-                {"label": "2018", "value": 2245},
+                {"label": "2019", "value": 2245},
             ],
             "title": "GitHub activity",
             "description": "Contributions listed per year for "
