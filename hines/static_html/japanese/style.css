@@ -203,6 +203,7 @@ div.right {
   body {
     margin-left: 20px;
     margin-right: 20px;
+    background: yellow;
   }
   header {
     margin: 0 0 1em 0;
@@ -244,8 +245,13 @@ div.right {
   }
 }
 @media (max-width: 420px) {
+  body { background: red;}
   h1 {
     font-size: 1em;
+  }
+  .block-1,
+  .block-2 {
+    width: 100%;
   }
   .subtitle {
     font-size: 0.9em;
@@ -259,12 +265,19 @@ div.right {
   body {
     margin-left: 10px;
     margin-right: 10px;
+    background: blue;
   }
   .subtitle {
     font-size: 0.8em;
-  } 
+  }
+  .block-1 {
+    height: 9.5em;
+  }
   .quiz-letter {
-    font-size: 4em;
+    font-size: 3.5em;
+  }
+  .quiz-answer-jp {
+    font-size: 2.5em;
   }
   .input-text {
     font-size: 1.5em;
