@@ -203,7 +203,6 @@ div.right {
   body {
     margin-left: 20px;
     margin-right: 20px;
-    background: yellow;
   }
   header {
     margin: 0 0 1em 0;
@@ -245,7 +244,6 @@ div.right {
   }
 }
 @media (max-width: 420px) {
-  body { background: red;}
   h1 {
     font-size: 1em;
   }
@@ -265,7 +263,6 @@ div.right {
   body {
     margin-left: 10px;
     margin-right: 10px;
-    background: blue;
   }
   .subtitle {
     font-size: 0.8em;
