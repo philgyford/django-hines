@@ -29,6 +29,9 @@ body {
   color: #666;
 }
 
+.bodytext {
+  max-width: 40em;
+}
 .input-text {
   font-size: 2em;
   letter-spacing: 0.05em;
