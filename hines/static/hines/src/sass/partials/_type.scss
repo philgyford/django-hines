@@ -179,6 +179,17 @@ blockquote {
   padding-right: ($border-width * 2);
   margin-bottom: $vertical-space;
 }
+/**
+ * Undo the above styles for certain embeds that, by default, use the
+ * blockquote element.
+ */
+blockquote.tiktok-embed,
+blockquote.twitter-tweet {
+  border-left: none;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0 0 1.5rem 0;
+}
 
 cite {
   font-style: $cite-font-style;
