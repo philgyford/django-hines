@@ -32,4 +32,4 @@ class CustomS3Boto3Storage(S3Boto3Storage):
 
             # Upload the object which will auto close the
             # content_autoclose instance
-            super()._save(name, content_autoclose)
+            return super()._save(name, content_autoclose)
