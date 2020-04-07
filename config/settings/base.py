@@ -218,6 +218,10 @@ except ImproperlyConfigured:
 AWS_DEFAULT_ACL = None
 
 
+# https://django-imagekit.readthedocs.io/en/stable/caching.html#removing-safeguards
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+
+
 # END THIRD-PARTY APPS
 ####################################################################
 

@@ -44,9 +44,14 @@ Probably need to do this for a fresh install:
 
 	$ pg_restore -d django-hines my_dump_file
 
+Still in the pipenv shell, generate all the django-spectator thumbnails (which
+must be done because of the "Optimistic" cache file strategy):
+
+    $ ./manage.py generateimages
+
 Then run the webserver:
 
-	$ pipenv run ./manage.py runserver
+	$ ./manage.py runserver
 
 Then visit http://localhost:8000 or http://127.0.0.1:8000.
 
@@ -91,6 +96,11 @@ To clear the cached thumbnail images created by django-imagekit (used by django-
 
 1. Delete all the images from the `CACHES` directories on S3.
 2. Clear the Redis cache, as above.
+
+To generate all the cached thumbnail images (which must be done because of the
+"Optimistic" cache file strategy):
+
+    $ heroku run python ./manage.py generateimages
 
 
 ## Django Settings
