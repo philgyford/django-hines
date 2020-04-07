@@ -9,7 +9,7 @@ Expects:
 {% with link_url=url|default:obj.thumbnail.url %}
   <figure class="figure figure--right figure--img">
     <a href="{{ link_url }}">
-      <img src="{{ obj.detail_thumbnail.url }}" srcset="{{ obj.detail_thumbnail.url }} 1x, {{ obj.detail_thumbnail_2x.url }} 2x" width="{{ obj.detail_thumbnail.width }}" height="{{ obj.detail_thumbnail.height }}" alt="{{ alt_text }}">
+      <img src="{{ obj.detail_thumbnail.url }}" srcset="{{ obj.detail_thumbnail.url }} 1x, {{ obj.detail_thumbnail_2x.url }} 2x" alt="{{ alt_text }}">
     </a>
   </figure>
 {% endwith %}
