@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Share API test</title>
+  <link rel="canonical" href="https://www.gyford.com/misc/web-share-api.html">
+</head>
+<body>
+  <h1>Web Share API test</h1>
+
+  <p>See what data gets shared when clicking each of these buttons.</p>
+
+  <p>
+    <button class="js-share" data-title="The title" data-text="The text">Share title, text and URL</button>
+  </p>
+
+  <p>
+    <button class="js-share" data-title="The title">Share title and URL</button>
+  </p>
+
+  <p>
+    <button class="js-share" data-text="The text">Share text and URL</button>
+  </p>
+
+  <h2>The data sent using <code>navigator.share()</code>:</h2>
+
+  <ul class="js-output">
+  </ul>
+
+  <script>
+
+    document.addEventListener("click", function(event) {
+
+      var output = document.getElementsByClassName("js-output")[0];
+
+      // Not a share button.
+      if (!event.target.matches(".js-share")) {
+        return;
+      }
+
+      if (navigator.share) {
+        // This browser supports Web Share API.
+        var el = event.target;
+        var shareData = {
+          "url": document.querySelector("link[rel='canonical']").getAttribute('href')
+        };
+
+        if (el.getAttribute("data-title")) {
+          shareData.title = el.getAttribute("data-title");
+        }
+        if (el.getAttribute("data-text")) {
+          shareData.text = el.getAttribute("data-text");
+        }
+
+        navigator
+          .share(shareData)
+          .then(function() {
+            // Output what we shared.
+            var li = document.createElement("li");
+            var cd = document.createElement("code");
+            cd.innerHTML = JSON.stringify(shareData);
+            li.appendChild(cd);
+            output.appendChild(li);
+          })
+          .catch(console.error);
+
+      } else {
+        alert("This browser doesn't support the Web Share API");
+      };
+    });
+
+  </script>
+</body>
+</html>
