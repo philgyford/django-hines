@@ -11,18 +11,18 @@
   <p>See what data gets shared when clicking each of these buttons.</p>
 
   <p>
-    <button class="js-share" data-title="The title" data-text="The text">Share title, text and URL</button>
+    <button class="js-share" data-title="The title" data-text="The text">Share URL, title and text</button>
   </p>
 
   <p>
-    <button class="js-share" data-title="The title">Share title and URL</button>
+    <button class="js-share" data-title="The title">Share URL and title</button>
   </p>
 
   <p>
-    <button class="js-share" data-text="The text">Share text and URL</button>
+    <button class="js-share" data-text="The text">Share URL and text</button>
   </p>
 
-  <h2>The data sent using <code>navigator.share()</code>:</h2>
+  <h2 class="js-output-header" style="display:none;">The data sent using <code>navigator.share()</code>:</h2>
 
   <ul class="js-output">
   </ul>
@@ -55,6 +55,8 @@
         navigator
           .share(shareData)
           .then(function() {
+            document.getElementsByClassName("js-output-header")[0].style.display = "block";
+
             // Output what we shared.
             var li = document.createElement("li");
             var cd = document.createElement("code");
