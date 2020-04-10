@@ -1,37 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Web Share API test</title>
   <link rel="canonical" href="https://www.gyford.com/misc/web-share-api.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <style type="text/css">
+    li {
+      margin-bottom: 1em;
+    }
+    .output-header {
+      display: none;
+    }
+    hr {
+      margin-top: 3em;
+    }
+  </style>
 </head>
 <body>
   <h1>Web Share API test</h1>
 
   <p>See what data gets shared when clicking each of these buttons.</p>
 
-  <p>
-    <button class="js-share" data-title="The title" data-text="The text">Share URL, title and text</button>
-  </p>
+  <ul>
+    <li>
+      <button class="js-share" data-title="The title" data-text="The text">Share URL, title and text</button>
+    </li>
 
-  <p>
-    <button class="js-share" data-title="The title">Share URL and title</button>
-  </p>
+    <li>
+      <button class="js-share" data-title="The title">Share URL and title</button>
+    </li>
 
-  <p>
-    <button class="js-share" data-text="The text">Share URL and text</button>
-  </p>
+    <li>
+      <button class="js-share" data-text="The text">Share URL and text</button>
+    </li>
+  </ul>
 
-  <h2 class="js-output-header" style="display:none;">The data sent using <code>navigator.share()</code>:</h2>
+  <h2 class="js-output-header output-header">The data sent using <code>navigator.share()</code>:</h2>
 
   <ul class="js-output">
   </ul>
 
+  <hr>
+
+  <footer>
+    <p>
+      See <code>navigator.share()</code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share">at MDN</a> and <a href="https://caniuse.com/#search=web%20share%20api">Can I Use</a>.
+    </p>
+    <p>
+      A quick test by <a href="https://www.gyford.com/">Phil Gyford</a>. <a href="https://www.gyford.com/phil/writing/2020/04/10/web-share-api/">Read more about it</a>.
+    </p>
+  </footer>
+
   <script>
 
     document.addEventListener("click", function(event) {
-
-      var output = document.getElementsByClassName("js-output")[0];
 
       // Not a share button.
       if (!event.target.matches(".js-share")) {
@@ -40,7 +64,12 @@
 
       if (navigator.share) {
         // This browser supports Web Share API.
+
+        var output = document.getElementsByClassName("js-output")[0];
+        var outputHeader = document.getElementsByClassName("js-output-header")[0];
+
         var el = event.target;
+
         var shareData = {
           "url": document.querySelector("link[rel='canonical']").getAttribute('href')
         };
@@ -55,7 +84,7 @@
         navigator
           .share(shareData)
           .then(function() {
-            document.getElementsByClassName("js-output-header")[0].style.display = "block";
+            outputHeader.style.display = "block";
 
             // Output what we shared.
             var li = document.createElement("li");
