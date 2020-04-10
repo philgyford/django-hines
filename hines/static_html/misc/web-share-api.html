@@ -7,6 +7,16 @@
   <link rel="canonical" href="https://www.gyford.com/misc/web-share-api.html">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <style type="text/css">
+    body {
+      line-height: 1.5em;
+    }
+    ul {
+      padding-left: 1.5em;
+    }
+    ul.nobullets {
+      list-style-type: none;
+      padding-left: 0;
+    }
     li {
       margin-bottom: 1em;
     }
@@ -16,6 +26,9 @@
     hr {
       margin-top: 3em;
     }
+    .nowrap {
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -23,7 +36,7 @@
 
   <p>See what data gets shared when clicking each of these buttons.</p>
 
-  <ul>
+  <ul class="nobullets">
     <li>
       <button class="js-share" data-title="The title" data-text="The text">Share URL, title and text</button>
     </li>
@@ -46,10 +59,10 @@
 
   <footer>
     <p>
-      See <code>navigator.share()</code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share">at MDN</a> and <a href="https://caniuse.com/#search=web%20share%20api">Can I Use</a>.
+      See <code>navigator.share()</code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share">at MDN</a> and <a class="nowrap" href="https://caniuse.com/#search=web%20share%20api">Can I Use</a>.
     </p>
     <p>
-      A quick test by <a href="https://www.gyford.com/">Phil Gyford</a>. <a href="https://www.gyford.com/phil/writing/2020/04/10/web-share-api/">Read more about it</a>.
+      A quick test by <a href="https://www.gyford.com/">Phil Gyford</a>. <a class="nowrap" href="https://www.gyford.com/phil/writing/2020/04/10/web-share-api/">Read more about it</a>.
     </p>
   </footer>
 
