@@ -248,7 +248,8 @@ pre {
   // we force a non-overlapping, non-auto-hiding scrollbar to counteract.
   -ms-overflow-style: scrollbar;
 
-  line-height: $line-height-monospace-base;
+  font-size: $font-size-monospace-pre;
+  line-height: $line-height-monospace-pre;
 }
 
 

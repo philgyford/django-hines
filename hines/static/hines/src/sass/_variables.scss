@@ -194,16 +194,20 @@ $line-height-base:            ($line-height-pixels-base / $font-pixels-base); //
 $line-height-base-computed:   $line-height-base * 1rem;                       // 30px
 
 $font-size-sm:                ($font-pixels-sm / 16) * 1rem;
-$line-height-sm:              ($line-height-pixels-sm / $font-pixels-sm); // 24px
-$line-height-sm-computed:     $line-height-sm * 1rem;                     // 24px
+$line-height-sm:              ($line-height-pixels-sm / $font-pixels-sm); // 1.714; 24px
+$line-height-sm-computed:     $line-height-sm * 1rem;                     // 1.714rem; 24px
 
 $font-size-xs:                ($font-pixels-xs / 16) * 1rem;
 $line-height-xs:              ($line-height-pixels-xs / $font-pixels-xs); // 18px
 $line-height-xs-computed:     $line-height-xs * 1rem;                     // 18px
 
 // Has to be adjusted to see what looks best with the base font size:
-$font-size-monospace-base:    0.9375rem; // 15px.
-$line-height-monospace-base:  $line-height-sm;
+$font-size-monospace-base:    0.9em; // 18px in body text.
+$line-height-monospace-base:  1.333333333em; 
+
+// For <pre> elements:
+$font-size-monospace-pre:     $font-size-xs;
+$line-height-monospace-pre:   $line-height-xs;
 
 
 // Headings

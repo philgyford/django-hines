@@ -156,12 +156,14 @@ pre {
   code {
     color: $body-color;
     white-space: pre-wrap;
+    font-size: $font-size-monospace-pre;
+    line-height: $line-height-monospace-pre;
   }
 }
 
 code {
   font-family: $font-family-monospace;
-  font-weight: $font-weight-normal;
+  line-height: $line-height-monospace-base;
   color: $gray-dark;
   white-space: pre;
   word-wrap: normal;
