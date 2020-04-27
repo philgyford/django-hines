@@ -167,6 +167,19 @@ code {
   color: $gray-dark;
   white-space: pre;
   word-wrap: normal;
+
+  a & {
+    color: $link-color;
+  }
+  a:visited & {
+    color: $link-visited-color;
+  }
+  a:hover & {
+    color: $link-hover-color;
+  }
+  a:visited:hover & {
+    color: $link-visited-hover-color;
+  }
 }
 
 abbr {
