@@ -1,1 +1,1 @@
-python ./manage.py clear_cache && gunicorn pepysdiary.wsgi --preload
+python ./manage.py clear_cache && gunicorn config.wsgi --preload
