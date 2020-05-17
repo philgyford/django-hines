@@ -15,7 +15,7 @@ env:
 install:
 - pip install pipenv
 - pipenv install
-- pipenv install coverage coveralls factory-boy freezegun
+- pipenv install coverage coveralls factory-boy freezegun flake8 black==19.10b0
 before_script:
 - "./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput"
 - psql -c 'CREATE DATABASE test_db;' -U postgres
