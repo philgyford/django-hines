@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             name="excerpt",
             field=models.TextField(
                 blank=True,
-                help_text="Brief summary, HTML allowed. If not set, it will be a truncated version of the Intro.",
+                help_text="Brief summary, HTML allowed. If not set, it will be a "
+                "truncated version of the Intro.",
             ),
         ),
     ]

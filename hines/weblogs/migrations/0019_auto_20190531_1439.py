@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             name="allow_comments",
             field=models.BooleanField(
                 default=True,
-                help_text="If true, can still be overridden by the Blog's equivalent setting, or in Django SETTINGS.",
+                help_text="If true, can still be overridden by the Blog's equivalent "
+                "setting, or in Django SETTINGS.",
             ),
         ),
     ]
