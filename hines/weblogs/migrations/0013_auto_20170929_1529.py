@@ -8,12 +8,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0012_auto_20170929_1509'),
+        ("weblogs", "0012_auto_20170929_1509"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='trackback',
-            unique_together=set([('post', 'url')]),
+            name="trackback", unique_together=set([("post", "url")]),
         ),
     ]

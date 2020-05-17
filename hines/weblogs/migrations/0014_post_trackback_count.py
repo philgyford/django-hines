@@ -8,13 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0013_auto_20170929_1529'),
+        ("weblogs", "0013_auto_20170929_1529"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='post',
-            name='trackback_count',
+            model_name="post",
+            name="trackback_count",
             field=models.IntegerField(default=0),
         ),
     ]

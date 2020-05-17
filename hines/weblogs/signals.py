@@ -12,4 +12,3 @@ def trackback_actions(sender, instance, using, **kwargs):
     trackback_count is still accurate.
     """
     instance.set_parent_trackback_data()
-

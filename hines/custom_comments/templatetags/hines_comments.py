@@ -16,4 +16,3 @@ def allowed_tags():
     Returns a list of tags that are allowed in comments.
     """
     return get_allowed_tags()
-

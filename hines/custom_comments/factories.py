@@ -27,15 +27,16 @@ class CustomCommentFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = models.CustomComment
-        exclude = ['content_object']
+        exclude = ["content_object"]
 
-    comment = factory.Sequence(lambda n: 'A comment %s' % n)
+    comment = factory.Sequence(lambda n: "A comment %s" % n)
     site_id = Site.objects.get_current().id
 
     content_object = factory.SubFactory(LivePostFactory)
-    object_pk = factory.SelfAttribute('content_object.pk')
+    object_pk = factory.SelfAttribute("content_object.pk")
     content_type = factory.LazyAttribute(
-        lambda o: ContentType.objects.get_for_model(Post))
+        lambda o: ContentType.objects.get_for_model(Post)
+    )
 
     @factory.post_generation
     def post(self, create, extracted, **kwargs):
@@ -45,12 +46,9 @@ class CustomCommentFactory(factory.DjangoModelFactory):
 
 
 class CommentFlagFactory(factory.DjangoModelFactory):
-
     class Meta:
         model = CommentFlag
 
     comment = factory.SubFactory(CustomCommentFactory)
-    flag = factory.Sequence(lambda n: 'Reason %s' % n)
+    flag = factory.Sequence(lambda n: "Reason %s" % n)
     user = factory.SubFactory(UserFactory)
-
-

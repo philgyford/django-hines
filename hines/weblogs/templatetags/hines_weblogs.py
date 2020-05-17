@@ -1,7 +1,5 @@
 from django import template
 
-from taggit.models import Tag
-
 from ..models import Blog, Post
 
 
@@ -32,18 +30,18 @@ def recent_posts(blog, num=5):
     """
     Returns a QuerySet of `num` recently-published Posts for `blog`.
     """
-    return blog.public_posts.all().order_by('-time_published')[:num]
+    return blog.public_posts.all().order_by("-time_published")[:num]
 
 
-@register.inclusion_tag('weblogs/includes/card_posts.html')
+@register.inclusion_tag("weblogs/includes/card_posts.html")
 def recent_posts_card(blog, num=5):
     """
     Displays `num` recently-published Posts for `blog`.
     """
     return {
-            'card_title': 'Recent posts',
-            'post_list': recent_posts(blog=blog, num=num),
-            }
+        "card_title": "Recent posts",
+        "post_list": recent_posts(blog=blog, num=num),
+    }
 
 
 @register.simple_tag
@@ -52,10 +50,10 @@ def blog_years(blog):
     Returns a QuerySet of dates, one per year this blog has published Posts in.
     `blog` is a Blog object.
     """
-    return Post.public_objects.filter(blog=blog).dates('time_published', 'year')
+    return Post.public_objects.filter(blog=blog).dates("time_published", "year")
 
 
-@register.inclusion_tag('weblogs/includes/card_years.html')
+@register.inclusion_tag("weblogs/includes/card_years.html")
 def blog_years_card(blog, current_year=None):
     """
     Displays the years this blog has published posts in.
@@ -63,11 +61,11 @@ def blog_years_card(blog, current_year=None):
     `current_year` is the year (a date object) that shouldn't be a link, if any.
     """
     return {
-            'card_title': 'Years of {}'.format(blog.short_name),
-            'date_list': blog_years(blog=blog),
-            'blog': blog,
-            'current_year': current_year,
-            }
+        "card_title": "Years of {}".format(blog.short_name),
+        "date_list": blog_years(blog=blog),
+        "blog": blog,
+        "current_year": current_year,
+    }
 
 
 @register.simple_tag
@@ -81,13 +79,12 @@ def blog_popular_tags(blog, num=10):
     return blog.popular_tags(num=num)
 
 
-@register.inclusion_tag('weblogs/includes/card_tags.html')
+@register.inclusion_tag("weblogs/includes/card_tags.html")
 def blog_popular_tags_card(blog, num=10):
     """
     """
     return {
-            'card_title': 'Most-used tags',
-            'tag_list': blog_popular_tags(blog=blog, num=num),
-            'blog': blog,
-            }
-
+        "card_title": "Most-used tags",
+        "tag_list": blog_popular_tags(blog=blog, num=num),
+        "blog": blog,
+    }

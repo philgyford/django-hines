@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0015_auto_20180107_1716'),
+        ("weblogs", "0015_auto_20180107_1716"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='status',
-            field=models.PositiveSmallIntegerField(choices=[(1, 'Draft'), (2, 'Published'), (4, 'Scheduled')], default=1),
+            model_name="post",
+            name="status",
+            field=models.PositiveSmallIntegerField(
+                choices=[(1, "Draft"), (2, "Published"), (4, "Scheduled")], default=1
+            ),
         ),
     ]

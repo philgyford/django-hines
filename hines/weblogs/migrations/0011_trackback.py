@@ -9,26 +9,61 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0010_auto_20170923_1705'),
+        ("weblogs", "0010_auto_20170923_1705"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Trackback',
+            name="Trackback",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time_created', models.DateTimeField(auto_now_add=True, help_text='The time this item was created in the database.')),
-                ('time_modified', models.DateTimeField(auto_now=True, help_text='The time this item was last saved to the database.')),
-                ('title', models.CharField(max_length=255)),
-                ('excerpt', models.TextField(blank=True, default='')),
-                ('url', models.URLField(blank=True, default='', verbose_name='URL')),
-                ('ip_address', models.GenericIPAddressField(blank=True, default=None, null=True, verbose_name='IP Address')),
-                ('blog_name', models.CharField(max_length=255)),
-                ('is_visible', models.BooleanField(default=True, help_text='Should this be displayed on the site?')),
-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='trackbacks', to='weblogs.Post')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "time_created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="The time this item was created in the database.",
+                    ),
+                ),
+                (
+                    "time_modified",
+                    models.DateTimeField(
+                        auto_now=True,
+                        help_text="The time this item was last saved to the database.",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("excerpt", models.TextField(blank=True, default="")),
+                ("url", models.URLField(blank=True, default="", verbose_name="URL")),
+                (
+                    "ip_address",
+                    models.GenericIPAddressField(
+                        blank=True, default=None, null=True, verbose_name="IP Address"
+                    ),
+                ),
+                ("blog_name", models.CharField(max_length=255)),
+                (
+                    "is_visible",
+                    models.BooleanField(
+                        default=True, help_text="Should this be displayed on the site?"
+                    ),
+                ),
+                (
+                    "post",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="trackbacks",
+                        to="weblogs.Post",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
     ]

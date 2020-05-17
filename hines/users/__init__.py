@@ -1,2 +1,1 @@
-default_app_config = 'hines.users.apps.UsersConfig'
-
+default_app_config = "hines.users.apps.UsersConfig"

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0020_auto_20190531_1445'),
+        ("weblogs", "0020_auto_20190531_1445"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='title',
-            field=models.CharField(help_text='Can use HTML tags', max_length=255),
+            model_name="post",
+            name="title",
+            field=models.CharField(help_text="Can use HTML tags", max_length=255),
         ),
     ]

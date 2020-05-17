@@ -8,18 +8,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0007_auto_20170407_1654'),
+        ("weblogs", "0007_auto_20170407_1654"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blog',
-            name='feed_description',
-            field=models.CharField(blank=True, help_text="For the Blog's RSS feed of recent Posts.", max_length=255),
+            model_name="blog",
+            name="feed_description",
+            field=models.CharField(
+                blank=True,
+                help_text="For the Blog's RSS feed of recent Posts.",
+                max_length=255,
+            ),
         ),
         migrations.AddField(
-            model_name='blog',
-            name='feed_title',
-            field=models.CharField(blank=True, help_text="For the Blog's RSS feed of recent Posts.", max_length=255),
+            model_name="blog",
+            name="feed_title",
+            field=models.CharField(
+                blank=True,
+                help_text="For the Blog's RSS feed of recent Posts.",
+                max_length=255,
+            ),
         ),
     ]

@@ -10,33 +10,50 @@ import taggit.managers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taggit', '0002_auto_20150616_2121'),
-        ('weblogs', '0005_post_tags'),
+        ("taggit", "0002_auto_20150616_2121"),
+        ("weblogs", "0005_post_tags"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TaggedPost',
+            name="TaggedPost",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.AlterField(
-            model_name='post',
-            name='tags',
-            field=taggit.managers.TaggableManager(help_text='A comma-separated list of tags.', through='weblogs.TaggedPost', to='taggit.Tag', verbose_name='Tags'),
+            model_name="post",
+            name="tags",
+            field=taggit.managers.TaggableManager(
+                help_text="A comma-separated list of tags.",
+                through="weblogs.TaggedPost",
+                to="taggit.Tag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='taggedpost',
-            name='content_object',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='weblogs.Post'),
+            model_name="taggedpost",
+            name="content_object",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="weblogs.Post"
+            ),
         ),
         migrations.AddField(
-            model_name='taggedpost',
-            name='tag',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='weblogs_taggedpost_items', to='taggit.Tag'),
+            model_name="taggedpost",
+            name="tag",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="weblogs_taggedpost_items",
+                to="taggit.Tag",
+            ),
         ),
     ]

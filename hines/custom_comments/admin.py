@@ -11,16 +11,18 @@ from hines.weblogs.models import Post
 class CommentFlagInline(admin.TabularInline):
     model = CommentFlag
     extra = 0
-    raw_id_fields = ('user', )
+    raw_id_fields = ("user",)
 
 
 class CustomCommentAdmin(CommentsAdmin):
-    inlines = [CommentFlagInline, ]
+    inlines = [
+        CommentFlagInline,
+    ]
 
     def flag(self, obj):
-        flag_name = ''
+        flag_name = ""
         try:
-            flag_name = obj.flags.values()[0]['flag']
+            flag_name = obj.flags.values()[0]["flag"]
         except IndexError:
             pass
         return flag_name
@@ -38,12 +40,17 @@ class CustomCommentAdmin(CommentsAdmin):
         post_obj = ct.get_object_for_this_type(pk=obj.object_pk)
         return post_obj.title
 
-    list_display = ('name', 'post_title', 'ip_address',
-                    'submit_date', 'flag', 'is_public', 'is_removed')
-    list_filter = ('submit_date', 'site', 'is_public', 'is_removed',
-                    'flags__flag')
+    list_display = (
+        "name",
+        "post_title",
+        "ip_address",
+        "submit_date",
+        "flag",
+        "is_public",
+        "is_removed",
+    )
+    list_filter = ("submit_date", "site", "is_public", "is_removed", "flags__flag")
 
 
 if get_model() is CustomComment:
     admin.site.register(CustomComment, CustomCommentAdmin)
-

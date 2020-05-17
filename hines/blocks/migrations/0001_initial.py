@@ -9,23 +9,59 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Block',
+            name="Block",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time_created', models.DateTimeField(auto_now_add=True, help_text='The time this item was created in the database.')),
-                ('time_modified', models.DateTimeField(auto_now=True, help_text='The time this item was last saved to the database.')),
-                ('slug', models.SlugField(help_text='Used in a template to include this Block.', max_length=255)),
-                ('title', models.CharField(help_text='Optional title for this Block', max_length=255)),
-                ('content', models.TextField(help_text='Can use HTML or Markdown.')),
-                ('content_html', models.TextField(blank=True, editable=False, help_text='Fully HTML version of Content, created on save.', verbose_name='Content HTML')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "time_created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="The time this item was created in the database.",
+                    ),
+                ),
+                (
+                    "time_modified",
+                    models.DateTimeField(
+                        auto_now=True,
+                        help_text="The time this item was last saved to the database.",
+                    ),
+                ),
+                (
+                    "slug",
+                    models.SlugField(
+                        help_text="Used in a template to include this Block.",
+                        max_length=255,
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        help_text="Optional title for this Block", max_length=255
+                    ),
+                ),
+                ("content", models.TextField(help_text="Can use HTML or Markdown.")),
+                (
+                    "content_html",
+                    models.TextField(
+                        blank=True,
+                        editable=False,
+                        help_text="Fully HTML version of Content, created on save.",
+                        verbose_name="Content HTML",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['title'],
-            },
+            options={"ordering": ["title"],},
         ),
     ]

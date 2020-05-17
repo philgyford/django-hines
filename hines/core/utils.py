@@ -107,7 +107,7 @@ def expire_view_cache(path, key_prefix=None):
     try:
         cache_key = get_cache_key(request, key_prefix=key_prefix)
         if cache_key:
-            if cache.has_key(cache_key):
+            if cache.get(cache_key):
                 cache.delete(cache_key)
                 return (True, "Successfully invalidated")
             else:

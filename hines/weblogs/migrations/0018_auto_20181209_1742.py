@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0017_auto_20181204_1440'),
+        ("weblogs", "0017_auto_20181204_1440"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='excerpt',
-            field=models.TextField(blank=True, help_text='Brief summary, HTML allowed. If not set, it will be a truncated version of the Intro.'),
+            model_name="post",
+            name="excerpt",
+            field=models.TextField(
+                blank=True,
+                help_text="Brief summary, HTML allowed. If not set, it will be a truncated version of the Intro.",
+            ),
         ),
     ]

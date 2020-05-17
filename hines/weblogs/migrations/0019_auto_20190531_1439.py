@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0018_auto_20181209_1742'),
+        ("weblogs", "0018_auto_20181209_1742"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='allow_comments',
-            field=models.BooleanField(default=True, help_text="If true, can still be overridden by the Blog's equivalent setting, or in Django SETTINGS."),
+            model_name="post",
+            name="allow_comments",
+            field=models.BooleanField(
+                default=True,
+                help_text="If true, can still be overridden by the Blog's equivalent setting, or in Django SETTINGS.",
+            ),
         ),
     ]

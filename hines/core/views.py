@@ -3,14 +3,18 @@ import datetime
 import re
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.core.paginator import InvalidPage
-from django.http import (Http404, HttpResponseNotFound,
-            HttpResponseBadRequest, HttpResponseForbidden,
-            HttpResponseServerError)
+from django.http import (
+    Http404,
+    HttpResponseNotFound,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseServerError,
+)
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import get_template
 from django.utils import timezone
-from django.utils.encoding import force_str
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import requires_csrf_token
@@ -26,7 +30,7 @@ from spectator.reading.models import Publication
 from spectator.reading.views import ReadingHomeView as SpectatorReadingHomeView
 from hines.core import app_settings
 from hines.core.utils import make_date
-from hines.weblogs.models import Blog, Post
+from hines.weblogs.models import Blog
 from .paginator import DiggPaginator
 
 
@@ -80,26 +84,29 @@ class CacheMixin(object):
 
     Disables caching for logged-in users.
     """
-    cache_timeout = 60 * 5 # seconds
+
+    cache_timeout = 60 * 5  # seconds
 
     def get_cache_timeout(self):
         return self.cache_timeout
 
     def dispatch(self, *args, **kwargs):
-        if hasattr(self.request, 'user') and self.request.user.is_authenticated:
+        if hasattr(self.request, "user") and self.request.user.is_authenticated:
             # Logged-in, return the page without caching.
             return super().dispatch(*args, **kwargs)
         else:
             # Unauthenticated user; use caching.
-            return cache_page(self.get_cache_timeout())(super().dispatch)(*args, **kwargs)
+            return cache_page(self.get_cache_timeout())(super().dispatch)(
+                *args, **kwargs
+            )
 
 
 class HomeView(CacheMixin, TemplateView):
-    template_name = 'hines_core/home.html'
+    template_name = "hines_core/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sections'] = self.get_recent_items()
+        context["sections"] = self.get_recent_items()
         return context
 
     def get_recent_items(self):
@@ -118,7 +125,7 @@ class HomeView(CacheMixin, TemplateView):
         items = {}
 
         for blog, posts in self._get_weblog_posts().items():
-            items.update({blog:posts})
+            items.update({blog: posts})
         items.update(self._get_flickr_photos())
         items.update(self._get_pinboard_bookmarks())
 
@@ -131,7 +138,7 @@ class HomeView(CacheMixin, TemplateView):
             """
             qs = item[1]
             if len(qs) > 0:
-                if hasattr(qs[0], 'time_published'):
+                if hasattr(qs[0], "time_published"):
                     return qs[0].time_published
                 else:
                     return qs[0].post_time
@@ -144,8 +151,7 @@ class HomeView(CacheMixin, TemplateView):
         # when comparing their by_time_key's below.
         items = {k: v for k, v in items.items() if len(v) > 0}
 
-        sorted_items = OrderedDict(
-                    sorted(items.items(), key=by_time_key, reverse=True))
+        sorted_items = OrderedDict(sorted(items.items(), key=by_time_key, reverse=True))
 
         return sorted_items
 
@@ -173,7 +179,7 @@ class HomeView(CacheMixin, TemplateView):
 
         if section_name in display:
             section_quantity = display[section_name]
-            if section_name == 'weblog_posts':
+            if section_name == "weblog_posts":
                 if subsection_name in section_quantity:
                     section_quantity = section_quantity[subsection_name]
 
@@ -192,29 +198,29 @@ class HomeView(CacheMixin, TemplateView):
         posts = {}
 
         for blog in Blog.objects.all():
-            quantity = self._get_section_quantity('weblog_posts', blog.slug)
+            quantity = self._get_section_quantity("weblog_posts", blog.slug)
             if quantity > 0:
                 qs = blog.public_posts.all()[:quantity]
-            key = 'weblog_posts_{}'.format(blog.slug)
+            key = "weblog_posts_{}".format(blog.slug)
             posts[key] = qs
 
         return posts
 
     def _get_flickr_photos(self):
-        quantity = self._get_section_quantity('flickr_photos')
+        quantity = self._get_section_quantity("flickr_photos")
         if quantity > 0:
             photos = Photo.public_objects.all()[:quantity]
         else:
             photos = Photo.objects.none()
-        return {'flickr_photo_list': photos}
+        return {"flickr_photo_list": photos}
 
     def _get_pinboard_bookmarks(self):
-        quantity = self._get_section_quantity('pinboard_bookmarks')
+        quantity = self._get_section_quantity("pinboard_bookmarks")
         if quantity > 0:
             bookmarks = Bookmark.public_objects.all()[:quantity]
         else:
-            bookmarks = Bookmar.objects.none()
-        return {'pinboard_bookmark_list': bookmarks}
+            bookmarks = Bookmark.objects.none()
+        return {"pinboard_bookmark_list": bookmarks}
 
 
 class ReadingHomeView(SpectatorReadingHomeView):
@@ -225,7 +231,7 @@ class ReadingHomeView(SpectatorReadingHomeView):
     """
 
     def get(self, request, *args, **kwargs):
-        year = request.GET.get('y', None)
+        year = request.GET.get("y", None)
 
         try:
             year = int(year)
@@ -239,8 +245,9 @@ class ReadingHomeView(SpectatorReadingHomeView):
 
         if year is not None:
             # We have a 4-digit number, so try redirecting.
-            return redirect('spectator:reading:reading_year_archive',
-                            year=int(year), permanent=True)
+            return redirect(
+                "spectator:reading:reading_year_archive", year=int(year), permanent=True
+            )
 
         return super().get(request, args, kwargs)
 
@@ -252,30 +259,33 @@ class WritingResourcesRedirectView(RedirectView):
     FROM: http://www.gyford.com/phil/writing/resources/2016/02/02/test.png
     TO: https://MY-BUCKET.s3.amazonaws.com/phil/weblogs/2016/02/02/test.png
     """
+
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        year = kwargs.get('year', None)
-        month = kwargs.get('month', None)
-        day = kwargs.get('day', None)
-        path = kwargs.get('path', None)
+        year = kwargs.get("year", None)
+        month = kwargs.get("month", None)
+        day = kwargs.get("day", None)
+        path = kwargs.get("path", None)
 
         if path is None:
             raise Http404("No path supplied.")
         else:
-            return '{}weblogs/{}/{}/{}/{}'.format(
-                settings.MEDIA_URL, year, month, day, path)
+            return "{}weblogs/{}/{}/{}/{}".format(
+                settings.MEDIA_URL, year, month, day, path
+            )
 
 
 class ArchiveRedirectView(RedirectView):
     """
     Redirecting old /archive/* URLs to archive.gyford.com.
     """
+
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        path = kwargs.get('path', '')
-        return 'http://archive.gyford.com/{}'.format(path)
+        path = kwargs.get("path", "")
+        return "http://archive.gyford.com/{}".format(path)
 
 
 class AuthorRedirectView(RedirectView):
@@ -285,11 +295,12 @@ class AuthorRedirectView(RedirectView):
 
     Redirect to the new creator_detail view with the creator's new slug.
     """
+
     permanent = True
-    pattern_name = 'spectator:creators:creator_detail'
+    pattern_name = "spectator:creators:creator_detail"
 
     def get_redirect_url(self, *args, **kwargs):
-        creator_id = self.request.GET.get('id', False)
+        creator_id = self.request.GET.get("id", False)
 
         if creator_id is False:
             raise Http404("No creator ID supplied.")
@@ -299,7 +310,7 @@ class AuthorRedirectView(RedirectView):
         except ValueError:
             raise Http404("Invalid creator ID supplied.")
 
-        kwargs['slug'] = creator.slug
+        kwargs["slug"] = creator.slug
 
         return super().get_redirect_url(*args, **kwargs)
 
@@ -311,11 +322,12 @@ class PublicationRedirectView(RedirectView):
 
     Redirect to the new publication_detail view with the publication's new slug.
     """
+
     permanent = True
-    pattern_name = 'spectator:reading:publication_detail'
+    pattern_name = "spectator:reading:publication_detail"
 
     def get_redirect_url(self, *args, **kwargs):
-        publication_id = self.request.GET.get('id', False)
+        publication_id = self.request.GET.get("id", False)
 
         if publication_id is False:
             raise Http404("No publication ID supplied.")
@@ -325,7 +337,7 @@ class PublicationRedirectView(RedirectView):
         except ValueError:
             raise Http404("Invalid publication ID supplied.")
 
-        kwargs['slug'] = publication.slug
+        kwargs["slug"] = publication.slug
 
         return super().get_redirect_url(*args, **kwargs)
 
@@ -336,7 +348,7 @@ class MTSearchRedirectView(RedirectView):
     404 everything else.
 
     e.g. a tag on Mary's site (blog 14):
-    FROM: www.gyford.com/cgi-bin/mt/mt-search.cgi?IncludeBlogs=14&tag=test%20this%20tag%28brackets%29&limit=1000
+    FROM: www.gyford.com/cgi-bin/mt/mt-search.cgi?IncludeBlogs=14&tag=test%20this%20tag%28brackets%29&limit=1000  # noqa: E501
     TO: https://www.sparklytrainers.com/blog/tag/test-this-tag-brackets/
 
     e.g. a search on both Mary's blogs (blogs 14 and 18):
@@ -347,12 +359,13 @@ class MTSearchRedirectView(RedirectView):
     FROM: /cgi-bin/mt/mt-search.cgi?search=test+search&IncludeBlogs=10&limit=1000
     TO: https://www.google.com/search?as_sitesearch=www.overmorgen.com&q=test+search
     """
+
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        blog_ids = self.request.GET.get('IncludeBlogs', None)
-        tag_str = self.request.GET.get('tag', None)
-        search_str = self.request.GET.get('search', None)
+        blog_ids = self.request.GET.get("IncludeBlogs", None)
+        tag_str = self.request.GET.get("tag", None)
+        search_str = self.request.GET.get("search", None)
 
         if blog_ids is None:
             raise Http404("No Blog IDs supplied.")
@@ -360,29 +373,30 @@ class MTSearchRedirectView(RedirectView):
         if tag_str is None and search_str is None:
             raise Http404("No tag or search string supplied.")
 
-        blog_ids = blog_ids.split(',')
+        blog_ids = blog_ids.split(",")
 
         if len(blog_ids) == 0:
             raise Http404("No Blog IDs supplied.")
 
-        if '14' in blog_ids or '18' in blog_ids:
+        if "14" in blog_ids or "18" in blog_ids:
             # One of Mary's blogs.
             tag_str = self._get_wp_tag_str(tag_str)
             search_str = self._get_wp_search_str(search_str)
 
             if tag_str:
-                url = 'https://www.sparklytrainers.com/blog/tag/{}/'.format(tag_str)
+                url = "https://www.sparklytrainers.com/blog/tag/{}/".format(tag_str)
             else:
-                url = 'https://www.sparklytrainers.com/?s={}'.format(search_str)
+                url = "https://www.sparklytrainers.com/?s={}".format(search_str)
 
-        elif '10' in blog_ids:
+        elif "10" in blog_ids:
             # Overmorgen.
             search_str = self._get_google_search_str(search_str)
-            url = 'https://www.google.com/search?as_sitesearch=www.overmorgen.com&q={}'.format(search_str)
+            url = (
+                "https://www.google.com/search?" "as_sitesearch=www.overmorgen.com&q={}"
+            ).format(search_str)
 
         else:
-            raise Http404(
-                    "Not the right combination of Blog ID, tag or search.")
+            raise Http404("Not the right combination of Blog ID, tag or search.")
 
         return url
 
@@ -397,13 +411,13 @@ class MTSearchRedirectView(RedirectView):
             return None
 
         # Removes things like apostrophes. Leaves spaces and brackets:
-        tag_str = re.sub(r'[^a-zA-Z0-9 \(\)]+', '', tag_str)
+        tag_str = re.sub(r"[^a-zA-Z0-9 \(\)]+", "", tag_str)
         # Turns the spaces and brackets into hyphens:
-        tag_str = "".join([ c if c.isalnum() else "-" for c in tag_str ])
+        tag_str = "".join([c if c.isalnum() else "-" for c in tag_str])
         # Remove any duplicate hyphens:
-        tag_str = re.sub('-+', '-', tag_str)
+        tag_str = re.sub("-+", "-", tag_str)
         # Remove any trailing hyphen:
-        tag_str = tag_str.rstrip('-')
+        tag_str = tag_str.rstrip("-")
         # Everything to lowercase:
         tag_str = tag_str.lower()
 
@@ -412,7 +426,7 @@ class MTSearchRedirectView(RedirectView):
     def _get_wp_search_str(self, search_str):
         if search_str is None:
             return None
-        search_str = search_str.replace(' ', '+')
+        search_str = search_str.replace(" ", "+")
         return search_str
 
     def _get_google_search_str(self, search_str):
@@ -422,9 +436,8 @@ class MTSearchRedirectView(RedirectView):
         if search_str is None:
             return None
 
-        search_str = "".join([ c if c.isalnum() else "+" for c in search_str ])
+        search_str = "".join([c if c.isalnum() else "+" for c in search_str])
         return search_str
-
 
 
 class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
@@ -433,14 +446,15 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
     don't have a single QuerySet we're fetching for this date, so we can't
     use it.
     """
+
     # Note: Disallowing empty pages will still show next/prev links to empty
     # pages as we don't currently check all the contents of next/prev pages:
     allow_empty = True
     allow_future = False
-    day_format = '%d'
-    month_format = '%m'
-    year_format = '%Y'
-    template_name = 'hines_core/archive_day.html'
+    day_format = "%d"
+    month_format = "%m"
+    year_format = "%Y"
+    template_name = "hines_core/archive_day.html"
 
     def get_allow_empty(self):
         """
@@ -464,7 +478,7 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         context.update(extra_context)
 
-        context['sections'] = object_lists
+        context["sections"] = object_lists
 
         return context
 
@@ -477,9 +491,14 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         month = self.get_month()
         day = self.get_day()
 
-        date = _date_from_string(year, self.get_year_format(),
-                                 month, self.get_month_format(),
-                                 day, self.get_day_format())
+        date = _date_from_string(
+            year,
+            self.get_year_format(),
+            month,
+            self.get_month_format(),
+            day,
+            self.get_day_format(),
+        )
 
         return self._get_dated_items(date)
 
@@ -509,7 +528,7 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         # they'll appear in the page...
 
         for blog, posts in self._get_weblog_posts(date).items():
-            object_lists.update({blog:posts})
+            object_lists.update({blog: posts})
 
         object_lists.update(self._get_flickr_photos(date))
 
@@ -528,12 +547,16 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         for key, object_list in object_lists.items():
             object_count += len(object_list)
 
-        return (None, object_lists, {
-            'day': date,
-            'previous_day': self.get_previous_day(date),
-            'next_day': self.get_next_day(date),
-            'object_count': object_count,
-        })
+        return (
+            None,
+            object_lists,
+            {
+                "day": date,
+                "previous_day": self.get_previous_day(date),
+                "next_day": self.get_next_day(date),
+                "object_count": object_count,
+            },
+        )
 
     def get_next_day(self, date):
         result = date + datetime.timedelta(days=1)
@@ -550,7 +573,8 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         """
         if app_settings.FIRST_DATE:
             return datetime.datetime.strptime(
-                                app_settings.FIRST_DATE, "%Y-%m-%d").date()
+                app_settings.FIRST_DATE, "%Y-%m-%d"
+            ).date()
         else:
             return False
 
@@ -580,37 +604,38 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         for blog in Blog.objects.all():
             qs = blog.public_posts.filter(time_published__date=date)
-            key = 'weblog_posts_{}'.format(blog.slug)
+            key = "weblog_posts_{}".format(blog.slug)
             posts[key] = qs
 
         return posts
 
     def _get_flickr_photos(self, date):
-        photos = Photo.public_objects.filter(
-                                        taken_time__date=date,
-                                        taken_granularity=0)
-        return {'flickr_photo_list': photos}
+        photos = Photo.public_objects.filter(taken_time__date=date, taken_granularity=0)
+        return {"flickr_photo_list": photos}
 
     def _get_pinboard_bookmarks(self, date):
         bookmarks = Bookmark.public_objects.filter(post_time__date=date)
-        return {'pinboard_bookmark_list': bookmarks}
+        return {"pinboard_bookmark_list": bookmarks}
 
     def _get_twitter_favorites(self, date):
-        tweets = Tweet.public_favorite_objects.filter(post_time__date=date) \
-                                                    .prefetch_related('user')
-        return {'twitter_favorite_list': tweets}
+        tweets = Tweet.public_favorite_objects.filter(
+            post_time__date=date
+        ).prefetch_related("user")
+        return {"twitter_favorite_list": tweets}
 
     def _get_twitter_tweets(self, date):
-        tweets = Tweet.public_tweet_objects.filter(post_time__date=date) \
-                                                    .prefetch_related('user')
-        return {'twitter_tweet_list': tweets}
+        tweets = Tweet.public_tweet_objects.filter(
+            post_time__date=date
+        ).prefetch_related("user")
+        return {"twitter_tweet_list": tweets}
 
 
 class PaginatedListView(ListView):
     """Use this instead of ListView to provide standardised pagination."""
+
     paginator_class = DiggPaginator
     paginate_by = 30
-    page_kwarg = 'p'
+    page_kwarg = "p"
     allow_empty = False
 
     # See hines.core.paginator for what these mean:
@@ -642,30 +667,32 @@ class PaginatedListView(ListView):
         paginator = self.get_paginator(
             queryset,
             page_size,
-            orphans = self.get_paginate_orphans(),
-            allow_empty_first_page = self.get_allow_empty(),
-            body    = self.paginator_body,
-            margin  = self.paginator_margin,
-            padding = self.paginator_padding,
-            tail    = self.paginator_tail,
+            orphans=self.get_paginate_orphans(),
+            allow_empty_first_page=self.get_allow_empty(),
+            body=self.paginator_body,
+            margin=self.paginator_margin,
+            padding=self.paginator_padding,
+            tail=self.paginator_tail,
         )
         page_kwarg = self.page_kwarg
         page = self.kwargs.get(page_kwarg) or self.request.GET.get(page_kwarg) or 1
         try:
             page_number = int(page)
         except ValueError:
-            if page == 'last':
+            if page == "last":
                 page_number = paginator.num_pages
             else:
-                raise Http404(_("Page is not 'last', nor can it be converted to an int."))
+                raise Http404(
+                    _("Page is not 'last', nor can it be converted to an int.")
+                )
         try:
             page = paginator.page(page_number, softlimit=self.softlimit)
             return (paginator, page, page.object_list, page.has_other_pages())
         except InvalidPage as e:
-            raise Http404(_('Invalid page (%(page_number)s): %(message)s') % {
-                'page_number': page_number,
-                'message': str(e)
-            })
+            raise Http404(
+                _("Invalid page (%(page_number)s): %(message)s")
+                % {"page_number": page_number, "message": str(e)}
+            )
 
 
 class PhotosHomeView(PaginatedListView):
@@ -673,7 +700,8 @@ class PhotosHomeView(PaginatedListView):
     We only have a single page showing photos, so doesn't make sense to put
     it in its own app. So here we are.
     """
-    template_name = 'hines_core/photos_home.html'
+
+    template_name = "hines_core/photos_home.html"
     queryset = Photo.public_objects.all()
     # Divisible by four columns:
     paginate_by = 48
@@ -681,8 +709,9 @@ class PhotosHomeView(PaginatedListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['photoset_list'] = Photoset.objects.all() \
-                                            .order_by('-last_update_time')[:10]
+        context["photoset_list"] = Photoset.objects.all().order_by("-last_update_time")[
+            :10
+        ]
 
         return context
 
@@ -713,12 +742,13 @@ class TemplateSetMixin(object):
     The name of the chosen template set will also be set in the context data
     (or None, if no set was used).
     """
+
     template_name = None
 
     # Which attribute of self.object should be used to determine the date that
     # we use to find which Template Set to use?
     # It can be a date or datetime object.
-    template_set_date_attr = 'time_created'
+    template_set_date_attr = "time_created"
 
     # Will be set to the name of the appropriate template set, if any.
     template_set = None
@@ -729,7 +759,7 @@ class TemplateSetMixin(object):
         # Not sure this is the best place for this call...
         self.set_template_set()
 
-        context['template_set'] = self.template_set
+        context["template_set"] = self.template_set
 
         return context
 
@@ -750,19 +780,22 @@ class TemplateSetMixin(object):
                 elif isinstance(d, datetime.datetme):
                     return d.date()
                 else:
-                    raise ImproperlyConfigure(
+                    raise ImproperlyConfigured(
                         "TemplateSetMixin can't make a date object from the "
-                        "self.template_set_date_attr attribute on self.object.")
+                        "self.template_set_date_attr attribute on self.object."
+                    )
             else:
                 raise ImproperlyConfigured(
-                "TemplateSetMixin can't find a {} attribute on self.object. "
-                "Either change self.template_set_date_attr or use a different "
-                "get_template_set_date() method.")
+                    "TemplateSetMixin can't find a {} attribute on self.object. "
+                    "Either change self.template_set_date_attr or use a different "
+                    "get_template_set_date() method."
+                )
         else:
             raise ImproperlyConfigured(
                 "TemplateSetMixin.get_template_set_date() assumes there is a "
                 "self.object. Provide one or use a different "
-                "get_template_set_date() method.")
+                "get_template_set_date() method."
+            )
 
     def get_template_names(self):
         """
@@ -775,13 +808,12 @@ class TemplateSetMixin(object):
         templates = []
 
         if self.template_set is not None:
-            templates.append(
-                        'sets/{}/{}'.format(self.template_set,
-                                            self.template_name))
+            templates.append("sets/{}/{}".format(self.template_set, self.template_name))
 
         if self.template_name is None:
             raise ImproperlyConfigured(
-                "TemplateSetMixin requires a definition of 'template_name'")
+                "TemplateSetMixin requires a definition of 'template_name'"
+            )
         else:
             templates.append(self.template_name)
 
@@ -796,12 +828,11 @@ class TemplateSetMixin(object):
             date = self.get_template_set_date()
 
             for ts in app_settings.TEMPLATE_SETS:
-                start = make_date(ts['start'])
-                end = make_date(ts['end'])
+                start = make_date(ts["start"])
+                end = make_date(ts["end"])
                 if date >= start and date <= end:
-                    self.template_set = ts['name']
+                    self.template_set = ts["name"]
                     break
-
 
 
 def timezone_today():
@@ -814,19 +845,21 @@ def timezone_today():
         return datetime.date.today()
 
 
-def _date_from_string(year, year_format, month='', month_format='', day='', day_format='', delim='__'):
+def _date_from_string(
+    year, year_format, month="", month_format="", day="", day_format="", delim="__"
+):
     """
     Helper: get a datetime.date object given a format string and a year,
     month, and day (only year is mandatory). Raise a 404 for an invalid date.
 
-    Copied from https://github.com/django/django/blob/2.0/django/views/generic/dates.py#L609
+    Copied from https://github.com/django/django/blob/2.0/django/views/generic/dates.py#L609  # noqa: E501
     """
     format = year_format + delim + month_format + delim + day_format
     datestr = str(year) + delim + str(month) + delim + str(day)
     try:
         return datetime.datetime.strptime(datestr, format).date()
     except ValueError:
-        raise Http404(_("Invalid date string '%(datestr)s' given format '%(format)s'") % {
-            'datestr': datestr,
-            'format': format,
-        })
+        raise Http404(
+            _("Invalid date string '%(datestr)s' given format '%(format)s'")
+            % {"datestr": datestr, "format": format}
+        )

@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # noqa: F403
 
 DEBUG = True
 
@@ -9,27 +9,28 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DEFAULT_FILE_STORAGE = "hines.core.storages.CustomS3Boto3Storage"
 
-AWS_ACCESS_KEY_ID = get_env_variable("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = get_env_variable("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = get_env_variable("AWS_STORAGE_BUCKET_NAME")
+AWS_ACCESS_KEY_ID = get_env_variable("AWS_ACCESS_KEY_ID")  # noqa: F405
+AWS_SECRET_ACCESS_KEY = get_env_variable("AWS_SECRET_ACCESS_KEY")  # noqa: F405
+AWS_STORAGE_BUCKET_NAME = get_env_variable("AWS_STORAGE_BUCKET_NAME")  # noqa: F405
 
 AWS_QUERYSTRING_AUTH = False
 
-MEDIA_URL = "https://{}.s3.amazonaws.com{}".format(AWS_STORAGE_BUCKET_NAME, MEDIA_URL)
+MEDIA_URL = "https://{}.s3.amazonaws.com{}".format(
+    AWS_STORAGE_BUCKET_NAME, MEDIA_URL  # noqa: F405
+)  # noqa: F405
 
 
 CACHES = {
     "default": {
-        # In-memory caching:
-        # 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        # 'TIMEOUT': 400, # seconds before expiring a cached item. None for never expiring.
-        # django-redis:
-        # 'BACKEND': 'django_redis.cache.RedisCache',
-        # 'LOCATION': get_env_variable('REDIS_URL'),
-        # 'KEY_PREFIX': 'hines',
-        # 'OPTIONS': {
-        #     'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        # },
+        # Use i-memory caching:
+        # "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        # Seconds before expiring a cached item. None for never expiring.
+        # "TIMEOUT": 400,
+        # Use django-redis:
+        # "BACKEND": "django_redis.cache.RedisCache",
+        # "LOCATION": get_env_variable("REDIS_URL"),
+        # "KEY_PREFIX": "hines",
+        # "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient",},
         # Use dummy cache (ie, no caching):
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
     }
@@ -38,10 +39,10 @@ CACHES = {
 
 # Debug Toolbar settings.
 if DEBUG:
-    MIDDLEWARE += [
+    MIDDLEWARE += [  # noqa: F405
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
-    INSTALLED_APPS += [
+    INSTALLED_APPS += [  # noqa: F405
         "debug_toolbar",
     ]
 

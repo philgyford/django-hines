@@ -48,10 +48,10 @@ class RecentObjects(object):
 
     # __init__() throws an error if supplied with kind_types that aren't these.
     valid_kind_types = [
-                'blog_posts',
-                'flickr_photos',
-                'pinboard_bookmarks',
-            ]
+        "blog_posts",
+        "flickr_photos",
+        "pinboard_bookmarks",
+    ]
 
     def __init__(self, kinds):
         """
@@ -73,14 +73,16 @@ class RecentObjects(object):
                 self.kinds.append(kind)
             else:
                 if len(kind) == 2:
-                    invalid_kinds.append('{}: {}'.format(kind[0], kind[1]))
+                    invalid_kinds.append("{}: {}".format(kind[0], kind[1]))
                 else:
                     invalid_kinds.append(str(kind))
 
         if len(invalid_kinds) > 0:
             raise ValueError(
                 "Invalid kind(s) supplied to __init__(): {}".format(
-                                                    ', '.join(invalid_kinds)))
+                    ", ".join(invalid_kinds)
+                )
+            )
         elif len(self.kinds) == 0:
             raise ValueError("No valid kinds supplied to __init__().")
 
@@ -103,19 +105,19 @@ class RecentObjects(object):
         if kind_type not in self.valid_kind_types:
             return False
 
-        if kind_type == 'blog_posts':
+        if kind_type == "blog_posts":
             try:
                 Blog.objects.get(slug=kind_id)
             except Blog.DoesNotExist:
                 return False
 
-        elif kind_type == 'flickr_photos':
+        elif kind_type == "flickr_photos":
             try:
                 FlickrAccount.objects.get(user__nsid=kind_id)
             except FlickrAccount.DoesNotExist:
                 return False
 
-        elif kind_type == 'pinboard_bookmarks':
+        elif kind_type == "pinboard_bookmarks":
             try:
                 PinboardAccount.objects.get(username=kind_id)
             except PinboardAccount.DoesNotExist:
@@ -134,19 +136,18 @@ class RecentObjects(object):
             kind_type = kind[0]
             kind_id = kind[1]
 
-            if kind_type == 'blog_posts':
-                objects.extend( self.get_blog_posts(kind_id, num) )
+            if kind_type == "blog_posts":
+                objects.extend(self.get_blog_posts(kind_id, num))
 
-            elif kind_type == 'flickr_photos':
-                objects.extend( self.get_flickr_photos(kind_id, num) )
+            elif kind_type == "flickr_photos":
+                objects.extend(self.get_flickr_photos(kind_id, num))
 
-            elif kind_type == 'pinboard_bookmarks':
-                objects.extend( self.get_pinboard_bookmarks(kind_id, num) )
+            elif kind_type == "pinboard_bookmarks":
+                objects.extend(self.get_pinboard_bookmarks(kind_id, num))
 
-        sorted_objects = sorted(objects, key=lambda k: k['time'], reverse=True)
+        sorted_objects = sorted(objects, key=lambda k: k["time"], reverse=True)
 
         return sorted_objects[:num]
-
 
     def get_blog_posts(self, blog_slug, num):
         """
@@ -155,14 +156,13 @@ class RecentObjects(object):
         """
         objects = []
 
-        posts = Post.public_objects.filter(blog__slug=blog_slug) \
-                                    .order_by('-time_published')[:num]
+        posts = Post.public_objects.filter(blog__slug=blog_slug).order_by(
+            "-time_published"
+        )[:num]
         for post in posts:
-            objects.append({
-                'kind': 'blog_post',
-                'object': post,
-                'time': post.time_published,
-            })
+            objects.append(
+                {"kind": "blog_post", "object": post, "time": post.time_published}
+            )
 
         return objects
 
@@ -176,25 +176,24 @@ class RecentObjects(object):
         """
         objects = []
 
-        photo_dates = Photo.public_objects.filter(user__nsid=nsid) \
-                                .dates('post_time', 'day', order='DESC')[:num]
+        photo_dates = Photo.public_objects.filter(user__nsid=nsid).dates(
+            "post_time", "day", order="DESC"
+        )[:num]
 
         for photo_date in photo_dates:
             photos = Photo.public_objects.filter(
-                                            user__nsid=nsid,
-                                            post_time__date=photo_date) \
-                                            .order_by('post_time')
+                user__nsid=nsid, post_time__date=photo_date
+            ).order_by("post_time")
 
             # Turn photo_date into a timezone aware time at midnight:
             photo_time = datetime.combine(photo_date, datetime.min.time())
             photo_time = timezone.make_aware(
-                                photo_time, timezone.get_current_timezone())
+                photo_time, timezone.get_current_timezone()
+            )
 
-            objects.append({
-                'kind': 'flickr_photos',
-                'objects': photos,
-                'time': photo_time,
-            })
+            objects.append(
+                {"kind": "flickr_photos", "objects": photos, "time": photo_time}
+            )
 
         return objects
 
@@ -204,16 +203,17 @@ class RecentObjects(object):
         """
         objects = []
 
-        bookmarks = Bookmark.public_objects \
-                            .filter(account__username=username) \
-                            .order_by('-post_time')[:num]
+        bookmarks = Bookmark.public_objects.filter(account__username=username).order_by(
+            "-post_time"
+        )[:num]
 
         for bookmark in bookmarks:
-            objects.append({
-                'kind': 'pinboard_bookmark',
-                'object': bookmark,
-                'time': bookmark.post_time
-            })
+            objects.append(
+                {
+                    "kind": "pinboard_bookmark",
+                    "object": bookmark,
+                    "time": bookmark.post_time,
+                }
+            )
 
         return objects
-

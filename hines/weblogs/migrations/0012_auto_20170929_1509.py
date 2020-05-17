@@ -8,12 +8,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0011_trackback'),
+        ("weblogs", "0011_trackback"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='trackback',
-            options={'ordering': ['-time_created']},
+            name="trackback", options={"ordering": ["-time_created"]},
         ),
     ]

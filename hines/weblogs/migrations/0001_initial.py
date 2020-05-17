@@ -17,43 +17,173 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Blog',
+            name="Blog",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time_created', models.DateTimeField(auto_now_add=True, help_text='The time this item was created in the database.')),
-                ('time_modified', models.DateTimeField(auto_now=True, help_text='The time this item was last saved to the database.')),
-                ('name', models.CharField(help_text='Full version of the name for headings, titles, etc.', max_length=255)),
-                ('short_name', models.CharField(help_text='Short version of the name for navigation etc.', max_length=30)),
-                ('slug', models.SlugField(max_length=255)),
-                ('sort_order', models.SmallIntegerField(default=1, help_text='Blogs will be sorted with lowest sort order first, then alphabetically by Name.')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "time_created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="The time this item was created in the database.",
+                    ),
+                ),
+                (
+                    "time_modified",
+                    models.DateTimeField(
+                        auto_now=True,
+                        help_text="The time this item was last saved to the database.",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Full version of the name for headings, titles, etc.",
+                        max_length=255,
+                    ),
+                ),
+                (
+                    "short_name",
+                    models.CharField(
+                        help_text="Short version of the name for navigation etc.",
+                        max_length=30,
+                    ),
+                ),
+                ("slug", models.SlugField(max_length=255)),
+                (
+                    "sort_order",
+                    models.SmallIntegerField(
+                        default=1,
+                        help_text="Blogs will be sorted with lowest sort order first, then alphabetically by Name.",  # noqa: E501
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['sort_order', 'name'],
-            },
+            options={"ordering": ["sort_order", "name"]},
         ),
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time_created', models.DateTimeField(auto_now_add=True, help_text='The time this item was created in the database.')),
-                ('time_modified', models.DateTimeField(auto_now=True, help_text='The time this item was last saved to the database.')),
-                ('title', models.CharField(max_length=255)),
-                ('excerpt', models.TextField(blank=True, help_text='Brief summary, no HTML. If not set, it will be a truncated version of the Intro.')),
-                ('intro', models.TextField(help_text='First paragraph or so of the post.')),
-                ('intro_html', models.TextField(blank=True, editable=False, help_text='Fully HTML version of the Intro, created on save')),
-                ('body', models.TextField(blank=True, help_text='The rest of the post text.')),
-                ('body_html', models.TextField(blank=True, editable=False, help_text='Fully HTML version of Body, created on save')),
-                ('remote_url', models.URLField(blank=True, help_text="If this post is reposted from elsewhere, add the URL for the original and it will be used for the post's permalink")),
-                ('time_published', models.DateTimeField(blank=True, null=True)),
-                ('slug', models.SlugField(help_text='Must be unique within its date of publication', max_length=255, unique_for_date='time_published')),
-                ('html_format', models.IntegerField(choices=[(0, 'No formatting'), (1, 'Convert line breaks'), (2, 'Markdown')], default=2)),
-                ('status', models.IntegerField(choices=[(1, 'Draft'), (2, 'Published')], default=1)),
-                ('featured', models.PositiveSmallIntegerField(choices=[(0, 'Not featured'), (1, 'Featured')], default=0)),
-                ('blog', models.ForeignKey(default=1, null=True, on_delete=django.db.models.deletion.CASCADE, to='weblogs.Blog')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "time_created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="The time this item was created in the database.",
+                    ),
+                ),
+                (
+                    "time_modified",
+                    models.DateTimeField(
+                        auto_now=True,
+                        help_text="The time this item was last saved to the database.",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                (
+                    "excerpt",
+                    models.TextField(
+                        blank=True,
+                        help_text="Brief summary, no HTML. If not set, it will be a truncated version of the Intro.",  # noqa: E501
+                    ),
+                ),
+                (
+                    "intro",
+                    models.TextField(help_text="First paragraph or so of the post."),
+                ),
+                (
+                    "intro_html",
+                    models.TextField(
+                        blank=True,
+                        editable=False,
+                        help_text="Fully HTML version of the Intro, created on save",
+                    ),
+                ),
+                (
+                    "body",
+                    models.TextField(
+                        blank=True, help_text="The rest of the post text."
+                    ),
+                ),
+                (
+                    "body_html",
+                    models.TextField(
+                        blank=True,
+                        editable=False,
+                        help_text="Fully HTML version of Body, created on save",
+                    ),
+                ),
+                (
+                    "remote_url",
+                    models.URLField(
+                        blank=True,
+                        help_text="If this post is reposted from elsewhere, add the URL for the original and it will be used for the post's permalink",  # noqa: E501
+                    ),
+                ),
+                ("time_published", models.DateTimeField(blank=True, null=True)),
+                (
+                    "slug",
+                    models.SlugField(
+                        help_text="Must be unique within its date of publication",
+                        max_length=255,
+                        unique_for_date="time_published",
+                    ),
+                ),
+                (
+                    "html_format",
+                    models.IntegerField(
+                        choices=[
+                            (0, "No formatting"),
+                            (1, "Convert line breaks"),
+                            (2, "Markdown"),
+                        ],
+                        default=2,
+                    ),
+                ),
+                (
+                    "status",
+                    models.IntegerField(
+                        choices=[(1, "Draft"), (2, "Published")], default=1
+                    ),
+                ),
+                (
+                    "featured",
+                    models.PositiveSmallIntegerField(
+                        choices=[(0, "Not featured"), (1, "Featured")], default=0
+                    ),
+                ),
+                (
+                    "blog",
+                    models.ForeignKey(
+                        default=1,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="weblogs.Blog",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['-time_published'],
-            },
+            options={"ordering": ["-time_published"]},
         ),
     ]

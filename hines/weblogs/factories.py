@@ -9,13 +9,12 @@ from hines.users.factories import UserFactory
 
 
 class BlogFactory(factory.DjangoModelFactory):
-
     class Meta:
         model = models.Blog
 
-    name = factory.Sequence(lambda n: 'Blog %s' % n)
-    short_name = factory.Sequence(lambda n: 'Blog %s' % n)
-    slug = factory.Sequence(lambda n: 'blog-%s' % n)
+    name = factory.Sequence(lambda n: "Blog %s" % n)
+    short_name = factory.Sequence(lambda n: "Blog %s" % n)
+    slug = factory.Sequence(lambda n: "blog-%s" % n)
     sort_order = factory.Sequence(lambda n: n)
 
 
@@ -27,11 +26,11 @@ class PostFactory(factory.DjangoModelFactory):
     class Meta:
         model = models.Post
 
-    title = factory.Sequence(lambda n: 'Post %s' % n)
+    title = factory.Sequence(lambda n: "Post %s" % n)
 
-    intro = factory.Sequence(lambda n: 'The intro %s.' % n)
-    body = factory.Sequence(lambda n: 'The body %s.' % n)
-    slug = factory.Sequence(lambda n: 'post-%s' % n)
+    intro = factory.Sequence(lambda n: "The intro %s." % n)
+    body = factory.Sequence(lambda n: "The body %s." % n)
+    slug = factory.Sequence(lambda n: "post-%s" % n)
     blog = factory.SubFactory(BlogFactory)
     author = factory.SubFactory(UserFactory)
 
@@ -62,13 +61,12 @@ class ScheduledPostFactory(PostFactory):
 
 
 class TrackbackFactory(factory.DjangoModelFactory):
-
     class Meta:
         model = models.Trackback
 
     post = factory.SubFactory(PostFactory)
-    title = factory.Sequence(lambda n: 'Trackback %s' % n)
+    title = factory.Sequence(lambda n: "Trackback %s" % n)
     excerpt = factory.fuzzy.FuzzyText(length=150)
-    url = factory.Sequence(lambda n: 'http://exmple.org/%s.html' % n)
-    ip_address = '123.123.123.123'
-    blog_name = factory.Sequence(lambda n: 'Other Blog %s' % n)
+    url = factory.Sequence(lambda n: "http://exmple.org/%s.html" % n)
+    ip_address = "123.123.123.123"
+    blog_name = factory.Sequence(lambda n: "Other Blog %s" % n)

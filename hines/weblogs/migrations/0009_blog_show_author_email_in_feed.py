@@ -8,13 +8,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0008_auto_20170428_1449'),
+        ("weblogs", "0008_auto_20170428_1449"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blog',
-            name='show_author_email_in_feed',
-            field=models.BooleanField(default=True, help_text="If checked, a Post's author's email will be included in the RSS feed."),
+            model_name="blog",
+            name="show_author_email_in_feed",
+            field=models.BooleanField(
+                default=True,
+                help_text="If checked, a Post's author's email will be included in the RSS feed.",  # noqa: E501
+            ),
         ),
     ]

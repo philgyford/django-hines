@@ -12,4 +12,3 @@ def custom_comment_actions(sender, instance, using, **kwargs):
     comment_count and last_comment_time are still accurate.
     """
     instance.set_parent_comment_data()
-

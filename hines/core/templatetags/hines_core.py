@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 from urllib.parse import urlparse
 
@@ -164,15 +163,18 @@ def widont(text):
 
     From https://github.com/chrisdrackett/django-typogrify
     """
-    widont_finder = re.compile(r"""((?:</?(?:a|em|span|strong|i|b)[^>]*>)|[^<>\s]) # must be proceeded by an approved inline opening or closing tag or a nontag/nonspace  # noqa: E501
+    widont_finder = re.compile(
+        r"""((?:</?(?:a|em|span|strong|i|b)[^>]*>)|[^<>\s]) # must be proceeded by an approved inline opening or closing tag or a nontag/nonspace  # noqa: E501
                                    \s+                                             # the space to replace
                                    ([^<>\s]+                                       # must be flollowed by non-tag non-space characters
                                    \s*                                             # optional white space!
                                    (</(a|em|span|strong|i|b)>\s*)*                 # optional closing inline tags with optional white space after each
                                    ((</(p|h[1-6]|li|dt|dd)>)|$))                   # end with a closing p, h1-6, li or the end of the string
-                                   """, re.VERBOSE)
+                                   """,
+        re.VERBOSE,
+    )
 
-    output = widont_finder.sub(r'\1&nbsp;\2', text)
+    output = widont_finder.sub(r"\1&nbsp;\2", text)
     return mark_safe(output)
 
 

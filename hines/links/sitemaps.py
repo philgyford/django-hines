@@ -3,7 +3,7 @@ from ditto.pinboard.models import Bookmark
 
 
 class BookmarkSitemap(Sitemap):
-    changefreq = 'never'
+    changefreq = "never"
     priority = 0.5
 
     def items(self):
@@ -11,4 +11,3 @@ class BookmarkSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.time_modified
-

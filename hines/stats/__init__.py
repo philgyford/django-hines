@@ -1,1 +1,1 @@
-default_app_config = 'hines.stats.apps.StatsConfig'
+default_app_config = "hines.stats.apps.StatsConfig"

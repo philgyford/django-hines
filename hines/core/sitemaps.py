@@ -18,4 +18,3 @@ class PagesSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
-

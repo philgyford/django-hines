@@ -8,18 +8,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0006_auto_20170405_1445'),
+        ("weblogs", "0006_auto_20170405_1445"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blog',
-            name='allow_comments',
-            field=models.BooleanField(default=True, help_text='If true, can still be overridden in Django SETTINGS.'),
+            model_name="blog",
+            name="allow_comments",
+            field=models.BooleanField(
+                default=True,
+                help_text="If true, can still be overridden in Django SETTINGS.",
+            ),
         ),
         migrations.AddField(
-            model_name='post',
-            name='allow_comments',
-            field=models.BooleanField(default=True, help_text="If true, can still be overridden by the Blog's equivalent setting, or in Django SETTINGS."),
+            model_name="post",
+            name="allow_comments",
+            field=models.BooleanField(
+                default=True,
+                help_text="If true, can still be overridden by the Blog's equivalent setting, or in Django SETTINGS.",  # noqa: E501
+            ),
         ),
     ]

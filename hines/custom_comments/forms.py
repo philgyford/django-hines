@@ -22,4 +22,3 @@ class CustomCommentForm(CommentForm):
 
         self.fields['comment'].required = True
         self.fields['comment'].widget.attrs['required'] = 'required'
-

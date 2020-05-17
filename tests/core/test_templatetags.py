@@ -105,6 +105,7 @@ class SmartypantsTestCase(TestCase):
 
 class WidontTestCase(TestCase):
     "From https://github.com/chrisdrackett/django-typogrify"
+
     def test_simple(self):
         self.assertEqual(widont("A very simple test"), "A very simple&nbsp;test")
 
