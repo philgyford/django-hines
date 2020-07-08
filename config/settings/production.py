@@ -1,4 +1,7 @@
 from .base import *  # noqa: F403
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 DEBUG = False
 
@@ -57,17 +60,15 @@ CSRF_COOKIE_SECURE = True
 
 # Sentry
 # https://devcenter.heroku.com/articles/sentry#integrating-with-python-or-django
-# via https://simonwillison.net/2017/Oct/17/free-continuous-deployment/
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN")  # noqa: F405
 
 if SENTRY_DSN:
-    INSTALLED_APPS += ("raven.contrib.django.raven_compat",)  # noqa: F405
-    RAVEN_CONFIG = {
-        "dsn": SENTRY_DSN,
-        "release": os.environ.get("HEROKU_SLUG_COMMIT", ""),  # noqa: F405
-    }
-
+    sentry_sdk.init(
+        dsn=os.environ["SENTRY_DSN"],  # noqa: F40
+        integrations=[DjangoIntegration()],
+        release=os.environ.get("HEROKU_SLUG_COMMIT", ""),  # noqa: F40
+    )
 
 #############################################################################
 # HINES-SPECIFIC SETTINGS.

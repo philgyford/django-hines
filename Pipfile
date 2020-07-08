@@ -18,10 +18,10 @@ whitenoise = "*"
 Django = ">=3.0, <3.1"
 Markdown = "*"
 gunicorn = "*"
-raven = "*"
 "psycopg2-binary" = "*"
 django-redis = "*"
 beautifulsoup4 = "*"
+sentry-sdk = "*"
 
 [dev-packages]
 # If changing things here, might also need to do so in .travis.yml
