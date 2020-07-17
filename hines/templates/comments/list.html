@@ -34,5 +34,17 @@
         </li>
       {% endfor %}
     </ol>
+
+    {# If the user posted a comment that was flagged as Spam, then a message will have been set, with extra_tags="spam", so: #}
+    {% if messages %}
+      {% for message in messages %}
+        {% if "spam" in message.tags %}
+          <p class="u-warning{% if message.tags %} {{ message.tags }}{% endif %}">
+            {{ message|safe }}
+          </p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
   </section>
 {% endif %}

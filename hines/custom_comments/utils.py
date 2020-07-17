@@ -174,8 +174,8 @@ def test_comment_for_spam(sender, comment, request, **kwargs):
         # Just in case MANAGERS isn't set or is empty:
         if len(managers) > 0:
             message += (
-                "If it wasn't then "
-                '<a href="mailto:%s?subject=Flagged annotation (ID: %s)">email me</a> '
+                " If it wasn't then "
+                '<a href="mailto:%s?subject=Flagged comment (ID: %s)">email me</a> '
                 "to have it published." % (managers[0][1], comment.id)
             )
 
