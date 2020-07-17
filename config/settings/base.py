@@ -34,6 +34,9 @@ DEBUG = False
 
 ALLOWED_HOSTS = get_env_variable("ALLOWED_HOSTS").split(",")
 
+ADMINS = [("Phil Gyford", "phil@gyford.com")]
+
+MANAGERS = ADMINS
 
 # Application definition
 
@@ -267,7 +270,9 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 }
 
 # Close comments on posts after this many days (assuming they're open):
-HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
+HINES_COMMENTS_CLOSE_AFTER_DAYS = 0
+
+HINES_AKISMET_API_KEY = os.environ.get("HINES_AKISMET_API_KEY", None)
 
 # How many of each thing do we want displayed on the home page?
 HINES_HOME_PAGE_DISPLAY = {

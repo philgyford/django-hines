@@ -109,6 +109,8 @@ To generate all the cached thumbnail images (which must be done because of the
 
 Custom settings that can be in the django `settings.py` file:
 
+`HINES_AKISMET_API_KEY`: To enable checking submitted comments for spam using [Akismet](https://akismet.com) set this to your API key, a string. If `None` then no spam checking is done using Akismet. `None` is the default. By default this is picked up from a `HINES_AKISMET_API_KEY` environment variable.
+
 `HINES_AUTHOR_NAME`: Name of the site's main author. e.g `'Phil Gyford'`.
 
 `HINES_AUTHOR_EMAIL`: Email of the site's main author. e.g. `'bob@example.com'`.

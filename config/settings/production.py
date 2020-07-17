@@ -5,13 +5,13 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 DEBUG = False
 
-ADMINS = [("Phil Gyford", "phil@gyford.com")]
-
-MANAGERS = ADMINS
-
 # If you *don't* want to prepend www to the URL, remove the setting from
 # the environment entirely. Otherwise, set to 'True' (or anything tbh).
 PREPEND_WWW = True
+
+
+# Close comments on posts after this many days (assuming they're open):
+HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
 
 
 # Storing Media files on AWS.

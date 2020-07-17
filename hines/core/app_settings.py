@@ -37,6 +37,7 @@ if not isinstance(COMMENTS_CLOSE_AFTER_DAYS, int):
         f"but it's 'f{COMMENTS_CLOSE_AFTER_DAYS}"
     )
 
+AKISMET_API_KEY = getattr(settings, "HINES_AKISMET_API_KEY", None)
 
 AUTHOR_NAME = getattr(settings, "HINES_AUTHOR_NAME", "")
 
