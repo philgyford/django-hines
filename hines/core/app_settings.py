@@ -26,7 +26,7 @@ COMMENTS_ALLOWED_TAGS = getattr(
 COMMENTS_ALLOWED_ATTRIBUTES = getattr(
     settings,
     "HINES_COMMENTS_ALLOWED_ATTRIBUTES",
-    {"a": ["href", "title"], "acronym": ["title"], "abbr": ["title"],},
+    {"a": ["href", "title"], "acronym": ["title"], "abbr": ["title"]},
 )
 
 COMMENTS_CLOSE_AFTER_DAYS = getattr(settings, "HINES_COMMENTS_CLOSE_AFTER_DAYS", 0)
