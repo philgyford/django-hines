@@ -111,7 +111,7 @@ class Akismet:
 
         # Construct the GET request to akismet.
         r = requests.post(
-            "http://" + self.api_key + "." + AKISMET_CHECK_URL,
+            "https://" + self.api_key + "." + AKISMET_CHECK_URL,
             data=parameters,
             headers=headers,
         )
@@ -176,9 +176,9 @@ class Akismet:
 
         # Construct the GET request to akismet.
         if t == "spam":
-            url = "http://" + self.api_key + "." + AKISMET_SUBMIT_SPAM_URL
+            url = "https://" + self.api_key + "." + AKISMET_SUBMIT_SPAM_URL
         elif t == "ham":
-            url = "http://" + self.api_key + "." + AKISMET_SUBMIT_HAM_URL
+            url = "https://" + self.api_key + "." + AKISMET_SUBMIT_HAM_URL
         else:
             raise InternalPykismetError("submit called with invalid t")
 
