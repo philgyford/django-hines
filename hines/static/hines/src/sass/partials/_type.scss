@@ -20,17 +20,13 @@ var {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   text-rendering: optimizeLegibility;
-  margin-top: 0;
+  margin-top: ($vertical-space * 2);
   margin-bottom: $headings-margin-bottom;
   color: $headings-color;
 
   // Needed for when we have left/right floated images in body text:
   // But messes up publication_detail page a bit, so trying with it off...
   //clear: both;
-
-  &:not(:first-child) {
-    margin-top: ($vertical-space * 2);
-  }
 
   @include text-style-nav;
 

@@ -29,29 +29,26 @@ $meta-offset-bottom: 0.4rem;
 
 .meta {
   @include text-style-nav;
+  // Clearfix needed because of .meta__inner's float:left.
+  @include clearfix;
   border-left: $border-width solid $border-color;
   margin-top: $meta-offset-top;
   margin-bottom: $meta-offset-bottom;
-
-  // We have to float it to get the border/height stuff to work.
-  // I haven't found a better way to do it.
-  // So whatever this is in will probably need clearfix included.
-  float: left;
   width: 100%;
-
-  .meta__inner {
-    @include list-unstyled;
-    padding-left: $border-width;
-    margin-top: -$meta-offset-top;
-    margin-bottom: -$meta-offset-bottom;
-
-    li {
-      background: none;
-    }
-  }
 }
 
+.meta__inner {
+  @include list-unstyled;
+  padding-left: $border-width;
+  margin-top: -$meta-offset-top;
+  margin-bottom: -$meta-offset-bottom;
+  // We have to float it to get the border/height stuff to work.
+  float: left;
 
+  li {
+    background: none;
+  }
+}
 
 .meta--inline {
   border-left: none;
