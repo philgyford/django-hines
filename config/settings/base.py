@@ -266,6 +266,9 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
     "a": ["href", "title"],
 }
 
+# Close comments on posts after this many days (assuming they're open):
+HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
+
 # How many of each thing do we want displayed on the home page?
 HINES_HOME_PAGE_DISPLAY = {
     "flickr_photos": 4,

@@ -71,6 +71,14 @@ Run tests:
 
 	$ pipenv run ./scripts/run-tests.sh
 
+Run a specific test module, e.g.:
+
+	$ pipenv run ./scripts/run-tests.sh tests.weblogs.models.test_post
+
+Run a specific test e.g.:
+
+	$ pipenv run ./scripts/run-tests.sh tests.weblogs.models.test_post.PostTestCase.test_ordering
+
 To include coverage, do:
 
 	$ pipenv run ./scripts/coverage.sh
@@ -121,6 +129,8 @@ directory. e.g. ``'hines/img/site_icon.jpg'``.
 ``HINES_COMMENTS_ALLOWED_TAGS``: A list of HTML tags allowed in comments; all others will be stripped. e.g. ``['a', 'strong', 'em',]``. Default is: ``[a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul']``.
 
 ``HINES_COMMENTS_ALLOWED_ATTRIBUTES``: A dict of attributes allowed in HTML tags in comments; all others will be stripped. e.g. ``{'a': ['href', 'title',],}``. Default is: ``{'a': ['href', 'title'], 'acronym': ['title'], 'abbr': ['title']}``.
+
+``HINES_COMMENTS_CLOSE_AFTER_DAYS``: An integer indicating whether to close comments on Posts after a certain number of days (assuming they're otherwise allowed). A `0` means ignore this setting. Other integers, e.g. `30`, mean "keep comments open until this Post is 30 days old".
 
 ``HINES_DATE_FORMAT`` strftime to use for displaying dates in templates. Default is ``'%-d %b %Y'``.
 

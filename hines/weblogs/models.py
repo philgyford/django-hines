@@ -1,3 +1,4 @@
+from datetime import timedelta
 import html.parser
 import re
 
@@ -464,7 +465,18 @@ class Post(TimeStampedModelMixin, models.Model):
             return False
 
         else:
-            return True
+            # Check COMMENTS_CLOSE_AFTER_DAYS setting.
+            cutoff_days = app_settings.COMMENTS_CLOSE_AFTER_DAYS
+            cutoff_time = timezone.now() - timedelta(days=cutoff_days)
+            if cutoff_days == 0:
+                # A 0 means ignore this setting
+                return True
+            elif self.time_published < cutoff_time:
+                # The post is too old, so comments no longer allowed
+                return False
+            else:
+                # The post is within the cutoff, so comments allowed
+                return True
 
 
 class Trackback(TimeStampedModelMixin, models.Model):

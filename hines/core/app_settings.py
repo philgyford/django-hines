@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
 
 ALLOW_COMMENTS = getattr(settings, 'HINES_ALLOW_COMMENTS', True)
@@ -23,6 +24,15 @@ COMMENTS_ALLOWED_ATTRIBUTES = getattr(settings, 'HINES_COMMENTS_ALLOWED_ATTRIBUT
     'acronym': ['title'],
     'abbr': ['title'],
 })
+
+COMMENTS_CLOSE_AFTER_DAYS = getattr(settings, 'HINES_COMMENTS_CLOSE_AFTER_DAYS', 0)
+
+if not isinstance(COMMENTS_CLOSE_AFTER_DAYS, int):
+    raise ImproperlyConfigured(
+        "The HINES_COMMENTS_CLOSE_AFTER_DAYS setting should be an integer, "
+        f"but it's 'f{COMMENTS_CLOSE_AFTER_DAYS}"
+    )
+
 
 AUTHOR_NAME = getattr(settings, 'HINES_AUTHOR_NAME', '')
 
