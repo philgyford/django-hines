@@ -1,4 +1,5 @@
 {% load hines_comments hines_core %}
+{% load l10n %}
 
 {% if post.comment_count > 0 %}
   <section>
@@ -20,14 +21,15 @@
               </span>
 
               at {% display_time comment.submit_date %}
-              <a href="#c{{ comment.id }}" title="Link to this comment">#</a>
+              &nbsp;
+              <a href="#c{{ comment.id|unlocalize }}" title="Link to this comment">#</a>
+              {% if perms.custom_comments.can_change_customcomment %}
+                &nbsp; <a class="u-admin" href="{% url 'admin:custom_comments_customcomment_change' comment.id %}" title="Edit this Comment in the Django Admin">Edit</a>
+              {% endif %}
             </p>
 
             {{ comment.comment|clean|safe|linebreaks }}
 
-            {% if perms.custom_comments.can_change_customcomment %}
-              <br><br><a class="u-admin" href="{% url 'admin:custom_comments_customcomment_change' post.id %}" title="Edit this Comment in the Django Admin">Edit</a>
-            {% endif %}
           </div> <!-- .media__body -->
         </li>
       {% endfor %}
