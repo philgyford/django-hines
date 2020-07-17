@@ -455,7 +455,7 @@ class Post(TimeStampedModelMixin, models.Model):
         """
         Returns a boolean indicating whether new comments are allowed on this.
         """
-        if app_settings.ALLOW_COMMENTS is not True:
+        if app_settings.COMMENTS_ALLOWED is not True:
             return False
 
         elif self.blog.allow_comments is False:

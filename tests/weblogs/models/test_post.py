@@ -405,28 +405,28 @@ Cats""",
         )
         self.assertEqual(post.main_image_url, "/dir/img1.jpg")
 
-    @override_app_settings(ALLOW_COMMENTS=False)
+    @override_app_settings(COMMENTS_ALLOWED=False)
     def test_comments_allowed_settings(self):
         "If the setting is False, should return False."
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertFalse(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     def test_comments_allowed_blog(self):
         "If the blog doesn't allow comments, it should return False."
         b = BlogFactory(allow_comments=False)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertFalse(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     def test_comments_allowed_post(self):
         "If the post doesn't allow comments, it should return False."
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=False)
         self.assertFalse(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     def test_comments_allowed_all_true(self):
         "If settings, blog and post are all true, it should return True"
         b = BlogFactory(allow_comments=True)
@@ -436,13 +436,13 @@ Cats""",
     @override_app_settings()
     def test_comments_allowed_no_setting(self):
         "If no setting, but blog and post are true, it should return True"
-        if hasattr(settings, "HINES_ALLOW_COMMENTS"):
-            del settings.HINES_ALLOW_COMMENTS
+        if hasattr(settings, "HINES_COMMENTS_ALLOWED"):
+            del settings.HINES_COMMENTS_ALLOWED
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertTrue(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=0)
     @freeze_time("2020-01-01 00:00:00")
     def test_comments_allowed_close_after_days_0(self):
@@ -456,7 +456,7 @@ Cats""",
         )
         self.assertTrue(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
     @freeze_time("2020-01-31 00:00:00")
     def test_comments_allowed_close_after_days_open(self):
@@ -470,7 +470,7 @@ Cats""",
         )
         self.assertTrue(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
     @freeze_time("2020-01-31 00:00:00")
     def test_comments_allowed_close_after_days_closed(self):

@@ -109,16 +109,16 @@ To generate all the cached thumbnail images (which must be done because of the
 
 Custom settings that can be in the django `settings.py` file:
 
-`HINES_ALLOW_COMMENTS`: Whether to allow commenting on blog posts. If
-`False`, overrides the settings for individual Blogs and Posts. Default
-`True`.
-
 `HINES_AUTHOR_NAME`: Name of the site's main author. e.g `'Phil Gyford'`.
 
 `HINES_AUTHOR_EMAIL`: Email of the site's main author. e.g. `'bob@example.com'`.
 
 `HINES_SITE_ICON`: Path of an image to represent the site, within the static
 directory. e.g. `'hines/img/site_icon.jpg'`.
+
+`HINES_COMMENTS_ALLOWED`: Whether to allow commenting on blog posts. If
+`False`, overrides the settings for individual Blogs and Posts. Default
+`True`.
 
 `HINES_COMMENTS_ALLOWED_TAGS`: A list of HTML tags allowed in comments; all others will be stripped. e.g. `['a', 'strong', 'em',]`. Default is: `[a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul']`.
 
