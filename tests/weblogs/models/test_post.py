@@ -443,10 +443,10 @@ Cats""",
         self.assertTrue(p.comments_allowed)
 
     @override_app_settings(COMMENTS_ALLOWED=True)
-    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=0)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
     @freeze_time("2020-01-01 00:00:00")
-    def test_comments_allowed_close_after_days_0(self):
-        "If the setting is 0 days, it should always return True"
+    def test_comments_allowed_close_after_days_none(self):
+        "If the setting is None, it should always return True"
         b = BlogFactory(allow_comments=True)
         # A really old post!
         p = LivePostFactory(

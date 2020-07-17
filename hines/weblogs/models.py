@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.utils.html import strip_tags
 
 from bs4 import BeautifulSoup
+from django_comments.moderation import CommentModerator, moderator
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
@@ -467,16 +468,58 @@ class Post(TimeStampedModelMixin, models.Model):
         else:
             # Check COMMENTS_CLOSE_AFTER_DAYS setting.
             cutoff_days = app_settings.COMMENTS_CLOSE_AFTER_DAYS
-            cutoff_time = timezone.now() - timedelta(days=cutoff_days)
-            if cutoff_days == 0:
-                # A 0 means ignore this setting
+            if cutoff_days is None:
+                # Means ignore this setting
                 return True
-            elif self.time_published < cutoff_time:
+
+            cutoff_time = timezone.now() - timedelta(days=cutoff_days)
+            if self.time_published < cutoff_time:
                 # The post is too old, so comments no longer allowed
                 return False
             else:
                 # The post is within the cutoff, so comments allowed
                 return True
+
+
+class PostCommentModerator(CommentModerator):
+    """
+    In addition to what we do in Post.comments_allowed, this should also
+    ensure that:
+
+    * We could enable email_notifications
+    * If something automatedly submits a Comment on a Post that's older
+      than COMMENTS_CLOSE_AFTER_DAYS, it will just be discarded.
+
+    https://django-contrib-comments.readthedocs.io/en/latest/moderation.html
+    """
+
+    email_notification = False
+    enable_field = "allow_comments"
+    auto_close_field = "time_published"
+    close_after = app_settings.COMMENTS_CLOSE_AFTER_DAYS
+
+    def allow(self, comment, content_object, request):
+        """
+        While this slightly duplicates Post.comments_allowed() it
+        ensures that our custom things (settings.HINES_COMMENTS_ALLOWED
+        and Blog.allow_comments) are taken into account in this
+        moderator.
+
+        If this returns False, then a submitted comment is just
+        disappeared.
+        """
+        result = super().allow(comment, content_object, request)
+
+        if not result:
+            # Default method already soys NO, so:
+            return False
+        elif content_object.comments_allowed:
+            return True
+        else:
+            return False
+
+
+moderator.register(Post, PostCommentModerator)
 
 
 class Trackback(TimeStampedModelMixin, models.Model):

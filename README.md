@@ -126,7 +126,7 @@ directory. e.g. `'hines/img/site_icon.jpg'`.
 
 `HINES_COMMENTS_ALLOWED_ATTRIBUTES`: A dict of attributes allowed in HTML tags in comments; all others will be stripped. e.g. `{'a': ['href', 'title',],}`. Default is: `{'a': ['href', 'title'], 'acronym': ['title'], 'abbr': ['title']}`.
 
-`HINES_COMMENTS_CLOSE_AFTER_DAYS`: An integer indicating whether to close comments on Posts after a certain number of days (assuming they're otherwise allowed). A `0` means ignore this setting. Other integers, e.g. `30`, mean "keep comments open until this Post is 30 days old".
+`HINES_COMMENTS_CLOSE_AFTER_DAYS`: An integer indicating whether to close comments on Posts after a certain number of days (assuming they're otherwise allowed). `None` (the default) means ignore this setting. Integers, e.g. `30`, mean "keep comments open until this Post is 30 days old".
 
 `HINES_DATE_FORMAT` strftime to use for displaying dates in templates. Default is `'%-d %b %Y'`.
 

@@ -29,9 +29,12 @@ COMMENTS_ALLOWED_ATTRIBUTES = getattr(
     {"a": ["href", "title"], "acronym": ["title"], "abbr": ["title"]},
 )
 
-COMMENTS_CLOSE_AFTER_DAYS = getattr(settings, "HINES_COMMENTS_CLOSE_AFTER_DAYS", 0)
 
-if not isinstance(COMMENTS_CLOSE_AFTER_DAYS, int):
+COMMENTS_CLOSE_AFTER_DAYS = getattr(settings, "HINES_COMMENTS_CLOSE_AFTER_DAYS", None)
+
+if COMMENTS_CLOSE_AFTER_DAYS is not None and not isinstance(
+    COMMENTS_CLOSE_AFTER_DAYS, int
+):
     raise ImproperlyConfigured(
         "The HINES_COMMENTS_CLOSE_AFTER_DAYS setting should be an integer, "
         f"but it's 'f{COMMENTS_CLOSE_AFTER_DAYS}"
