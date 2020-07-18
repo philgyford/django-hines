@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "taggit",
     "django_comments",
+    "hcaptcha",
     "imagekit",
     "spectator.core",
     "spectator.events",
@@ -222,7 +223,7 @@ AWS_DEFAULT_ACL = None
 
 
 # https://django-imagekit.readthedocs.io/en/stable/caching.html#removing-safeguards
-IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
 
 
 # END THIRD-PARTY APPS
@@ -315,3 +316,9 @@ DITTO_CORE_DATE_FORMAT = HINES_DATE_FORMAT
 DITTO_CORE_DATETIME_FORMAT = HINES_DATETIME_FORMAT
 
 SPECTATOR_DATE_FORMAT = HINES_DATE_FORMAT
+
+
+# For https://github.com/AndrejZbin/django-hcaptcha
+# Used in the comments form.
+HCAPTCHA_SITEKEY = os.environ.get("HCAPTCHA_SITEKEY", None)
+HCAPTCHA_SECRET = os.environ.get("HCAPTCHA_SECRET", None)

@@ -188,6 +188,7 @@ Default is `None`, to disable this behaviour.
 `HINES_USE_HTTPS`: e.g. `False`. Used when generating full URLs and the
 request object isn't available. Default `False`.
 
+
 ## Environment variables
 
 We expect some variables to be set in the environment. For local development we
@@ -204,6 +205,12 @@ These variables are used on both local development and production/Heroku sites:
     AWS_STORAGE_BUCKET_NAME
     REDIS_URL
     SPECTATOR_GOOGLE_MAPS_API_KEY
+
+Used only on production/Heroku site:
+
+    HCAPTCHA_SITEKEY
+    HCAPTCHA_SECRET
+    HINES_AKISEMT_API_KEY
 
 For local development, a couple of them should be like this in the `.env` file:
 
