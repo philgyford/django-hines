@@ -452,6 +452,31 @@ class Post(TimeStampedModelMixin, models.Model):
         return url
 
     @property
+    def comments_are_open(self):
+        """
+        Ignoring the various on/off switches for allowing comments,
+        focusing only on the COMMENTS_CLOSE_AFTER_DAYS setting, are
+        comments possible based on that?
+
+        If the setting is None, this returns True
+        If the setting is set then:
+            If the Post is within the time limit, this returns True
+            If the Post is too old, this returns False
+        """
+        cutoff_days = app_settings.COMMENTS_CLOSE_AFTER_DAYS
+        if cutoff_days is None:
+            # Means ignore this setting
+            return True
+
+        cutoff_time = timezone.now() - timedelta(days=cutoff_days)
+        if self.time_published >= cutoff_time:
+            # The post is within the cutoff, so comments allowed
+            return True
+        else:
+            # The post is too old, so comments no longer allowed
+            return False
+
+    @property
     def comments_allowed(self):
         """
         Returns a boolean indicating whether new comments are allowed on this.
@@ -466,19 +491,7 @@ class Post(TimeStampedModelMixin, models.Model):
             return False
 
         else:
-            # Check COMMENTS_CLOSE_AFTER_DAYS setting.
-            cutoff_days = app_settings.COMMENTS_CLOSE_AFTER_DAYS
-            if cutoff_days is None:
-                # Means ignore this setting
-                return True
-
-            cutoff_time = timezone.now() - timedelta(days=cutoff_days)
-            if self.time_published < cutoff_time:
-                # The post is too old, so comments no longer allowed
-                return False
-            else:
-                # The post is within the cutoff, so comments allowed
-                return True
+            return self.comments_are_open
 
 
 class PostCommentModerator(CommentModerator):

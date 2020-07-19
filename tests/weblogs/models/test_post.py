@@ -377,6 +377,8 @@ Cats""",
         )
         self.assertEqual(post.excerpt_text, "This is ‘Cited’ and Bold")
 
+    # Post.main_image_url
+
     def test_main_image_url_none(self):
         """If there's no image in either intro_html or body_html it
         should return an empty string.
@@ -404,6 +406,50 @@ Cats""",
             '<img src="/dir/img2.jpg">. Bye.</p>',
         )
         self.assertEqual(post.main_image_url, "/dir/img1.jpg")
+
+    # Post.comments_are_open
+
+    @override_app_settings(COMMENTS_ALLOWED=False)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
+    @freeze_time("2020-01-31 00:00:00")
+    def test_comments_are_open_true(self):
+        "If the post is older than the setting allows for, it should return True"
+        b = BlogFactory(allow_comments=False)
+        # A post just within 30 days ago:
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=False,
+            time_published=make_datetime("2020-01-01 00:00:01"),
+        )
+        self.assertTrue(p.comments_are_open)
+
+    @override_app_settings(COMMENTS_ALLOWED=False)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
+    def test_comments_are_open_not_set(self):
+        "If the COMMENTS_CLOSE_AFTER_DAYS setting is None, it should return True"
+        b = BlogFactory(allow_comments=False)
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=False,
+            time_published=make_datetime("2000-01-01 00:00:00"),
+        )
+        self.assertTrue(p.comments_are_open)
+
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
+    @freeze_time("2020-01-31 00:00:00")
+    def test_comments_are_open_false(self):
+        "If the post is newer than the setting allows for, it should return False"
+        b = BlogFactory(allow_comments=True)
+        # A post just older than 30 days ago:
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=True,
+            time_published=make_datetime("2019-12-31 23:59:59"),
+        )
+        self.assertFalse(p.comments_are_open)
+
+    # Post.comments_allowed
 
     @override_app_settings(COMMENTS_ALLOWED=False)
     def test_comments_allowed_settings(self):
