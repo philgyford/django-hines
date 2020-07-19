@@ -211,19 +211,23 @@ cite {
  * (e.g. in a <p> that immediately follows an <hr>)
  */
 .section-anchor {
-  // Assuming there's a " &nbsp; " before the first text:
-  @include media-breakpoint-up(md) {
-    margin-left: -1.25em;
-  }
+  @include media-breakpoint-up(sm) {
+    position: absolute;
+    left: -1rem;
 
-  @include media-breakpoint-up(lg) {
     h1 &, .h1 &,
     h2 &, .h2 &,
     h3 &, .h3 &,
     h4 &, .h4 &,
     h5 &, .h5 &,
     h6 &, .h6 & {
-      margin-left: -1.39em;
+      left: -1.25rem;
+    }
+
+    .media__byline & {
+      // For when we have an a.section-anchor at the end of a .media__byline:
+      font-size: $font-size-base;
+      line-height: 1.5em;
     }
   }
 }

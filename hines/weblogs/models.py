@@ -394,8 +394,8 @@ class Post(TimeStampedModelMixin, models.Model):
                 if el is not None:
                     # Set the ID of the <p> etc...
                     el.attrs["id"] = id
-                    # ...prepend spaces, then prepemd the <a>...
-                    el.insert(0, " \xa0 ")
+                    # ...prepend a space, then prepemd the <a>...
+                    el.insert(0, " ")
                     el.insert(0, anchor)
             html = soup.encode(formatter="html5").decode()
         return html

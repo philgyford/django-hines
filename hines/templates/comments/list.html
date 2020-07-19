@@ -9,7 +9,7 @@
 
     <ol class="media-list">
       {% for comment in comment_list %}
-        <li class="media" id="c{{ comment.id }}">
+        <li class="media" id="c{{ comment.id|unlocalize }}">
           <div class="media__body">
             <p class="media__byline"{% if forloop.last %} id="latest"{% endif %}>
               <span class="media__byline__author">
@@ -22,7 +22,7 @@
 
               at {% display_time comment.submit_date %}
               &nbsp;
-              <a href="#c{{ comment.id|unlocalize }}" title="Link to this comment">#</a>
+              <a class="section-anchor" href="#c{{ comment.id|unlocalize }}" title="Link to this comment">#</a>
               {% if perms.custom_comments.can_change_customcomment %}
                 &nbsp; <a class="u-admin" href="{% url 'admin:custom_comments_customcomment_change' comment.id %}" title="Edit this Comment in the Django Admin">Edit</a>
               {% endif %}
