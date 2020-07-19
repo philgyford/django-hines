@@ -57,7 +57,7 @@
       </ul>
     </aside>
 
-		<div class="h-content">
+		<div class="e-content">
 	    {{ post.intro_html|safe }}
 
 			{{ post.body_html|safe }}
@@ -71,7 +71,7 @@
 
     <aside class="meta">
       <ul class="meta__inner">
-				<li>By <a rel="author" href="{{ site_url }}">{{ post.author.display_name }}</a></li>
+				<li>By <a class="p-author h-card" rel="author" href="{{ site_url }}">{{ post.author.display_name }}</a></li>
 
         {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
 
