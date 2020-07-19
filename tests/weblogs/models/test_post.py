@@ -165,9 +165,9 @@ Cod""",
             post.body_html,
             """<p>Dogs</p>
 <hr>
-<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Cats</p>
+<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
 <hr>
-<h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Fish</h2>
+<h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Fish</h2>
 <p>Cod</p>""",  # noqa: E501
         )
 
@@ -188,7 +188,7 @@ Cats""",
             """<p>Dogs</p>
 <hr>
 <figure src="test.png"></figure>
-<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Cats</p>""",  # noqa: E501
+<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>""",  # noqa: E501
         )
 
     def test_body_html_hines_markdown_no_change(self):
