@@ -19,7 +19,12 @@ from taggit.models import Tag, TaggedItemBase
 
 from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
-from hines.core.utils import get_site_url, expire_view_cache, markdownify, truncate_string
+from hines.core.utils import (
+    get_site_url,
+    expire_view_cache,
+    markdownify,
+    truncate_string,
+)
 from hines.custom_comments.utils import add_comment_message
 from . import managers
 
