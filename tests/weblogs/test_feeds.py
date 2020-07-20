@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.contrib.sites.models import Site
 from django.utils.feedgenerator import rfc2822_date
 
@@ -55,11 +57,17 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         response = self.client.get("/terry/not-my-blog/feeds/posts/rss/")
         self.assertEqual(response.status_code, 404)
 
+    @patch("hines.weblogs.models.Post.comments_allowed", False)
     def test_feed(self):
         """
         Borrowing a lot from
         https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
+
+        Don't want the content to be affected by whether comments are
+        allowed on the Post or not for this test, so patching
+        Post.comments_allowed()
         """
+
         channel = self.get_feed_channel("/terry/my-blog/feeds/posts/rss/")
 
         d = self.blog.public_posts.latest("time_modified").time_modified
@@ -155,6 +163,21 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
             self.assertIsNone(
                 item.getElementsByTagName("guid")[0].attributes.get("isPermaLink")
             )
+
+    @patch("hines.weblogs.models.Post.comments_allowed", True)
+    def test_feed_comments_allowed(self):
+        "If comments are enabled on a Post, there should be a link in content:encoded"
+
+        channel = self.get_feed_channel("/terry/my-blog/feeds/posts/rss/")
+
+        item = channel.getElementsByTagName("item")[0]
+
+        content = item.getElementsByTagName("content:encoded")[0].firstChild.wholeText
+
+        self.assertEqual(
+            content,
+            '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p><p><a href="http://example.com/terry/my-blog/2017/04/25/my-latest-post/#comments">Read comments or post one</a></p>',  # noqa: E501
+        )
 
     def test_no_author_email(self):
         "If we don't want to show author emails, they don't appear."

@@ -11,6 +11,10 @@
     <p><a href="{{ site_url }}{{ obj.object.get_absolute_url }}">Permalink</a></p>
   {% endif %}
 
+  {% if obj.object.comments_allowed %}
+    <p><a href="{{ site_url }}{{obj.object.get_absolute_url }}#comments">Read comments or post one</a></p>
+  {% endif %}
+
 {% elif obj.kind == 'pinboard_bookmark' %}
   <p>{{ obj.object.description|safe }}</p>
   <p><a href="{{ site_url }}{{ obj.object.get_absolute_url }}">Permalink</a></p>

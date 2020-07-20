@@ -2,7 +2,7 @@
 {% load l10n %}
 
 {% if post.comment_count > 0 %}
-  <section>
+  <section id="comments">
     <h2>
       {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
     </h2>
@@ -36,21 +36,5 @@
         </li>
       {% endfor %}
     </ol>
-
-    {% comment %}
-      If the user posted a comment that was flagged as Spam, or comments require
-      moderation, then a message will have been set, with
-      extra_tags="message-kind-comment", so:
-    {% endcomment %}
-    {% if messages %}
-      {% for message in messages %}
-        {% if "message-kind-comment" in message.tags %}
-          <p class="{% if message.tags %} {{ message.tags }}{% endif %}">
-            {{ message|safe }}
-          </p>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-
   </section>
 {% endif %}

@@ -122,6 +122,7 @@ def get_site_url():
     """
     Returns the full domain of the website.
     Shouldn't end in a slash, so it can be used with static() etc.
+    (Although it appears to return URLs ending in slashes?)
     """
     protocol = "http"
 
