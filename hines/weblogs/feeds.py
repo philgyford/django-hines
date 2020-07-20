@@ -1,5 +1,4 @@
 from hines.core.feeds import ExtendedFeed, ExtendedRSSFeed
-from hines.core.utils import get_site_url
 from .models import Blog
 
 
@@ -57,8 +56,7 @@ class BlogPostsFeedRSS(ExtendedFeed):
         content = item.intro_html + item.body_html
 
         if item.comments_allowed:
-            domain = get_site_url()
-            url = f"{domain}{item.get_absolute_url()}#comments"
+            url = f"{item.get_absolute_url_with_domain()}#comments"
             content += f'<p><a href="{url}">Read comments or post one</a></p>'
 
         return content

@@ -19,7 +19,7 @@ from taggit.models import Tag, TaggedItemBase
 
 from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
-from hines.core.utils import expire_view_cache, markdownify, truncate_string
+from hines.core.utils import get_site_url, expire_view_cache, markdownify, truncate_string
 from hines.custom_comments.utils import add_comment_message
 from . import managers
 
@@ -89,6 +89,12 @@ class Blog(TimeStampedModelMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse("weblogs:blog_detail", kwargs={"blog_slug": self.slug})
+
+    def get_absolute_url_with_domain(self):
+        """
+        Returns the Blog's URL but starting with "http..."
+        """
+        return get_site_url() + self.get_absolute_url()
 
     def get_rss_feed_url(self):
         return reverse("weblogs:blog_feed_posts_rss", kwargs={"blog_slug": self.slug})
@@ -276,6 +282,12 @@ class Post(TimeStampedModelMixin, models.Model):
                 "post_slug": self.slug,
             },
         )
+
+    def get_absolute_url_with_domain(self):
+        """
+        Returns the Post's URL but starting with "http..."
+        """
+        return get_site_url() + self.get_absolute_url()
 
     def get_previous_post(self):
         "Gets the previous public Post, by time_published."

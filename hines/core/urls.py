@@ -5,6 +5,7 @@ from django.views.generic.base import RedirectView
 
 from . import converters, feeds
 from . import views as core_views
+from hines.custom_comments import feeds as comments_feeds
 
 
 register_converter(converters.FourDigitYearConverter, "yyyy")
@@ -21,7 +22,11 @@ urlpatterns = [
     path(
         "feeds/everything/rss/", feeds.EverythingFeedRSS(), name="everything_feed_rss"
     ),
-
+    path(
+        "feeds/comments/rss/",
+        comments_feeds.CommentsFeedRSS(),
+        name="comments_feed_rss",
+    ),
     # Flatpages with names:
     path("about/", flatpages_views.flatpage, {"url": "/phil/about/"}, name="about"),
     path(
