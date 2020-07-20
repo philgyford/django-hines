@@ -506,10 +506,19 @@ class PostCommentModerator(CommentModerator):
     https://django-contrib-comments.readthedocs.io/en/latest/moderation.html
     """
 
-    email_notification = False
-    enable_field = "allow_comments"
+    # All comments require moderation, so are not published automatically:
+    auto_moderate_field = "time_published"
+    moderate_after = 0
+
+    # No more comments are allowed at all after this many days:
     auto_close_field = "time_published"
     close_after = app_settings.COMMENTS_CLOSE_AFTER_DAYS
+
+    # This field on a Post is what we look at to see if comments are allowed on it:
+    enable_field = "allow_comments"
+
+    # Whether to send an email to site staff when there's a new comment:
+    email_notification = False
 
     def allow(self, comment, content_object, request):
         """

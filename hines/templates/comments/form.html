@@ -53,12 +53,13 @@ Could have this passed in:
           {% load hines_comments %}
           {% allowed_tags as tags %}
           <div class="form__text">
-            URLs will be turned into links.<br>
             {% if tags|length == 0 %}
               No tags allowed in comments.
             {% else %}
               Allowed HTML tags: <code>{{ tags|join:"</code>, <code>" }}</code>.
             {% endif %}
+            <br>
+            URLs will be turned into links.
           </div>
         {% endif %}
       </div>
@@ -67,15 +68,33 @@ Could have this passed in:
   {% endfor %}
 
   <p class="form__buttons">
-  {% if is_preview|default_if_none:False %}
-    <button type="submit" name="preview" class="button button--primary">Preview again</button>
-    {% if form.is_valid %}
-      &nbsp;
-      <button type="submit" name="post" class="button button--primary">Post comment</button>
-    {% endif %}
-  {% else %}
-    <button type="submit" name="preview" class="button button--primary">Preview comment</button>
-  {% endif %}
+    <button type="submit" name="post" class="button button--primary">Post comment</button>
   </p>
+
+  {% comment %}
+    {# Using the below means we initially show a "Preview comment" button, which leads
+      to a page where there's a "Preview again" and "Post comment" button.
+      But if we're using hCaptcha the user has to complete that on both of the forms,
+      which is a real pain.
+
+      *Maybe* it would be possible to override the django-contrib-comments template
+      tag that calls get_form() so that it can return a form that has the hcaptcha
+      field for the second (preview & post) form, but not for the first
+      (preview only) form?
+
+      But for now, let's stick with a simple single form and hCaptcha.
+    #}
+    <p class="form__buttons">
+      {% if is_preview|default_if_none:False %}
+        <button type="submit" name="preview" class="button button--primary">Preview again</button>
+        {% if form.is_valid %}
+          &nbsp;
+          <button type="submit" name="post" class="button button--primary">Post comment</button>
+        {% endif %}
+      {% else %}
+        <button type="submit" name="preview" class="button button--primary">Preview comment</button>
+      {% endif %}
+    </p>
+  {% endcomment %}
 
 </form>
