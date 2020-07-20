@@ -37,11 +37,15 @@
       {% endfor %}
     </ol>
 
-    {# If the user posted a comment that was flagged as Spam, then a message will have been set, with extra_tags="spam", so: #}
+    {% comment %}
+      If the user posted a comment that was flagged as Spam, or comments require
+      moderation, then a message will have been set, with
+      extra_tags="message-kind-comment", so:
+    {% endcomment %}
     {% if messages %}
       {% for message in messages %}
-        {% if "spam" in message.tags %}
-          <p class="u-warning{% if message.tags %} {{ message.tags }}{% endif %}">
+        {% if "message-kind-comment" in message.tags %}
+          <p class="{% if message.tags %} {{ message.tags }}{% endif %}">
             {{ message|safe }}
           </p>
         {% endif %}

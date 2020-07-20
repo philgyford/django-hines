@@ -1,7 +1,10 @@
 
+.u-success {
+  color: $text-color-success;
+  @include text-style-alt;
+}
 .u-warning {
   color: $text-color-warning;
-
   @include text-style-alt;
 }
 

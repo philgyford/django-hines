@@ -3,6 +3,7 @@ import html.parser
 import re
 
 from django.conf import settings
+from django.contrib import messages
 from django.db import models
 from django.db.models import Count
 from django.template.defaultfilters import linebreaks
@@ -19,6 +20,7 @@ from taggit.models import Tag, TaggedItemBase
 from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
 from hines.core.utils import expire_view_cache, markdownify, truncate_string
+from hines.custom_comments.utils import add_comment_message
 from . import managers
 
 
@@ -506,9 +508,14 @@ class PostCommentModerator(CommentModerator):
     https://django-contrib-comments.readthedocs.io/en/latest/moderation.html
     """
 
-    # All comments require moderation, so are not published automatically:
+    # Should comments require moderation before publishing?
     auto_moderate_field = "time_published"
-    moderate_after = 0
+    # Set this to:
+    #   None - No moderation, publish immediately
+    #   0 - Always moderate, never publish immediately
+    #   n - Any other integer, only moderate when the post is this
+    #       many days old.
+    moderate_after = None
 
     # No more comments are allowed at all after this many days:
     auto_close_field = "time_published"
@@ -539,6 +546,27 @@ class PostCommentModerator(CommentModerator):
             return True
         else:
             return False
+
+    def moderate(self, comment, content_object, request):
+        """
+        All we do here is:
+
+        * Get the result from the parent moderate() method.
+        * If the message is to be moderated, add a flash message
+          explaining this.
+        * Return the result.
+        """
+        result = super().moderate(comment, content_object, request)
+
+        if result is True:
+            message_content = (
+                "Thanks for your comment. "
+                "All comments must be checked before publishing, "
+                "so it should appear soon."
+            )
+            add_comment_message(request, messages.SUCCESS, message_content)
+
+        return result
 
 
 moderator.register(Post, PostCommentModerator)

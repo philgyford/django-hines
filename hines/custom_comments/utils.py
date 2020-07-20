@@ -167,18 +167,31 @@ def test_comment_for_spam(sender, comment, request, **kwargs):
         # Add a message which will be displayed in comment_form.html
         # (as well as wherever messages are usually displayed).
         # It will have tags like "spam warning".
-        message = "Your post was flagged as possible spam."
+        message_content = "Your post was flagged as possible spam."
 
         managers = getattr(settings, "MANAGERS", [])
 
         # Just in case MANAGERS isn't set or is empty:
         if len(managers) > 0:
-            message += (
+            message_content += (
                 " If it wasn't then "
                 '<a href="mailto:%s?subject=Flagged comment (ID: %s)">email me</a> '
                 "to have it published." % (managers[0][1], comment.id)
             )
 
-        messages.warning(
-            request, message, extra_tags="spam",
-        )
+        add_comment_message(request, messages.WARNING, message_content)
+
+
+def add_comment_message(request, level, content):
+    """
+    So we have a single place for adding flash messages that will
+    appear when submitting a comment.
+
+    https://docs.djangoproject.com/en/3.0/ref/contrib/messages/
+
+    Keyword arguments:
+    request - The Request object
+    level - One of the message levels, e.g. messages.SUCCESS
+    content - The content of the message, a string.
+    """
+    messages.add_message(request, level, content, extra_tags="message-kind-comment")

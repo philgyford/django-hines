@@ -5,6 +5,7 @@ import os
 
 import dj_database_url
 
+from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 
 
@@ -189,6 +190,15 @@ AUTH_USER_MODEL = "users.User"
 # Monday:
 FIRST_DAY_OF_WEEK = 1
 
+
+# Use our custom CSS classes for message styles.
+MESSAGE_TAGS = {
+    messages.DEBUG: "u-debug",
+    messages.INFO: "u-info",
+    messages.SUCCESS: "u-success",
+    messages.WARNING: "u-warning",
+    messages.ERROR: "u-error",
+}
 
 ####################################################################
 # THIRD-PARTY APPS
