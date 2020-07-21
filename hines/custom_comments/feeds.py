@@ -32,7 +32,7 @@ class CommentsFeedRSS(ExtendedFeed):
         return f"Comments on {obj.name}"
 
     def description(self, obj):
-        return "The most recent comments on {obj.name}"
+        return f"The most recent comments on {obj.name}"
 
     def items(self, obj):
         site = Site.objects.get_current()
@@ -56,6 +56,21 @@ class CommentsFeedRSS(ExtendedFeed):
 
     def item_author_name(self, item):
         return item.user_name
+
+    def item_description(self, item):
+        """
+        I tried several things to get CDATA stuff working like we
+        do with content:encoded, but everything ended up as encoded
+        HTML (&lt; etc). Given the spec says "entity-encoded HTML is
+        allowed" now we just put the comment's HTML in, which will get
+        encoded, without using CDATA.
+
+        Also, fyi, we're putting the full comment here, as well as in
+        content:encoded, because we don't have a meaningful way to
+        provide a summary of the full comment here, which is what
+        we'd otherwise use description for.
+        """
+        return self.get_item_content(item)
 
     def _get_parent_object(self, item):
         # Get the object that this CustomComment was posted on:
