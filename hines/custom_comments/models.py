@@ -86,3 +86,6 @@ class CustomComment(Comment):
                 ]
 
         obj.save()
+
+
+# Looking for the Comment Moderator? It's at weblogs.models.PostCommentModerator !

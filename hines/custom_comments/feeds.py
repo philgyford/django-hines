@@ -15,6 +15,9 @@ class CommentsFeedRSS(ExtendedFeed):
     https://github.com/django/django-contrib-comments/blob/master/django_comments/feeds.py  # noqa: E501
     """
 
+    # Is this feed showing public comments or not-public ones?
+    show_public_comments = True
+
     feed_type = ExtendedRSSFeed
 
     # Used for the content:encoded element:
@@ -37,7 +40,7 @@ class CommentsFeedRSS(ExtendedFeed):
     def items(self, obj):
         site = Site.objects.get_current()
         qs = django_comments.get_model().objects.filter(
-            site__pk=site.pk, is_public=True, is_removed=False
+            site__pk=site.pk, is_public=self.show_public_comments, is_removed=False
         )
         return qs.order_by("-submit_date")[:20]
 
@@ -82,3 +85,45 @@ class CommentsFeedRSS(ExtendedFeed):
             )
         obj = content_type.get_object_for_this_type(pk=item.object_pk)
         return obj
+
+
+class AdminPublishedCommentsFeedRSS(CommentsFeedRSS):
+    """
+    The same as the public Comments RSS feed, except with added links
+    to Remove comments.
+    """
+
+    # Is this feed showing public comments or not-public ones?
+    show_public_comments = True
+
+    content_template = "comments/feeds/content_admin_published.html"
+
+    def title(self, obj):
+        title = super().title(obj)
+        return f"{title} (Admin)"
+
+    def description(self, obj):
+        description = super().description(obj)
+        return f"{description} (Admin)"
+
+
+class AdminNotPublicCommentsFeedRSS(CommentsFeedRSS):
+    """
+    The same as the Adin Published feed, except it only includes
+    comments marked as is_public=False. They've probably been
+    automatically marked as likely spam.
+
+    The template gives the user the option to "delete" them, i.e. mark
+    them as is_rmoved=True
+    """
+
+    # Is this feed showing public comments or not-public ones?
+    show_public_comments = False
+
+    content_template = "comments/feeds/content_admin_not_public.html"
+
+    def title(self, obj):
+        return f"Spam comments on {obj.name} (Admin)"
+
+    def description(self, obj):
+        return f"The most recent spam comments on {obj.name} (Admin)"

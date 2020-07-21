@@ -19,6 +19,7 @@ urlpatterns = [
     path("test.html", TemplateView.as_view(template_name="hines_core/test.html")),
     # Send anyone going to '/phil/' to the home page at '/'.
     path("", RedirectView.as_view(url="/", permanent=False)),
+    # RSS FEEDS
     path(
         "feeds/everything/rss/", feeds.EverythingFeedRSS(), name="everything_feed_rss"
     ),
@@ -26,6 +27,16 @@ urlpatterns = [
         "feeds/comments/rss/",
         comments_feeds.CommentsFeedRSS(),
         name="comments_feed_rss",
+    ),
+    path(
+        "feeds/admin-published-comments/rss/",
+        comments_feeds.AdminPublishedCommentsFeedRSS(),
+        name="admin_published_comments_feed_rss",
+    ),
+    path(
+        "feeds/admin-not-public-comments/rss/",
+        comments_feeds.AdminNotPublicCommentsFeedRSS(),
+        name="admin_not_public_comments_feed_rss",
     ),
     # Flatpages with names:
     path("about/", flatpages_views.flatpage, {"url": "/phil/about/"}, name="about"),
