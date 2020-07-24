@@ -13,12 +13,10 @@ register_converter(converters.FourDigitYearConverter, "yyyy")
 register_converter(converters.TwoDigitMonthConverter, "mm")
 register_converter(converters.TwoDigitDayConverter, "dd")
 
-
 app_name = "hines"
 
 admin_published_comments_slug = app_settings.COMMENTS_ADMIN_PUBLISHED_FEED_SLUG
 admin_not_published_comments_slug = app_settings.COMMENTS_ADMIN_NOT_PUBLISHED_FEED_SLUG
-
 
 urlpatterns = [
     path("test.html", TemplateView.as_view(template_name="hines_core/test.html")),
