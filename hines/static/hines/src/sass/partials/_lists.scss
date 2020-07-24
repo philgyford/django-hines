@@ -70,6 +70,6 @@ li > p {
 // RSS list
 
 li.icon-rss {
-  @include background-svg(rss, "#f78422");
+  @include background-svg(rss);
   background-size: 12px;
 }
