@@ -122,25 +122,30 @@
                 <h1 class="card__header">RSS feeds</h1>
                 <ul class="list-unstyled">
                   <li>
-                    <a href="{% url 'hines:everything_feed_rss' %}">Everything below combined</a>
-                  </li>
-                  {% with all_blogs|get_item:'writing' as b %}
-                    <li>
-                      <a href="{{ b.get_rss_feed_url }}">{{ b.short_name }}</a>
-                    </li>
-                  {% endwith %}
+                    <a href="{% url 'hines:everything_feed_rss' %}">These four feeds combined</a>
+                    <ul>
+                      {% with all_blogs|get_item:'writing' as b %}
+                        <li>
+                          <a href="{{ b.get_rss_feed_url }}">{{ b.short_name }}</a>
+                        </li>
+                      {% endwith %}
 
-                  <li>
-                    <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
+                      <li>
+                        <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
+                      </li>
+                      <li>
+                        <a href="http://feeds.pinboard.in/rss/u:philgyford/">Links at Pinboard</a>
+                      </li>
+                      {% with all_blogs|get_item:'comments' as b %}
+                        <li>
+                          <a href="{{ b.get_rss_feed_url }}">{{ b.name }}</a>
+                        </li>
+                      {% endwith %}
+                    </ul>
                   </li>
                   <li>
-                    <a href="http://feeds.pinboard.in/rss/u:philgyford/">Links at Pinboard</a>
+                    <a href="{% url 'hines:comments_feed_rss' %}">Comments posted on this site</a>
                   </li>
-                  {% with all_blogs|get_item:'comments' as b %}
-                    <li>
-                      <a href="{{ b.get_rss_feed_url }}">{{ b.name }}</a>
-                    </li>
-                  {% endwith %}
                 </ul>
               </aside>
             </div>
