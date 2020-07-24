@@ -69,6 +69,18 @@ def current_url_name(context):
     return url_name
 
 
+@register.filter('fieldtype')
+def fieldtype(field):
+    """
+    For getting the type of a form field in a template.
+    e.g.
+        {% if field|fieldtype == "Textarea" %}
+            ...
+        {% endif %}
+    """
+    return field.field.widget.__class__.__name__
+
+
 @register.simple_tag
 def display_time(dt=None, show="both", granularity=0, link_to_day=False):
     """Return the HTML to display a datetime nicely, wrapped in a <time> tag.
