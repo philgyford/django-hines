@@ -1,0 +1,20 @@
+{% extends "comments/base.html" %}
+{# Overriding the default django-comments approved.html template, so it looks better on our site. #}
+{% load i18n %}
+
+{% block title %}{% trans "Comment approved" %}{% endblock %}
+
+{% block content %}
+  <section>
+    <header class="pagehead">
+      <h1>{% trans "✅ Approved!" %}</h1>
+    </header>
+
+    <p>This comment from <a href="{{ comment.content_object.get_absolute_url }}">‘{{ comment.content_object|safe }}’</a> was approved:</p>
+
+    <div class="media-list">
+      {% include "comments/comment.html" with comment=comment wrapper_element="div" %}
+    </div>
+
+  </section>
+{% endblock %}

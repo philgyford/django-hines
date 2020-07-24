@@ -1,0 +1,28 @@
+{% extends "comments/base.html" %}
+{# Overriding the default django-comments approve.html template, so it looks better on our site. #}
+{% load i18n %}
+
+{% block title %}{% trans "Approve a comment" %}{% endblock %}
+
+{% block content %}
+  <section>
+    <header class="pagehead">
+      <h1>{% trans "Really make this comment public?" %}</h1>
+    </header>
+
+    <div class="media-list">
+      {% include "comments/comment.html" with comment=comment wrapper_element="div" %}
+    </div>
+
+    <form action="." method="post">
+      {% csrf_token %}
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next }}" id="next">
+      {% endif %}
+      <p class="form__buttons">
+        <button type="submit" name="submit" class="button button--primary">{% trans "Approve" %}</button>
+        &nbsp; or &nbsp; <a href="{{ comment.get_absolute_url }}">Cancel</a>
+      </p>
+    </form>
+  </section>
+{% endblock %}
