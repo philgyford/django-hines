@@ -5,6 +5,7 @@ from django.views.generic.base import RedirectView
 
 from . import converters, feeds
 from . import views as core_views
+from . import app_settings
 from hines.custom_comments import feeds as comments_feeds
 
 
@@ -14,6 +15,10 @@ register_converter(converters.TwoDigitDayConverter, "dd")
 
 
 app_name = "hines"
+
+admin_published_comments_slug = app_settings.COMMENTS_ADMIN_PUBLISHED_FEED_SLUG
+admin_not_published_comments_slug = app_settings.COMMENTS_ADMIN_NOT_PUBLISHED_FEED_SLUG
+
 
 urlpatterns = [
     path("test.html", TemplateView.as_view(template_name="hines_core/test.html")),
@@ -29,13 +34,13 @@ urlpatterns = [
         name="comments_feed_rss",
     ),
     path(
-        "feeds/admin-published-comments/rss/",
+        f"feeds/{admin_published_comments_slug}/rss/",
         comments_feeds.AdminPublishedCommentsFeedRSS(),
         name="admin_published_comments_feed_rss",
     ),
     path(
-        "feeds/admin-not-public-comments/rss/",
-        comments_feeds.AdminNotPublicCommentsFeedRSS(),
+        f"feeds/{admin_not_published_comments_slug}/rss/",
+        comments_feeds.AdminNotPublishedCommentsFeedRSS(),
         name="admin_not_public_comments_feed_rss",
     ),
     # Flatpages with names:

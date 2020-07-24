@@ -107,7 +107,7 @@ class AdminPublishedCommentsFeedRSS(CommentsFeedRSS):
         return f"{description} (Admin)"
 
 
-class AdminNotPublicCommentsFeedRSS(CommentsFeedRSS):
+class AdminNotPublishedCommentsFeedRSS(CommentsFeedRSS):
     """
     The same as the Adin Published feed, except it only includes
     comments marked as is_public=False. They've probably been
@@ -120,7 +120,7 @@ class AdminNotPublicCommentsFeedRSS(CommentsFeedRSS):
     # Is this feed showing public comments or not-public ones?
     show_public_comments = False
 
-    content_template = "comments/feeds/content_admin_not_public.html"
+    content_template = "comments/feeds/content_admin_not_published.html"
 
     def title(self, obj):
         return f"Spam comments on {obj.name} (Admin)"

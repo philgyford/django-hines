@@ -40,6 +40,16 @@ if COMMENTS_CLOSE_AFTER_DAYS is not None and not isinstance(
         f"but it's 'f{COMMENTS_CLOSE_AFTER_DAYS}"
     )
 
+COMMENTS_ADMIN_NOT_PUBLISHED_FEED_SLUG = getattr(
+    settings,
+    "HINES_COMMENTS_ADMIN_NOT_PUBLISHED_FEED_SLUG",
+    "admin-not-published-comments",
+)
+
+COMMENTS_ADMIN_PUBLISHED_FEED_SLUG = getattr(
+    settings, "HINES_COMMENTS_ADMIN_PUBLISHED_FEED_SLUG", "admin-published-comments"
+)
+
 AKISMET_API_KEY = getattr(settings, "HINES_AKISMET_API_KEY", None)
 
 AUTHOR_NAME = getattr(settings, "HINES_AUTHOR_NAME", "")

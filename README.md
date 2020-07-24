@@ -118,6 +118,10 @@ Custom settings that can be in the django `settings.py` file:
 `HINES_SITE_ICON`: Path of an image to represent the site, within the static
 directory. e.g. `'hines/img/site_icon.jpg'`.
 
+`HINES_COMMENTS_ADMIN_NOT_PUBLISHED_FEED_SLUG`: URL slug for the admin-only RSS feed of *not* published comments, so it can be at a non-obvious location. Default is `"admin-not-published-comments"`.
+
+`HINES_COMMENTS_ADMIN_PUBLISHED_FEED_SLUG`: URL slug for the admin-only RSS feed of published comments, so it can be at a non-obvious location. Default is `"admin-published-comments"`.
+
 `HINES_COMMENTS_ALLOWED`: Whether to allow commenting on blog posts. If
 `False`, overrides the settings for individual Blogs and Posts. Default
 `True`.
