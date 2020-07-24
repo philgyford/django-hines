@@ -143,7 +143,6 @@ class ExtendedFeed(Feed):
         return content_tmp
 
 
-
 class EverythingFeedRSS(ExtendedFeed):
 
     num_items = 14

@@ -65,3 +65,11 @@ dd:last-child {
 li > p {
   margin-top: $vertical-space;
 }
+
+
+// RSS list
+
+li.icon-rss {
+  @include background-svg(rss, "#f78422");
+  background-size: 12px;
+}
