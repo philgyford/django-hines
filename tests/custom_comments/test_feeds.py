@@ -4,7 +4,7 @@ from django.contrib.sites.models import Site
 from hines.core.utils import make_datetime
 from hines.custom_comments.factories import CustomCommentFactory
 from hines.weblogs.factories import BlogFactory, LivePostFactory
-from tests import override_app_settings
+# from tests import override_app_settings
 from tests.core.test_feeds import FeedTestCase
 
 
@@ -49,15 +49,13 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
         response = self.client.get(self.feed_url)
         self.assertEqual(response.status_code, 200)
 
-    def test_feed_channel(self):
+    def test_channel(self):
         "Testing the <channel> element"
 
         channel = self.get_feed_channel(self.feed_url)
 
         d = self.comment.submit_date
         last_build_date = rfc2822_date(d)
-
-        # TEST THE channel ELEMENT
 
         # We're not currently using 'ttl', 'copyright' or 'category':
         self.assertChildNodes(
