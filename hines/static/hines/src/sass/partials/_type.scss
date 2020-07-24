@@ -20,7 +20,7 @@ var {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   text-rendering: optimizeLegibility;
-  margin-top: ($vertical-space * 2);
+  margin-top: 0;
   margin-bottom: $headings-margin-bottom;
   color: $headings-color;
 
@@ -28,13 +28,24 @@ h1, h2, h3, h4, h5, h6,
   // But messes up publication_detail page a bit, so trying with it off...
   //clear: both;
 
+  &:not(:first-child) {
+    margin-top: ($vertical-space * 2);
+
+    // For headings in blog posts etc that are immediately after <hr>
+    hr + & {
+      margin-top: 0;
+    }
+  }
+
   @include text-style-nav;
 
   &.h--bordered {
     border-bottom: $border-width solid $border-color;
     margin-bottom: 0;
+
   }
 }
+
 
 h1 small,
 .h1 small {
