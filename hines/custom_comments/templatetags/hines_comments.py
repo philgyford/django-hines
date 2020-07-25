@@ -21,6 +21,16 @@ def allowed_tags():
 
 @register.simple_tag
 def commenting_status_message(post, allowed, close_after_days):
+    """
+    Generate a message describing why comments aren't allowed on a Post.
+    If comments ARE allowed, it returns an empty string.
+
+    Keyword arguments:
+    post - The Post object.
+    allowed - The global app_settings.COMMENTS_ALLOWED value.
+    close_after_days - The global app_settings.COMMENTS_CLOSE_AFTER_DAYS
+                       value.
+    """
     message = ""
 
     if not allowed:
@@ -32,7 +42,7 @@ def commenting_status_message(post, allowed, close_after_days):
     elif not post.comments_are_open:
         plural = pluralize(close_after_days)
         message = (
-            "Commenting is disabled on posts once they're "
+            "Commenting is disabled on posts once they’re "
             f"{close_after_days} day{plural} old."
         )
     elif not post.comments_allowed:
