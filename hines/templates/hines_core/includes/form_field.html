@@ -21,7 +21,7 @@ Expects:
     </label>
 
     {% if field|fieldtype == 'Textarea' %}
-      <textarea class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %} rows="10"{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>{{ field.value|default_if_none:"" }}</textarea>
+      <textarea class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>{{ field.value|default_if_none:"" }}</textarea>
     {% else %}
       {# Assuming we only have text/email/etc input fields... #}
       <input type="{{ field.field.widget.input_type }}" class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:"" }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
