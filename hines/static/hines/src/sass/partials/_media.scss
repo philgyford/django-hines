@@ -63,6 +63,8 @@ $media-header-line-height: $line-height-base;
 
 .media__img {
   margin-right: ($grid-gutter-width / 2);
+  // It lines up the top of the image with the top of .media__byline__author:
+  margin-top: ($vertical-space / 3);
 }
 
 .media__body {

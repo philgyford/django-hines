@@ -1,3 +1,4 @@
+from hashlib import md5
 import re
 from urllib.parse import urlparse
 
@@ -21,6 +22,21 @@ from spectator.events.templatetags.spectator_events import (
 
 
 register = template.Library()
+
+
+@register.simple_tag
+def gravatar_url(email):
+    """
+    Returns the Gravatar.com for an email address.
+    Or returns an empty string if the provided email is non-True.
+    Docs: https://en.gravatar.com/site/implement/images/
+    """
+    email = email.lower().strip()
+    if email:
+        email_hash = md5(email.encode("utf-8")).hexdigest()
+        return f"https://secure.gravatar.com/avatar/{email_hash}.jpg?d=mp&size=80"
+    else:
+        return ""
 
 
 @register.filter
@@ -69,7 +85,7 @@ def current_url_name(context):
     return url_name
 
 
-@register.filter('fieldtype')
+@register.filter("fieldtype")
 def fieldtype(field):
     """
     For getting the type of a form field in a template.

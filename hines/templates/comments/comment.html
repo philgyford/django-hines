@@ -14,6 +14,10 @@ wrapper_element - Optional, default is "div". What kind of HTML element should t
 {% load l10n %}
 
 <{{ wrapper_element|default:"div" }} class="media h-entry" id="c{{ comment.id|unlocalize }}">
+  {% if comment.user and comment.user.email %}
+    {# Posted by a User of this site. We want to make them look different to normal commenters. #}
+    <img class="media__img" src="{% gravatar_url email=comment.user.email %}" width="24" height="24" alt="">
+  {% endif %}
   <div class="media__body">
     <p class="media__byline"{% if forloop.last %} id="latest"{% endif %}>
       <span class="media__byline__author h-card">
