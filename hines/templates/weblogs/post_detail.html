@@ -101,25 +101,9 @@
 	      <h2>Post a comment</h2>
 	      {% render_comment_form for post %}
 			</section>
-    {% else %}
-      <p>
-        {% if not settings.comments_allowed %}
-          Commenting is turned off.
-        {% elif not post.blog.allow_comments %}
-          Commenting is turned off on this blog.
-        {% elif not post.allow_comments %}
-          Commenting is turned off for this post.
-        {% elif not post.comments_are_open %}
-          Commenting is disabled on posts once they're {{ settings.comments_close_after_days }} day{{ settings.comments_close_after_days|pluralize }} old.
-        {% else %}
-          {# Not sure why we're here. #}
-          Commenting is currently turned off.
-        {% endif %}
-      </p>
-	{% comment %}
-		<p>Comments are closed for this post.</p>
-	{% endcomment %}
     {% endif %}
+
+    {% include "comments/includes/status_message.html" %}
 
     {% comment %}
 
