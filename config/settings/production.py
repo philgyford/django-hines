@@ -79,7 +79,7 @@ if SENTRY_DSN:
     sentry_sdk.init(
         dsn=get_env_variable("SENTRY_DSN"),
         integrations=[DjangoIntegration()],
-        release=get_env_variable("HEROKU_SLUG_COMMIT", ""),
+        release=get_env_variable("HEROKU_SLUG_COMMIT"),
     )
 
 #############################################################################
