@@ -35,28 +35,40 @@ class CleanTestCase(TestCase):
 
 
 class CommentingStatusMessage(TestCase):
+    @override_app_settings(COMMENTS_ALLOWED=False)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
     def test_settings_allowed_false(self):
         "If the global COMMENTS_ALLOWED setting is False the message should be returned"
         post = LivePostFactory()
         message = commenting_status_message(
-            post=post, allowed=False, close_after_days=0
+            post=post, allowed=False, close_after_days=None
         )
         self.assertEqual(message, "Commenting is turned off.")
 
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
     def test_blog_allowed_false(self):
         "If the Blog's comments allowed setting is False the message should be returned"
         blog = BlogFactory(allow_comments=False)
         post = LivePostFactory(blog=blog)
-        message = commenting_status_message(post=post, allowed=True, close_after_days=0)
+        message = commenting_status_message(
+            post=post, allowed=True, close_after_days=None
+        )
         self.assertEqual(message, "Commenting is turned off on this blog.")
 
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
     def test_post_allowed_false(self):
         "If the Post's comments allowed setting is False the message should be returned"
         blog = BlogFactory(allow_comments=True)
         post = LivePostFactory(blog=blog, allow_comments=False)
-        message = commenting_status_message(post=post, allowed=True, close_after_days=0)
+        message = commenting_status_message(
+            post=post, allowed=True, close_after_days=None
+        )
         self.assertEqual(message, "Commenting is turned off for this post.")
 
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
     def test_post_too_old(self):
         """If the Post is older than the COMMENTS_CLOSE_AFTER_DAYS setting the message
         should be returned
@@ -74,11 +86,13 @@ class CommentingStatusMessage(TestCase):
             message, "Commenting is disabled on posts once they’re 30 days old."
         )
 
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
     def test_allowed(self):
         "If comments are allowed on the post, an empty string should be returned"
         blog = BlogFactory(allow_comments=True)
         post = LivePostFactory(blog=blog, allow_comments=True)
         message = commenting_status_message(
-            post=post, allowed=True, close_after_days=00
+            post=post, allowed=True, close_after_days=None
         )
         self.assertEqual(message, "")
