@@ -40,13 +40,15 @@
             <span class="nav__link">Links</span>
           {% endif %}
         </li>
-        <li class="nav__item{% if blog.slug == 'comments' %} is-active{% endif %}">
-          {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
-            <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
-          {% else %}
-            <span class="nav__link">Comments</span>
-          {% endif %}
-        </li>
+        {% comment %}
+          <li class="nav__item{% if blog.slug == 'comments' %} is-active{% endif %}">
+            {% if url_name != 'weblogs:blog_detail' or page_obj.number > 1 or blog.slug != 'comments' %}
+              <a class="nav__link" href="{% url 'weblogs:blog_detail' blog_slug='comments' %}" title="Comments posted on other sites">Comments</a>
+            {% else %}
+              <span class="nav__link">Comments</span>
+            {% endif %}
+          </li>
+        {% endcomment %}
         <li class="nav__item nav__item--split {% block reading_nav_active %}{% endblock %}">
           {% if url_name != 'reading_home' %}
             <a class="nav__link" href="{% url 'reading_home' %}">Reading</a>
