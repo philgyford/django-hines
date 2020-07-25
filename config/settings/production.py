@@ -10,6 +10,9 @@ DEBUG = False
 # the environment entirely. Otherwise, set to 'True' (or anything tbh).
 PREPEND_WWW = True
 
+# Globally enable/disable comments across the site.
+# Overrides all other settings (close after days, per-post, etc).
+HINES_COMMENTS_ALLOWED = True
 
 # Close comments on posts after this many days (assuming they're open):
 HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
