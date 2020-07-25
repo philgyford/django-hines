@@ -282,7 +282,7 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 
 # Close comments on posts after this many days (assuming they're open):
 # Or None to ignore this setting
-HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
+HINES_COMMENTS_CLOSE_AFTER_DAYS = None
 
 HINES_AKISMET_API_KEY = os.environ.get("HINES_AKISMET_API_KEY", None)
 

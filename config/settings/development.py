@@ -1,4 +1,5 @@
 from .base import *  # noqa: F403
+from .base import get_env_variable
 
 DEBUG = True
 
@@ -9,9 +10,9 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DEFAULT_FILE_STORAGE = "hines.core.storages.CustomS3Boto3Storage"
 
-AWS_ACCESS_KEY_ID = get_env_variable("AWS_ACCESS_KEY_ID")  # noqa: F405
-AWS_SECRET_ACCESS_KEY = get_env_variable("AWS_SECRET_ACCESS_KEY")  # noqa: F405
-AWS_STORAGE_BUCKET_NAME = get_env_variable("AWS_STORAGE_BUCKET_NAME")  # noqa: F405
+AWS_ACCESS_KEY_ID = get_env_variable("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = get_env_variable("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = get_env_variable("AWS_STORAGE_BUCKET_NAME")
 
 AWS_QUERYSTRING_AUTH = False
 
@@ -35,6 +36,14 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
     }
 }
+
+# Globally enable/disable comments across the site.
+# Overrides all other settings (close after days, per-post, etc).
+HINES_COMMENTS_ALLOWED = True
+
+# Close comments on posts after this many days (assuming they're open):
+# Or None to ignore this setting
+HINES_COMMENTS_CLOSE_AFTER_DAYS = None
 
 
 # Debug Toolbar settings.

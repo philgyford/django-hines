@@ -1,5 +1,5 @@
 {% extends 'hines_core/layouts/no_sidebar.html' %}
-{% load comments static hines_core hines_weblogs spectator_reading %}
+{% load comments static hines_comments hines_core hines_weblogs spectator_reading %}
 
 {% block head_page_title %}{{ post.title_text|smartypants }}{% endblock %}
 
@@ -97,13 +97,20 @@
     {% endif %}
 
     {% if post.comments_allowed %}
-			<section id="comment-form">
+			<section id="comment-form" class="u-mt-4">
 	      <h2>Post a comment</h2>
 	      {% render_comment_form for post %}
 			</section>
     {% endif %}
 
-    {% include "comments/includes/status_message.html" %}
+    {% commenting_status_message post settings.comments_allowed settings.comments_close_after_days as comments_closed_message %}
+    {% if comments_closed_message %}
+      <aside class="u-mt-4 meta">
+        <ul class="meta__inner">
+          <li>{{ comments_closed_message }}</li>
+        </ul>
+      </aside>
+    {% endif %}
 
     {% comment %}
 
