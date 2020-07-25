@@ -53,4 +53,10 @@ class BlogPostsFeedRSS(ExtendedFeed):
 
     def item_content(self, item):
         "For content:encoded"
-        return item.intro_html + item.body_html
+        content = item.intro_html + item.body_html
+
+        if item.comments_allowed:
+            url = f"{item.get_absolute_url_with_domain()}#comments"
+            content += f'<p><a href="{url}">Read comments or post one</a></p>'
+
+        return content

@@ -1,5 +1,5 @@
 {% extends 'sets/200603/weblogs/base.html' %}
-{% load static %}
+{% load static hines_comments %}
 {% block start_html %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
@@ -61,6 +61,11 @@
 {% endblock start_body_content %}
 
 {% block comment_form %}
+  <div class="clear"></div>
+  <div style="margin-top:1em;">
+    {% include "comments/includes/status_message.html" %}
+  </div>
+
 	{% comment %}
 		<div class="comments-open" id="comments-open">
             <div class="clear"></div>
@@ -135,4 +140,3 @@
 	</div> <!-- #container-foot -->
 	</div> <!-- #wrapper-foot -->
 {% endblock end_body %}
-

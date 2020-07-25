@@ -1,12 +1,14 @@
 // Custom CSS only used for the Django Admin.
 
 @import "functions";
+@import "svgs";
 @import "variables";
 @import "mixins/bootstrap/breakpoints";
 @import "mixins/bootstrap/clearfix";
 @import "mixins/figures";
 @import "mixins/links";
 @import "mixins/lists";
+@import "mixins/svgs";
 @import "mixins/type";
 
 .editor-toolbar,

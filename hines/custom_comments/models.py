@@ -26,8 +26,7 @@ class CustomComment(Comment):
         """
         We store the comment_count for each object that can have comments.
         So here we set the comment_count after we save/delete each comment.
-        Which should take account of comments being added, removed, flagged
-        etc.
+        Which should take account of comments being added, removed etc.
 
         We also have to ensure the parent object's last_comment_time is
         still accurate.
@@ -87,3 +86,6 @@ class CustomComment(Comment):
                 ]
 
         obj.save()
+
+
+# Looking for the Comment Moderator? It's at weblogs.models.PostCommentModerator !

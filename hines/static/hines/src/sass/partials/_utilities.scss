@@ -1,7 +1,10 @@
 
+.u-success {
+  color: $text-color-success;
+  @include text-style-alt;
+}
 .u-warning {
   color: $text-color-warning;
-
   @include text-style-alt;
 }
 
@@ -22,6 +25,12 @@
   white-space: nowrap;
 }
 
+// Add margin to top of elements.
+// Only using u-mt-4 at the moment.
+// u-mt-1 { margin-top: ($vertical-space-sm / 2); }
+// u-mt-2 { margin-top: $vertical-space-sm; }
+// u-mt-3 { margin-top: $vertical-space; }
+.u-mt-4 { margin-top: ($vertical-space * 2); }
 
 // Make everything within it inline, and bold sanserif.
 .u-inline-container {

@@ -1,6 +1,6 @@
 {% spaceless %}
 {% if obj.kind == 'blog_post' %}
-  <p><em>From <a href="{{ site_url }}{{ obj.object.blog.get_absolute_url }}">{{ obj.object.blog.name }}</a>.</em></p>
+  <p><em>From <a href="{{ obj.object.blog.get_absolute_url_with_domain }}">{{ obj.object.blog.name }}</a>.</em></p>
 
 	{{ obj.object.intro_html|safe }}
   {% if obj.object.body_html %}
@@ -8,7 +8,11 @@
   {% endif %}
 
   {% if obj.object.remote_url %}
-    <p><a href="{{ site_url }}{{ obj.object.get_absolute_url }}">Permalink</a></p>
+    <p><a href="{{ obj.object.get_absolute_url_with_domain }}">Permalink</a></p>
+  {% endif %}
+
+  {% if obj.object.comments_allowed %}
+    <p><a href="{{obj.object.get_absolute_url_with_domain }}#comments">Read comments or post one</a></p>
   {% endif %}
 
 {% elif obj.kind == 'pinboard_bookmark' %}

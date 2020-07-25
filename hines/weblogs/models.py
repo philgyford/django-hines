@@ -1,7 +1,9 @@
+from datetime import timedelta
 import html.parser
 import re
 
 from django.conf import settings
+from django.contrib import messages
 from django.db import models
 from django.db.models import Count
 from django.template.defaultfilters import linebreaks
@@ -10,13 +12,20 @@ from django.utils import timezone
 from django.utils.html import strip_tags
 
 from bs4 import BeautifulSoup
+from django_comments.moderation import CommentModerator, moderator
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
 
 from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
-from hines.core.utils import expire_view_cache, markdownify, truncate_string
+from hines.core.utils import (
+    get_site_url,
+    expire_view_cache,
+    markdownify,
+    truncate_string,
+)
+from hines.custom_comments.utils import add_comment_message
 from . import managers
 
 
@@ -85,6 +94,12 @@ class Blog(TimeStampedModelMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse("weblogs:blog_detail", kwargs={"blog_slug": self.slug})
+
+    def get_absolute_url_with_domain(self):
+        """
+        Returns the Blog's URL but starting with "http..."
+        """
+        return get_site_url() + self.get_absolute_url()
 
     def get_rss_feed_url(self):
         return reverse("weblogs:blog_feed_posts_rss", kwargs={"blog_slug": self.slug})
@@ -273,6 +288,12 @@ class Post(TimeStampedModelMixin, models.Model):
             },
         )
 
+    def get_absolute_url_with_domain(self):
+        """
+        Returns the Post's URL but starting with "http..."
+        """
+        return get_site_url() + self.get_absolute_url()
+
     def get_previous_post(self):
         "Gets the previous public Post, by time_published."
         return (
@@ -392,8 +413,8 @@ class Post(TimeStampedModelMixin, models.Model):
                 if el is not None:
                     # Set the ID of the <p> etc...
                     el.attrs["id"] = id
-                    # ...prepend spaces, then prepemd the <a>...
-                    el.insert(0, " \xa0 ")
+                    # ...prepend a space, then prepemd the <a>...
+                    el.insert(0, " ")
                     el.insert(0, anchor)
             html = soup.encode(formatter="html5").decode()
         return html
@@ -450,11 +471,36 @@ class Post(TimeStampedModelMixin, models.Model):
         return url
 
     @property
+    def comments_are_open(self):
+        """
+        Ignoring the various on/off switches for allowing comments,
+        focusing only on the COMMENTS_CLOSE_AFTER_DAYS setting, are
+        comments possible based on that?
+
+        If the setting is None, this returns True
+        If the setting is set then:
+            If the Post is within the time limit, this returns True
+            If the Post is too old, this returns False
+        """
+        cutoff_days = app_settings.COMMENTS_CLOSE_AFTER_DAYS
+        if cutoff_days is None:
+            # Means ignore this setting
+            return True
+
+        cutoff_time = timezone.now() - timedelta(days=cutoff_days)
+        if self.time_published >= cutoff_time:
+            # The post is within the cutoff, so comments allowed
+            return True
+        else:
+            # The post is too old, so comments no longer allowed
+            return False
+
+    @property
     def comments_allowed(self):
         """
         Returns a boolean indicating whether new comments are allowed on this.
         """
-        if app_settings.ALLOW_COMMENTS is not True:
+        if app_settings.COMMENTS_ALLOWED is not True:
             return False
 
         elif self.blog.allow_comments is False:
@@ -464,7 +510,83 @@ class Post(TimeStampedModelMixin, models.Model):
             return False
 
         else:
+            return self.comments_are_open
+
+
+class PostCommentModerator(CommentModerator):
+    """
+    In addition to what we do in Post.comments_allowed, this should also
+    ensure that:
+
+    * We could enable email_notifications
+    * If something automatedly submits a Comment on a Post that's older
+      than COMMENTS_CLOSE_AFTER_DAYS, it will just be discarded.
+
+    https://django-contrib-comments.readthedocs.io/en/latest/moderation.html
+    """
+
+    # Should comments require moderation before publishing?
+    auto_moderate_field = "time_published"
+    # Set this to:
+    #   None - No moderation, publish immediately
+    #   0 - Always moderate, never publish immediately
+    #   n - Any other integer, only moderate when the post is this
+    #       many days old.
+    moderate_after = None
+
+    # No more comments are allowed at all after this many days:
+    auto_close_field = "time_published"
+    close_after = app_settings.COMMENTS_CLOSE_AFTER_DAYS
+
+    # This field on a Post is what we look at to see if comments are allowed on it:
+    enable_field = "allow_comments"
+
+    # Whether to send an email to site staff when there's a new comment:
+    email_notification = False
+
+    def allow(self, comment, content_object, request):
+        """
+        While this slightly duplicates Post.comments_allowed() it
+        ensures that our custom things (settings.HINES_COMMENTS_ALLOWED
+        and Blog.allow_comments) are taken into account in this
+        moderator.
+
+        If this returns False, then a submitted comment is just
+        disappeared.
+        """
+        result = super().allow(comment, content_object, request)
+
+        if not result:
+            # Default method already soys NO, so:
+            return False
+        elif content_object.comments_allowed:
             return True
+        else:
+            return False
+
+    def moderate(self, comment, content_object, request):
+        """
+        All we do here is:
+
+        * Get the result from the parent moderate() method.
+        * If the message is to be moderated, add a flash message
+          explaining this.
+        * Return the result.
+        """
+        result = super().moderate(comment, content_object, request)
+
+        if result is True:
+            message_content = (
+                "Thanks for your comment. "
+                "All comments must be checked before publishing, "
+                "so it should appear soon."
+            )
+            add_comment_message(request, messages.SUCCESS, message_content)
+
+        return result
+
+
+moderator.register(Post, PostCommentModerator)
 
 
 class Trackback(TimeStampedModelMixin, models.Model):

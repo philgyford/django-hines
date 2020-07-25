@@ -1,0 +1,44 @@
+{% comment %}
+Display an invidual comment.
+
+Expects to be in context so that the `if forloop.last` works.
+
+Does expect these variables to be present:
+
+comment - The Comment object
+perms - The Django PermWrapper object
+wrapper_element - Optional, default is "div". What kind of HTML element should the
+  surrounding .media element be?
+{% endcomment %}
+{% load hines_comments hines_core %}
+{% load l10n %}
+
+<{{ wrapper_element|default:"div" }} class="media h-entry" id="c{{ comment.id|unlocalize }}">
+  {% if comment.user and comment.user.email %}
+    {# Posted by a User of this site. We want to make them look different to normal commenters. #}
+    <img class="media__img" src="{% gravatar_url email=comment.user.email %}" width="24" height="24" alt="">
+  {% endif %}
+  <div class="media__body">
+    <p class="media__byline"{% if forloop.last %} id="latest"{% endif %}>
+      <span class="media__byline__author h-card">
+        {% if comment.user_url %}
+          <a class="p-name u-url" href="{{ comment.user_url }}" rel="nofollow">{{ comment.name }}</a>
+        {% else %}
+          <span class="p-name">{{ comment.name }}</span>
+        {% endif %}
+      </span>
+
+      at <span class="dt-published">{% display_time comment.submit_date %}</span>
+      &nbsp;
+      <a class="section-anchor" href="#c{{ comment.id|unlocalize }}" title="Link to this comment">#</a>
+      {% if perms.custom_comments.can_change_customcomment %}
+        &nbsp; <a class="u-admin u-url" href="{% url 'admin:custom_comments_customcomment_change' comment.id %}" title="Edit this Comment in the Django Admin">Edit</a>
+      {% endif %}
+    </p>
+
+    <div class="e-content">
+      {{ comment.comment|clean|safe|linebreaks }}
+    </div>
+
+  </div> <!-- .media__body -->
+</{{ wrapper_element|default:"div" }}>

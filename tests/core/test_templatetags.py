@@ -5,6 +5,7 @@ from freezegun import freeze_time
 from django.test import TestCase
 
 from hines.core.templatetags.hines_core import (
+    gravatar_url,
     get_item,
     display_time,
     smartypants,
@@ -15,6 +16,24 @@ from hines.core.templatetags.hines_core import (
 from hines.core.utils import make_datetime
 
 from tests import override_app_settings
+
+
+class GravatarURLTestcase(TestCase):
+    def test_returns_url(self):
+        "It should return the correct URL for a lowercased, stripped email"
+        url = gravatar_url(" PHIL@gyford.com  ")
+        self.assertEqual(
+            url,
+            (
+                "https://secure.gravatar.com/avatar/"
+                "57d9e4faebab769718a0b4107c3d06df.jpg?d=mp&size=80"
+            ),
+        )
+
+    def returns_empty_string(self):
+        "It should return empty string if the stripped email is empty"
+        url = gravatar_url("     ")
+        self.assertEqual(url, "")
 
 
 class GetItemTestCase(TestCase):

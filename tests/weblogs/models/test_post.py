@@ -165,9 +165,9 @@ Cod""",
             post.body_html,
             """<p>Dogs</p>
 <hr>
-<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Cats</p>
+<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
 <hr>
-<h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Fish</h2>
+<h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Fish</h2>
 <p>Cod</p>""",  # noqa: E501
         )
 
@@ -188,7 +188,7 @@ Cats""",
             """<p>Dogs</p>
 <hr>
 <figure src="test.png"></figure>
-<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> &nbsp; Cats</p>""",  # noqa: E501
+<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>""",  # noqa: E501
         )
 
     def test_body_html_hines_markdown_no_change(self):
@@ -377,6 +377,8 @@ Cats""",
         )
         self.assertEqual(post.excerpt_text, "This is ‘Cited’ and Bold")
 
+    # Post.main_image_url
+
     def test_main_image_url_none(self):
         """If there's no image in either intro_html or body_html it
         should return an empty string.
@@ -405,28 +407,72 @@ Cats""",
         )
         self.assertEqual(post.main_image_url, "/dir/img1.jpg")
 
-    @override_app_settings(ALLOW_COMMENTS=False)
+    # Post.comments_are_open
+
+    @override_app_settings(COMMENTS_ALLOWED=False)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
+    @freeze_time("2020-01-31 00:00:00")
+    def test_comments_are_open_true(self):
+        "If the post is older than the setting allows for, it should return True"
+        b = BlogFactory(allow_comments=False)
+        # A post just within 30 days ago:
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=False,
+            time_published=make_datetime("2020-01-01 00:00:01"),
+        )
+        self.assertTrue(p.comments_are_open)
+
+    @override_app_settings(COMMENTS_ALLOWED=False)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
+    def test_comments_are_open_not_set(self):
+        "If the COMMENTS_CLOSE_AFTER_DAYS setting is None, it should return True"
+        b = BlogFactory(allow_comments=False)
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=False,
+            time_published=make_datetime("2000-01-01 00:00:00"),
+        )
+        self.assertTrue(p.comments_are_open)
+
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
+    @freeze_time("2020-01-31 00:00:00")
+    def test_comments_are_open_false(self):
+        "If the post is newer than the setting allows for, it should return False"
+        b = BlogFactory(allow_comments=True)
+        # A post just older than 30 days ago:
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=True,
+            time_published=make_datetime("2019-12-31 23:59:59"),
+        )
+        self.assertFalse(p.comments_are_open)
+
+    # Post.comments_allowed
+
+    @override_app_settings(COMMENTS_ALLOWED=False)
     def test_comments_allowed_settings(self):
         "If the setting is False, should return False."
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertFalse(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     def test_comments_allowed_blog(self):
         "If the blog doesn't allow comments, it should return False."
         b = BlogFactory(allow_comments=False)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertFalse(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     def test_comments_allowed_post(self):
         "If the post doesn't allow comments, it should return False."
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=False)
         self.assertFalse(p.comments_allowed)
 
-    @override_app_settings(ALLOW_COMMENTS=True)
+    @override_app_settings(COMMENTS_ALLOWED=True)
     def test_comments_allowed_all_true(self):
         "If settings, blog and post are all true, it should return True"
         b = BlogFactory(allow_comments=True)
@@ -436,8 +482,50 @@ Cats""",
     @override_app_settings()
     def test_comments_allowed_no_setting(self):
         "If no setting, but blog and post are true, it should return True"
-        if hasattr(settings, "HINES_ALLOW_COMMENTS"):
-            del settings.HINES_ALLOW_COMMENTS
+        if hasattr(settings, "HINES_COMMENTS_ALLOWED"):
+            del settings.HINES_COMMENTS_ALLOWED
         b = BlogFactory(allow_comments=True)
         p = LivePostFactory(blog=b, allow_comments=True)
         self.assertTrue(p.comments_allowed)
+
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=None)
+    @freeze_time("2020-01-01 00:00:00")
+    def test_comments_allowed_close_after_days_none(self):
+        "If the setting is None, it should always return True"
+        b = BlogFactory(allow_comments=True)
+        # A really old post!
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=True,
+            time_published=make_datetime("2000-01-01 00:00:00"),
+        )
+        self.assertTrue(p.comments_allowed)
+
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
+    @freeze_time("2020-01-31 00:00:00")
+    def test_comments_allowed_close_after_days_open(self):
+        "If post is within the setting's days, it should return True"
+        b = BlogFactory(allow_comments=True)
+        # A post just within 30 days ago:
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=True,
+            time_published=make_datetime("2020-01-01 00:00:01"),
+        )
+        self.assertTrue(p.comments_allowed)
+
+    @override_app_settings(COMMENTS_ALLOWED=True)
+    @override_app_settings(COMMENTS_CLOSE_AFTER_DAYS=30)
+    @freeze_time("2020-01-31 00:00:00")
+    def test_comments_allowed_close_after_days_closed(self):
+        "If post is older than the setting's days, it should return False"
+        b = BlogFactory(allow_comments=True)
+        # A post just older than 30 days ago:
+        p = LivePostFactory(
+            blog=b,
+            allow_comments=True,
+            time_published=make_datetime("2019-12-31 23:59:59"),
+        )
+        self.assertFalse(p.comments_allowed)

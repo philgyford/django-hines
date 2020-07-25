@@ -1,7 +1,8 @@
 {% comment %}
 Could have this passed in:
 
-* is_preview - Boolean, default false.
+* is_preview - Boolean, default false. Whether this is used in a preview of a
+  draft/scheduled post (as opposed to a published post).
 {% endcomment %}
 
 {% load comments %}
@@ -15,23 +16,64 @@ Could have this passed in:
     <input type="hidden" name="next" value="{{ object.get_absolute_url }}#latest" />
   {% endif %}
 
+ {% for field in form %}
+    {% if field.is_hidden %}
+      {{ field }}
+    {% endif %}
+  {% endfor %}
+
+  <div style="display:none">{{ form.honeypot }}</div>
+
+  {% if not request.user.is_authenticated or not request.user.get_full_name %}
+    {% include 'hines_core/includes/form_field.html' with field=form.name %}
+  {% else %}
+    <div class="form__group">
+      <div class="form__text">
+        Commenting as {{ request.user.get_full_name }}
+        (<a href="{% url 'admin:logout' %}">sign out</a>)
+      </div>
+    </div>
+  {% endif %}
+
+   {% if not request.user.is_authenticated or not request.user.email %}
+    {% include 'hines_core/includes/form_field.html' with field=form.email %}
+  {% endif %}
+
+   {% if not request.user.is_authenticated  %}
+    {% include 'hines_core/includes/form_field.html' with field=form.url %}
+  {% else %}
+    {# request.user has no URL, so we'll set the comment's user's URL to this site's. #}
+    <input type="hidden" name="url" value="{{ site_url }}">
+  {% endif %}
+
+  {% include 'hines_core/includes/form_field.html' with field=form.comment %}
+
+  <div class="form__group{% if form.hcaptcha.errors %} has-danger{% endif %}">
+    {{ form.hcaptcha }}
+  </div>
+
+{% comment %}
   {% for field in form %}
     {% if field.is_hidden %}
       {{ field }}
     {% else %}
 
       <div class="form__group{% if field.errors %} has-danger{% endif %}"{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
-        <label for="{{ field.id_for_label }}">
-          {{ field.label }}
-          {% if field.html_name == 'url' %}
-            (optional)
-          {% endif %}
-        </label>
+        {% if field.html_name != "hcaptcha" %}
+          <label for="{{ field.id_for_label }}">
+            {{ field.label }}
+            {% if field.html_name == 'url' %}
+              (optional)
+            {% endif %}
+          </label>
+        {% endif %}
 
         {% if field.html_name == 'comment' %}
           <textarea class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %} rows="10"{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>{{ field.value|default_if_none:"" }}</textarea>
+        {% elif field.html_name == "hcaptcha" %}
+          {{ field }}
         {% else %}
-          <input type="{{ field.field.widget.input_type }}" class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:"" }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+          <input type="{{ field.field.widget.input_type }}" class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:"" }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}{% if field.html_name == "honeypot" %} tabindex="-1"{% endif %}>
         {% endif %}
 
         {% if field.errors %}
@@ -48,29 +90,49 @@ Could have this passed in:
           {% load hines_comments %}
           {% allowed_tags as tags %}
           <div class="form__text">
-            URLs will be turned into links.<br>
             {% if tags|length == 0 %}
               No tags allowed in comments.
             {% else %}
               Allowed HTML tags: <code>{{ tags|join:"</code>, <code>" }}</code>.
             {% endif %}
+            <br>
+            URLs will be turned into links.
           </div>
         {% endif %}
       </div>
+
     {% endif %}
   {% endfor %}
+{% endcomment %}
 
   <p class="form__buttons">
-  {% if is_preview|default_if_none:False %}
-    <button type="submit" name="preview" class="button button--primary">Preview again</button>
-    {% if form.is_valid %}
-      &nbsp;
-      <button type="submit" name="post" class="button button--primary">Post comment</button>
-    {% endif %}
-  {% else %}
-    <button type="submit" name="preview" class="button button--primary">Preview comment</button>
-  {% endif %}
+    <button type="submit" name="post" class="button button--primary">Post comment</button>
   </p>
 
-</form>
+  {% comment %}
+    {# Using the below means we initially show a "Preview comment" button, which leads
+      to a page where there's a "Preview again" and "Post comment" button.
+      But if we're using hCaptcha the user has to complete that on both of the forms,
+      which is a real pain.
 
+      *Maybe* it would be possible to override the django-contrib-comments template
+      tag that calls get_form() so that it can return a form that has the hcaptcha
+      field for the second (preview & post) form, but not for the first
+      (preview only) form?
+
+      But for now, let's stick with a simple single form and hCaptcha.
+    #}
+    <p class="form__buttons">
+      {% if is_preview|default_if_none:False %}
+        <button type="submit" name="preview" class="button button--primary">Preview again</button>
+        {% if form.is_valid %}
+          &nbsp;
+          <button type="submit" name="post" class="button button--primary">Post comment</button>
+        {% endif %}
+      {% else %}
+        <button type="submit" name="preview" class="button button--primary">Preview comment</button>
+      {% endif %}
+    </p>
+  {% endcomment %}
+
+</form>

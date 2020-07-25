@@ -114,6 +114,7 @@ urlpatterns = [
     path("comments/", include("django_comments.urls")),
 ]
 
+
 # Use our custom error view so that the error template gets context.
 handler400 = core_views.bad_request
 handler403 = core_views.permission_denied

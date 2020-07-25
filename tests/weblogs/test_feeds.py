@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.contrib.sites.models import Site
 from django.utils.feedgenerator import rfc2822_date
 
@@ -8,6 +10,13 @@ from tests.core.test_feeds import FeedTestCase
 
 
 class BlogPostsFeedRSSTestCase(FeedTestCase):
+    """
+    Borrowing a lot from
+    https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
+    """
+
+    feed_url = "/terry/my-blog/feeds/posts/rss/"
+
     def setUp(self):
         super().setUp()
         self.user = UserFactory(
@@ -55,17 +64,13 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         response = self.client.get("/terry/not-my-blog/feeds/posts/rss/")
         self.assertEqual(response.status_code, 404)
 
-    def test_feed(self):
-        """
-        Borrowing a lot from
-        https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
-        """
-        channel = self.get_feed_channel("/terry/my-blog/feeds/posts/rss/")
+    def test_channel(self):
+        "Testing the <channel> element"
+
+        channel = self.get_feed_channel(self.feed_url)
 
         d = self.blog.public_posts.latest("time_modified").time_modified
         last_build_date = rfc2822_date(d)
-
-        # TEST THE channel ELEMENT
 
         # We're not currently using 'ttl', 'copyright' or 'category':
         self.assertChildNodes(
@@ -98,7 +103,10 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
             },
         )
 
-        # TEST THE channel image ELEMENT
+    def test_channel_image(self):
+        "Testing the <channel>'s <image> element"
+
+        channel = self.get_feed_channel(self.feed_url)
 
         image_el = channel.getElementsByTagName("image")[0]
 
@@ -115,9 +123,18 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
             },
         )
 
-        # TEST THE item ELEMENTS
+    @patch("hines.weblogs.models.Post.comments_allowed", False)
+    def test_items(self):
+        """
+        Check the <item> elements
 
+        Don't want the content to be affected by whether comments are
+        allowed on the Post or not for this test, so patching
+        Post.comments_allowed()
+        """
+        channel = self.get_feed_channel(self.feed_url)
         items = channel.getElementsByTagName("item")
+
         self.assertEqual(len(items), 5)
 
         # Test the content of the most recent Post:
@@ -156,12 +173,27 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
                 item.getElementsByTagName("guid")[0].attributes.get("isPermaLink")
             )
 
+    @patch("hines.weblogs.models.Post.comments_allowed", True)
+    def test_items_comments_allowed(self):
+        "If comments are enabled on a Post, there should be a link in content:encoded"
+
+        channel = self.get_feed_channel(self.feed_url)
+
+        item = channel.getElementsByTagName("item")[0]
+
+        content = item.getElementsByTagName("content:encoded")[0].firstChild.wholeText
+
+        self.assertEqual(
+            content,
+            '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p><p><a href="http://example.com/terry/my-blog/2017/04/25/my-latest-post/#comments">Read comments or post one</a></p>',  # noqa: E501
+        )
+
     def test_no_author_email(self):
         "If we don't want to show author emails, they don't appear."
         self.blog.show_author_email_in_feed = False
         self.blog.save()
 
-        channel = self.get_feed_channel("/terry/my-blog/feeds/posts/rss/")
+        channel = self.get_feed_channel(self.feed_url)
 
         items = channel.getElementsByTagName("item")
         self.assertEqual(len(items), 5)
