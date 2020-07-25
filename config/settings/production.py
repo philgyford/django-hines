@@ -1,3 +1,5 @@
+import os
+
 from .base import *  # noqa: F403
 from .base import get_env_variable
 import sentry_sdk
@@ -73,13 +75,14 @@ CSRF_COOKIE_SECURE = True
 # Sentry
 # https://devcenter.heroku.com/articles/sentry#integrating-with-python-or-django
 
-SENTRY_DSN = get_env_variable("SENTRY_DSN")
+SENTRY_DSN = os.environ.get("SENTRY_DSN", False)
 
 if SENTRY_DSN:
     sentry_sdk.init(
-        dsn=get_env_variable("SENTRY_DSN"),
+        dsn=SENTRY_DSN,
         integrations=[DjangoIntegration()],
-        release=get_env_variable("HEROKU_SLUG_COMMIT"),
+        # Note: Not sure this exists... has disappeared from docs:
+        release=os.environ.get("HEROKU_SLUG_COMMIT", ""),
     )
 
 #############################################################################
