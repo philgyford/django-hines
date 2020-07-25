@@ -117,10 +117,13 @@ class BlogTagListView(CacheMixin, DetailView):
         return context
 
 
-class PostDetailView(CacheMixin, TemplateSetMixin, DateDetailView):
+class PostDetailView(TemplateSetMixin, DateDetailView):
     """
     A bit complicated because we need to match the post using its slug,
     its date, and its weblog slug.
+
+    Removed CacheMixin because it was screwing up the CSRF token
+    for the comment form.
     """
 
     # True, because we want to be able to preview scheduled posts:
