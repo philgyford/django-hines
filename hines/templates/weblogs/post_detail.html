@@ -1,5 +1,5 @@
 {% extends 'hines_core/layouts/no_sidebar.html' %}
-{% load comments static hines_core hines_weblogs spectator_reading %}
+{% load comments static hines_comments hines_core hines_weblogs spectator_reading %}
 
 {% block head_page_title %}{{ post.title_text|smartypants }}{% endblock %}
 
@@ -57,7 +57,7 @@
       </ul>
     </aside>
 
-		<div class="h-content">
+		<div class="e-content">
 	    {{ post.intro_html|safe }}
 
 			{{ post.body_html|safe }}
@@ -71,7 +71,7 @@
 
     <aside class="meta">
       <ul class="meta__inner">
-				<li>By <a rel="author" href="{{ site_url }}">{{ post.author.display_name }}</a></li>
+				<li>By <a class="p-author h-card" rel="author" href="{{ site_url }}">{{ post.author.display_name }}</a></li>
 
         {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
 
@@ -81,15 +81,35 @@
 
     {% render_comment_list for post %}
 
+    {% comment %}
+      If the user posted a comment that was flagged as Spam, or comments require
+      moderation, then a message will have been set, with
+      extra_tags="message-kind-comment", so:
+    {% endcomment %}
+    {% if messages %}
+      {% for message in messages %}
+        {% if "message-kind-comment" in message.tags %}
+          <p class="{% if message.tags %} {{ message.tags }}{% endif %}">
+            {{ message|safe }}
+          </p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
     {% if post.comments_allowed %}
-			<section>
+			<section id="comment-form" class="u-mt-4">
 	      <h2>Post a comment</h2>
 	      {% render_comment_form for post %}
 			</section>
-    {% else %}
-	{% comment %}
-		<p>Comments are closed for this post.</p>
-	{% endcomment %}
+    {% endif %}
+
+    {% commenting_status_message post settings.comments_allowed settings.comments_close_after_days as comments_closed_message %}
+    {% if comments_closed_message %}
+      <aside class="u-mt-4 meta">
+        <ul class="meta__inner">
+          <li>{{ comments_closed_message }}</li>
+        </ul>
+      </aside>
     {% endif %}
 
     {% comment %}

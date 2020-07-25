@@ -5,6 +5,7 @@ import os
 
 import dj_database_url
 
+from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 
 
@@ -34,6 +35,9 @@ DEBUG = False
 
 ALLOWED_HOSTS = get_env_variable("ALLOWED_HOSTS").split(",")
 
+ADMINS = [("Phil Gyford", "phil@gyford.com")]
+
+MANAGERS = ADMINS
 
 # Application definition
 
@@ -53,6 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "taggit",
     "django_comments",
+    "hcaptcha",
     "imagekit",
     "spectator.core",
     "spectator.events",
@@ -186,6 +191,15 @@ AUTH_USER_MODEL = "users.User"
 FIRST_DAY_OF_WEEK = 1
 
 
+# Use our custom CSS classes for message styles.
+MESSAGE_TAGS = {
+    messages.DEBUG: "u-debug",
+    messages.INFO: "u-info",
+    messages.SUCCESS: "u-success",
+    messages.WARNING: "u-warning",
+    messages.ERROR: "u-error",
+}
+
 ####################################################################
 # THIRD-PARTY APPS
 
@@ -219,7 +233,7 @@ AWS_DEFAULT_ACL = None
 
 
 # https://django-imagekit.readthedocs.io/en/stable/caching.html#removing-safeguards
-IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
 
 
 # END THIRD-PARTY APPS
@@ -248,7 +262,7 @@ HINES_USE_HTTPS = False
 
 # If True, must also be True for a Blog's and a Post's allow_comments field
 # before a comment on a Post is allowed.
-HINES_ALLOW_COMMENTS = True
+HINES_COMMENTS_ALLOWED = True
 
 # Both these are used by Bleach to whitelist the contents of comments.
 HINES_COMMENTS_ALLOWED_TAGS = [
@@ -265,6 +279,12 @@ HINES_COMMENTS_ALLOWED_TAGS = [
 HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
     "a": ["href", "title"],
 }
+
+# Close comments on posts after this many days (assuming they're open):
+# Or None to ignore this setting
+HINES_COMMENTS_CLOSE_AFTER_DAYS = None
+
+HINES_AKISMET_API_KEY = os.environ.get("HINES_AKISMET_API_KEY", None)
 
 # How many of each thing do we want displayed on the home page?
 HINES_HOME_PAGE_DISPLAY = {
@@ -306,3 +326,9 @@ DITTO_CORE_DATE_FORMAT = HINES_DATE_FORMAT
 DITTO_CORE_DATETIME_FORMAT = HINES_DATETIME_FORMAT
 
 SPECTATOR_DATE_FORMAT = HINES_DATE_FORMAT
+
+
+# For https://github.com/AndrejZbin/django-hcaptcha
+# Used in the comments form.
+HCAPTCHA_SITEKEY = os.environ.get("HCAPTCHA_SITEKEY", None)
+HCAPTCHA_SECRET = os.environ.get("HCAPTCHA_SECRET", None)

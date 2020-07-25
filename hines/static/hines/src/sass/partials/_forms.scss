@@ -210,3 +210,13 @@ select.form__control--sm {
   // Give the buttons some space if they wrap onto more than one line.
   margin-bottom: $vertical-space-sm;
 }
+
+
+.h-captcha {
+  // Leaves a space for the iframe to load, which is this high:
+  height: 78px;
+
+  iframe {
+    margin-bottom: 0;
+  };
+}

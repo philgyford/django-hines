@@ -1,6 +1,6 @@
 {% extends 'sets/2002/weblogs/base.html' %}
 
-{% load comments hines_core l10n static %}
+{% load comments hines_comments hines_core l10n static %}
 
 {% block head_title %}{{ post.title }} (Phil Gyford: {{ blog.short_name }}){% endblock %}
 
@@ -72,6 +72,13 @@ We don't have categories any more, so can't really link to these...
 				<div class="controls">Posted by {{ comment.name }} on {{ comment.submit_date|date:"j F Y, g:i" }} {{ comment.submit_date|date:"A"|lower }} | <a href="{{ post.get_absolute_url }}#c{{ comment.id|unlocalize }}" title="Permanent link to this comment">Link</a></div>
 			</div>
 		{% endfor %}
+{% endif %}
+
+{% commenting_status_message post settings.comments_allowed settings.comments_close_after_days as comments_closed_message %}
+{% if comments_closed_message %}
+  <div style="margin-top:1em;">
+    <p>{{ comments_closed_message }}</p>
+  </div>
 {% endif %}
 
 {% comment %}

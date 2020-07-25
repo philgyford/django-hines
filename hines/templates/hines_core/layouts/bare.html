@@ -9,15 +9,16 @@
 
     {% block css %}
     <!-- inject:css -->
-    <link rel="stylesheet" href="/static/hines/css/site-c602f54fa2.css">
+    <link rel="stylesheet" href="/static/hines/css/site-86041d525e.css">
     <!-- endinject -->
     {% endblock css %}
 
-    <link rel="alternate" type="application/rss+xml" title="Writing, photos, links, and my comments combined" href="{% url 'hines:everything_feed_rss' %}">
+    <link rel="alternate" type="application/rss+xml" title="Writing, photos, links, etc. combined" href="{% url 'hines:everything_feed_rss' %}">
     {% get_all_blogs_by_slug as all_blogs %}
     {% for blog_slug, blog_obj in all_blogs.items %}
     <link rel="alternate" type="application/rss+xml" title="{{ blog_obj.get_feed_title }}" href="{{ blog_obj.get_rss_feed_url }}"/>
     {% endfor %}
+    <link rel="alternate" type="application/rss+xml" title="Comments posted on this site" href="{% url 'hines:comments_feed_rss' %}">
 
     {% block favicons %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'hines/img/favicons/apple-touch-icon.png' %}">

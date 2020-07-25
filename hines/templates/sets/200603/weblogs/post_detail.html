@@ -1,5 +1,5 @@
 {% extends 'sets/200603/weblogs/base.html' %}
-{% load static %}
+{% load static hines_comments %}
 {% block start_html %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -36,8 +36,14 @@
 	</ul>
 {% endblock nav %}
 
-
 {% block comment_form %}
+  {% commenting_status_message post settings.comments_allowed settings.comments_close_after_days as comments_closed_message %}
+  {% if comments_closed_message %}
+    <div style="margin-top:1em;">
+      <p>{{ comments_closed_message }}</p>
+    </div>
+  {% endif %}
+
 	{% comment %}
 		<form action="" method="post" onsubmit="if (this.bakecookie.checked) rememberMe(this)" name="comments_form" id="comments_form">
 		<input type="hidden" name="static" value="1"/>

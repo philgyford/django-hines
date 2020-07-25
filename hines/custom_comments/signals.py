@@ -1,7 +1,10 @@
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
+from django_comments.signals import comment_was_posted
+
 from .models import CustomComment
+from .utils import test_comment_for_spam
 
 
 @receiver(post_save, sender=CustomComment)
@@ -12,3 +15,9 @@ def custom_comment_actions(sender, instance, using, **kwargs):
     comment_count and last_comment_time are still accurate.
     """
     instance.set_parent_comment_data()
+
+
+# Test a comment for Spam when it's been posted.
+comment_was_posted.connect(
+    test_comment_for_spam, sender=CustomComment, dispatch_uid="comments.post_comment"
+)

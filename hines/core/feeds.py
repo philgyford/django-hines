@@ -12,7 +12,8 @@ from .utils import get_site_url
 
 class ExtendedRSSFeed(Rss201rev2Feed):
     """
-    Create a type of RSS feed generator that has content:encoded elements.
+    Create a type of RSS feed generator that has <content:encoded>
+    elements and <image> elements.
 
     This is adapted from
     https://github.com/chrisdev/django-wagtail-feeds/blob/master/wagtail_feeds/feeds.py
@@ -110,13 +111,7 @@ class ExtendedFeed(Feed):
         If there's a self.content_template, then render that for the
         content:encoded element, otherwise use the self.item_content() method.
         """
-        content_tmp = None
-
-        if self.content_template is not None:
-            try:
-                content_tmp = loader.get_template(self.content_template)
-            except TemplateDoesNotExist:
-                pass
+        content_tmp = self._get_content_template()
 
         if content_tmp:
             context = {"obj": item, "site_url": get_site_url()}
@@ -136,6 +131,16 @@ class ExtendedFeed(Feed):
         context = super().get_context_data(**kwargs)
         context["foo"] = "bar"
         return context
+
+    def _get_content_template(self):
+        content_tmp = None
+
+        if self.content_template is not None:
+            try:
+                content_tmp = loader.get_template(self.content_template)
+            except TemplateDoesNotExist:
+                pass
+        return content_tmp
 
 
 class EverythingFeedRSS(ExtendedFeed):

@@ -10,7 +10,13 @@ from .models import Blog, Post, Trackback
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ("name", "sort_order")
+    list_display = (
+        "name",
+        "short_name",
+        "allow_comments",
+        "show_author_email_in_feed",
+        "sort_order",
+    )
     search_fields = ("name", "short_name")
 
     fieldsets = (
@@ -78,6 +84,8 @@ class PostAdmin(admin.ModelAdmin):
     list_display = (
         "blog",
         "title",
+        "allow_comments",
+        "comment_count",
         "status_icon",
         "time_published",
         # 'is_featured',
