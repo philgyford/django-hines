@@ -15,8 +15,8 @@ class CommentsFeedRSS(ExtendedFeed):
     https://github.com/django/django-contrib-comments/blob/master/django_comments/feeds.py  # noqa: E501
     """
 
-    # Is this feed showing public comments or not-public ones?
-    show_public_comments = True
+    # Can be "public", "spam", or "all":
+    comments_to_show = "public"
 
     feed_type = ExtendedRSSFeed
 
@@ -40,8 +40,14 @@ class CommentsFeedRSS(ExtendedFeed):
     def items(self, obj):
         site = Site.objects.get_current()
         qs = django_comments.get_model().objects.filter(
-            site__pk=site.pk, is_public=self.show_public_comments, is_removed=False
+            site__pk=site.pk, is_removed=False
         )
+        if self.comments_to_show == "public":
+            qs = qs.filter(is_public=True)
+        elif self.comments_to_show == "spam":
+            qs = qs.filter(is_public=False)
+        # else, we show all comments
+
         return qs.order_by("-submit_date")[:20]
 
     # Getting details for each post in the feed:
@@ -55,7 +61,10 @@ class CommentsFeedRSS(ExtendedFeed):
 
     def item_title(self, item):
         obj = self._get_parent_object(item)
-        return f"{item.user_name}: {obj.title_text}"
+        title = f"{item.user_name}: {obj.title_text}"
+        if item.is_public is False:
+            title = f"[SPAM] {title}"
+        return title
 
     def item_author_name(self, item):
         return item.user_name
@@ -87,16 +96,16 @@ class CommentsFeedRSS(ExtendedFeed):
         return obj
 
 
-class AdminPublishedCommentsFeedRSS(CommentsFeedRSS):
+class AdminCommentsFeedRSS(CommentsFeedRSS):
     """
-    The same as the public Comments RSS feed, except with added links
-    to Remove comments.
+    Includes both public and spam comments, plus links to
+    approve/delete/edit them in the Admin.
     """
 
-    # Is this feed showing public comments or not-public ones?
-    show_public_comments = True
+    # Can be "public", "spam", or "all":
+    comments_to_show = "all"
 
-    content_template = "comments/feeds/content_admin_published.html"
+    content_template = "comments/feeds/content_admin.html"
 
     def title(self, obj):
         title = super().title(obj)
@@ -105,25 +114,3 @@ class AdminPublishedCommentsFeedRSS(CommentsFeedRSS):
     def description(self, obj):
         description = super().description(obj)
         return f"{description} (Admin)"
-
-
-class AdminNotPublishedCommentsFeedRSS(CommentsFeedRSS):
-    """
-    The same as the Adin Published feed, except it only includes
-    comments marked as is_public=False. They've probably been
-    automatically marked as likely spam.
-
-    The template gives the user the option to "delete" them, i.e. mark
-    them as is_rmoved=True
-    """
-
-    # Is this feed showing public comments or not-public ones?
-    show_public_comments = False
-
-    content_template = "comments/feeds/content_admin_not_published.html"
-
-    def title(self, obj):
-        return f"Spam comments on {obj.name} (Admin)"
-
-    def description(self, obj):
-        return f"The most recent spam comments on {obj.name} (Admin)"

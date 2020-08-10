@@ -1,7 +1,0 @@
-{% spaceless %}
-  {{ obj.comment|safe|linebreaks }}
-  <hr>
-  <p>
-    <a href="{{ site_url }}{% url 'comments-delete' obj.pk %}">Remove this comment</a> or <a href="{{ site_url }}{% url 'admin:custom_comments_customcomment_change' obj.pk %}">edit in Admin</a>
-  </p>
-{% endspaceless %}

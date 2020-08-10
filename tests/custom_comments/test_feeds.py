@@ -4,6 +4,7 @@ from django.contrib.sites.models import Site
 from hines.core.utils import make_datetime
 from hines.custom_comments.factories import CustomCommentFactory
 from hines.weblogs.factories import BlogFactory, LivePostFactory
+
 # from tests import override_app_settings
 from tests.core.test_feeds import FeedTestCase
 
@@ -155,9 +156,9 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
             )
 
 
-class AdminPublishedCommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
+class AdminCommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
 
-    feed_url = "/terry/feeds/admin-published-comments/rss/"
+    feed_url = "/terry/feeds/admin-comments/rss/"
 
     def test_response_200(self):
         response = self.client.get(self.feed_url)
@@ -167,19 +168,4 @@ class AdminPublishedCommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
     # @override_app_settings(COMMENTS_ADMIN_PUBLISHED_FEED_SLUG="good-comments")
     # def test_response_200_with_custom_slug(self):
     #     response = self.client.get("/terry/feeds/good-comments/rss/")
-    #     self.assertEqual(response.status_code, 200)
-
-
-class AdminNotPublishedCommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
-
-    feed_url = "/terry/feeds/admin-not-published-comments/rss/"
-
-    def test_response_200(self):
-        response = self.client.get(self.feed_url)
-        self.assertEqual(response.status_code, 200)
-
-    # Can't work out why this test fails.
-    # @override_app_settings(COMMENTS_ADMIN_NOT_PUBLISHED_FEED_SLUG="spammy-comments")
-    # def test_response_200_with_custom_slug(self):
-    #     response = self.client.get("/terry/feeds/spammy-comments/rss/")
     #     self.assertEqual(response.status_code, 200)
