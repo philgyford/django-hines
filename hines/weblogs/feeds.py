@@ -55,8 +55,11 @@ class BlogPostsFeedRSS(ExtendedFeed):
         "For content:encoded"
         content = item.intro_html + item.body_html
 
-        if item.comments_allowed:
+        if item.comments_allowed or item.comment_count > 0:
             url = f"{item.get_absolute_url_with_domain()}#comments"
-            content += f'<p><a href="{url}">Read comments or post one</a></p>'
+            text = "Read comments"
+            if item.comments_allowed:
+                text = f"{text} or post one"
+            content += f'<hr><p><a href="{url}">{text}</a></p>'
 
         return content

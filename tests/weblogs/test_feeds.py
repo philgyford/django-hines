@@ -185,7 +185,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
 
         self.assertEqual(
             content,
-            '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p><p><a href="http://example.com/terry/my-blog/2017/04/25/my-latest-post/#comments">Read comments or post one</a></p>',  # noqa: E501
+            '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p><hr><p><a href="http://example.com/terry/my-blog/2017/04/25/my-latest-post/#comments">Read comments or post one</a></p>',  # noqa: E501
         )
 
     def test_no_author_email(self):

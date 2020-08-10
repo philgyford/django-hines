@@ -128,5 +128,5 @@ class ExtendedFeedTestCase(FeedTestCase):
 
         self.assertEqual(
             content,
-            '<p><em>From <a href="http://example.com/terry/my-blog/">My Blog</a>.</em></p><p>The post intro.</p><p>This is the post <b>body</b>.</p><p>OK?</p><p><a href="http://example.com/terry/my-blog/2017/04/25/my-blog-post/#comments">Read comments or post one</a></p>\n',  # noqa: E501
+            '<p><em>From <a href="http://example.com/terry/my-blog/">My Blog</a>.</em></p><p>The post intro.</p><p>This is the post <b>body</b>.</p><p>OK?</p><hr><p><a href="http://example.com/terry/my-blog/2017/04/25/my-blog-post/#comments">Read comments or post one</a></p>\n',  # noqa: E501
         )

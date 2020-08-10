@@ -11,8 +11,9 @@
     <p><a href="{{ obj.object.get_absolute_url_with_domain }}">Permalink</a></p>
   {% endif %}
 
-  {% if obj.object.comments_allowed %}
-    <p><a href="{{obj.object.get_absolute_url_with_domain }}#comments">Read comments or post one</a></p>
+  {% if obj.object.comments_allowed or obj.object.comment_count > 0 %}
+    <hr>
+    <p><a href="{{obj.object.get_absolute_url_with_domain }}#comments">Read comments{% if obj.object.comments_allowed %} or post one{% endif %}</a></p>
   {% endif %}
 
 {% elif obj.kind == 'pinboard_bookmark' %}
