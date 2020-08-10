@@ -109,10 +109,10 @@
         },
         "django-ditto": {
             "hashes": [
-                "sha256:7022eaaecf12e0d67d18d0facb924a8e75552a96137a8e48120e628fd8a7419a"
+                "sha256:c3371afc589040cb4ce97e827fed0493268b0219a0bab214a64fbc41910275f7"
             ],
             "index": "pypi",
-            "version": "==1.0.0"
+            "version": "==1.1.0"
         },
         "django-hcaptcha": {
             "hashes": [
@@ -145,10 +145,10 @@
         },
         "django-spectator": {
             "hashes": [
-                "sha256:3d08bbd0b1c2b54790bcfcfbe8b8674fd6d86c282a4457aa8d83af6c9a9e14ba"
+                "sha256:dc3017bf06236da86b4c96987bebb8aabb6f1863bd44b6c4c5a8179c9a25f921"
             ],
             "index": "pypi",
-            "version": "==11.1.0"
+            "version": "==11.2.0"
         },
         "django-storages": {
             "hashes": [
