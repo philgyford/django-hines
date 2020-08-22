@@ -8,7 +8,7 @@ from hines.core.utils import datetime_now
 from hines.users.factories import UserFactory
 
 
-class BlogFactory(factory.DjangoModelFactory):
+class BlogFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Blog
 
@@ -18,7 +18,7 @@ class BlogFactory(factory.DjangoModelFactory):
     sort_order = factory.Sequence(lambda n: n)
 
 
-class PostFactory(factory.DjangoModelFactory):
+class PostFactory(factory.django.DjangoModelFactory):
     """
     Probably clearer to use either DraftPostFactory or LivePostFactory.
     """
@@ -60,7 +60,7 @@ class ScheduledPostFactory(PostFactory):
     time_published = datetime_now() + timedelta(days=1)
 
 
-class TrackbackFactory(factory.DjangoModelFactory):
+class TrackbackFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Trackback
 
