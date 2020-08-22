@@ -3,7 +3,7 @@ import factory
 from . import models
 
 
-class BlockFactory(factory.DjangoModelFactory):
+class BlockFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Block
