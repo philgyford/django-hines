@@ -11,7 +11,7 @@ from hines.weblogs.factories import LivePostFactory
 from hines.weblogs.models import Post
 
 
-class CustomCommentFactory(factory.DjangoModelFactory):
+class CustomCommentFactory(factory.django.DjangoModelFactory):
     """
     You can associate the comment with a Post by passing it in like this:
 
@@ -45,7 +45,7 @@ class CustomCommentFactory(factory.DjangoModelFactory):
             self.content_object = extracted
 
 
-class CommentFlagFactory(factory.DjangoModelFactory):
+class CommentFlagFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = CommentFlag
 
