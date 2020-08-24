@@ -3,9 +3,11 @@ import random
 
 from dal import autocomplete
 from taggit.models import Tag
+from webmention.middleware import include_webmention_information
 
 from django.http import Http404
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.generic import (
     DateDetailView,
@@ -117,6 +119,7 @@ class BlogTagListView(CacheMixin, DetailView):
         return context
 
 
+@method_decorator(include_webmention_information, name="dispatch")
 class PostDetailView(TemplateSetMixin, DateDetailView):
     """
     A bit complicated because we need to match the post using its slug,

@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "spectator.events",
     "spectator.reading",
     "sortedm2m",
+    "webmention",
     "ditto.core",
     "ditto.flickr",
     "ditto.lastfm",
