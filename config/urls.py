@@ -112,6 +112,7 @@ urlpatterns = [
     path("{}/".format(ROOT_DIR), include(root_dir_patterns)),
     # Used in the weblogs app:
     path("comments/", include("django_comments.urls")),
+    path("webmention/", include("webmention.urls")),
 ]
 
 

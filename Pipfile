@@ -23,6 +23,7 @@ django-redis = "*"
 beautifulsoup4 = "*"
 sentry-sdk = "*"
 django-hcaptcha = "*"
+django-webmention = "*"
 
 [dev-packages]
 # If changing things here, might also need to do so in .travis.yml
