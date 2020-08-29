@@ -217,6 +217,9 @@ WHITENOISE_ROOT = os.path.join(APPS_DIR, "static_html/")
 # Visiting /example/ will serve /example/index.html:
 WHITENOISE_INDEX_FILE = True
 
+WHITENOISE_MIMETYPES = {
+    ".xsl": "text/xsl"
+}
 
 try:
     SPECTATOR_MAPS = {
