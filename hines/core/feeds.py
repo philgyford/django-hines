@@ -96,6 +96,18 @@ class ExtendedFeed(Feed):
     # Specify the path to a template to use that for the content:encoded data.
     content_template = None
 
+    def __call__(self, request, *args, **kwargs):
+        response = super().__call__(request, *args, **kwargs)
+
+        xsl_url = static("/hines/xsl/pretty-feed-v1.xsl").encode("utf-8")
+
+        tag = b'<?xml-stylesheet type="text/xsl" href="' + xsl_url + b'"?>\n'
+        start = b"<rss version"
+
+        response.content = response.content.replace(start, tag + start)
+
+        return response
+
     def item_extra_kwargs(self, item):
         """
         Add 'content' to the item, which will be used to make the
