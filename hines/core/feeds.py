@@ -1,5 +1,6 @@
 from django.contrib.sites.models import Site
 from django.templatetags.static import static
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.syndication.views import Feed
 from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
@@ -99,7 +100,9 @@ class ExtendedFeed(Feed):
     def __call__(self, request, *args, **kwargs):
         response = super().__call__(request, *args, **kwargs)
 
-        xsl_url = static("/hines/xsl/pretty-feed-v1.xsl").encode("utf-8")
+        xsl_url = staticfiles_storage.url("hines/xsl/pretty-feed-v1.xsl").encode(
+            "utf-8"
+        )
 
         tag = b'<?xml-stylesheet type="text/xsl" href="' + xsl_url + b'"?>\n'
         start = b"<rss version"
