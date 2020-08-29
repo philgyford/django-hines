@@ -32,8 +32,8 @@ class ExtendedRSSFeed(Rss201rev2Feed):
                 return '<b>This is my HTML for content:encoded.</b>'
     """
 
-    def root_attributes(self):
-        attrs = super().root_attributes()
+    def rss_attributes(self):
+        attrs = super().rss_attributes()
         attrs["xmlns:content"] = "http://purl.org/rss/1.0/modules/content/"
         return attrs
 

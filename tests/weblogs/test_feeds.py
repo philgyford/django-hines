@@ -64,10 +64,19 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         response = self.client.get("/terry/not-my-blog/feeds/posts/rss/")
         self.assertEqual(response.status_code, 404)
 
-    def test_channel(self):
+    def test_feed_element(self):
+        "Testing the <rss> element"
+        feed = self.get_feed_element(self.feed_url)
+
+        self.assertEqual(
+            feed.attributes["xmlns:content"].value,
+            "http://purl.org/rss/1.0/modules/content/",
+        )
+
+    def test_channel_element(self):
         "Testing the <channel> element"
 
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
 
         d = self.blog.public_posts.latest("time_modified").time_modified
         last_build_date = rfc2822_date(d)
@@ -87,11 +96,6 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
             ],
         )
 
-        self.assertEqual(
-            channel.attributes["xmlns:content"].value,
-            "http://purl.org/rss/1.0/modules/content/",
-        )
-
         self.assertChildNodeContent(
             channel,
             {
@@ -106,7 +110,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
     def test_channel_image(self):
         "Testing the <channel>'s <image> element"
 
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
 
         image_el = channel.getElementsByTagName("image")[0]
 
@@ -132,7 +136,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         allowed on the Post or not for this test, so patching
         Post.comments_allowed()
         """
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
         items = channel.getElementsByTagName("item")
 
         self.assertEqual(len(items), 5)
@@ -177,7 +181,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
     def test_items_comments_allowed(self):
         "If comments are enabled on a Post, there should be a link in content:encoded"
 
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
 
         item = channel.getElementsByTagName("item")[0]
 
@@ -193,7 +197,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
         self.blog.show_author_email_in_feed = False
         self.blog.save()
 
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
 
         items = channel.getElementsByTagName("item")
         self.assertEqual(len(items), 5)

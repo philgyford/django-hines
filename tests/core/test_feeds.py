@@ -17,18 +17,23 @@ class FeedTestCase(TestCase):
     https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
     """
 
-    def get_feed_channel(self, url):
-        """Handy method that returns the 'channel' tag from a feed at url.
-        You can then get the items like:
-
-            chan = self.get_feed_channel('/blah/')
-            items = chan.getElementsByTagName('item')
-        """
+    def get_feed_element(self, url):
         response = self.client.get(url)
         doc = minidom.parseString(response.content)
 
         feed_elem = doc.getElementsByTagName("rss")
         feed = feed_elem[0]
+
+        return feed
+
+    def get_channel_element(self, url):
+        """Handy method that returns the 'channel' tag from a feed at url.
+        You can then get the items like:
+
+            chan = self.get_channel_element('/blah/')
+            items = chan.getElementsByTagName('item')
+        """
+        feed = self.get_feed_element(url)
 
         chan_elem = feed.getElementsByTagName("channel")
         chan = chan_elem[0]
@@ -96,7 +101,7 @@ class ExtendedFeedTestCase(FeedTestCase):
         Post.comments_allowed()
         """
 
-        channel = self.get_feed_channel("/terry/feeds/everything/rss/")
+        channel = self.get_channel_element("/terry/feeds/everything/rss/")
 
         items = channel.getElementsByTagName("item")
 
@@ -120,7 +125,7 @@ class ExtendedFeedTestCase(FeedTestCase):
     def test_blog_post_comments_allowed(self):
         "If comments are enabled on a Post, there should be a link in content:encoded"
 
-        channel = self.get_feed_channel("/terry/feeds/everything/rss/")
+        channel = self.get_channel_element("/terry/feeds/everything/rss/")
 
         item = channel.getElementsByTagName("item")[0]
 

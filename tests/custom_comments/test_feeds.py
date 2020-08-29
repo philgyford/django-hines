@@ -50,10 +50,19 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
         response = self.client.get(self.feed_url)
         self.assertEqual(response.status_code, 200)
 
-    def test_channel(self):
+    def test_feed_element(self):
+        "Testing the <rss> element"
+        feed = self.get_feed_element(self.feed_url)
+
+        self.assertEqual(
+            feed.attributes["xmlns:content"].value,
+            "http://purl.org/rss/1.0/modules/content/",
+        )
+
+    def test_channel_element(self):
         "Testing the <channel> element"
 
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
 
         d = self.comment.submit_date
         last_build_date = rfc2822_date(d)
@@ -73,11 +82,6 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
             ],
         )
 
-        self.assertEqual(
-            channel.attributes["xmlns:content"].value,
-            "http://purl.org/rss/1.0/modules/content/",
-        )
-
         self.assertChildNodeContent(
             channel,
             {
@@ -92,7 +96,7 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
     def test_channel_image(self):
         "Testing the <channel>'s <image> element"
 
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
 
         image_el = channel.getElementsByTagName("image")[0]
 
@@ -111,7 +115,7 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
 
     def test_items(self):
         "Check the <item> elements"
-        channel = self.get_feed_channel(self.feed_url)
+        channel = self.get_channel_element(self.feed_url)
 
         items = channel.getElementsByTagName("item")
         self.assertEqual(len(items), 1)
