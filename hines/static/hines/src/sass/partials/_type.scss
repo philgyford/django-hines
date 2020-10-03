@@ -161,10 +161,18 @@ pre {
   padding: $vertical-space-sm $horizontal-space;
 
   code {
-    color: $body-color;
     white-space: pre-wrap;
     font-size: $font-size-monospace-pre;
     line-height: $line-height-monospace-pre;
+  }
+}
+
+.codehilite pre {
+  /* So that it uses whatever pygments styles are defined. */
+  background: inherit;
+
+  code {
+    color: $body-color;
   }
 }
 

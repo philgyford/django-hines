@@ -61,6 +61,20 @@ We use gulp to process Sass and JavaScript:
 
     $ gulp watch
 
+To check for any NPM updates:
+
+    $ npm outdated
+
+To update everything to new major versions, first install this globally:
+
+    $ npm install -g npm-check-updates
+
+Then:
+
+    $ ncu -u
+    $ npm install
+
+
 #### Tests
 
 Run tests:

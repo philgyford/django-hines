@@ -51,9 +51,16 @@
 .CodeMirror-fullscreen,
 .CodeMirror-sided {
   max-width: 100%;
-  margin-left: 0;
+  // Allow for the pop-out Django Admin nav button at left:
+  margin-left: 23px;
   margin-right: 0;
+
+  @media (max-width: 767px) {
+    // The pop-out Django Admin nav button isn't visible at this width, so:
+    margin-left: 0;
+  }
 }
+
 
 // For the Post add/edit form, make the elements around the Markdown fields
 // look better.

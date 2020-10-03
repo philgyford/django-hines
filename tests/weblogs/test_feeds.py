@@ -152,7 +152,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
                 "guid": "http://example.com/terry/my-blog/2017/04/25/my-latest-post/",
                 "pubDate": rfc2822_date(self.post2.time_published),
                 "author": "bob@example.org (Bob Ferris)",
-                "content:encoded": "<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p>",  # noqa: E501
+                "content:encoded": "<p>The post intro.</p>\n<p>This is the post <b>body</b>.</p>\n<p>OK?</p>\n",  # noqa: E501
             },
         )
 
@@ -189,7 +189,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
 
         self.assertEqual(
             content,
-            '<p>The post intro.</p><p>This is the post <b>body</b>.</p>\n<p>OK?</p><hr><p><a href="http://example.com/terry/my-blog/2017/04/25/my-latest-post/#comments">Read comments or post one</a></p>',  # noqa: E501
+            '<p>The post intro.</p>\n<p>This is the post <b>body</b>.</p>\n<p>OK?</p>\n<hr><p><a href="http://example.com/terry/my-blog/2017/04/25/my-latest-post/#comments">Read comments or post one</a></p>',  # noqa: E501
         )
 
     def test_no_author_email(self):

@@ -7,18 +7,23 @@ class MarkdownifyTestCase(TestCase):
     def test_basic(self):
         "Just test it actually does some Markdowning"
         html = markdownify("Hello\n\nBye")
-        self.assertEqual(html, "<p>Hello</p>\n<p>Bye</p>")
+        self.assertEqual(html, "<p>Hello</p>\n\n<p>Bye</p>\n")
 
     def test_fenced_code(self):
-        "It should mark up code blocks correctly."
+        "It should mark up fenced code blocks correctly."
         html = markdownify("```\nCode line 1\n\nCode line 2\n```")
-        self.assertEqual(html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>")
+        self.assertEqual(html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>\n")
+
+    def test_pygments_highlighting(self):
+        "It should use pygments to highlight fenced code blocks"
+        html = markdownify("```html\n<p>Hi</p>\n```")
+        self.assertEqual(html, '<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hi<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>\n</code></pre></div>\n')  # noqa: E501
 
     def test_output_format_default(self):
         "By default it should produce XHTML-style tags"
         html = markdownify("Hi\n\n----\n\n![Alt](test.png)")
         self.assertEqual(
-            html, '<p>Hi</p>\n<hr />\n<p><img alt="Alt" src="test.png" /></p>'
+            html, '<p>Hi</p>\n\n<hr />\n\n<p><img src="test.png" alt="Alt" /></p>\n'
         )
 
     def test_output_format_xhtml(self):
@@ -26,14 +31,39 @@ class MarkdownifyTestCase(TestCase):
         # With trailing slashes on solo tags.
         html = markdownify("Hi\n\n----\n\n![Alt](test.png)", output_format="xhtml")
         self.assertEqual(
-            html, '<p>Hi</p>\n<hr />\n<p><img alt="Alt" src="test.png" /></p>'
+            html, '<p>Hi</p>\n\n<hr />\n\n<p><img src="test.png" alt="Alt" /></p>\n'
         )
 
     def test_output_format_html5(self):
         "It should produce HTML5-style tags when asked"
         # With NO trailing slashes on solo tags.
         html = markdownify("Hi\n\n----\n\n![Alt](test.png)", output_format="html5")
-        self.assertEqual(html, '<p>Hi</p>\n<hr>\n<p><img alt="Alt" src="test.png"></p>')
+        self.assertEqual(
+            html, '<p>Hi</p>\n\n<hr>\n\n<p><img src="test.png" alt="Alt"></p>\n'
+        )
+
+    def test_urls_to_links(self):
+        "It should turn bare URLs into clickable links"
+        html = markdownify("Hello https://www.example.org/foo/ Bye")
+        self.assertEqual(
+            html,
+            '<p>Hello <a href="https://www.example.org/foo/">https://www.example.org/foo/</a> Bye</p>\n',  # noqa: E501
+        )
+
+    def test_hrefs_are_untouched(self):
+        "It should not do anything with links that are already clickable"
+        text = (
+            'Hello <a href="https://www.example.org/">https://www.example.org</a> Bye'
+        )
+        html = markdownify(text)
+        self.assertEqual(html, f"<p>{text}</p>\n")
+
+    def test_markdown_links_are_done_correctly(self):
+        "Standard Markdown links should be linkified correctly"
+        html = markdownify("Hello [Link](https://www.example.org/) Bye")
+        self.assertEqual(
+            html, '<p>Hello <a href="https://www.example.org/">Link</a> Bye</p>\n'
+        )
 
 
 class TruncateStringTestCase(TestCase):
@@ -126,12 +156,12 @@ class TruncateStringTestCase(TestCase):
 
     def test_no_truncation(self):
         """Too short to be truncated."""
-        self.assertEqual(truncate_string(u"This is my string."), "This is my string.")
+        self.assertEqual(truncate_string("This is my string."), "This is my string.")
 
     def test_no_truncation_at_word_boundary(self):
         """Too short to be truncated."""
         self.assertEqual(
-            truncate_string(u"This is my string.", at_word_boundary=True),
+            truncate_string("This is my string.", at_word_boundary=True),
             "This is my string.",
         )
 

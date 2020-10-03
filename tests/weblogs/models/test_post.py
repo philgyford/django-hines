@@ -74,7 +74,7 @@ Another line.""",
         )
         self.assertEqual(
             post.intro_html,
-            '<p><a href="http://example.org">Hello</a>. <em>OK?</em></p>',
+            '<p><a href="http://example.org">Hello</a>. <em>OK?</em></p>\n',
         )
 
     def test_intro_html_smartypants(self):
@@ -116,8 +116,11 @@ Another line.""",
         self.assertEqual(
             post.body_html,
             """<p><a href="http://example.org">Hello</a>.</p>
+
 <hr />
-<p><em>OK?</em></p>""",
+
+<p><em>OK?</em></p>
+""",
         )
 
     def test_body_html_smartypants(self):
@@ -141,8 +144,11 @@ Cats""",
         self.assertEqual(
             post.intro_html,
             """<p>Dogs</p>
+
 <hr>
-<p>Cats</p>""",
+
+<p>Cats</p>
+""",
         )
 
     def test_body_html_hines_markdown(self):
@@ -168,7 +174,8 @@ Cod""",
 <p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
 <hr>
 <h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Fish</h2>
-<p>Cod</p>""",  # noqa: E501
+<p>Cod</p>
+""",  # noqa: E501
         )
 
     def test_body_html_hines_markdown_figure(self):
@@ -188,7 +195,8 @@ Cats""",
             """<p>Dogs</p>
 <hr>
 <figure src="test.png"></figure>
-<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>""",  # noqa: E501
+<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
+""",  # noqa: E501
         )
 
     def test_body_html_hines_markdown_no_change(self):
@@ -219,7 +227,8 @@ Cats""",
 <hr>
 <ol>
 <li>Fish</li>
-</ol>""",
+</ol>
+""",
         )
 
     def test_new_excerpt(self):

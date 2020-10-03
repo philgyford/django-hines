@@ -15,10 +15,10 @@ class BlockTestCase(TestCase):
     def test_content_html(self):
         "It should convert markdown to html."
         block = BlockFactory(
-            content="""[Hello](http://example.org).  \n*Another* line."""
+            content="""[Hello](http://example.org).  \n*Another* line.\n"""
         )
         self.assertEqual(
             block.content_html,
-            '<p><a href="http://example.org">Hello</a>.<br />\n'
-            "<em>Another</em> line.</p>",
+            '<p><a href="http://example.org">Hello</a>. <br />\n'
+            "<em>Another</em> line.</p>\n",
         )
