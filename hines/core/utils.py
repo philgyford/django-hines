@@ -1,12 +1,13 @@
 # coding: utf-8
 from datetime import datetime
 import pytz
+import re
 
 from django.contrib.sites.models import Site
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 
-from markdown import markdown
+import markdown2
 
 from . import app_settings
 
@@ -29,9 +30,39 @@ def datetime_now():
 def markdownify(content, output_format="xhtml"):
     """Wrap the method, just in case we need to do something extra in future.
     output_format is one of "xhtml" or "html5".
+
+    We used to use the markdown module, but now use markdown2. For changing the style
+    of links (between xml-style and html5-style) it uses a boolean, html4tags. But
+    we're sticking with the output_format of "xhtml" or "html5" that was used directly
+    with the markdown module, and converting it.
+
+    Extras used:
+    * link-patterns - To make bare links in text clickable.
     """
-    return markdown(
-        text=content, extensions=["fenced_code"], output_format=output_format
+    # We want any bare links in the text to be converted to links,
+    # and still want any <a href=""> tags, and []() Markdown links,
+    # to be converted normally.
+    # See https://github.com/trentm/python-markdown2/wiki/link-patterns
+    pattern = (
+        r"((([A-Za-z]{3,9}:(?:\/\/)?)"  # scheme
+        r"(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+(:\[0-9]+)?"  # user@hostname:port
+        r"|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)"  # www.|user@hostname
+        r"((?:\/[\+~%\/\.\w\-_]*)?"  # path
+        r"\??(?:[\-\+=&;%@\.\w_]*)"  # query parameters
+        r"#?(?:[\.\!\/\\\w]*))?)"  # fragment
+        r"(?![^<]*?(?:<\/\w+>|\/?>))"  # ignore anchor HTML tags
+        r"(?![^\(]*?\))"  # ignore links in brackets (Markdown links and images)
+    )
+    link_patterns = [(re.compile(pattern), r"\1")]
+
+    return markdown2.markdown(
+        content,
+        extras=[
+            # "fenced-code-blocks",
+            "link-patterns"
+        ],
+        html4tags=(output_format == "html5"),
+        link_patterns=link_patterns,
     )
 
 
