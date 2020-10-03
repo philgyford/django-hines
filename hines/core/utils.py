@@ -37,12 +37,21 @@ def markdownify(content, output_format="xhtml"):
     with the markdown module, and converting it.
 
     Extras used:
+
+    * fenced-code-blocks - Enabled code blocks to be indicated with ```
+        before and after the code. If pygments is installed, it also
+        adds HTML tags to enable colouring if a syntax is indicated:
+            ```python
+            print("hi")
+            ```
+        https://github.com/trentm/python-markdown2/wiki/fenced-code-blocks
+
     * link-patterns - To make bare links in text clickable.
+        https://github.com/trentm/python-markdown2/wiki/link-patterns
     """
     # We want any bare links in the text to be converted to links,
     # and still want any <a href=""> tags, and []() Markdown links,
     # to be converted normally.
-    # See https://github.com/trentm/python-markdown2/wiki/link-patterns
     pattern = (
         r"((([A-Za-z]{3,9}:(?:\/\/)?)"  # scheme
         r"(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+(:\[0-9]+)?"  # user@hostname:port
@@ -58,7 +67,7 @@ def markdownify(content, output_format="xhtml"):
     return markdown2.markdown(
         content,
         extras=[
-            # "fenced-code-blocks",
+            "fenced-code-blocks",
             "link-patterns"
         ],
         html4tags=(output_format == "html5"),

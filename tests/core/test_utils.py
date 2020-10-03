@@ -9,10 +9,15 @@ class MarkdownifyTestCase(TestCase):
         html = markdownify("Hello\n\nBye")
         self.assertEqual(html, "<p>Hello</p>\n\n<p>Bye</p>\n")
 
-    # def test_fenced_code(self):
-    #     "It should mark up code blocks correctly."
-    #     html = markdownify("```\nCode line 1\n\nCode line 2\n```")
-    #     self.assertEqual(html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>")
+    def test_fenced_code(self):
+        "It should mark up fenced code blocks correctly."
+        html = markdownify("```\nCode line 1\n\nCode line 2\n```")
+        self.assertEqual(html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>\n")
+
+    def test_pygments_highlighting(self):
+        "It should use pygments to highlight fenced code blocks"
+        html = markdownify("```html\n<p>Hi</p>\n```")
+        self.assertEqual(html, '<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hi<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>\n</code></pre></div>\n')  # noqa: E501
 
     def test_output_format_default(self):
         "By default it should produce XHTML-style tags"
