@@ -23,6 +23,7 @@ sentry-sdk = "*"
 django-hcaptcha = "*"
 markdown2 = "*"
 pygments = "*"
+bleach = "*"
 
 [dev-packages]
 # If changing things here, might also need to do so in .travis.yml
