@@ -6,8 +6,7 @@ name = "pypi"
 [packages]
 "boto3" = "*"
 dj-database-url = "*"
-# Until this is fixed: https://github.com/yourlabs/django-autocomplete-light/issues/1137
-django-autocomplete-light = "==3.5.0"
+django-autocomplete-light = "*"
 django-contrib-comments = "*"
 django-ditto = "*"
 django-spectator = "*"
@@ -33,7 +32,7 @@ factory-boy = "*"
 freezegun = "*"
 flake8 = "*"
 # Got mismatched dependencies unless I specified a specific version:
-black = "==19.10b0"
+black = "==20.8b1"
 
 [requires]
 python_version = "3.8"
