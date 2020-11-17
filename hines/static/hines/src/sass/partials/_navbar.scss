@@ -118,6 +118,7 @@ $navbar-form-top:               $vertical-space-sm;
 
   .navbar .nav {
     order: 3;
+    width: 100%;
   }
 
   .navbar__form {
@@ -141,7 +142,7 @@ $navbar-form-top:               $vertical-space-sm;
 
 }
 
-@media (min-width: 1030px) {
+@media (min-width: 1040px) {
   /* Form is to right of title. Nav is in line with title's bottom border. */
 
   .navbar {
