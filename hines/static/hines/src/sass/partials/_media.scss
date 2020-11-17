@@ -106,6 +106,12 @@ $media-header-line-height: $line-height-base;
   line-height: $media-header-line-height;
 }
 
+.media__byline__author__icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: text-bottom;
+}
+
 // Media items in a .card.
 .card {
 
