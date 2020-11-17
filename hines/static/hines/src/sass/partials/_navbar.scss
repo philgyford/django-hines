@@ -127,6 +127,12 @@ $navbar-form-top:               $vertical-space-sm;
     margin-bottom: 0;
     padding-bottom: $nav-border-width;
 
+    .form--inline {
+      .form__control {
+        width: 10em;
+      }
+    }
+
     body.js-can-navbar & {
       display: block;
     }
@@ -168,9 +174,21 @@ $navbar-form-top:               $vertical-space-sm;
   .navbar__form {
     position: absolute;
     top: $navbar-form-top;
-    right: ($grid-gutter-width / 2);
+    right: 0;
     border-bottom: none;
     margin-top: 0;
+    width: 100%;
+    padding-left: ($grid-gutter-width / 2);
+    padding-right: ($grid-gutter-width / 2);
+    @include make-col($sub-columns);
+
+    form {
+      width: 100%;
+
+      input[type=text] {
+        flex-grow: 1;
+      }
+    };
   }
 
   // .navbar__form input {
