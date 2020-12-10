@@ -217,9 +217,7 @@ WHITENOISE_ROOT = os.path.join(APPS_DIR, "static_html/")
 # Visiting /example/ will serve /example/index.html:
 WHITENOISE_INDEX_FILE = True
 
-WHITENOISE_MIMETYPES = {
-    ".xsl": "text/xsl"
-}
+WHITENOISE_MIMETYPES = {".xsl": "text/xsl"}
 
 try:
     SPECTATOR_MAPS = {
@@ -319,6 +317,9 @@ HINES_TEMPLATE_SETS = (
 )
 
 HINES_GOOGLE_ANALYTICS_ID = os.environ.get("HINES_GOOGLE_ANALYTICS_ID", None)
+HINES_CLOUDFLARE_ANALYTICS_TOKEN = os.environ.get(
+    "HINES_CLOUDFLARE_ANALYTICS_TOKEN", None
+)
 
 # Date/time formats
 

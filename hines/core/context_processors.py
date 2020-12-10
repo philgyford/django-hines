@@ -16,6 +16,7 @@ def core(request):
         "site_name": current_site.name,
         "site_url": get_site_url(),
         "google_analytics_id": app_settings.GOOGLE_ANALYTICS_ID,
+        "cloudflare_analytics_token": app_settings.CLOUDFLARE_ANALYTICS_TOKEN,
         "show_grid": show_grid,
         "author_name": app_settings.AUTHOR_NAME,
         "author_email": app_settings.AUTHOR_EMAIL,

@@ -153,6 +153,11 @@ directory. e.g. `'hines/img/site_icon.jpg'`.
 `HINES_FIRST_DATE`: Day Archive pages will 404 for days before this date. e.g.
 `2000-03-15`. Default is `False` (dates of any age allowed).
 
+`HINES_CLOUDFLARE_ANALYTICS_TOKEN`: e.g. `'32bc47e0f'` etc. If present, the
+Cloudflare Web Analytics tracking code will be put into every page, using this
+token. This value is taken from the `HINES_CLOUDFLARE_ANALYTICS_TOKEN`
+environment variable. Default is `''`.
+
 `HINES_GOOGLE_ANALYTICS_ID`: e.g. `'UA-123456-1'`. If present, the Google
 Analytics Tracking code will be put into every page, using this ID. This value
 is taken from the `HINES_GOOGLE_ANALYTICS_ID` environment variable. Default is `''`.
