@@ -259,6 +259,8 @@ CSP_DEFAULT_SRC = (
     "'self'",
 )
 
+# This is deprecated in favour of worker-src and frame-src
+# but Safari appears not to recongise worker-src, at least. (2020-12-15)
 CSP_CHILD_SRC = (
     # For comment captcha:
     "https://assets.hcaptcha.com",
@@ -267,10 +269,13 @@ CSP_CHILD_SRC = (
     "https://*.youtube.com",
     "https://*.youtube-nocookie.com",
     "https://*.twitter.com",
+    # For Mapbox:
+    "blob:",
 )
 
 CSP_CONNECT_SRC = (
     "https://cloudflareinsights.com",
+    "https://*.mapbox.com",
 )
 
 CSP_FONT_SRC = (
@@ -288,11 +293,13 @@ CSP_IMG_SRC = (
     "https://*.staticflickr.com",
     "https://*.gravatar.com",
     "https://hines-production.s3.amazonaws.com",
+    # Needed for Mapbox:
+    "blob:",
 )
 
 CSP_SCRIPT_SRC = (
     "'self'",
-    # Required to have code between <script></script> tags in the page:
+    # Needed to have code between <script></script> tags in the page:
     "'unsafe-inline'",
     "https://static.cloudflareinsights.com",
     # For comment captcha:
