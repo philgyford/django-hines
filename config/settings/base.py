@@ -277,10 +277,11 @@ CSP_FONT_SRC = (
 
 CSP_IMG_SRC = (
     "'self'",
-    "https://*.flickr.com",
     # Required when we have CSS that has a background-image like:
     # url("data:image/svg+xml ... ")
     "data:"
+    "https://*.flickr.com",
+    "https://*.gravatar.com",
 )
 
 CSP_SCRIPT_SRC = (
