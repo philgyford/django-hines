@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "spectator.events",
     "spectator.reading",
     "sortedm2m",
+    "corsheaders",
     "ditto.core",
     "ditto.flickr",
     "ditto.lastfm",
@@ -80,6 +81,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # Should go before WhiteNoiseMiddleware and CommonMiddleware:
+    "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -236,6 +239,14 @@ AWS_DEFAULT_ACL = None
 
 # https://django-imagekit.readthedocs.io/en/stable/caching.html#removing-safeguards
 IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://www.gyford.local:8000",
+    "https://www.gyford.com",
+    "https://cloudflareinsights.com",
+    "https://static.cloudflareinsights.com",
+]
 
 
 # Content Security Policy

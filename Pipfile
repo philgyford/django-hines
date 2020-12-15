@@ -24,6 +24,7 @@ markdown2 = "*"
 pygments = "*"
 bleach = "*"
 django-csp = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 # If changing things here, might also need to do so in .travis.yml
