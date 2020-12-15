@@ -282,6 +282,7 @@ CSP_IMG_SRC = (
     "data:",
     "https://*.flickr.com",
     "https://*.gravatar.com",
+    "https://hines-production.s3.amazonaws.com",
 )
 
 CSP_SCRIPT_SRC = (
