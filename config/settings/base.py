@@ -204,6 +204,10 @@ MESSAGE_TAGS = {
     messages.ERROR: "u-error",
 }
 
+
+SECURE_REFERRER_POLICY = "unsafe-url"
+
+
 ####################################################################
 # THIRD-PARTY APPS
 
