@@ -299,6 +299,7 @@ CSP_SCRIPT_SRC = (
     "https://*.hcaptcha.com",
     # For embeds:
     "https://*.twitter.com",
+    "https://*.mapbox.com",
 )
 
 
@@ -309,6 +310,7 @@ CSP_STYLE_SRC = (
     "'unsafe-inline'",
     # Required for EasyMDE rich text editor in admin:
     "https://maxcdn.bootstrapcdn.com",
+    "https://*.mapbox.com",
 )
 
 # END THIRD-PARTY APPS
