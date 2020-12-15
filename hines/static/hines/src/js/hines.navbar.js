@@ -17,7 +17,7 @@
  *
  * Relies on our utils.js.
  */
-(function() {
+(function () {
   "use strict";
 
   window.hines = window.hines || {};
@@ -37,14 +37,14 @@
     var formId = "js-navbar-form";
 
     var exports = {
-      init: function() {
+      init: function () {
         // Indicate to the CSS that this is running:
         $.addClass(document.body, "js-can-navbar");
 
         createSearchLink();
 
         initListener();
-      }
+      },
     };
 
     /**
@@ -70,7 +70,7 @@
     }
 
     function initListener() {
-      $.getElByClass(buttonClass).addEventListener("click", function(event) {
+      $.getElByClass(buttonClass).addEventListener("click", function (event) {
         event.preventDefault();
 
         $.hideEl(liClass);

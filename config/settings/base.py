@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     "spectator.events",
     "spectator.reading",
     "sortedm2m",
-    "corsheaders",
     "ditto.core",
     "ditto.flickr",
     "ditto.lastfm",
@@ -81,8 +80,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # Should be before WhiteNoiseMiddleware and CommonMiddleware:
-    "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -90,6 +87,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "csp.middleware.CSPMiddleware",
     # Can go at the end of the list:
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
 ]
@@ -240,15 +238,59 @@ AWS_DEFAULT_ACL = None
 IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://www.gyford.local:8000",
-    "https://www.gyford.com",
-    "https://static.cloudflareinsights.com",
+# Content Security Policy
+
+CSP_DEFAULT_SRC = (
+    "'self'",
+)
+
+CSP_CHILD_SRC = (
+    # For comment captcha:
+    "https://assets.hcaptcha.com",
+    # For embeds:
+    "https://*.bandcamp.com",
+    "https://*.youtube.com",
+    "https://*.youtube-nocookie.com",
+    "https://*.twitter.com",
+)
+
+CSP_CONNECT_SRC = (
     "https://cloudflareinsights.com",
-]
+)
 
-CORS_ALLOW_CREDENTIALS = True
+CSP_FONT_SRC = (
+    "'self'",
+    # Needed for EasyMDE rich text editor in admin:
+    "https://maxcdn.bootstrapcdn.com",
+)
 
+CSP_IMG_SRC = (
+    "'self'",
+    "https://*.flickr.com",
+    # Required when we have CSS that has a background-image like:
+    # url("data:image/svg+xml ... ")
+    "data:"
+)
+
+CSP_SCRIPT_SRC = (
+    "'self'",
+    # Required to have code between <script></script> tags in the page:
+    "'unsafe-inline'",
+    "https://static.cloudflareinsights.com",
+    # For comment captcha:
+    "https://*.hcaptcha.com",
+    # For embeds:
+    "https://*.twitter.com",
+)
+
+CSP_STYLE_SRC = (
+    "'self'",
+    # Required to use inline style attributes in HTML tags, and
+    # CSS between <style></style> tags:
+    "'unsafe-inline'",
+    # Required for EasyMDE rich text editor in admin:
+    "https://maxcdn.bootstrapcdn.com",
+)
 
 # END THIRD-PARTY APPS
 ####################################################################
