@@ -297,6 +297,7 @@ CSP_SCRIPT_SRC = (
     "https://*.twitter.com",
 )
 
+
 CSP_STYLE_SRC = (
     "'self'",
     # Required to use inline style attributes in HTML tags, and
