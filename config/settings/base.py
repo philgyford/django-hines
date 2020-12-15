@@ -247,6 +247,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://cloudflareinsights.com",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 
 # END THIRD-PARTY APPS
 ####################################################################
