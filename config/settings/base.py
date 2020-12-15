@@ -90,7 +90,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "csp.middleware.CSPMiddleware",
     # Can go at the end of the list:
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
 ]
@@ -252,73 +251,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://static.cloudflareinsights.com",
 ]
 
-
-# Content Security Policy
-
-CSP_DEFAULT_SRC = (
-    "'self'",
-)
-
-# This is deprecated in favour of worker-src and frame-src
-# but Safari appears not to recongise worker-src, at least. (2020-12-15)
-CSP_CHILD_SRC = (
-    # For comment captcha:
-    "https://assets.hcaptcha.com",
-    # For embeds:
-    "https://*.bandcamp.com",
-    "https://*.youtube.com",
-    "https://*.youtube-nocookie.com",
-    "https://*.twitter.com",
-    # Needed for Mapbox:
-    "blob:",
-)
-
-CSP_CONNECT_SRC = (
-    "https://cloudflareinsights.com",
-    "https://*.mapbox.com",
-)
-
-CSP_FONT_SRC = (
-    "'self'",
-    # Needed for EasyMDE rich text editor in admin:
-    "https://maxcdn.bootstrapcdn.com",
-)
-
-CSP_IMG_SRC = (
-    "'self'",
-    # Required when we have CSS that has a background-image like:
-    # url("data:image/svg+xml ... ")
-    "data:",
-    "https://*.flickr.com",
-    "https://*.staticflickr.com",
-    "https://*.gravatar.com",
-    "https://hines-production.s3.amazonaws.com",
-    # Needed for Mapbox:
-    "blob:",
-)
-
-CSP_SCRIPT_SRC = (
-    "'self'",
-    # Needed to have code between <script></script> tags in the page:
-    "'unsafe-inline'",
-    "https://static.cloudflareinsights.com",
-    # For comment captcha:
-    "https://*.hcaptcha.com",
-    # For embeds:
-    "https://*.twitter.com",
-    "https://*.mapbox.com",
-)
-
-
-CSP_STYLE_SRC = (
-    "'self'",
-    # Required to use inline style attributes in HTML tags, and
-    # CSS between <style></style> tags:
-    "'unsafe-inline'",
-    # Required for EasyMDE rich text editor in admin:
-    "https://maxcdn.bootstrapcdn.com",
-    "https://*.mapbox.com",
-)
 
 # END THIRD-PARTY APPS
 ####################################################################

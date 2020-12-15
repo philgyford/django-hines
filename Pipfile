@@ -23,7 +23,6 @@ django-hcaptcha = "*"
 markdown2 = "*"
 pygments = "*"
 bleach = "*"
-django-csp = "*"
 django-cors-headers = "*"
 
 [dev-packages]
