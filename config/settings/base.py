@@ -281,6 +281,7 @@ CSP_IMG_SRC = (
     # url("data:image/svg+xml ... ")
     "data:",
     "https://*.flickr.com",
+    "https://*.staticflickr.com",
     "https://*.gravatar.com",
     "https://hines-production.s3.amazonaws.com",
 )
