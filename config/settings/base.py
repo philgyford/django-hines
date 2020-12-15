@@ -269,7 +269,7 @@ CSP_CHILD_SRC = (
     "https://*.youtube.com",
     "https://*.youtube-nocookie.com",
     "https://*.twitter.com",
-    # For Mapbox:
+    # Needed for Mapbox:
     "blob:",
 )
 
