@@ -279,7 +279,7 @@ CSP_IMG_SRC = (
     "'self'",
     # Required when we have CSS that has a background-image like:
     # url("data:image/svg+xml ... ")
-    "data:"
+    "data:",
     "https://*.flickr.com",
     "https://*.gravatar.com",
 )
