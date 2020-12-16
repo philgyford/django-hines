@@ -204,7 +204,7 @@ MESSAGE_TAGS = {
 }
 
 
-SECURE_REFERRER_POLICY = "unsafe-url"
+SECURE_REFERRER_POLICY = "origin-when-cross-origin"
 
 
 ####################################################################
