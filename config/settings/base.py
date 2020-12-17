@@ -204,7 +204,8 @@ MESSAGE_TAGS = {
 }
 
 
-SECURE_REFERRER_POLICY = "origin-when-cross-origin"
+# Rwquired for Cloudflare Web Analytics:
+SECURE_REFERRER_POLICY = "unsafe-url"
 
 
 ####################################################################
