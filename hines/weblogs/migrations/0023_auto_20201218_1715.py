@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weblogs', '0022_auto_20191025_1757'),
+        ("weblogs", "0022_auto_20191025_1757"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='featured',
-            field=models.PositiveSmallIntegerField(choices=[(0, 'Not featued'), (1, 'Featured')], default=0),
+            model_name="post",
+            name="featured",
+            field=models.PositiveSmallIntegerField(
+                choices=[(0, "Not featued"), (1, "Featured")], default=0
+            ),
         ),
     ]
