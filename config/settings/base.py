@@ -205,7 +205,7 @@ MESSAGE_TAGS = {
 
 
 # Rwquired for Cloudflare Web Analytics:
-SECURE_REFERRER_POLICY = "unsafe-url"
+SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 
 
 ####################################################################
