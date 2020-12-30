@@ -70,3 +70,6 @@ if DEBUG:
             new_apps.append("whitenoise.runserver_nostatic")
         new_apps.append(app)
     INSTALLED_APPS[:] = new_apps
+
+    # Add Django Extensions
+    INSTALLED_APPS += ["django_extensions"]
