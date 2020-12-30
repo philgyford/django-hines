@@ -3,7 +3,7 @@ import logging
 from time import time, sleep
 import psycopg2
 
-# From https://github.com/flexy/cookiecutter-drf/blob/develop/%7B%7B%20cookiecutter.project_slug%20%7D%7D/scripts/local/wait_for_postgres.py
+# From https://github.com/flexy/cookiecutter-drf/blob/develop/%7B%7B%20cookiecutter.project_slug%20%7D%7D/scripts/local/wait_for_postgres.py  # noqa: E501
 
 check_timeout = os.getenv("POSTGRES_CHECK_TIMEOUT", 30)
 check_interval = os.getenv("POSTGRES_CHECK_INTERVAL", 1)
