@@ -15,7 +15,8 @@ We use Docker for local development only, not for the live site.
 
 ### 1. Create a .env file
 
-Create a `.env` file containing the below:
+Create a `.env` file containing the below (see the Heroku Setup section for
+more details about the variables):
 
     export ALLOWED_HOSTS='*'
 
@@ -309,39 +310,6 @@ Default is `None`, to disable this behaviour.
 `HINES_USE_HTTPS`: e.g. `False`. Used when generating full URLs and the
 request object isn't available. Default `False`.
 
-
-## Environment variables
-
-We expect some variables to be set in the environment. For local development we
-have a `.env` file which is used by pipenv.
-
-These variables are used on both local development and production/Heroku sites:
-
-    ALLOWED_HOSTS
-    DJANGO_SECRET_KEY
-    DJANGO_SETTINGS_MODULE
-    DATABASE_URL
-    AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY
-    AWS_STORAGE_BUCKET_NAME
-    REDIS_URL
-    SPECTATOR_GOOGLE_MAPS_API_KEY
-
-Used only on production/Heroku site:
-
-    HCAPTCHA_SITEKEY
-    HCAPTCHA_SECRET
-    HINES_AKISEMT_API_KEY
-
-For local development, a couple of them should be like this in the `.env` file:
-
-    export DJANGO_SETTINGS_MODULE='config.settings.development'
-
-    export DATABASE_URL='postgres://hines:hines@localhost:5432/django-hines'
-
-`REDIS_URL` is used on prodution and _can be_ used on development, if there's
-a redis server running and we set the `CACHES` setting to use it in
-`config/settings/development.py`.
 
 ## Media files
 
