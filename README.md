@@ -108,10 +108,10 @@ Once that's complete, delete your database dump file.
 
 #### 5. Vist and set up the site
 
-Then go to http://gyford.test:8000 and you should see the site.
+Then go to http://www.gyford.test:8000 and you should see the site.
 
-Log in to the [Django Admin](http://gyford.test:8000/backstage/), go to the "Sites"
-section and change the one Site's Domain Name to `gyford.test:8000` and the
+Log in to the [Django Admin](http://www.gyford.test:8000/backstage/), go to the "Sites"
+section and change the one Site's Domain Name to `www.gyford.test:8000` and the
 Display Name to "Phil Gyford’s Website".
 
 
@@ -175,9 +175,7 @@ You can run a specific test passing a path in like:
 After tests run successfully you can open the file `htmlcov/index.html` in a browser to get more detailed information about coverage.
 
 
-### Other local dev tasks
-
-#### Editing CSS and JS
+## Editing CSS and JS
 
 We use gulp to process Sass and JavaScript:
 
