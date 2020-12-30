@@ -6,7 +6,4 @@ set -e
 # ./run_tests.sh tests.appname.test_models.TestClass.test_a_thing
 TESTS_TO_RUN=${1:tests}
 
-docker exec -t hines_web coverage --branch --source=. --omit=*/migrations/*.py,manage.py,tests/*.py run manage.py test --settings=config.settings.tests $TESTS_TO_RUN
-flake8
-coverage report
-coverage html
+docker exec hines_web /bin/sh -c "pipenv run coverage run --branch --source=. --omit=*/migrations/*.py,manage.py,tests/*.py manage.py test --settings=config.settings.tests $TESTS_TO_RUN ; pipenv run flake8 ; pipenv run coverage html"
