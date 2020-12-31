@@ -24,6 +24,7 @@ markdown2 = "*"
 pygments = "*"
 bleach = "*"
 django-cors-headers = "*"
+django-extensions = "*"
 
 [dev-packages]
 # If changing things here, might also need to do so in .travis.yml
@@ -37,3 +38,6 @@ black = "==20.8b1"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+tests = "./scripts/pipenv-run-tests.sh"

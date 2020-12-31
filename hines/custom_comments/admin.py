@@ -22,8 +22,8 @@ class CustomCommentAdmin(CommentsAdmin):
     def flag(self, obj):
         flag_name = ""
         try:
-            flag_name = obj.flags.values()[0]["flag"]
-        except IndexError:
+            flag_name = obj.flags.values().last()["flag"]
+        except (IndexError, TypeError):
             pass
         return flag_name
 

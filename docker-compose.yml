@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  # Postgres
+  db:
+    container_name: hines_db
+    environment:
+      # Mirrored in .env file
+      - POSTGRES_USER=hines
+      - POSTGRES_PASSWORD=hines
+      - POSTGRES_DB=django-hines
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  # Redis
+  # redis:
+  #   restart: always
+  #   image: sameersbn/redis:4.0.9-2  # Or redis:alpine?
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - ./docker/redis:/var/lib/redis:delegated
+  #   environment:
+  #     - REDIS_PASSWORD=${REDIS_PASSWORD}
+
+  # Application
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    command: scripts/run-web.sh
+    container_name: hines_web
+    depends_on:
+      - db
+      # - redis
+    env_file: .env
+    links:
+      - db
+      # - redis
+    ports:
+      - "8000:8000"
+    restart: always
+    volumes:
+      - .:/code
+
+volumes:
+  postgres_data:

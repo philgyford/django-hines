@@ -7,55 +7,176 @@ Code for http://www.gyford.com
 
 Pushing to `master` will run the commit through [Travis](https://travis-ci.org) and [Coveralls](https://coveralls.io). If it passes, and coverage doesn't decrease, it will be deployed automatically to Heroku.
 
-## Local development
 
-### Setup
+## Local development setup
 
-Install python requirements:
+We use Docker for local development only, not for the live site.
 
-    $ pipenv install --dev
 
-In the Django Admin set the Domain Name of the one Site.
+### 1. Create a .env file
 
-Create a database user with the required privileges:
+Create a `.env` file containing the below (see the Heroku Setup section for
+more details about the variables):
 
-    $ psql
-    # create database django-hines;
-    # create user hines with password 'hines';
-    # grant all privileges on database "django-hines" to hines;
-    # alter user hines createdb;
+    export ALLOWED_HOSTS='*'
 
-I got an error ("permission denied for relation django_migrations") later:
+    export AWS_ACCESS_KEY_ID='YOUR-ACCESS-KEY'
+    export AWS_SECRET_ACCESS_KEY='YOUR-SECRET-ACCESS-KEY'
+    export AWS_STORAGE_BUCKET_NAME='your-bucket-name'
 
-    $ psql "django-hines" -c "GRANT ALL ON ALL TABLES IN SCHEMA public to hines;"
-    $ psql "django-hines" -c "GRANT ALL ON ALL SEQUENCES IN SCHEMA public to hines;"
-    $ psql "django-hines" -c "GRANT ALL ON ALL FUNCTIONS IN SCHEMA public to hines;"
+    export DJANGO_SECRET_KEY='YOUR-SECRET-KEY'
+    export DJANGO_SETTINGS_MODULE='config.settings.development'
 
-Probably need to do this for a fresh install:
+    # Settings mirrored in docker-compose.yml:
+    export DATABASE_URL='postgres://hines:hines@db:5432/django-hines'
 
-    $ pipenv shell
-    $ ./manage.py migrate
-    $ ./manage.py collectstatic
-    $ ./manage.py createsuperuser
+    export HCAPTCHA_SITEKEY="YOUR-SITEKEY"
+    export HCAPTCHA_SECRET="YOUR-SECRET"
 
-_OR_, download the database backup file from Heroku and do this:
+    export HINES_AKISMET_API_KEY="YOUR-KEY"
 
-    $ pg_restore -d django-hines my_dump_file
+    export HINES_CLOUDFLARE_ANALYTICS_TOKEN="YOUR-TOKEN"
 
-Still in the pipenv shell, generate all the django-spectator thumbnails (which
-must be done because of the "Optimistic" cache file strategy):
+    export HINES_MAPBOX_API_KEY="YOUR-API-KEY"
 
-    $ ./manage.py generateimages
+    # TBD what this should be when using Docker:
+    export REDIS_URL='redis://127.0.0.1:6379/1'
 
-Then run the webserver:
 
-    $ ./manage.py runserver
+### 2. Set up a local domain name
 
-Then visit http://localhost:8000 or http://127.0.0.1:8000.
+Open your `/etc/hosts` file in a terminal window by doing:
 
-### Other local dev tasks
+    $ sudo vim /etc/hosts
 
-#### Editing CSS and JS
+Enter your computer's password. Then add this line somewhere in the file and save:
+
+    127.0.0.1 gyford.test
+
+
+### 3. Build the Docker containers
+
+Download, install and run Docker Desktop.
+
+In same directory as this README, build the containers:
+
+    $ docker-compose build
+
+Then start up the web and database containers:
+
+    $ docker-compose up
+
+There are two containers, the webserver (`web`) and the postgres serer (`db`).
+All the repository's code is mirrored in the web container in the `/code/` directory.
+
+
+### 4. Set up the database
+
+
+Once that's running, showing its logs, open another terminal window/tab.
+
+There are two ways we can populate the database. First we'll create an empty one,
+and second we'll populate it with a dump of data from the live site.
+
+#### 4a. An empty database
+
+Run Django's database migrations:
+
+    $ ./scripts/manage.sh migrate
+
+(NOTE: The `manage.sh` script is a shortcut for a longer command that runs
+Django's `manage.py` within the Docker web container.)
+
+Then create a superuser:
+
+    $ ./scripts/manage.sh createsuperuser
+
+#### 4b. Use a dump from the live site
+
+On Heroku, download a backup file of the live site's database and rename it to
+something simpler. We'll use "heroku_db_dump" below.
+
+Put the file in the same directory as this README.
+
+Import the data into the database:
+
+    $ docker-compose exec -T db pg_restore --verbose --clean --no-acl --no-owner -h localhost -U hines -d django-hines < heroku_db_dump
+
+You can copy and paste that command, only ensuring the final filename is the same as your database dump's.
+
+Once that's complete, delete your database dump file.
+
+
+#### 5. Vist and set up the site
+
+Then go to http://www.gyford.test:8000 and you should see the site.
+
+Log in to the [Django Admin](http://www.gyford.test:8000/backstage/), go to the "Sites"
+section and change the one Site's Domain Name to `www.gyford.test:8000` and the
+Display Name to "Phil Gyford’s Website".
+
+
+## Ongoing work
+
+Whenever you come back to start work you need to start the containers up again:
+
+    $ docker-compose up
+
+When you want to stop the server, in the terminal window/tab that's showing the logs, hit `Control` and `X` together.
+
+You can check if anything's running by doing this, which will list any Docker processes:
+
+    $ docker ps
+
+Do this in the project's directory to stop containers:
+
+    $ docker-compose stop
+
+You can also open the Docker Desktop app to see a prettier view of what containers you have.
+
+When the containers are running you can open a shell to the web server (exit with `Control` and `D` together):
+
+    $ docker exec -it hines_web sh
+
+You could then run `.manage.py` commands within there:
+
+    $ ./manage.py help
+
+Or, use the shortcut command from *outside* of the Docker container:
+
+    $ ./scripts/manage.sh help
+
+Or you can log into the database:
+
+    $ docker exec -it hines_db psql --username=hines --dbname=django-hines
+
+The development environment has [django-extensions](https://django-extensions.readthedocs.io/en/latest/index.html) installed so you can use its `shell_plus` and other commands. e.g.:
+
+    $ ./scripts/manage.sh shell_plus
+    $ ./scripts/manage.sh show_urls
+
+To install new python dependencies:
+
+    $ docker exec -it hines_web sh
+    # pipenv install module-name
+
+
+## Running tests
+
+The tests should all pass before committing code, especially to `main`.
+
+Run the tests using this shortcut script:
+
+    $ ./scripts/run-tests.sh
+
+You can run a specific test passing a path in like:
+
+    $ ./scripts/run-tests.sh tests.core.test_views.HomeViewTestCase.test_response_200
+
+After tests run successfully you can open the file `htmlcov/index.html` in a browser to get more detailed information about coverage.
+
+
+## Editing CSS and JS
 
 We use gulp to process Sass and JavaScript:
 
@@ -74,26 +195,6 @@ Then:
     $ ncu -u
     $ npm install
 
-
-#### Tests
-
-Run tests:
-
-    $ pipenv run ./scripts/run-tests.sh
-
-Run a specific test module, e.g.:
-
-    $ pipenv run ./scripts/run-tests.sh tests.weblogs.models.test_post
-
-Run a specific test e.g.:
-
-    $ pipenv run ./scripts/run-tests.sh tests.weblogs.models.test_post.PostTestCase.test_ordering
-
-To include coverage, do:
-
-    $ pipenv run ./scripts/coverage.sh
-
-and then open `htmlcov/index.html` in a browser.
 
 ## Heroku set-up
 
@@ -209,39 +310,6 @@ Default is `None`, to disable this behaviour.
 `HINES_USE_HTTPS`: e.g. `False`. Used when generating full URLs and the
 request object isn't available. Default `False`.
 
-
-## Environment variables
-
-We expect some variables to be set in the environment. For local development we
-have a `.env` file which is used by pipenv.
-
-These variables are used on both local development and production/Heroku sites:
-
-    ALLOWED_HOSTS
-    DJANGO_SECRET_KEY
-    DJANGO_SETTINGS_MODULE
-    DATABASE_URL
-    AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY
-    AWS_STORAGE_BUCKET_NAME
-    REDIS_URL
-    SPECTATOR_GOOGLE_MAPS_API_KEY
-
-Used only on production/Heroku site:
-
-    HCAPTCHA_SITEKEY
-    HCAPTCHA_SECRET
-    HINES_AKISEMT_API_KEY
-
-For local development, a couple of them should be like this in the `.env` file:
-
-    export DJANGO_SETTINGS_MODULE='config.settings.development'
-
-    export DATABASE_URL='postgres://hines:hines@localhost:5432/django-hines'
-
-`REDIS_URL` is used on prodution and _can be_ used on development, if there's
-a redis server running and we set the `CACHES` setting to use it in
-`config/settings/development.py`.
 
 ## Media files
 
