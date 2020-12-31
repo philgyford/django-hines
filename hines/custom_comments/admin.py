@@ -23,7 +23,7 @@ class CustomCommentAdmin(CommentsAdmin):
         flag_name = ""
         try:
             flag_name = obj.flags.values().last()["flag"]
-        except IndexError:
+        except (IndexError, TypeError):
             pass
         return flag_name
 
