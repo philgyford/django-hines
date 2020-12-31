@@ -27,7 +27,7 @@ before_script:
 - psql -c 'CREATE DATABASE test_db;' -U postgres
 - "./manage.py migrate --settings=config.settings.tests --verbosity=0"
 script:
-- "./scripts/run-tests.sh"
+- "./scripts/pipenv-run-tests.sh"
 after_success:
 - coveralls
 sudo: false
