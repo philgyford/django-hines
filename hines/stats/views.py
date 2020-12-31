@@ -36,18 +36,29 @@ class StatsView(CacheMixin, TemplateView):
                 "flickr_photos_per_year",
                 "github_contributions_per_year",
                 "diary_words_per_year",
-                "headaches_per_year",
             ],
         },
         {
             "slug": "consuming",
             "title": "Consuming",
             "charts": [
-                "books_per_year",
-                "periodicals_per_year",
                 "emails_received_per_year",
                 "lastfm_scrobbles_per_year",
                 "twitter_favorites_per_year",
+            ],
+        },
+        {
+            "slug": "reading",
+            "title": "Reading",
+            "charts": [
+                "books_per_year",
+                "periodicals_per_year",
+            ],
+        },
+        {
+            "slug": "events",
+            "title": "Events",
+            "charts": [
                 "movies_per_year",
                 "theatres_per_year",
                 "gigs_per_year",
@@ -56,6 +67,13 @@ class StatsView(CacheMixin, TemplateView):
                 # 'concerts_per_year',
                 # 'dance_per_year',
                 # 'misc_events_per_year',
+            ],
+        },
+        {
+            "slug": "health",
+            "title": "Health",
+            "charts": [
+                "headaches_per_year",
             ],
         },
     ]
