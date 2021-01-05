@@ -64,7 +64,7 @@
 
         chart = hines.chart();
 
-        d3.select('.js-chart-{{ chart.name }}').datum(data).call(chart);
+        d3.select('.js-chart-{{ chart.name }}').datum(data, {{ chart.labels|safe }}).call(chart);
       {% endfor %}
 
     });

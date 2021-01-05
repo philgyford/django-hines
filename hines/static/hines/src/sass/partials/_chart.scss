@@ -9,9 +9,31 @@
   height: 200px;
 }
 
-.chart__bar {
-  fill: $border-color;
+// Normal bar chart:
+.chart--bargroup { fill: $border-color; }
+
+// Stacked bar chart:
+.chart__inner--bar-stacked {
+  .chart__bargroup--0 { fill: #1d6996; }
+  .chart__bargroup--1 { fill: #E17C05; }
+  .chart__bargroup--2 { fill: #73AF48; }
+  .chart__bargroup--3 { fill: #CC503E; }
+  .chart__bargroup--4 { fill: #994E95; }
 }
+
+// From https://carto.com/carto-colors/
+// #5F4690 purple
+// #1D6996 blue
+// #38A6A5 light blue
+// #0F8554 green
+// #73AF48 light green
+// #EDAD08 yellow
+// #E17C05 orange
+// #CC503E red
+// #94346E purple 2
+// #6F4070 purple 3
+// #994E95 puprle 4
+// #666666 grey
 
 .chart__bar--clickable:hover {
   fill: $link-color;
