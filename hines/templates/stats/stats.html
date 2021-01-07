@@ -60,8 +60,6 @@
 
       {% if chart.description or chart.data.0.columns|length > 1 %}
         <figcaption class="chart__description">
-          {{ chart.description|safe }}
-
           {% if chart.data.0.columns|length > 1 %}
             <ul class="chart__legend">
               {% for k, v in chart.data.0.columns.items %}
@@ -73,6 +71,8 @@
               {% endfor %}
             </ul>
           {% endif %}
+
+          {{ chart.description|safe }}
         </figcaption>
       {% endif %}
     </figure>

@@ -611,28 +611,6 @@ class StaticGenerator(Generator):
 
     def get_days_worked_per_year(self):
         # Each of these three arrays should have the same keys.
-        freelance = {
-            "2001": 0,
-            "2002": 0,
-            "2003": 81,
-            "2004": 171,
-            "2005": 148,
-            "2006": 141,
-            "2007": 85,
-            "2008": 25,
-            "2009": 137,
-            "2010": 90,
-            "2011": 148,
-            "2012": 169,
-            "2013": 13,
-            "2014": 81,
-            "2015": 170,
-            "2016": 68,
-            "2017": 35,
-            "2018": 59,
-            "2019": 126,
-            "2020": 116,
-        }
 
         employment = {
             "2001": 174,
@@ -655,6 +633,29 @@ class StaticGenerator(Generator):
             "2018": 0,
             "2019": 0,
             "2020": 0,
+        }
+
+        freelance = {
+            "2001": 0,
+            "2002": 0,
+            "2003": 81,
+            "2004": 171,
+            "2005": 148,
+            "2006": 141,
+            "2007": 85,
+            "2008": 25,
+            "2009": 137,
+            "2010": 90,
+            "2011": 148,
+            "2012": 169,
+            "2013": 13,
+            "2014": 81,
+            "2015": 170,
+            "2016": 68,
+            "2017": 35,
+            "2018": 59,
+            "2019": 126,
+            "2020": 116,
         }
 
         acting = {
@@ -682,16 +683,16 @@ class StaticGenerator(Generator):
 
         chart_data = []
 
-        for year in freelance.keys():
+        for year in employment.keys():
             chart_data.append(
                 {
                     "label": year,
                     "columns": {
-                        "freelance": {"value": freelance[year], "label": "Freelance"},
                         "employment": {
                             "value": employment[year],
                             "label": "Employment",
                         },
+                        "freelance": {"value": freelance[year], "label": "Freelance"},
                         "acting": {"value": acting[year], "label": "Acting"},
                     },
                 }
@@ -700,7 +701,11 @@ class StaticGenerator(Generator):
         return {
             "data": chart_data,
             "title": "Days worked per year",
-            "description": "",
+            "description": (
+                "Employment does not include holidays or sick days.<br>"
+                "Freelance only includes days working for clients.<br>"
+                "Acting includes paid or unpaid work."
+            ),
         }
 
     def get_github_contributions_per_year(self):
