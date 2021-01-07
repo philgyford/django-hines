@@ -10,15 +10,21 @@
  *    var data = [
  *      {
  *        'label': '2012',
- *        'cats': {'label': 'Cats', 'value': 32}
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 32}
+ *        }
  *      },
  *      {
  *        'label': '2013',
- *        'cats': {'label': 'Cats', 'value': 46}
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 46}
+ *        }
  *      },
  *      {
  *        'label': '2014',
- *        'cats': {'label': 'Cats', 'value': 25}
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 25}
+ *        }
  *      }
  *    ];
  *
@@ -33,18 +39,24 @@
  *    var data = [
  *      {
  *        'label': '2012',
- *        'cats': {'label': 'Cats', 'value': 32},
- *        'dogs': {'label': 'Dogs', 'value': 23},
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 32},
+ *          'dogs': {'label': 'Dogs', 'value': 23},
+ *        }
  *      },
  *      {
  *        'label': '2013',
- *        'cats': {'label': 'Cats', 'value': 46},
- *        'dogs': {'label': 'Dogs', 'value': 29},
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 46},
+ *          'dogs': {'label': 'Dogs', 'value': 29},
+ *        }
  *      },
  *      {
  *        'label': '2014',
- *        'cats': {'label': 'Cats', 'value': 25},
- *        'dogs': {'label': 'Dogs', 'value': 32},
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 25},
+ *          'dogs': {'label': 'Dogs', 'value': 32},
+ *        }
  *      },
  *    ];
  *
@@ -54,15 +66,21 @@
  *    var data = [
  *      {
  *        'label': '2012',
- *        'cats': {'label': 'Cats', 'value': 32, 'url': 'http://example.org/cats/2012'}
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 32, 'url': '/cats/2012'}
+ *        }
  *      },
  *      {
  *        'label': '2013',
- *        'cats': {'label': 'Cats', 'value': 46, 'url': 'http://example.org/cats/2013'}
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 46, 'url': '/cats/2013'}
+ *        }
  *      },
  *      {
  *        'label': '2014',
- *        'cats': {'label': 'Cats', 'value': 25, 'url': 'http://example.org/cats/2014'}
+ *        'columns': {
+ *          'cats': {'label': 'Cats', 'value': 25, 'url': '/cats/2014'}
+ *        }
  *      }
  *    ];
  */
@@ -100,9 +118,9 @@
       var text = "<strong>" + d.data.label + ":</strong> ";
       if (chartType == "bar-stacked") {
         // Only need to show the group label if there are stacked bars.
-        text += d.data[groupKey]["label"] + ": ";
+        text += d.data.columns[groupKey]["label"] + ": ";
       }
-      text += numberFormat(d.data[groupKey]["value"]);
+      text += numberFormat(d.data.columns[groupKey]["value"]);
       return text;
     };
 
@@ -206,7 +224,7 @@
         var chartH;
 
         // The keys that we identify each of the coloured bar groups:
-        var barGroupKeys = Object.keys(data[0]).slice(1);
+        var barGroupKeys = Object.keys(data[0].columns);
 
         if (barGroupKeys.length > 1) {
           chartType = "bar-stacked";
@@ -214,7 +232,7 @@
 
         // Transform the data into what we need for stacked bar chart:
         var stack = d3.stack().keys(barGroupKeys).value(function(d, key) {
-          return d[key]["value"];
+          return d.columns[key]["value"];
         });
         var seriesData = stack(data);
 
@@ -281,6 +299,7 @@
           // Outer width, including space for axes etc:
           var width = parseInt(container.style("width"), 10);
           var height = parseInt(container.style("height"), 10);
+          console.log(width);
 
           // Inner width, chart area only, minus margins for axes etc.
           chartW = width - margin.left - margin.right;
@@ -355,7 +374,7 @@
               .classed("chart__bar--clickable", function(d, i) {
                 // Get the name of the group this rect is in:
                 var groupKey = d3.select(this.parentNode).datum().key;
-                if ("url" in d.data[groupKey] && d.data[groupKey]["url"]) {
+                if ("url" in d.data.columns[groupKey] && d.data.columns[groupKey]["url"]) {
                   return true;
                 } else {
                   return false;

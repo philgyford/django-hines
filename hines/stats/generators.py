@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from datetime import datetime
 
 from django.db.models import Count, F, Min, Max
 from django.db.models.functions import TruncYear
@@ -69,15 +70,21 @@ class Generator:
             [
                 {
                     'label': '2017',
-                    'foo': {'label': 'Foo', 'value': 37},
+                    'columns': {
+                        'foo': {'label': 'Foo', 'value': 37},
+                    }
                 },
                 {
                     'label': '2018',
-                    'foo': {'label': 'Foo', 'value': 0},
+                    'columns': {
+                        'foo': {'label': 'Foo', 'value': 0},
+                    }
                 },
                 {
                     'label': '2019',
-                    'foo': {'label': 'Foo', 'value': 42},
+                    'columns': {
+                        'foo': {'label': 'Foo', 'value': 42},
+                    }
                 },
                 # etc.
             ]
@@ -113,10 +120,12 @@ class Generator:
         for year in range(start_year, end_year + 1):
             year_data = {
                 "label": str(year),
-                group_key: {"label": group_label, "value": 0},
+                "columns": {
+                    group_key: {"label": group_label, "value": 0},
+                },
             }
             if year in counts:
-                year_data[group_key]["value"] = counts[year]
+                year_data["columns"][group_key]["value"] = counts[year]
 
             data.append(year_data)
 
@@ -143,10 +152,8 @@ class EventsGenerator(Generator):
             self.start_year = dates["date__min"].year
         except AttributeError:
             self.start_year = None
-        try:
-            self.end_year = dates["date__max"].year
-        except AttributeError:
-            self.end_year = None
+
+        self.end_year = datetime.utcnow().year
 
     def get_per_year(self):
         """
@@ -163,10 +170,10 @@ class EventsGenerator(Generator):
                 # Then take out the data and put it in our all_data structure.
                 kind_data = self._get_kind_per_year(kind)
                 for year_data in kind_data:
-                    label = year_data["label"]
+                    label = year_data["label"]  # "2017"
                     if label not in all_data:
-                        all_data[label] = {"label": label}
-                    all_data[label][kind] = year_data[kind]
+                        all_data[label] = {"label": label, "columns": {}}
+                    all_data[label]["columns"][kind] = year_data["columns"][kind]
 
             data = {"data": list(all_data.values()), "title": "All Events"}
 
@@ -369,8 +376,8 @@ class ReadingGenerator(Generator):
 
         # Go through and add in URLs to each year.
         for year in data["data"]:
-            if year[self.kind]["value"] > 0:
-                year[self.kind]["url"] = reverse(
+            if year["columns"][self.kind]["value"] > 0:
+                year["columns"][self.kind]["url"] = reverse(
                     "spectator:reading:reading_year_archive",
                     kwargs={"year": year["label"], "kind": "{}s".format(self.kind)},
                 )
@@ -415,7 +422,10 @@ class StaticGenerator(Generator):
         chart_data = []
         for year, count in totals.items():
             chart_data.append(
-                {"label": year, "diary": {"label": "Words", "value": count}}
+                {
+                    "label": year,
+                    "columns": {"diary": {"label": "Words", "value": count}},
+                }
             )
 
         return {
@@ -551,7 +561,10 @@ class StaticGenerator(Generator):
         chart_data = []
         for year, count in totals.items():
             chart_data.append(
-                {"label": year, "emails": {"label": "Emails", "value": count}}
+                {
+                    "label": year,
+                    "columns": {"emails": {"label": "Emails", "value": count}},
+                }
             )
 
         return {
@@ -583,7 +596,10 @@ class StaticGenerator(Generator):
         chart_data = []
         for year, count in totals.items():
             chart_data.append(
-                {"label": year, "headaches": {"label": "Headaches", "value": count}}
+                {
+                    "label": year,
+                    "columns": {"headaches": {"label": "Headaches", "value": count}},
+                }
             )
 
         return {
@@ -670,9 +686,14 @@ class StaticGenerator(Generator):
             chart_data.append(
                 {
                     "label": year,
-                    "freelance": {"value": freelance[year], "label": "Freelance"},
-                    "employment": {"value": employment[year], "label": "Employment"},
-                    "acting": {"value": acting[year], "label": "Acting"},
+                    "columns": {
+                        "freelance": {"value": freelance[year], "label": "Freelance"},
+                        "employment": {
+                            "value": employment[year],
+                            "label": "Employment",
+                        },
+                        "acting": {"value": acting[year], "label": "Acting"},
+                    },
                 }
             )
 
@@ -703,7 +724,10 @@ class StaticGenerator(Generator):
         chart_data = []
         for year, count in totals.items():
             chart_data.append(
-                {"label": year, "github": {"label": "Contributions", "value": count}}
+                {
+                    "label": year,
+                    "columns": {"github": {"label": "Contributions", "value": count}},
+                }
             )
 
         return {
@@ -811,8 +835,8 @@ class WeblogGenerator(Generator):
 
         # Go through and add URLs for each year of writing.
         for year in data["data"]:
-            if year["posts"]["value"] > 0:
-                year["posts"]["url"] = reverse(
+            if year["columns"]["posts"]["value"] > 0:
+                year["columns"]["posts"]["url"] = reverse(
                     "weblogs:post_year_archive",
                     kwargs={"blog_slug": self.blog_slug, "year": year["label"]},
                 )

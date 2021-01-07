@@ -31,10 +31,24 @@
     {% endwith %}
 
     <figure class="figure figure--chart">
-      <div class="chart js-chart-{{ chart.name }}"></div>
+      <div class="chart js-chart-{{ chart.name }}" aria-hidden="true"></div>
 
-      {% if chart.description %}
-        <figcaption class="chart-description">{{ chart.description|safe }}</figcaption>
+      {% if chart.description or chart.data.0.columns|length > 1 %}
+        <figcaption class="chart__description">
+          {{ chart.description|safe }}
+
+          {% if chart.data.0.columns|length > 1 %}
+            <ul class="chart__legend" aria-hidden="true">
+              {% for k, v in chart.data.0.columns.items %}
+                {% if k != "label" %}
+                  <li class="chart__legend__item">
+                    <span class="chart__legend__item__key chart__legend__item__key--{{ forloop.counter0 }}"> </span> {{ v.label }}
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </figcaption>
       {% endif %}
     </figure>
   {% endfor %}
@@ -60,7 +74,7 @@
       var chart;
 
       {% for chart in charts %}
-        data = JSON.parse(document.getElementById('{{ chart.name}}').textContent);
+        data = JSON.parse(document.getElementById('{{ chart.name }}').textContent);
 
         chart = hines.chart();
 

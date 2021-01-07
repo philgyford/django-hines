@@ -14,11 +14,11 @@
 
 // Stacked bar chart:
 .chart__inner--bar-stacked {
-  .chart__bargroup--0 { fill: #1d6996; }
-  .chart__bargroup--1 { fill: #E17C05; }
-  .chart__bargroup--2 { fill: #73AF48; }
-  .chart__bargroup--3 { fill: #CC503E; }
-  .chart__bargroup--4 { fill: #994E95; }
+  .chart__bargroup--0 { fill: $chart-bar-color-0; }
+  .chart__bargroup--1 { fill: $chart-bar-color-1; }
+  .chart__bargroup--2 { fill: $chart-bar-color-2; }
+  .chart__bargroup--3 { fill: $chart-bar-color-3; }
+  .chart__bargroup--4 { fill: $chart-bar-color-4; }
 }
 
 // From https://carto.com/carto-colors/
@@ -166,6 +166,32 @@
   border: 1px solid $border-color;
 }
 
-.chart-description {
+.chart__description {
   @include text-style-alt;
 }
+
+.chart__legend {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+  }
+}
+.chart__legend__item {
+  background: none;
+  padding-left: 0;
+  margin-right: $horizontal-space;
+}
+.chart__legend__item__key {
+  display: inline-block;
+  width: $border-width * 2;
+  height: $border-width;
+  margin-right: $horizontal-space-sm;
+}
+.chart__legend__item__key--0 { background: $chart-bar-color-0; }
+.chart__legend__item__key--1 { background: $chart-bar-color-1; }
+.chart__legend__item__key--2 { background: $chart-bar-color-2; }
+.chart__legend__item__key--3 { background: $chart-bar-color-3; }
+.chart__legend__item__key--4 { background: $chart-bar-color-4; }
