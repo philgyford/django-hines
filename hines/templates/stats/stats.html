@@ -26,19 +26,44 @@
   </ul>
 
   {% for chart in charts %}
+
     {% with chart.name|cut:"_" as header_id %}
       <h2 id="{{ header_id }}">{{ chart.title }}</h2>
     {% endwith %}
 
-    <figure class="figure figure--chart">
-      <div class="chart js-chart-{{ chart.name }}" aria-hidden="true"></div>
+    {# Only visible to screen readers #}
+    <table class="table u-sr-only">
+      {% if chart.description %}
+        <caption>{{ chart.description|safe }}</caption>
+      {% endif %}
+      <thead>
+        <th>Year</th>
+        {% for k, v in chart.data.0.columns.items %}
+          <th>{{ v.label }}</th>
+        {% endfor %}
+      </thead>
+      <tbody>
+        {% for row in chart.data %}
+          <tr>
+            <th>{{ row.label }}</th>
+            {% for k, v in row.columns.items %}
+              <td>{{ v.value }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {# NOT visible to screen readers #}
+    <figure class="figure figure--chart" aria-hidden="true">
+      <div class="chart js-chart-{{ chart.name }}"></div>
 
       {% if chart.description or chart.data.0.columns|length > 1 %}
         <figcaption class="chart__description">
           {{ chart.description|safe }}
 
           {% if chart.data.0.columns|length > 1 %}
-            <ul class="chart__legend" aria-hidden="true">
+            <ul class="chart__legend">
               {% for k, v in chart.data.0.columns.items %}
                 {% if k != "label" %}
                   <li class="chart__legend__item">
@@ -51,6 +76,7 @@
         </figcaption>
       {% endif %}
     </figure>
+
   {% endfor %}
 
 {% endblock content %}
