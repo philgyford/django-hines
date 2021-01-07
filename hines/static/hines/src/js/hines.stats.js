@@ -279,7 +279,9 @@
             .classed("chart__axis chart__axis--x", true);
 
           // Add extra classes depending on the number of ticks on x-axis:
-          if (data.length > 20) {
+          if (data.length > 30) {
+            xAxisG.classed("chart__axis--x--30", true);
+          } else if (data.length > 20) {
             xAxisG.classed("chart__axis--x--20", true);
           } else if (data.length > 15) {
             xAxisG.classed("chart__axis--x--15", true);

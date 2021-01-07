@@ -58,7 +58,42 @@
 // ticks on it. We then hide/show different quantities of ticks at
 // different browser widths, so that their labels should never overlap.
 
-// > 20 ticks
+// > 30 ticks
+.chart__axis--x--30 .tick {
+  display: none;
+
+  &:nth-child(5n) {
+    display: inline;
+  }
+
+  @media (min-width: 400px) {
+    &:nth-child(5n) {
+      display: none;
+    }
+    &:nth-child(3n) {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 580px) {
+    &:nth-child(3n),
+    &:nth-child(5n) {
+      display: none;
+    }
+    &:nth-child(2n) {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    &,
+    &:nth-child(3n),
+    &:nth-child(5n) {
+      display: inline;
+    }
+  }
+}
+// 21-30 ticks
 .chart__axis--x--20 .tick {
   display: none;
 
