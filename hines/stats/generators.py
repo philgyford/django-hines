@@ -250,7 +250,10 @@ class FlickrGenerator(Generator):
         )
 
         data["data"] = self._queryset_to_list(
-            qs, group_key="flickr", group_label="Flickr photos"
+            qs,
+            group_key="flickr_photos",
+            group_label="Flickr photos",
+            end_year=datetime.utcnow().year,
         )
 
         return data
@@ -288,7 +291,11 @@ class LastfmGenerator(Generator):
         )
 
         data["data"] = self._queryset_to_list(
-            qs, group_key="lastfm", group_label="Tracks", start_year=start_year
+            qs,
+            group_key="lastfm_scrobbles",
+            group_label="Tracks",
+            start_year=start_year,
+            end_year=datetime.utcnow().year,
         )
 
         return data
@@ -324,7 +331,10 @@ class PinboardGenerator(Generator):
         )
 
         data["data"] = self._queryset_to_list(
-            qs, group_key="pinboard", group_label="Links"
+            qs,
+            group_key="pinboard_bookmarks",
+            group_label="Links",
+            end_year=datetime.utcnow().year,
         )
 
         return data
@@ -360,14 +370,13 @@ class ReadingGenerator(Generator):
         else:
             start_year = 1998
 
-        try:
-            end_year = counts[-1]["year"].year
-        except IndexError:
-            end_year = None
+        end_year = datetime.utcnow().year
+
+        group_key = f"reading_{self.kind}"
 
         data["data"] = self._queryset_to_list(
             counts,
-            group_key=self.kind,
+            group_key=group_key,
             group_label=title,
             start_year=start_year,
             end_year=end_year,
@@ -376,8 +385,8 @@ class ReadingGenerator(Generator):
 
         # Go through and add in URLs to each year.
         for year in data["data"]:
-            if year["columns"][self.kind]["value"] > 0:
-                year["columns"][self.kind]["url"] = reverse(
+            if year["columns"][group_key]["value"] > 0:
+                year["columns"][group_key]["url"] = reverse(
                     "spectator:reading:reading_year_archive",
                     kwargs={"year": year["label"], "kind": "{}s".format(self.kind)},
                 )
@@ -424,7 +433,7 @@ class StaticGenerator(Generator):
             chart_data.append(
                 {
                     "label": year,
-                    "columns": {"diary": {"label": "Words", "value": count}},
+                    "columns": {"diary_words": {"label": "Words", "value": count}},
                 }
             )
 
@@ -731,7 +740,12 @@ class StaticGenerator(Generator):
             chart_data.append(
                 {
                     "label": year,
-                    "columns": {"github": {"label": "Contributions", "value": count}},
+                    "columns": {
+                        "github_contributions": {
+                            "label": "Contributions",
+                            "value": count,
+                        }
+                    },
                 }
             )
 
@@ -773,7 +787,10 @@ class TwitterGenerator(Generator):
         )
 
         data["data"] = self._queryset_to_list(
-            qs, group_key="tweets", group_label="Tweets"
+            qs,
+            group_key="twitter_tweets",
+            group_label="Tweets",
+            end_year=datetime.utcnow().year,
         )
 
         return data
@@ -802,7 +819,10 @@ class TwitterGenerator(Generator):
         )
 
         data["data"] = self._queryset_to_list(
-            qs, group_key="favorites", group_label="Favorites"
+            qs,
+            group_key="twitter_favorites",
+            group_label="Favorites",
+            end_year=datetime.utcnow().year,
         )
 
         return data
@@ -835,13 +855,16 @@ class WeblogGenerator(Generator):
         )
 
         data["data"] = self._queryset_to_list(
-            qs, group_key="posts", group_label="Posts"
+            qs,
+            group_key="weblog_posts",
+            group_label="Posts",
+            end_year=datetime.utcnow().year,
         )
 
         # Go through and add URLs for each year of writing.
         for year in data["data"]:
-            if year["columns"]["posts"]["value"] > 0:
-                year["columns"]["posts"]["url"] = reverse(
+            if year["columns"]["weblog_posts"]["value"] > 0:
+                year["columns"]["weblog_posts"]["url"] = reverse(
                     "weblogs:post_year_archive",
                     kwargs={"blog_slug": self.blog_slug, "year": year["label"]},
                 )
