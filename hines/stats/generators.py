@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from datetime import datetime
 
 from django.db.models import Count, F, Min, Max
 from django.db.models.functions import TruncYear
@@ -40,7 +41,15 @@ class Generator:
     Parent class for all other kinds of generator.
     """
 
-    def _queryset_to_list(self, qs, start_year=None, end_year=None, value_key="total"):
+    def _queryset_to_list(
+        self,
+        qs,
+        group_key,
+        group_label,
+        start_year=None,
+        end_year=None,
+        value_key="total",
+    ):
         """
         Takes a Queryset that's of this form (or years can be integers):
 
@@ -61,15 +70,21 @@ class Generator:
             [
                 {
                     'label': '2017',
-                    'value': 37,
+                    'columns': {
+                        'foo': {'label': 'Foo', 'value': 37},
+                    }
                 },
                 {
                     'label': '2018',
-                    'value': 0,
+                    'columns': {
+                        'foo': {'label': 'Foo', 'value': 0},
+                    }
                 },
                 {
                     'label': '2019',
-                    'value': 42,
+                    'columns': {
+                        'foo': {'label': 'Foo', 'value': 42},
+                    }
                 },
                 # etc.
             ]
@@ -103,9 +118,14 @@ class Generator:
         # In case there are years with no data, we go through ALL the possible
         # years and fill in empty years with 0 visits:
         for year in range(start_year, end_year + 1):
-            year_data = {"label": str(year), "value": 0}
+            year_data = {
+                "label": str(year),
+                "columns": {
+                    group_key: {"label": group_label, "value": 0},
+                },
+            }
             if year in counts:
-                year_data["value"] = counts[year]
+                year_data["columns"][group_key]["value"] = counts[year]
 
             data.append(year_data)
 
@@ -115,47 +135,90 @@ class Generator:
 class EventsGenerator(Generator):
     """
     For things about Spectator Events.
+
+    Can generate the data for a single kind, or for "all" kinds, suitable
+    for a stacked bar chart.
     """
 
     def __init__(self, kind):
         """
-        kind is like 'cinema', 'concert', 'gig', 'theatre', etc.
+        kind is like 'all', 'cinema', 'concert', 'gig', 'theatre', etc.
         """
         self.kind = kind
 
+        # We want all the event charts to span the full possible years:
+        dates = Event.objects.aggregate(Min("date"), Max("date"))
+        try:
+            self.start_year = dates["date__min"].year
+        except AttributeError:
+            self.start_year = None
+
+        self.end_year = datetime.utcnow().year
+
     def get_per_year(self):
-        kind_title = Event.get_kind_name_plural(self.kind)
+        """
+        Gets the data for either a single kind or all kinds.
+        """
+        if self.kind == "all":
+            # The kinds we want to include, in this order:
+            kinds = ["cinema", "theatre", "gig", "museum", "comedy"]
 
-        # Special cases:
-        if self.kind == "comedy":
-            kind_title = "Comedy gigs"
-        elif self.kind in ["cinema", "theatre"]:
-            kind_title += " visits"
+            all_data = {}
+            for kind in kinds:
+                # Get the data structure for each kind in turn, as if
+                # we were only displaying it.
+                # Then take out the data and put it in our all_data structure.
+                kind_data = self._get_kind_per_year(kind)
+                for year_data in kind_data:
+                    label = year_data["label"]  # "2017"
+                    if label not in all_data:
+                        all_data[label] = {"label": label, "columns": {}}
+                    all_data[label]["columns"][kind] = year_data["columns"][kind]
 
-        data = {"data": [], "title": "{}".format(kind_title)}
+            data = {"data": list(all_data.values()), "title": "All Events"}
 
+        else:
+            # A chart for a single kind, like "cinema".
+            data = {
+                "data": self._get_kind_per_year(self.kind),
+                "title": self._get_kind_title(self.kind),
+            }
+
+        return data
+
+    def _get_kind_per_year(self, kind):
+        """
+        Returns the required data structure for a single kind.
+        """
         qs = (
-            Event.objects.filter(kind=self.kind)
+            Event.objects.filter(kind=kind)
             .annotate(year=TruncYear("date"))
             .values("year")
             .annotate(total=Count("id"))
             .order_by("year")
         )
 
-        # We want all the event charts to span the full possible years:
-        dates = Event.objects.aggregate(Min("date"), Max("date"))
-        try:
-            start_year = dates["date__min"].year
-        except AttributeError:
-            start_year = None
-        try:
-            end_year = dates["date__max"].year
-        except AttributeError:
-            end_year = None
+        return self._queryset_to_list(
+            qs,
+            group_key=kind,
+            group_label=self._get_kind_title(kind),
+            start_year=self.start_year,
+            end_year=self.end_year,
+        )
 
-        data["data"] = self._queryset_to_list(qs, start_year, end_year)
+    def _get_kind_title(self, kind):
+        """
+        Returns the plural title for a single kind.
+        """
+        kind_title = Event.get_kind_name_plural(kind)
 
-        return data
+        # Special cases:
+        if kind == "comedy":
+            kind_title = "Comedy gigs"
+        elif kind in ["cinema", "theatre"]:
+            kind_title += " visits"
+
+        return kind_title
 
 
 class FlickrGenerator(Generator):
@@ -186,7 +249,12 @@ class FlickrGenerator(Generator):
             .order_by("year")
         )
 
-        data["data"] = self._queryset_to_list(qs)
+        data["data"] = self._queryset_to_list(
+            qs,
+            group_key="flickr_photos",
+            group_label="Flickr photos",
+            end_year=datetime.utcnow().year,
+        )
 
         return data
 
@@ -222,7 +290,13 @@ class LastfmGenerator(Generator):
             .order_by("year")
         )
 
-        data["data"] = self._queryset_to_list(qs, start_year=start_year)
+        data["data"] = self._queryset_to_list(
+            qs,
+            group_key="lastfm_scrobbles",
+            group_label="Tracks",
+            start_year=start_year,
+            end_year=datetime.utcnow().year,
+        )
 
         return data
 
@@ -256,7 +330,12 @@ class PinboardGenerator(Generator):
             .order_by("year")
         )
 
-        data["data"] = self._queryset_to_list(qs)
+        data["data"] = self._queryset_to_list(
+            qs,
+            group_key="pinboard_bookmarks",
+            group_label="Links",
+            end_year=datetime.utcnow().year,
+        )
 
         return data
 
@@ -273,9 +352,11 @@ class ReadingGenerator(Generator):
         self.kind = kind
 
     def get_per_year(self):
+        title = "{}s read".format(self.kind).capitalize()
+
         data = {
             "data": [],
-            "title": "{}s read".format(self.kind).capitalize(),
+            "title": title,
             "description": "Per year, determined by date finished.",
         }
 
@@ -289,19 +370,23 @@ class ReadingGenerator(Generator):
         else:
             start_year = 1998
 
-        try:
-            end_year = counts[-1]["year"].year
-        except IndexError:
-            end_year = None
+        end_year = datetime.utcnow().year
+
+        group_key = f"reading_{self.kind}"
 
         data["data"] = self._queryset_to_list(
-            counts, start_year, end_year, value_key=self.kind
+            counts,
+            group_key=group_key,
+            group_label=title,
+            start_year=start_year,
+            end_year=end_year,
+            value_key=self.kind,
         )
 
         # Go through and add in URLs to each year.
         for year in data["data"]:
-            if year["value"] > 0:
-                year["url"] = reverse(
+            if year["columns"][group_key]["value"] > 0:
+                year["columns"][group_key]["url"] = reverse(
                     "spectator:reading:reading_year_archive",
                     kwargs={"year": year["label"], "kind": "{}s".format(self.kind)},
                 )
@@ -315,38 +400,48 @@ class StaticGenerator(Generator):
     """
 
     def get_diary_words_per_year(seelf):
-        data = {
-            "data": [
-                # {'label': '1996', 'value': 46696}, # Partial year
-                {"label": "1997", "value": 125643},
-                {"label": "1998", "value": 103359},
-                {"label": "1999", "value": 88432},
-                {"label": "2000", "value": 108429},
-                {"label": "2001", "value": 75226},
-                {"label": "2002", "value": 40419},
-                {"label": "2003", "value": 31648},
-                {"label": "2004", "value": 44537},
-                {"label": "2005", "value": 77280},
-                {"label": "2006", "value": 89983},
-                {"label": "2007", "value": 38911},
-                {"label": "2008", "value": 74180},
-                {"label": "2009", "value": 85464},
-                {"label": "2010", "value": 88061},
-                {"label": "2011", "value": 74305},
-                {"label": "2012", "value": 50409},
-                {"label": "2013", "value": 80000},
-                {"label": "2014", "value": 85572},
-                {"label": "2015", "value": 57049},
-                {"label": "2016", "value": 72438},
-                {"label": "2017", "value": 30978},
-                {"label": "2018", "value": 37442},
-                {"label": "2019", "value": 3873},
-            ],
+        totals = {
+            # "1996": 46696,  # Partial year
+            "1997": 125643,
+            "1998": 103359,
+            "1999": 88432,
+            "2000": 108429,
+            "2001": 75226,
+            "2002": 40419,
+            "2003": 31648,
+            "2004": 44537,
+            "2005": 77280,
+            "2006": 89983,
+            "2007": 38911,
+            "2008": 74180,
+            "2009": 85464,
+            "2010": 88061,
+            "2011": 74305,
+            "2012": 50409,
+            "2013": 80000,
+            "2014": 85572,
+            "2015": 57049,
+            "2016": 72438,
+            "2017": 30978,
+            "2018": 37442,
+            "2019": 3873,
+            "2020": 15636,
+        }
+
+        chart_data = []
+        for year, count in totals.items():
+            chart_data.append(
+                {
+                    "label": year,
+                    "columns": {"diary_words": {"label": "Words", "value": count}},
+                }
+            )
+
+        return {
+            "data": chart_data,
             "title": "Words written in diary",
             # 'description': "Per year."
         }
-
-        return data
 
     def get_emails_received_per_year(self):
         # From Archive by year folders:
@@ -376,6 +471,7 @@ class StaticGenerator(Generator):
             "2017": 1806,
             "2018": 1417,
             "2019": 1480,
+            "2020": 2117,
         }
         # Pepys Feedback:
         pepys = {
@@ -397,6 +493,7 @@ class StaticGenerator(Generator):
             "2017": 251,
             "2018": 170,
             "2019": 239,
+            "2020": 211,
         }
 
         barbicantalk = {
@@ -411,6 +508,7 @@ class StaticGenerator(Generator):
             "2017": 8,
             "2018": 20,
             "2019": 103,
+            "2020": 21,
         }
 
         whitstillman = {
@@ -432,6 +530,7 @@ class StaticGenerator(Generator):
             "2017": 0,
             "2018": 3,
             "2019": 6,
+            "2020": 24,
         }
 
         byliner = {
@@ -468,66 +567,194 @@ class StaticGenerator(Generator):
         for k, v in byliner.items():
             totals[k] += v
 
-        data = {
-            "data": [],
+        chart_data = []
+        for year, count in totals.items():
+            chart_data.append(
+                {
+                    "label": year,
+                    "columns": {"emails": {"label": "Emails", "value": count}},
+                }
+            )
+
+        return {
+            "data": chart_data,
             "title": "Emails received",
             "description": "Per year. Not counting: work, discussion lists, "
             "most newsletters, spam, or anything else I threw away.",
         }
 
-        # Put totals dict into correct format for charts:
-        for k, v in totals.items():
-            data["data"].append({"label": k, "value": v})
-
-        return data
-
     def get_headaches_per_year(self):
-        data = {
-            "data": [
-                {"label": "2006", "value": 29},
-                {"label": "2007", "value": 22},
-                {"label": "2008", "value": 18},
-                {"label": "2009", "value": 8},
-                {"label": "2010", "value": 10},
-                {"label": "2011", "value": 14},
-                {"label": "2012", "value": 12},
-                {"label": "2013", "value": 34},
-                {"label": "2014", "value": 47},
-                {"label": "2015", "value": 51},
-                {"label": "2016", "value": 59},
-                {"label": "2017", "value": 53},
-                {"label": "2018", "value": 43},
-                {"label": "2019", "value": 44},
-            ],
+        totals = {
+            "2006": 29,
+            "2007": 22,
+            "2008": 18,
+            "2009": 8,
+            "2010": 10,
+            "2011": 14,
+            "2012": 12,
+            "2013": 34,
+            "2014": 47,
+            "2015": 51,
+            "2016": 59,
+            "2017": 53,
+            "2018": 43,
+            "2019": 44,
+            "2020": 46,
+        }
+
+        chart_data = []
+        for year, count in totals.items():
+            chart_data.append(
+                {
+                    "label": year,
+                    "columns": {"headaches": {"label": "Headaches", "value": count}},
+                }
+            )
+
+        return {
+            "data": chart_data,
             "title": "Headaches",
             "description": "Per year. Those that require, or are defeated by, "
             "prescription medication.",
         }
 
-        return data
+    def get_days_worked_per_year(self):
+        # Each of these three arrays should have the same keys.
+
+        employment = {
+            "2001": 174,
+            "2002": 225,
+            "2003": 115,
+            "2004": 0,
+            "2005": 0,
+            "2006": 0,
+            "2007": 0,
+            "2008": 0,
+            "2009": 0,
+            "2010": 0,
+            "2011": 0,
+            "2012": 0,
+            "2013": 167,
+            "2014": 59,
+            "2015": 0,
+            "2016": 0,
+            "2017": 37,
+            "2018": 0,
+            "2019": 0,
+            "2020": 0,
+        }
+
+        freelance = {
+            "2001": 0,
+            "2002": 0,
+            "2003": 81,
+            "2004": 171,
+            "2005": 148,
+            "2006": 141,
+            "2007": 85,
+            "2008": 25,
+            "2009": 137,
+            "2010": 90,
+            "2011": 148,
+            "2012": 169,
+            "2013": 13,
+            "2014": 81,
+            "2015": 170,
+            "2016": 68,
+            "2017": 35,
+            "2018": 59,
+            "2019": 126,
+            "2020": 116,
+        }
+
+        acting = {
+            "2001": 0,
+            "2002": 0,
+            "2003": 0,
+            "2004": 0,
+            "2005": 0,
+            "2006": 0,
+            "2007": 0,
+            "2008": 3,
+            "2009": 0,
+            "2010": 0,
+            "2011": 0,
+            "2012": 0,
+            "2013": 2,
+            "2014": 0,
+            "2015": 0,
+            "2016": 0,
+            "2017": 0,
+            "2018": 2,
+            "2019": 3,
+            "2020": 0,
+        }
+
+        chart_data = []
+
+        for year in employment.keys():
+            chart_data.append(
+                {
+                    "label": year,
+                    "columns": {
+                        "employment": {
+                            "value": employment[year],
+                            "label": "Employment",
+                        },
+                        "freelance": {"value": freelance[year], "label": "Freelance"},
+                        "acting": {"value": acting[year], "label": "Acting"},
+                    },
+                }
+            )
+
+        return {
+            "data": chart_data,
+            "title": "Days worked per year",
+            "description": (
+                "Employment does not include holidays or sick days.<br>"
+                "Freelance only includes days working for clients.<br>"
+                "Acting includes paid or unpaid work."
+            ),
+        }
 
     def get_github_contributions_per_year(self):
         # From https://github.com/philgyford
-        data = {
-            "data": [
-                {"label": "2009", "value": 11},
-                {"label": "2010", "value": 168},
-                {"label": "2011", "value": 97},
-                {"label": "2012", "value": 296},
-                {"label": "2013", "value": 620},
-                {"label": "2014", "value": 626},
-                {"label": "2015", "value": 1061},
-                {"label": "2016", "value": 1533},
-                {"label": "2017", "value": 1762},
-                {"label": "2018", "value": 2089},
-                {"label": "2019", "value": 2245},
-            ],
+
+        totals = {
+            "2009": 11,
+            "2010": 168,
+            "2011": 97,
+            "2012": 296,
+            "2013": 620,
+            "2014": 626,
+            "2015": 1061,
+            "2016": 1533,
+            "2017": 1762,
+            "2018": 2089,
+            "2019": 2245,
+            "2020": 2403,
+        }
+
+        chart_data = []
+        for year, count in totals.items():
+            chart_data.append(
+                {
+                    "label": year,
+                    "columns": {
+                        "github_contributions": {
+                            "label": "Contributions",
+                            "value": count,
+                        }
+                    },
+                }
+            )
+
+        return {
+            "data": chart_data,
             "title": "GitHub activity",
             "description": "Contributions listed per year for "
             '<a href="https://github.com/philgyford">philgyford</a>.',
         }
-
-        return data
 
 
 class TwitterGenerator(Generator):
@@ -559,7 +786,12 @@ class TwitterGenerator(Generator):
             .order_by("year")
         )
 
-        data["data"] = self._queryset_to_list(qs)
+        data["data"] = self._queryset_to_list(
+            qs,
+            group_key="twitter_tweets",
+            group_label="Tweets",
+            end_year=datetime.utcnow().year,
+        )
 
         return data
 
@@ -586,7 +818,12 @@ class TwitterGenerator(Generator):
             .order_by("year")
         )
 
-        data["data"] = self._queryset_to_list(qs)
+        data["data"] = self._queryset_to_list(
+            qs,
+            group_key="twitter_favorites",
+            group_label="Favorites",
+            end_year=datetime.utcnow().year,
+        )
 
         return data
 
@@ -617,12 +854,17 @@ class WeblogGenerator(Generator):
             .order_by("year")
         )
 
-        data["data"] = self._queryset_to_list(qs)
+        data["data"] = self._queryset_to_list(
+            qs,
+            group_key="weblog_posts",
+            group_label="Posts",
+            end_year=datetime.utcnow().year,
+        )
 
         # Go through and add URLs for each year of writing.
         for year in data["data"]:
-            if year["value"] > 0:
-                year["url"] = reverse(
+            if year["columns"]["weblog_posts"]["value"] > 0:
+                year["columns"]["weblog_posts"]["url"] = reverse(
                     "weblogs:post_year_archive",
                     kwargs={"blog_slug": self.blog_slug, "year": year["label"]},
                 )

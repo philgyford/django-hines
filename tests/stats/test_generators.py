@@ -1,4 +1,5 @@
 from django.test import TestCase
+from freezegun import freeze_time
 
 from ditto.flickr.factories import UserFactory as FlickrUserFactory
 from ditto.flickr.factories import PhotoFactory
@@ -45,10 +46,9 @@ class EventsGeneratorTestCase(TestCase):
 
         result = EventsGenerator("gig").get_per_year()
 
-        self.assertIn("data", result)
-        self.assertEqual(len(result["data"]), 1)
         self.assertEqual(result["data"][0]["label"], "2018")
-        self.assertEqual(result["data"][0]["value"], 3)
+        self.assertEqual(len(result["data"][0]["columns"]), 1)
+        self.assertEqual(result["data"][0]["columns"]["gig"]["value"], 3)
 
     def test_restricts_kind(self):
         "Only counts events of the requested kind"
@@ -59,7 +59,7 @@ class EventsGeneratorTestCase(TestCase):
 
         self.assertEqual(result["data"][0]["label"], "2018")
         # Only counts the 'gig' event:
-        self.assertEqual(result["data"][0]["value"], 1)
+        self.assertEqual(result["data"][0]["columns"]["gig"]["value"], 1)
 
     def test_comedy_title(self):
         "Sets custom title for Comedy kind"
@@ -88,6 +88,7 @@ class EventsGeneratorTestCase(TestCase):
 
         self.assertEqual(result["title"], "Theatre visits")
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_complete_years(self):
         "Should fill in all the years there are no events of this kind."
         ComedyEventFactory(date=make_date("2014-01-01"))
@@ -96,15 +97,37 @@ class EventsGeneratorTestCase(TestCase):
 
         result = EventsGenerator("gig").get_per_year()
 
-        self.assertEqual(len(result["data"]), 5)
         self.assertEqual(
             result["data"],
             [
-                {"label": "2014", "value": 0},
-                {"label": "2015", "value": 0},
-                {"label": "2016", "value": 1},
-                {"label": "2017", "value": 0},
-                {"label": "2018", "value": 0},
+                {
+                    "label": "2014",
+                    "columns": {"gig": {"label": "Gigs", "value": 0}},
+                },
+                {
+                    "label": "2015",
+                    "columns": {"gig": {"label": "Gigs", "value": 0}},
+                },
+                {
+                    "label": "2016",
+                    "columns": {"gig": {"label": "Gigs", "value": 1}},
+                },
+                {
+                    "label": "2017",
+                    "columns": {"gig": {"label": "Gigs", "value": 0}},
+                },
+                {
+                    "label": "2018",
+                    "columns": {"gig": {"label": "Gigs", "value": 0}},
+                },
+                {
+                    "label": "2019",
+                    "columns": {"gig": {"label": "Gigs", "value": 0}},
+                },
+                {
+                    "label": "2020",
+                    "columns": {"gig": {"label": "Gigs", "value": 0}},
+                },
             ],
         )
 
@@ -131,11 +154,11 @@ class FlickrGeneratorTestCase(TestCase):
 
         result = FlickrGenerator(nsid="35034346050@N01").get_photos_per_year()
 
-        self.assertIn("data", result)
-        self.assertEqual(len(result["data"]), 1)
         self.assertEqual(result["data"][0]["label"], "2018")
-        self.assertEqual(result["data"][0]["value"], 3)
+        self.assertEqual(len(result["data"][0]["columns"]), 1)
+        self.assertEqual(result["data"][0]["columns"]["flickr_photos"]["value"], 3)
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_years(self):
         "Should include all intermediate years."
         user = FlickrUserFactory(nsid="35034346050@N01")
@@ -147,15 +170,51 @@ class FlickrGeneratorTestCase(TestCase):
 
         result = FlickrGenerator(nsid="35034346050@N01").get_photos_per_year()
 
-        self.assertIn("data", result)
         self.assertEqual(
             result["data"],
             [
-                {"label": "2014", "value": 1},
-                {"label": "2015", "value": 0},
-                {"label": "2016", "value": 3},
-                {"label": "2017", "value": 0},
-                {"label": "2018", "value": 1},
+                {
+                    "label": "2014",
+                    "columns": {
+                        "flickr_photos": {"label": "Flickr photos", "value": 1}
+                    },
+                },
+                {
+                    "label": "2015",
+                    "columns": {
+                        "flickr_photos": {"label": "Flickr photos", "value": 0}
+                    },
+                },
+                {
+                    "label": "2016",
+                    "columns": {
+                        "flickr_photos": {"label": "Flickr photos", "value": 3}
+                    },
+                },
+                {
+                    "label": "2017",
+                    "columns": {
+                        "flickr_photos": {"label": "Flickr photos", "value": 0}
+                    },
+                },
+                {
+                    "label": "2018",
+                    "columns": {
+                        "flickr_photos": {"label": "Flickr photos", "value": 1}
+                    },
+                },
+                {
+                    "label": "2019",
+                    "columns": {
+                        "flickr_photos": {"label": "Flickr photos", "value": 0}
+                    },
+                },
+                {
+                    "label": "2020",
+                    "columns": {
+                        "flickr_photos": {"label": "Flickr photos", "value": 0}
+                    },
+                },
             ],
         )
 
@@ -170,7 +229,7 @@ class LastfmGeneratorTestCase(TestCase):
         self.assertEqual(
             result["description"],
             'Number of scrobbles <a href="https://www.last.fm/user/gyford">'
-            'on Last.fm</a> per year.',
+            "on Last.fm</a> per year.",
         )
 
     def test_data(self):
@@ -181,11 +240,11 @@ class LastfmGeneratorTestCase(TestCase):
 
         result = LastfmGenerator(username="gyford").get_scrobbles_per_year()
 
-        self.assertIn("data", result)
-        self.assertEqual(len(result["data"]), 1)
         self.assertEqual(result["data"][0]["label"], "2018")
-        self.assertEqual(result["data"][0]["value"], 3)
+        self.assertEqual(len(result["data"][0]["columns"]), 1)
+        self.assertEqual(result["data"][0]["columns"]["lastfm_scrobbles"]["value"], 3)
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_years(self):
         "Should include all intermediate years."
         account = LastfmAccountFactory(username="gyford")
@@ -201,11 +260,34 @@ class LastfmGeneratorTestCase(TestCase):
         self.assertEqual(
             result["data"],
             [
-                {"label": "2014", "value": 1},
-                {"label": "2015", "value": 0},
-                {"label": "2016", "value": 3},
-                {"label": "2017", "value": 0},
-                {"label": "2018", "value": 1},
+                {
+                    "label": "2014",
+                    "columns": {"lastfm_scrobbles": {"label": "Tracks", "value": 1}},
+                },
+                {
+                    "label": "2015",
+                    "columns": {"lastfm_scrobbles": {"label": "Tracks", "value": 0}},
+                },
+                {
+                    "label": "2016",
+                    "columns": {"lastfm_scrobbles": {"label": "Tracks", "value": 3}},
+                },
+                {
+                    "label": "2017",
+                    "columns": {"lastfm_scrobbles": {"label": "Tracks", "value": 0}},
+                },
+                {
+                    "label": "2018",
+                    "columns": {"lastfm_scrobbles": {"label": "Tracks", "value": 1}},
+                },
+                {
+                    "label": "2019",
+                    "columns": {"lastfm_scrobbles": {"label": "Tracks", "value": 0}},
+                },
+                {
+                    "label": "2020",
+                    "columns": {"lastfm_scrobbles": {"label": "Tracks", "value": 0}},
+                },
             ],
         )
 
@@ -219,10 +301,11 @@ class PinboardGeneratorTestCase(TestCase):
         self.assertIn("description", result)
         self.assertEqual(
             result["description"],
-            'Number of links posted on Delicious, then '
+            "Number of links posted on Delicious, then "
             '<a href="https://pinboard.in/u:philgyford">on Pinboard</a>, per year.',
         )
 
+    @freeze_time("2018-01-01 00:00:00", tz_offset=0)
     def test_data(self):
         account = PinboardAccountFactory(username="philgyford")
         BookmarkFactory.create_batch(
@@ -234,8 +317,9 @@ class PinboardGeneratorTestCase(TestCase):
         self.assertIn("data", result)
         self.assertEqual(len(result["data"]), 1)
         self.assertEqual(result["data"][0]["label"], "2018")
-        self.assertEqual(result["data"][0]["value"], 3)
+        self.assertEqual(result["data"][0]["columns"]["pinboard_bookmarks"]["value"], 3)
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_years(self):
         "Should include all intermediate years."
         account = PinboardAccountFactory(username="philgyford")
@@ -251,11 +335,34 @@ class PinboardGeneratorTestCase(TestCase):
         self.assertEqual(
             result["data"],
             [
-                {"label": "2014", "value": 1},
-                {"label": "2015", "value": 0},
-                {"label": "2016", "value": 3},
-                {"label": "2017", "value": 0},
-                {"label": "2018", "value": 1},
+                {
+                    "label": "2014",
+                    "columns": {"pinboard_bookmarks": {"label": "Links", "value": 1}},
+                },
+                {
+                    "label": "2015",
+                    "columns": {"pinboard_bookmarks": {"label": "Links", "value": 0}},
+                },
+                {
+                    "label": "2016",
+                    "columns": {"pinboard_bookmarks": {"label": "Links", "value": 3}},
+                },
+                {
+                    "label": "2017",
+                    "columns": {"pinboard_bookmarks": {"label": "Links", "value": 0}},
+                },
+                {
+                    "label": "2018",
+                    "columns": {"pinboard_bookmarks": {"label": "Links", "value": 1}},
+                },
+                {
+                    "label": "2019",
+                    "columns": {"pinboard_bookmarks": {"label": "Links", "value": 0}},
+                },
+                {
+                    "label": "2020",
+                    "columns": {"pinboard_bookmarks": {"label": "Links", "value": 0}},
+                },
             ],
         )
 
@@ -277,6 +384,7 @@ class ReadingGeneratorTestCase(TestCase):
         self.assertIn("title", result)
         self.assertEqual(result["title"], "Periodicals read")
 
+    @freeze_time("2000-01-01 00:00:00", tz_offset=0)
     def test_data(self):
         "Test data returned."
         ReadingFactory.create_batch(
@@ -295,12 +403,34 @@ class ReadingGeneratorTestCase(TestCase):
         self.assertEqual(
             result["data"],
             [
-                {"label": "1998", "value": 3, "url": "/terry/reading/1998/books/"},
-                {"label": "1999", "value": 0},
-                {"label": "2000", "value": 1, "url": "/terry/reading/2000/books/"},
+                {
+                    "label": "1998",
+                    "columns": {
+                        "reading_book": {
+                            "label": "Books read",
+                            "value": 3,
+                            "url": "/terry/reading/1998/books/",
+                        }
+                    },
+                },
+                {
+                    "label": "1999",
+                    "columns": {"reading_book": {"label": "Books read", "value": 0}},
+                },
+                {
+                    "label": "2000",
+                    "columns": {
+                        "reading_book": {
+                            "label": "Books read",
+                            "value": 1,
+                            "url": "/terry/reading/2000/books/",
+                        }
+                    },
+                },
             ],
         )
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_years_book(self):
         "Books should have years from 1998."
         ReadingFactory(
@@ -310,8 +440,9 @@ class ReadingGeneratorTestCase(TestCase):
 
         result = ReadingGenerator(kind="book").get_per_year()
 
-        self.assertEqual(len(result["data"]), 11)
+        self.assertEqual(len(result["data"]), 23)
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_years_periodicals(self):
         "Periodicas should have years from 2005."
         ReadingFactory(
@@ -321,7 +452,7 @@ class ReadingGeneratorTestCase(TestCase):
 
         result = ReadingGenerator(kind="periodical").get_per_year()
 
-        self.assertEqual(len(result["data"]), 4)
+        self.assertEqual(len(result["data"]), 16)
 
 
 class StaticGeneratorTestCase(TestCase):
@@ -339,7 +470,9 @@ class StaticGeneratorTestCase(TestCase):
 
         self.assertIn("data", result)
         self.assertIn("label", result["data"][0])
-        self.assertIn("value", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("diary_words", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["diary_words"])
 
     def test_emails_title_description(self):
         result = StaticGenerator().get_emails_received_per_year()
@@ -359,7 +492,9 @@ class StaticGeneratorTestCase(TestCase):
 
         self.assertIn("data", result)
         self.assertIn("label", result["data"][0])
-        self.assertIn("value", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("emails", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["emails"])
 
     def test_headaches_title_description(self):
         result = StaticGenerator().get_headaches_per_year()
@@ -379,7 +514,9 @@ class StaticGeneratorTestCase(TestCase):
 
         self.assertIn("data", result)
         self.assertIn("label", result["data"][0])
-        self.assertIn("value", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("headaches", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["headaches"])
 
     def test_github_title_description(self):
         result = StaticGenerator().get_github_contributions_per_year()
@@ -389,7 +526,7 @@ class StaticGeneratorTestCase(TestCase):
         self.assertIn("description", result)
         self.assertEqual(
             result["description"],
-            'Contributions listed per year for '
+            "Contributions listed per year for "
             '<a href="https://github.com/philgyford">philgyford</a>.',
         )
 
@@ -399,7 +536,9 @@ class StaticGeneratorTestCase(TestCase):
 
         self.assertIn("data", result)
         self.assertIn("label", result["data"][0])
-        self.assertIn("value", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("github_contributions", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["github_contributions"])
 
 
 class TwitterGeneratorTestCase(TestCase):
@@ -411,10 +550,11 @@ class TwitterGeneratorTestCase(TestCase):
         self.assertIn("description", result)
         self.assertEqual(
             result["description"],
-            'Number of tweets posted by '
+            "Number of tweets posted by "
             '<a href="https://twitter.com/philgyford/">@philgyford</a> per year.',
         )
 
+    @freeze_time("2018-01-01 00:00:00", tz_offset=0)
     def test_tweets_data(self):
         user = TwitterUserFactory(screen_name="philgyford", is_private=False)
         TwitterAccountFactory(user=user)
@@ -429,8 +569,9 @@ class TwitterGeneratorTestCase(TestCase):
         self.assertIn("data", result)
         self.assertEqual(len(result["data"]), 1)
         self.assertEqual(result["data"][0]["label"], "2018")
-        self.assertEqual(result["data"][0]["value"], 3)
+        self.assertEqual(result["data"][0]["columns"]["twitter_tweets"]["value"], 3)
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_tweets_years(self):
         "Should include all intermediate years."
         user = TwitterUserFactory(screen_name="philgyford", is_private=False)
@@ -449,11 +590,34 @@ class TwitterGeneratorTestCase(TestCase):
         self.assertEqual(
             result["data"],
             [
-                {"label": "2014", "value": 1},
-                {"label": "2015", "value": 0},
-                {"label": "2016", "value": 3},
-                {"label": "2017", "value": 0},
-                {"label": "2018", "value": 1},
+                {
+                    "label": "2014",
+                    "columns": {"twitter_tweets": {"label": "Tweets", "value": 1}},
+                },
+                {
+                    "label": "2015",
+                    "columns": {"twitter_tweets": {"label": "Tweets", "value": 0}},
+                },
+                {
+                    "label": "2016",
+                    "columns": {"twitter_tweets": {"label": "Tweets", "value": 3}},
+                },
+                {
+                    "label": "2017",
+                    "columns": {"twitter_tweets": {"label": "Tweets", "value": 0}},
+                },
+                {
+                    "label": "2018",
+                    "columns": {"twitter_tweets": {"label": "Tweets", "value": 1}},
+                },
+                {
+                    "label": "2019",
+                    "columns": {"twitter_tweets": {"label": "Tweets", "value": 0}},
+                },
+                {
+                    "label": "2020",
+                    "columns": {"twitter_tweets": {"label": "Tweets", "value": 0}},
+                },
             ],
         )
 
@@ -465,7 +629,7 @@ class TwitterGeneratorTestCase(TestCase):
         self.assertIn("description", result)
         self.assertEqual(
             result["description"],
-            'Number of tweets liked by '
+            "Number of tweets liked by "
             '<a href="https://twitter.com/philgyford/">@philgyford</a> per year.',
         )
 
@@ -482,10 +646,11 @@ class TwitterGeneratorTestCase(TestCase):
         result = TwitterGenerator(screen_name="philgyford").get_favorites_per_year()
 
         self.assertIn("data", result)
-        self.assertEqual(len(result["data"]), 1)
         self.assertEqual(result["data"][0]["label"], "2018")
-        self.assertEqual(result["data"][0]["value"], 3)
+        self.assertEqual(len(result["data"][0]["columns"]), 1)
+        self.assertEqual(result["data"][0]["columns"]["twitter_favorites"]["value"], 3)
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_favorites_years(self):
         "Should include all intermediate years."
         user = TwitterUserFactory(screen_name="philgyford", is_private=False)
@@ -505,11 +670,48 @@ class TwitterGeneratorTestCase(TestCase):
         self.assertEqual(
             result["data"],
             [
-                {"label": "2014", "value": 1},
-                {"label": "2015", "value": 0},
-                {"label": "2016", "value": 3},
-                {"label": "2017", "value": 0},
-                {"label": "2018", "value": 1},
+                {
+                    "label": "2014",
+                    "columns": {
+                        "twitter_favorites": {"label": "Favorites", "value": 1}
+                    },
+                },
+                {
+                    "label": "2015",
+                    "columns": {
+                        "twitter_favorites": {"label": "Favorites", "value": 0}
+                    },
+                },
+                {
+                    "label": "2016",
+                    "columns": {
+                        "twitter_favorites": {"label": "Favorites", "value": 3}
+                    },
+                },
+                {
+                    "label": "2017",
+                    "columns": {
+                        "twitter_favorites": {"label": "Favorites", "value": 0}
+                    },
+                },
+                {
+                    "label": "2018",
+                    "columns": {
+                        "twitter_favorites": {"label": "Favorites", "value": 1}
+                    },
+                },
+                {
+                    "label": "2019",
+                    "columns": {
+                        "twitter_favorites": {"label": "Favorites", "value": 0}
+                    },
+                },
+                {
+                    "label": "2020",
+                    "columns": {
+                        "twitter_favorites": {"label": "Favorites", "value": 0}
+                    },
+                },
             ],
         )
 
@@ -526,6 +728,7 @@ class WeblogGeneratorTestCase(TestCase):
             'Posts per year in <a href="/terry/writing/">Writing</a>.',
         )
 
+    @freeze_time("2018-01-01 00:00:00", tz_offset=0)
     def test_data(self):
         "Not testing the details as it's all hard-coded."
         blog = BlogFactory(slug="writing")
@@ -538,9 +741,12 @@ class WeblogGeneratorTestCase(TestCase):
         self.assertIn("data", result)
         self.assertEqual(len(result["data"]), 1)
         self.assertEqual(result["data"][0]["label"], "2018")
-        self.assertEqual(result["data"][0]["value"], 3)
-        self.assertEqual(result["data"][0]["url"], "/terry/writing/2018/")
+        self.assertEqual(result["data"][0]["columns"]["weblog_posts"]["value"], 3)
+        self.assertEqual(
+            result["data"][0]["columns"]["weblog_posts"]["url"], "/terry/writing/2018/"
+        )
 
+    @freeze_time("2020-01-01 00:00:00", tz_offset=0)
     def test_years(self):
         "Should include all intermediate years."
         blog = BlogFactory(slug="writing")
@@ -560,10 +766,51 @@ class WeblogGeneratorTestCase(TestCase):
         self.assertEqual(
             result["data"],
             [
-                {"label": "2014", "value": 1, "url": "/terry/writing/2014/"},
-                {"label": "2015", "value": 0},
-                {"label": "2016", "value": 3, "url": "/terry/writing/2016/"},
-                {"label": "2017", "value": 0},
-                {"label": "2018", "value": 1, "url": "/terry/writing/2018/"},
+                {
+                    "label": "2014",
+                    "columns": {
+                        "weblog_posts": {
+                            "label": "Posts",
+                            "value": 1,
+                            "url": "/terry/writing/2014/",
+                        }
+                    },
+                },
+                {
+                    "label": "2015",
+                    "columns": {"weblog_posts": {"label": "Posts", "value": 0}},
+                },
+                {
+                    "label": "2016",
+                    "columns": {
+                        "weblog_posts": {
+                            "label": "Posts",
+                            "value": 3,
+                            "url": "/terry/writing/2016/",
+                        }
+                    },
+                },
+                {
+                    "label": "2017",
+                    "columns": {"weblog_posts": {"label": "Posts", "value": 0}},
+                },
+                {
+                    "label": "2018",
+                    "columns": {
+                        "weblog_posts": {
+                            "label": "Posts",
+                            "value": 1,
+                            "url": "/terry/writing/2018/",
+                        }
+                    },
+                },
+                {
+                    "label": "2019",
+                    "columns": {"weblog_posts": {"label": "Posts", "value": 0}},
+                },
+                {
+                    "label": "2020",
+                    "columns": {"weblog_posts": {"label": "Posts", "value": 0}},
+                },
             ],
         )

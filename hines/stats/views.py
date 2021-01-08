@@ -59,6 +59,7 @@ class StatsView(CacheMixin, TemplateView):
             "slug": "events",
             "title": "Events",
             "charts": [
+                "events_per_year",
                 "movies_per_year",
                 "theatres_per_year",
                 "gigs_per_year",
@@ -74,6 +75,13 @@ class StatsView(CacheMixin, TemplateView):
             "title": "Health",
             "charts": [
                 "headaches_per_year",
+            ],
+        },
+        {
+            "slug": "money",
+            "title": "Money",
+            "charts": [
+                "days_worked_per_year",
             ],
         },
     ]
@@ -135,6 +143,12 @@ class StatsView(CacheMixin, TemplateView):
 
     def get_data_headaches_per_year(self):
         return StaticGenerator().get_headaches_per_year()
+
+    def get_data_days_worked_per_year(self):
+        return StaticGenerator().get_days_worked_per_year()
+
+    def get_data_events_per_year(self):
+        return EventsGenerator(kind="all").get_per_year()
 
     def get_data_movies_per_year(self):
         return EventsGenerator(kind="cinema").get_per_year()

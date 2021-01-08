@@ -1,14 +1,12 @@
 version: '3.9'
 
+# For use in development only.
+
 services:
   # Postgres
   db:
     container_name: hines_db
-    environment:
-      # Mirrored in .env file
-      - POSTGRES_USER=hines
-      - POSTGRES_PASSWORD=hines
-      - POSTGRES_DB=django-hines
+    env_file: .env
     image: postgres:alpine
     ports:
       - "5432:5432"
@@ -31,7 +29,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
-    command: scripts/run-web.sh
+    command: >
+      sh -c "
+      pipenv run python manage.py migrate &&
+      pipenv run python manage.py runserver 0.0.0.0:8000
+      "
     container_name: hines_web
     depends_on:
       - db
