@@ -27,8 +27,12 @@ more details about the variables):
     export DJANGO_SECRET_KEY='YOUR-SECRET-KEY'
     export DJANGO_SETTINGS_MODULE='config.settings.development'
 
-    # Settings mirrored in docker-compose.yml:
+    # For use in Django:
     export DATABASE_URL='postgres://hines:hines@db:5432/django-hines'
+    # For use in Docker:
+    POSTGRES_USER=hines
+    POSTGRES_PASSWORD=hines
+    POSTGRES_DB=django-hines
 
     export HCAPTCHA_SITEKEY="YOUR-SITEKEY"
     export HCAPTCHA_SECRET="YOUR-SECRET"

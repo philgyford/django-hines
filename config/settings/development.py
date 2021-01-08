@@ -51,9 +51,7 @@ if DEBUG:
     MIDDLEWARE += [  # noqa: F405
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
-    INSTALLED_APPS += ["debug_toolbar", 
-    # "django_extensions"
-    ]  # noqa: F405
+    INSTALLED_APPS += ["debug_toolbar", "django_extensions"]  # noqa: F405
 
     INTERNAL_IPS = ["127.0.0.1"]
 
