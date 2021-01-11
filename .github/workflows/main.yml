@@ -74,7 +74,7 @@ jobs:
         PIPENV_NOSPIN: 'true'
         WORKON_HOME: ~/.pipenv/virtualenvs
 
-    - name: Uplosd coverage to Coveralls
+    - name: Upload coverage to Coveralls
       # Using coveralls-python
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
