@@ -1,6 +1,5 @@
 name: CI
 
-# Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
@@ -14,7 +13,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: postgres:10.8
@@ -45,7 +44,7 @@ jobs:
         key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-pipenv-v2-
-            
+
     - name: Install Dependencies
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
       env:
@@ -67,12 +66,13 @@ jobs:
         pipenv run python manage.py migrate --noinput
         pipenv run ./manage.py test
       env:
-        DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'  
+        ALLOWED_HOSTS: '*'
+        DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
         DJANGO_SECRET_KEY: 'fake-secret-key-for-tests'
         DJANGO_SETTINGS_MODULE: config.settings.tests
         PIPENV_NOSPIN: 'true'
         WORKON_HOME: ~/.pipenv/virtualenvs
-          
+
     - name: Run Coveralls
       uses: coverallsapp/github-action@master
       with:
