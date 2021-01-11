@@ -21,7 +21,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTRES_PASSWORD: postgres
-          POSTGRES_DB: test_db
+          POSTGRES_DB: postgres
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
@@ -29,23 +29,43 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    - name: Install Dependencies
+
+    - name: Install pipenv
       run: |
-        python -m pip install --upgrade pip
-        pip install pipenv
-        pipenv install --dev
+        python -m pip install --upgrade pipenv wheel
+
+    - name: Cache pipenv dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.local/share/virtualenvs
+        key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+    - name: Install Dependencies
+      if: steps.cache-pipenv.outputs.cache-hit != 'true'
+      run: |
+        pipenv install --deploy --dev
+
     - name: Set up database
       run: |
-        ./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput
+        pipenv run ./manage.py collectstatic --settings=config.settings.tests --verbosity=0 --noinput
         psql -c 'CREATE DATABASE test_db;' -U postgres
-        ./manage.py migrate --settings=config.settings.tests --verbosity=0
+        pipenv run ./manage.py migrate --settings=config.settings.tests --verbosity=0
+
     - name: Run Tests
       run: |
-        ./scripts/pipenv-run-tests.sh
+        pipenv run ./manage.py test --settings=config.settings.tests
+      env:
+        TEST_DB_HOST: localhost
+        TEST_DB_NAME: postgres
+        TEST_DB_PASS: postgres
+        TEST_DB_PORT: 5432
+        TEST_DB_USER: postgres
+          
     - name: Run Coveralls
       uses: coverallsapp/github-action@master
       with:
