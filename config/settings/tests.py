@@ -3,8 +3,6 @@ from .base import *  # noqa: F401, F403
 
 HINES_ROOT_DIR = 'terry'
 
-ALLOWED_HOSTS = "*"
-
 CACHES = {
     'default': {
         # Use dummy cache (ie, no caching):
