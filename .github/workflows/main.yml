@@ -63,6 +63,7 @@ jobs:
 
     - name: Run Tests
       run: |
+        pipenv run ./manage.py collectstatic --verbosity=0 --noinput
         pipenv run python manage.py migrate --noinput
         pipenv run ./manage.py test
       env:
