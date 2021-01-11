@@ -58,6 +58,8 @@ jobs:
         pipenv run ./manage.py collectstatic --verbosity=0 --noinput
         pipenv run python manage.py migrate --verbosity=0 --noinput
         pipenv run coverage run --branch --source=. --omit=*/migrations/*.py,manage.py,tests/*.py ./manage.py test
+        # Used to make the lcov report in next step:
+        pipenv run coverage xml -o coverage.xml
       env:
         ALLOWED_HOSTS: '*'
         DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
@@ -66,8 +68,16 @@ jobs:
         PIPENV_NOSPIN: 'true'
         WORKON_HOME: ~/.pipenv/virtualenvs
 
-    - name: Upload coverage to Coveralls
-      # Using coveralls-python
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: pipenv run coveralls
+    - name: Generate lcov report
+      # We need an lcov report for Coveralls
+      uses: danielpalme/ReportGenerator-GitHub-Action@4.6.4
+      with:
+        reports: coverage.xml
+        targetdir: lcov/
+        reporttypes: lcov
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: lcov/lcov.info

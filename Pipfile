@@ -35,7 +35,6 @@ freezegun = "*"
 flake8 = "*"
 # Got mismatched dependencies unless I specified a specific version:
 black = "==20.8b1"
-coveralls = "*"
 
 [requires]
 python_version = "3.8"
