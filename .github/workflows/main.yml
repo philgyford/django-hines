@@ -45,7 +45,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pipenv-v2-
 
-    - name: Install Dependencies
+    - name: Install dependencies
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
       env:
         PIPENV_NOSPIN: 'true'
@@ -64,8 +64,8 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run ./manage.py collectstatic --verbosity=0 --noinput
-        pipenv run python manage.py migrate --noinput
-        pipenv run ./manage.py test
+        pipenv run python manage.py migrate --verbosity=0 --noinput
+        pipenv run coverage run --branch --source=. --omit=*/migrations/*.py,manage.py,tests/*.py ./manage.py test
       env:
         ALLOWED_HOSTS: '*'
         DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
@@ -74,7 +74,8 @@ jobs:
         PIPENV_NOSPIN: 'true'
         WORKON_HOME: ~/.pipenv/virtualenvs
 
-    - name: Run Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Uplosd coverage to Coveralls
+      # Using coveralls-python
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: coveralls
