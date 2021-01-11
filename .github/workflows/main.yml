@@ -78,4 +78,4 @@ jobs:
       # Using coveralls-python
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: coveralls
+      run: pipenv run coveralls
