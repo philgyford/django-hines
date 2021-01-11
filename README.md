@@ -76,13 +76,22 @@ All the repository's code is mirrored in the web container in the `/code/` direc
 
 ### 4. Set up the database
 
-
 Once that's running, showing its logs, open another terminal window/tab.
 
 There are two ways we can populate the database. First we'll create an empty one,
 and second we'll populate it with a dump of data from the live site.
 
 #### 4a. An empty database
+
+(
+Did we have to create a database first? If so we'd have had to do something like:
+
+    $ docker-compose exec db sh
+    # su - postgres -c psql
+    > CREATE DATABASE hines djangodb OWNER postgres;
+
+At a guess. Maybe create the `hines` user and grant them permission to access `hines` database too?
+)
 
 Run Django's database migrations:
 
