@@ -62,8 +62,6 @@ jobs:
         DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
         DJANGO_SECRET_KEY: 'fake-secret-key-for-tests'
         DJANGO_SETTINGS_MODULE: config.settings.tests
-        PIPENV_NOSPIN: 'true'
-        WORKON_HOME: ~/.pipenv/virtualenvs
 
     - name: Generate lcov report
       # We need an lcov report for Coveralls
