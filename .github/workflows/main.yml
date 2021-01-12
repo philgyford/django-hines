@@ -58,8 +58,9 @@ jobs:
       run: |
         pipenv run ./manage.py collectstatic --verbosity=0 --noinput
         pipenv run python manage.py migrate --verbosity=0 --noinput
-        # relative-files=True is needed for coveralls-python-action:
-        pipenv run coverage run --relative_files=True manage.py test
+        pipenv run coverage run manage.py test
+        # Used to make the lcov report in next step:
+        pipenv run coverage xml -o coverage.xml
       env:
         ALLOWED_HOSTS: '*'
         DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
@@ -68,18 +69,16 @@ jobs:
         PIPENV_NOSPIN: 'true'
         WORKON_HOME: ~/.pipenv/virtualenvs
 
+    - name: Generate lcov report
+      # We need an lcov report for Coveralls
+      uses: danielpalme/ReportGenerator-GitHub-Action@4.6.4
+      with:
+        reports: coverage.xml
+        targetdir: lcov/
+        reporttypes: lcov
+
     - name: Coveralls
-      uses: AndreMiras/coveralls-python-action@develop
+      uses: coverallsapp/github-action@master
       with:
-        parallel: true
-        flag-name: Unit Test
-
-  coveralls_finish:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Coveralls Finished
-      uses: AndreMiras/coveralls-python-action@develop
-      with:
-        parallel-finished: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: lcov/lcov.info
