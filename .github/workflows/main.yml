@@ -39,6 +39,7 @@ jobs:
 
     - name: Cache pipenv virtualenv
       uses: actions/cache@v2
+      id: pipenv-cache
       with:
         path: ~/.local/share/virtualenvs
         key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
@@ -57,7 +58,7 @@ jobs:
       run: |
         pipenv run ./manage.py collectstatic --verbosity=0 --noinput
         pipenv run python manage.py migrate --verbosity=0 --noinput
-        pipenv run coverage run test
+        pipenv run coverage run manage.py test
         # Used to make the lcov report in next step:
         pipenv run coverage xml -o coverage.xml
       env:
