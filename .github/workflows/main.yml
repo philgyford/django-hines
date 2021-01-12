@@ -19,7 +19,7 @@ jobs:
         image: postgres:12.5
         env:
           POSTGRES_DB: postgres
-          POSTRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
         ports: ['5432:5432']
         # needed because the postgres container does not provide a healthcheck
