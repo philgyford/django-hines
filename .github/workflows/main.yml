@@ -48,10 +48,6 @@ jobs:
 
     - name: Install dependencies
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
-      env:
-        PIPENV_CACHE_DIR: ~/.pipenv/pipcache
-        PIPENV_NOSPIN: 'true'
-        WORKON_HOME: ~/.pipenv/virtualenvs
       run: pipenv install --dev
 
     - name: Run Tests
