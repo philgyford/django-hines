@@ -10,4 +10,5 @@ set -e
 # ./run-tests.sh tests.appname.test_models.TestClass.test_a_thing
 TESTS_TO_RUN=${1:-tests}
 
-docker exec hines_web /bin/sh -c "pipenv run coverage run --branch --source=. --omit=*/migrations/*.py,manage.py,tests/*.py manage.py test --settings=config.settings.tests $TESTS_TO_RUN ; pipenv run flake8 ; pipenv run coverage html"
+# Coverage config is in setup.cfg
+docker exec hines_web /bin/sh -c "pipenv run coverage run manage.py test --settings=config.settings.tests $TESTS_TO_RUN ; pipenv run flake8 ; pipenv run coverage html"
