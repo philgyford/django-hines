@@ -55,6 +55,7 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run ./manage.py collectstatic --verbosity=0 --noinput
+        pipenv run python manage.py migrate --verbosity=0 --noinput
         pipenv run coverage run manage.py test
         # Used to make the lcov report in next step:
         pipenv run coverage xml -o coverage.xml
