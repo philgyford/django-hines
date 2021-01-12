@@ -59,7 +59,7 @@ jobs:
         pipenv run ./manage.py collectstatic --verbosity=0 --noinput
         pipenv run python manage.py migrate --verbosity=0 --noinput
         # relative-files=True is needed for coveralls-python-action:
-        pipenv run coverage run --relative-files=True manage.py test
+        pipenv run coverage run --relative_files=True manage.py test
       env:
         ALLOWED_HOSTS: '*'
         DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
