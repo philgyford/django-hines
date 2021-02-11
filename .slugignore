@@ -1,0 +1,11 @@
+# Things that don't need to be sent to Heroku
+.github
+.vscode
+/docker
+/tests
+docker-compose.yml
+
+# Only used for front-end build locally:
+gulpfile.js
+package-lock.json
+package.json
