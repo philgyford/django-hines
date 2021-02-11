@@ -102,7 +102,7 @@ class ExtendedFeed(Feed):
     def __call__(self, request, *args, **kwargs):
         response = super().__call__(request, *args, **kwargs)
 
-        xsl_url = staticfiles_storage.url("hines/xsl/pretty-feed-v2.xsl").encode(
+        xsl_url = staticfiles_storage.url("hines/xsl/pretty-feed-v3.xsl").encode(
             "utf-8"
         )
 
