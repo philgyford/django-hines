@@ -90,7 +90,6 @@ Did we have to create a database first? If so we'd have had to do something like
     > CREATE DATABASE hines djangodb OWNER postgres;
 
 At a guess. Maybe create the `hines` user and grant them permission to access `hines` database too?
-)
 
 Run Django's database migrations:
 
