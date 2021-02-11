@@ -2,10 +2,11 @@
 
 Code for http://www.gyford.com
 
-[![Build Status](https://travis-ci.org/philgyford/django-hines.svg?branch=master)](https://travis-ci.org/philgyford/django-hines)
+[![Build Status](https://github.com/philgyford/django-hines/workflows/CI/badge.svg)](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI)
+
 [![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=master)](https://coveralls.io/github/philgyford/django-hines?branch=master)
 
-Pushing to `master` will run the commit through [Travis](https://travis-ci.org) and [Coveralls](https://coveralls.io). If it passes, and coverage doesn't decrease, it will be deployed automatically to Heroku.
+Pushing to `main` will run the commit through [this GitHub Action](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI) to run tests, and [Coveralls](https://coveralls.io) to check coverage. If it passes, it will be deployed automatically to Heroku.
 
 
 ## Local development setup
