@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-# Call this from the host machine.
-# It will call the `tests` shortcut defined in Pipfile, which will run
-# a script within the pipenv environment.
+# Call this from the host machine to run tests in Docker.
 
 # You can optionally pass in a test, or test module or class, as an argument.
 # e.g.
