@@ -42,9 +42,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-pipenv-${{ python-version }}-v1-${{ hashFiles('**/Pipfile.lock') }}
+          key: ${{ runner.os }}-pipenv-v1-${{ hashFiles('**/Pipfile.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pipenv-${{ python-version }}-v1-
+            ${{ runner.os }}-pipenv-v1-
 
       - name: Install dependencies
         env:
