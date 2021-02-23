@@ -1,12 +1,11 @@
 # django-hines
 
+[![Build Status](https://github.com/philgyford/django-hines/workflows/CI/badge.svg)](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI)
+[![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=main)](https://coveralls.io/github/philgyford/django-hines?branch=main)
+
 Code for http://www.gyford.com
 
-[![Build Status](https://github.com/philgyford/django-hines/workflows/CI/badge.svg)](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI)
-
-[![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=master)](https://coveralls.io/github/philgyford/django-hines?branch=master)
-
-Pushing to `main` will run the commit through [this GitHub Action](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI) to run tests, and [Coveralls](https://coveralls.io) to check coverage. If it passes, it will be deployed automatically to Heroku.
+Pushing to `main` will run the commit through [this GitHub Action](https://github.com/philgyford/django-hines/actions/workflows/main.yml) to run tests, and [Coveralls](https://coveralls.io) to check coverage. If it passes, it will be deployed automatically to Heroku.
 
 
 ## Local development setup
@@ -29,7 +28,7 @@ more details about the variables):
     export DJANGO_SETTINGS_MODULE='config.settings.development'
 
     # For use in Django:
-    export DATABASE_URL='postgres://hines:hines@db:5432/django-hines'
+    export DATABASE_URL='postgres://hines:hines@hines_db:5432/django-hines'
     # For use in Docker:
     POSTGRES_USER=hines
     POSTGRES_PASSWORD=hines
@@ -56,7 +55,7 @@ Open your `/etc/hosts` file in a terminal window by doing:
 
 Enter your computer's password. Then add this line somewhere in the file and save:
 
-    127.0.0.1 gyford.test
+    127.0.0.1 www.gyford.test
 
 
 ### 3. Build the Docker containers
@@ -71,8 +70,7 @@ Then start up the web and database containers:
 
     $ docker-compose up
 
-There are two containers, the webserver (`web`) and the postgres serer (`db`).
-All the repository's code is mirrored in the web container in the `/code/` directory.
+There are two containers, the webserver (`hines_web`) and the postgres serer (`hines_db`). All the repository's code is mirrored in the web container in the `/code/` directory.
 
 
 ### 4. Set up the database
@@ -84,28 +82,24 @@ and second we'll populate it with a dump of data from the live site.
 
 #### 4a. An empty database
 
-(
-Did we have to create a database first? If so we'd have had to do something like:
-
-    $ docker-compose exec db sh
-    # su - postgres -c psql
-    > CREATE DATABASE hines djangodb OWNER postgres;
-
-At a guess. Maybe create the `hines` user and grant them permission to access `hines` database too?
-)
-
-Run Django's database migrations:
-
-    $ ./scripts/manage.sh migrate
-
-(NOTE: The `manage.sh` script is a shortcut for a longer command that runs
-Django's `manage.py` within the Docker web container.)
+The `build` step will create the database and run the Django migrations.
 
 Then create a superuser:
 
     $ ./scripts/manage.sh createsuperuser
 
+(NOTE: The `manage.sh` script is a shortcut for a longer command that runs
+Django's `manage.py` within the Docker web container.)
+
 #### 4b. Use a dump from the live site
+
+Log into postgres and drop the current (empty) database:
+
+    $ docker exec -it hines_db psql -U hines -d postgres
+    # drop database django-hines with (FORCE);
+	# create database django-hines;
+	# grant all privileges on database "django-hines" to hines;
+    # \q
 
 On Heroku, download a backup file of the live site's database and rename it to
 something simpler. We'll use "heroku_db_dump" below.
@@ -114,11 +108,7 @@ Put the file in the same directory as this README.
 
 Import the data into the database:
 
-    $ docker-compose exec -T db pg_restore --verbose --clean --no-acl --no-owner -h localhost -U hines -d django-hines < heroku_db_dump
-
-You can copy and paste that command, only ensuring the final filename is the same as your database dump's.
-
-Once that's complete, delete your database dump file.
+    $ docker exec -i hines_db pg_restore --verbose --clean --no-acl --no-owner -U hines -d django-hines < heroku_db_dump
 
 
 #### 5. Vist and set up the site
@@ -162,7 +152,7 @@ Or, use the shortcut command from *outside* of the Docker container:
 
 Or you can log into the database:
 
-    $ docker exec -it hines_db psql --username=hines --dbname=django-hines
+    $ docker exec -it hines_db psql -U hines -d django-hines
 
 The development environment has [django-extensions](https://django-extensions.readthedocs.io/en/latest/index.html) installed so you can use its `shell_plus` and other commands. e.g.:
 

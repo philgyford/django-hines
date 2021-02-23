@@ -10,6 +10,7 @@ services:
     image: postgres:alpine
     ports:
       - "5432:5432"
+    restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
@@ -32,16 +33,13 @@ services:
     command: >
       sh -c "
       pipenv run python manage.py migrate &&
-      pipenv run python manage.py runserver 0.0.0.0:8000
+      pipenv run python -Wd manage.py runserver 0.0.0.0:8000
       "
     container_name: hines_web
     depends_on:
       - db
       # - redis
     env_file: .env
-    links:
-      - db
-      # - redis
     ports:
       - "8000:8000"
     restart: unless-stopped
