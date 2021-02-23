@@ -55,9 +55,9 @@ jobs:
         run: pipenv install --dev
 
       - name: Run Tests
+        # Shouldn't need to manually migrate, but otherwise the tests that use AdminSite() fail:
         run: |
           pipenv run ./manage.py collectstatic --verbosity=0 --noinput
-          # Shouldn't need to manually migrate, but otherwise the tests that use AdminSite() fail:
           pipenv run ./manage.py migrate --verbosity=0 --noinput
           pipenv run coverage run ./manage.py test
           pipenv run coverage report -m
