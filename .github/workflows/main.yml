@@ -59,6 +59,7 @@ jobs:
         run: |
           pipenv run ./manage.py collectstatic --verbosity=0 --noinput
           pipenv run ./manage.py migrate --verbosity=0 --noinput
+          pipenv run flake8 hines
           pipenv run coverage run ./manage.py test
           pipenv run coverage report -m
         env:
