@@ -94,10 +94,10 @@
         },
         "django-autocomplete-light": {
             "hashes": [
-                "sha256:4e84a6d95d272b0d7221614332e2bd54ffff15ec06e78947279398f6507ce225"
+                "sha256:25f0ea71b59a8f1f97a8a564e33e429570b0ea77c5eac81f7beb283073b4ba90"
             ],
             "index": "pypi",
-            "version": "==3.8.1"
+            "version": "==3.8.2"
         },
         "django-contrib-comments": {
             "hashes": [
