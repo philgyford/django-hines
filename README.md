@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/philgyford/django-hines/workflows/CI/badge.svg)](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=main)](https://coveralls.io/github/philgyford/django-hines?branch=main)
 
-Code for http://www.gyford.com
+Code for https://www.gyford.com
 
 Pushing to `main` will run the commit through [this GitHub Action](https://github.com/philgyford/django-hines/actions/workflows/main.yml) to run tests, and [Coveralls](https://coveralls.io) to check coverage. If it passes, it will be deployed automatically to Heroku.
 
