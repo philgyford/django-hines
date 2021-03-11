@@ -639,9 +639,8 @@ class StaticGenerator(Generator):
         return {
             "data": chart_data,
             "title": "Average steps per day",
-            "description": "As counted by my iPhone or Apple Watch."
+            "description": "As counted by my iPhone or Apple Watch.",
         }
-
 
     def get_days_worked_per_year(self):
         # Each of these three arrays should have the same keys.
