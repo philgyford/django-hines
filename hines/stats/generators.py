@@ -618,6 +618,31 @@ class StaticGenerator(Generator):
             "prescription medication.",
         }
 
+    def get_steps_per_year(self):
+        totals = {
+            "2016": 6466,
+            "2017": 6219,
+            "2018": 6078,
+            "2019": 7842,
+            "2020": 6396,
+        }
+
+        chart_data = []
+        for year, count in totals.items():
+            chart_data.append(
+                {
+                    "label": year,
+                    "columns": {"steps": {"label": "Steps", "value": count}},
+                }
+            )
+
+        return {
+            "data": chart_data,
+            "title": "Average steps per day",
+            "description": "As counted by my iPhone or Apple Watch."
+        }
+
+
     def get_days_worked_per_year(self):
         # Each of these three arrays should have the same keys.
 

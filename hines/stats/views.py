@@ -75,6 +75,7 @@ class StatsView(CacheMixin, TemplateView):
             "title": "Health",
             "charts": [
                 "headaches_per_year",
+                "steps_per_year",
             ],
         },
         {
@@ -143,6 +144,9 @@ class StatsView(CacheMixin, TemplateView):
 
     def get_data_headaches_per_year(self):
         return StaticGenerator().get_headaches_per_year()
+
+    def get_data_steps_per_year(self):
+        return StaticGenerator().get_steps_per_year()
 
     def get_data_days_worked_per_year(self):
         return StaticGenerator().get_days_worked_per_year()

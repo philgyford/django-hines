@@ -518,6 +518,26 @@ class StaticGeneratorTestCase(TestCase):
         self.assertIn("headaches", result["data"][0]["columns"])
         self.assertIn("value", result["data"][0]["columns"]["headaches"])
 
+    def test_steps_title_description(self):
+        result = StaticGenerator().get_steps_per_year()
+
+        self.assertIn("title", result)
+        self.assertEqual(result["title"], "Average steps per day")
+        self.assertIn("description", result)
+        self.assertEqual(
+            result["description"], "As counted by my iPhone or Apple Watch."
+        )
+
+    def test_steps_data(self):
+        "Not testing the details as it's all hard-coded."
+        result = StaticGenerator().get_steps_per_year()
+
+        self.assertIn("data", result)
+        self.assertIn("label", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("steps", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["steps"])
+
     def test_github_title_description(self):
         result = StaticGenerator().get_github_contributions_per_year()
 
