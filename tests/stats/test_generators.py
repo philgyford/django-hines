@@ -456,6 +456,26 @@ class ReadingGeneratorTestCase(TestCase):
 
 
 class StaticGeneratorTestCase(TestCase):
+    def test_amazon_spending_title_description(self):
+        result = StaticGenerator().get_amazon_spending_per_year()
+
+        self.assertIn("title", result)
+        self.assertEqual(result["title"], "Amount spent on Amazon per year")
+        self.assertIn("description", result)
+        self.assertEqual(
+            result["description"], "USD converted into GBP where applicable."
+        )
+
+    def test_amazon_spending_data(self):
+        "Not testing the details as it's all hard-coded."
+        result = StaticGenerator().get_amazon_spending_per_year()
+
+        self.assertIn("data", result)
+        self.assertIn("label", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("amazon_spending", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["amazon_spending"])
+
     def test_diary_title_description(self):
         result = StaticGenerator().get_diary_words_per_year()
 

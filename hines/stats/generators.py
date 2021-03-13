@@ -399,7 +399,63 @@ class StaticGenerator(Generator):
     For all kinds of hard-coded data.
     """
 
-    def get_diary_words_per_year(seelf):
+    def _make_simple_data(self, totals, columns_key, label, title, description=None):
+        data = []
+
+        for year, count in totals.items():
+            data.append(
+                {
+                    "label": year,
+                    "columns": {columns_key: {"label": label, "value": count}},
+                }
+            )
+
+        return_data = {
+            "data": data,
+            "title": title,
+            # 'description': "Per year."
+        }
+
+        if description is not None:
+            return_data["description"] = description
+
+        return return_data
+
+    def get_amazon_spending_per_year(self):
+        totals = {
+            "1999": 117,
+            "2000": 63,
+            "2001": 62,
+            "2002": 193,
+            "2003": 105,
+            "2004": 309,
+            "2005": 379,
+            "2006": 197,
+            "2007": 157,
+            "2008": 426,
+            "2009": 397,
+            "2010": 761,
+            "2011": 468,
+            "2012": 202,
+            "2013": 116,
+            "2014": 391,
+            "2015": 125,
+            "2016": 150,
+            "2017": 47,
+            "2018": 157,
+            "2019": 51,
+            "2020": 0,
+        }
+
+        return self._make_simple_data(
+            totals,
+            columns_key="amazon_spending",
+            label="Amount",
+            title="Amount spent on Amazon per year",
+            description="USD converted into GBP where applicable."
+        )
+
+    def get_diary_words_per_year(self):
         totals = {
             # "1996": 46696,  # Partial year
             "1997": 125643,
@@ -428,20 +484,12 @@ class StaticGenerator(Generator):
             "2020": 15636,
         }
 
-        chart_data = []
-        for year, count in totals.items():
-            chart_data.append(
-                {
-                    "label": year,
-                    "columns": {"diary_words": {"label": "Words", "value": count}},
-                }
-            )
-
-        return {
-            "data": chart_data,
-            "title": "Words written in diary",
-            # 'description': "Per year."
-        }
+        return self._make_simple_data(
+            totals,
+            columns_key="diary_words",
+            label="Words",
+            title="Words written in diary",
+        )
 
     def get_emails_received_per_year(self):
         # From Archive by year folders:
@@ -567,21 +615,16 @@ class StaticGenerator(Generator):
         for k, v in byliner.items():
             totals[k] += v
 
-        chart_data = []
-        for year, count in totals.items():
-            chart_data.append(
-                {
-                    "label": year,
-                    "columns": {"emails": {"label": "Emails", "value": count}},
-                }
-            )
-
-        return {
-            "data": chart_data,
-            "title": "Emails received",
-            "description": "Per year. Not counting: work, discussion lists, "
-            "most newsletters, spam, or anything else I threw away.",
-        }
+        return self._make_simple_data(
+            totals,
+            columns_key="emails",
+            label="Emails",
+            title="Emails received",
+            description=(
+                "Per year. Not counting: work, discussion lists, "
+                "most newsletters, spam, or anything else I threw away."
+            ),
+        )
 
     def get_headaches_per_year(self):
         totals = {
@@ -602,21 +645,16 @@ class StaticGenerator(Generator):
             "2020": 46,
         }
 
-        chart_data = []
-        for year, count in totals.items():
-            chart_data.append(
-                {
-                    "label": year,
-                    "columns": {"headaches": {"label": "Headaches", "value": count}},
-                }
-            )
-
-        return {
-            "data": chart_data,
-            "title": "Headaches",
-            "description": "Per year. Those that require, or are defeated by, "
-            "prescription medication.",
-        }
+        return self._make_simple_data(
+            totals,
+            columns_key="headaches",
+            label="Headaches",
+            title="Headaches",
+            description=(
+                "Per year. Those that require, or are defeated by, "
+                "prescription medication."
+            ),
+        )
 
     def get_steps_per_year(self):
         totals = {
@@ -627,20 +665,13 @@ class StaticGenerator(Generator):
             "2020": 6396,
         }
 
-        chart_data = []
-        for year, count in totals.items():
-            chart_data.append(
-                {
-                    "label": year,
-                    "columns": {"steps": {"label": "Steps", "value": count}},
-                }
-            )
-
-        return {
-            "data": chart_data,
-            "title": "Average steps per day",
-            "description": "As counted by my iPhone or Apple Watch.",
-        }
+        return self._make_simple_data(
+            totals,
+            columns_key="steps",
+            label="Steps",
+            title="Average steps per day",
+            description="As counted by my iPhone or Apple Watch.",
+        )
 
     def get_days_worked_per_year(self):
         # Each of these three arrays should have the same keys.
@@ -759,26 +790,16 @@ class StaticGenerator(Generator):
             "2020": 2403,
         }
 
-        chart_data = []
-        for year, count in totals.items():
-            chart_data.append(
-                {
-                    "label": year,
-                    "columns": {
-                        "github_contributions": {
-                            "label": "Contributions",
-                            "value": count,
-                        }
-                    },
-                }
-            )
-
-        return {
-            "data": chart_data,
-            "title": "GitHub activity",
-            "description": "Contributions listed per year for "
-            '<a href="https://github.com/philgyford">philgyford</a>.',
-        }
+        return self._make_simple_data(
+            totals,
+            columns_key="github_contributions",
+            label="Contributions",
+            title="GitHub activity",
+            description=(
+                "Contributions listed per year for "
+                '<a href="https://github.com/philgyford">philgyford</a>.'
+            ),
+        )
 
 
 class TwitterGenerator(Generator):

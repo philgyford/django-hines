@@ -83,6 +83,7 @@ class StatsView(CacheMixin, TemplateView):
             "title": "Money",
             "charts": [
                 "days_worked_per_year",
+                "amazon_spending_per_year",
             ],
         },
     ]
@@ -135,6 +136,9 @@ class StatsView(CacheMixin, TemplateView):
         chart_data.update(data_method())
 
         return chart_data
+
+    def get_data_amazon_spending_per_year(self):
+        return StaticGenerator().get_amazon_spending_per_year()
 
     def get_data_books_per_year(self):
         return ReadingGenerator(kind="book").get_per_year()
