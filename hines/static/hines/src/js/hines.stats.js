@@ -398,7 +398,7 @@
                 // If the bar is for the current year, make its opacity
                 // in proportion to how far through the year we are.
                 var currentYear = new Date().getFullYear();
-                if (parseInt(d["label"]) == currentYear) {
+                if (parseInt(d.data.label) == currentYear) {
                   return dayOfYear() / 366;
                 } else {
                   return 1;
