@@ -104,6 +104,14 @@
 
         chart = hines.chart();
 
+        {% if chart.number_format_prefix %}
+          chart.numberFormatPrefix("{{ chart.number_format_prefix }}");
+        {% endif %}
+
+        {% if chart.number_format_suffix %}
+          chart.numberFormatSuffix("{{ chart.number_format_suffix }}");
+        {% endif %}
+
         d3.select('.js-chart-{{ chart.name }}').datum(data, {{ chart.labels|safe }}).call(chart);
       {% endfor %}
 

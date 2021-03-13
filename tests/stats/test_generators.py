@@ -475,6 +475,8 @@ class StaticGeneratorTestCase(TestCase):
         self.assertIn("columns", result["data"][0])
         self.assertIn("amazon_spending", result["data"][0]["columns"])
         self.assertIn("value", result["data"][0]["columns"]["amazon_spending"])
+        self.assertIn("number_format_prefix", result)
+        self.assertEqual(result["number_format_prefix"], "£")
 
     def test_diary_title_description(self):
         result = StaticGenerator().get_diary_words_per_year()

@@ -399,7 +399,19 @@ class StaticGenerator(Generator):
     For all kinds of hard-coded data.
     """
 
-    def _make_simple_data(self, totals, columns_key, label, title, description=None):
+    def _make_simple_data(
+        self, totals, columns_key, label, chart_title, chart_description=None
+    ):
+        """
+        Private method for generating the data most of the data methods return.
+        Can only handle data for simple bar charts, not stacked.
+
+        totals - A dict of year and value, like {"2001": 42, "2002": 50}
+        columns_key - A unique key used to describe the data, like "amazon_spending"
+        label - Label for the value used in the hover tooltip over a bar.
+        chart_title - Title for the entire chart
+        chart_description - Optional description to go under chart. Can contain HTML.
+        """
         data = []
 
         for year, count in totals.items():
@@ -412,12 +424,11 @@ class StaticGenerator(Generator):
 
         return_data = {
             "data": data,
-            "title": title,
-            # 'description': "Per year."
+            "title": chart_title,
         }
 
-        if description is not None:
-            return_data["description"] = description
+        if chart_description is not None:
+            return_data["description"] = chart_description
 
         return return_data
 
@@ -447,13 +458,17 @@ class StaticGenerator(Generator):
             "2020": 0,
         }
 
-        return self._make_simple_data(
+        data = self._make_simple_data(
             totals,
             columns_key="amazon_spending",
             label="Amount",
-            title="Amount spent on Amazon per year",
-            description="USD converted into GBP where applicable."
+            chart_title="Amount spent on Amazon per year",
+            chart_description="USD converted into GBP where applicable.",
         )
+
+        data["number_format_prefix"] = "£"
+
+        return data
 
     def get_diary_words_per_year(self):
         totals = {
@@ -488,7 +503,7 @@ class StaticGenerator(Generator):
             totals,
             columns_key="diary_words",
             label="Words",
-            title="Words written in diary",
+            chart_title="Words written in diary",
         )
 
     def get_emails_received_per_year(self):
@@ -619,8 +634,8 @@ class StaticGenerator(Generator):
             totals,
             columns_key="emails",
             label="Emails",
-            title="Emails received",
-            description=(
+            chart_title="Emails received",
+            chart_description=(
                 "Per year. Not counting: work, discussion lists, "
                 "most newsletters, spam, or anything else I threw away."
             ),
@@ -649,8 +664,8 @@ class StaticGenerator(Generator):
             totals,
             columns_key="headaches",
             label="Headaches",
-            title="Headaches",
-            description=(
+            chart_title="Headaches",
+            chart_description=(
                 "Per year. Those that require, or are defeated by, "
                 "prescription medication."
             ),
@@ -669,8 +684,8 @@ class StaticGenerator(Generator):
             totals,
             columns_key="steps",
             label="Steps",
-            title="Average steps per day",
-            description="As counted by my iPhone or Apple Watch.",
+            chart_title="Average steps per day",
+            chart_description="As counted by my iPhone or Apple Watch.",
         )
 
     def get_days_worked_per_year(self):
@@ -794,8 +809,8 @@ class StaticGenerator(Generator):
             totals,
             columns_key="github_contributions",
             label="Contributions",
-            title="GitHub activity",
-            description=(
+            chart_title="GitHub activity",
+            chart_description=(
                 "Contributions listed per year for "
                 '<a href="https://github.com/philgyford">philgyford</a>.'
             ),

@@ -90,16 +90,16 @@
   window.hines = window.hines || {};
 
   window.hines.chart = function(selection) {
+
     /**
-     * Utility function: Adds a comma to numbers of 5 or more digits.
+     * Can be changed using the chart.numberFormatPrefix() method.
      */
-    var numberFormat = function(d) {
-      if (("" + d3.format(".0f")(d)).length > 4) {
-        return d3.format(",")(d);
-      } else {
-        return d3.format("d")(d);
-      }
-    };
+    var numberFormatPrefix = "";
+
+    /**
+     * Can be changed using the chart.numberFormatSuffix() method.
+     */
+    var numberFormatSuffix = "";
 
     /**
      * Can be changed using the chart.margin() method.
@@ -160,6 +160,19 @@
     } else {
       tooltip = d3.select(".chart-tooltip");
     }
+
+    /**
+     * Utility function: Adds a comma to numbers of 5 or more digits.
+     */
+    function numberFormat(d) {
+      var ret;
+      if (("" + d3.format(".0f")(d)).length > 4) {
+        ret = d3.format(",")(d);
+      } else {
+        ret = d3.format("d")(d);
+      }
+      return numberFormatPrefix + ret + numberFormatSuffix;
+    };
 
     /**
      * When cursor goes over a bar.
@@ -301,7 +314,6 @@
           // Outer width, including space for axes etc:
           var width = parseInt(container.style("width"), 10);
           var height = parseInt(container.style("height"), 10);
-          console.log(width);
 
           // Inner width, chart area only, minus margins for axes etc.
           chartW = width - margin.left - margin.right;
@@ -436,6 +448,18 @@
     chart.margin = function(value) {
       if (!arguments.length) return margin;
       margin = value;
+      return chart;
+    };
+
+    chart.numberFormatPrefix = function(value) {
+      if (!arguments.length) return numberFormatPrefix;
+      numberFormatPrefix = value;
+      return chart;
+    };
+
+    chart.numberFormatSuffix = function(value) {
+      if (!arguments.length) return numberFormatSuffix;
+      numberFormatSuffix = value;
       return chart;
     };
 
