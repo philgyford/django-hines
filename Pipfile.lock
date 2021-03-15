@@ -42,18 +42,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:4e177c9dd4ac45d9e41867cfb747f4c985d6b05ff14637ac5861a60daa95c7c1",
-                "sha256:ee03a05669c4e82021db8da61c1e7744f231b7481010917ed9066862c8d3cad9"
+                "sha256:6758751f1181b9363e4e7559dcbd5ac0fc7147b73f429c976ec5ecd1688c9ec7",
+                "sha256:fa41987f9f71368013767306d9522b627946a01b4843938a26fb19cc8adb06c0"
             ],
             "index": "pypi",
-            "version": "==1.17.22"
+            "version": "==1.17.27"
         },
         "botocore": {
             "hashes": [
-                "sha256:32e86f9d18555bd3b4dc694a2639a1c1fc8c8b42a49da543b95ac9d04c40770b",
-                "sha256:e92e22275ddc15b80015ee630b14ac3701bd9834bffc0814a65a894d490d2eaf"
+                "sha256:4477803f07649f4d80b17d054820e7a09bb2cb0792d0decc2812108bc3759c4a",
+                "sha256:57e45c9d443163da7312cae61bcc60382e6d0b3aecda68e850d6438162fe7b5b"
             ],
-            "version": "==1.20.22"
+            "version": "==1.20.27"
         },
         "certifi": {
             "hashes": [
@@ -574,10 +574,10 @@
         },
         "faker": {
             "hashes": [
-                "sha256:90b69e9e05d622edb2fa5ebfda7bef41c88675cace85e72689fde5b8723d00a3",
-                "sha256:da395fe545f40d4366b82b1a02448847a4586bd2b28af393b3edbd1e45d1e0fc"
+                "sha256:0a68a539b236a614157581a135c82a27024a66dc96b9a491883fe583ae3689f9",
+                "sha256:38bd2ff0afb7d9956fed477a2cd1007a7012b401a9ffd3de5fb909d739880582"
             ],
-            "version": "==6.5.0"
+            "version": "==6.6.0"
         },
         "flake8": {
             "hashes": [
