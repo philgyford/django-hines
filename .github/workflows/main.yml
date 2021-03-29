@@ -82,4 +82,5 @@ jobs:
           fields: repo,message,commit,author,action,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_CI_SLACK_HOOK }} # required
-        if: always() # Pick up events even if the job fails or is canceled.
+        # Run even if job fails/cancelled, but only if Slack webhook is present (it's not when Dependabot runs):
+        if: ${{ always() && env.SLACK_WEBHOOK_URL != null }}
