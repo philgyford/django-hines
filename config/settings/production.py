@@ -42,7 +42,7 @@ CACHES = {
     "default": {
         "BACKEND": "redis_cache.RedisCache",
         "LOCATION": get_env_variable("REDIS_TLS_URL"),
-        "OPTIONS": {"CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": None}},
+        "OPTIONS": {"CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": False}},
     }
 }
 
