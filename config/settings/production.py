@@ -41,7 +41,7 @@ MEDIA_URL = "https://{}.s3.amazonaws.com{}".format(
 CACHES = {
     "default": {
         "BACKEND": "redis_cache.RedisCache",
-        "LOCATION": get_env_variable("REDIS_TLS_URL"),
+        "LOCATION": get_env_variable("REDIS_URL"),
         "OPTIONS": {"CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": None}},
     }
 }
