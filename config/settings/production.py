@@ -19,9 +19,7 @@ HINES_COMMENTS_ALLOWED = True
 # Close comments on posts after this many days (assuming they're open):
 HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
 
-HINES_COMMENTS_ADMIN_FEED_SLUG = get_env_variable(
-    "HINES_COMMENTS_ADMIN_FEED_SLUG"
-)
+HINES_COMMENTS_ADMIN_FEED_SLUG = get_env_variable("HINES_COMMENTS_ADMIN_FEED_SLUG")
 
 
 # Storing Media files on AWS.
@@ -42,14 +40,9 @@ MEDIA_URL = "https://{}.s3.amazonaws.com{}".format(
 
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": get_env_variable("REDIS_URL"),
-        "KEY_PREFIX": "hines",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            # If Redis is down, ignore exceptions:
-            "IGNORE_EXCEPTIONS": True,
-        },
+        "BACKEND": "redis_cache.RedisCache",
+        "LOCATION": get_env_variable("REDIS_TLS_URL"),
+        "OPTIONS": {"CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": None}},
     }
 }
 
