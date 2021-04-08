@@ -27,8 +27,8 @@ CACHES = {
         # "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         # Seconds before expiring a cached item. None for never expiring.
         # "TIMEOUT": 400,
-        # Use django-redis:
-        # "BACKEND": "django_redis.cache.RedisCache",
+        # Use django-redis-cache:
+        # "BACKEND": "redis_cache.RedisCache",
         # "LOCATION": get_env_variable("REDIS_URL"),
         # "KEY_PREFIX": "hines",
         # "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient",},
