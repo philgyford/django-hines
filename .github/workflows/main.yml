@@ -46,6 +46,8 @@ jobs:
           key: ${{ runner.os }}-pipenv-v2-${{ hashFiles('**/Pipfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pipenv-v2-
+            ${{ runner.os }}-pipenv-
+            ${{ runner.os }}-
 
       - name: Install dependencies
         env:
