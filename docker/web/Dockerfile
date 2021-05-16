@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
     && apk add --no-cache \
+    git \
     # Required for installing/upgrading postgres and Pillow:
     gcc python3-dev \
     # Required for installing/upgrading postgres:
