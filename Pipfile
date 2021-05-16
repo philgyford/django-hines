@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 "boto3" = "*"
 dj-database-url = "*"
-django-autocomplete-light = "*"
+django-autocomplete-light = {editable = true, git = "https://github.com/yourlabs/django-autocomplete-light.git"}
 django-contrib-comments = "*"
 django-ditto = "*"
 django-spectator = "*"
