@@ -43,9 +43,9 @@ jobs:
         id: pipenv-cache
         with:
           path: ~/.pipenv
-          key: ${{ runner.os }}-pipenv-v5-${{ hashFiles('**/Pipfile.lock') }}
+          key: ${{ runner.os }}-pipenv-v6-${{ hashFiles('**/Pipfile.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pipenv-v5-
+            ${{ runner.os }}-pipenv-v6-
 
       - name: Install dependencies
         env:
