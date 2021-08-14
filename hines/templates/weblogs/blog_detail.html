@@ -22,15 +22,5 @@
 		{% blog_years_card blog=blog current_year=year|default_if_none:None %}
 	{% endif %}
 
-  <div id="blogroll">
-    {% if blog.slug == "writing" %}
-      {% render_block "blogroll-people" %}
-
-      {% render_block "blogroll-topics" %}
-
-      {% render_block "newsletters" %}
-    {% endif %}
-  </div>
-
 	{{ block.super }}
 {% endblock sidebar_content %}

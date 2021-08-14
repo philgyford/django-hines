@@ -64,6 +64,12 @@ urlpatterns = [
     path(
         "archive/", flatpages_views.flatpage, {"url": "/phil/archive/"}, name="archive"
     ),
+    path(
+        "blogroll/",
+        flatpages_views.flatpage,
+        {"url": "/phil/blogroll/"},
+        name="blogroll",
+    ),
     path("work/", flatpages_views.flatpage, {"url": "/phil/work/"}, name="about_work"),
     path(
         "timeline/",
