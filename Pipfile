@@ -27,14 +27,13 @@ django-extensions = "*"
 django-redis = "*"
 
 [dev-packages]
-# If changing things here, might also need to do so in .travis.yml
 django-debug-toolbar = "*"
 coverage = "*"
 factory-boy = "*"
 freezegun = "*"
 flake8 = "*"
 # Got mismatched dependencies unless I specified a specific version:
-black = "==20.8b1"
+black = "==21.7b0"
 
 [requires]
 python_version = "3.8"

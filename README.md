@@ -224,6 +224,16 @@ To generate all the cached thumbnail images (which must be done because of the
 
     $ heroku run python ./manage.py generateimages
 
+Note that by default Heroku's Redis is set up with a `maxmemory-policy` of `noeviction` which will generate OOM (Out Of Memory) errors when the memory limit is reached. This [can be changed](https://devcenter.heroku.com/articles/heroku-redis#maxmemory-policy):
+
+    $ heroku redis:info
+    === redis-fishery-12345 (HEROKU_REDIS_NAVY_TLS_URL, ...
+
+Then use that Redis name like:
+
+    $ heroku redis:maxmemory redis-fisher-12345 --policy allkeys-lru
+
+
 ## Django Settings
 
 Custom settings that can be in the django `settings.py` file:
