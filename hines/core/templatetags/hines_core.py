@@ -323,32 +323,36 @@ def most_seen_directors_card(num=10):
     creators = data["object_list"]
 
     for n, creator in enumerate(creators):
-        if prev_creator:
+        if prev_creator is not None:
             if prev_creator.name in coens and creator.name in coens:
                 # Both this item and the previous are Coen brothers.
                 # This is the position they should both be at:
-                coen_position = n - 1
+                coen_position = n
                 break
         prev_creator = creator
 
     if coen_position is not None:
         # The Coen brothers were in the list.
         # So, get both of the Creator objects:
-        coen1 = creators[coen_position]
-        coen2 = creators[coen_position + 1]
+        coen1 = creators[coen_position - 1]
+        coen2 = creators[coen_position]
         # Put them both in a list at the first position a Coen occupied:
-        creators[coen_position] = [coen1, coen2]
+        creators[coen_position - 1] = [coen1, coen2]
         # And delete the second position:
-        del creators[coen_position + 1]
+        del creators[coen_position]
 
-    # Now we need to improve the positions of all subsequent people
-    # because we just removed a position:
-    for m in range(coen_position + 1, len(creators)):
-        creators[m].chart_position = creators[m].chart_position - 1
+        # Now we need to improve the positions of all subsequent people
+        # because we just removed a position:
+        for m, creator in enumerate(creators):
+            if not isinstance(creators[m], list):
+                # It's not the Coens...
+                if creator.chart_position > coen_position:
+                    # And its at the same position as the Coens or after:
+                    creators[m].chart_position = creators[m].chart_position - 1
+
+        data["object_list"] = creators
 
     # While we're here, a better title:
     data["card_title"] = "Directors by number of movies"
-
-    data["object_list"] = creators
 
     return data

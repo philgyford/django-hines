@@ -1,8 +1,13 @@
 from unittest.mock import patch
 
 from freezegun import freeze_time
-
 from django.test import TestCase
+from spectator.events.factories import (
+    IndividualCreatorFactory,
+    MovieFactory,
+    PlayFactory,
+    WorkRoleFactory,
+)
 
 from hines.core.templatetags.hines_core import (
     gravatar_url,
@@ -12,6 +17,7 @@ from hines.core.templatetags.hines_core import (
     widont,
     linebreaks_first,
     domain_urlize,
+    most_seen_directors_card,
 )
 from hines.core.utils import make_datetime
 
@@ -202,3 +208,112 @@ class DomainUrlizeTestCase(TestCase):
             domain_urlize("http://www.example.org/foo/"),
             '<a href="http://www.example.org/foo/" rel="nofollow">example.org</a>',
         )
+
+
+class MostSeenDirectorsCard(TestCase):
+
+    def test_returns_correct_kind_and_role(self):
+        "It should only return data related to movies and Directors"
+        c1 = IndividualCreatorFactory()
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="")
+        WorkRoleFactory(creator=c1, work=PlayFactory(), role_name="Director")
+
+        c2 = IndividualCreatorFactory()
+        WorkRoleFactory(creator=c2, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c2, work=MovieFactory(), role_name="Director")
+
+        c3 = IndividualCreatorFactory()
+        WorkRoleFactory(creator=c3, work=MovieFactory(), role_name="Playwright")
+        WorkRoleFactory(creator=c3, work=PlayFactory(), role_name="Director")
+
+        data = most_seen_directors_card()
+
+        self.assertEqual(len(data["object_list"]), 2)
+        self.assertEqual(data["object_list"][0], c1)
+        self.assertEqual(data["object_list"][0].num_works, 3)
+        self.assertEqual(data["object_list"][1], c2)
+        self.assertEqual(data["object_list"][1].num_works, 2)
+
+    def test_groups_the_coen_brothers(self):
+        "It should group Ethan and Joel Coen into a single position"
+        c1 = IndividualCreatorFactory()
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+
+        joel = IndividualCreatorFactory(name="Joel Coen")
+        ethan = IndividualCreatorFactory(name="Ethan Coen")
+        m1 = MovieFactory()
+        WorkRoleFactory(creator=joel, work=m1, role_name="Director")
+        WorkRoleFactory(creator=ethan, work=m1, role_name="Director")
+        m2 = MovieFactory()
+        WorkRoleFactory(creator=joel, work=m2, role_name="Director")
+        WorkRoleFactory(creator=ethan, work=m2, role_name="Director")
+        m3 = MovieFactory()
+        WorkRoleFactory(creator=joel, work=m3, role_name="Director")
+        WorkRoleFactory(creator=ethan, work=m3, role_name="Director")
+
+        c2 = IndividualCreatorFactory()
+        WorkRoleFactory(creator=c2, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c2, work=MovieFactory(), role_name="Director")
+
+        data = most_seen_directors_card()
+
+        self.assertEqual(data["object_list"][0], c1)
+        self.assertEqual(data["object_list"][0].chart_position, 1)
+
+        self.assertEqual(data["object_list"][1], [ethan, joel])
+        self.assertEqual(data["object_list"][1][0].chart_position, 2)
+        self.assertEqual(data["object_list"][1][1].chart_position, 2)
+
+        self.assertEqual(data["object_list"][2], c2)
+        self.assertEqual(data["object_list"][2].chart_position, 3)
+
+    def test_coen_brothers_equal_to_next_position(self):
+        "If Coen Bros have same # movies as next creator, positions should be correct"
+        # 4 movies
+        c1 = IndividualCreatorFactory()
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c1, work=MovieFactory(), role_name="Director")
+
+        # 3 movies
+        joel = IndividualCreatorFactory(name="Joel Coen")
+        ethan = IndividualCreatorFactory(name="Ethan Coen")
+        m1 = MovieFactory()
+        WorkRoleFactory(creator=joel, work=m1, role_name="Director")
+        WorkRoleFactory(creator=ethan, work=m1, role_name="Director")
+        m2 = MovieFactory()
+        WorkRoleFactory(creator=joel, work=m2, role_name="Director")
+        WorkRoleFactory(creator=ethan, work=m2, role_name="Director")
+        m3 = MovieFactory()
+        WorkRoleFactory(creator=joel, work=m3, role_name="Director")
+        WorkRoleFactory(creator=ethan, work=m3, role_name="Director")
+
+        # Also 3 movies. Name should put this person after the Coens.
+        c2 = IndividualCreatorFactory(name="ZZZ")
+        WorkRoleFactory(creator=c2, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c2, work=MovieFactory(), role_name="Director")
+        WorkRoleFactory(creator=c2, work=MovieFactory(), role_name="Director")
+
+        data = most_seen_directors_card()
+
+        self.assertEqual(data["object_list"][0], c1)
+        self.assertEqual(data["object_list"][0].chart_position, 1)
+
+        self.assertEqual(data["object_list"][1], [ethan, joel])
+        self.assertEqual(data["object_list"][1][0].chart_position, 2)
+        self.assertEqual(data["object_list"][1][1].chart_position, 2)
+
+        self.assertEqual(data["object_list"][2], c2)
+        self.assertEqual(data["object_list"][2].chart_position, 2)
+
+    def test_works_with_no_directors(self):
+        "It shouldn't generate an error if there are no directors."
+        data = most_seen_directors_card()
+        self.assertEqual(len(data["object_list"]), 0)
