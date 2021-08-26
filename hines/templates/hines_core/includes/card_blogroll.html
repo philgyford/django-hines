@@ -1,0 +1,11 @@
+	<nav class="card">
+		<ul>
+			<li>
+				{% if url_name == 'hines:blogroll' %}
+					Blogroll
+				{% else %}
+					<a href="{% url 'hines:blogroll' %}">Blogroll</a>
+				{% endif %}
+			</li>
+		</ul>
+	</nav>
