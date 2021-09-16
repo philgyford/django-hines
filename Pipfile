@@ -9,7 +9,7 @@ dj-database-url = "*"
 django-autocomplete-light = {editable = true, git = "https://github.com/yourlabs/django-autocomplete-light.git"}
 django-contrib-comments = "*"
 django-ditto = "*"
-django-spectator = "*"
+django-spectator = {ref = "8172ede3ef1a895c2078c900001a4fe8a77d210d", git = "https://github.com/philgyford/django-spectator.git"}
 django-storages = "*"
 smartypants = "*"
 whitenoise = "*"
