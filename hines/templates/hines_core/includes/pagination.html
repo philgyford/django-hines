@@ -23,12 +23,12 @@ Expects:
           <li class="nav__item is-disabled">
             <span class="nav__link">
               <span aria-hidden="true">…</span>
-              <span class="u-sr-only">(more pages)</span>
+              <span class="utils-sr-only">(more pages)</span>
             </span>
           </li>
         {% elif p == page_obj.number %}
           <li class="nav__item is-active">
-            <span class="nav__link">{{ p }} <span class="u-sr-only">(current)</span></span>
+            <span class="nav__link">{{ p }} <span class="utils-sr-only">(current)</span></span>
           </li>
         {% else %}
           <li class="nav__item">

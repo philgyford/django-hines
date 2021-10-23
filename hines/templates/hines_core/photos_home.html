@@ -51,7 +51,7 @@
                   </li>
                 {% endif %}
                 {% if perms.flickr.can_change_photoset %}
-                  <li><a class="u-admin" href="{% url 'admin:flickr_photoset_change' photoset.id %}" title="Edit this Photoset in the Django Admin">Edit</a></li>
+                  <li><a class="utils-admin" href="{% url 'admin:flickr_photoset_change' photoset.id %}" title="Edit this Photoset in the Django Admin">Edit</a></li>
                 {% endif %}
               </ul>
             </div>

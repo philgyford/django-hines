@@ -48,7 +48,7 @@ Expects:
               {% endif %}
             </li>
             {% if perms.flickr.can_change_photo %}
-              <li><a class="u-admin" href="{% url 'admin:flickr_photo_change' photo.id %}" title="Edit this Photo in the Django Admin">Edit</a></li>
+              <li><a class="utils-admin" href="{% url 'admin:flickr_photo_change' photo.id %}" title="Edit this Photo in the Django Admin">Edit</a></li>
             {% endif %}
           </ul>
         </div>

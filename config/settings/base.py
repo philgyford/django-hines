@@ -196,11 +196,11 @@ FIRST_DAY_OF_WEEK = 1
 
 # Use our custom CSS classes for message styles.
 MESSAGE_TAGS = {
-    messages.DEBUG: "u-debug",
-    messages.INFO: "u-info",
-    messages.SUCCESS: "u-success",
-    messages.WARNING: "u-warning",
-    messages.ERROR: "u-error",
+    messages.DEBUG: "utils-debug",
+    messages.INFO: "utils-info",
+    messages.SUCCESS: "utils-success",
+    messages.WARNING: "utils-warning",
+    messages.ERROR: "utils-error",
 }
 
 

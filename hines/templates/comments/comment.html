@@ -33,7 +33,7 @@ wrapper_element - Optional, default is "div". What kind of HTML element should t
       &nbsp;
       <a class="section-anchor" href="#c{{ comment.id|unlocalize }}" title="Link to this comment">#</a>
       {% if perms.custom_comments.can_change_customcomment %}
-        &nbsp; <a class="u-admin u-url" href="{% url 'admin:custom_comments_customcomment_change' comment.id %}" title="Edit this Comment in the Django Admin">Edit</a>
+        &nbsp; <a class="utils-admin u-url" href="{% url 'admin:custom_comments_customcomment_change' comment.id %}" title="Edit this Comment in the Django Admin">Edit</a>
       {% endif %}
     </p>
 

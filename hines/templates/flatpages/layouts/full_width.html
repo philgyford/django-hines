@@ -10,7 +10,7 @@
     {% if perms.flatpages.can_change_flatpage %}
       <aside>
         <p>
-          <a class="u-admin" href="{% url 'admin:flatpages_flatpage_change' flatpage.id %}" title="Edit this page in the Django Admin">Edit</a>
+          <a class="utils-admin" href="{% url 'admin:flatpages_flatpage_change' flatpage.id %}" title="Edit this page in the Django Admin">Edit</a>
         </p>
       </aside>
     {% endif %}

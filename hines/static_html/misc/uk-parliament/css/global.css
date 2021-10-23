@@ -127,7 +127,7 @@ select {
 }
 
 
-.u-sr-only {
+.utils-sr-only {
   position: absolute;
   left: -10000px;
   top: auto;

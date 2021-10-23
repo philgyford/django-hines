@@ -49,7 +49,7 @@
 <div id="writing">
 	<div class="indv-entry">
 
-		{% if perms.weblogs.can_change_post %}<p><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>{% endif %}
+		{% if perms.weblogs.can_change_post %}<p><a class="utils-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>{% endif %}
 
 {{ post.intro_html|safe }}
 {{ post.body_html|safe }}

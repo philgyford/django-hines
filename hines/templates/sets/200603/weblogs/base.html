@@ -50,7 +50,7 @@
 	<div id="main">
 
     {% if perms.weblogs.can_change_post %}
-      <p><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
+      <p><a class="utils-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></p>
     {% endif %}
 
 		<div id="intro" class="intro">

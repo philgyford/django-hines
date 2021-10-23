@@ -33,7 +33,7 @@ Expects:
     • <a href="{{ tweet.permalink }}" title="See this Tweet on Twitter">#</a>
 
     {% if perms.twitter.can_change_tweet %}
-      • <a href="{% url 'admin:twitter_tweet_change' tweet.id %}" class="u-admin">Edit</a>
+      • <a href="{% url 'admin:twitter_tweet_change' tweet.id %}" class="utils-admin">Edit</a>
     {% endif %}
   </div>
 

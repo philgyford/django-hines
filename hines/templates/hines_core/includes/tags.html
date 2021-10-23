@@ -4,7 +4,7 @@ Expects:
 
 * tag_list - The list of tags.
 * format - 'inline' or 'chart'.
-           Inline will put it all within <li class="u-inline-container"></li>
+           Inline will put it all within <li class="utils-inline-container"></li>
 * tag_type - 'bookmark' (Default) or 'post'.
 
 Optional:
@@ -17,7 +17,7 @@ Optional:
 
 {% if tag_list|length > 0 %}
   {% if format == 'inline' %}
-    <li class="u-inline-container">
+    <li class="utils-inline-container">
   {% endif %}
     {% spaceless %}
       {% if format == 'inline' %}

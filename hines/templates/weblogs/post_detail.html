@@ -42,7 +42,7 @@
     </header>
 
     {% if is_preview %}
-      <p class="u-admin">
+      <p class="utils-admin">
         This is a preview. This Post’s status is {{ post.status_str }}.
       </p>
     {% endif %}
@@ -54,7 +54,7 @@
         <li class="u-hide"><a class="u-url" href="{{ post.get_absolute_url|add_domain }}">Permalink</a></li>
 
         {% if perms.weblogs.can_change_post %}
-          <li><a class="u-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
+          <li><a class="utils-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
         {% endif %}
       </ul>
     </aside>
@@ -106,7 +106,7 @@
     {% endif %}
 
     {% if post.comments_allowed %}
-      <section id="comment-form" class="u-mt-4">
+      <section id="comment-form" class="utils-mt-4">
         <h2>Post a comment</h2>
         {% render_comment_form for post %}
       </section>
@@ -114,7 +114,7 @@
 
     {% commenting_status_message post settings.comments_allowed settings.comments_close_after_days as comments_closed_message %}
     {% if comments_closed_message %}
-      <aside class="u-mt-4 meta">
+      <aside class="utils-mt-4 meta">
         <ul class="meta__inner">
           <li>{{ comments_closed_message }}</li>
         </ul>
