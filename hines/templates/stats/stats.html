@@ -56,7 +56,7 @@
 
     {# NOT visible to screen readers #}
     <figure class="figure figure--chart" aria-hidden="true">
-      <div class="chart js-chart-{{ chart.name }}"></div>
+      <div class="chart js-chart js-chart-{{ chart.name }}"></div>
 
       {% if chart.description or chart.data.0.columns|length > 1 %}
         <figcaption class="chart__description">

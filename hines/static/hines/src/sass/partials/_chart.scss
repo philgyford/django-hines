@@ -199,6 +199,7 @@
   font-family: $font-family-sans-serif;
   font-size: $font-size-xs;
   border: 1px solid $border-color;
+  white-space: nowrap;
 }
 
 .chart__description {

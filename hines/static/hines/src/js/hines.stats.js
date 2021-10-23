@@ -84,13 +84,12 @@
  *      }
  *    ];
  */
-(function() {
+(function () {
   "use strict";
 
   window.hines = window.hines || {};
 
-  window.hines.chart = function(selection) {
-
+  window.hines.chart = function (selection) {
     /**
      * Can be changed using the chart.numberFormatPrefix() method.
      */
@@ -114,7 +113,7 @@
      * @param {string} The key for which bar this is. This will correspond to
      *  a key in d.data, like "cats" in the examples.
      */
-    var tooltipFormat = function(d, groupKey) {
+    var tooltipFormat = function (d, groupKey) {
       var text = "<strong>" + d.data.label + ":</strong> ";
       if (chartType == "bar-stacked") {
         // Only need to show the group label if there are stacked bars.
@@ -128,10 +127,7 @@
 
     var xScale = d3.scaleBand();
     var yScale = d3.scaleLinear();
-    var xAxis = d3
-      .axisBottom(xScale)
-      .tickSize(0)
-      .tickPadding(6);
+    var xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(6);
     var yAxis = d3
       .axisLeft(yScale)
       .ticks(5)
@@ -139,10 +135,7 @@
       .tickPadding(6)
       .tickFormat(numberFormat);
     // The horizontal lines:
-    var yAxisGrid = d3
-      .axisLeft(yScale)
-      .ticks(5)
-      .tickFormat("");
+    var yAxisGrid = d3.axisLeft(yScale).ticks(5).tickFormat("");
     var barPadding = 0.1;
 
     // Might be changed to "bar-stacked" if we have multiple bars per label:
@@ -172,7 +165,7 @@
         ret = d3.format("d")(d);
       }
       return numberFormatPrefix + ret + numberFormatSuffix;
-    };
+    }
 
     /**
      * When cursor goes over a bar.
@@ -182,19 +175,33 @@
       var groupKey = d3.select(this.parentNode).datum().key;
       tooltip.html(tooltipFormat(d, groupKey));
       tooltip.style("visibility", "visible");
-    };
+    }
 
     /**
      * When cursor moves while over a bar.
      * Bit hacky. Keep the tooltip onscreen when it's at the right-most edge.
      */
     function onMousemove(d) {
+      var tooltipWidth = d3
+        .select(".js-chart-tooltip")
+        .node()
+        .getBoundingClientRect().width;
+
+      // Get position of right edge of chart.
+      // A bit nasty - we're assuming here that the first .js-chart on the page
+      // has the same right position as whatever chart the cursor is currently
+      // over. Not sure how else to know which chart it is.
+      var chartRight = d3
+        .select(".js-chart")
+        .node()
+        .getBoundingClientRect().right;
+
       // Default, slightly to right of cursor:
       var tooltipLeft = event.pageX + 15;
 
-      if (window.innerWidth - event.pageX < 120) {
-        // Close to edge; put it to left of cursor:
-        tooltipLeft = event.pageX - 90;
+      if (chartRight - event.pageX < tooltipWidth) {
+        // Close to right edge of chart; put tooltip to left of cursor:
+        tooltipLeft = event.pageX - tooltipWidth - 10;
       }
 
       tooltip
@@ -228,8 +235,7 @@
      * @param {object} selection The HTML elements to draw charts in.
      */
     function chart(selection) {
-
-      selection.each(function(data) {
+      selection.each(function (data) {
         var container = d3.select(this);
 
         // Need to be in a scope available to all the render methods.
@@ -244,23 +250,33 @@
         }
 
         // Transform the data into what we need for stacked bar chart:
-        var stack = d3.stack().keys(barGroupKeys).value(function(d, key) {
-          return d.columns[key]["value"];
-        });
+        var stack = d3
+          .stack()
+          .keys(barGroupKeys)
+          .value(function (d, key) {
+            return d.columns[key]["value"];
+          });
         var seriesData = stack(data);
 
         // Set the domains for the scales based on the data:
         xScale.domain(
-          data.map(function(d) { return d.label; })
+          data.map(function (d) {
+            return d.label;
+          })
         );
         yScale.domain([
           0,
-          d3.max(seriesData, function(d) { return d3.max(d, function(d) { return d[1]})})
+          d3.max(seriesData, function (d) {
+            return d3.max(d, function (d) {
+              return d[1];
+            });
+          }),
         ]);
 
         // Create new elements:
         var svg = container.append("svg");
-        var inner = svg.append("g")
+        var inner = svg
+          .append("g")
           .classed("chart__inner chart__inner--" + chartType, true);
 
         createAxes();
@@ -325,10 +341,7 @@
           yScale.rangeRound([chartH, 0]);
 
           // Update outer dimensions.
-          svg
-            .transition()
-            .attr("width", width)
-            .attr("height", height);
+          svg.transition().attr("width", width).attr("height", height);
 
           inner.attr("transform", translation(margin.left, margin.top));
         }
@@ -352,10 +365,16 @@
          */
         function renderBars() {
           // Calculating the x, y, width and height of a bar:
-          var barX = function(d, i) { return xScale(d.data.label); };
-          var barY = function(d) { return yScale(d[1]); };
+          var barX = function (d, i) {
+            return xScale(d.data.label);
+          };
+          var barY = function (d) {
+            return yScale(d[1]);
+          };
           var barW = xScale.bandwidth();
-          var barH = function(d) { return yScale(d[0]) - yScale(d[1]); };
+          var barH = function (d) {
+            return yScale(d[0]) - yScale(d[1]);
+          };
 
           // bars are grouped into barGroups, one per kind/color.
           // All barGroups are within the barGroupsContainer.
@@ -367,47 +386,52 @@
 
           // ENTER + UPDATE
           barGroups = barGroups
-            .enter().append("g")
-              .merge(barGroups)
-              .attr("class", function(d, i) {
-                return "chart__bargroup chart__bargroup--" + i;
-              })
+            .enter()
+            .append("g")
+            .merge(barGroups)
+            .attr("class", function (d, i) {
+              return "chart__bargroup chart__bargroup--" + i;
+            });
 
-          var bars = barGroups
-            .selectAll("rect")
-            .data(function(d) { return d; });
+          var bars = barGroups.selectAll("rect").data(function (d) {
+            return d;
+          });
 
           // ENTER
           bars
-            .enter().append("rect")
-              .attr("x", barX)
-              .attr("y", barY)
-              .attr("width", barW)
-              .attr("height", barH)
-              .classed("chart__bar", true)
-              .classed("chart__bar--clickable", function(d, i) {
-                // Get the name of the group this rect is in:
-                var groupKey = d3.select(this.parentNode).datum().key;
-                if ("url" in d.data.columns[groupKey] && d.data.columns[groupKey]["url"]) {
-                  return true;
-                } else {
-                  return false;
-                }
-              })
-              .style("opacity", function(d, i) {
-                // If the bar is for the current year, make its opacity
-                // in proportion to how far through the year we are.
-                var currentYear = new Date().getFullYear();
-                if (parseInt(d.data.label) == currentYear) {
-                  return dayOfYear() / 366;
-                } else {
-                  return 1;
-                }
-              })
-              .on("mouseover", onMouseover)
-              .on("mousemove", onMousemove)
-              .on("mouseout", onMouseout)
-              .on("click", onClick);
+            .enter()
+            .append("rect")
+            .attr("x", barX)
+            .attr("y", barY)
+            .attr("width", barW)
+            .attr("height", barH)
+            .classed("chart__bar", true)
+            .classed("chart__bar--clickable", function (d, i) {
+              // Get the name of the group this rect is in:
+              var groupKey = d3.select(this.parentNode).datum().key;
+              if (
+                "url" in d.data.columns[groupKey] &&
+                d.data.columns[groupKey]["url"]
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+            .style("opacity", function (d, i) {
+              // If the bar is for the current year, make its opacity
+              // in proportion to how far through the year we are.
+              var currentYear = new Date().getFullYear();
+              if (parseInt(d.data.label) == currentYear) {
+                return dayOfYear() / 366;
+              } else {
+                return 1;
+              }
+            })
+            .on("mouseover", onMouseover)
+            .on("mousemove", onMousemove)
+            .on("mouseout", onMouseout)
+            .on("click", onClick);
 
           // UPDATE
           bars
@@ -441,29 +465,28 @@
           var day = Math.floor(diff / oneDay);
           return day;
         }
-
       });
     }
 
-    chart.margin = function(value) {
+    chart.margin = function (value) {
       if (!arguments.length) return margin;
       margin = value;
       return chart;
     };
 
-    chart.numberFormatPrefix = function(value) {
+    chart.numberFormatPrefix = function (value) {
       if (!arguments.length) return numberFormatPrefix;
       numberFormatPrefix = value;
       return chart;
     };
 
-    chart.numberFormatSuffix = function(value) {
+    chart.numberFormatSuffix = function (value) {
       if (!arguments.length) return numberFormatSuffix;
       numberFormatSuffix = value;
       return chart;
     };
 
-    chart.tooltipFormat = function(value) {
+    chart.tooltipFormat = function (value) {
       if (!arguments.length) return tooltipFormat;
       tooltipFormat = value;
       return chart;
