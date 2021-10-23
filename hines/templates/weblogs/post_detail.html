@@ -153,6 +153,7 @@
   </article>
 
 	<script type="application/ld+json">
+    // "publisher @type" must be "Organization" for Google for some reason
 		{
 			"@context": "http://schema.org",
 			"@type": "BlogPosting",
@@ -175,7 +176,6 @@
 			"datePublished": "{{ post.time_published|date:'c' }}",
 			"dateModified": "{{ post.time_modified|date:'c' }}",
 			"publisher": {
-				// Must be "Organization" for Google for some reason:
 				"@type": "Organization",
 				"name": "{{ author_name|escapejs }}",
 				"logo": {
