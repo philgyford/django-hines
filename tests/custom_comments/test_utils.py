@@ -9,25 +9,32 @@ from hines.custom_comments.utils import (
 from tests import override_app_settings
 
 
-@override_app_settings(
-    COMMENTS_ALLOWED_TAGS=["b", "i", "a"]
-)
-@override_app_settings(
-    COMMENTS_ALLOWED_ATTRIBUTES={"a": ["href", "title"]}
-)
 class CleanCommentTestCase(TestCase):
+    @override_app_settings(
+        COMMENTS_ALLOWED_TAGS=["b", "i", "a"]
+    )
     def test_strips_bad_tags(self):
         self.assertEqual(
             clean_comment('<h1>Heading</h1> <img src="blah"> Hello'), "Heading  Hello"
         )
 
+    @override_app_settings(
+        COMMENTS_ALLOWED_TAGS=["b", "i", "a"]
+    )
     def test_allows_good_tags(self):
         s = "<b>Bold</b> and <i>Italic</i>"
         self.assertEqual(clean_comment(s), s)
 
+    @override_app_settings(
+        COMMENTS_ALLOWED_TAGS=["b", "i", "a"]
+    )
     def test_closes_open_good_tags(self):
         self.assertEqual(clean_comment("<b>This is bold"), "<b>This is bold</b>")
 
+    @override_app_settings(
+        COMMENTS_ALLOWED_TAGS=["a"],
+        COMMENTS_ALLOWED_ATTRIBUTES={"a": ["href", "title"]}
+    )
     def test_allows_only_good_attributes(self):
         "Removes non-whitelisted attributes and adds rel=nofollow to a tags."
         self.assertEqual(

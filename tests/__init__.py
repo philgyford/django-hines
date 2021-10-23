@@ -20,6 +20,9 @@ def override_app_settings(**test_settings):
             def test_does_a_thing(self):
                 # ...
 
+    Doesn't seem to work if applied to a TestCase class, only the
+    individual test methods.
+
     From https://gist.github.com/integricho/6502772fd3c144c719a7
     """
 
