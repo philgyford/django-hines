@@ -1,5 +1,5 @@
 {% extends 'hines_core/layouts/bare.html' %}
-{% load hines_core %}
+{% load hines_core static %}
 
 {% block body %}
   <a class="u-sr-only u-sr-only-focusable" href="#content">Skip to main content</a>
@@ -159,6 +159,7 @@
                     <li>Email: <a rel="me" class="u-email" href="mailto:{{ author_email }}">{{ author_email }}</a><li>
                     <li>Twitter: <a rel="me" href="https://twitter.com/philgyford">@philgyford</a></li>
                     <li>Mastodon: <a rel="me" href="https://mastodon.social/@philgyford">@philgyford@mastodon.social</a></li>
+                    <li class="u-hide"><img class="u-photo" src="{% static site_icon %}" alt="Photo of me"></li>
                   </ul>
                 </div>
               </aside>
