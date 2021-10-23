@@ -167,7 +167,7 @@ def display_time(dt=None, show="both", granularity=0, link_to_day=False):
                     "[time]", dt.strftime(t_fmt)
                 )
 
-        stamp = dt.strftime("%Y-%m-%d %H:%M:%S")
+        stamp = dt.strftime("%Y-%m-%dT%H:%M:%S%z")
 
     return format_html(
         '<time datetime="%(stamp)s">%(visible)s</time>'
