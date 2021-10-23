@@ -74,10 +74,12 @@
     <aside class="meta">
       <ul class="meta__inner">
         <li>By
-          <a class="p-author h-card" rel="author" href="{{ site_url }}">
-            {{ post.author.display_name }}
-            <img class="u-photo u-hide" src="{% static site_icon %}" alt="Photo of me">
-          </a>
+          <span class="p-author h-card">
+            <a class="p-name u-url" rel="author" href="{{ site_url }}">
+              {{ post.author.display_name }}
+            </a>
+            <img class="u-photo u-hide" src="{% static site_icon %}" alt="">
+          </span>
         </li>
 
         {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
