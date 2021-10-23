@@ -4,34 +4,34 @@
 {% block head_page_title %}{{ post.title_text|smartypants }}{% endblock %}
 
 {% block meta_social %}
-	<meta property="og:title" content="{{ post.title_text|smartypants }}" />
-	<meta property="og:description" content="{{ post.excerpt_text|smartypants }}" />
-	<meta name="twitter:title" content="{{ post.title_text|smartypants }}" />
-	<meta name="twitter:description" content="{{ post.excerpt_text|smartypants }}" />
-	{% with url=post.main_image_url %}
-		{% if url %}
-	    <meta property="og:image" content="{{ url|add_domain }}" />
-	    <meta name="twitter:image" content="{{ url|add_domain }}" />
-		{% endif %}
-	{% endwith %}
+  <meta property="og:title" content="{{ post.title_text|smartypants }}" />
+  <meta property="og:description" content="{{ post.excerpt_text|smartypants }}" />
+  <meta name="twitter:title" content="{{ post.title_text|smartypants }}" />
+  <meta name="twitter:description" content="{{ post.excerpt_text|smartypants }}" />
+  {% with url=post.main_image_url %}
+    {% if url %}
+      <meta property="og:image" content="{{ url|add_domain }}" />
+      <meta name="twitter:image" content="{{ url|add_domain }}" />
+    {% endif %}
+  {% endwith %}
 {% endblock %}
 
 {# We put the heading within <article> #}
 {% block content_heading %}{% endblock content_heading %}
 
 {% block head_extra %}
-	{{ block.super }}
-	<link rel="index" title="In all of {{ post.blog.short_name }}" href="{% url 'weblogs:blog_archive' blog_slug=post.blog.slug %}"/>
-	{% with post.get_previous_post as previous_post %}
-		{% if previous_post %}
-			<link rel="prev" title="{{ previous_post.title }}" href="{{ previous_post.get_absolute_url }}"/>
-		{% endif %}
-	{% endwith %}
-	{% with post.get_next_post as next_post %}
-		{% if next_post %}
-			<link rel="next" title="{{ next_post.title }}" href="{{ next_post.get_absolute_url }}"/>
-		{% endif %}
-	{% endwith %}
+  {{ block.super }}
+  <link rel="index" title="In all of {{ post.blog.short_name }}" href="{% url 'weblogs:blog_archive' blog_slug=post.blog.slug %}"/>
+  {% with post.get_previous_post as previous_post %}
+    {% if previous_post %}
+      <link rel="prev" title="{{ previous_post.title }}" href="{{ previous_post.get_absolute_url }}"/>
+    {% endif %}
+  {% endwith %}
+  {% with post.get_next_post as next_post %}
+    {% if next_post %}
+      <link rel="next" title="{{ next_post.title }}" href="{{ next_post.get_absolute_url }}"/>
+    {% endif %}
+  {% endwith %}
 {% endblock %}
 
 {% block content %}
@@ -57,21 +57,21 @@
       </ul>
     </aside>
 
-		<div class="e-content">
-	    {{ post.intro_html|safe }}
+    <div class="e-content">
+      {{ post.intro_html|safe }}
 
-			{{ post.body_html|safe }}
+      {{ post.body_html|safe }}
 
-			{% if post.remote_url %}
-				<p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
-			{% endif %}
-		</div>
+      {% if post.remote_url %}
+        <p><i>See on {{ post.remote_url|domain_urlize }}.</i></p>
+      {% endif %}
+    </div>
 
-		<hr>
+    <hr>
 
     <aside class="meta">
       <ul class="meta__inner">
-				<li>By <a class="p-author h-card" rel="author" href="{{ site_url }}">{{ post.author.display_name }}</a></li>
+        <li>By <a class="p-author h-card" rel="author" href="{{ site_url }}">{{ post.author.display_name }}</a></li>
 
         {% include 'hines_core/includes/tags.html' with tag_list=post.get_tags format='inline' tag_type='post' blog_slug=post.blog.slug only %}
 
@@ -97,10 +97,10 @@
     {% endif %}
 
     {% if post.comments_allowed %}
-			<section id="comment-form" class="u-mt-4">
-	      <h2>Post a comment</h2>
-	      {% render_comment_form for post %}
-			</section>
+      <section id="comment-form" class="u-mt-4">
+        <h2>Post a comment</h2>
+        {% render_comment_form for post %}
+      </section>
     {% endif %}
 
     {% commenting_status_message post settings.comments_allowed settings.comments_close_after_days as comments_closed_message %}
@@ -152,45 +152,45 @@
 
   </article>
 
-	<script type="application/ld+json">
+  <script type="application/ld+json">
     // "publisher @type" must be "Organization" for Google for some reason
-		{
-			"@context": "http://schema.org",
-			"@type": "BlogPosting",
-			"headline": "{{ post.title|smartypants|safe|escapejs }}",
-			"description": "{{ post.excerpt|smartypants|safe|escapejs }}",
-			{% with image_url=post.main_image_url %}
-				{% if image_url %}
-			"image": "{{ image_url|add_domain }}",
-				{% else %}
-					{% with domain=''|add_domain %}
-			"image": "{{ domain }}{% static site_icon %}",
-					{% endwith %}
-				{% endif %}
-			{% endwith %}
-			"url": "{{ request.build_absolute_uri }}",
-			"mainEntityOfPage": {
-				"@type": "WebPage",
-				"@id": "{{ request.build_absolute_uri }}"
-			},
-			"datePublished": "{{ post.time_published|date:'c' }}",
-			"dateModified": "{{ post.time_modified|date:'c' }}",
-			"publisher": {
-				"@type": "Organization",
-				"name": "{{ author_name|escapejs }}",
-				"logo": {
-					"@type": "ImageObject",
-					{% with domain=''|add_domain %}
-						"url": "{{ domain }}{% static site_icon %}"
-					{% endwith %}
-				}
-			},
-			"editor": "{{ author_name|escapejs }}",
-			"author": {
-				"@type": "Person",
-				"name": "{{ post.author.display_name|escapejs }}"
-			}
-		}
-	</script>
+    {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{ post.title|smartypants|safe|escapejs }}",
+      "description": "{{ post.excerpt|smartypants|safe|escapejs }}",
+      {% with image_url=post.main_image_url %}
+        {% if image_url %}
+      "image": "{{ image_url|add_domain }}",
+        {% else %}
+          {% with domain=''|add_domain %}
+      "image": "{{ domain }}{% static site_icon %}",
+          {% endwith %}
+        {% endif %}
+      {% endwith %}
+      "url": "{{ request.build_absolute_uri }}",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ request.build_absolute_uri }}"
+      },
+      "datePublished": "{{ post.time_published|date:'c' }}",
+      "dateModified": "{{ post.time_modified|date:'c' }}",
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ author_name|escapejs }}",
+        "logo": {
+          "@type": "ImageObject",
+          {% with domain=''|add_domain %}
+            "url": "{{ domain }}{% static site_icon %}"
+          {% endwith %}
+        }
+      },
+      "editor": "{{ author_name|escapejs }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ post.author.display_name|escapejs }}"
+      }
+    }
+  </script>
 
 {% endblock %}
