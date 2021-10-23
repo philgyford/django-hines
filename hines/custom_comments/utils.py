@@ -1,8 +1,9 @@
-# coding: utf-8
+from functools import partial
 import re
 
 import bleach
-from bleach.linkifier import Linker
+from bleach import Cleaner
+from bleach.linkifier import LinkifyFilter
 from django_comments import signals
 from django_comments.models import CommentFlag
 
@@ -33,13 +34,6 @@ def clean_comment(comment, max_url_length=23):
     max_url_length - URLs longer than this will have their visible version
                      truncated.
     """
-    # Remove disallowed tags and attributes, and close open tags:
-    comment = bleach.clean(
-        comment,
-        tags=get_allowed_tags(),
-        attributes=get_allowed_attributes(),
-        strip=True,
-    )
 
     def shorten_url(attrs, new=False):
         """Shorten overly-long URLs in the text."""
@@ -61,9 +55,32 @@ def clean_comment(comment, max_url_length=23):
             attrs["_text"] = text
         return attrs
 
-    # Make URLs into links, truncating long ones:
-    linker = Linker(callbacks=[bleach.callbacks.nofollow, shorten_url])
-    comment = linker.linkify(comment)
+    # Use a different regular expression to match URLs when creating
+    # links because by default Bleach doesn't recognise any of the
+    # newer TLDs like .rocks, .blog, etc.
+    # via https://github.com/mozilla/bleach/issues/563#issuecomment-715586797
+    URL_RE = re.compile(
+        r"(?i)\b((?:(?:https?)://|www\d{0,3}[.])(?:[^\s()<>]+|"
+        r"\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()"
+        r"<>]+\)))*\)|[^\s`!()\[\]{};:" + r"'" + r'".,<>?«»“”‘’]))'
+    )
+
+    # Remove disallowed tags and attributes, and close open tags:
+    cleaner = Cleaner(
+        tags=get_allowed_tags(),
+        attributes=get_allowed_attributes(),
+        strip=True,
+        filters=[
+            # Make URLs into links, truncating long ones:
+            partial(
+                LinkifyFilter,
+                callbacks=[bleach.callbacks.nofollow, shorten_url],
+                url_re=URL_RE,
+            )
+        ],
+    )
+
+    comment = cleaner.clean(comment)
 
     # Replace more than two newlines with two:
     comment = re.sub(r"\n\s*\n", "\n\n", comment)
@@ -152,7 +169,9 @@ def test_comment_for_spam(sender, comment, request, **kwargs):
         # comment has identical content to a previously-flagged spam comment.
         # So this ensure we don't try and create duplicate flags:
         flag, created = CommentFlag.objects.get_or_create(
-            user=user, comment=comment, flag="Spam",
+            user=user,
+            comment=comment,
+            flag="Spam",
         )
         signals.comment_was_flagged.send(
             sender=comment.__class__,
