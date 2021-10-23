@@ -21,7 +21,8 @@ def override_app_settings(**test_settings):
                 # ...
 
     Doesn't seem to work if applied to a TestCase class, only the
-    individual test methods.
+    individual test methods. Or maybe that's only if you try to
+    override two settings on a class.
 
     From https://gist.github.com/integricho/6502772fd3c144c719a7
     """
