@@ -19,7 +19,7 @@ wrapper_element - Optional, default is "div". What kind of HTML element should t
       <span class="media__byline__author h-card">
         {% if comment.user and comment.user.email %}
           {# Posted by a User of this site. We want to make them look different to normal commenters. #}
-          <img class="media__byline__author__icon" src="{% gravatar_url email=comment.user.email %}" width="48" height="48" alt="">
+          <img class="media__byline__author__icon u-photo" src="{% gravatar_url email=comment.user.email %}" width="48" height="48" alt="">
         {% endif %}
 
         {% if comment.user_url %}
