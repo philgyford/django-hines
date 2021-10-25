@@ -118,10 +118,10 @@
         },
         "django-ditto": {
             "hashes": [
-                "sha256:ac0bff75667207a0a8454558dd7e2e9cb12d3d81e16458fb39646ce7f58e5091"
+                "sha256:ff397e5f3ba917d6d8b4ea5988e28ddf5b4acf6a1a0a03fee665e0823406980b"
             ],
             "index": "pypi",
-            "version": "==1.4.1"
+            "version": "==1.4.2"
         },
         "django-extensions": {
             "hashes": [
