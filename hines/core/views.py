@@ -427,7 +427,7 @@ class MTSearchRedirectView(RedirectView):
         if search_str is None:
             return None
         # Removes most punctuation. Leaves spaces and brackets:
-        search_str = re.sub(r"[^a-zA-Z0-9'\., \(\)]+", "", search_str)
+        search_str = re.sub(r"[^a-zA-Z0-9'\.,_ \(\)]+", "", search_str)
         search_str = search_str.replace(" ", "+")
         return search_str
 
