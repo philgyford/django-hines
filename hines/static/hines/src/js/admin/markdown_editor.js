@@ -72,6 +72,13 @@
 
       if (field["buttons"] == "minimal") {
         config["toolbar"] = [
+          {
+            name: "textArea",
+            action: revertToTextArea,
+            className: "fa fa-times",
+            title: "Revert to TextArea"
+          },
+          "|",
           "bold",
           "italic",
           {
@@ -88,6 +95,13 @@
         ];
       } else if (field["buttons"] == "full") {
         config["toolbar"] = [
+          {
+            name: "textArea",
+            action: revertToTextArea,
+            className: "fa fa-times",
+            title: "Revert to TextArea"
+          },
+          "|",
           "bold",
           "italic",
           {
@@ -135,24 +149,24 @@
             title: "Image, aligned right"
           },
           "|",
-          {
-            name: "video-left",
-            action: makeVideoLeft,
-            className: "fa fa-backward",
-            title: "Video, aligned left"
-          },
+          // {
+          //   name: "video-left",
+          //   action: makeVideoLeft,
+          //   className: "fa fa-backward",
+          //   title: "Video, aligned left"
+          // },
           {
             name: "video-full",
             action: makeVideoFull,
             className: "fa fa-play",
             title: "Video, full-width"
           },
-          {
-            name: "video-right",
-            action: makeVideoRight,
-            className: "fa fa-forward",
-            title: "Video, aligned right"
-          },
+          // {
+          //   name: "video-right",
+          //   action: makeVideoRight,
+          //   className: "fa fa-forward",
+          //   title: "Video, aligned right"
+          // },
           "|",
           "preview",
           "side-by-side",
@@ -199,6 +213,14 @@
       } else {
         return null;
       }
+    }
+
+    /**
+     * Disables EasyMDE for this textarea. 
+     */
+    function revertToTextArea(editor) {
+      editor.toTextArea();
+      editor = null;
     }
 
     function makeCite(editor) {
@@ -267,9 +289,9 @@
       }
 
       startStr += '">\n\
-  <img src="';
+  <a href="" title="See on Flickr"><img src="';
 
-      var endStr = '" alt="">\n\
+      var endStr = '" alt=""></a>\n\
   <figcaption></figcaption>\n\
 </figure>';
 
@@ -294,12 +316,12 @@
       startStr +=
         '">\n\
   <div class="figure--embed__16by9">\n\
-    <iframe src="';
+    <iframe src="https://www.youtube-nocookie.com/embed/';
 
       var endStr =
-        '" allowfullscreen></iframe>\n\
+        '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>\n\
   </div>\n\
-  <figcaption></figcaption>\n\
+  <figcaption><a href="">on YouTube</a></figcaption>\n\
 </figure>';
 
       // First, replace the URL with the embed version, if necessary.
