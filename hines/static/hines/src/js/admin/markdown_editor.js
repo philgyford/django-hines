@@ -60,11 +60,11 @@
       var config = {
         element: document.getElementById(field["elementId"]),
         autoDownloadFontAwesome: true,
-        autosave: {
-          enabled: true,
-          uniqueId: getAutosaveId(field),
-          delay: 120000 // milliseconds
-        },
+        // autosave: {
+        //   enabled: true,
+        //   uniqueId: getAutosaveId(field),
+        //   delay: 120000 // milliseconds
+        // },
         indentWithTabs: false, // Use spaces
         promptURLs: true, // Show pop-up for URL when adding a link
         minHeight: field["minHeight"]
