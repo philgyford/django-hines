@@ -11,73 +11,53 @@
 @import "mixins/svgs";
 @import "mixins/type";
 
-.editor-toolbar,
-.CodeMirror,
-.editor-statusbar {
+
+// Hide the wierd Django Admin navbar on left:
+#nav-sidebar,
+#toggle-nav-sidebar {
+  display: none;
+}
+
+
+.EasyMDEContainer {
   width: 100%;
-}
+  max-width: 610px;
 
-// Make width of editor, toolbar and statusbar work better.
-@media (min-width: 768px) {
-  .editor-toolbar,
-  .CodeMirror,
-  .editor-statusbar {
-    max-width: 518px;
-    margin-left: 170px;
-  }
-  .editor-statusbar,
-  .editor-toolbar {
-    // Allow for padding and borders:
-    max-width: 496px;
+  .CodeMirror {
+    font-size: 20px;
   }
 }
 
-@media (min-width: 1024px) {
-  .editor-toolbar,
-  .CodeMirror,
-  .editor-statusbar {
-    max-width: 622px;
-    margin-left: 170px;
-  }
-  .editor-statusbar,
-  .editor-toolbar {
-    // Allow for padding and borders:
-    max-width: 600px;
-  }
-}
-
-// But put things back to normal at full-screen or side-by-side:
-.editor-toolbar.fullscreen,
-.CodeMirror-fullscreen,
-.CodeMirror-sided {
-  max-width: 100%;
-  // Allow for the pop-out Django Admin nav button at left:
-  margin-left: 23px;
-  margin-right: 0;
-
-  @media (max-width: 767px) {
-    // The pop-out Django Admin nav button isn't visible at this width, so:
-    margin-left: 0;
-  }
-}
-
-
-// For the Post add/edit form, make the elements around the Markdown fields
-// look better.
 .app-weblogs.model-post.change-form {
-
   .field-intro,
   .field-body {
     label {
+      // Stops the editor covering the label at small widths.
       float: none;
     }
 
+    // Make it line up with the editor's info on right.
     .help {
-      margin-top: -25px;
+      margin-top: -23px;
     }
   }
 }
 
+@media (min-width: 883px) {
+  // Have the label and editor side-by-side.
+  .EasyMDEContainer {
+    display: inline-block;
+  }
+
+  .app-weblogs.model-post.change-form {
+    .field-intro,
+    .field-body {
+      label {
+        float: left;
+      }
+    }
+  }
+}
 
 // The Markdown editor previews.
 .editor-preview-side,
