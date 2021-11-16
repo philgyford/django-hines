@@ -1,6 +1,8 @@
 // A lot of these variables taken from Bootstrap.
 
 
+@use "sass:math";
+
 $img-path:      "../img/css/";
 
 $browser-prefixes: -webkit-, -moz-, -ms-, '';
@@ -101,12 +103,12 @@ $base-unit:                   $base-unit-pixels * 1px;
 
 
 // e.g. space below paragraphs:
-$vertical-space:              ($base-unit-pixels * 4 / 16) * 1rem; // 24px
-$vertical-space-sm:           ($base-unit-pixels * 2 / 16) * 1rem; // 12px
+$vertical-space:              math.div($base-unit-pixels * 4, 16) * 1rem; // 24px
+$vertical-space-sm:           math.div($base-unit-pixels * 2, 16) * 1rem; // 12px
 
 // For horizontal space that should be proportionate to font sizes:
-$horizontal-space:            ($base-unit-pixels * 2 / 16) * 1rem; // 12px
-$horizontal-space-sm:         ($base-unit-pixels / 16) * 1rem;     // 6px
+$horizontal-space:            math.div($base-unit-pixels * 2, 16) * 1rem; // 12px
+$horizontal-space-sm:         math.div($base-unit-pixels, 16) * 1rem;     // 6px
 
 // What we use for hr's, navbar rules, etc:
 $border-width:                ($base-unit * 2);
@@ -178,7 +180,7 @@ $main-columns-alt:          12;
 $sub-columns-alt:           3;
 
 // Half width:
-$half-columns:              $grid-columns / 2;
+$half-columns:              $grid-columns * 0.5;
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -196,16 +198,16 @@ $font-weight-normal:          400;
 $font-weight-bold:            700;
 $font-weight-base:            $font-weight-normal;
 
-$font-size-base:              ($font-pixels-base / 16) * 1rem;
-$line-height-base:            ($line-height-pixels-base / $font-pixels-base); // 30px
+$font-size-base:              math.div($font-pixels-base, 16) * 1rem;
+$line-height-base:            math.div($line-height-pixels-base, $font-pixels-base); // 30px
 $line-height-base-computed:   $line-height-base * 1rem;                       // 30px
 
-$font-size-sm:                ($font-pixels-sm / 16) * 1rem;
-$line-height-sm:              ($line-height-pixels-sm / $font-pixels-sm); // 1.714; 24px
+$font-size-sm:                math.div($font-pixels-sm, 16) * 1rem;
+$line-height-sm:              math.div($line-height-pixels-sm, $font-pixels-sm); // 1.714; 24px
 $line-height-sm-computed:     $line-height-sm * 1rem;                     // 1.714rem; 24px
 
-$font-size-xs:                ($font-pixels-xs / 16) * 1rem;
-$line-height-xs:              ($line-height-pixels-xs / $font-pixels-xs); // 18px
+$font-size-xs:                math.div($font-pixels-xs, 16) * 1rem;
+$line-height-xs:              math.div($line-height-pixels-xs, $font-pixels-xs); // 18px
 $line-height-xs-computed:     $line-height-xs * 1rem;                     // 18px
 
 // Has to be adjusted to see what looks best with the base font size:
@@ -223,22 +225,22 @@ $headings-margin-bottom:      $vertical-space;
 $headings-color:              inherit;
 $headings-font-weight:        $font-weight-base;
 
-$h1-font-size:                ($h1-font-pixels / 16) * 1rem;
+$h1-font-size:                math.div($h1-font-pixels, 16) * 1rem;
 $h1-line-height:              2 * $line-height-base-computed;
 
-$h2-font-size:                ($h2-font-pixels / 16) * 1rem;
+$h2-font-size:                math.div($h2-font-pixels, 16) * 1rem;
 $h2-line-height:              2 * $line-height-base-computed;
 
-$h3-font-size:                ($h3-font-pixels / 16) * 1rem;
+$h3-font-size:                math.div($h3-font-pixels, 16) * 1rem;
 $h3-line-height:              1.5 * $line-height-base-computed;
 
-$h4-font-size:                ($h4-font-pixels / 16) * 1rem;
+$h4-font-size:                math.div($h4-font-pixels, 16) * 1rem;
 $h4-line-height:              1.5 * $line-height-base-computed;
 
-$h5-font-size:                ($h5-font-pixels / 16) * 1rem;
+$h5-font-size:                math.div($h5-font-pixels, 16) * 1rem;
 $h5-line-height:              $line-height-base-computed;
 
-$h6-font-size:                ($h6-font-pixels / 16) * 1rem;
+$h6-font-size:                math.div($h6-font-pixels, 16) * 1rem;
 $h6-line-height:              $line-height-base-computed;
 
 // Variants for wider screens:
@@ -286,8 +288,8 @@ $list-bullet-position-xs:     0.1em;
 
 $table-cell-padding-x:        ($grid-gutter-width);
 $table-cell-padding-y:        $vertical-space-sm;
-$table-cell-padding-sm-x:     ($grid-gutter-width / 2);
-$table-cell-padding-sm-y:     ($vertical-space-sm / 2);
+$table-cell-padding-sm-x:     ($grid-gutter-width * 0.5);
+$table-cell-padding-sm-y:     ($vertical-space-sm * 0.5);
 
 $table-border-width:          $border-width-sm;
 $table-border-color:          $border-color;
@@ -306,7 +308,7 @@ $input-button-focus-width:       .2rem;
 
 $input-button-padding-y-sm:      0;
 $input-button-padding-x-sm:      $horizontal-space-sm;
-$input-button-line-height-sm:    ($line-height-pixels-sm / $font-pixels-sm);
+$input-button-line-height-sm:    math.div($line-height-pixels-sm, $font-pixels-sm);
 
 $input-button-border-width:      1px;
 

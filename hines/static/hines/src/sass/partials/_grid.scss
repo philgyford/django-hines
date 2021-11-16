@@ -138,8 +138,8 @@
   .grid {
     .grid {
       .grid__col {
-        padding-left: ($grid-gutter-width / 2);
-        padding-right: ($grid-gutter-width / 2);
+        padding-left: ($grid-gutter-width * 0.5);
+        padding-right: ($grid-gutter-width * 0.5);
       }
       .grid__col:first-child {
         padding-left: 0;
@@ -151,12 +151,12 @@
       .grid__col.grid__col--first {
         @include media-breakpoint-up(md) {
           padding-left: 0;
-          padding-right: ($grid-gutter-width / 2);
+          padding-right: ($grid-gutter-width * 0.5);
         }
       }
       .grid__col.grid__col--last {
         @include media-breakpoint-up(md) {
-          padding-left: ($grid-gutter-width / 2);
+          padding-left: ($grid-gutter-width * 0.5);
           padding-right: 0;
         }
       }

@@ -31,8 +31,8 @@ $navbar-form-top:               $vertical-space-sm;
   flex-wrap: wrap;
   flex-direction: row;
   align-items: flex-end;
-  margin-left: ($grid-gutter_width / 2);
-  margin-right: ($grid-gutter_width / 2);
+  margin-left: ($grid-gutter_width * 0.5);
+  margin-right: ($grid-gutter_width * 0.5);
 }
 
 //.navbar__icon {
@@ -84,7 +84,7 @@ $navbar-form-top:               $vertical-space-sm;
   .form--inline {
     .form__control {
       width: 8em;
-      margin-right: ($nav-border-width / 2);
+      margin-right: ($nav-border-width * 0.5);
       margin-bottom: 0;
 	    @include text-style-alt();
     }
@@ -178,8 +178,8 @@ $navbar-form-top:               $vertical-space-sm;
     border-bottom: none;
     margin-top: 0;
     width: 100%;
-    padding-left: ($grid-gutter-width / 2);
-    padding-right: ($grid-gutter-width / 2);
+    padding-left: ($grid-gutter-width * 0.5);
+    padding-right: ($grid-gutter-width * 0.5);
     @include make-col($sub-columns);
 
     form {

@@ -21,6 +21,8 @@
 // That will set the background-image to be an encoded version of the chevron
 // svg, with {COLOR} replaced with #f00.
 // The $color2 (mapping to {COLOR2} in the svg) is optional.
+@use "sass:math";
+
 @mixin background-svg($svg-name, $color:null, $color2:null) {
 
   $svg: map-get($svgs, $svg-name);
@@ -55,7 +57,7 @@
     $encoded:'';
     $slice: 2000;
     $index: 0;
-    $loops: ceil(str-length($svg)/$slice);
+    $loops: ceil(math.div(str-length($svg), $slice));
     @for $i from 1 through $loops {
         $chunk: str-slice($svg, $index, $index + $slice - 1);
         //

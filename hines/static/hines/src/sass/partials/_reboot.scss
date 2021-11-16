@@ -53,7 +53,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 
 body {
   margin: 0 0 2em 0;
-  padding: 0 $body-horizontal-space-sm / 2;
+  padding: 0 $body-horizontal-space-sm * 0.5;
   @include text-style-default;
   font-size: $font-size-base;
   line-height: $line-height-base;
