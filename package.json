@@ -27,6 +27,7 @@
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
+    "sass": "^1.43.4",
     "stream-series": "^0.1.1",
     "watch": "^1.0.2"
   }
