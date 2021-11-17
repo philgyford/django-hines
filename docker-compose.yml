@@ -50,6 +50,17 @@ services:
     volumes:
       - .:/code
 
+  assets:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    command: sh -c "yarn && yarn watch"
+    container_name: hines_assets
+    volumes:
+      - .:/code
+      # HACK: use node_modules from inside image instead of one on local machine
+      - /code/node_modules
+
 volumes:
   postgres_data:
   # redis:

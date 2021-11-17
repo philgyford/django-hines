@@ -14,7 +14,12 @@ RUN apk update \
     # Required for installing/upgrading postgres:
     postgresql-libs postgresql-dev musl-dev \
     # Required for installing/upgrading Pillow:
-    jpeg-dev zlib-dev libjpeg
+    jpeg-dev zlib-dev libjpeg \
+    # Because?
+    postgresql-client \
+    # For front-end build:
+    nodejs \
+    yarn
 
 # set work directory
 RUN mkdir /code
@@ -26,5 +31,12 @@ COPY ./Pipfile .
 COPY ./Pipfile.lock .
 RUN pipenv install --dev --deploy
 
+# For front-end build:
+COPY package.json yarn.lock gulpfile.js /code/
+RUN yarn install
+
 # copy project
 COPY . /code/
+
+# Run gulp to build static assets in image
+RUN yarn build
