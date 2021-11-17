@@ -1,8 +1,7 @@
 .coverage
 .env
-node_modules
+node_modules/
 db.sqlite3
-htmlcov
-static_collected
+htmlcov/
+static_collected/
 hines/media/
-.vscode
