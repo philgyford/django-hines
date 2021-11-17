@@ -33,7 +33,7 @@ var autoprefixer = require("gulp-autoprefixer");
  * VARIABLES
  */
 
-var SRC_DIR = "hines/static/hines/src";
+var SRC_DIR = "assets";
 var STATIC_DIR = "hines/static";
 var TEMPLATES_DIR = "hines/templates/";
 // Removed from the start of CSS/JS paths inserted into files by inject:
