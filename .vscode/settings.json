@@ -1,3 +1,15 @@
 {
-    "python.pythonPath": "/Users/phil/.local/share/virtualenvs/django-hines-jsiYO4hw/bin/python"
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "**/*.html": "html",
+    "**/templates/**/*.html": "django-html",
+    "**/templates/**/*": "django-txt"
+  },
+  "python.formatting.provider": "black",
+  "python.pythonPath": "/usr/local/bin/python",
+  "python.linting.pylintArgs": [
+    "--load-plugins",
+    "pylint_django",
+    "--disable=C0111"
+  ]
 }
