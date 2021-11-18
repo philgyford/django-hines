@@ -73,9 +73,9 @@ function black {
 }
 
 
-function bash {
-  # Start a Bash session in the web container
-  cmd bash "${@}"
+function sh {
+  # Start a Shell session in the web container
+  cmd sh "${@}"
 }
 
 
@@ -83,7 +83,7 @@ function psql {
   # Connect to PostgreSQL with psql
   # shellcheck disable=SC1091
   . .env
- _dc postgres psql -U "${POSTGRES_USER}" "${@}"
+ _dc db psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" "${@}"
 }
 
 
