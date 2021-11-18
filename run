@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# Much of this copied from https://github.com/nickjj/docker-django-example/blob/main/run
+# Much of this copied from Nick Janetakis
+# https://github.com/nickjj/docker-django-example/blob/main/run
 
 set -eo pipefail
 
