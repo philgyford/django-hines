@@ -37,12 +37,18 @@ function cmd {
   _dc web "${@}"
 }
 
+function sh {
+  # Start a Shell session in the web container
+  cmd sh "${@}"
+}
 
 function manage {
   # Run any manage.py commands
 
   cmd pipenv run python manage.py "${@}"
 }
+
+
 
 
 function tests {
@@ -74,17 +80,11 @@ function black {
 }
 
 
-function sh {
-  # Start a Shell session in the web container
-  cmd sh "${@}"
-}
-
-
 function psql {
   # Connect to PostgreSQL with psql
   # shellcheck disable=SC1091
   . .env
- _dc db psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" "${@}"
+ _dc db psql -U "${POSTGRES_USER}" "${@}"
 }
 
 
@@ -99,20 +99,22 @@ function pipenv:outdated {
   cmd pipenv update --outdated --dev
 }
 
+
 function pipenv:update {
   # Update any outdated packages
   cmd pipenv update --dev
 }
 
 
-function yarn:install {
-  # Install yarn dependencies and write lock file
-  _build_run_down yarn install
+function yarn:outdated {
+  # List any installed yarn packages that are outdated
+  _dc yarn outdated
 }
 
-function yarn:outdated {
-  # List any installed packages that are outdated
-  _dc yarn outdated
+
+function yarn:upgrade {
+  # Upgrade yarn dependencies.
+  _dc yarn upgrade
 }
 
 
