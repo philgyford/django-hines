@@ -37,23 +37,21 @@ function cmd {
   _dc web "${@}"
 }
 
+
 function sh {
   # Start a Shell session in the web container
   cmd sh "${@}"
 }
 
+
 function manage {
   # Run any manage.py commands
-
   cmd pipenv run python manage.py "${@}"
 }
 
 
-
-
 function tests {
   # Run the Django tests
-
   manage collectstatic --settings=config.settings.tests --no-input
   manage test --settings=config.settings.tests "${@}"
 }
@@ -61,7 +59,6 @@ function tests {
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-
   manage collectstatic --settings=config.settings.tests --no-input
   cmd pipenv run coverage run manage.py test --settings=config.settings.tests tests
   cmd pipenv run coverage html
@@ -106,6 +103,13 @@ function pipenv:update {
 }
 
 
+# function pipenv:install {
+#   # Install pip3 dependencies and write lock file
+#   # (untested)
+#   _build_run_down web sh -c "pipenv install"
+# }
+
+
 function yarn:outdated {
   # List any installed yarn packages that are outdated
   _dc yarn outdated
@@ -116,6 +120,13 @@ function yarn:upgrade {
   # Upgrade yarn dependencies.
   _dc yarn upgrade
 }
+
+
+# function yarn:install {
+#   # Install yarn dependencies and write lock file
+#   # (untested)
+#   _build_run_down webpack yarn install
+# }
 
 
 function help {
