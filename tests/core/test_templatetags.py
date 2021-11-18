@@ -211,7 +211,6 @@ class DomainUrlizeTestCase(TestCase):
 
 
 class MostSeenDirectorsCard(TestCase):
-
     def test_returns_correct_kind_and_role(self):
         "It should only return data related to movies and Directors"
         c1 = IndividualCreatorFactory()

@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterUniqueTogether(
-            name="trackback", unique_together=set([("post", "url")]),
+            name="trackback",
+            unique_together=set([("post", "url")]),
         ),
     ]

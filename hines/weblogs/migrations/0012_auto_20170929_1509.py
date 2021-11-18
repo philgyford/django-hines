@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="trackback", options={"ordering": ["-time_created"]},
+            name="trackback",
+            options={"ordering": ["-time_created"]},
         ),
     ]

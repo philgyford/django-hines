@@ -15,17 +15,13 @@ class CustomCommentTestCase(TestCase):
     making sure it does it generally here.
     """
 
-    @override_app_settings(
-        COMMENTS_ALLOWED_TAGS=["b", "a"]
-    )
+    @override_app_settings(COMMENTS_ALLOWED_TAGS=["b", "a"])
     def test_clean_comment_tags(self):
         p = LivePostFactory(title="Boo")
         c = CustomCommentFactory(comment="<b><i>Hi</i>", post=p)
         self.assertEqual(c.comment, "<b>Hi</b>")
 
-    @override_app_settings(
-        COMMENTS_ALLOWED_TAGS=["b", "a"]
-    )
+    @override_app_settings(COMMENTS_ALLOWED_TAGS=["b", "a"])
     def test_clean_comment_links(self):
         p = LivePostFactory()
         c = CustomCommentFactory(comment="http://foo.org", post=p)

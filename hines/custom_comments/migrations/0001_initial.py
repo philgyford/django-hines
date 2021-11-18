@@ -10,17 +10,16 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('django_comments', '0003_add_submit_date_index'),
+        ("django_comments", "0003_add_submit_date_index"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CustomComment',
-            fields=[
-            ],
+            name="CustomComment",
+            fields=[],
             options={
-                'proxy': True,
+                "proxy": True,
             },
-            bases=('django_comments.comment',),
+            bases=("django_comments.comment",),
         ),
     ]

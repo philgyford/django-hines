@@ -1,2 +1,2 @@
 release: python manage.py migrate --noinput
-web: scripts/heroku-web
+web: python ./manage.py clear_cache && gunicorn config.wsgi --preload

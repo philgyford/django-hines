@@ -20,7 +20,7 @@ class CommentsFeedRSSParentTestCase(FeedTestCase):
     def setUp(self):
         super().setUp()
 
-        self.blog = BlogFactory(slug="my-blog",)
+        self.blog = BlogFactory(slug="my-blog")
         self.post = LivePostFactory.create(
             blog=self.blog,
             title="Test Blog Post",

@@ -17,7 +17,10 @@ class MarkdownifyTestCase(TestCase):
     def test_pygments_highlighting(self):
         "It should use pygments to highlight fenced code blocks"
         html = markdownify("```html\n<p>Hi</p>\n```")
-        self.assertEqual(html, '<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hi<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>\n</code></pre></div>\n')  # noqa: E501
+        self.assertEqual(
+            html,
+            '<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hi<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>\n</code></pre></div>\n',
+        )  # noqa: E501
 
     def test_output_format_default(self):
         "By default it should produce XHTML-style tags"

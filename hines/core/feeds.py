@@ -33,7 +33,7 @@ class ExtendedRSSFeed(Rss201rev2Feed):
                 return '<b>This is my HTML for content:encoded.</b>'
     """
 
-    content_type = 'application/xml; charset=utf-8'
+    content_type = "application/xml; charset=utf-8"
 
     def rss_attributes(self):
         attrs = super().rss_attributes()

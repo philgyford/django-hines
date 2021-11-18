@@ -12,7 +12,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(model_name="post", old_name="user", new_name="author",),
+        migrations.RenameField(
+            model_name="post",
+            old_name="user",
+            new_name="author",
+        ),
         migrations.AlterField(
             model_name="post",
             name="body_html",

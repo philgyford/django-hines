@@ -8,12 +8,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('custom_comments', '0001_initial'),
+        ("custom_comments", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='customcomment',
-            options={'verbose_name': 'Comment'},
+            name="customcomment",
+            options={"verbose_name": "Comment"},
         ),
     ]
