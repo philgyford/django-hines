@@ -38,16 +38,20 @@ function cmd {
 }
 
 
+function sh {
+  # Start a Shell session in the web container
+  cmd sh "${@}"
+}
+
+
 function manage {
   # Run any manage.py commands
-
   cmd pipenv run python manage.py "${@}"
 }
 
 
 function tests {
   # Run the Django tests
-
   manage collectstatic --settings=config.settings.tests --no-input
   manage test --settings=config.settings.tests "${@}"
 }
@@ -55,7 +59,6 @@ function tests {
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-
   manage collectstatic --settings=config.settings.tests --no-input
   cmd pipenv run coverage run manage.py test --settings=config.settings.tests tests
   cmd pipenv run coverage html
@@ -74,17 +77,11 @@ function black {
 }
 
 
-function sh {
-  # Start a Shell session in the web container
-  cmd sh "${@}"
-}
-
-
 function psql {
   # Connect to PostgreSQL with psql
   # shellcheck disable=SC1091
   . .env
- _dc db psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" "${@}"
+ _dc db psql -U "${POSTGRES_USER}" "${@}"
 }
 
 
@@ -99,21 +96,37 @@ function pipenv:outdated {
   cmd pipenv update --outdated --dev
 }
 
+
 function pipenv:update {
   # Update any outdated packages
   cmd pipenv update --dev
 }
 
 
-function yarn:install {
-  # Install yarn dependencies and write lock file
-  _build_run_down yarn install
-}
+# function pipenv:install {
+#   # Install pip3 dependencies and write lock file
+#   # (untested)
+#   _build_run_down web sh -c "pipenv install"
+# }
+
 
 function yarn:outdated {
-  # List any installed packages that are outdated
+  # List any installed yarn packages that are outdated
   _dc yarn outdated
 }
+
+
+function yarn:upgrade {
+  # Upgrade yarn dependencies.
+  _dc yarn upgrade
+}
+
+
+# function yarn:install {
+#   # Install yarn dependencies and write lock file
+#   # (untested)
+#   _build_run_down webpack yarn install
+# }
 
 
 function help {
