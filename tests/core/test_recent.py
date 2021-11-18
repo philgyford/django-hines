@@ -31,27 +31,27 @@ class RecentObjectsTestCase(TestCase):
             RecentObjects(kinds)
 
     def test_raises_error_with_invalid_kind(self):
-        kinds = (("fail", "bob",),)
+        kinds = (("fail", "bob"),)
         with self.assertRaises(ValueError):
             RecentObjects(kinds)
 
     def test_raises_error_with_invalid_blog(self):
         # 'blog_posts' is correct but there's no Blog with a slug of 'bill':
-        kinds = (("blog_posts", "bob",),)
+        kinds = (("blog_posts", "bob"),)
         with self.assertRaises(ValueError):
             RecentObjects(kinds)
 
     def test_raises_error_with_invalid_flickr_account(self):
         # 'flickr_photos' is correct but there's no Flickr Account with a User
         # with an NSID of '12345678901@N01':
-        kinds = (("flickr_photos", "12345678901@N01",),)
+        kinds = (("flickr_photos", "12345678901@N01"),)
         with self.assertRaises(ValueError):
             RecentObjects(kinds)
 
     def test_raises_error_with_invalid_pinboard_account(self):
         # 'pinboard_links' is correct but there's no Pinboard Account with a
         # username of 'bob'.
-        kinds = (("pinboard_links", "bob",),)
+        kinds = (("pinboard_links", "bob"),)
         with self.assertRaises(ValueError):
             RecentObjects(kinds)
 
@@ -61,14 +61,14 @@ class RecentObjectsTestCase(TestCase):
         "It should return 10 objects by default"
         b = BlogFactory(slug="my-blog")
         LivePostFactory.create_batch(11, blog=b)
-        r = RecentObjects((("blog_posts", "my-blog",),))
+        r = RecentObjects((("blog_posts", "my-blog"),))
         self.assertEqual(len(r.get_objects()), 10)
 
     def test_get_objects_num_custom(self):
         "It should return the defined num of objects"
         b = BlogFactory(slug="my-blog")
         LivePostFactory.create_batch(4, blog=b)
-        r = RecentObjects((("blog_posts", "my-blog",),))
+        r = RecentObjects((("blog_posts", "my-blog"),))
         self.assertEqual(len(r.get_objects(num=3)), 3)
 
     # BLOG POSTS
@@ -83,7 +83,7 @@ class RecentObjectsTestCase(TestCase):
         DraftPostFactory(blog=b1)
         LivePostFactory(blog=b2)
 
-        r = RecentObjects((("blog_posts", "my-blog",),))
+        r = RecentObjects((("blog_posts", "my-blog"),))
         objects = r.get_objects()
 
         self.assertEqual(len(objects), 3)
@@ -96,7 +96,7 @@ class RecentObjectsTestCase(TestCase):
         "The returned blog post dicts should be the correct format"
         blog = BlogFactory(slug="my-blog")
         post = LivePostFactory(blog=blog)
-        r = RecentObjects((("blog_posts", "my-blog",),))
+        r = RecentObjects((("blog_posts", "my-blog"),))
         objects = r.get_objects()
 
         self.assertEqual(objects[0]["kind"], "blog_post")
@@ -118,7 +118,7 @@ class RecentObjectsTestCase(TestCase):
         PhotoFactory(user=u1, is_private=True)
         PhotoFactory(user=u2, is_private=False)
 
-        r = RecentObjects((("flickr_photos", u1.nsid,),))
+        r = RecentObjects((("flickr_photos", u1.nsid),))
         objects = r.get_objects()
 
         self.assertEqual(len(objects), 1)
@@ -147,7 +147,7 @@ class RecentObjectsTestCase(TestCase):
             post_time=make_datetime("2017-06-01 12:30:00"),
         )
 
-        r = RecentObjects((("flickr_photos", user.nsid,),))
+        r = RecentObjects((("flickr_photos", user.nsid),))
         objects = r.get_objects()
 
         self.assertEqual(len(objects), 2)
@@ -162,7 +162,7 @@ class RecentObjectsTestCase(TestCase):
             user=user, is_private=False, post_time=make_datetime("2017-05-01 12:30:00")
         )
 
-        r = RecentObjects((("flickr_photos", user.nsid,),))
+        r = RecentObjects((("flickr_photos", user.nsid),))
         objects = r.get_objects()
 
         self.assertEqual(objects[0]["kind"], "flickr_photos")
@@ -181,7 +181,7 @@ class RecentObjectsTestCase(TestCase):
         BookmarkFactory(account=a1, is_private=True)
         BookmarkFactory(account=a2, is_private=False)
 
-        r = RecentObjects((("pinboard_bookmarks", "bob",),))
+        r = RecentObjects((("pinboard_bookmarks", "bob"),))
         objects = r.get_objects()
 
         self.assertEqual(len(objects), 3)
@@ -194,7 +194,7 @@ class RecentObjectsTestCase(TestCase):
         "The returned bookmark dicts should be the correct format"
         account = PinboardAccountFactory(username="bob")
         bookmark = BookmarkFactory(account=account, is_private=False)
-        r = RecentObjects((("pinboard_bookmarks", "bob",),))
+        r = RecentObjects((("pinboard_bookmarks", "bob"),))
         objects = r.get_objects()
 
         self.assertEqual(objects[0]["kind"], "pinboard_bookmark")
@@ -227,9 +227,9 @@ class RecentObjectsTestCase(TestCase):
         )
 
         kinds = (
-            ("blog_posts", "my-blog",),
-            ("flickr_photos", "11111111111@N01",),
-            ("pinboard_bookmarks", "bob",),
+            ("blog_posts", "my-blog"),
+            ("flickr_photos", "11111111111@N01"),
+            ("pinboard_bookmarks", "bob"),
         )
 
         objects = RecentObjects(kinds).get_objects()

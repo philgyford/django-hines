@@ -81,8 +81,7 @@ def blog_popular_tags(blog, num=10):
 
 @register.inclusion_tag("weblogs/includes/card_tags.html")
 def blog_popular_tags_card(blog, num=10):
-    """
-    """
+    """ """
     return {
         "card_title": "Most-used tags",
         "tag_list": blog_popular_tags(blog=blog, num=num),

@@ -66,10 +66,7 @@ def markdownify(content, output_format="xhtml"):
 
     return markdown2.markdown(
         content,
-        extras=[
-            "fenced-code-blocks",
-            "link-patterns"
-        ],
+        extras=["fenced-code-blocks", "link-patterns"],
         html4tags=(output_format == "html5"),
         link_patterns=link_patterns,
     )

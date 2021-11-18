@@ -24,5 +24,5 @@ def core(request):
         "settings": {
             "comments_close_after_days": app_settings.COMMENTS_CLOSE_AFTER_DAYS,
             "comments_allowed": app_settings.COMMENTS_ALLOWED,
-        }
+        },
     }
