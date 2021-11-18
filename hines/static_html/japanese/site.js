@@ -464,7 +464,7 @@ function hideEl(classname) {
         numToGet += characters["katakana"].length;
       }
 
-      var percent = Math.round((correctCount / numToGet) * 100);
+      var percent = (correctCount / numToGet) * 100;
 
       return percent;
     }
