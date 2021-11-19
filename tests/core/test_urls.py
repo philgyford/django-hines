@@ -40,18 +40,6 @@ class CoreUrlsTestCase(TestCase):
             resolve("/terry/reading/").func.__name__, views.ReadingHomeView.__name__
         )
 
-    def test_author_redirect_view(self):
-        self.assertEqual(
-            resolve("/terry/reading/author/").func.__name__,
-            views.AuthorRedirectView.__name__,
-        )
-
-    def test_publication_redirect_view(self):
-        self.assertEqual(
-            resolve("/terry/reading/publication/").func.__name__,
-            views.PublicationRedirectView.__name__,
-        )
-
     def test_writing_resources_redirect_view(self):
         self.assertEqual(
             resolve(

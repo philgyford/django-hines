@@ -65,9 +65,6 @@ root_dir_patterns = [
     path("links/", include("hines.links.urls")),
     path("stats/", include("hines.stats.urls")),
     path("patterns/", include("hines.patterns.urls")),
-    # Redirecting legacy author/publication detail URLs that have ?id=123.
-    path("reading/author/", core_views.AuthorRedirectView.as_view()),
-    path("reading/publication/", core_views.PublicationRedirectView.as_view()),
     re_path(
         r"^writing/resources/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/"
         r"(?P<path>.*?)$",

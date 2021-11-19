@@ -3,8 +3,6 @@ from django.test import RequestFactory, TestCase, override_settings
 
 from ditto.flickr.factories import PhotoFactory
 from ditto.pinboard.factories import BookmarkFactory
-from spectator.core.factories import IndividualCreatorFactory
-from spectator.reading.factories import PublicationFactory
 from hines.core import views
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, PostFactory
@@ -98,66 +96,6 @@ class ArchiveRedirectViewTestCase(ViewTestCase):
         )
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response.url, "http://archive.gyford.com/my/archive/path/")
-
-
-class AuthorRedirectViewTestCase(ViewTestCase):
-    def setUp(self):
-        super().setUp()
-        self.creator = IndividualCreatorFactory(id=123)
-
-    def test_redirect(self):
-        request = self.factory.get("/fake-path/", {"id": 123})
-        response = views.AuthorRedirectView.as_view()(request)
-        self.assertEqual(response.status_code, 301)
-        self.assertEqual(response.url, "/terry/creators/9g5o8/")
-
-    def test_missing_id(self):
-        "No id supplied in query string"
-        request = self.factory.get("/fake-path/")
-        with self.assertRaises(Http404):
-            views.AuthorRedirectView.as_view()(request)
-
-    def test_wrong_id(self):
-        "There's no creator with this id"
-        request = self.factory.get("/fake-path/", {"id": 456})
-        with self.assertRaises(Http404):
-            views.AuthorRedirectView.as_view()(request)
-
-    def test_invalid_id(self):
-        "If the id supplied isn't int-able, it should 404."
-        request = self.factory.get("/fake-path/", {"id": "a string"})
-        with self.assertRaises(Http404):
-            views.AuthorRedirectView.as_view()(request)
-
-
-class PublicationRedirectViewTestCase(ViewTestCase):
-    def setUp(self):
-        super().setUp()
-        self.publication = PublicationFactory(id=123)
-
-    def test_redirect(self):
-        request = self.factory.get("/fake-path/", {"id": 123})
-        response = views.PublicationRedirectView.as_view()(request)
-        self.assertEqual(response.status_code, 301)
-        self.assertEqual(response.url, "/terry/reading/publications/9g5o8/")
-
-    def test_missing_id(self):
-        "No id supplied in query string"
-        request = self.factory.get("/fake-path/")
-        with self.assertRaises(Http404):
-            views.PublicationRedirectView.as_view()(request)
-
-    def test_wrong_id(self):
-        "There's no publication with this id"
-        request = self.factory.get("/fake-path/", {"id": 456})
-        with self.assertRaises(Http404):
-            views.PublicationRedirectView.as_view()(request)
-
-    def test_invalid_id(self):
-        "If the id supplied isn't int-able, it should 404."
-        request = self.factory.get("/fake-path/", {"id": "897'A=0"})
-        with self.assertRaises(Http404):
-            views.PublicationRedirectView.as_view()(request)
 
 
 class MTSearchRedirectViewTestCase(ViewTestCase):
