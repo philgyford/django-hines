@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 # For use in development only.
 
@@ -53,7 +53,7 @@ services:
   assets:
     build:
       context: .
-      dockerfile: ./docker/web/Dockerfile
+      dockerfile: ./docker/assets/Dockerfile
     command: sh -c "yarn && yarn watch"
     container_name: hines_assets
     volumes:

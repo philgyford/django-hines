@@ -62,8 +62,6 @@ DATETIME_FORMAT = getattr(settings, "HINES_DATETIME_FORMAT", "[time] on [date]")
 
 FIRST_DATE = getattr(settings, "HINES_FIRST_DATE", False)
 
-GOOGLE_ANALYTICS_ID = getattr(settings, "HINES_GOOGLE_ANALYTICS_ID", "")
-
 CLOUDFLARE_ANALYTICS_TOKEN = getattr(settings, "HINES_CLOUDFLARE_ANALYTICS_TOKEN", "")
 
 HOME_PAGE_DISPLAY = getattr(settings, "HINES_HOME_PAGE_DISPLAY", {})

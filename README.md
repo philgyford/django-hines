@@ -13,8 +13,7 @@ For local development we use Docker. The live site is on Heroku.
 
 ### 1. Create a .env file
 
-Create a `.env` file containing the below (see the Django Settings section below for
-more details about the variables):
+Create a `.env` file containing the below (see the Custom Django Settings section below for more details about the variables):
 
     export ALLOWED_HOSTS='*'
 
@@ -26,7 +25,7 @@ more details about the variables):
     export DJANGO_SETTINGS_MODULE='config.settings.development'
 
     # For use in Django:
-    export DATABASE_URL='postgres://hines:hines@hines_db:5432/django-hines'
+    export DATABASE_URL='postgres://hines:hines@hines_db:5432/hines'
     # For use in Docker:
     POSTGRES_USER=hines
     POSTGRES_PASSWORD=hines
@@ -35,7 +34,7 @@ more details about the variables):
     export HCAPTCHA_SITEKEY="YOUR-SITEKEY"
     export HCAPTCHA_SECRET="YOUR-SECRET"
 
-    export HINES_AKISMET_API_KEY="YOUR-KEY"
+    export HINES_AKISMET_API_KEY="YOUR-API-KEY"
 
     export HINES_CLOUDFLARE_ANALYTICS_TOKEN="YOUR-TOKEN"
 
@@ -72,8 +71,7 @@ There are three containers, the webserver (`hines_web`), the front-end assets bu
 
 Once that's running, showing its logs, open another terminal window/tab.
 
-There are two ways we can populate the database. First we'll create an empty one,
-and second we'll populate it with a dump of data from the live site.
+There are two ways we can populate the database. First we'll create an empty one, and second we'll populate it with a dump of data from the live site.
 
 #### 4a. An empty database
 
@@ -95,8 +93,7 @@ Log into postgres and drop the current (empty) database:
     # grant all privileges on database hines to hines;
     # \q
 
-On Heroku, download a backup file of the live site's database and rename it to
-something simpler. We'll use "heroku_db_dump" below.
+On Heroku, download a backup file of the live site's database and rename it to something simpler. We'll use "heroku_db_dump" below.
 
 Put the file in the same directory as this README.
 
@@ -108,9 +105,7 @@ Import the data into the database ():
 
 Then go to http://www.gyford.test:8000 and you should see the site.
 
-Log in to the [Django Admin](http://www.gyford.test:8000/backstage/), go to the "Sites"
-section and change the one Site's Domain Name to `www.gyford.test:8000` and the
-Display Name to "Phil Gyford’s website", if it's not already.
+Log in to the [Django Admin](http://www.gyford.test:8000/backstage/), go to the "Sites" section and change the one Site's Domain Name to `www.gyford.test:8000` and the Display Name to "Phil Gyford’s website", if it's not already.
 
 ## Ongoing work
 
@@ -126,26 +121,7 @@ You can check if anything's running by doing this, which will list any Docker pr
 
     $ docker ps
 
-When the containers are running you can open a shell to the web server (exit with `Control` and `D` together):
-
-    $ docker exec -it hines_web sh
-
-You could then run `.manage.py` commands within there:
-
-    $ ./manage.py help
-
-Or, use the shortcut command from _outside_ of the Docker container:
-
-    $ ./scripts/manage.sh help
-
-Or you can log into the database:
-
-    $ docker exec -it hines_db psql -U hines -d django-hines
-
-The development environment has [django-extensions](https://django-extensions.readthedocs.io/en/latest/index.html) installed so you can use its `shell_plus` and other commands. e.g.:
-
-    $ ./run manage shell_plus
-    $ ./run manage show_urls
+See details on the `./run` script below for running things inside the containers.
 
 VS Code will use the python environment on the web Docker container for autocompletion etc.
 
@@ -174,6 +150,11 @@ Starts a Shell session in the web container.
 Run the Django `manage.py` file with any of the usual commands, within the pipenv virtual environment. e.g.
 
     ./run manage makemigrations
+
+The development environment has [django-extensions](https://django-extensions.readthedocs.io/en/latest/index.html) installed so you can use its `shell_plus` and other commands. e.g.:
+
+    $ ./run manage shell_plus
+    $ ./run manage show_urls
 
 ### `./run tests`
 
@@ -230,6 +211,8 @@ For hosting on Heroku, we use these add-ons:
 - Papertrail (for viewing/filtering logs)
 - Sentry (for error reporting)
 
+The site will require Config settings to be set-up as in the local development `.env` (above) and see the Django settings (below).
+
 To clear the Redis cache, use our `clear_cache` management command:
 
     $ heroku run python ./manage.py clear_cache
@@ -253,9 +236,30 @@ Then use that Redis name like:
 
     $ heroku redis:maxmemory redis-fisher-12345 --policy allkeys-lru
 
-## Django Settings
+### Heroku Config Vars
 
-Custom settings that can be in the django `settings.py` file:
+Set these Config Vars in Heroku (see the Custom Django Settings section below for more about some of the variables):
+
+```
+ALLOWED_HOSTS                       pepysdiary-production.herokuapp.com,www.pepysdiary.com
+AWS_ACCESS_KEY_ID                   YOUR-ACCESS-KEY
+AWS_SECRET_ACCESS_KEY               YOUR-SECRET-ACCESS-KEY
+AWS_STORAGE_BUCKET_NAME             your-bucket-nuame
+DJANGO_SECRET_KEY                   YOUR-SECRET-KEY
+DJANGO_SETTINGS_MODULE              pepysdiary.settings.production
+HCAPTCHA_SECRET                     YOUR-PRIVATE-KEY
+HCAPTCHA_SITEKEY                    YOUR-PUBLIC-KEY
+HINES_AKISMET_API_KEY               YOUR-API-KEY
+HINES_CLOUDFLARE_ANALYTICS_TOKEN    YOUR-TOKEN
+HINES_COMMENTS_ADMIN_FEED_SLUG      your-slug
+HINES_MAPBOX_API_KEY                YOUR_API_KEY
+```
+
+Further settings will be set automatically by add-ons.
+
+## Custom Django Settings
+
+Custom settings that can be in the Django `settings.py` file:
 
 `HINES_AKISMET_API_KEY`: To enable checking submitted comments for spam using [Akismet](https://akismet.com) set this to your API key, a string. If `None` then no spam checking is done using Akismet. `None` is the default. By default this is picked up from a `HINES_AKISMET_API_KEY` environment variable.
 
@@ -263,8 +267,10 @@ Custom settings that can be in the django `settings.py` file:
 
 `HINES_AUTHOR_EMAIL`: Email of the site's main author. e.g. `'bob@example.com'`.
 
-`HINES_SITE_ICON`: Path of an image to represent the site, within the static
-directory. e.g. `'hines/img/site_icon.jpg'`.
+`HINES_CLOUDFLARE_ANALYTICS_TOKEN`: e.g. `'32bc47e0f'` etc. If present, the
+Cloudflare Web Analytics tracking code will be put into every page, using this
+token. This value is taken from the `HINES_CLOUDFLARE_ANALYTICS_TOKEN`
+environment variable. Default is `''`.
 
 `HINES_COMMENTS_ADMIN_FEED_SLUG`: URL slug for the admin-only RSS feed of comments, so it can be at a non-obvious location. Default is `"admin-comments"`.
 
@@ -286,15 +292,6 @@ directory. e.g. `'hines/img/site_icon.jpg'`.
 
 `HINES_FIRST_DATE`: Day Archive pages will 404 for days before this date. e.g.
 `2000-03-15`. Default is `False` (dates of any age allowed).
-
-`HINES_CLOUDFLARE_ANALYTICS_TOKEN`: e.g. `'32bc47e0f'` etc. If present, the
-Cloudflare Web Analytics tracking code will be put into every page, using this
-token. This value is taken from the `HINES_CLOUDFLARE_ANALYTICS_TOKEN`
-environment variable. Default is `''`.
-
-`HINES_GOOGLE_ANALYTICS_ID`: e.g. `'UA-123456-1'`. If present, the Google
-Analytics Tracking code will be put into every page, using this ID. This value
-is taken from the `HINES_GOOGLE_ANALYTICS_ID` environment variable. Default is `''`.
 
 `HINES_HOME_PAGE_DISPLAY`: Defines how many of different kinds of thing to
 display on the sites's home page. The `'weblog_posts'` uses the `slug` of each
@@ -326,6 +323,9 @@ HINES_EVERYTHING_FEED_KINDS = (
 ```
 
 `HINES_ROOT_DIR`: e.g. `'phil'`. All the pages except things like the very front page and admin will live under this directory. Default is `''` but I haven't tried using it with out a root dir set.
+
+`HINES_SITE_ICON`: Path of an image to represent the site, within the static
+directory. e.g. `'hines/img/site_icon.jpg'`.
 
 `HINES_TEMPLATE_SETS`: A set of dicts describing different sets of templates that can be used for PostDetails between certain dates. e.g.:
 
