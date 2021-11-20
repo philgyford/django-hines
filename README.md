@@ -2,6 +2,8 @@
 
 [![Build Status](https://github.com/philgyford/django-hines/workflows/CI/badge.svg)](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/philgyford/django-hines/badge.svg?branch=main)](https://coveralls.io/github/philgyford/django-hines?branch=main)
+[![Code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Code for https://www.gyford.com
 
