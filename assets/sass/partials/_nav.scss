@@ -1,4 +1,3 @@
-
 .nav {
   display: flex;
   flex-direction: row;
@@ -28,7 +27,6 @@
   margin-left: $nav-border-width;
   padding-left: $nav-link-padding-x;
 }
-
 
 .nav__link {
   display: block;
@@ -73,11 +71,9 @@
   pointer-events: none;
 }
 
-
 // Variant for pagination.
 
 .nav--pagination {
-
   .nav__item:not(.nav__item--next) {
     // More spaced out because they're so small:
     padding-right: ($nav-link-padding-x * 2);

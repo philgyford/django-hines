@@ -1,4 +1,3 @@
-
 // Lists
 
 ul {
@@ -14,7 +13,6 @@ ol {
   padding-left: 2em;
 }
 
-
 // Inline lists
 
 .list--inline {
@@ -27,7 +25,6 @@ ol {
   }
 }
 
-
 .list--spaced {
   & > li {
     margin-bottom: $vertical-space;
@@ -38,7 +35,6 @@ ol {
     margin-top: $vertical-space;
   }
 }
-
 
 // Unstyled lists
 
@@ -53,19 +49,16 @@ ol {
   background: none;
 }
 
-
 // Definition lists
 
 dd:last-child {
   margin-bottom: 0;
 }
 
-
 // Makes spacing better if we have p's in li's and also nested lists.
 li > p {
   margin-top: $vertical-space;
 }
-
 
 // RSS list
 

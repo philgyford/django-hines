@@ -1,13 +1,11 @@
 // MEDIA
 // For lists of blog posts, comments, etc.
 
-
 // Used for both .media__header and .media__byline_author:
 @use "sass:math";
 
 $media-header-font-size: $h4-font-size;
 $media-header-line-height: $line-height-base;
-
 
 .media-list {
   padding-left: 0;
@@ -76,10 +74,10 @@ $media-header-line-height: $line-height-base;
     margin-bottom: $vertical-space-sm;
   }
 
-  &>p:last-child,
-  &>ul:last-child,
-  &>ol:last-child,
-  &>.media__header {
+  & > p:last-child,
+  & > ul:last-child,
+  & > ol:last-child,
+  & > .media__header {
     margin-bottom: 0;
   }
 
@@ -89,14 +87,12 @@ $media-header-line-height: $line-height-base;
   }
 }
 
-
 .media__header {
   @include text-style-default;
   font-size: $media-header-font-size;
   line-height: $media-header-line-height;
   margin-bottom: $vertical-space-sm;
 }
-
 
 .media__byline {
   @include text-style-nav;
@@ -116,7 +112,6 @@ $media-header-line-height: $line-height-base;
 
 // Media items in a .card.
 .card {
-
   .media-list {
     border-top: none;
   }

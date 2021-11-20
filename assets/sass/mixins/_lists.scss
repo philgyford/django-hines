@@ -1,4 +1,3 @@
-
 @mixin list-inline() {
   padding-left: 0;
   list-style: none;
@@ -12,7 +11,7 @@
 @mixin list-item-bullet() {
   // Also see the exception to this background positioning in _cards.scss
   // And in .table--timeline in _tables.scss
-  background: url('#{$img-path}bullet.png') 0 $list-bullet-position no-repeat;
+  background: url("#{$img-path}bullet.png") 0 $list-bullet-position no-repeat;
   padding-left: ($border-width + $list-inline-padding);
 }
 

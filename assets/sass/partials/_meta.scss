@@ -80,7 +80,7 @@ $meta-offset-bottom: 0.4rem;
   // which is neat, but a bit too close:
   margin-bottom: ($meta-offset-bottom + $vertical-space);
 
-	@include media-breakpoint-up(md) {
+  @include media-breakpoint-up(md) {
     float: right;
     width: auto;
     max-width: 50%;

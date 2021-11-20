@@ -11,13 +11,11 @@
 @import "mixins/svgs";
 @import "mixins/type";
 
-
 // Hide the wierd Django Admin navbar on left:
 #nav-sidebar,
 #toggle-nav-sidebar {
   display: none;
 }
-
 
 .EasyMDEContainer {
   width: 100%;
@@ -62,10 +60,8 @@
 // The Markdown editor previews.
 .editor-preview-side,
 .editor-preview {
-
   // A bit nicer than default.
   padding: 1rem 20px;
-
 
   // Things that we want to look similar in EasyMDE preview:
   @import "partials/reboot";
@@ -82,7 +78,10 @@
   }
 
   .form-row & {
-    p, li, dt, dd {
+    p,
+    li,
+    dt,
+    dd {
       @include text-style-default;
       font-size: $font-size-base;
       line-height: $line-height-base;

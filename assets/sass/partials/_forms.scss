@@ -78,13 +78,12 @@ select.form__control {
 // For use with horizontal and inline forms, when you need the label text to
 // align with the form controls.
 //.form__col__label {
-  //padding-top: calc(#{$input-padding-y} + #{$input-border-width});
-  //padding-bottom: calc(#{$input-padding-y} + #{$input-border-width});
-  //margin-bottom: 0; // Override the `<label>` default
-  //// Compensate for labels having the smaller nav-font-size:
-  //line-height: ($font-size-base / $nav-font-size) * $input-line-height;
+//padding-top: calc(#{$input-padding-y} + #{$input-border-width});
+//padding-bottom: calc(#{$input-padding-y} + #{$input-border-width});
+//margin-bottom: 0; // Override the `<label>` default
+//// Compensate for labels having the smaller nav-font-size:
+//line-height: ($font-size-base / $nav-font-size) * $input-line-height;
 //}
-
 
 // Form control sizing
 //
@@ -129,12 +128,10 @@ select.form__control--sm {
   color: $form-feedback-invalid-color;
 }
 
-
 // Form validation
 
 // We're only using the invalid color, so replacing the call to the Bootstrap
 // mixin with the bits of its output that we need for that:
-
 
 .form__control {
   .was-validated &:invalid,
@@ -151,7 +148,6 @@ select.form__control--sm {
     }
   }
 }
-
 
 // Inline forms
 //
@@ -211,12 +207,11 @@ select.form__control--sm {
   margin-bottom: $vertical-space-sm;
 }
 
-
 .h-captcha {
   // Leaves a space for the iframe to load, which is this high:
   height: 78px;
 
   iframe {
     margin-bottom: 0;
-  };
+  }
 }

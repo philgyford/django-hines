@@ -16,9 +16,11 @@
   margin-left: auto;
 }
 
-
 // For each breakpoint, define the maximum width of the container in a media query
-@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+@mixin make-container-max-widths(
+  $max-widths: $container-max-widths,
+  $breakpoints: $grid-breakpoints
+) {
   @each $breakpoint, $container-max-width in $max-widths {
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       max-width: $container-max-width;
@@ -33,7 +35,7 @@
   margin-left: -$gutter * 0.5;
   // Pushes the main and sub columns apart if there's a column or more of space
   // between them:
-  justify-content: space-between;  // HINES
+  justify-content: space-between; // HINES
 }
 
 @mixin make-col-ready($gutter: $grid-gutter-width) {

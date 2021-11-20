@@ -1,15 +1,14 @@
 // Tables
 // Based on Bootstrap v4
 
-
 .table {
-
   max-width: 100%;
   margin-bottom: $vertical-space;
 
   th,
   td {
-    padding: calc(#{$table-cell-padding-y} - #{$table-border-width}) $table-cell-padding-x $table-cell-padding-y $table-cell-padding-x;
+    padding: calc(#{$table-cell-padding-y} - #{$table-border-width})
+      $table-cell-padding-x $table-cell-padding-y $table-cell-padding-x;
     vertical-align: top;
     border-top: $table-border-width solid $table-border-color;
   }
@@ -29,15 +28,16 @@
   }
 }
 
-
 .table--sm {
-
   th,
   td {
     // If there is vertical padding, remove the border-height to keep things on
     // the vertical grid. If there isn't any, then not much we can do.
     @if $table-cell-padding-sm-y > 0 {
-      padding: calc(#{$table-cell-padding-sm-y} - #{$table-border-width}) $table-cell-padding-sm-x $table-cell-padding-sm-y $table-cell-padding-sm-x;
+      padding: calc(#{$table-cell-padding-sm-y} - #{$table-border-width})
+        $table-cell-padding-sm-x
+        $table-cell-padding-sm-y
+        $table-cell-padding-sm-x;
     } @else {
       padding: $table-cell-padding-sm-y $table-cell-padding-sm-x;
     }
@@ -55,21 +55,20 @@
     // If there is vertical padding, remove the border-height to keep things on
     // the vertical grid. If there isn't any, then not much we can do.
     @if $table-cell-padding-sm-y > 0 {
-      padding-bottom: calc(#{$table-cell-padding-sm-y} - #{$table-border-width});
+      padding-bottom: calc(
+        #{$table-cell-padding-sm-y} - #{$table-border-width}
+      );
     } @else {
       padding-bottom: $table-cell-padding-sm-y;
     }
   }
 }
 
-
 .table--full {
   width: 100%;
 }
 
-
 .table--responsive {
-
   // Allow for bottom scrollbar:
   margin-bottom: ($vertical-space * 2);
 
@@ -94,7 +93,6 @@
  */
 
 .table--timeline {
-
   th,
   td {
     border: $table-border-width solid $table-border-color;
@@ -104,7 +102,6 @@
     ul li {
       background-position: 0 $list-bullet-position-xs;
     }
-
   }
   th {
     font-weight: $font-weight-bold;

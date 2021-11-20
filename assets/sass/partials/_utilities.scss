@@ -35,7 +35,9 @@
 // .utils-mt-1 { margin-top: ($vertical-space-sm / 2); }
 // .utils-mt-2 { margin-top: $vertical-space-sm; }
 // .utils-mt-3 { margin-top: $vertical-space; }
-.utils-mt-4 { margin-top: ($vertical-space * 2); }
+.utils-mt-4 {
+  margin-top: ($vertical-space * 2);
+}
 
 // Make everything within it inline, and bold sanserif.
 .utils-inline-container {

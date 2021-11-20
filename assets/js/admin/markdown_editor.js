@@ -216,7 +216,7 @@
     }
 
     /**
-     * Disables EasyMDE for this textarea. 
+     * Disables EasyMDE for this textarea.
      */
     function revertToTextArea(editor) {
       editor.toTextArea();

@@ -9,7 +9,6 @@
 //
 // Normalize is licensed MIT. https://github.com/necolas/normalize.css
 
-
 // Document
 //
 // 1. Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
@@ -44,7 +43,17 @@ html {
 
 // stylelint-disable selector-list-comma-newline-after
 // Shim for "new" HTML5 structural elements to display correctly (IE10, older browsers)
-article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, section {
+article,
+aside,
+dialog,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
   display: block;
 }
 // stylelint-enable selector-list-comma-newline-after
@@ -65,7 +74,6 @@ body {
     padding-left: $body-horizontal-space;
     padding-right: $body-horizontal-space;
   }
-
 }
 
 // Suppress the focus outline on elements that cannot be accessed via keyboard.
@@ -76,7 +84,6 @@ body {
 [tabindex="-1"]:focus {
   outline: 0 !important;
 }
-
 
 // Content grouping
 //
@@ -89,7 +96,6 @@ hr {
   overflow: visible; // 2
 }
 
-
 //
 // Typography
 //
@@ -99,7 +105,12 @@ hr {
 // By default, `<h1>`-`<h6>` all receive top and bottom margins. We nuke the top
 // margin for easier control within type scales as it avoids margin collapsing.
 // stylelint-disable selector-list-comma-newline-after
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: $headings-margin-bottom;
 }
@@ -122,7 +133,8 @@ p {
 // 4. Duplicate behavior to the data-* attribute for our tooltip plugin
 
 abbr[title],
-abbr[data-original-title] { // 4
+abbr[data-original-title] {
+  // 4
   text-decoration: underline; // 2
   text-decoration: underline dotted; // 2
   cursor: help; // 3
@@ -188,9 +200,12 @@ sup {
   vertical-align: baseline;
 }
 
-sub { bottom: -.25em; }
-sup { top: -.5em; }
-
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
 
 //
 // Links
@@ -220,7 +235,6 @@ a:not([href]):not([tabindex]) {
     outline: 0;
   }
 }
-
 
 //
 // Code
@@ -252,7 +266,6 @@ pre {
   line-height: $line-height-monospace-pre;
 }
 
-
 //
 // Figures
 //
@@ -261,7 +274,6 @@ figure {
   // Apply a consistent margin strategy (matches our type styles).
   margin: 0 0 $vertical-space 0;
 }
-
 
 //
 // Images and content
@@ -275,7 +287,6 @@ img {
 svg:not(:root) {
   overflow: hidden; // Hide the overflow in IE
 }
-
 
 // Avoid 300ms click delay on touch devices that support the `touch-action` CSS property.
 //
@@ -299,7 +310,6 @@ textarea {
   touch-action: manipulation;
 }
 
-
 //
 // Tables
 //
@@ -321,7 +331,6 @@ th {
   text-align: inherit;
 }
 
-
 //
 // Forms
 //
@@ -329,7 +338,7 @@ th {
 label {
   // Allow labels to use `margin` for spacing.
   display: inline-block;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 // Remove the default `border-radius` that macOS Chrome adds.
@@ -394,7 +403,6 @@ input[type="checkbox"] {
   padding: 0; // 2. Remove the padding in IE 10-
 }
 
-
 input[type="date"],
 input[type="time"],
 input[type="datetime-local"],
@@ -433,7 +441,7 @@ legend {
   width: 100%;
   max-width: 100%; // 1
   padding: 0;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   font-size: 1.5rem;
   line-height: inherit;
   color: inherit; // 2

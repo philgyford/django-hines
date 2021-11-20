@@ -25,7 +25,7 @@
   ol ol,
   ol ul,
   ul ol,
-  ul ul, {
+  ul ul {
     margin-bottom: 0;
   }
 
@@ -34,7 +34,6 @@
     // Fix position of bullet for the smaller font size:
     background-position: 0 $list-bullet-position-sm;
   }
-
 
   hr {
     border-top: $hr-border-width-sm solid $hr-border-color;

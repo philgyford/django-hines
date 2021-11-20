@@ -1,15 +1,13 @@
-
 // All of these should add up to a whole-number of $vertical-space's:
-$navbar-top-space:              ($vertical-space-sm * 0);
-$navbar-bottom-space:           ($vertical-space-sm * 3);
-$navbar-title-top-space:        ($vertical-space-sm * 2);
-$navbar-title-bottom-space:     ($vertical-space-sm * 1);
-$navbar-title-line-height:      ($vertical-space-sm * 1);
+$navbar-top-space: ($vertical-space-sm * 0);
+$navbar-bottom-space: ($vertical-space-sm * 3);
+$navbar-title-top-space: ($vertical-space-sm * 2);
+$navbar-title-bottom-space: ($vertical-space-sm * 1);
+$navbar-title-line-height: ($vertical-space-sm * 1);
 
 // Variations/additions for the widest width:
-$navbar-bottom-space-wide:      ($vertical-space-sm * 4);
-$navbar-form-top:               $vertical-space-sm;
-
+$navbar-bottom-space-wide: ($vertical-space-sm * 4);
+$navbar-form-top: $vertical-space-sm;
 
 .navbar {
   position: relative;
@@ -36,25 +34,25 @@ $navbar-form-top:               $vertical-space-sm;
 }
 
 //.navbar__icon {
-  //width: 50px;
-  //height: 50px;
-  //background: url("../img/site_icon.jpg") 0 0 no-repeat;
-  //background-size: contain;
+//width: 50px;
+//height: 50px;
+//background: url("../img/site_icon.jpg") 0 0 no-repeat;
+//background-size: contain;
 //}
 
 .navbar__title {
-  order:            1;
-  width:            100%;
-  margin-right:     auto;
-  margin-top:       $navbar-title-top-space;
-  padding-bottom:   $navbar-title-bottom-space;
-  font-size:        $navbar-brand-font-size;
-  line-height:      $navbar-title-line-height;
-  text-transform:   uppercase;
-  white-space:      nowrap;
-  letter-spacing:   0.03em;
-  word-spacing:     0.06em;
-  border-bottom:    $nav-border-width solid $border-color;
+  order: 1;
+  width: 100%;
+  margin-right: auto;
+  margin-top: $navbar-title-top-space;
+  padding-bottom: $navbar-title-bottom-space;
+  font-size: $navbar-brand-font-size;
+  line-height: $navbar-title-line-height;
+  text-transform: uppercase;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  word-spacing: 0.06em;
+  border-bottom: $nav-border-width solid $border-color;
 
   a {
     text-decoration: none;
@@ -86,7 +84,7 @@ $navbar-form-top:               $vertical-space-sm;
       width: 8em;
       margin-right: ($nav-border-width * 0.5);
       margin-bottom: 0;
-	    @include text-style-alt();
+      @include text-style-alt();
     }
 
     .button {
@@ -107,7 +105,6 @@ $navbar-form-top:               $vertical-space-sm;
 .js-navbar-nav-item-search {
   text-transform: uppercase;
 }
-
 
 @media (min-width: 510px) {
   /* Form is to right of title. Nav is underneath. */
@@ -145,7 +142,6 @@ $navbar-form-top:               $vertical-space-sm;
   // .navbar__form input {
   //   background: green;
   // }
-
 }
 
 @media (min-width: 1040px) {
@@ -185,10 +181,10 @@ $navbar-form-top:               $vertical-space-sm;
     form {
       width: 100%;
 
-      input[type=text] {
+      input[type="text"] {
         flex-grow: 1;
       }
-    };
+    }
   }
 
   // .navbar__form input {

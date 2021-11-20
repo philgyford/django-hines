@@ -1,5 +1,3 @@
-
-
 // Main col has different number of columns at the md, lg, xl widths:
 // So we use this to set the left-right margins and width of .figure-full
 // elements at those widths.
@@ -7,11 +5,15 @@
 @use "sass:math";
 
 @mixin figure-full($size) {
-  $main-col-ratio:   math.div(map-get($main-only-columns, $size), $grid-columns);
+  $main-col-ratio: math.div(map-get($main-only-columns, $size), $grid-columns);
 
   @include media-breakpoint-up($size) {
-    margin-left: percentage( -( math.div(((1 - $main-col-ratio) * 0.5), $main-col-ratio) ) );
-    margin-right: percentage( -( math.div(((1 - $main-col-ratio) * 0.5), $main-col-ratio) ) );
+    margin-left: percentage(
+      -(math.div(((1 - $main-col-ratio) * 0.5), $main-col-ratio))
+    );
+    margin-right: percentage(
+      -(math.div(((1 - $main-col-ratio) * 0.5), $main-col-ratio))
+    );
 
     figcaption {
       width: percentage($main-col-ratio);

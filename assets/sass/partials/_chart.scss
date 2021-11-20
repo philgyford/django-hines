@@ -3,22 +3,33 @@
  * For the stats d3 charts.
  */
 
-
 .chart {
   width: 100%;
   height: 200px;
 }
 
 // Normal bar chart:
-.chart--bargroup { fill: $border-color; }
+.chart--bargroup {
+  fill: $border-color;
+}
 
 // Stacked bar chart:
 .chart__inner--bar-stacked {
-  .chart__bargroup--0 { fill: $chart-bar-color-0; }
-  .chart__bargroup--1 { fill: $chart-bar-color-1; }
-  .chart__bargroup--2 { fill: $chart-bar-color-2; }
-  .chart__bargroup--3 { fill: $chart-bar-color-3; }
-  .chart__bargroup--4 { fill: $chart-bar-color-4; }
+  .chart__bargroup--0 {
+    fill: $chart-bar-color-0;
+  }
+  .chart__bargroup--1 {
+    fill: $chart-bar-color-1;
+  }
+  .chart__bargroup--2 {
+    fill: $chart-bar-color-2;
+  }
+  .chart__bargroup--3 {
+    fill: $chart-bar-color-3;
+  }
+  .chart__bargroup--4 {
+    fill: $chart-bar-color-4;
+  }
 }
 
 // From https://carto.com/carto-colors/
@@ -179,7 +190,6 @@
   }
 }
 
-
 .chart__axis--y--grid {
   line {
     stroke: $gray-light;
@@ -188,7 +198,6 @@
     stroke: transparent;
   }
 }
-
 
 .chart-tooltip {
   background: $white;
@@ -227,8 +236,18 @@
   height: $border-width;
   margin-right: $horizontal-space-sm;
 }
-.chart__legend__item__key--0 { background: $chart-bar-color-0; }
-.chart__legend__item__key--1 { background: $chart-bar-color-1; }
-.chart__legend__item__key--2 { background: $chart-bar-color-2; }
-.chart__legend__item__key--3 { background: $chart-bar-color-3; }
-.chart__legend__item__key--4 { background: $chart-bar-color-4; }
+.chart__legend__item__key--0 {
+  background: $chart-bar-color-0;
+}
+.chart__legend__item__key--1 {
+  background: $chart-bar-color-1;
+}
+.chart__legend__item__key--2 {
+  background: $chart-bar-color-2;
+}
+.chart__legend__item__key--3 {
+  background: $chart-bar-color-3;
+}
+.chart__legend__item__key--4 {
+  background: $chart-bar-color-4;
+}

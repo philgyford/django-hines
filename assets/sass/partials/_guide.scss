@@ -9,7 +9,10 @@ html.has-guide {
 
 // Replacement for make-container-max-widths() which sets the --max_width
 // variable correctly for our guides.
-@mixin make-guides-max-width($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+@mixin make-guides-max-width(
+  $max-widths: $container-max-widths,
+  $breakpoints: $grid-breakpoints
+) {
   @each $breakpoint, $container-max-width in $max-widths {
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       --max_width: calc(#{$container-max-width} - #{$grid-gutter-width});
@@ -60,23 +63,23 @@ html.has-guide {
 
 /* Helper variables for the two backgrounds. */
 :root {
- --repeating-width: calc(100% / var(--columns));
- --column-width: calc((100% / var(--columns)) - var(--gutter));
- --background-width: calc(100% + var(--gutter));
- --background-columns: repeating-linear-gradient(
-   to right,
-   var(--color),
-   var(--color) var(--column-width),
-   transparent var(--column-width),
-   transparent var(--repeating-width)
- );
- --background-baseline: repeating-linear-gradient(
-   to bottom,
-   var(--color),
-   var(--color) 1px,
-   transparent 1px,
-   transparent var(--baseline)
- );
+  --repeating-width: calc(100% / var(--columns));
+  --column-width: calc((100% / var(--columns)) - var(--gutter));
+  --background-width: calc(100% + var(--gutter));
+  --background-columns: repeating-linear-gradient(
+    to right,
+    var(--color),
+    var(--color) var(--column-width),
+    transparent var(--column-width),
+    transparent var(--repeating-width)
+  );
+  --background-baseline: repeating-linear-gradient(
+    to bottom,
+    var(--color),
+    var(--color) 1px,
+    transparent 1px,
+    transparent var(--baseline)
+  );
 }
 
 /**
@@ -89,19 +92,21 @@ html.has-guide {
 
 html.has-guide::before {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   margin-right: auto;
   margin-left: auto;
   width: calc(100% - (2 * var(--offset)));
   max-width: var(--max_width);
   min-height: 100vh;
-  content: '';
+  content: "";
   background-image: var(--background-columns), var(--background-baseline);
   background-size: var(--background-width) 100%;
   background-position: 0 var(--baseline-shift);
   z-index: 1000;
   pointer-events: none;
-
 }
 
 /**

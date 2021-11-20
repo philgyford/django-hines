@@ -12,7 +12,13 @@
   transition: $button-transition;
 
   @include text-style-nav;
-  @include button-size($button-padding-y, $button-padding-x, $font-size-base, $button-line-height, 0);
+  @include button-size(
+    $button-padding-y,
+    $button-padding-x,
+    $font-size-base,
+    $button-line-height,
+    0
+  );
 
   &:focus,
   &:hover {
@@ -49,7 +55,14 @@
 @each $color, $value in $theme-colors {
   .button--#{$color} {
     $hover-color: map-get($theme-hover-colors, $color);
-    @include button-variant($value, $value, $hover-color, $hover-color, $hover-color, $hover-color);
+    @include button-variant(
+      $value,
+      $value,
+      $hover-color,
+      $hover-color,
+      $hover-color,
+      $hover-color
+    );
   }
 }
 
@@ -92,5 +105,11 @@
 //
 
 .button--sm {
-  @include button-size($button-padding-y-sm, $button-padding-x-sm, $font-size-sm, $button-line-height-sm, 0);
+  @include button-size(
+    $button-padding-y-sm,
+    $button-padding-x-sm,
+    $font-size-sm,
+    $button-line-height-sm,
+    0
+  );
 }

@@ -12,7 +12,6 @@
 // When there comes a time we can ditch the Flexbox layout we should be able
 // to delete parts 2 and 3a.
 
-
 // 1. Styles for ALL browsers.
 
 .gallery {
@@ -27,7 +26,6 @@
     flex-grow: 1;
   }
 }
-
 
 // 2. Styles for browsers that DON'T support CSS Grid layouts:
 
@@ -58,11 +56,9 @@
   }
 }
 
-
 // 3. Styles for browsers that DO support CSS Grid layouts:
 
 @supports (display: grid) {
-
   // 3a. Undo the non-Grid styles:
 
   .gallery {
@@ -127,7 +123,6 @@
   }
 }
 
-
 // 4. All other styles for all browsers.
 
 .gallery__item__header {
@@ -142,7 +137,6 @@
   font-size: $font-size-base;
   line-height: $line-height-base;
 }
-
 
 .gallery__item__img {
   order: 1;
@@ -188,14 +182,13 @@
 
 // First undo the CSS Grid layout styles.
 @supports (display: grid) {
-  .gallery--flow{
+  .gallery--flow {
     display: flex;
     flex-wrap: wrap;
   }
 }
 
 .gallery--flow {
-
   .gallery__item {
     width: 150px;
     max-width: 150px;
@@ -214,7 +207,6 @@
 // then the items will all be in a single maximum-width column.
 @include media-breakpoint-up(md) {
   .grid__col--sub {
-
     .gallery--flow {
       .gallery__item {
         width: 100%;

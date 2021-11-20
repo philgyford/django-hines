@@ -21,7 +21,6 @@ $fig-max-cols: floor($main-columns * 0.5);
 // That as a percentage of total width:
 $fig-max-cols-percentage: percentage(math.div($fig-max-cols, $main-columns));
 
-
 .figure {
   margin: 0 0 $vertical-space 0;
 
@@ -46,7 +45,9 @@ $fig-max-cols-percentage: percentage(math.div($fig-max-cols, $main-columns));
     max-width: 100%;
 
     @include media-breakpoint-up(sm) {
-      max-width: calc( #{$fig-max-cols-percentage} - #{$grid-gutter-width * 0.5} );
+      max-width: calc(
+        #{$fig-max-cols-percentage} - #{$grid-gutter-width * 0.5}
+      );
     }
   }
 
@@ -72,7 +73,6 @@ figcaption {
   margin-top: $vertical-space-sm;
 }
 
-
 // BLOCKQUOTE
 
 .figure--blockquote {
@@ -86,11 +86,9 @@ figcaption {
   }
 }
 
-
 // IMG
 
 .figure--img {
-
   img {
     max-width: 100%;
     height: auto;
@@ -126,9 +124,7 @@ video {
   margin-bottom: $vertical-space;
 }
 
-
 .figure--embed {
-
   &.figure--left {
     @include media-breakpoint-up(sm) {
       width: 50%;
@@ -171,7 +167,6 @@ video {
     }
   }
 }
-
 
 .figure--embed__21by9 {
   &::before {
