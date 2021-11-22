@@ -392,30 +392,52 @@ class Post(TimeStampedModelMixin, models.Model):
             html isn't modified.
         """
         if field == "body":
+
+            # We start on section 2, i.e. the one after the first <hr>:
+            section_number = 2
+
+            # Have we inserted a § into this section yet?
+            added_anchor_to_section = False
+
+            # The elements we can insert a § into:
+            eligible_elements = ["p", "h2", "h3", "h4" "h5", "h6"]
+
             # We use html.parser as that doesn't add <html> amd <body> tags.
             soup = BeautifulSoup(html, "html.parser")
-            hrs = soup.find_all("hr")
-            for n, hr in enumerate(hrs):
-                id = "s{}".format(n + 2)
-                # Create the <a> tag:
-                anchor = soup.new_tag(
-                    "a",
-                    href="#{}".format(id),
-                    title="Link to this section",
-                    # Inline style on the off-chance it's used by RSS readers:
-                    style="text-decoration:none;",
-                )
-                anchor["class"] = "section-anchor"
-                anchor.string = "§"
-                # All the elements into which we'll insert an anchor
-                # (assuming it directly follows an <hr>):
-                el = hr.find_next(["p", "h2", "h3", "h4" "h5", "h6"])
-                if el is not None:
-                    # Set the ID of the <p> etc...
-                    el.attrs["id"] = id
-                    # ...prepend a space, then prepemd the <a>...
-                    el.insert(0, " ")
-                    el.insert(0, anchor)
+            first_hr = soup.hr
+
+            if first_hr is not None:
+                # Loop through every element at the same level as that first <hr>:
+                for el in first_hr.find_next_siblings():
+                    if el.name == "hr":
+                        # We're starting a new section.
+                        section_number += 1
+                        added_anchor_to_section = False
+
+                    elif (
+                        added_anchor_to_section is False
+                        and el.name in eligible_elements
+                    ):
+                        # We've found the first eligible element in this section,
+                        # so add an anchor to it.
+                        id = "s{}".format(section_number)
+                        anchor = soup.new_tag(
+                            "a",
+                            href="#{}".format(id),
+                            title="Link to this section",
+                            # Inline style on the off-chance it's used by RSS readers:
+                            style="text-decoration:none;",
+                        )
+                        anchor["class"] = "section-anchor"
+                        anchor.string = "§"
+                        # Set the ID of the <p> etc...
+                        el.attrs["id"] = id
+                        # ...prepend a space, then prepemd the <a>...
+                        el.insert(0, " ")
+                        el.insert(0, anchor)
+
+                        added_anchor_to_section = True
+
             html = soup.encode(formatter="html5").decode()
         return html
 

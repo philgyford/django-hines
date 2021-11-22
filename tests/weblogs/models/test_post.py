@@ -153,9 +153,7 @@ Cats""",
 
     def test_body_html_hines_markdown(self):
         """Formats.HINES_MARKDOWN should add section markers to the body."""
-        post = LivePostFactory(
-            html_format=Post.Formats.HINES_MARKDOWN,
-            body="""Dogs
+        body = """Dogs
 
 ----
 
@@ -165,8 +163,8 @@ Cats
 
 ##Fish
 
-Cod""",
-        )
+Cod"""  # noqaL E501
+        post = LivePostFactory(html_format=Post.Formats.HINES_MARKDOWN, body=body)
         self.assertEqual(
             post.body_html,
             """<p>Dogs</p>
@@ -196,6 +194,32 @@ Cats""",
 <hr>
 <figure src="test.png"></figure>
 <p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
+""",  # noqa: E501
+        )
+
+    def test_body_html_hines_markdown_figure_only(self):
+        """If a section only contains a <figure> it shouldn't have a marker.
+        But we should still count it as a section, in case we want to add markers later.
+        """
+        post = LivePostFactory(
+            html_format=Post.Formats.HINES_MARKDOWN,
+            body="""Dogs
+
+----
+
+<figure src="test.png"></figure>
+
+----
+
+Cats""",
+        )
+        self.assertEqual(
+            post.body_html,
+            """<p>Dogs</p>
+<hr>
+<figure src="test.png"></figure>
+<hr>
+<p id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
 """,  # noqa: E501
         )
 
