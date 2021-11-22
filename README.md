@@ -67,11 +67,11 @@ Then start up the web, assets and database containers:
 
     $ docker-compose up
 
-There are three containers, the webserver (`hines_web`), the front-end assets builder (`hines_assets`) and the postgres server (`hines_db`). All the repository's code is mirrored in the web container in the `/code/` directory.
+There are three containers, the webserver (`hines_web`), the front-end assets builder (`hines_assets`) and the postgres server (`hines_db`). All the repository's code is mirrored in the web and assets containers in the `/code/` directory.
 
 ### 4. Set up the database
 
-Once that's running, showing its logs, open another terminal window/tab.
+Once that's running, showing the logs, open another terminal window/tab.
 
 There are two ways we can populate the database. First we'll create an empty one, and second we'll populate it with a dump of data from the live site.
 
@@ -125,7 +125,11 @@ You can check if anything's running by doing this, which will list any Docker pr
 
 See details on the `./run` script below for running things inside the containers.
 
-VS Code will use the python environment on the web Docker container for autocompletion etc.
+To have VS Code know what python packages are available you'll need to set up a pipenv environment on your host machine:
+
+    $ pipenv install --dev
+
+This is *only* used for this purpose. It's apparently possible to use another Docker "remote container" in VS Code but it was way too fiddly for any benefit, compared to this.
 
 ### Front-end assets
 

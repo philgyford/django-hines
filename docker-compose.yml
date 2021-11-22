@@ -3,14 +3,24 @@ version: "3.9"
 # For use in development only.
 
 services:
+  assets:
+    build:
+      context: .
+      dockerfile: ./docker/assets/Dockerfile
+    command: sh -c "yarn && yarn watch"
+    container_name: hines_assets
+    volumes:
+      - .:/code
+      # HACK: use node_modules from inside image instead of one on local machine
+      - /code/node_modules
+
   db:
     container_name: hines_db
     env_file: .env
-    image: postgres:alpine
+    image: postgres:13
     ports:
       - "5432:5432"
     restart: unless-stopped
-    stop_grace_period: "3s"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
@@ -49,17 +59,6 @@ services:
     restart: unless-stopped
     volumes:
       - .:/code
-
-  assets:
-    build:
-      context: .
-      dockerfile: ./docker/assets/Dockerfile
-    command: sh -c "yarn && yarn watch"
-    container_name: hines_assets
-    volumes:
-      - .:/code
-      # HACK: use node_modules from inside image instead of one on local machine
-      - /code/node_modules
 
 volumes:
   postgres_data:
