@@ -438,8 +438,7 @@ class Post(TimeStampedModelMixin, models.Model):
             text = "{} {}".format(self.intro_html, self.body_html)
             # The HTML texts will contain entities like '&#8217;' which we
             # don't want in an excerpt, so:
-            html_parser = html.parser.HTMLParser()
-            text = html_parser.unescape(text)
+            text = html.unescape(text)
             text = truncate_string(
                 text, strip_html=True, chars=100, at_word_boundary=True
             )
