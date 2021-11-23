@@ -12,16 +12,7 @@ from hines.weblogs.factories import PostFactory
 from hines.users.factories import UserFactory
 
 
-class CommentForm(CustomCommentForm):
-    """
-    We use this for tests, because I don't know how to test the hCaptcha
-    field in CustomCommentForm.
-    """
-
-    hcaptcha = None
-
-
-@override_settings(HINES_AKISMET_API_KEY="abcd1234")
+@override_settings(HINES_AKISMET_API_KEY="abcd1234", HINES_USE_HCAPTCHA=False)
 class TestCommentForSpamTestCase(TestCase):
     """
     Testing the spam_checker.test_comment_for_spam() method.
@@ -33,6 +24,9 @@ class TestCommentForSpamTestCase(TestCase):
     here, with the idea that we could replace it and call
     the replacement from test_comment_for_spam() and these tests
     should still pass.
+
+    We set HINES_USE_HCAPTCHA to False because I'm not sure how to test
+    the form with the hCaptcha field in place.
     """
 
     def add_response(self, body):
@@ -54,14 +48,15 @@ class TestCommentForSpamTestCase(TestCase):
         Returns the request object.
         """
         data = self.make_comment_form_data(data=data)
-        return self.client.post("/comments/post/", data, REMOTE_ADDR="1.2.3.4")
+        r = self.client.post("/comments/post/", data, REMOTE_ADDR="1.2.3.4")
+        return r
 
     def make_comment_form_data(self, data=None):
         """Make data for a comment submission.
         data can be a dict of data submitted in the comment form.
         """
         post = PostFactory()
-        form = CommentForm(post)
+        form = CustomCommentForm(post)
 
         if data is None:
             data = {
@@ -168,15 +163,6 @@ class TestCommentForSpamTestCase(TestCase):
         self.assertEqual(len(responses.calls), 0)
 
     @responses.activate
-    def test_standard_user_is_tested(self):
-        "Ordinary users should have their comments tested by Akismet"
-        self.log_user_in(is_staff=False, is_superuser=False)
-        self.add_response("false")
-        self.post_comment()
-
-        self.assertEqual(len(responses.calls), 1)
-
-    @responses.activate
     def test_staff_user_is_not_tested(self):
         "Staff should not have their comments tested by Akismet"
         self.log_user_in(is_staff=True, is_superuser=False)
@@ -186,16 +172,12 @@ class TestCommentForSpamTestCase(TestCase):
         self.assertEqual(len(responses.calls), 0)
 
     @responses.activate
-    def test_logged_in_user_data(self):
-        "If the user is logged in, their name and email should be sent to Akismet"
-        user = self.log_user_in()
+    def test_not_logged_in_user_is_tested(self):
+        "Ordinary users should have their comments tested by Akismet"
         self.add_response("false")
-        self.post_comment(data={"comment": "Hello"})
+        self.post_comment()
 
-        params = self.get_request_params(responses.calls[0].request)
-        self.assertEqual(params["comment_author"], user.display_name)
-        self.assertEqual(params["comment_author_email"], user.email)
-        self.assertNotIn("comment_author_url", params)
+        self.assertEqual(len(responses.calls), 1)
 
     @responses.activate
     def test_not_logged_in_user_data(self):

@@ -1,21 +1,25 @@
 from django_comments.forms import CommentForm
+from django.conf import settings
+
 from hcaptcha.fields import hCaptchaField
 
 from .models import CustomComment
 
 
 class CustomCommentForm(CommentForm):
-
-    # I think that removing this is all we need to do to remove
-    # the hcaptcha field from the form:
-    hcaptcha = hCaptchaField()
-
     def get_comment_model(self):
         # Use our custom comment model instead of the built-in one.
         return CustomComment
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        if (
+            hasattr(settings, "HINES_USE_HCAPTCHA")
+            and settings.HINES_USE_HCAPTCHA is True
+        ):
+            self.fields["hcaptcha"] = hCaptchaField()
+
         self.fields["name"].required = True
         self.fields["name"].widget.attrs["required"] = "required"
 

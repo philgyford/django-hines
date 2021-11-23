@@ -19,7 +19,7 @@ def is_akismet_spam(comment, request):
     request - The Request object
     """
 
-    if comment.user and (comment.user.is_staff):
+    if comment.user and comment.user.is_staff:
         # Don't test comments posted by staff/admin.
         return False
 

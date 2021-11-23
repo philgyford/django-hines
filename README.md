@@ -129,7 +129,7 @@ To have VS Code know what python packages are available you'll need to set up a 
 
     $ pipenv install --dev
 
-This is *only* used for this purpose. It's apparently possible to use another Docker "remote container" in VS Code but it was way too fiddly for any benefit, compared to this.
+This is _only_ used for this purpose. It's apparently possible to use another Docker "remote container" in VS Code but it was way too fiddly for any benefit, compared to this.
 
 ### Front-end assets
 
@@ -344,6 +344,8 @@ Any Post on the Blog with slug `writing` between those two dates will use the `w
 Default is `None`, to disable this behaviour.
 
 `HINES_TIMEFORMAT` strftime to use for displaying times in templates. Default is `'%H:%M'`.
+
+`HINES_USE_HCAPTCHA`: boolean, whether to enable the hCaptcha field on weblog post comment forms.
 
 `HINES_USE_HTTPS`: e.g. `False`. Used when generating full URLs and the request object isn't available. Default `False`.
 
