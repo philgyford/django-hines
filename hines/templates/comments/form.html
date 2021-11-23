@@ -52,59 +52,6 @@ Could have this passed in:
     {{ form.hcaptcha }}
   </div>
 
-{% comment %}
-  {% for field in form %}
-    {% if field.is_hidden %}
-      {{ field }}
-    {% else %}
-
-      <div class="form__group{% if field.errors %} has-danger{% endif %}"{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
-        {% if field.html_name != "hcaptcha" %}
-          <label for="{{ field.id_for_label }}">
-            {{ field.label }}
-            {% if field.html_name == 'url' %}
-              (optional)
-            {% endif %}
-          </label>
-        {% endif %}
-
-        {% if field.html_name == 'comment' %}
-          <textarea class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %} rows="10"{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>{{ field.value|default_if_none:"" }}</textarea>
-        {% elif field.html_name == "hcaptcha" %}
-          {{ field }}
-        {% else %}
-          <input type="{{ field.field.widget.input_type }}" class="form__control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:"" }}" name="{{ field.html_name }}"{% if field.help_text %} aria-describedby="{{ field.id_for_label }}_help"{% endif %}{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}{% if field.html_name == "honeypot" %} tabindex="-1"{% endif %}>
-        {% endif %}
-
-        {% if field.errors %}
-          {% for error in field.errors %}
-            <div class="form__text form__text--invalid">{{ error }}</div>
-          {% endfor %}
-        {% endif %}
-
-        {% if field.help_text %}
-          <div id="{{ field.id_for_label }}_help" class="form__text">{{ field.help_text|safe }}</div>
-        {% endif %}
-
-        {% if field.html_name == 'comment' %}
-          {% load hines_comments %}
-          {% allowed_tags as tags %}
-          <div class="form__text">
-            {% if tags|length == 0 %}
-              No tags allowed in comments.
-            {% else %}
-              Allowed HTML tags: <code>{{ tags|join:"</code>, <code>" }}</code>.
-            {% endif %}
-            <br>
-            URLs will be turned into links.
-          </div>
-        {% endif %}
-      </div>
-
-    {% endif %}
-  {% endfor %}
-{% endcomment %}
-
   <p class="form__buttons">
     <button type="submit" name="post" class="button button--primary">Post comment</button>
   </p>

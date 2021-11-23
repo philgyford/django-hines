@@ -351,3 +351,6 @@ SPECTATOR_DATE_FORMAT = HINES_DATE_FORMAT
 # Used in the comments form.
 HCAPTCHA_SITEKEY = os.environ.get("HCAPTCHA_SITEKEY", None)
 HCAPTCHA_SECRET = os.environ.get("HCAPTCHA_SECRET", None)
+
+# Set to False to disable the hCaptcha field on the comment form:
+HINES_USE_HCAPTCHA = True
