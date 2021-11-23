@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from django_comments.signals import comment_was_posted
 
 from .models import CustomComment
-from .utils import test_comment_for_spam
+from .spam_checker import test_comment_for_spam
 
 
 @receiver(post_save, sender=CustomComment)
