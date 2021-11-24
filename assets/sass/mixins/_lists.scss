@@ -11,7 +11,10 @@
 @mixin list-item-bullet() {
   // Also see the exception to this background positioning in _cards.scss
   // And in .table--timeline in _tables.scss
-  background: url("#{$img-path}bullet.png") 0 $list-bullet-position no-repeat;
+  @include background-svg(bullet, $body-color);
+  background-position: 0 $list-bullet-position;
+  background-size: $border-width;
+  background-repeat: no-repeat;
   padding-left: ($border-width + $list-inline-padding);
 }
 

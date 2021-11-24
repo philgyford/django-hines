@@ -33,12 +33,12 @@ $chart-bar-color-4: #994e95;
 
 $theme-colors: (
   "primary": $blue,
-  "secondary": $black
+  "secondary": $black,
 );
 
 $theme-hover-colors: (
   "primary": $blue-dark,
-  "secondary": $black
+  "secondary": $black,
 );
 
 $yiq-text-dark: $gray-darkest;
@@ -120,7 +120,7 @@ $grid-breakpoints: (
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px
+  xl: 1200px,
 );
 
 @include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
@@ -134,7 +134,7 @@ $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1140px
+  xl: 1140px,
 );
 
 @include _assert-ascending($container-max-widths, "$container-max-widths");
@@ -160,7 +160,7 @@ $main-only-columns-xl: $main-columns;
 $main-only-columns: (
   md: $grid-columns,
   lg: 12,
-  xl: $main-columns
+  xl: $main-columns,
 );
 
 // Sidebar:
@@ -274,7 +274,7 @@ $list-bullet-position: 0.5em;
 // And when used with larger/smaller text:
 $list-bullet-position-lg: 0.65em;
 $list-bullet-position-sm: 0.4em;
-$list-bullet-position-xs: 0.1em;
+$list-bullet-position-xs: 0.25em;
 
 /////////////////////////////////////////////////////////////////////////
 // Tables
