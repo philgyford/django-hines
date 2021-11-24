@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "hines.links",
     "hines.patterns",
     "hines.weblogs",
+    "hines.webmentions",
 ]
 
 MIDDLEWARE = [
@@ -354,3 +355,7 @@ HCAPTCHA_SECRET = os.environ.get("HCAPTCHA_SECRET", None)
 
 # Set to False to disable the hCaptcha field on the comment form:
 HINES_USE_HCAPTCHA = True
+
+HINES_INCOMING_WEBMENTIONS_ALLOWED = True
+HINES_OUTGOING_WEBMENTIONS_ALLOWED = True
+HINES_AUTO_APPROVE_INCOMING_WEBMENTIONS = True
