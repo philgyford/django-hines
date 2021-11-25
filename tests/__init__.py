@@ -1,3 +1,7 @@
+from django.db import connection
+from django.db.models.base import ModelBase
+from django.test import TestCase
+
 from hines.core import app_settings
 
 
@@ -44,3 +48,44 @@ def override_app_settings(**test_settings):
         return __override_app_settings
 
     return _override_app_settings
+
+
+class ModelMixinTestCase(TestCase):
+    """
+    Test Case for abstract mixin models.
+
+    Subclass and set cls.mixin to your desired mixin.
+    access your model using cls.model.
+
+    From https://stackoverflow.com/a/57586891/250962
+    """
+
+    mixin = None
+    model = None
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        # Create a real model from the mixin
+        cls.model = ModelBase(
+            "__Test" + cls.mixin.__name__,
+            (cls.mixin,),
+            {"__module__": cls.mixin.__module__},
+        )
+
+        # Use schema_editor to create schema
+        with connection.schema_editor() as editor:
+            editor.create_model(cls.model)
+
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        # allow the transaction to exit
+        super().tearDownClass()
+
+        # Use schema_editor to delete schema
+        with connection.schema_editor() as editor:
+            editor.delete_model(cls.model)
+
+        # close the connection
+        connection.close()

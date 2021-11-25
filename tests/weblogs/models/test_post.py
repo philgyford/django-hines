@@ -16,6 +16,10 @@ from hines.weblogs.factories import (
     ScheduledPostFactory,
     TrackbackFactory,
 )
+from hines.webmentions.factories import (
+    IncomingWebmentionFactory,
+    OutgoingWebmentionFactory,
+)
 
 
 class PostTestCase(TestCase):
@@ -562,3 +566,132 @@ Cats""",
             time_published=make_datetime("2019-12-31 23:59:59"),
         )
         self.assertFalse(p.comments_allowed)
+
+
+class MentionablePostTestCase(TestCase):
+    "Testing the properties and methods inherited from MentionableMixin"
+
+    def test_incoming_webmentions(self):
+        "Method should return a queryset of public, validated incoming webmentions"
+        post = LivePostFactory()
+        url = post.get_absolute_url_with_domain()
+
+        wm1 = IncomingWebmentionFactory(
+            post=post, target_url=url, is_public=True, is_validated=True
+        )
+        wm2 = IncomingWebmentionFactory(
+            post=post, target_url=url, is_public=True, is_validated=True
+        )
+        # Non-public:
+        IncomingWebmentionFactory(
+            post=post, target_url=url, is_public=False, is_validated=True
+        )
+        # Not validated:
+        IncomingWebmentionFactory(
+            post=post, target_url=url, is_public=True, is_validated=False
+        )
+        # On a different Post
+        IncomingWebmentionFactory(is_public=True, is_validated=True)
+
+        mentions = post.incoming_webmentions
+
+        self.assertEqual(len(mentions), 2)
+        self.assertIn(wm1, mentions)
+        self.assertIn(wm2, mentions)
+
+    def test_outgoing_webmentions(self):
+        "Method should return a queryset of outgoing webmentions"
+        post = LivePostFactory()
+        url = post.get_absolute_url_with_domain()
+
+        wm1 = OutgoingWebmentionFactory(post=post, source_url=url)
+        wm2 = OutgoingWebmentionFactory(post=post, source_url=url)
+        # On a different post:
+        OutgoingWebmentionFactory()
+
+        mentions = post.outgoing_webmentions
+
+        self.assertEqual(len(mentions), 2)
+        self.assertIn(wm1, mentions)
+        self.assertIn(wm2, mentions)
+
+    # incoming_webmentions_allowed
+
+    @override_app_settings(INCOMING_WEBMENTIONS_ALLOWED=True)
+    def test_incoming_webmentions_allowed_not_live(self):
+        "If Post isn't Live, should return false"
+        blog = BlogFactory(allow_incoming_webmentions=True)
+        post = DraftPostFactory(blog=blog, allow_incoming_webmentions=True)
+        self.assertFalse(post.incoming_webmentions_allowed)
+
+    @override_app_settings(INCOMING_WEBMENTIONS_ALLOWED=False)
+    def test_incoming_webmentions_allowed_global_setting_false(self):
+        "If global setting is False, should return false"
+        blog = BlogFactory(allow_incoming_webmentions=True)
+        post = LivePostFactory(blog=blog, allow_incoming_webmentions=True)
+        self.assertFalse(post.incoming_webmentions_allowed)
+
+    @override_app_settings(INCOMING_WEBMENTIONS_ALLOWED=True)
+    def test_incoming_webmentions_allowed_blog_false(self):
+        "If Blog setting is False, should return false"
+        blog = BlogFactory(allow_incoming_webmentions=False)
+        post = LivePostFactory(blog=blog, allow_incoming_webmentions=True)
+        self.assertFalse(post.incoming_webmentions_allowed)
+
+    @override_app_settings(INCOMING_WEBMENTIONS_ALLOWED=True)
+    def test_incoming_webmentions_allowed_post_false(self):
+        "If Post setting is False, should return false"
+        blog = BlogFactory(allow_incoming_webmentions=True)
+        post = LivePostFactory(blog=blog, allow_incoming_webmentions=False)
+        self.assertFalse(post.incoming_webmentions_allowed)
+
+    @override_app_settings(INCOMING_WEBMENTIONS_ALLOWED=True)
+    def test_incoming_webmentions_allowed_true(self):
+        "If all are True, it should return True"
+        blog = BlogFactory(allow_incoming_webmentions=True)
+        post = LivePostFactory(blog=blog, allow_incoming_webmentions=True)
+        self.assertTrue(post.incoming_webmentions_allowed)
+
+    # outgoing_webmentions_allowed
+
+    @override_app_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
+    def test_outgoing_webmentions_allowed_not_live(self):
+        "If Post isn't Live, should return false"
+        blog = BlogFactory(allow_outgoing_webmentions=True)
+        post = DraftPostFactory(blog=blog, allow_outgoing_webmentions=True)
+        self.assertFalse(post.outgoing_webmentions_allowed)
+
+    @override_app_settings(OUTGOING_WEBMENTIONS_ALLOWED=False)
+    def test_outgoing_webmentions_allowed_global_setting_false(self):
+        "If global setting is False, should return false"
+        blog = BlogFactory(allow_outgoing_webmentions=True)
+        post = LivePostFactory(blog=blog, allow_outgoing_webmentions=True)
+        self.assertFalse(post.outgoing_webmentions_allowed)
+
+    @override_app_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
+    def test_outgoing_webmentions_allowed_blog_false(self):
+        "If Blog setting is False, should return false"
+        blog = BlogFactory(allow_outgoing_webmentions=False)
+        post = LivePostFactory(blog=blog, allow_outgoing_webmentions=True)
+        self.assertFalse(post.outgoing_webmentions_allowed)
+
+    @override_app_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
+    def test_outgoing_webmentions_allowed_post_false(self):
+        "If Post setting is False, should return false"
+        blog = BlogFactory(allow_outgoing_webmentions=True)
+        post = LivePostFactory(blog=blog, allow_outgoing_webmentions=False)
+        self.assertFalse(post.outgoing_webmentions_allowed)
+
+    @override_app_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
+    def test_outgoing_webmentions_allowed_true(self):
+        "If all are True, it should return True"
+        blog = BlogFactory(allow_outgoing_webmentions=True)
+        post = LivePostFactory(blog=blog, allow_outgoing_webmentions=True)
+        self.assertTrue(post.outgoing_webmentions_allowed)
+
+    # get_all_html
+
+    def test_get_all_html(self):
+        "It should return all of the Post's html"
+        post = LivePostFactory(intro="<p>Intro</p>", body="<p>Body</p>")
+        self.assertEqual(post.get_all_html(), "<p>Intro</p>\n<p>Body</p>\n")

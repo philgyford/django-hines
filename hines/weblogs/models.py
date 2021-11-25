@@ -27,6 +27,7 @@ from hines.core.utils import (
 )
 from hines.custom_comments.utils import add_comment_message
 from . import managers
+from hines.webmentions.models import MentionableMixin
 
 
 class Blog(TimeStampedModelMixin, models.Model):
@@ -81,6 +82,14 @@ class Blog(TimeStampedModelMixin, models.Model):
         default=True, help_text="If true, can still be overridden in Django SETTINGS."
     )
 
+    allow_incoming_webmentions = models.BooleanField(
+        default=True, help_text="If true, can still be overridden in Django SETTINGS."
+    )
+
+    allow_outgoing_webmentions = models.BooleanField(
+        default=True, help_text="If true, can still be overridden in Django SETTINGS."
+    )
+
     def __str__(self):
         return self.name
 
@@ -131,7 +140,7 @@ class TaggedPost(TaggedItemBase):
     content_object = models.ForeignKey("Post", on_delete=models.CASCADE)
 
 
-class Post(TimeStampedModelMixin, models.Model):
+class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
     """
     TimeStampedModelMixin gives us:
 
@@ -532,6 +541,56 @@ class Post(TimeStampedModelMixin, models.Model):
 
         else:
             return self.comments_are_open
+
+    @property
+    def incoming_webmentions_allowed(self):
+        """
+        Do we currently accept incoming webmentions on this object?
+
+        Overriding the parent's class with Post-specific permissions.
+        """
+        if self.status != self.Status.LIVE:
+            return False
+
+        elif app_settings.INCOMING_WEBMENTIONS_ALLOWED is not True:
+            return False
+
+        elif self.blog.allow_incoming_webmentions is False:
+            return False
+
+        elif self.allow_incoming_webmentions is False:
+            return False
+
+        else:
+            return True
+
+    @property
+    def outgoing_webmentions_allowed(self):
+        """
+        Do we currently allow this object to send webmentions?
+
+        Overriding the parent's class with Post-specific permissions.
+        """
+        if self.status != self.Status.LIVE:
+            return False
+
+        elif app_settings.OUTGOING_WEBMENTIONS_ALLOWED is not True:
+            return False
+
+        elif self.blog.allow_outgoing_webmentions is False:
+            return False
+
+        elif self.allow_outgoing_webmentions is False:
+            return False
+
+        else:
+            return True
+
+    def get_all_html(self):
+        """Return the full HTML for this Post.
+        Required for MentionableMixin.
+        """
+        return self.intro_html + self.body_html
 
 
 class PostCommentModerator(CommentModerator):

@@ -22,7 +22,17 @@ class BlogAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             None,
-            {"fields": ("name", "short_name", "slug", "sort_order", "allow_comments")},
+            {
+                "fields": (
+                    "name",
+                    "short_name",
+                    "slug",
+                    "sort_order",
+                    "allow_comments",
+                    "allow_incoming_webmentions",
+                    "allow_outgoing_webmentions",
+                )
+            },
         ),
         (
             "Feed",
@@ -105,13 +115,15 @@ class PostAdmin(admin.ModelAdmin):
             {"classes": ("collapse",), "fields": ("author", "featured", "remote_url")},
         ),
         (
-            "Comments",
+            "Comments, Webmentions and Trackbacks",
             {
                 "classes": ("collapse",),
                 "fields": (
                     "allow_comments",
-                    "comment_count",
-                    "last_comment_time",
+                    "allow_incoming_webmentions",
+                    "allow_outgoing_webmentions",
+                    ("comment_count", "last_comment_time"),
+                    "incoming_webmention_count",
                     "trackback_count",
                 ),
             },

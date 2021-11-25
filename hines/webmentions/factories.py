@@ -4,7 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 
 from . import models
 from hines.weblogs.factories import LivePostFactory
-from hines.weblogs.models import Post
 
 
 class IncomingWebmentionFactory(factory.django.DjangoModelFactory):
@@ -12,10 +11,10 @@ class IncomingWebmentionFactory(factory.django.DjangoModelFactory):
     You can associate the webmention with a Post by passing it in like this:
 
         p = LivePostFactory(title='My title')
-        c = IncomingWebmentionFactory(comment='hi', post=p)
+        c = IncomingWebmentionFactory(source_title='hi', post=p)
 
     Or:
-        c = IncomingWebmentionFactory(comment='hi', content_object=p)
+        c = IncomingWebmentionFactory(source_title='hi', content_object=p)
 
 
     Otherwise a LivePost will be created to associate this comment with.
@@ -27,10 +26,12 @@ class IncomingWebmentionFactory(factory.django.DjangoModelFactory):
 
     source_title = factory.Sequence(lambda n: "Source title %s" % n)
 
+    source_url = factory.Faker("uri")
+
     content_object = factory.SubFactory(LivePostFactory)
     object_pk = factory.SelfAttribute("content_object.pk")
     content_type = factory.LazyAttribute(
-        lambda o: ContentType.objects.get_for_model(Post)
+        lambda o: ContentType.objects.get_for_model(o.content_object)
     )
 
     @factory.post_generation
@@ -45,10 +46,10 @@ class OutgoingWebmentionFactory(factory.django.DjangoModelFactory):
     You can associate the webmention with a Post by passing it in like this:
 
         p = LivePostFactory(title='My title')
-        c = OutgoingWebmentionFactory(comment='hi', post=p)
+        c = OutgoingWebmentionFactory(target_url='https://foo.com', post=p)
 
     Or:
-        c = OutgoingWebmentionFactory(comment='hi', content_object=p)
+        c = OutgoingWebmentionFactory(target_url='https://foo.com', content_object=p)
 
 
     Otherwise a LivePost will be created to associate this comment with.
@@ -58,12 +59,14 @@ class OutgoingWebmentionFactory(factory.django.DjangoModelFactory):
         model = models.OutgoingWebmention
         exclude = ["content_object"]
 
-    source_title = factory.Sequence(lambda n: "Source title %s" % n)
+    target_url = factory.Faker("uri")
+
+    target_endpoint_url = factory.Faker("uri")
 
     content_object = factory.SubFactory(LivePostFactory)
     object_pk = factory.SelfAttribute("content_object.pk")
     content_type = factory.LazyAttribute(
-        lambda o: ContentType.objects.get_for_model(Post)
+        lambda o: ContentType.objects.get_for_model(o.content_object)
     )
 
     @factory.post_generation
