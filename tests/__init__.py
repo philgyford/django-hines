@@ -63,11 +63,20 @@ class ModelMixinTestCase(TestCase):
     mixin = None
     model = None
 
+    # If you use the same mixin for more than one TestCase object,
+    # you'll get errors about the Model "was already registered".
+    # This is because the models created for each TestCase will have
+    # the same name, of "__Test" + cls.mixin.__name__
+    # To avoid this, set a new name for the class using this property
+    # in your TestCase.
+    class_name = None
+
     @classmethod
     def setUpClass(cls) -> None:
         # Create a real model from the mixin
+        class_name = cls.class_name if cls.class_name else f"__Test{cls.mixin.__name__}"
         cls.model = ModelBase(
-            "__Test" + cls.mixin.__name__,
+            class_name,
             (cls.mixin,),
             {"__module__": cls.mixin.__module__},
         )

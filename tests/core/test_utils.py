@@ -19,7 +19,12 @@ class MarkdownifyTestCase(TestCase):
         html = markdownify("```html\n<p>Hi</p>\n```")
         self.assertEqual(
             html,
-            '<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hi<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>\n</code></pre></div>\n',
+            '<div class="codehilite"><pre>'
+            '<span></span><code><span class="p">&lt;</span>'
+            '<span class="nt">p</span><span class="p">&gt;</span>Hi'
+            '<span class="p">&lt;/</span><span class="nt">p</span>'
+            '<span class="p">&gt;</span>\n</code>'
+            '</pre></div>\n',
         )  # noqa: E501
 
     def test_output_format_default(self):

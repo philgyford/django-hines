@@ -157,7 +157,8 @@ def expire_view_cache(path, key_prefix=None):
 
 def get_site_url():
     """
-    Returns the full domain of the website.
+    Returns the full domain of the website preceded by "http(s)://"
+
     Shouldn't end in a slash, so it can be used with static() etc.
     (Although it appears to return URLs ending in slashes?)
     """

@@ -85,7 +85,7 @@ class OutgoingWebmention(TimeStampedModelMixin, models.Model):
     target_url on another site.
     """
 
-    class OutgoingStatus(models.TextChoices):
+    class Status(models.TextChoices):
         WAITING = "WA", "Waiting to be sent"
         UNREACHABLE = "UN", "Target URL is unreachable"
         TARGET_ERROR = "TE", "Target URL returned an error"
@@ -111,7 +111,7 @@ class OutgoingWebmention(TimeStampedModelMixin, models.Model):
     )
 
     status = models.CharField(
-        max_length=2, choices=OutgoingStatus.choices, default=OutgoingStatus.WAITING
+        max_length=2, choices=Status.choices, default=Status.WAITING
     )
 
     response_code = models.PositiveIntegerField(default=None, null=True)
