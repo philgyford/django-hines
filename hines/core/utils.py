@@ -2,6 +2,7 @@
 from datetime import datetime
 import pytz
 import re
+from urllib.parse import urlparse, parse_qsl, unquote_plus
 
 from django.contrib.sites.models import Site
 from django.utils.html import strip_tags
@@ -173,3 +174,58 @@ def get_site_url():
     domain = Site.objects.get_current().domain
 
     return "{}://{}".format(protocol, domain)
+
+
+class Url(object):
+    """
+    A url object that can be compared with other url orbjects
+    without regard to the vagaries of encoding, escaping, and ordering
+    of parameters in query strings.
+
+    e.g.
+
+        if Url(url1) == Url(url2):
+            print("equal URLs")
+
+    https://stackoverflow.com/a/9468284/250962
+
+    We only use this (at time of writing) via the urls_are_equal()
+    function below.
+    """
+
+    def __init__(self, url):
+        parts = urlparse(url)
+        _query = frozenset(parse_qsl(parts.query))
+        _path = unquote_plus(parts.path)
+        parts = parts._replace(query=_query, path=_path)
+        self.parts = parts
+
+    def __eq__(self, other):
+        return self.parts == other.parts
+
+    def __hash__(self):
+        return hash(self.parts)
+
+
+def urls_are_equal(url1, url2, ignore_scheme=None):
+    """
+    Test whether two URLs are equal
+
+    If ignore_schema is "http" then we ignore any difference in
+    http/https in the URLs. Otherwise this matters.
+
+    Order of query string arguments does not matter.
+    Different #fragments do matter.
+    """
+    url1 = Url(url1)
+    url2 = Url(url2)
+
+    if ignore_scheme == "http":
+        if url1.parts.scheme in ["http", "https"] and url2.parts.scheme in [
+            "http",
+            "https",
+        ]:
+            url1.parts = url1.parts._replace(scheme="")
+            url2.parts = url2.parts._replace(scheme="")
+
+    return url1 == url2

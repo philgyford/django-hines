@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from hines.core.utils import markdownify, truncate_string
+from hines.core.utils import markdownify, truncate_string, urls_are_equal
 
 
 class MarkdownifyTestCase(TestCase):
@@ -24,7 +24,7 @@ class MarkdownifyTestCase(TestCase):
             '<span class="nt">p</span><span class="p">&gt;</span>Hi'
             '<span class="p">&lt;/</span><span class="nt">p</span>'
             '<span class="p">&gt;</span>\n</code>'
-            '</pre></div>\n',
+            "</pre></div>\n",
         )  # noqa: E501
 
     def test_output_format_default(self):
@@ -190,4 +190,70 @@ class TruncateStringTestCase(TestCase):
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget "
             "odio eget odio porttitor accumsan in eget elit. Integer gravida "
             "egestas nunc. Mauris at tortor ornare, blandit eros quis,...",
+        )
+
+
+class UrlsAreEqualTestCase(TestCase):
+    """
+    Testing whether two URLs passed through Url() are equal or not.
+    """
+
+    def test_equal(self):
+        self.assertTrue(
+            urls_are_equal(
+                "https://example.org/foo/bar/", "https://example.org/foo/bar/"
+            )
+        )
+
+    def test_not_equal(self):
+        self.assertFalse(urls_are_equal("https://foo.org/", "https://bar.com/"))
+
+    def test_scheme(self):
+        "Same URLs with http or https difference should not be the same"
+        self.assertFalse(urls_are_equal("https://example.org/", "http://example.org/"))
+
+    def test_query_string(self):
+        "Order of query string args should not matter"
+        self.assertTrue(
+            urls_are_equal(
+                "https://example.org/?a=1&b=2", "https://example.org/?b=2&a=1"
+            )
+        )
+
+    def test_trailing_slash(self):
+        "Having a trailing slash or not should equal different URLs"
+        self.assertFalse(
+            urls_are_equal("https://example.org/foo/", "https://example.org/foo")
+        )
+
+    def test_fragment_equal(self):
+        "Same fragments should be equal"
+        self.assertTrue(
+            urls_are_equal("https://example.org/foo/#a", "https://example.org/foo/#a")
+        )
+
+    def test_fragment_unequal(self):
+        "Different fragments should be unequal"
+        self.assertFalse(
+            urls_are_equal("https://example.org/foo/#a", "https://example.org/foo/#b")
+        )
+
+    def test_ignore_scheme(self):
+        "Should be able to ignore http/https differences"
+        self.assertTrue(
+            urls_are_equal(
+                "https://example.org/foo/",
+                "http://example.org/foo/",
+                ignore_scheme="http",
+            )
+        )
+
+    def test_ignore_scheme_ftp(self):
+        "Using ignore_scheme should not mean http vs ftp URLs are equal"
+        self.assertFalse(
+            urls_are_equal(
+                "ftp://example.org/foo/",
+                "http://example.org/foo/",
+                ignore_scheme="http",
+            )
         )

@@ -1,14 +1,18 @@
-from urllib.parse import urlparse
+import logging
+from urllib.parse import urldefrag
 
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.models import Site
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 
 from bs4 import BeautifulSoup
 
 from hines.core import app_settings
+from hines.core.utils import urls_are_equal
 from .models import OutgoingWebmention
+
+
+log = logging.getLogger(__name__)
 
 
 class MentionableMixin(models.Model):
@@ -121,6 +125,10 @@ class MentionableMixin(models.Model):
                 mention.status == OutgoingWebmention.Status.WAITING
                 and mention.target_url not in target_urls
             ):
+                log.debug(
+                    f"Deleting OutgoingWebmention ({mention.pk}) that's no longer "
+                    f"present: {mention.target_url}"
+                )
                 mention.delete()
 
         # Add any new URLs that are in the HTML
@@ -134,24 +142,30 @@ class MentionableMixin(models.Model):
                 content_type=ctype,
                 object_pk=self.pk,
             )
+            log.debug(f"Added new OutgoingWebmention ({obj.pk}): {target_url}")
 
     def _get_outgoing_urls(self):
         """
         Gets all the outgoing links from the object's HTML.
 
         Returns an array of unique URLs.
-        Only includes URLs that do not link to a page on this site.
+        Only includes URLs that do not link to this page.
         """
-        source_domain = Site.objects.get_current().domain
-        links = []
+        source_url = urldefrag(self.get_absolute_url_with_domain())[0]
+        urls = []
 
         soup = BeautifulSoup(self.get_all_html(), "html.parser")
-        raw_links = [a["href"] for a in soup.find_all("a", href=True)]
+        raw_urls = [a["href"] for a in soup.find_all("a", href=True)]
 
-        for link in raw_links:
-            if link[:8] == "https://" or link[:7] == "http://":
-                if urlparse(link).netloc != source_domain:
-                    links.append(link)
+        for target_url in raw_urls:
+            target_url = urldefrag(target_url)[0]
+            if target_url[:8] == "https://" or target_url[:7] == "http://":
+                if (
+                    urls_are_equal(source_url, target_url, ignore_scheme="http")
+                    is False
+                ):
+
+                    urls.append(target_url)
 
         # Get rid of any duplicates:
-        return list(set(links))
+        return list(set(urls))

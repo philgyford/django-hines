@@ -236,16 +236,61 @@ class MockedMentionableMixinTestCase(ModelMixinTestCase):
 
     @override_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
     @patch("hines.webmentions.models.MentionableMixin.get_all_html")
-    def test_generate_outgoing_ignores_links_to_self_with_domain(self, get_all_html):
-        "It should ignore any links that are to the current site"
+    @patch("hines.webmentions.models.MentionableMixin.get_absolute_url_with_domain")
+    def test_generate_outgoing_ignores_links_to_source_url(
+        self, get_absolute_url_with_domain, get_all_html
+    ):
+        "It should ignore any links that are to the same page"
+        get_absolute_url_with_domain.return_value = "https://example.com/my/post/"
         get_all_html.return_value = (
+            # Should be included - different pages:
             '<a href="http://example.com/foo">Foo</a>'
             '<a href="https://example.com/bar">bar</a>'
+            # Should not be included:
+            '<a href="https://example.com/my/post/">post</a>'
         )
 
         self.obj.save()
 
+        self.assertEqual(len(self.obj.outgoing_webmentions), 2)
+
+    @override_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
+    @patch("hines.webmentions.models.MentionableMixin.get_all_html")
+    @patch("hines.webmentions.models.MentionableMixin.get_absolute_url_with_domain")
+    def test_generate_outgoing_ignores_http_https_difference(
+        self, get_absolute_url_with_domain, get_all_html
+    ):
+        "It should treat source/target urls that only differ by http/https as the same"
+        get_absolute_url_with_domain.return_value = "https://example.com/my/post/"
+        get_all_html.return_value = '<a href="http://example.com/my/post/">Foo</a>'
+
+        self.obj.save()
+
         self.assertEqual(len(self.obj.outgoing_webmentions), 0)
+
+    @override_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
+    @patch("hines.webmentions.models.MentionableMixin.get_all_html")
+    def test_generate_outgoing_ignores_ftp(self, get_all_html):
+        "It should ignore any non-http(s) links"
+        get_all_html.return_value = '<a href="ftp://example.com/foo">Foo</a>'
+
+        self.obj.save()
+
+        self.assertEqual(len(self.obj.outgoing_webmentions), 0)
+
+    @override_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
+    @patch("hines.webmentions.models.MentionableMixin.get_all_html")
+    def test_generate_outgoing_ignores_fragment_differences(self, get_all_html):
+        "It should treat urls that only differ by #fragment as the same"
+        get_all_html.return_value = (
+            '<a href="https://example.com/foo">Foo</a>'
+            '<a href="https://example.com/foo#a">Foo</a>'
+            '<a href="https://example.com/foo#b">Foo</a>'
+        )
+
+        self.obj.save()
+
+        self.assertEqual(len(self.obj.outgoing_webmentions), 1)
 
     @override_settings(OUTGOING_WEBMENTIONS_ALLOWED=True)
     @patch("hines.webmentions.models.MentionableMixin.get_all_html")
