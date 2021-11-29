@@ -25,10 +25,12 @@ class IncomingWebmention(TimeStampedModelMixin, models.Model):
     source_url = models.URLField(
         blank=True,
         help_text="Source address of the HTTP request that sent this webmention.",
+        verbose_name="Source URL",
     )
     target_url = models.URLField(
         blank=True,
         help_text="URL of the object on this site that the mention was sent to.",
+        verbose_name="Target URL",
     )
 
     is_public = models.BooleanField(
@@ -87,9 +89,11 @@ class OutgoingWebmention(TimeStampedModelMixin, models.Model):
 
     class Status(models.TextChoices):
         WAITING = "WA", "Waiting to be sent"
-        UNREACHABLE = "UN", "Target URL is unreachable"
+        TARGET_UNREACHABLE = "TU", "Target URL is unreachable"
         TARGET_ERROR = "TE", "Target URL returned an error"
+        ENDPOINT_UNREACHABLE = "EU", "Endpoint URL is unreachable"
         ENDPOINT_ERROR = "EE", "Endpoint URL returned an error"
+        NO_ENDPOINT = "NE", "No endpoint found"
         OK = "OK", "Target accepted the webmention"
 
     # The object whose Detail page the source_url represents.
@@ -100,21 +104,44 @@ class OutgoingWebmention(TimeStampedModelMixin, models.Model):
     source_url = models.URLField(
         blank=True,
         help_text="ULR of the object on this site that sent the webmention.",
+        verbose_name="Source URL",
     )
 
-    target_url = models.URLField(blank=True, help_text="The URL that was mentioned.")
+    target_url = models.URLField(
+        blank=True, help_text="The URL that was mentioned.", verbose_name="Target URL"
+    )
 
     target_endpoint_url = models.URLField(
         null=True,
         blank=True,
         help_text="The endpoint URL to which we sent the webmention.",
+        verbose_name="Target endpoint URL",
     )
 
     status = models.CharField(
         max_length=2, choices=Status.choices, default=Status.WAITING
     )
 
-    response_code = models.PositiveIntegerField(default=None, null=True)
+    target_response_code = models.PositiveIntegerField(
+        default=None, null=True, blank=True
+    )
+    endpoint_response_code = models.PositiveIntegerField(
+        default=None, null=True, blank=True
+    )
+
+    error_message = models.CharField(max_length=255, blank=True)
+    last_attempt_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         ordering = ["-time_created"]
+
+    @classmethod
+    def get_error_statuses(cls):
+        "The Status values which count as errors"
+        return [
+            cls.Status.TARGET_UNREACHABLE,
+            cls.Status.TARGET_ERROR,
+            cls.Status.ENDPOINT_UNREACHABLE,
+            cls.Status.ENDPOINT_ERROR,
+            cls.Status.NO_ENDPOINT,
+        ]

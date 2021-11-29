@@ -1,6 +1,7 @@
 from django.db import connection
 from django.db.models.base import ModelBase
 from django.test import TestCase
+import responses
 
 from hines.core import app_settings
 
@@ -98,3 +99,22 @@ class ModelMixinTestCase(TestCase):
 
         # close the connection
         connection.close()
+
+
+class ResponsesMixin(object):
+    """
+    Add this to a TestCase class to activate responses,
+    instead of using the `@responses.activate` decorator on every
+    test method.
+    https://gist.github.com/asfaltboy/bebd2c6943c34b0b27a7e3060448049b
+    """
+
+    def setUp(self):
+        assert responses, "responses package required to use ResponsesMixin"
+        responses.start()
+        super().setUp()
+
+    def tearDown(self):
+        super().tearDown()
+        responses.stop()
+        responses.reset()
