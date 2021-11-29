@@ -41,10 +41,7 @@ jobs:
           cache: "pipenv"
 
       - name: Install dependencies
-        env:
-          WORKON_HOME: ~/.pipenv/virtualenvs
-          PIPENV_CACHE_DIR: ~/.pipenv/pipcache
-          run: pipenv install --dev
+        run: pipenv install --dev
 
       - name: Run Tests
         # Shouldn't need to manually migrate, but otherwise the tests that use AdminSite() fail:
