@@ -162,10 +162,10 @@
         },
         "django-spectator": {
             "hashes": [
-                "sha256:6c1fd3ebe07d3045900c3001234a4129f15db571fdbe02322beaf7ef8dd2910d"
+                "sha256:08dffb6f4d5b1d7adaa936c36112c2472432efad36253879cb638b9ba6e6985c"
             ],
             "index": "pypi",
-            "version": "==11.7.0"
+            "version": "==12.0.0"
         },
         "django-storages": {
             "hashes": [
