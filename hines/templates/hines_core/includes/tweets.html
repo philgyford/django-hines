@@ -10,9 +10,8 @@ Expects:
 
 <div class="media-list">
   {% for tweet in tweet_list %}
-    <li class="media">
+    <li class="media" id="tweet-{{ tweet.twitter_id|cut:',' }}">
       {% include 'hines_core/includes/tweet.html' with tweet=tweet perms=perms view='day' only %}
     </li> <!-- .media -->
   {% endfor %}
 </div>
-

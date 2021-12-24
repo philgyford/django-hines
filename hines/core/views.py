@@ -12,8 +12,9 @@ from django.http import (
     HttpResponseForbidden,
     HttpResponseServerError,
 )
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_page
@@ -779,6 +780,41 @@ class TemplateSetMixin(object):
                 if date >= start and date <= end:
                     self.template_set = ts["name"]
                     break
+
+
+class TweetDetailRedirectView(RedirectView):
+    """
+    Redirecting URLs for an individual Tweet to the DayArchive page.
+
+    Because if we click the 'View on site' link in Django Admin when
+    viewing a Tweet it uses the Tweet.get_absolute_url() method
+    in django-ditto. But we don't include the twitter URLs, and don't
+    have a TweetDetail page in hines.
+
+    So we've added a URL with the namespace:name of
+    "twitter:tweet_detail" that points to here.
+
+    And we redirect to the DayArchiveView with an #anchor of
+    #tweet-{tweet_id}
+    """
+
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        twitter_id = kwargs.get("twitter_id", None)
+
+        tweet = get_object_or_404(Tweet, twitter_id=twitter_id)
+
+        url = reverse(
+            "hines:day_archive",
+            kwargs={
+                "year": tweet.post_time.year,
+                "month": tweet.post_time.month,
+                "day": tweet.post_time.day,
+            },
+        )
+
+        return f"{url}#tweet-{tweet.twitter_id}"
 
 
 def timezone_today():

@@ -50,6 +50,20 @@ spectator_patterns = (
 )
 
 
+# Adding some patterns we need that are used in Django Ditto, whose
+# urls.py we don't include.
+twitter_patterns = (
+    [
+        re_path(
+            r"^(?P<screen_name>\w+)/(?P<twitter_id>\d+)/$",
+            view=core_views.TweetDetailRedirectView.as_view(),
+            name="tweet_detail",
+        ),
+    ],
+    "twitter",
+)
+
+
 # We might in future have a photos app, in which case we'd include
 # its urlconf here. But for now, just one view in the core app:
 photos_patterns = (
@@ -76,7 +90,10 @@ root_dir_patterns = [
     path("", include(spectator_patterns)),
     path("", include("hines.core.urls")),
     path("", include("hines.weblogs.urls")),
+    # Ditto patterns
+    path("twitter/", include(twitter_patterns)),
 ]
+
 
 urlpatterns = [
     # REDIRECTS

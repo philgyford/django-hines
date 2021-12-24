@@ -3,6 +3,7 @@ from django.test import RequestFactory, TestCase, override_settings
 
 from ditto.flickr.factories import PhotoFactory
 from ditto.pinboard.factories import BookmarkFactory
+from ditto.twitter.factories import TweetFactory
 from hines.core import views
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, PostFactory
@@ -345,3 +346,33 @@ class DayArchiveViewTestCase(ViewTestCase):
     # self.assertIn('twitter_tweet_list', context)
     # self.assertEqual(len(context['twitter_tweet_list']), 1)
     # self.assertEqual(context['twitter_tweet_list'][0], tweet)
+
+
+class TweetDetailRedirectView(ViewTestCase):
+    def setUp(self):
+        super().setUp()
+        self.tweet = TweetFactory(post_time=make_datetime("2021-12-31 12:00:00"))
+
+    def test_response_redirects(self):
+        "It should redirect to the correct day view with an #anchor"
+
+        response = views.TweetDetailRedirectView.as_view()(
+            self.request,
+            screen_name=self.tweet.user.screen_name,
+            twitter_id=self.tweet.twitter_id,
+        )
+
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
+            response.url, f"/terry/2021/12/31/#tweet-{self.tweet.twitter_id}"
+        )
+
+    def test_response_404(self):
+        "It should return 404 with a non-existent tweet_id"
+
+        with self.assertRaises(Http404):
+            views.TweetDetailRedirectView.as_view()(
+                self.request,
+                screen_name=self.tweet.user.screen_name,
+                twitter_id=self.tweet.twitter_id + 1,
+            )

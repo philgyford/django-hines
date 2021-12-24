@@ -58,3 +58,18 @@ class CoreUrlsTestCase(TestCase):
             resolve("/archive/my/path/here/").func.__name__,
             views.ArchiveRedirectView.__name__,
         )
+
+    def test_tweet_detail_url(self):
+        self.assertEqual(
+            reverse(
+                "twitter:tweet_detail",
+                kwargs={"screen_name": "bob", "twitter_id": "1234567890"},
+            ),
+            "/terry/twitter/bob/1234567890/",
+        )
+
+    def test_tweet_detail_view(self):
+        self.assertEqual(
+            resolve("/terry/twitter/bob/1234567890/").func.__name__,
+            views.TweetDetailRedirectView.__name__,
+        )
