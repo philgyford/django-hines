@@ -223,7 +223,7 @@
       // Get the name of the group this rect is in:
       var groupKey = d3.select(this.parentNode).datum().key;
       // The original data for a single bar:
-      var groupData = d.data[groupKey];
+      var groupData = d.data.columns[groupKey];
       if ("url" in groupData && groupData["url"]) {
         window.location.href = groupData["url"];
       } else {
