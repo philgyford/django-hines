@@ -456,6 +456,7 @@ class StaticGenerator(Generator):
             "2018": 157,
             "2019": 51,
             "2020": 0,
+            "2021": 0,
         }
 
         data = self._make_simple_data(
@@ -497,6 +498,7 @@ class StaticGenerator(Generator):
             "2018": 37442,
             "2019": 3873,
             "2020": 15636,
+            "2021": 6428,
         }
 
         return self._make_simple_data(
@@ -535,6 +537,7 @@ class StaticGenerator(Generator):
             "2018": 1417,
             "2019": 1480,
             "2020": 2117,
+            "2021": 1744,
         }
         # Pepys Feedback:
         pepys = {
@@ -557,6 +560,7 @@ class StaticGenerator(Generator):
             "2018": 170,
             "2019": 239,
             "2020": 211,
+            "2021": 219,
         }
 
         barbicantalk = {
@@ -572,6 +576,7 @@ class StaticGenerator(Generator):
             "2018": 20,
             "2019": 103,
             "2020": 21,
+            "2021": 25,
         }
 
         whitstillman = {
@@ -594,6 +599,7 @@ class StaticGenerator(Generator):
             "2018": 3,
             "2019": 6,
             "2020": 24,
+            "2021": 13,
         }
 
         byliner = {
@@ -658,6 +664,7 @@ class StaticGenerator(Generator):
             "2018": 43,
             "2019": 44,
             "2020": 46,
+            "2021": 60,
         }
 
         return self._make_simple_data(
@@ -678,6 +685,7 @@ class StaticGenerator(Generator):
             "2018": 6078,
             "2019": 7842,
             "2020": 6396,
+            "2021": 7137,
         }
 
         return self._make_simple_data(
@@ -712,6 +720,7 @@ class StaticGenerator(Generator):
             "2018": 0,
             "2019": 0,
             "2020": 0,
+            "2021": 0,
         }
 
         freelance = {
@@ -735,6 +744,7 @@ class StaticGenerator(Generator):
             "2018": 59,
             "2019": 126,
             "2020": 116,
+            "2021": 33,
         }
 
         acting = {
@@ -758,6 +768,7 @@ class StaticGenerator(Generator):
             "2018": 2,
             "2019": 3,
             "2020": 0,
+            "2021": 0,
         }
 
         chart_data = []
@@ -803,6 +814,7 @@ class StaticGenerator(Generator):
             "2018": 2089,
             "2019": 2245,
             "2020": 2403,
+            "2021": 1651,
         }
 
         return self._make_simple_data(
