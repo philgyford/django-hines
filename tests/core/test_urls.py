@@ -17,6 +17,14 @@ class CoreUrlsTestCase(TestCase):
         "Should use the correct view."
         self.assertEqual(resolve("/").func.__name__, views.HomeView.__name__)
 
+    def test_up_url(self):
+        "The healthcheck url"
+        self.assertEqual(reverse("up"), "/up/")
+
+    def test_up_view(self):
+        "Should use the correct view."
+        self.assertEqual(resolve("/up/").func, views.up)
+
     def test_hines_home_url(self):
         "The URL at /phil/ or whatever."
         response = Client().get("/terry/", follow=True)

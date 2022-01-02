@@ -5,8 +5,10 @@ import re
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.paginator import InvalidPage
+from django.db import connection
 from django.http import (
     Http404,
+    HttpResponse,
     HttpResponseNotFound,
     HttpResponseBadRequest,
     HttpResponseForbidden,
@@ -75,6 +77,22 @@ def server_error(request, template_name="errors/500.html"):
     context = {"STATIC_URL": settings.STATIC_URL}
     t = get_template(template_name)
     return HttpResponseServerError(t.render(context, request))
+
+
+def up(request):
+    """
+    Healthcheck page, for testing the site is up.
+
+    Could also do:
+
+        from redis import Redis
+
+    and then:
+
+        redis.ping()
+    """
+    connection.ensure_connection()
+    return HttpResponse("")
 
 
 class CacheMixin(object):

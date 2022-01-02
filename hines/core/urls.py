@@ -1,6 +1,5 @@
 from django.urls import path, register_converter
 from django.contrib.flatpages import views as flatpages_views
-from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
 from . import converters, feeds
@@ -18,7 +17,6 @@ app_name = "hines"
 admin_comments_slug = app_settings.COMMENTS_ADMIN_FEED_SLUG
 
 urlpatterns = [
-    path("test.html", TemplateView.as_view(template_name="hines_core/test.html")),
     # Send anyone going to '/phil/' to the home page at '/'.
     path("", RedirectView.as_view(url="/", permanent=False)),
     # RSS FEEDS

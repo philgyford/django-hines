@@ -96,6 +96,7 @@ root_dir_patterns = [
 
 
 urlpatterns = [
+    path("up/", core_views.up, name="up"),
     # REDIRECTS
     path(
         "favicon.ico",
