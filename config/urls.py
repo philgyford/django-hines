@@ -86,6 +86,9 @@ root_dir_patterns = [
     ),
     # Just the reading home page (our custom version):
     path("reading/", core_views.ReadingHomeView.as_view(), name="reading_home"),
+    # Redirects for legacy URLs that are now in Spectator:
+    path("reading/author/", core_views.AuthorRedirectView.as_view()),
+    path("reading/publication/", core_views.PublicationRedirectView.as_view()),
     # All other Spectator URLs, including other /reading/ URLs:
     path("", include(spectator_patterns)),
     path("", include("hines.core.urls")),

@@ -28,6 +28,8 @@ from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 from ditto.flickr.models import Photo, Photoset
 from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
+from spectator.core.models import Creator
+from spectator.reading.models import Publication
 from spectator.reading.views import ReadingHomeView as SpectatorReadingHomeView
 from hines.core import app_settings
 from hines.core.utils import make_date
@@ -303,6 +305,40 @@ class ArchiveRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         path = kwargs.get("path", "")
         return "http://archive.gyford.com/{}".format(path)
+
+
+class AuthorRedirectView(RedirectView):
+    """
+    Redirecting old /phil/reading/author/?id=123 requests
+    """
+
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        id = self.request.GET.get("id", None)
+        try:
+            author = Creator.objects.get(id=id)
+        except Creator.DoesNotExist:
+            return None
+        else:
+            return author.get_absolute_url()
+
+
+class PublicationRedirectView(RedirectView):
+    """
+    Redirecting old /phil/reading/publication/?id=123 requests
+    """
+
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        id = self.request.GET.get("id", None)
+        try:
+            publication = Publication.objects.get(id=id)
+        except Publication.DoesNotExist:
+            return None
+        else:
+            return publication.get_absolute_url()
 
 
 class MTSearchRedirectView(RedirectView):

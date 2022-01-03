@@ -8,6 +8,8 @@ from hines.core import views
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post
+from spectator.core.factories import IndividualCreatorFactory
+from spectator.reading.factories import PublicationFactory
 from tests import override_app_settings
 
 
@@ -41,35 +43,35 @@ class UpViewTestCase(ViewTestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class ReadingHomeViewTestCase(ViewTestCase):
+class ReadingHomeViewTestCase(TestCase):
     def test_redirects(self):
         "It redirects if there's like a y=[\d\d\d\d] in the querystring."  # noqa: W605
-        request = self.factory.get("/fake-path/", {"y": 2017})
+        request = RequestFactory().get("/fake-path/", {"y": 2017})
         response = views.ReadingHomeView.as_view()(request)
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response.url, "/terry/reading/2017/")
 
     def test_no_redirect(self):
         "It doesn't redirect if there's no y=2017 in the querystring."
-        request = self.factory.get("/fake-path/")
+        request = RequestFactory().get("/fake-path/")
         response = views.ReadingHomeView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
     def test_handles_text(self):
         "It does nothing special if the 'y' value is not a number."
-        request = self.factory.get("/fake-path/", {"y": "bad"})
+        request = RequestFactory().get("/fake-path/", {"y": "bad"})
         response = views.ReadingHomeView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
     def test_handles_small_number(self):
         "It does nothing special if the 'y' value is < 1000."
-        request = self.factory.get("/fake-path/", {"y": 999})
+        request = RequestFactory().get("/fake-path/", {"y": 999})
         response = views.ReadingHomeView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
     def test_handles_big_number(self):
         "It does nothing special if the 'y' value is > 9999."
-        request = self.factory.get("/fake-path/", {"y": 10000})
+        request = RequestFactory().get("/fake-path/", {"y": 10000})
         response = views.ReadingHomeView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
@@ -106,10 +108,48 @@ class ArchiveRedirectViewTestCase(ViewTestCase):
         self.assertEqual(response.url, "http://archive.gyford.com/my/archive/path/")
 
 
-class MTSearchRedirectViewTestCase(ViewTestCase):
+class AuthorRedirectViewTestCase(TestCase):
+    def test_redirects(self):
+        "If passed an ID it should redirect to the Creator's detail URL"
+        author = IndividualCreatorFactory.create()
+        request = RequestFactory().get("/fake-path/", {"id": str(author.id)})
+        response = views.AuthorRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
+            response.url,
+            f"/terry/creators/{author.slug}/",
+        )
+
+    def test_410(self):
+        "It should return 410 if there's no matching Creator"
+        request = RequestFactory().get("/fake-path/", {"id": "123"})
+        response = views.AuthorRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 410)
+
+
+class PublicationRedirectViewTestCase(TestCase):
+    def test_redirects(self):
+        "If passed an ID it should redirect to the Publication's detail URL"
+        publication = PublicationFactory.create()
+        request = RequestFactory().get("/fake-path/", {"id": str(publication.id)})
+        response = views.PublicationRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
+            response.url,
+            f"/terry/reading/publications/{publication.slug}/",
+        )
+
+    def test_410(self):
+        "It should return 410 if there's no matching Publication"
+        request = RequestFactory().get("/fake-path/", {"id": "123"})
+        response = views.PublicationRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 410)
+
+
+class MTSearchRedirectViewTestCase(TestCase):
     def test_mary_redirect(self):
         "Lowercases, and replaces spaces and brackets"
-        request = self.factory.get(
+        request = RequestFactory().get(
             "/fake-path/",
             {"IncludeBlogs": "14", "tag": "Test this tag (brackets)", "limit": 1000},
         )
@@ -122,7 +162,7 @@ class MTSearchRedirectViewTestCase(ViewTestCase):
 
     def test_mary_tag(self):
         "Test a real-world tag example, with apostrophe"
-        request = self.factory.get(
+        request = RequestFactory().get(
             "/fake-path/",
             {
                 "IncludeBlogs": "14",
@@ -140,7 +180,7 @@ class MTSearchRedirectViewTestCase(ViewTestCase):
 
     def test_mary_search(self):
         "Test a real-world search example"
-        request = self.factory.get(
+        request = RequestFactory().get(
             "/fake-path/",
             {
                 "IncludeBlogs": "14,18",
@@ -158,7 +198,7 @@ class MTSearchRedirectViewTestCase(ViewTestCase):
         )
 
     def test_overmorgen_redirect(self):
-        request = self.factory.get(
+        request = RequestFactory().get(
             "/fake-path/", {"IncludeBlogs": 10, "search": "bye for now", "limit": 1000}
         )
         response = views.MTSearchRedirectView.as_view()(request)
@@ -171,7 +211,7 @@ class MTSearchRedirectViewTestCase(ViewTestCase):
 
     def test_wrong_blog_404(self):
         "404s if the IncludeBlogs is wrong"
-        request = self.factory.get(
+        request = RequestFactory().get(
             "/fake-path/", {"IncludeBlogs": 9, "search": "bye for now", "limit": 1000}
         )
         with self.assertRaises(Http404):
@@ -179,7 +219,9 @@ class MTSearchRedirectViewTestCase(ViewTestCase):
 
     def test_no_tag_or_search_404(self):
         "404s if there's no tag or search"
-        request = self.factory.get("/fake-path/", {"IncludeBlogs": 14, "limit": 1000})
+        request = RequestFactory().get(
+            "/fake-path/", {"IncludeBlogs": 14, "limit": 1000}
+        )
         with self.assertRaises(Http404):
             views.MTSearchRedirectView.as_view()(request)
 
