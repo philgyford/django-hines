@@ -34,7 +34,7 @@ factory-boy = "*"
 freezegun = "*"
 flake8 = "*"
 # Got mismatched dependencies unless I specified a specific version:
-black = "==21.12b0"
+black = "==22.1.0"
 responses = "*"
 
 [requires]
