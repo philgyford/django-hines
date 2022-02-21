@@ -100,7 +100,7 @@
                 "sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d",
                 "sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_version >= '3.1'",
             "version": "==1.0.5"
         },
         "django-autocomplete-light": {
@@ -126,10 +126,10 @@
         },
         "django-ditto": {
             "hashes": [
-                "sha256:ff397e5f3ba917d6d8b4ea5988e28ddf5b4acf6a1a0a03fee665e0823406980b"
+                "sha256:4bdd70129ad34240f36862f4ff88aa5be6a30298f2a56e33118e3749d5177057"
             ],
             "index": "pypi",
-            "version": "==1.4.2"
+            "version": "==2.0.0"
         },
         "django-extensions": {
             "hashes": [
@@ -149,10 +149,10 @@
         },
         "django-imagekit": {
             "hashes": [
-                "sha256:304c3379f6a5cac387e47ace11195a603ad3cb01e3e951b45489824d25b00359",
-                "sha256:6ec0afb77cdf52cd453c9fc2c10ef350d111edfd6ce53c5977aa8a0e22cee00c"
+                "sha256:87e36f8dc1d8745647881f4366ef4965225f048042dacebbee0dcb87425defef",
+                "sha256:e559aeaae43a33b34f87631a9fa5696455e4451ffa738a42635fde442fedac5c"
             ],
-            "version": "==4.0.2"
+            "version": "==4.1.0"
         },
         "django-redis": {
             "hashes": [
@@ -164,10 +164,10 @@
         },
         "django-sortedm2m": {
             "hashes": [
-                "sha256:091e00e12b399ffd8fc74ebf4cc0f14d0bc0e28961c4ac714ca88ae24bd96aa3",
-                "sha256:8acc3638b7a2587533c7776deaa2c6c035220c8f9fff85ed67858a9c6bf51e7c"
+                "sha256:136f3d4e0820b351608a7141d88ac3ba7fafcd37a9b8361ad00ffe616a790be5",
+                "sha256:c67ae0757e8e60ded15a9ba04d0862fe39fba3d5b865899c2472166ff0050f2c"
             ],
-            "version": "==3.0.2"
+            "version": "==3.1.1"
         },
         "django-spectator": {
             "hashes": [
@@ -186,11 +186,11 @@
         },
         "django-taggit": {
             "hashes": [
-                "sha256:dfe9e9c10b5929132041de0c00093ef0072c73c2a97d0f74a818ae50fa77149a",
-                "sha256:e5bb62891f458d55332e36a32e19c08d20142c43f74bc5656c803f8af25c084a"
+                "sha256:61547a23fc99967c9304107414a09e662b459f4163dbbae32e60b8ba40c34d05",
+                "sha256:a9f41e4ad58efe4b28d86f274728ee87eb98eeae90c9eb4b4efad39e5068184e"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.5.1"
+            "version": "==2.1.0"
         },
         "flickrapi": {
             "hashes": [
