@@ -46,6 +46,10 @@ HINES_COMMENTS_ALLOWED = True
 HINES_COMMENTS_CLOSE_AFTER_DAYS = None
 
 
+# django-wm settings
+DOMAIN_NAME = "www.gyford.test:8000"
+
+
 # Debug Toolbar settings.
 if DEBUG:
     MIDDLEWARE += [  # noqa: F405

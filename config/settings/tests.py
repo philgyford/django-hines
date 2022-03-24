@@ -9,3 +9,7 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
     }
 }
+
+
+# django-wm settings
+DOMAIN_NAME = "testserver"
