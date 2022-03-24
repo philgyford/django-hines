@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 "boto3" = "*"
 dj-database-url = "*"
-django-autocomplete-light = {editable = true, git = "https://github.com/yourlabs/django-autocomplete-light.git"}
+django-autocomplete-light = "*"
 django-contrib-comments = "*"
 django-ditto = "*"
 django-spectator = "*"
@@ -33,8 +33,7 @@ coverage = "*"
 factory-boy = "*"
 freezegun = "*"
 flake8 = "*"
-# Got mismatched dependencies unless I specified a specific version:
-black = "==21.12b0"
+black = "==22.1.0"
 responses = "*"
 
 [requires]
