@@ -73,7 +73,7 @@ def markdownify(content, output_format="xhtml"):
 
 
 def truncate_string(
-    text, strip_html=True, chars=255, truncate=u"…", at_word_boundary=False
+    text, strip_html=True, chars=255, truncate="…", at_word_boundary=False
 ):
     """Truncate a string to a certain length, removing line breaks and mutliple
     spaces, optionally removing HTML, and appending a 'truncate' string.

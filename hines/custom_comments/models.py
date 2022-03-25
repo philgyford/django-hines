@@ -40,13 +40,13 @@ class CustomComment(Comment):
             content_type = ContentType.objects.get(pk=self.content_type_id)
             if not content_type.model_class():
                 raise AttributeError(
-                    u"Content type %(ct_id)s object has no associated model"
+                    "Content type %(ct_id)s object has no associated model"
                     % {"ct_id": self.content_type_id}
                 )
             obj = content_type.get_object_for_this_type(pk=self.object_pk)
         except (ObjectDoesNotExist, ValueError):
             raise AttributeError(
-                u"Content type %(ct_id)s object %(obj_id)s doesn't exist"
+                "Content type %(ct_id)s object %(obj_id)s doesn't exist"
                 % {"ct_id": self.content_type_id, "obj_id": self.object_pk}
             )
 
