@@ -14,9 +14,7 @@ class StatsUrlsTestCase(TestCase):
 
     def test_home_view(self):
         "Should use the correct view."
-        self.assertEqual(
-            resolve("/terry/stats/").func.__name__, views.StatsView.__name__
-        )
+        self.assertEqual(resolve("/terry/stats/").func.view_class, views.StatsView)
 
     def test_creating_redirect(self):
         response = self.client.get("/terry/stats/creating/", follow=True)
@@ -30,5 +28,5 @@ class StatsUrlsTestCase(TestCase):
 
     def test_stats_detail_view(self):
         self.assertEqual(
-            resolve("/terry/stats/consuming/").func.__name__, views.StatsView.__name__
+            resolve("/terry/stats/consuming/").func.view_class, views.StatsView
         )

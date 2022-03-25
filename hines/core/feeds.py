@@ -1,3 +1,6 @@
+import re
+from xml.sax.saxutils import XMLGenerator
+
 from django.contrib.sites.models import Site
 from django.templatetags.static import static
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -5,10 +8,40 @@ from django.contrib.syndication.views import Feed
 from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
+from django.utils.xmlutils import SimplerXMLGenerator, UnserializableContentError
 
 from .recent import RecentObjects
 from . import app_settings
 from .utils import get_site_url
+
+
+class HinesSimplerXMLGenerator(SimplerXMLGenerator):
+    """
+    A tweaked XML Generator that won't escape strings that begin with
+    '<![CDATA['
+    From https://stackoverflow.com/a/68530135/250962
+    """
+
+    def addQuickElement(self, name, contents=None, attrs=None):
+        "Convenience method for adding an element with no children"
+        if attrs is None:
+            attrs = {}
+        self.startElement(name, attrs)
+        if contents is not None:
+            if contents.startswith("<![CDATA["):
+                self.unescaped_characters(contents)
+            else:
+                self.characters(contents)
+        self.endElement(name)
+
+    def unescaped_characters(self, content):
+        if content and re.search(r"[\x00-\x08\x0B-\x0C\x0E-\x1F]", content):
+            # Fail loudly when content has control chars (unsupported in XML 1.0)
+            # See https://www.w3.org/International/questions/qa-controls
+            raise UnserializableContentError(
+                "Control characters are not supported in XML 1.0"
+            )
+        XMLGenerator.ignorableWhitespace(self, content)
 
 
 class ExtendedRSSFeed(Rss201rev2Feed):
@@ -35,6 +68,17 @@ class ExtendedRSSFeed(Rss201rev2Feed):
 
     content_type = "application/xml; charset=utf-8"
 
+    def write(self, outfile, encoding):
+        "Override default write() method just to use our new XML Generator"
+        handler = HinesSimplerXMLGenerator(outfile, encoding)
+        handler.startDocument()
+        handler.startElement("rss", self.rss_attributes())
+        handler.startElement("channel", self.root_attributes())
+        self.add_root_elements(handler)
+        self.write_items(handler)
+        self.endChannelElement(handler)
+        handler.endElement("rss")
+
     def rss_attributes(self):
         attrs = super().rss_attributes()
         attrs["xmlns:content"] = "http://purl.org/rss/1.0/modules/content/"
@@ -56,25 +100,12 @@ class ExtendedRSSFeed(Rss201rev2Feed):
             handler.endElement("image")
 
     def add_item_elements(self, handler, item):
-        """
-        Use item['content'] to make the content:encoded element.
-        """
+        "Use item['content'] to make the content:encoded element."
         super().add_item_elements(handler, item)
 
         if item["content"] is not None:
-            handler.startElement("content:encoded", {})
-
-            content = "<![CDATA["
-            content += item["content"]
-            content += "]]>"
-
-            # Adding content in this way do not escape content so make it
-            # suitable for Feedburner and other services. If we use
-            # handler.characters(content) then it will escape content and will
-            # not work perfectly with Feedburner and other services.
-            handler._write(content)
-
-            handler.endElement("content:encoded")
+            content = "<![CDATA[" + item["content"] + "]]>"
+            handler.addQuickElement("content:encoded", content, {})
 
     def channel_image_url(self):
         "URL of the image to use for the feed."

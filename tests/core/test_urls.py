@@ -15,7 +15,7 @@ class CoreUrlsTestCase(TestCase):
 
     def test_home_view(self):
         "Should use the correct view."
-        self.assertEqual(resolve("/").func.__name__, views.HomeView.__name__)
+        self.assertEqual(resolve("/").func.view_class, views.HomeView)
 
     def test_up_url(self):
         "The healthcheck url"
@@ -40,43 +40,43 @@ class CoreUrlsTestCase(TestCase):
 
     def test_day_archive_view(self):
         self.assertEqual(
-            resolve("/terry/2017/04/03/").func.__name__, views.DayArchiveView.__name__
+            resolve("/terry/2017/04/03/").func.view_class, views.DayArchiveView
         )
 
     def test_reading_home_view(self):
         self.assertEqual(
-            resolve("/terry/reading/").func.__name__, views.ReadingHomeView.__name__
+            resolve("/terry/reading/").func.view_class, views.ReadingHomeView
         )
 
     def test_author_redirect_view(self):
         self.assertEqual(
-            resolve("/terry/reading/author/").func.__name__,
-            views.AuthorRedirectView.__name__,
+            resolve("/terry/reading/author/").func.view_class,
+            views.AuthorRedirectView,
         )
 
     def test_publication_redirect_view(self):
         self.assertEqual(
-            resolve("/terry/reading/publication/").func.__name__,
-            views.PublicationRedirectView.__name__,
+            resolve("/terry/reading/publication/").func.view_class,
+            views.PublicationRedirectView,
         )
 
     def test_writing_resources_redirect_view(self):
         self.assertEqual(
             resolve(
                 "/terry/writing/resources/2017/03/31/folder/test.png"
-            ).func.__name__,
-            views.WritingResourcesRedirectView.__name__,
+            ).func.view_class,
+            views.WritingResourcesRedirectView,
         )
 
     def test_archive_redirect_view(self):
         self.assertEqual(
-            resolve("/archive/").func.__name__, views.ArchiveRedirectView.__name__
+            resolve("/archive/").func.view_class, views.ArchiveRedirectView
         )
 
     def test_archive_redirect_view_with_path(self):
         self.assertEqual(
-            resolve("/archive/my/path/here/").func.__name__,
-            views.ArchiveRedirectView.__name__,
+            resolve("/archive/my/path/here/").func.view_class,
+            views.ArchiveRedirectView,
         )
 
     def test_tweet_detail_url(self):
@@ -90,6 +90,6 @@ class CoreUrlsTestCase(TestCase):
 
     def test_tweet_detail_view(self):
         self.assertEqual(
-            resolve("/terry/twitter/bob/1234567890/").func.__name__,
-            views.TweetDetailRedirectView.__name__,
+            resolve("/terry/twitter/bob/1234567890/").func.view_class,
+            views.TweetDetailRedirectView,
         )

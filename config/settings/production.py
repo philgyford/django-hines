@@ -77,5 +77,8 @@ if SENTRY_DSN:
         release=os.environ.get("HEROKU_SLUG_COMMIT", ""),
     )
 
+# django-wm settings
+DOMAIN_NAME = "www.gyford.com"
+
 #############################################################################
 # HINES-SPECIFIC SETTINGS.

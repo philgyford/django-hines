@@ -98,7 +98,19 @@ class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
 
     fieldsets = (
-        (None, {"fields": ("blog", "title", "slug", "status", "time_published")}),
+        (
+            None,
+            {
+                "fields": (
+                    "blog",
+                    "title",
+                    "slug",
+                    "status",
+                    "time_published",
+                    # ("allow_incoming_webmentions", "allow_outgoing_webmentions"),
+                )
+            },
+        ),
         ("The post", {"fields": ("html_format", "intro", "body", "excerpt", "tags")}),
         (
             "Extra",

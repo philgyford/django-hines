@@ -18,7 +18,7 @@ class WeblogsUrlsTestCase(TestCase):
     def test_blog_detail_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/").func.__name__, views.BlogDetailView.__name__
+            resolve("/terry/my-blog/").func.view_class, views.BlogDetailView
         )
 
     def test_blog_archive_url(self):
@@ -30,8 +30,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_blog_archive_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/archive/").func.__name__,
-            views.BlogArchiveView.__name__,
+            resolve("/terry/my-blog/archive/").func.view_class,
+            views.BlogArchiveView,
         )
 
     def test_blog_feed_rss_url(self):
@@ -58,8 +58,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_blog_tag_detail_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/tags/my-tag/").func.__name__,
-            views.BlogTagDetailView.__name__,
+            resolve("/terry/my-blog/tags/my-tag/").func.view_class,
+            views.BlogTagDetailView,
         )
 
     def test_post_detail_url(self):
@@ -80,8 +80,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_post_detail_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/2017/02/20/my-post/").func.__name__,
-            views.PostDetailView.__name__,
+            resolve("/terry/my-blog/2017/02/20/my-post/").func.view_class,
+            views.PostDetailView,
         )
 
     def test_post_redirect_url(self):
@@ -102,8 +102,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_post_redirect_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/2017/02/20/my_old_post.php").func.__name__,
-            views.PostRedirectView.__name__,
+            resolve("/terry/my-blog/2017/02/20/my_old_post.php").func.view_class,
+            views.PostRedirectView,
         )
 
     def test_post_redirect_index_url(self):
@@ -124,8 +124,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_post_redirect_index_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/2017/02/20/my_old_post/index.php").func.__name__,
-            views.PostRedirectView.__name__,
+            resolve("/terry/my-blog/2017/02/20/my_old_post/index.php").func.view_class,
+            views.PostRedirectView,
         )
 
     def test_post_day_archive_url(self):
@@ -145,8 +145,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_post_day_archive_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/2017/02/01/").func.__name__,
-            views.PostDayArchiveView.__name__,
+            resolve("/terry/my-blog/2017/02/01/").func.view_class,
+            views.PostDayArchiveView,
         )
 
     def test_post_month_archive_url(self):
@@ -161,8 +161,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_post_month_archive_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/2017/02/").func.__name__,
-            views.PostMonthArchiveView.__name__,
+            resolve("/terry/my-blog/2017/02/").func.view_class,
+            views.PostMonthArchiveView,
         )
 
     def test_post_year_archive_url(self):
@@ -177,8 +177,8 @@ class WeblogsUrlsTestCase(TestCase):
     def test_post_year_archive_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/my-blog/2017/").func.__name__,
-            views.PostYearArchiveView.__name__,
+            resolve("/terry/my-blog/2017/").func.view_class,
+            views.PostYearArchiveView,
         )
 
     def test_random_phil_2001_url(self):
@@ -187,7 +187,7 @@ class WeblogsUrlsTestCase(TestCase):
     def test_random_phil_2001_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/random-phil/").func.__name__, views.RandomPhilView.__name__
+            resolve("/terry/random-phil/").func.view_class, views.RandomPhilView
         )
 
     def test_random_phil_2002_url(self):
@@ -196,5 +196,5 @@ class WeblogsUrlsTestCase(TestCase):
     def test_random_phil_2002_view(self):
         "Should use the correct view."
         self.assertEqual(
-            resolve("/terry/random/").func.__name__, views.RandomPhilView.__name__
+            resolve("/terry/random/").func.view_class, views.RandomPhilView
         )

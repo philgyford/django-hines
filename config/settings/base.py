@@ -208,6 +208,9 @@ MESSAGE_TAGS = {
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
 ####################################################################
 # THIRD-PARTY APPS
 
