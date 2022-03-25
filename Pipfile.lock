@@ -63,6 +63,7 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==1.24.26"
+
         },
         "certifi": {
             "hashes": [
