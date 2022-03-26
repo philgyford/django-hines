@@ -26,6 +26,7 @@ django-cors-headers = "*"
 django-extensions = "*"
 django-redis = "*"
 requests = "*"
+django-wm = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
