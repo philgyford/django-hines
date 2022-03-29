@@ -14,6 +14,7 @@ from django.utils.html import strip_tags
 
 from bs4 import BeautifulSoup
 from django_comments.moderation import CommentModerator, moderator
+from mentions.models.mixins.mentionable import MentionableMixin
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
@@ -135,7 +136,7 @@ class TaggedPost(TaggedItemBase):
     content_object = models.ForeignKey("Post", on_delete=models.CASCADE)
 
 
-class Post(TimeStampedModelMixin, models.Model):
+class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
     """
     TimeStampedModelMixin gives us:
 
@@ -247,6 +248,10 @@ class Post(TimeStampedModelMixin, models.Model):
     last_comment_time = models.DateTimeField(blank=True, null=True)
 
     trackback_count = models.IntegerField(default=0, blank=False, null=False)
+
+    # ALSO HAS:
+    # allow_incoming_webmentions - from django-wm
+    # allow_outgoing_webmentions - from django-wm
 
     # But you might want to use self.get_tags() instead, so they're in order.
     tags = TaggableManager(through=TaggedPost, blank=True)
@@ -552,6 +557,20 @@ class Post(TimeStampedModelMixin, models.Model):
     def all_text(self):
         "Required for django-wm's MentionableMixin"
         return f"{self.intro_html} {self.body_html}"
+
+    @classmethod
+    def resolve_from_url_kwargs(cls, blog_slug, year, month, day, post_slug, **url_kwargs):
+        """
+        Used by django-wm's MentionableMixin to find the matching Post
+        based on a URL.
+        """
+        return cls.objects.get(
+            blog__slug=blog_slug,
+            date__year=year,
+            date__month=month,
+            date__day=day,
+            slug=post_slug,
+        )
 
 
 class PostCommentModerator(CommentModerator):
