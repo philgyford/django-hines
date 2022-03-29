@@ -64,6 +64,8 @@ urlpatterns = [
     path(
         "<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>/",
         views.PostDetailView.as_view(),
+        # Needed for django-wm:
+        kwargs={"model_name": "weblogs.Post"},
         name="post_detail",
     ),
     path(

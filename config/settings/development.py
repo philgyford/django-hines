@@ -46,7 +46,7 @@ HINES_COMMENTS_ALLOWED = True
 HINES_COMMENTS_CLOSE_AFTER_DAYS = None
 
 
-# django-wm settings
+# django-wm
 DOMAIN_NAME = "www.gyford.test:8000"
 
 

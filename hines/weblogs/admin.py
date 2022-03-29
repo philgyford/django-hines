@@ -86,6 +86,8 @@ class PostAdmin(admin.ModelAdmin):
         "title",
         "allow_comments",
         "comment_count",
+        "allow_incoming_webmentions",
+        "allow_outgoing_webmentions",
         "status_icon",
         "time_published",
         # 'is_featured',
@@ -107,7 +109,11 @@ class PostAdmin(admin.ModelAdmin):
                     "slug",
                     "status",
                     "time_published",
-                    # ("allow_incoming_webmentions", "allow_outgoing_webmentions"),
+                    (
+                        "allow_comments",
+                        "allow_incoming_webmentions",
+                        "allow_outgoing_webmentions",
+                    ),
                 )
             },
         ),
@@ -121,7 +127,6 @@ class PostAdmin(admin.ModelAdmin):
             {
                 "classes": ("collapse",),
                 "fields": (
-                    "allow_comments",
                     "comment_count",
                     "last_comment_time",
                     "trackback_count",

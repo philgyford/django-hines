@@ -100,7 +100,7 @@ root_dir_patterns = [
 
 urlpatterns = [
     path("up/", core_views.up, name="up"),
-    # path("webmentions/", include("mentions.urls")),
+    path("webmentions/", include("mentions.urls")),
     # REDIRECTS
     path(
         "favicon.ico",

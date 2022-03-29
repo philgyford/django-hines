@@ -1,5 +1,5 @@
 {% extends 'hines_core/layouts/no_sidebar.html' %}
-{% load comments static hines_comments hines_core hines_weblogs spectator_reading %}
+{% load comments static hines_comments hines_core hines_weblogs spectator_reading webmention_endpoint %}
 
 {% block head_page_title %}{{ post.title_text|smartypants }}{% endblock %}
 
@@ -14,6 +14,8 @@
       <meta name="twitter:image" content="{{ url|add_domain }}" />
     {% endif %}
   {% endwith %}
+
+  {% webmention_endpoint %}
 {% endblock %}
 
 {# We put the heading within <article> #}

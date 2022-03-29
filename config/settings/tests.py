@@ -11,5 +11,5 @@ CACHES = {
 }
 
 
-# django-wm settings
+# django-wm
 DOMAIN_NAME = "testserver"

@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "spectator.reading",
     "sortedm2m",
     "corsheaders",
+    "mentions",
     "ditto.core",
     "ditto.flickr",
     "ditto.lastfm",
@@ -90,6 +91,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "mentions.middleware.WebmentionHeadMiddleware",
     # Can go at the end of the list:
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
 ]
@@ -254,6 +256,12 @@ CORS_ALLOWED_ORIGINS = [
     "https://cloudflareinsights.com",
     "https://static.cloudflareinsights.com",
 ]
+
+
+# django-wm
+WEBMENTIONS_USE_CELERY = False
+
+WEBMENTIONS_AUTO_APPROVE = False
 
 
 # END THIRD-PARTY APPS
