@@ -559,16 +559,18 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         return f"{self.intro_html} {self.body_html}"
 
     @classmethod
-    def resolve_from_url_kwargs(cls, blog_slug, year, month, day, post_slug, **url_kwargs):
+    def resolve_from_url_kwargs(
+        cls, blog_slug, year, month, day, post_slug, **url_kwargs
+    ):
         """
         Used by django-wm's MentionableMixin to find the matching Post
         based on a URL.
         """
         return cls.objects.get(
             blog__slug=blog_slug,
-            date__year=year,
-            date__month=month,
-            date__day=day,
+            time_published__year=year,
+            time_published__month=month,
+            time_published__day=day,
             slug=post_slug,
         )
 
