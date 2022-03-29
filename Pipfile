@@ -34,7 +34,7 @@ coverage = "*"
 factory-boy = "*"
 freezegun = "*"
 flake8 = "*"
-black = "==22.1.0"
+black = "==22.3.0"
 responses = "*"
 
 [requires]
