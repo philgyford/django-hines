@@ -5,6 +5,7 @@ import re
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import Count
 from django.template.defaultfilters import linebreaks
@@ -15,6 +16,8 @@ from django.utils.html import strip_tags
 from bs4 import BeautifulSoup
 from django_comments.moderation import CommentModerator, moderator
 from mentions.models.mixins.mentionable import MentionableMixin
+from mentions.models.webmention import Webmention
+from mentions.tasks.scheduling import handle_outgoing_webmentions
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
@@ -275,18 +278,18 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         self.excerpt = self.make_excerpt()
 
         # # Adapted from mentions.models.mixins.mentionable.MentionableMixin:
-        # if self.status == self.Status.LIVE and self.allow_outgoing_webmentions:
-        #     print("ADDING")
-        #     log.info("Outgoing webmention processing task added to queue...")
-        #     handle_outgoing_webmention(self.get_absolute_url(), self.all_text())
+        if self.status == self.Status.LIVE and self.allow_outgoing_webmentions:
+            log.info("Outgoing webmention processing task added to queue...")
+            handle_outgoing_webmentions(self.get_absolute_url(), self.all_text())
 
-        # # To prevent MentionableMixin.save() handling them again:
-        # orig_allow_outgoing_webmentions = self.allow_outgoing_webmentions
+        # To prevent MentionableMixin.save() handling them again:
+        orig_allow_outgoing_webmentions = self.allow_outgoing_webmentions
+        self.allow_outgoing_webmentions = False
 
         super().save(*args, **kwargs)
 
-        # # Put it back how it was:
-        # self.allow_outgoing_webmentions = orig_allow_outgoing_webmentions
+        # Put it back how it was:
+        self.allow_outgoing_webmentions = orig_allow_outgoing_webmentions
 
         # Expire old detail page, home page, and blog home page.
         # Assumes the things used to generate the absolute_url haven't changed.
