@@ -17,7 +17,6 @@ from bs4 import BeautifulSoup
 from django_comments.moderation import CommentModerator, moderator
 from mentions.models.mixins.mentionable import MentionableMixin
 from mentions.models.webmention import Webmention
-from mentions.tasks.scheduling import handle_outgoing_webmentions
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
