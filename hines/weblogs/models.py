@@ -568,13 +568,22 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         Used by django-wm's MentionableMixin to find the matching Post
         based on a URL.
         """
-        return cls.objects.get(
+        obj = cls.objects.get(
             blog__slug=blog_slug,
             time_published__year=year,
             time_published__month=month,
             time_published__day=day,
             slug=post_slug,
         )
+        return obj
+
+    def get_received_mentions(self):
+        "Returns approved, validated incoming Webmentions"
+
+        ct = ContentType.objects.get_for_model(self)
+        return Webmention.objects.filter(
+            content_type=ct, object_id=self.pk, approved=True, validated=True
+        ).order_by("created_at")
 
 
 class PostCommentModerator(CommentModerator):
