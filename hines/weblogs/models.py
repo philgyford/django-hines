@@ -278,18 +278,17 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         self.excerpt = self.make_excerpt()
 
         # # Adapted from mentions.models.mixins.mentionable.MentionableMixin:
-        if self.status == self.Status.LIVE and self.allow_outgoing_webmentions:
-            log.info("Outgoing webmention processing task added to queue...")
-            handle_outgoing_webmentions(self.get_absolute_url(), self.all_text())
+        # if self.status == self.Status.LIVE and self.allow_outgoing_webmentions:
+        #     log.info("Outgoing webmention processing task added to queue...")
+        #     handle_outgoing_webmentions(self.get_absolute_url(), self.all_text())
 
-        # To prevent MentionableMixin.save() handling them again:
-        orig_allow_outgoing_webmentions = self.allow_outgoing_webmentions
-        self.allow_outgoing_webmentions = False
+        # # To prevent MentionableMixin.save() handling them again:
+        # orig_allow_outgoing_webmentions = self.allow_outgoing_webmentions
 
-        super().save(*args, **kwargs)
+        # super().save(*args, **kwargs)
 
-        # Put it back how it was:
-        self.allow_outgoing_webmentions = orig_allow_outgoing_webmentions
+        # # Put it back how it was:
+        # self.allow_outgoing_webmentions = orig_allow_outgoing_webmentions
 
         # Expire old detail page, home page, and blog home page.
         # Assumes the things used to generate the absolute_url haven't changed.
