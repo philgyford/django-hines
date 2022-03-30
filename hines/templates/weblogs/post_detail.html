@@ -90,6 +90,61 @@
       </ul>
     </aside>
 
+    {% with mentions=post.get_received_mentions %}
+      {% if mentions %}
+        <section id="mentions" class="utils-mt-4">
+          <h2>
+            Mentions elsewhere
+            <small>(<a href="https://indieweb.org/Webmention" title="Webmentions sort of explained at Indieweb.org">Webmentions?</a>)</small>
+          </h2>
+          <ol class="media-list">
+            {% for mention in mentions %}
+              <li class="media">
+                <div class="media__body">
+                  <h2 class="media__header">
+                    {{ mention.source_url|domain_urlize }}
+                  </h2>
+                  {% if mention.quote %}
+                    <p>{{ mention.quote|striptags|truncatewords:20 }}</p>
+                  {% endif %}
+                  <div class="meta meta--inline">
+                    <ul class="meta__inner">
+                      <li>{% display_time mention.published link_to_day=False %}</li>
+                      {% if perms.mentions.can_change_webmention %}
+                        <li><a class="utils-admin u-url" href="{% url 'admin:mentions_webmention_change' mention.id %}" title="Edit this Webmention in the Django Admin">Edit</a></li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </div>
+              <li>
+            {% endfor %}
+          </ol>
+          <p class="utils-align-right"></p>
+        </section>
+      {% endif %}
+    {% endwith %}
+
+    <section id="mentions-form" class="utils-mt-4">
+      <h2>Mention this post</h2>
+
+      <form action="{% url 'incoming_webmention_api_view' %}" method="post" class="form--inline">
+        {% csrf_token %}
+        {% for hidden in webmention_form.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+
+        <p>If you’ve mentioned this post somewhere, enter the URL here to <span class="utils-nowrap">let me know:</span></p>
+
+        <p>
+          {% with field=webmention_form.source %}
+            <label class="utils-sr-only" for="{{ field.id_for_label }}">{{ f.label }}</label>
+            {{ field }}
+          {% endwith %}
+          <button type="submit" class="button button--primary">Send</button>
+        </p>
+      </form>
+    </section>
+
     {% render_comment_list for post %}
 
     {% comment %}

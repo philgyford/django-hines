@@ -5,6 +5,7 @@ import re
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import Count
 from django.template.defaultfilters import linebreaks
@@ -15,6 +16,8 @@ from django.utils.html import strip_tags
 from bs4 import BeautifulSoup
 from django_comments.moderation import CommentModerator, moderator
 from mentions.models.mixins.mentionable import MentionableMixin
+from mentions.models.webmention import Webmention
+from mentions.tasks.scheduling import handle_outgoing_webmentions
 import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
@@ -276,14 +279,13 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
 
         # # Adapted from mentions.models.mixins.mentionable.MentionableMixin:
         # if self.status == self.Status.LIVE and self.allow_outgoing_webmentions:
-        #     print("ADDING")
         #     log.info("Outgoing webmention processing task added to queue...")
-        #     handle_outgoing_webmention(self.get_absolute_url(), self.all_text())
+        #     handle_outgoing_webmentions(self.get_absolute_url(), self.all_text())
 
         # # To prevent MentionableMixin.save() handling them again:
         # orig_allow_outgoing_webmentions = self.allow_outgoing_webmentions
 
-        super().save(*args, **kwargs)
+        # super().save(*args, **kwargs)
 
         # # Put it back how it was:
         # self.allow_outgoing_webmentions = orig_allow_outgoing_webmentions
@@ -566,13 +568,22 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         Used by django-wm's MentionableMixin to find the matching Post
         based on a URL.
         """
-        return cls.objects.get(
+        obj = cls.objects.get(
             blog__slug=blog_slug,
             time_published__year=year,
             time_published__month=month,
             time_published__day=day,
             slug=post_slug,
         )
+        return obj
+
+    def get_received_mentions(self):
+        "Returns approved, validated incoming Webmentions"
+
+        ct = ContentType.objects.get_for_model(self)
+        return Webmention.objects.filter(
+            content_type=ct, object_id=self.pk, approved=True, validated=True
+        ).order_by("created_at")
 
 
 class PostCommentModerator(CommentModerator):

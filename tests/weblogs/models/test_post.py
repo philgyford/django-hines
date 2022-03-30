@@ -15,6 +15,7 @@ from hines.weblogs.factories import (
     LivePostFactory,
     ScheduledPostFactory,
     TrackbackFactory,
+    WebmentionFactory,
 )
 
 
@@ -562,3 +563,34 @@ Cats""",
             time_published=make_datetime("2019-12-31 23:59:59"),
         )
         self.assertFalse(p.comments_allowed)
+
+    def test_get_received_mentions(self):
+        "It only returns mentions for this Post"
+        p1 = LivePostFactory()
+        p2 = LivePostFactory()
+        w = WebmentionFactory(target_object=p1, approved=True, validated=True)
+        WebmentionFactory(target_object=p2, approved=True, validated=True)
+
+        mentions = p1.get_received_mentions()
+        self.assertEqual(len(mentions), 1)
+        self.assertEqual(mentions[0], w)
+
+    def test_get_received_mentions_approved(self):
+        "It only returns approved mentions"
+        p = LivePostFactory()
+        w = WebmentionFactory(target_object=p, approved=True, validated=True)
+        WebmentionFactory(target_object=p, approved=False, validated=True)
+
+        mentions = p.get_received_mentions()
+        self.assertEqual(len(mentions), 1)
+        self.assertEqual(mentions[0], w)
+
+    def test_get_received_mentions_validated(self):
+        "It only returns validated mentions"
+        p = LivePostFactory()
+        w = WebmentionFactory(target_object=p, approved=True, validated=True)
+        WebmentionFactory(target_object=p, approved=True, validated=False)
+
+        mentions = p.get_received_mentions()
+        self.assertEqual(len(mentions), 1)
+        self.assertEqual(mentions[0], w)

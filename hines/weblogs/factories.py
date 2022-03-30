@@ -1,11 +1,13 @@
 from datetime import timedelta
 
+from django.contrib.contenttypes.models import ContentType
 import factory
 import factory.fuzzy
 
 from . import models
 from hines.core.utils import datetime_now
 from hines.users.factories import UserFactory
+from mentions.models import Webmention
 
 
 class BlogFactory(factory.django.DjangoModelFactory):
@@ -70,3 +72,39 @@ class TrackbackFactory(factory.django.DjangoModelFactory):
     url = factory.Sequence(lambda n: "http://exmple.org/%s.html" % n)
     ip_address = "123.123.123.123"
     blog_name = factory.Sequence(lambda n: "Other Blog %s" % n)
+
+
+class WebmentionFactory(factory.django.DjangoModelFactory):
+    """
+    You can associate the incoming Webmention with a Post by passing it in like this:
+
+        p = LivePostFactory(title='My title')
+        w = WebmentionFactory(post=p)
+
+    Or:
+        w = WebmentionFactory(target_object=p)
+
+    Otherwise a LivePost will be created to associate this webmention with.
+    """
+
+    class Meta:
+        model = Webmention
+        exclude = ["target_object"]
+
+    source_url = factory.Sequence(lambda n: "http://exmple.org/%s.html" % n)
+    # Not sure we can set this to anything accurate automatically:
+    target_url = "/blog/post/"
+    sent_by = "123.123.123.123"
+    quote = factory.fuzzy.FuzzyText(length=150)
+
+    target_object = factory.SubFactory(LivePostFactory)
+    object_id = factory.SelfAttribute("target_object.pk")
+    content_type = factory.LazyAttribute(
+        lambda o: ContentType.objects.get_for_model(models.Post)
+    )
+
+    @factory.post_generation
+    def post(self, create, extracted, **kwargs):
+        "Set object_id using any `post` that was passed in."
+        if extracted:
+            self.target_object = extracted
