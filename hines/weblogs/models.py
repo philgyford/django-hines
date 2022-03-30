@@ -284,7 +284,7 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         # # To prevent MentionableMixin.save() handling them again:
         # orig_allow_outgoing_webmentions = self.allow_outgoing_webmentions
 
-        # super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
         # # Put it back how it was:
         # self.allow_outgoing_webmentions = orig_allow_outgoing_webmentions
