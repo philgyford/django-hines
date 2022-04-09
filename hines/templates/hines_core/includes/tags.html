@@ -26,11 +26,7 @@ Optional:
       <ol{% if format == 'inline' %} class="list--inline list--unstyled"{% endif %}>
         {% for tag in tag_list %}
           <li>
-            <a class="p-category" href="{% if tag_type == 'post' %}
-              {% url 'weblogs:blog_tag_detail' blog_slug=blog_slug tag_slug=tag.slug %}
-            {% else %}
-              {% url 'pinboard:tag_detail' slug=tag.slug %}
-            {% endif %}" title="More tagged with {{ tag.name }}">{{ tag.name }}</a>
+            <a class="p-category" href="{% if tag_type == 'post' %}{% url 'weblogs:blog_tag_detail' blog_slug=blog_slug tag_slug=tag.slug %}{% else %}{% url 'pinboard:tag_detail' slug=tag.slug %}{% endif %}" title="More tagged with {{ tag.name }}">{{ tag.name }}</a>
             {% if format == 'chart' %}
               {% if tag_type == 'post' %}
                 ({{ tag.post_count|localize }})
