@@ -77,9 +77,11 @@
       <ul class="meta__inner">
         <li>By
           <span class="p-author h-card">
-            <a class="p-name u-url" rel="author" href="{{ site_url }}">
+            <a class="p-name u-email" rel="author" href="mailto:{{ post.author.email }}">
               {{ post.author.display_name }}
             </a>
+            on
+            <a class="u-url" rel="me" href="{{ site_url }}">{{ site_name }}</a>
             <img class="u-photo utils-hide" src="{% with domain=''|add_domain %}{{domain}}{% endwith %}{% static site_icon %}" alt="Photo of me">
           </span>
         </li>
