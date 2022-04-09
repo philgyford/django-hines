@@ -142,6 +142,8 @@ handler500 = core_views.server_error
 
 
 admin.site.site_header = "Gyford.com admin"
+admin.site.site_title = "Gyford.com admin"
+admin.site.enable_nav_sidebar = False
 
 
 if settings.DEBUG:
