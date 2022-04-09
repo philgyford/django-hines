@@ -80,7 +80,7 @@
             <a class="p-name u-url" rel="author" href="{{ site_url }}">
               {{ post.author.display_name }}
             </a>
-            <img class="u-photo utils-hide" src="{% static site_icon %}" alt="">
+            <img class="u-photo utils-hide" src="{% with domain=''|add_domain %}{{domain}}{% endwith %}{% static site_icon %}" alt="Photo of me">
           </span>
         </li>
 
