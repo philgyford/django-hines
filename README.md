@@ -263,6 +263,23 @@ HINES_MAPBOX_API_KEY                YOUR_API_KEY
 
 Further settings will be set automatically by add-ons.
 
+### Schedule tasks
+
+Here are the tasks that, at time of writing, are set to run using Heroku Scheduler:
+
+- Every 10 mins: `./manage.py publish_scheduled_posts`
+- Every 10 mins: `./manage.py fetch_lastfm_scrobbles --account=gyford --days=1`
+- Every 10 mins: `./manage.py pending_mentions`
+- Hourly: `./manage.py fetch_flickr_photos --account=35034346050@N01 --days=30`
+- Hourly: `./manage.py fetch_pinboard_bookmarks --account=philgyford --recent=20`
+- Hourly: `./manage.py fetch_twitter_tweets --account=philgyford --recent=200`
+- Daily: `./manage.py fetch_flickr_photosets --account=35034346050@N01`
+- Daily: `./manage.py fetch_lastfm_scrobbles --account=gyford --days=14`
+- Daily: `./manage.py update_twitter_tweets --account=philgyford`
+- Daily: `./manage.py update_twitter_users --account=philgyford`
+- Daily: `./manage.py fetch_twitter_favorites --account=philgyford --recent=200`
+- Daily: `./manage.py fetch_twitter_files`
+
 ## Custom Django Settings
 
 Custom settings that can be in the Django `settings.py` file:
