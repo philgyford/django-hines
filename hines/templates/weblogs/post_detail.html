@@ -53,7 +53,7 @@
       <ul class="meta__inner">
         <li class="dt-published">{% display_time post.time_published link_to_day=True %}</li>
 
-        <li class="u-hide"><a class="u-url" href="{{ post.get_absolute_url|add_domain }}">Permalink</a></li>
+        <li class="utils-hide"><a class="u-url" href="{{ post.get_absolute_url|add_domain }}">Permalink</a></li>
 
         {% if perms.weblogs.can_change_post %}
           <li><a class="utils-admin" href="{% url 'admin:weblogs_post_change' post.id %}" title="Edit this Post in the Django Admin">Edit</a></li>
@@ -80,7 +80,7 @@
             <a class="p-name u-url" rel="author" href="{{ site_url }}">
               {{ post.author.display_name }}
             </a>
-            <img class="u-photo u-hide" src="{% static site_icon %}" alt="">
+            <img class="u-photo utils-hide" src="{% static site_icon %}" alt="">
           </span>
         </li>
 
