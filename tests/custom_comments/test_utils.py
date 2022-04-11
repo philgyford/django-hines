@@ -31,28 +31,28 @@ class CleanCommentTestCase(TestCase):
     )
     def test_allows_only_good_attributes(self):
         "Removes non-whitelisted attributes and adds rel=nofollow to a tags."
-        self.assertEqual(
+        self.assertHTMLEqual(
             clean_comment('<a href="foo" title="bar" id="bad">Link</a>'),
             '<a href="foo" rel="nofollow" title="bar">Link</a>',
         )
 
     def test_links_urls_http(self):
         "Turns URLs into links, removes protocol, and adds rel=nofollow."
-        self.assertEqual(
+        self.assertHTMLEqual(
             clean_comment("http://example.org/foo"),
             '<a href="http://example.org/foo" rel="nofollow">example.org/foo</a>',
         )
 
     def test_links_urls_https(self):
         "Turns https URLs into links, removes protocol, and adds rel=nofollow."
-        self.assertEqual(
+        self.assertHTMLEqual(
             clean_comment("https://example.org/foo"),
             '<a href="https://example.org/foo" rel="nofollow">example.org/foo</a>',
         )
 
     def test_truncates_long_urls(self):
         "Turns long URLs into truncated links and adds rel=nofollow."
-        self.assertEqual(
+        self.assertHTMLEqual(
             clean_comment("https://example.org/foo/bar/the_filename.html"),
             '<a href="https://example.org/foo/bar/the_filename.html" rel="nofollow">'
             "example.org/foo/bar/th…</a>",
@@ -60,7 +60,7 @@ class CleanCommentTestCase(TestCase):
 
     def test_links_non_standard_tlds(self):
         "It should links URLs that contain one of the newer TLDs"
-        self.assertEqual(
+        self.assertHTMLEqual(
             clean_comment("https://www.example.blog/foo/bar/the_filename.html"),
             '<a href="https://www.example.blog/foo/bar/the_filename.html"'
             ' rel="nofollow">www.example.blog/foo/b…</a>',
