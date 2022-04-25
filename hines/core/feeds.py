@@ -10,6 +10,8 @@ from django.urls import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.xmlutils import SimplerXMLGenerator, UnserializableContentError
 
+from mentions.models import Webmention
+
 from .recent import RecentObjects
 from . import app_settings
 from .utils import get_site_url
@@ -295,3 +297,58 @@ class EverythingFeedRSS(ExtendedFeed):
         elif app_settings.AUTHOR_EMAIL:
             email = app_settings.AUTHOR_EMAIL
         return email
+
+
+class AdminWebmentionsFeedRSS(ExtendedFeed):
+    """
+    Includes both public and spam comments, plus links to
+    approve/delete/edit them in the Admin.
+    """
+
+    feed_type = ExtendedRSSFeed
+
+    content_template = "hines_core/feeds/webmentions_admin.html"
+
+    # Getting details about the feed/site:
+
+    def get_object(self, request):
+        return Site.objects.get_current()
+
+    def link(self, obj):
+        return get_site_url()
+
+    def title(self, obj):
+        return f"Webmentions on {obj.name} (Admin)"
+
+    def description(self, obj):
+        return f"The most recent webmentions on {obj.name} (Admin"
+
+    def items(self, obj):
+        return Webmention.objects.all().order_by("-created_at")[:10]
+
+    # Getting details for each post in the feed:
+
+    def item_link(self, item):
+        obj = self._get_parent_object(item)
+        return obj.get_absolute_url_with_domain() + f"#m{item.pk}"
+
+    def item_pubdate(self, item):
+        return item.published
+
+    def item_title(self, item):
+        if hasattr(item.target_object, "title"):
+            # e.g. a blog Post
+            title = item.target_object.title
+        else:
+            # Just in case with use it for something that doesn't have a title attr.
+            title = str(item.target_object)
+
+        title = f"{title}: {item.source_url}"
+
+        if not item.validated:
+            title = f"[NOT VALIDATED] {title}"
+
+        return title
+
+    def item_description(self, item):
+        return self.get_item_content(item)
