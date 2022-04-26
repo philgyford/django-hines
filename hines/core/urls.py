@@ -15,6 +15,7 @@ register_converter(converters.TwoDigitDayConverter, "dd")
 app_name = "hines"
 
 admin_comments_slug = app_settings.COMMENTS_ADMIN_FEED_SLUG
+admin_webmentions_slug = app_settings.WEBMENTIONS_ADMIN_FEED_SLUG
 
 urlpatterns = [
     # Send anyone going to '/phil/' to the home page at '/'.
@@ -32,6 +33,11 @@ urlpatterns = [
         f"feeds/{admin_comments_slug}/rss/",
         comments_feeds.AdminCommentsFeedRSS(),
         name="admin_comments_feed_rss",
+    ),
+    path(
+        f"feeds/{admin_webmentions_slug}/rss/",
+        feeds.AdminWebmentionsFeedRSS(),
+        name="admin_webmentions_feed_rss",
     ),
     # Flatpages with names:
     path("about/", flatpages_views.flatpage, {"url": "/phil/about/"}, name="about"),

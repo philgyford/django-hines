@@ -303,10 +303,15 @@ class AdminWebmentionsFeedRSS(ExtendedFeed):
     """
     Includes both public and spam comments, plus links to
     approve/delete/edit them in the Admin.
+
+    Assumes that the target_object of a Webmention is a weblog Post
+    object, that has a `title` field and a
+    `get_absolute_url_with_domain()` method.
     """
 
     feed_type = ExtendedRSSFeed
 
+    # This will be used in <content:encoded>
     content_template = "hines_core/feeds/webmentions_admin.html"
 
     # Getting details about the feed/site:
@@ -321,7 +326,7 @@ class AdminWebmentionsFeedRSS(ExtendedFeed):
         return f"Webmentions on {obj.name} (Admin)"
 
     def description(self, obj):
-        return f"The most recent webmentions on {obj.name} (Admin"
+        return f"The most recent webmentions on {obj.name} (Admin)"
 
     def items(self, obj):
         return Webmention.objects.all().order_by("-created_at")[:10]
@@ -329,21 +334,20 @@ class AdminWebmentionsFeedRSS(ExtendedFeed):
     # Getting details for each post in the feed:
 
     def item_link(self, item):
-        obj = self._get_parent_object(item)
-        return obj.get_absolute_url_with_domain() + f"#m{item.pk}"
+        return item.target_object.get_absolute_url_with_domain() + f"#m{item.pk}"
 
     def item_pubdate(self, item):
         return item.published
 
     def item_title(self, item):
-        if hasattr(item.target_object, "title"):
-            # e.g. a blog Post
-            title = item.target_object.title
-        else:
-            # Just in case with use it for something that doesn't have a title attr.
-            title = str(item.target_object)
-
-        title = f"{title}: {item.source_url}"
+        """
+        For each item's title, include the title of the linked-to blog Post, followed
+        by the URL that mentioned it.
+        Flag as not validated, if it isn't.
+        """
+        url_re = re.compile(r"https?://(www\.)?")
+        source_url = url_re.sub("", item.source_url)
+        title = f"{item.target_object.title}: {source_url}"
 
         if not item.validated:
             title = f"[NOT VALIDATED] {title}"
@@ -351,4 +355,7 @@ class AdminWebmentionsFeedRSS(ExtendedFeed):
         return title
 
     def item_description(self, item):
-        return self.get_item_content(item)
+        "Return the most important thing, the admin URL for the simple description"
+        return get_site_url() + reverse(
+            "admin:mentions_webmention_change", args=[item.pk]
+        )
