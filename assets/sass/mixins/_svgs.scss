@@ -89,5 +89,5 @@
     $encoded: #{$encoded}#{$chunk};
     $index: $index + $slice;
   }
-  @return url("data:image/svg+xml,#{$encoded}");
+  @return url("data:image/svg+xml;charset=utf8,#{$encoded}");
 }
