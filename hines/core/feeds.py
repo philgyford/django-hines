@@ -194,6 +194,9 @@ class ExtendedFeed(Feed):
 
 
 class EverythingFeedRSS(ExtendedFeed):
+    """
+    The feed that combines posts, bookmarks, photos into one.
+    """
 
     num_items = 14
 

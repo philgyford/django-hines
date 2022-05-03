@@ -6,7 +6,7 @@ from hines.custom_comments.factories import CustomCommentFactory
 from hines.weblogs.factories import BlogFactory, LivePostFactory
 
 # from tests import override_app_settings
-from tests.core.test_feeds import FeedTestCase
+from tests.core.feeds import FeedTestCase
 
 
 class CommentsFeedRSSParentTestCase(FeedTestCase):
