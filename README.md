@@ -366,6 +366,8 @@ Default is `None`, to disable this behaviour.
 
 `HINES_USE_HTTPS`: e.g. `False`. Used when generating full URLs and the request object isn't available. Default `False`.
 
+`HINES_WEBMENTIONS_ADMIN_FEED_SLUG`: URL slug for the admin-only RSS feed of webmentions, so it can be at a non-obvious location. Default is `"admin-webmentions"`.
+
 ## Media files
 
 Whether in local dev or Heroku, we need an S3 bucket to store Media files in (Static files are served using Whitenoise).

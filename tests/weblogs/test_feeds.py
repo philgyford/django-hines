@@ -6,7 +6,7 @@ from django.utils.feedgenerator import rfc2822_date
 from hines.core.utils import make_datetime
 from hines.users.factories import UserFactory
 from hines.weblogs.factories import BlogFactory, DraftPostFactory, LivePostFactory
-from tests.core.test_feeds import FeedTestCase
+from tests.core.feeds import FeedTestCase
 
 
 class BlogPostsFeedRSSTestCase(FeedTestCase):

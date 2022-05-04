@@ -1,0 +1,50 @@
+{% autoescape off %}
+{% spaceless %}
+
+  <p>Webmention from<br>
+    <a href="{{ obj.source_url }}">{{ obj.source_url }}</a><br>
+    to<br>
+    <a href="{{ obj.target_object.get_absolute_url }}">{% if obj.target_object.title %}{{ obj.target_object.title }}{% else %}{{ obj.target_object }}{% endif %}</a><br>
+    sent by {{ obj.sent_by }}
+  </p>
+
+  {% if obj.quote %}
+    <blockquote><p>{{ obj.quote }}</p></blockquote>
+  {% endif %}
+
+  {% if obj.hcard %}
+    <h4>h-card</h4>
+    <dl>
+      <dt>Name</dt>
+      <dd>{{ obj.hcard.name|default:"[None]" }}</dd>
+      <dt>Homepage</dt>
+      <dd>
+        {% if obj.hcard.homepage %}
+          <a href="{{ obj.hcard.homepage }}">{{ obh.hcard.homepage }}</a>
+        {% else %}
+          [None]
+        {% endif %}
+      </dd>
+      <dt>Avatar</dt>
+      <dd>
+        {% if obj.hcard.avatar %}
+          <img src="{{ obj.hcard.avatar }}" width="150" alt="Avatar image">
+        {% else %}
+          [None]
+        {% endif %}
+      </dd>
+    </dl>
+  {% endif %}
+
+  <hr>
+  <dl>
+    <dt>Validated?</dt>
+    <dd>{% if obj.validated %}✅{% else %}❌{% endif %}</dd>
+    <dt>Approved?</dt>
+    <dd>{% if obj.approved %}✅{% else %}❌{% endif %}</dd>
+  </dl>
+  <p>
+    <a href="{{ site_url }}{% url 'admin:mentions_webmention_change' obj.pk %}">Edit in Admin</a>
+  </p>
+{% endspaceless %}
+{% endautoescape %}
