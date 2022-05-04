@@ -21,6 +21,10 @@ HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
 
 HINES_COMMENTS_ADMIN_FEED_SLUG = get_env_variable("HINES_COMMENTS_ADMIN_FEED_SLUG")
 
+HINES_WEBMENTIONS_ADMIN_FEED_SLUG = get_env_variable(
+    "HINES_WEBMENTIONS_ADMIN_FEED_SLUG"
+)
+
 # Used to generate URLs when we don't have access to a request object:
 HINES_USE_HTTPS = True
 
