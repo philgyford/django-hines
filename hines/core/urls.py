@@ -16,7 +16,6 @@ app_name = "hines"
 
 admin_comments_slug = app_settings.COMMENTS_ADMIN_FEED_SLUG
 admin_webmentions_slug = app_settings.WEBMENTIONS_ADMIN_FEED_SLUG
-print(admin_webmentions_slug)
 
 urlpatterns = [
     # Send anyone going to '/phil/' to the home page at '/'.
