@@ -259,6 +259,7 @@ HINES_AKISMET_API_KEY               YOUR-API-KEY
 HINES_CLOUDFLARE_ANALYTICS_TOKEN    YOUR-TOKEN
 HINES_COMMENTS_ADMIN_FEED_SLUG      your-slug
 HINES_MAPBOX_API_KEY                YOUR_API_KEY
+HINES_WEBMENTIONS_ADMIN_FEED_SLUG   your-slug
 ```
 
 Further settings will be set automatically by add-ons.
