@@ -64,12 +64,28 @@ def markdownify(content, output_format="xhtml"):
     )
     link_patterns = [(re.compile(pattern), r"\1")]
 
-    return markdown2.markdown(
+    html = markdown2.markdown(
         content,
         extras=["fenced-code-blocks", "link-patterns"],
         html4tags=(output_format == "html5"),
         link_patterns=link_patterns,
     )
+
+    html = _do_strike(html)
+
+    return html
+
+
+_strike_re = re.compile(r"~~(?=\S)(.+?)(?<=\S)~~", re.S)
+
+
+def _do_strike(text):
+    """The markdown2 strike extra uses <strike> not <s>
+    So until that's changed, we have our own function here.
+    https://github.com/trentm/python-markdown2/issues/444
+    """
+    text = _strike_re.sub(r"<s>\1</s>", text)
+    return text
 
 
 def truncate_string(

@@ -86,6 +86,10 @@ class MarkdownifyTestCase(TestCase):
             html, '<p>Hello <a href="https://www.example.org/">Link</a> Bye</p>\n'
         )
 
+    def test_markdown_strike(self):
+        "Using ~~foo~~ should translate into <s>foo</s>"
+        self.assertHTMLEqual(markdownify("~~foo~~"), "<p><s>foo</s></p>")
+
 
 class TruncateStringTestCase(TestCase):
     def test_strip_html(self):
