@@ -53,7 +53,7 @@ class PostTestCase(TestCase):
         "With no formmating, intro_html should be the same as intro."
         html = '<p><a href="http://example.org">Hello</a></p>'
         post = LivePostFactory(html_format=Post.Formats.NONE, intro=html)
-        self.assertEqual(post.intro_html, html)
+        self.assertHTMLEqual(post.intro_html, html)
 
     def test_intro_html_convert_line_breaks(self):
         "It should add <p> and <br> tags when converting line breaks."
@@ -62,7 +62,7 @@ class PostTestCase(TestCase):
             intro="""<a href="http://example.org">Hello</a>.
 Another line.""",
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.intro_html,
             '<p><a href="http://example.org">Hello</a>.<br>Another line.</p>',
         )
@@ -73,16 +73,16 @@ Another line.""",
             html_format=Post.Formats.MARKDOWN,
             intro="[Hello](http://example.org). *OK?*",
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.intro_html,
-            '<p><a href="http://example.org">Hello</a>. <em>OK?</em></p>\n',
+            '<p><a href="http://example.org">Hello</a>. <em>OK?</em></p>',
         )
 
     def test_intro_html_smartypants(self):
         post = LivePostFactory(
             html_format=Post.Formats.NONE, intro="""This... isn't -- "special"."""
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.intro_html, "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;."
         )
 
@@ -90,7 +90,7 @@ Another line.""",
         "With no formmating, body_html should be the same as body."
         html = '<p><a href="http://example.org">Hello</a></p>'
         post = LivePostFactory(html_format=Post.Formats.NONE, body=html)
-        self.assertEqual(post.body_html, html)
+        self.assertHTMLEqual(post.body_html, html)
 
     def test_body_html_convert_line_breaks(self):
         "It should add <p> and <br> tags when converting line breaks."
@@ -99,7 +99,7 @@ Another line.""",
             body="""<a href="http://example.org">Hello</a>.
 Another line.""",
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.body_html,
             '<p><a href="http://example.org">Hello</a>.<br>Another line.</p>',
         )
@@ -114,21 +114,18 @@ Another line.""",
 
 *OK?*""",
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.body_html,
             """<p><a href="http://example.org">Hello</a>.</p>
-
-<hr />
-
-<p><em>OK?</em></p>
-""",
+            <hr />
+            <p><em>OK?</em></p>""",
         )
 
     def test_body_html_smartypants(self):
         post = LivePostFactory(
             html_format=Post.Formats.NONE, body="""This... isn't -- "special"."""
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.body_html, "This&#8230; isn&#8217;t &#8212; &#8220;special&#8221;."
         )
 
@@ -142,14 +139,12 @@ Another line.""",
 
 Cats""",
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.intro_html,
             """<p>Dogs</p>
-
-<hr>
-
-<p>Cats</p>
-""",
+            <hr>
+            <p>Cats</p>
+            """,
         )
 
     def test_body_html_hines_markdown(self):
@@ -166,15 +161,15 @@ Cats
 
 Cod"""  # noqaL E501
         post = LivePostFactory(html_format=Post.Formats.HINES_MARKDOWN, body=body)
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.body_html,
             """<p>Dogs</p>
-<hr>
-<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
-<hr>
-<h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Fish</h2>
-<p>Cod</p>
-""",  # noqa: E501
+            <hr>
+            <p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
+            <hr>
+            <h2 id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Fish</h2>
+            <p>Cod</p>
+            """,  # noqa: E501
         )
 
     def test_body_html_hines_markdown_figure(self):
@@ -189,13 +184,13 @@ Cod"""  # noqaL E501
 
 Cats""",
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.body_html,
             """<p>Dogs</p>
-<hr>
-<figure src="test.png"></figure>
-<p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
-""",  # noqa: E501
+            <hr>
+            <figure src="test.png"></figure>
+            <p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
+            """,  # noqa: E501
         )
 
     def test_body_html_hines_markdown_figure_only(self):
@@ -214,14 +209,14 @@ Cats""",
 
 Cats""",
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.body_html,
             """<p>Dogs</p>
-<hr>
-<figure src="test.png"></figure>
-<hr>
-<p id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
-""",  # noqa: E501
+            <hr>
+            <figure src="test.png"></figure>
+            <hr>
+            <p id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
+            """,  # noqa: E501
         )
 
     def test_body_html_hines_markdown_no_change(self):
@@ -242,18 +237,18 @@ Cats""",
 1. Fish
 """,
         )
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.body_html,
             """<p>Dogs</p>
-<hr>
-<ul>
-<li>Cats</li>
-</ul>
-<hr>
-<ol>
-<li>Fish</li>
-</ol>
-""",
+            <hr>
+            <ul>
+            <li>Cats</li>
+            </ul>
+            <hr>
+            <ol>
+            <li>Fish</li>
+            </ol>
+            """,
         )
 
     def test_new_excerpt(self):
@@ -268,7 +263,7 @@ Cats""",
         )
         # Note: curly quotes created by Smartypants, and decoded in
         # Post.make_excerpt():
-        self.assertEqual(
+        self.assertHTMLEqual(
             post.excerpt,
             "Hello. The “body” goes on for a bit so we can check the "
             "excerpt is truncated and working correctly…",
