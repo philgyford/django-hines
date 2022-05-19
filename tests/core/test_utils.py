@@ -7,25 +7,33 @@ class MarkdownifyTestCase(TestCase):
     def test_basic(self):
         "Just test it actually does some Markdowning"
         html = markdownify("Hello\n\nBye")
-        self.assertEqual(html, "<p>Hello</p>\n\n<p>Bye</p>\n")
+        self.assertHTMLEqual(html, "<p>Hello</p>\n\n<p>Bye</p>\n")
 
     def test_fenced_code(self):
         "It should mark up fenced code blocks correctly."
         html = markdownify("```\nCode line 1\n\nCode line 2\n```")
-        self.assertEqual(html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>\n")
+        self.assertHTMLEqual(
+            html, "<pre><code>Code line 1\n\nCode line 2\n</code></pre>\n"
+        )
 
     def test_pygments_highlighting(self):
         "It should use pygments to highlight fenced code blocks"
         html = markdownify("```html\n<p>Hi</p>\n```")
-        self.assertEqual(
+        self.assertHTMLEqual(
             html,
-            '<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hi<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>\n</code></pre></div>\n',
+            """<div class="codehilite">
+                <pre><span></span><code>
+                    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+                    Hi
+                    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+                </code></pre>
+            </div>""",
         )  # noqa: E501
 
     def test_output_format_default(self):
         "By default it should produce XHTML-style tags"
         html = markdownify("Hi\n\n----\n\n![Alt](test.png)")
-        self.assertEqual(
+        self.assertHTMLEqual(
             html, '<p>Hi</p>\n\n<hr />\n\n<p><img src="test.png" alt="Alt" /></p>\n'
         )
 
@@ -33,7 +41,7 @@ class MarkdownifyTestCase(TestCase):
         "It should produce XHTML-style tags when asked"
         # With trailing slashes on solo tags.
         html = markdownify("Hi\n\n----\n\n![Alt](test.png)", output_format="xhtml")
-        self.assertEqual(
+        self.assertHTMLEqual(
             html, '<p>Hi</p>\n\n<hr />\n\n<p><img src="test.png" alt="Alt" /></p>\n'
         )
 
@@ -41,16 +49,19 @@ class MarkdownifyTestCase(TestCase):
         "It should produce HTML5-style tags when asked"
         # With NO trailing slashes on solo tags.
         html = markdownify("Hi\n\n----\n\n![Alt](test.png)", output_format="html5")
-        self.assertEqual(
+        self.assertHTMLEqual(
             html, '<p>Hi</p>\n\n<hr>\n\n<p><img src="test.png" alt="Alt"></p>\n'
         )
 
     def test_urls_to_links(self):
         "It should turn bare URLs into clickable links"
         html = markdownify("Hello https://www.example.org/foo/ Bye")
-        self.assertEqual(
+        self.assertHTMLEqual(
             html,
-            '<p>Hello <a href="https://www.example.org/foo/">https://www.example.org/foo/</a> Bye</p>\n',  # noqa: E501
+            (
+                '<p>Hello <a href="https://www.example.org/foo/">'
+                "https://www.example.org/foo/</a> Bye</p>\n"
+            ),
         )
 
     def test_hrefs_are_untouched(self):
@@ -64,7 +75,7 @@ class MarkdownifyTestCase(TestCase):
     def test_markdown_links_are_done_correctly(self):
         "Standard Markdown links should be linkified correctly"
         html = markdownify("Hello [Link](https://www.example.org/) Bye")
-        self.assertEqual(
+        self.assertHTMLEqual(
             html, '<p>Hello <a href="https://www.example.org/">Link</a> Bye</p>\n'
         )
 
@@ -174,15 +185,24 @@ class TruncateStringTestCase(TestCase):
         """
         self.assertEqual(
             truncate_string(
-                """<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget odio eget odio porttitor accumsan in eget elit. Integer gravida egestas nunc. Mauris at tortor ornare, blandit eros quis, auctorlacus.</p>
-
-        <p>Fusce ullamcorper nunc vitae tincidunt sodales. Vestibulum sit amet lacus at sem porta porta. Donec fringilla laoreet orci eu porta. Aenean non lacus hendrerit, semper odio a, feugiat orci. Suspendisse potenti.</p>""",  # noqa: E501
+                (
+                    "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                    "Donec eget odio eget odio porttitor accumsan in eget elit. "
+                    "Integer gravida egestas nunc. Mauris at tortor ornare, "
+                    "blandit eros quis, auctorlacus.</p>"
+                    "<p>Fusce ullamcorper nunc vitae tincidunt sodales. Vestibulum "
+                    "sit amet lacus at sem porta porta. Donec fringilla laoreet orci "
+                    "eu porta. Aenean non lacus hendrerit, semper odio a, feugiat "
+                    "orci. Suspendisse potenti.</p>"
+                ),
                 strip_html=True,
                 chars=200,
                 truncate="...",
                 at_word_boundary=True,
             ),
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget "
-            "odio eget odio porttitor accumsan in eget elit. Integer gravida "
-            "egestas nunc. Mauris at tortor ornare, blandit eros quis,...",
+            (
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget "
+                "odio eget odio porttitor accumsan in eget elit. Integer gravida "
+                "egestas nunc. Mauris at tortor ornare, blandit eros quis,..."
+            ),
         )
