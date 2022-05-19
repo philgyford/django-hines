@@ -172,15 +172,16 @@ Cod"""  # noqaL E501
             """,  # noqa: E501
         )
 
-    def test_body_html_hines_markdown_figure(self):
-        """If the first element is a <figure> it should add marker to next <p>."""
+    def test_body_html_hines_markdown_ineligible_element_first(self):
+        """If the first element is is not eligible for a section marker, the next <p>
+        should get one."""
         post = LivePostFactory(
             html_format=Post.Formats.HINES_MARKDOWN,
             body="""Dogs
 
 ----
 
-<figure src="test.png"></figure>
+<ul></ul>
 
 Cats""",
         )
@@ -188,13 +189,14 @@ Cats""",
             post.body_html,
             """<p>Dogs</p>
             <hr>
-            <figure src="test.png"></figure>
+            <ul></ul>
             <p id="s2"><a class="section-anchor" href="#s2" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
             """,  # noqa: E501
         )
 
-    def test_body_html_hines_markdown_figure_only(self):
-        """If a section only contains a <figure> it shouldn't have a marker.
+    def test_body_html_hines_markdown_ineligible_element_only(self):
+        """If a section only contains an element that's not eligible for a section
+        marker it shouldn't get one.
         But we should still count it as a section, in case we want to add markers later.
         """
         post = LivePostFactory(
@@ -203,7 +205,7 @@ Cats""",
 
 ----
 
-<figure src="test.png"></figure>
+<ul></ul>
 
 ----
 
@@ -213,7 +215,7 @@ Cats""",
             post.body_html,
             """<p>Dogs</p>
             <hr>
-            <figure src="test.png"></figure>
+            <ul></ul>
             <hr>
             <p id="s3"><a class="section-anchor" href="#s3" style="text-decoration:none;" title="Link to this section">&sect;</a> Cats</p>
             """,  # noqa: E501
