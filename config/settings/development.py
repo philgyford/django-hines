@@ -55,9 +55,16 @@ if DEBUG:
     MIDDLEWARE += [  # noqa: F405
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
+
     INSTALLED_APPS += ["debug_toolbar", "django_extensions"]  # noqa: F405
 
-    INTERNAL_IPS = ["127.0.0.1"]
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "INTERCEPT_REDIRECTS": False,
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
 
     # Stop Django handling static files in favour of Whitenoise.
     # (When DEBUG = False)
