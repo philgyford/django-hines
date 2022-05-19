@@ -31,7 +31,7 @@ class TrackbackTestCase(TestCase):
         self.assertEqual(trackbacks[1], tb1)
 
     def test_unique_together(self):
-        "post and url should be a unique combinatino"
+        "post and url should be a unique combination"
         post = LivePostFactory()
 
         TrackbackFactory(post=post, url="http://example.com/blah.html")
