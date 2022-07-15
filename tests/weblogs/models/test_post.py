@@ -392,10 +392,6 @@ Cats""",
         self.assertEqual(len(trackbacks), 1)
         self.assertEqual(trackbacks[0], visible_tb)
 
-    def test_status_str(self):
-        post = LivePostFactory()
-        self.assertEqual(post.status_str, "Published")
-
     def test_title_text(self):
         post = LivePostFactory(
             title="This is <cite>Cited</cite> and <strong>Bold</strong>"

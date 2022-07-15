@@ -45,7 +45,7 @@
 
     {% if is_preview %}
       <p class="utils-admin">
-        This is a preview. This Post’s status is {{ post.status_str }}.
+        This is a preview. This Post’s status is {{ post.get_status_display }}.
       </p>
     {% endif %}
 

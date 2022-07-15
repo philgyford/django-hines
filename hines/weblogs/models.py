@@ -346,17 +346,6 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
             return self.trackbacks.filter(is_visible=True)
 
     @property
-    def status_str(self):
-        """
-        Returns the text version of the Post's status. e.g. "Draft".
-        """
-        choices = {a: b for a, b in self.Status.choices}
-        if self.status in choices:
-            return choices[self.status]
-        else:
-            return None
-
-    @property
     def title_text(self):
         """A Post title containing no HTML.
         Suitable for RSS feeds, <meta> tags, etc.
