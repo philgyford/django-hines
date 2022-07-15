@@ -84,11 +84,11 @@ class PostAdmin(admin.ModelAdmin):
     list_display = (
         "blog",
         "title",
+        "status_icon",
         "allow_comments",
         "comment_count",
         "allow_incoming_webmentions",
         "allow_outgoing_webmentions",
-        "status_icon",
         "time_published",
         # 'is_featured',
     )
