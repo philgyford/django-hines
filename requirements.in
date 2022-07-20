@@ -29,4 +29,5 @@ django-debug-toolbar
 factory-boy
 flake8
 freezegun
+ipython
 responses
