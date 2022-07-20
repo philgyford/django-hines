@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-
 COMMENTS_ALLOWED = getattr(settings, "HINES_COMMENTS_ALLOWED", True)
 
 COMMENTS_ALLOWED_TAGS = getattr(

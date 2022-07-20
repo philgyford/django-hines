@@ -1,14 +1,13 @@
 import factory
-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-
 from django_comments.models import CommentFlag
 
-from . import models
 from hines.users.factories import UserFactory
 from hines.weblogs.factories import LivePostFactory
 from hines.weblogs.models import Post
+
+from . import models
 
 
 class CustomCommentFactory(factory.django.DjangoModelFactory):

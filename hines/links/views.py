@@ -1,5 +1,5 @@
-from ditto.pinboard.models import Bookmark
 from ditto.pinboard import views as pinboard_views
+from ditto.pinboard.models import Bookmark
 
 from hines.core.views import PaginatedListView
 

@@ -2,12 +2,12 @@ import re
 
 from django.contrib.sites.models import Site
 from django.urls import reverse
-
-from . import ExtendedFeed, ExtendedRSSFeed
-from ..recent import RecentObjects
-from .. import app_settings
-from ..utils import get_site_url
 from mentions.models import Webmention
+
+from .. import app_settings
+from ..recent import RecentObjects
+from ..utils import get_site_url
+from . import ExtendedFeed, ExtendedRSSFeed
 
 
 class EverythingFeedRSS(ExtendedFeed):

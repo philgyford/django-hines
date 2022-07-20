@@ -1,10 +1,7 @@
+import requests
 from django.conf import settings
 from django.contrib import messages
-
 from django.utils.encoding import smart_str
-
-import requests
-
 
 AKISMET_CHECK_URL = "rest.akismet.com/1.1/comment-check"
 

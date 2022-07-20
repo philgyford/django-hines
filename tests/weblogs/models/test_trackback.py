@@ -1,10 +1,9 @@
 import datetime
 
-from freezegun import freeze_time
-
 from django.db.utils import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
+from freezegun import freeze_time
 
 from hines.weblogs.factories import LivePostFactory, TrackbackFactory
 from hines.weblogs.models import Trackback

@@ -1,10 +1,7 @@
 from django.test import Client, TestCase
 
 from hines.core.utils import make_datetime
-from hines.weblogs.factories import (
-    BlogFactory,
-    LivePostFactory,
-)
+from hines.weblogs.factories import BlogFactory, LivePostFactory
 
 
 class WebmentionsTestCase(TestCase):

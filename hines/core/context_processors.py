@@ -3,7 +3,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from hines.core import app_settings
 from hines.core.utils import get_site_url
 
-
 # Things that we want to be available in the context of every page.
 
 

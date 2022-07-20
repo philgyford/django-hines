@@ -2,7 +2,6 @@ from django import template
 
 from ..models import Blog, Post
 
-
 register = template.Library()
 
 

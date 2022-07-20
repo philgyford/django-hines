@@ -1,8 +1,8 @@
 from django.urls import path, register_converter
 
 from hines.core import converters
-from . import views
 
+from . import views
 
 register_converter(converters.WordCharacterConverter, "word")
 

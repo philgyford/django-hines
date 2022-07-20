@@ -2,8 +2,6 @@ import datetime
 import random
 
 from dal import autocomplete
-from taggit.models import Tag
-
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -16,11 +14,12 @@ from django.views.generic import (
     YearArchiveView,
 )
 from django.views.generic.detail import SingleObjectMixin
+from taggit.models import Tag
 
 from hines.core.views import CacheMixin, PaginatedListView, TemplateSetMixin
+
 from .forms import ManualSubmitWebmentionForm
 from .models import Blog, Post
-
 
 # Colorful
 # http://web.archive.org/web/20000819162919/http://www.gyford.com:80/phil/daily/

@@ -1,25 +1,21 @@
-from hashlib import md5
 import re
+from hashlib import md5
 from urllib.parse import urlparse
 
 import smartypants as _smartypants
-
+from ditto.lastfm.templatetags.ditto_lastfm import recent_scrobbles, top_artists
 from django import template
-from django.urls import reverse
 from django.template.defaultfilters import linebreaks_filter
+from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
-
-from .. import app_settings
-from ..utils import get_site_url
-
-from ditto.lastfm.templatetags.ditto_lastfm import recent_scrobbles, top_artists
-
 from spectator.events.templatetags.spectator_events import (
     most_seen_creators_by_works_card,
 )
 
+from .. import app_settings
+from ..utils import get_site_url
 
 register = template.Library()
 

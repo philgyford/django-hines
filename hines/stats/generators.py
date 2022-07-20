@@ -1,24 +1,21 @@
 from collections import OrderedDict
 from datetime import datetime
 
-from django.db.models import Count, F, Min, Max
-from django.db.models.functions import TruncYear
-from django.urls import reverse
-
 from ditto.flickr.models import Photo
 from ditto.flickr.models import User as FlickrUser
-from ditto.lastfm.models import Scrobble
 from ditto.lastfm.models import Account as LastfmAccount
-from ditto.pinboard.models import Bookmark
+from ditto.lastfm.models import Scrobble
 from ditto.pinboard.models import Account as PinboardAccount
+from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
 from ditto.twitter.models import User as TwitterUser
-
+from django.db.models import Count, F, Max, Min
+from django.db.models.functions import TruncYear
+from django.urls import reverse
 from spectator.events.models import Event
 from spectator.reading.utils import annual_reading_counts
 
 from ..weblogs.models import Post
-
 
 # The methods in these generators should return dicts of this form:
 #

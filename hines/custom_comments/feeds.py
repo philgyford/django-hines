@@ -1,7 +1,6 @@
+import django_comments
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-
-import django_comments
 
 from hines.core.feeds import ExtendedFeed, ExtendedRSSFeed
 from hines.core.utils import get_site_url

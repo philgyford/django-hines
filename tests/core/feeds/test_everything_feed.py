@@ -6,8 +6,9 @@ from django.utils.feedgenerator import rfc2822_date
 from hines.core.utils import make_datetime
 from hines.users.factories import UserFactory
 from hines.weblogs.factories import BlogFactory, LivePostFactory
-from . import FeedTestCase
 from tests import override_app_settings
+
+from . import FeedTestCase
 
 
 class EverythingFeedTestCase(FeedTestCase):

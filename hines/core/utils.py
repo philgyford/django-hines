@@ -1,13 +1,12 @@
 # coding: utf-8
-from datetime import datetime
-import pytz
 import re
+from datetime import datetime
 
+import markdown2
+import pytz
 from django.contrib.sites.models import Site
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
-
-import markdown2
 
 from . import app_settings
 

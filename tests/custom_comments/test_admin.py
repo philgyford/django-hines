@@ -1,8 +1,8 @@
 from django.contrib.admin.sites import AdminSite
 from django.test import TestCase
 
-from hines.custom_comments.factories import CommentFlagFactory, CustomCommentFactory
 from hines.custom_comments.admin import CustomCommentAdmin
+from hines.custom_comments.factories import CommentFlagFactory, CustomCommentFactory
 from hines.custom_comments.models import CustomComment
 from hines.weblogs.factories import LivePostFactory
 

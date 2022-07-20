@@ -3,7 +3,6 @@ from django.urls import resolve, reverse
 
 from hines.weblogs import feeds, views
 
-
 # Testing that the named URLs map the correct name to URL,
 # and that the correct views are called.
 

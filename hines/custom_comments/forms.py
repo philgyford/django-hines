@@ -1,6 +1,5 @@
-from django_comments.forms import CommentForm
 from django.conf import settings
-
+from django_comments.forms import CommentForm
 from hcaptcha.fields import hCaptchaField
 
 from .models import CustomComment

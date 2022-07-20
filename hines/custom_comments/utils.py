@@ -1,10 +1,9 @@
-from functools import partial
 import re
+from functools import partial
 
 import bleach
 from bleach import Cleaner
 from bleach.linkifier import LinkifyFilter
-
 from django.contrib import messages
 
 from hines.core import app_settings

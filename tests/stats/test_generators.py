@@ -1,16 +1,14 @@
-from django.test import TestCase
-from freezegun import freeze_time
-
-from ditto.flickr.factories import UserFactory as FlickrUserFactory
 from ditto.flickr.factories import PhotoFactory
+from ditto.flickr.factories import UserFactory as FlickrUserFactory
 from ditto.lastfm.factories import AccountFactory as LastfmAccountFactory
 from ditto.lastfm.factories import ScrobbleFactory
 from ditto.pinboard.factories import AccountFactory as PinboardAccountFactory
 from ditto.pinboard.factories import BookmarkFactory
 from ditto.twitter.factories import AccountFactory as TwitterAccountFactory
-from ditto.twitter.factories import UserFactory as TwitterUserFactory
 from ditto.twitter.factories import TweetFactory
-
+from ditto.twitter.factories import UserFactory as TwitterUserFactory
+from django.test import TestCase
+from freezegun import freeze_time
 from spectator.events.factories import (
     CinemaEventFactory,
     ComedyEventFactory,

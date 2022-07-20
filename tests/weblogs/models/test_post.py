@@ -3,12 +3,9 @@ import datetime
 from django.conf import settings
 from django.test import TestCase
 from django.utils import timezone
-
 from freezegun import freeze_time
 
-from tests import override_app_settings
 from hines.core.utils import make_datetime
-from hines.weblogs.models import Post
 from hines.weblogs.factories import (
     BlogFactory,
     DraftPostFactory,
@@ -17,6 +14,8 @@ from hines.weblogs.factories import (
     TrackbackFactory,
     WebmentionFactory,
 )
+from hines.weblogs.models import Post
+from tests import override_app_settings
 
 
 class PostTestCase(TestCase):

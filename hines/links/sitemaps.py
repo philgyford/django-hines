@@ -1,5 +1,5 @@
-from django.contrib.sitemaps import Sitemap
 from ditto.pinboard.models import Bookmark
+from django.contrib.sitemaps import Sitemap
 
 
 class BookmarkSitemap(Sitemap):

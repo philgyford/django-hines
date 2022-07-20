@@ -1,7 +1,6 @@
-from freezegun import freeze_time
-
 from django.test import TestCase
 from django.utils import timezone
+from freezegun import freeze_time
 
 from hines.core.utils import make_datetime
 from hines.custom_comments.factories import CustomCommentFactory

@@ -1,15 +1,15 @@
-from django.http.response import Http404
-from django.test import RequestFactory, TestCase, override_settings
-
 from ditto.flickr.factories import PhotoFactory
 from ditto.pinboard.factories import BookmarkFactory
 from ditto.twitter.factories import TweetFactory
+from django.http.response import Http404
+from django.test import RequestFactory, TestCase, override_settings
+from spectator.core.factories import IndividualCreatorFactory
+from spectator.reading.factories import PublicationFactory
+
 from hines.core import views
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, PostFactory
 from hines.weblogs.models import Post
-from spectator.core.factories import IndividualCreatorFactory
-from spectator.reading.factories import PublicationFactory
 from tests import override_app_settings
 
 

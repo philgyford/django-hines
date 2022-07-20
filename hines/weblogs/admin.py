@@ -1,10 +1,10 @@
 from dal import autocomplete
-
 from django import forms
 from django.contrib import admin
 from django.urls import reverse_lazy
 
 from hines.core.utils import datetime_now
+
 from .models import Blog, Post, Trackback
 
 

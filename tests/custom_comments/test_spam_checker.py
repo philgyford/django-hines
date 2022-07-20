@@ -1,15 +1,14 @@
 from urllib.parse import unquote_plus
 
+import responses
 from django.conf import settings
 from django.contrib.messages import get_messages
-from django.test import override_settings, TestCase
-
-import responses
+from django.test import TestCase, override_settings
 
 from hines.custom_comments.forms import CustomCommentForm
 from hines.custom_comments.models import CustomComment
-from hines.weblogs.factories import PostFactory
 from hines.users.factories import UserFactory
+from hines.weblogs.factories import PostFactory
 
 
 @override_settings(HINES_AKISMET_API_KEY="abcd1234", HINES_USE_HCAPTCHA=False)

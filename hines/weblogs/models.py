@@ -1,8 +1,10 @@
-from datetime import timedelta
 import html.parser
 import logging
 import re
+from datetime import timedelta
 
+import smartypants
+from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
@@ -12,26 +14,23 @@ from django.template.defaultfilters import linebreaks
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
-
-from bs4 import BeautifulSoup
 from django_comments.moderation import CommentModerator, moderator
 from mentions.models.mixins.mentionable import MentionableMixin
 from mentions.models.webmention import Webmention
-import smartypants
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
 
 from hines.core import app_settings
 from hines.core.models import TimeStampedModelMixin
 from hines.core.utils import (
-    get_site_url,
     expire_view_cache,
+    get_site_url,
     markdownify,
     truncate_string,
 )
 from hines.custom_comments.utils import add_comment_message
-from . import managers
 
+from . import managers
 
 log = logging.getLogger(__name__)
 

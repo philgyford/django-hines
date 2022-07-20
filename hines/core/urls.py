@@ -1,12 +1,11 @@
-from django.urls import path, register_converter
 from django.contrib.flatpages import views as flatpages_views
+from django.urls import path, register_converter
 from django.views.generic.base import RedirectView
 
-from . import converters, feeds
-from . import views as core_views
-from . import app_settings
 from hines.custom_comments import feeds as comments_feeds
 
+from . import app_settings, converters, feeds
+from . import views as core_views
 
 register_converter(converters.FourDigitYearConverter, "yyyy")
 register_converter(converters.TwoDigitMonthConverter, "mm")

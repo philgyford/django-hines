@@ -1,13 +1,14 @@
 from datetime import timedelta
 
-from django.contrib.contenttypes.models import ContentType
 import factory
 import factory.fuzzy
+from django.contrib.contenttypes.models import ContentType
+from mentions.models import Webmention
 
-from . import models
 from hines.core.utils import datetime_now
 from hines.users.factories import UserFactory
-from mentions.models import Webmention
+
+from . import models
 
 
 class BlogFactory(factory.django.DjangoModelFactory):

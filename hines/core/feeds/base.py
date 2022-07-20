@@ -1,10 +1,10 @@
 import re
 from xml.sax.saxutils import XMLGenerator
 
-from django.templatetags.static import static
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.syndication.views import Feed
-from django.template import loader, TemplateDoesNotExist
+from django.template import TemplateDoesNotExist, loader
+from django.templatetags.static import static
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.xmlutils import SimplerXMLGenerator, UnserializableContentError
 

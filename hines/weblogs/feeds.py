@@ -1,4 +1,5 @@
 from hines.core.feeds import ExtendedFeed, ExtendedRSSFeed
+
 from .models import Blog
 
 

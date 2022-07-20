@@ -3,15 +3,15 @@ from django.test import Client
 
 from hines.core.utils import make_date, make_datetime
 from hines.users.models import User
+from hines.weblogs import views
 from hines.weblogs.factories import (
     BlogFactory,
     DraftPostFactory,
     LivePostFactory,
     ScheduledPostFactory,
 )
-from hines.weblogs import views
-from tests.core.test_views import ViewTestCase
 from tests import override_app_settings
+from tests.core.test_views import ViewTestCase
 
 
 class BlogDetailViewTestCase(ViewTestCase):

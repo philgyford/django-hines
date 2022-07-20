@@ -3,8 +3,8 @@ from django.test import TestCase
 from hines.core.utils import make_date, make_datetime
 from hines.weblogs.factories import BlogFactory, DraftPostFactory, LivePostFactory
 from hines.weblogs.templatetags.hines_weblogs import (
-    blog_years,
     blog_popular_tags,
+    blog_years,
     get_all_blogs,
     get_all_blogs_by_slug,
     recent_posts,

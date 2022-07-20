@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
-from freezegun import freeze_time
 from django.test import TestCase
+from freezegun import freeze_time
 from spectator.events.factories import (
     IndividualCreatorFactory,
     MovieFactory,
@@ -10,17 +10,16 @@ from spectator.events.factories import (
 )
 
 from hines.core.templatetags.hines_core import (
-    gravatar_url,
-    get_item,
     display_time,
+    domain_urlize,
+    get_item,
+    gravatar_url,
+    linebreaks_first,
+    most_seen_directors_card,
     smartypants,
     widont,
-    linebreaks_first,
-    domain_urlize,
-    most_seen_directors_card,
 )
 from hines.core.utils import make_datetime
-
 from tests import override_app_settings
 
 

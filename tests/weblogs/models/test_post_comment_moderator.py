@@ -1,16 +1,12 @@
 from unittest.mock import patch
 
 from django.test import RequestFactory, TestCase
-
 from django_comments.moderation import CommentModerator
 
-from tests import override_app_settings
 from hines.custom_comments.factories import CustomCommentFactory
-from hines.weblogs.factories import (
-    BlogFactory,
-    LivePostFactory,
-)
+from hines.weblogs.factories import BlogFactory, LivePostFactory
 from hines.weblogs.models import Post, PostCommentModerator
+from tests import override_app_settings
 
 
 class PostCommentModeratorTestCase(TestCase):

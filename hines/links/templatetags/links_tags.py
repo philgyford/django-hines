@@ -1,5 +1,5 @@
-from django import template
 from ditto.pinboard.templatetags.ditto_pinboard import popular_bookmark_tags
+from django import template
 
 register = template.Library()
 

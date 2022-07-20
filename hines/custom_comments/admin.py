@@ -4,8 +4,9 @@ from django_comments import get_model
 from django_comments.admin import CommentsAdmin
 from django_comments.models import CommentFlag
 
-from .models import CustomComment
 from hines.weblogs.models import Post
+
+from .models import CustomComment
 
 
 class CommentFlagInline(admin.TabularInline):

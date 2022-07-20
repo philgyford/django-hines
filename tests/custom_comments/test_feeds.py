@@ -1,5 +1,5 @@
-from django.utils.feedgenerator import rfc2822_date
 from django.contrib.sites.models import Site
+from django.utils.feedgenerator import rfc2822_date
 
 from hines.core.utils import make_datetime
 from hines.custom_comments.factories import CustomCommentFactory

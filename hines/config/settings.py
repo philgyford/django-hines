@@ -3,12 +3,10 @@ Should be extended by settings for specific environments.
 """
 from pathlib import Path
 
-from django.contrib import messages
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
 import environ
-
+import sentry_sdk
+from django.contrib import messages
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

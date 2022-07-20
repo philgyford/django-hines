@@ -1,9 +1,8 @@
 from io import StringIO
 
-from freezegun import freeze_time
-
 from django.core.management import call_command
 from django.test import TestCase
+from freezegun import freeze_time
 
 from hines.core.utils import make_datetime
 from hines.weblogs.factories import DraftPostFactory, ScheduledPostFactory

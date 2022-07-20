@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from hines.weblogs.models import Blog
 from hines.weblogs.factories import BlogFactory, DraftPostFactory, LivePostFactory
+from hines.weblogs.models import Blog
 
 
 class BlogTestCase(TestCase):

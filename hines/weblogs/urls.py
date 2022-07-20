@@ -1,8 +1,8 @@
 from django.urls import path, register_converter
 
 from hines.core import converters
-from . import feeds, views
 
+from . import feeds, views
 
 register_converter(converters.FourDigitYearConverter, "yyyy")
 register_converter(converters.TwoDigitMonthConverter, "mm")

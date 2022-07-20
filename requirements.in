@@ -26,10 +26,11 @@ whitenoise
 
 # Dev
 black==22.6.0
-coverage
+coverage[toml]
 django-debug-toolbar
 factory-boy
 flake8
 freezegun
 ipython
+isort
 responses

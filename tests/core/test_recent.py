@@ -1,14 +1,8 @@
+from ditto.flickr.factories import AccountFactory as FlickrAccountFactory
+from ditto.flickr.factories import PhotoFactory, UserFactory
+from ditto.pinboard.factories import AccountFactory as PinboardAccountFactory
+from ditto.pinboard.factories import BookmarkFactory
 from django.test import TestCase
-
-from ditto.flickr.factories import (
-    AccountFactory as FlickrAccountFactory,
-    PhotoFactory,
-    UserFactory,
-)
-from ditto.pinboard.factories import (
-    AccountFactory as PinboardAccountFactory,
-    BookmarkFactory,
-)
 
 from hines.core.recent import RecentObjects
 from hines.core.utils import make_datetime

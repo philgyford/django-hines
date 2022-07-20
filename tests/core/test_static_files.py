@@ -1,7 +1,6 @@
+from bs4 import BeautifulSoup
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.test import TestCase
-
-from bs4 import BeautifulSoup
 
 
 class StaticFilesTestCase(TestCase):

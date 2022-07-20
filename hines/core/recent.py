@@ -1,9 +1,11 @@
 from datetime import datetime
 
+from ditto.flickr.models import Account as FlickrAccount
+from ditto.flickr.models import Photo
+from ditto.pinboard.models import Account as PinboardAccount
+from ditto.pinboard.models import Bookmark
 from django.utils import timezone
 
-from ditto.flickr.models import Account as FlickrAccount, Photo
-from ditto.pinboard.models import Account as PinboardAccount, Bookmark
 from hines.weblogs.models import Blog, Post
 
 

@@ -7,7 +7,6 @@ from hines.custom_comments.templatetags.hines_comments import (
     commenting_status_message,
 )
 from hines.weblogs.factories import BlogFactory, LivePostFactory
-
 from tests import override_app_settings
 
 

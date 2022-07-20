@@ -5,7 +5,6 @@ from hines.custom_comments.utils import (
     get_allowed_attributes,
     get_allowed_tags,
 )
-
 from tests import override_app_settings
 
 
