@@ -1,10 +1,10 @@
 /**
  * We use EasyMDE, which is a fork of SimpleMDE.
  */
-(function($) {
+(function ($) {
   "use strict";
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Enable the Markdown editor.
     // Requires the MDE JS and CSS to be loaded too.
 
@@ -22,38 +22,38 @@
         elementId: "id_intro",
         autosaveId: "weblogs-post-intro",
         buttons: "minimal",
-        minHeight: "100px"
+        minHeight: "100px",
       },
       {
         selector: "body.app-weblogs.model-post.change-form #id_body",
         elementId: "id_body",
         autosaveId: "weblogs-post-body",
         buttons: "full",
-        minHeight: "300px"
-      }
+        minHeight: "300px",
+      },
     ];
 
     // The value of the "HTML format" select field that indicates whether
     // this post is in Markdown format or not.
     var markdown_formats = [
       "2", // Markdown
-      "3" // Hines Markdown
+      "3", // Hines Markdown
     ];
 
     var exports = {
       /**
        * Call this method to set everything up.
        */
-      init: function() {
+      init: function () {
         // Only for Markdown posts.
         if (markdown_formats.indexOf($("#id_html_format").val()) >= 0) {
-          $.each(fields, function(idx, field) {
+          $.each(fields, function (idx, field) {
             if ($(field["selector"]).length > 0) {
               initField(field);
             }
           });
         }
-      }
+      },
     };
 
     function initField(field) {
@@ -67,7 +67,7 @@
         // },
         indentWithTabs: false, // Use spaces
         promptURLs: true, // Show pop-up for URL when adding a link
-        minHeight: field["minHeight"]
+        minHeight: field["minHeight"],
       };
 
       if (field["buttons"] == "minimal") {
@@ -76,7 +76,7 @@
             name: "textArea",
             action: revertToTextArea,
             className: "fa fa-times",
-            title: "Revert to TextArea"
+            title: "Revert to TextArea",
           },
           "|",
           "bold",
@@ -85,13 +85,13 @@
             name: "cite",
             action: makeCite,
             className: "fa fa-angle-double-left",
-            title: "Cite"
+            title: "Cite",
           },
           "link",
           "|",
           "preview",
           "side-by-side",
-          "fullscreen"
+          "fullscreen",
         ];
       } else if (field["buttons"] == "full") {
         config["toolbar"] = [
@@ -99,7 +99,7 @@
             name: "textArea",
             action: revertToTextArea,
             className: "fa fa-times",
-            title: "Revert to TextArea"
+            title: "Revert to TextArea",
           },
           "|",
           "bold",
@@ -108,7 +108,7 @@
             name: "cite",
             action: makeCite,
             className: "fa fa-angle-double-left",
-            title: "Cite"
+            title: "Cite",
           },
           "link",
           "|",
@@ -118,7 +118,7 @@
             name: "quote-with-caption",
             action: makeQuoteWithCaption,
             className: "fa fa-quote-left",
-            title: "Quote with caption"
+            title: "Quote with caption",
           },
           //"unordered-list",
           //"ordered-list",
@@ -128,25 +128,25 @@
             name: "image-left",
             action: makeImageLeft,
             className: "fa fa-arrow-left",
-            title: "Image, aligned left"
+            title: "Image, aligned left",
           },
           {
             name: "image-standard",
             action: makeImageStandard,
             className: "fa fa-picture-o",
-            title: "Image, standard"
+            title: "Image, standard",
           },
           {
             name: "image-full",
             action: makeImageFull,
             className: "fa fa-arrows-h",
-            title: "Image, full-width"
+            title: "Image, full-width",
           },
           {
             name: "image-right",
             action: makeImageRight,
             className: "fa fa-arrow-right",
-            title: "Image, aligned right"
+            title: "Image, aligned right",
           },
           "|",
           // {
@@ -159,7 +159,7 @@
             name: "video-full",
             action: makeVideoFull,
             className: "fa fa-play",
-            title: "Video, full-width"
+            title: "Video, full-width",
           },
           // {
           //   name: "video-right",
@@ -170,7 +170,7 @@
           "|",
           "preview",
           "side-by-side",
-          "fullscreen"
+          "fullscreen",
         ];
       }
 
@@ -431,11 +431,11 @@
       cm.setSelection(
         {
           line: start_line_sel,
-          ch: 0
+          ch: 0,
         },
         {
           line: end_line_sel,
-          ch: 0
+          ch: 0,
         }
       );
     }
@@ -467,7 +467,7 @@
         end = text.slice(startPoint.ch);
         cm.replaceRange(start + end, {
           line: startPoint.line,
-          ch: 0
+          ch: 0,
         });
       } else {
         text = cm.getSelection();
