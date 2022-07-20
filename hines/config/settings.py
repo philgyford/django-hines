@@ -1,39 +1,30 @@
 """
 Should be extended by settings for specific environments.
 """
-import os
-
-import dj_database_url
+from pathlib import Path
 
 from django.contrib import messages
-from django.core.exceptions import ImproperlyConfigured
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
-
-def get_env_variable(var_name):
-    """Get the environment variable or raise exception."""
-    try:
-        return os.environ[var_name]
-    except KeyError:
-        error_msg = "Set the {} environment variable.".format(var_name)
-        raise ImproperlyConfigured(error_msg)
-
-
-# Most hines-related pages will be within this root directory:
-HINES_ROOT_DIR = "phil"
+import environ
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-APPS_DIR = os.path.join(BASE_DIR, "..", "hines")
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / ".env")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = get_env_variable("ALLOWED_HOSTS").split(",")
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+
+DEBUG = env.bool("DEBUG", default=False)
+
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
 
 ADMINS = [("Phil Gyford", "phil@gyford.com")]
 
@@ -50,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.flatpages",
@@ -96,7 +88,7 @@ MIDDLEWARE = [
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
 ]
 
-ROOT_URLCONF = "config.urls"
+ROOT_URLCONF = "hines.config.urls"
 
 TEMPLATES = [
     {
@@ -115,11 +107,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
+WSGI_APPLICATION = "hines.config.wsgi.application"
 
 
 # Uses DATABASE_URL environment variable:
-DATABASES = {"default": dj_database_url.config()}
+DATABASES = {"default": env.db()}
 DATABASES["default"]["CONN_MAX_AGE"] = 500
 
 
@@ -173,19 +165,33 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 
-# I think this is only used if we're NOT using S3:
-MEDIA_ROOT = os.path.join(APPS_DIR, "media")
-MEDIA_URL = "/{}/".format(HINES_ROOT_DIR)
-
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATIC_ROOT = os.path.join(APPS_DIR, "static_collected/")
+STATIC_ROOT = BASE_DIR / "hines" / "static_collected"
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [
-    os.path.join(APPS_DIR, "static"),
-]
+STATICFILES_DIRS = [BASE_DIR / "hines" / "static"]
+
+
+MEDIA_ROOT = BASE_DIR / "hines" / "media"
+
+MEDIA_URL = "/media/"
+
+
+if env.bool("USE_AWS_FOR_MEDIA", False):
+    # Storing Media files on AWS.
+    DEFAULT_FILE_STORAGE = "hines.core.storages.CustomS3Boto3Storage"
+
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+
+    AWS_QUERYSTRING_AUTH = False
+
+    AWS_DEFAULT_ACL = "public-read"
+
+    MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com{MEDIA_URL}"
 
 
 SITE_ID = 1
@@ -211,6 +217,15 @@ SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+HINES_USE_HTTPS = env.bool("HINES_USE_HTTPS", default=False)
+
+if HINES_USE_HTTPS:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 LOGGING = {
@@ -249,6 +264,54 @@ LOGGING = {
     },
 }
 
+
+HINES_CACHE = env("HINES_CACHE", default="memory")
+
+if HINES_CACHE == "redis":
+    # Use the TLS URL if set, otherwise, use the non-TLS one:
+    REDIS_URL = env("REDIS_TLS_URL", default="")
+    if not REDIS_URL:
+        REDIS_URL = env("REDIS_URL", default="")
+    if REDIS_URL:
+        CACHES = {
+            "default": {
+                "BACKEND": "django_redis.cache.RedisCache",
+                "LOCATION": REDIS_URL,
+                "OPTIONS": {
+                    "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                    "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": None},
+                },
+            }
+        }
+
+elif HINES_CACHE == "dummy":
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        }
+    }
+
+
+if DEBUG:
+    # Changes for local development
+
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+
+    INSTALLED_APPS += ["debug_toolbar", "django_extensions"]
+
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "INTERCEPT_REDIRECTS": False,
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
+
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
 ####################################################################
 # THIRD-PARTY APPS
 
@@ -261,21 +324,23 @@ TAGGIT_CASE_INSENSITIVE = True
 
 # A directory of static files to be served in the root directory.
 # e.g. 'robots.txt'.
-WHITENOISE_ROOT = os.path.join(APPS_DIR, "static_html/")
+WHITENOISE_ROOT = BASE_DIR / "hines" / "static_html"
 
 # Visiting /example/ will serve /example/index.html:
 WHITENOISE_INDEX_FILE = True
 
 WHITENOISE_MIMETYPES = {".xsl": "text/xsl"}
 
-try:
+HINES_MAPBOX_API_KEY = env("HINES_MAPBOX_API_KEY", default="")
+
+if HINES_MAPBOX_API_KEY:
     SPECTATOR_MAPS = {
         "enable": True,
         "library": "mapbox",
         "tile_style": "mapbox://styles/mapbox/light-v10",
-        "api_key": get_env_variable("HINES_MAPBOX_API_KEY"),
+        "api_key": HINES_MAPBOX_API_KEY,
     }
-except ImproperlyConfigured:
+else:
     SPECTATOR_MAPS = {"enable": False}
 
 
@@ -294,11 +359,25 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
+# Sentry
+# https://devcenter.heroku.com/articles/sentry#integrating-with-python-or-django
+
+SENTRY_DSN = env.bool("SENTRY_DSN", default="")
+
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+    )
+
+
 # django-wm
+
 WEBMENTIONS_USE_CELERY = False
 
 WEBMENTIONS_AUTO_APPROVE = False
 
+DOMAIN_NAME = env("WM_DOMAIN_NAME", default="")
 
 # END THIRD-PARTY APPS
 ####################################################################
@@ -307,7 +386,10 @@ WEBMENTIONS_AUTO_APPROVE = False
 ####################################################################
 # DJANGO-HINES-SPECIFIC SETTINGS
 
-# Also see HINES_ROOT_DIR at top of file.
+
+# Most hines-related pages will be within this root directory:
+# We only override this in settings by setting the environment variable.
+HINES_ROOT_DIR = env("HINES_ROOT_DIR", default="phil")
 
 # Used in templates and the Everything RSS Feed, for things that don't
 # have authors (so, not Blog Posts).
@@ -320,9 +402,6 @@ HINES_SITE_ICON = "hines/img/site_icon.jpg"
 
 # We won't show Day Archive pages before this YYYY-MM-DD date:
 HINES_FIRST_DATE = "1989-06-02"
-
-# Used to generate URLs when we don't have access to a request object:
-HINES_USE_HTTPS = False
 
 # If True, must also be True for a Blog's and a Post's allow_comments field
 # before a comment on a Post is allowed.
@@ -346,9 +425,18 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 
 # Close comments on posts after this many days (assuming they're open):
 # Or None to ignore this setting
-HINES_COMMENTS_CLOSE_AFTER_DAYS = None
+HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
 
-HINES_AKISMET_API_KEY = os.environ.get("HINES_AKISMET_API_KEY", None)
+HINES_COMMENTS_ADMIN_FEED_SLUG = env(
+    "HINES_COMMENTS_ADMIN_FEED_SLUG", default="admin-comments"
+)
+
+HINES_WEBMENTIONS_ADMIN_FEED_SLUG = env(
+    "HINES_WEBMENTIONS_ADMIN_FEED_SLUG", default="admin-webmentions"
+)
+
+
+HINES_AKISMET_API_KEY = env("HINES_AKISMET_API_KEY", default="")
 
 # How many of each thing do we want displayed on the home page?
 HINES_HOME_PAGE_DISPLAY = {
@@ -379,9 +467,7 @@ HINES_TEMPLATE_SETS = (
     {"name": "2009", "start": "2009-02-10", "end": "2018-01-04"},
 )
 
-HINES_CLOUDFLARE_ANALYTICS_TOKEN = os.environ.get(
-    "HINES_CLOUDFLARE_ANALYTICS_TOKEN", None
-)
+HINES_CLOUDFLARE_ANALYTICS_TOKEN = env("HINES_CLOUDFLARE_ANALYTICS_TOKEN", default="")
 
 # Date/time formats
 
@@ -396,8 +482,8 @@ SPECTATOR_DATE_FORMAT = HINES_DATE_FORMAT
 
 # For https://github.com/AndrejZbin/django-hcaptcha
 # Used in the comments form.
-HCAPTCHA_SITEKEY = os.environ.get("HCAPTCHA_SITEKEY", None)
-HCAPTCHA_SECRET = os.environ.get("HCAPTCHA_SECRET", None)
+HCAPTCHA_SITEKEY = env("HCAPTCHA_SITEKEY", default="")
+HCAPTCHA_SECRET = env("HCAPTCHA_SECRET", default="")
 
 # Set to False to disable the hCaptcha field on the comment form:
 HINES_USE_HCAPTCHA = True
