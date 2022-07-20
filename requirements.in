@@ -18,6 +18,7 @@ markdown2
 psycopg2
 pygments
 requests
+rich
 sentry-sdk
 smartypants
 whitenoise
