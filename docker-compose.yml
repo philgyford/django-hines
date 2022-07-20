@@ -46,8 +46,8 @@ services:
       dockerfile: ./docker/web/Dockerfile
     command: >
       sh -c "
-      pipenv run python manage.py migrate &&
-      pipenv run python -Wd manage.py runserver 0.0.0.0:8000
+      python manage.py migrate &&
+      python -Wd manage.py runserver 0.0.0.0:8000
       "
     container_name: hines_web
     depends_on:

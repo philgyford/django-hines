@@ -5,3 +5,4 @@ db.sqlite3
 htmlcov/
 hines/static_collected/
 hines/media/
+/venv/

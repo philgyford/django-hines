@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye
+FROM python:3.10-slim-bullseye
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -9,10 +9,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man \
     && apt-get clean
 
+RUN pip install --upgrade pip-tools
+
 RUN mkdir /code
 WORKDIR /code
+COPY requirements.txt /code/
+RUN pip-sync
 
-RUN pip install --upgrade pipenv
-COPY ./Pipfile .
-COPY ./Pipfile.lock .
-RUN pipenv install --dev --deploy
+COPY . /code/

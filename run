@@ -14,6 +14,9 @@ if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
 
+# We need to pass this in to docker-compose when we run tests and coverage:
+TEST_ENV_ARGS="-e DEBUG=FALSE"
+
 
 # -----------------------------------------------------------------------------
 # Helper functions start with _ and aren't listed in this script's help menu.
@@ -46,32 +49,26 @@ function sh {
 
 function manage {
   # Run any manage.py commands
-  cmd pipenv run python manage.py "${@}"
+  cmd python manage.py "${@}"
 }
 
 
 function tests {
   # Run the Django tests
-  manage test --settings=config.settings.tests "${@}"
+  _dc ${TEST_ENV_ARGS} web python manage.py test "${@}"
 }
 
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-  cmd pipenv run coverage run manage.py test --settings=config.settings.tests tests
-  cmd pipenv run coverage html
+  _dc ${TEST_ENV_ARGS} web coverage run manage.py test
+  _dc ${TEST_ENV_ARGS} web coverage html
 }
 
 
-function flake8 {
-  # Lint Python code with flake8
-  cmd pipenv run flake8 "${@}"
-}
-
-
-function black {
-  # Format Python code with black
-  cmd pipenv run black . "${@}"
+function shell {
+  # Start a shell session in the web container
+  cmd bash "${@}"
 }
 
 
@@ -79,7 +76,7 @@ function psql {
   # Connect to PostgreSQL with psql
   # shellcheck disable=SC1091
   . .env
- _dc db psql -U "${POSTGRES_USER}" "${@}"
+ _dc db psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" "${@}"
 }
 
 
@@ -89,23 +86,10 @@ function psql {
 # }
 
 
-function pipenv:outdated {
-  # List any installed packages that are outdated
-  cmd pipenv update --outdated --dev
+function pipsync {
+  # Install/uninstall/update packages
+  cmd pip-sync "${@}"
 }
-
-
-function pipenv:update {
-  # Update any outdated packages
-  cmd pipenv update --dev
-}
-
-
-# function pipenv:install {
-#   # Install pip3 dependencies and write lock file
-#   # (untested)
-#   _build_run_down web sh -c "pipenv install"
-# }
 
 
 function yarn:outdated {

@@ -28,35 +28,33 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install pipenv, coverage and coveralls
+      - name: Install coverage and coveralls
         run: |
-          pipx install pipenv
           pipx install coverage
           pipx install coveralls
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
-          cache: "pipenv"
+          python-version: "3.10"
+          cache: "pip"
 
       - name: Install dependencies
-        run: pipenv install --dev
+        run: python -m pip install -r requirements.txt
 
       - name: Run Tests
         # Shouldn't need to manually migrate, but otherwise the tests that use AdminSite() fail:
         run: |
-          pipenv run ./manage.py collectstatic --verbosity=0 --noinput
-          pipenv run ./manage.py migrate --verbosity=0 --noinput
-          pipenv run flake8 hines
-          pipenv run black . --check
-          pipenv run coverage run ./manage.py test
-          pipenv run coverage report -m
+          ./manage.py collectstatic --verbosity=0 --noinput
+          ./manage.py migrate --verbosity=0 --noinput
+          flake8 hines
+          black . --check
+          coverage run ./manage.py test
+          coverage report -m
         env:
           ALLOWED_HOSTS: "*"
           DATABASE_URL: "postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres"
           DJANGO_SECRET_KEY: "fake-secret-key-for-tests"
-          DJANGO_SETTINGS_MODULE: config.settings.tests
 
       - name: Run coveralls
         run: coveralls --service=github
