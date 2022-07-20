@@ -179,6 +179,10 @@ django-debug-toolbar==3.5.0 \
 django-ditto==2.1.1 \
     --hash=sha256:2d3c68f1ec83f9ea7d36f729f17bc8b1bd5629a78d184415e4996d23b0ea799a
     # via -r requirements.in
+django-environ==0.9.0 \
+    --hash=sha256:bff5381533056328c9ac02f71790bd5bf1cea81b1beeb648f28b81c9e83e0a21 \
+    --hash=sha256:f21a5ef8cc603da1870bbf9a09b7e5577ab5f6da451b843dbcc721a7bca6b3d9
+    # via -r requirements.in
 django-extensions==3.2.0 \
     --hash=sha256:4c234a7236e9e41c17d9036f6dae7a3a9b212527105b8a0d24b2459b267825f0 \
     --hash=sha256:7dc7cd1da50d83b76447a58f5d7e5c8e6cd83f21e9b7e5f97e6b644f4d4e21a6
