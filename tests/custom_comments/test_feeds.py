@@ -128,7 +128,7 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
                 "title": "Bob Ferris: Test Blog Post",
                 "description": (
                     "<p><strong>This</strong> is my comment.</p>"
-                    "<p>This is another paragraph.</p>"
+                    "<p>This is another paragraph.</p>\n"
                 ),
                 "link": f"http://example.com/terry/my-blog/2020/01/01/test-post/#c{self.comment.pk}",  # noqa: E501
                 "guid": f"http://example.com/terry/my-blog/2020/01/01/test-post/#c{self.comment.pk}",  # noqa: E501
@@ -136,7 +136,7 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
                 "dc:creator": "Bob Ferris",
                 "content:encoded": (
                     "<p><strong>This</strong> is my comment.</p>"
-                    "<p>This is another paragraph.</p>"
+                    "<p>This is another paragraph.</p>\n"
                 ),
             },
         )
