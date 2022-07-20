@@ -59,7 +59,7 @@ jobs:
           WM_DOMAIN_NAME: "testserver"
 
       - name: Run coveralls
-        run: coveralls --service=github
+        run: coveralls debug --service=github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
