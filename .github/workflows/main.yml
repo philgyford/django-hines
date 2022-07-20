@@ -30,7 +30,7 @@ jobs:
 
       - name: Install coverage and coveralls
         run: |
-          pipx install coverage
+          pipx install coverage[toml]
           pipx install coveralls
 
       - name: Set up Python
