@@ -245,7 +245,7 @@ LOGGING = {
             "class": "rich.logging.RichHandler",
             "filters": ["require_debug_true"],
             "formatter": "rich",
-            "level": "DEBUG",
+            "level": env("HINES_LOG_LEVEL", default="ERROR"),
             "rich_tracebacks": True,
             "tracebacks_show_locals": True,
         },
@@ -253,12 +253,12 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": [],
-            "level": "INFO",
+            "level": env("HINES_LOG_LEVEL", default="ERROR"),
         },
     },
     "root": {
         "handlers": ["console"],
-        "level": "INFO",
+        "level": env("HINES_LOG_LEVEL", default="ERROR"),
     },
 }
 
