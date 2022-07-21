@@ -263,33 +263,6 @@ LOGGING = {
 }
 
 
-HINES_CACHE = env("HINES_CACHE", default="memory")
-
-if HINES_CACHE == "redis":
-    # Use the TLS URL if set, otherwise, use the non-TLS one:
-    REDIS_URL = env("REDIS_TLS_URL", default="")
-    if not REDIS_URL:
-        REDIS_URL = env("REDIS_URL", default="")
-    if REDIS_URL:
-        CACHES = {
-            "default": {
-                "BACKEND": "django_redis.cache.RedisCache",
-                "LOCATION": REDIS_URL,
-                "OPTIONS": {
-                    "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                    "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": None},
-                },
-            }
-        }
-
-elif HINES_CACHE == "dummy":
-    CACHES = {
-        "default": {
-            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-        }
-    }
-
-
 if DEBUG:
     # Changes for local development
 
