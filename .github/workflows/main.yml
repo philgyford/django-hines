@@ -28,11 +28,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install coverage and coveralls
-        run: |
-          pipx install coverage[toml]
-          pipx install coveralls
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -50,7 +45,6 @@ jobs:
           flake8 hines
           black . --check
           coverage run ./manage.py test
-          coverage report -m
         env:
           ALLOWED_HOSTS: "*"
           DATABASE_URL: "postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres"
@@ -58,10 +52,8 @@ jobs:
           HINES_ROOT_DIR: "terry"
           WM_DOMAIN_NAME: "testserver"
 
-      - name: Run coveralls
-        run: coveralls debug --service=github
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v2
 
       - name: Slack notification
         uses: 8398a7/action-slack@v3
