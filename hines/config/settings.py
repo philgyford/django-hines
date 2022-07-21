@@ -226,41 +226,41 @@ if HINES_USE_HTTPS:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
-        },
-    },
-    "formatters": {
-        "rich": {"datefmt": "[%X]"},
-    },
-    "handlers": {
-        "console": {
-            "class": "rich.logging.RichHandler",
-            "filters": ["require_debug_true"],
-            "formatter": "rich",
-            "level": env("HINES_LOG_LEVEL", default="ERROR"),
-            "rich_tracebacks": True,
-            "tracebacks_show_locals": True,
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": [],
-            "level": env("HINES_LOG_LEVEL", default="ERROR"),
-        },
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": env("HINES_LOG_LEVEL", default="ERROR"),
-    },
-}
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "filters": {
+#         "require_debug_false": {
+#             "()": "django.utils.log.RequireDebugFalse",
+#         },
+#         "require_debug_true": {
+#             "()": "django.utils.log.RequireDebugTrue",
+#         },
+#     },
+#     "formatters": {
+#         "rich": {"datefmt": "[%X]"},
+#     },
+#     "handlers": {
+#         "console": {
+#             "class": "rich.logging.RichHandler",
+#             "filters": ["require_debug_true"],
+#             "formatter": "rich",
+#             "level": "INFO",
+#             "rich_tracebacks": True,
+#             "tracebacks_show_locals": True,
+#         },
+#     },
+#     "loggers": {
+#         "django": {
+#             "handlers": [],
+#             "level": env("HINES_LOG_LEVEL", default="ERROR"),
+#         },
+#     },
+#     "root": {
+#         "handlers": ["console"],
+#         "level": env("HINES_LOG_LEVEL", default="ERROR"),
+#     },
+# }
 
 
 HINES_CACHE = env("HINES_CACHE", default="memory")
