@@ -109,7 +109,7 @@ WSGI_APPLICATION = "hines.config.wsgi.application"
 
 
 # Uses DATABASE_URL environment variable:
-DATABASES = {"default": env.db()}
+DATABASES = {"default": env.db_url()}
 DATABASES["default"]["CONN_MAX_AGE"] = 500
 
 
