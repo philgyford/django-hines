@@ -404,7 +404,7 @@ HINES_FIRST_DATE = "1989-06-02"
 
 # If True, must also be True for a Blog's and a Post's allow_comments field
 # before a comment on a Post is allowed.
-HINES_COMMENTS_ALLOWED = env.bool("HINES_COMMENTS_ALLOWED", default=False)
+HINES_COMMENTS_ALLOWED = env.bool("HINES_COMMENTS_ALLOWED", default=True)
 
 # Both these are used by Bleach to whitelist the contents of comments.
 HINES_COMMENTS_ALLOWED_TAGS = [
