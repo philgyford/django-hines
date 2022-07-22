@@ -71,7 +71,7 @@ ROOT_DIR = getattr(settings, "HINES_ROOT_DIR", "")
 
 TEMPLATE_SETS = getattr(settings, "HINES_TEMPLATE_SETS", None)
 
-TIME_FORMAT = getattr(settings, "HIENS_TIME_FORMAT", "%H:%M")
+TIME_FORMAT = getattr(settings, "HINES_TIME_FORMAT", "%H:%M")
 
 USE_HTTPS = getattr(settings, "HINES_USE_HTTPS", False)
 

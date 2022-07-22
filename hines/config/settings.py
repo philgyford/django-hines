@@ -146,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 # Using 'en-gb' caused the select2 included with autocomplete_light, that's
-# used on admin screens for editing a weblog Post, to complain with:
+# used on admin screens for editing a Blog Post, to complain with:
 #   ValueError: Missing staticfiles manifest entry for
 #   'autocomplete_light/vendor/select2/dist/js/i18n/en-GB.js'
 # (2018-01-05)
@@ -177,7 +177,7 @@ MEDIA_ROOT = BASE_DIR / "hines" / "media"
 MEDIA_URL = "/media/"
 
 
-if env.bool("USE_AWS_FOR_MEDIA", False):
+if env.bool("HINES_USE_AWS_FOR_MEDIA", False):
     # Storing Media files on AWS.
     DEFAULT_FILE_STORAGE = "hines.core.storages.CustomS3Boto3Storage"
 
@@ -216,7 +216,7 @@ SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+#  Used when generating full URLs and the request object isn't available.
 HINES_USE_HTTPS = env.bool("HINES_USE_HTTPS", default=False)
 
 if HINES_USE_HTTPS:
@@ -384,8 +384,10 @@ DOMAIN_NAME = env("WM_DOMAIN_NAME", default="")
 # DJANGO-HINES-SPECIFIC SETTINGS
 
 
+# ALSO see HINES_USE_HTTPS above.
+
 # Most hines-related pages will be within this root directory:
-# We only override this in settings by setting the environment variable.
+# We override this in tests using an environment variable.
 HINES_ROOT_DIR = env("HINES_ROOT_DIR", default="phil")
 
 # Used in templates and the Everything RSS Feed, for things that don't
@@ -397,12 +399,12 @@ HINES_AUTHOR_EMAIL = "phil@gyford.com"
 # Used for RSS feeds and Structured Data.
 HINES_SITE_ICON = "hines/img/site_icon.jpg"
 
-# We won't show Day Archive pages before this YYYY-MM-DD date:
+# Any Day Archive pages before this YYYY-MM-DD date will 404:
 HINES_FIRST_DATE = "1989-06-02"
 
 # If True, must also be True for a Blog's and a Post's allow_comments field
 # before a comment on a Post is allowed.
-HINES_COMMENTS_ALLOWED = True
+HINES_COMMENTS_ALLOWED = env.bool("HINES_COMMENTS_ALLOWED", default=False)
 
 # Both these are used by Bleach to whitelist the contents of comments.
 HINES_COMMENTS_ALLOWED_TAGS = [
@@ -424,24 +426,29 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 # Or None to ignore this setting
 HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
 
+# The slug to use for the RSS feed for submitted comments used by Admins:
 HINES_COMMENTS_ADMIN_FEED_SLUG = env(
     "HINES_COMMENTS_ADMIN_FEED_SLUG", default="admin-comments"
 )
 
+# The slug to use for the RSS feed for webmentions used by Admins:
 HINES_WEBMENTIONS_ADMIN_FEED_SLUG = env(
     "HINES_WEBMENTIONS_ADMIN_FEED_SLUG", default="admin-webmentions"
 )
 
-
+# Used to check submitted comments for spam using https://akismet.com:
 HINES_AKISMET_API_KEY = env("HINES_AKISMET_API_KEY", default="")
 
 # How many of each thing do we want displayed on the home page?
+# The 'weblog_posts' uses the `slug` of each Blog to indicate how
+# many posts of each to display.
 HINES_HOME_PAGE_DISPLAY = {
     "flickr_photos": 4,
     "pinboard_bookmarks": 3,
     "weblog_posts": {"writing": 3, "comments": 1},
 }
 
+# Which blogs, accounts, etc should be featured in the 'everything combined' RSS feed?
 HINES_EVERYTHING_FEED_KINDS = (
     ("blog_posts", "writing"),
     ("blog_posts", "comments"),
@@ -449,6 +456,14 @@ HINES_EVERYTHING_FEED_KINDS = (
     ("pinboard_bookmarks", "philgyford"),
 )
 
+# Describing different sets of templates that can be used for PostDetails
+# between certain dates
+#
+# Any Post on the Blog with slug `writing` between the start/end dates will use the
+# template at `weblogs/sets/<name>/post_detail.html`.
+# Any other Post (e.g. the most recent) will use `weblogs/post_detail.html`.
+#
+# Set to None to have all Posts use `weblogs/post_detail.html` template.
 HINES_TEMPLATE_SETS = (
     # Colourful:
     {"name": "2000", "start": "2000-03-01", "end": "2000-12-31"},
@@ -464,23 +479,38 @@ HINES_TEMPLATE_SETS = (
     {"name": "2009", "start": "2009-02-10", "end": "2018-01-04"},
 )
 
+# If set then the Cloudflare Web Analytics JavaScript will be put in every page:
 HINES_CLOUDFLARE_ANALYTICS_TOKEN = env("HINES_CLOUDFLARE_ANALYTICS_TOKEN", default="")
 
-# Date/time formats
 
-HINES_DATE_FORMAT = "%Y-%m-%d"
-HINES_DATETIME_FORMAT = "[date] [time]"
-
-DITTO_CORE_DATE_FORMAT = HINES_DATE_FORMAT
-DITTO_CORE_DATETIME_FORMAT = HINES_DATETIME_FORMAT
-
-SPECTATOR_DATE_FORMAT = HINES_DATE_FORMAT
-
+# Set to False to disable the hCaptcha field on the comment form:
+HINES_USE_HCAPTCHA = True
 
 # For https://github.com/AndrejZbin/django-hcaptcha
 # Used in the comments form.
 HCAPTCHA_SITEKEY = env("HCAPTCHA_SITEKEY", default="")
 HCAPTCHA_SECRET = env("HCAPTCHA_SECRET", default="")
 
-# Set to False to disable the hCaptcha field on the comment form:
-HINES_USE_HCAPTCHA = True
+
+# DATE/TIME FORMATS
+
+# strftime to use for displaying dates in templates:
+HINES_DATE_FORMAT = "%Y-%m-%d"
+
+# strftime to use for displaying a month and year in templates:
+HINES_DATE_YEAR_MONTH_FORMAT = "%b %Y"
+
+# strftime to use for displaying times in templates:
+HINES_TIME_FORMAT = "%H:%M"
+
+# String to use when displaying a date AND a time in templates:
+# [date] will be replaced with the date in HINES_DATE_FORMAT.
+# [time] will be replaced with the time in HINES_TIME_FORMAT.
+HINES_DATETIME_FORMAT = "[date] [time]"
+
+# The date formats used by django-hines:
+DITTO_CORE_DATE_FORMAT = HINES_DATE_FORMAT
+DITTO_CORE_DATETIME_FORMAT = HINES_DATETIME_FORMAT
+
+# The date format used by django-spectator:
+SPECTATOR_DATE_FORMAT = HINES_DATE_FORMAT
