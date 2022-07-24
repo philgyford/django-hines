@@ -1,27 +1,28 @@
 """
 Should be extended by settings for specific environments.
 """
+import os
 from pathlib import Path
 
-import environ
+import dj_database_url
 import sentry_sdk
 from django.contrib import messages
+from dotenv import load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+# Loads env variables from .env:
+load_dotenv()
 
-env = environ.Env()
-environ.Env.read_env(BASE_DIR / ".env")
 
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+DEBUG = os.getenv("DEBUG", default="False") == "True"
 
-DEBUG = env.bool("DEBUG", default=False)
-
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 
 ADMINS = [("Phil Gyford", "phil@gyford.com")]
@@ -109,8 +110,7 @@ WSGI_APPLICATION = "hines.config.wsgi.application"
 
 
 # Uses DATABASE_URL environment variable:
-DATABASES = {"default": env.db_url()}
-DATABASES["default"]["CONN_MAX_AGE"] = 500
+DATABASES = {"default": dj_database_url.config(conn_max_age=500)}
 
 
 # Custom setting to enable the site-wide caching.
@@ -177,13 +177,13 @@ MEDIA_ROOT = BASE_DIR / "hines" / "media"
 MEDIA_URL = "/media/"
 
 
-if env.bool("HINES_USE_AWS_FOR_MEDIA", False):
+if os.getenv("HINES_USE_AWS_FOR_MEDIA", default="False") == "True":
     # Storing Media files on AWS.
     DEFAULT_FILE_STORAGE = "hines.core.storages.CustomS3Boto3Storage"
 
-    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 
     AWS_QUERYSTRING_AUTH = False
 
@@ -217,7 +217,7 @@ SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 #  Used when generating full URLs and the request object isn't available.
-HINES_USE_HTTPS = env.bool("HINES_USE_HTTPS", default=False)
+HINES_USE_HTTPS = os.getenv("HINES_USE_HTTPS", default="False") == "True"
 
 if HINES_USE_HTTPS:
     SECURE_SSL_REDIRECT = True
@@ -253,21 +253,21 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": [],
-            "level": env("HINES_LOG_LEVEL", default="INFO"),
+            "level": os.getenv("HINES_LOG_LEVEL", default="INFO"),
         },
     },
     "root": {
         "handlers": ["console"],
-        "level": env("HINES_LOG_LEVEL", default="INFO"),
+        "level": os.getenv("HINES_LOG_LEVEL", default="INFO"),
     },
 }
 
 
-HINES_CACHE = env("HINES_CACHE", default="memory")
+HINES_CACHE = os.getenv("HINES_CACHE", default="memory")
 
 if HINES_CACHE == "redis":
     # Use the TLS URL if set, otherwise, use the non-TLS one:
-    REDIS_URL = env("REDIS_TLS_URL", default=env("REDIS_URL", default=""))
+    REDIS_URL = os.getenv("REDIS_TLS_URL", default=os.getenv("REDIS_URL", default=""))
     if REDIS_URL != "":
         CACHES = {
             "default": {
@@ -276,7 +276,7 @@ if HINES_CACHE == "redis":
                 "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
             }
         }
-        if env("REDIS_TLS_URL", default=""):
+        if os.getenv("REDIS_TLS_URL", default=""):
             CACHES["default"]["OPTIONS"]["CONNECTION_POOL_KWARGS"] = {
                 "ssl_cert_reqs": None
             }
@@ -328,7 +328,7 @@ WHITENOISE_INDEX_FILE = True
 
 WHITENOISE_MIMETYPES = {".xsl": "text/xsl"}
 
-HINES_MAPBOX_API_KEY = env("HINES_MAPBOX_API_KEY", default="")
+HINES_MAPBOX_API_KEY = os.getenv("HINES_MAPBOX_API_KEY", default="")
 
 if HINES_MAPBOX_API_KEY:
     SPECTATOR_MAPS = {
@@ -359,7 +359,7 @@ CORS_ALLOWED_ORIGINS = [
 # Sentry
 # https://devcenter.heroku.com/articles/sentry#integrating-with-python-or-django
 
-SENTRY_DSN = env.bool("SENTRY_DSN", default="")
+SENTRY_DSN = os.getenv("SENTRY_DSN", default="")
 
 if SENTRY_DSN:
     sentry_sdk.init(
@@ -374,7 +374,7 @@ WEBMENTIONS_USE_CELERY = False
 
 WEBMENTIONS_AUTO_APPROVE = False
 
-DOMAIN_NAME = env("WM_DOMAIN_NAME", default="")
+DOMAIN_NAME = os.getenv("WM_DOMAIN_NAME", default="")
 
 # END THIRD-PARTY APPS
 ####################################################################
@@ -388,7 +388,7 @@ DOMAIN_NAME = env("WM_DOMAIN_NAME", default="")
 
 # Most hines-related pages will be within this root directory:
 # We override this in tests using an environment variable.
-HINES_ROOT_DIR = env("HINES_ROOT_DIR", default="phil")
+HINES_ROOT_DIR = os.getenv("HINES_ROOT_DIR", default="phil")
 
 # Used in templates and the Everything RSS Feed, for things that don't
 # have authors (so, not Blog Posts).
@@ -404,7 +404,7 @@ HINES_FIRST_DATE = "1989-06-02"
 
 # If True, must also be True for a Blog's and a Post's allow_comments field
 # before a comment on a Post is allowed.
-HINES_COMMENTS_ALLOWED = env.bool("HINES_COMMENTS_ALLOWED", default=True)
+HINES_COMMENTS_ALLOWED = os.getenv("HINES_COMMENTS_ALLOWED", default="True") == "True"
 
 # Both these are used by Bleach to whitelist the contents of comments.
 HINES_COMMENTS_ALLOWED_TAGS = [
@@ -427,17 +427,17 @@ HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
 HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
 
 # The slug to use for the RSS feed for submitted comments used by Admins:
-HINES_COMMENTS_ADMIN_FEED_SLUG = env(
+HINES_COMMENTS_ADMIN_FEED_SLUG = os.getenv(
     "HINES_COMMENTS_ADMIN_FEED_SLUG", default="admin-comments"
 )
 
 # The slug to use for the RSS feed for webmentions used by Admins:
-HINES_WEBMENTIONS_ADMIN_FEED_SLUG = env(
+HINES_WEBMENTIONS_ADMIN_FEED_SLUG = os.getenv(
     "HINES_WEBMENTIONS_ADMIN_FEED_SLUG", default="admin-webmentions"
 )
 
 # Used to check submitted comments for spam using https://akismet.com:
-HINES_AKISMET_API_KEY = env("HINES_AKISMET_API_KEY", default="")
+HINES_AKISMET_API_KEY = os.getenv("HINES_AKISMET_API_KEY", default="")
 
 # How many of each thing do we want displayed on the home page?
 # The 'weblog_posts' uses the `slug` of each Blog to indicate how
@@ -480,7 +480,9 @@ HINES_TEMPLATE_SETS = (
 )
 
 # If set then the Cloudflare Web Analytics JavaScript will be put in every page:
-HINES_CLOUDFLARE_ANALYTICS_TOKEN = env("HINES_CLOUDFLARE_ANALYTICS_TOKEN", default="")
+HINES_CLOUDFLARE_ANALYTICS_TOKEN = os.getenv(
+    "HINES_CLOUDFLARE_ANALYTICS_TOKEN", default=""
+)
 
 
 # Set to False to disable the hCaptcha field on the comment form:
@@ -488,8 +490,8 @@ HINES_USE_HCAPTCHA = True
 
 # For https://github.com/AndrejZbin/django-hcaptcha
 # Used in the comments form.
-HCAPTCHA_SITEKEY = env("HCAPTCHA_SITEKEY", default="")
-HCAPTCHA_SECRET = env("HCAPTCHA_SECRET", default="")
+HCAPTCHA_SITEKEY = os.getenv("HCAPTCHA_SITEKEY", default="")
+HCAPTCHA_SECRET = os.getenv("HCAPTCHA_SECRET", default="")
 
 
 # DATE/TIME FORMATS
