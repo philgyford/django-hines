@@ -109,7 +109,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "hines.config.wsgi.application"
 
 
-# Uses DATABASE_URL environment variable:
 DATABASES = {"default": dj_database_url.config(conn_max_age=500)}
 
 
