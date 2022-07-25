@@ -11,6 +11,15 @@ Code for https://www.gyford.com
 
 Pushing to `main` will run the commit through [this GitHub Action](https://github.com/philgyford/django-hines/actions/workflows/main.yml) to run tests, and [Coveralls](https://coveralls.io) to check coverage. If it passes, it will be deployed automatically to Heroku.
 
+When changing the python version, it will need to be changed in:
+
+- `.github/workflows/main.yml`
+- `.pre-commit-config.yaml`
+- `.python-version` (for pyenv)
+- `runtime.txt` (for Heroku)
+- `pyproject.toml` (black's target-version)
+- `Dockerfile`
+
 For local development we use Docker. The live site is on Heroku.
 
 ## Local development setup

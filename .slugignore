@@ -1,4 +1,5 @@
 # Things that don't need to be sent to Heroku
+
 .github
 .vscode
 /assets
@@ -9,8 +10,10 @@ docker-compose.yml
 README.md
 run
 setup.cfg
+.editorconfig
 
 # Only used for front-end build locally:
+
 gulpfile.js
 package.json
 yarn.lock
