@@ -19,7 +19,6 @@ psycopg2
 pygments
 python-dotenv
 requests
-rich
 sentry-sdk
 smartypants
 whitenoise
