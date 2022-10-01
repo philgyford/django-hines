@@ -259,10 +259,10 @@ Here are the tasks that, at time of writing, are set to run using Heroku Schedul
 
 - Every 10 mins: `./manage.py publish_scheduled_posts`
 - Every 10 mins: `./manage.py fetch_lastfm_scrobbles --account=gyford --days=1`
-- Every 10 mins: `./manage.py pending_mentions`
 - Hourly: `./manage.py fetch_flickr_photos --account=35034346050@N01 --days=30`
 - Hourly: `./manage.py fetch_pinboard_bookmarks --account=philgyford --recent=20`
 - Hourly: `./manage.py fetch_twitter_tweets --account=philgyford --recent=200`
+- Hourly: `./manage.py pending_mentions`
 - Daily: `./manage.py fetch_flickr_photosets --account=35034346050@N01`
 - Daily: `./manage.py fetch_lastfm_scrobbles --account=gyford --days=14`
 - Daily: `./manage.py update_twitter_tweets --account=philgyford`
