@@ -44,7 +44,7 @@ Expects:
               {% elif date_type == 'month' %}
                 {{ previous|date:'M' }}
               {% else %}
-                {{ previous|date:'j M Y' }}
+                {{ previous|date:'Y-m-d' }}
               {% endif %}
             {% endspaceless %}</span>
           </a>
@@ -58,7 +58,7 @@ Expects:
             {% elif date_type == 'month' %}
               {{ current|date:'M' }}
             {% else %}
-              {{ current|date:'j M Y' }}
+              {{ current|date:'Y-m-d' }}
             {% endif %}
           {% endspaceless %} <span class="utils-sr-only">(current)</span></span>
         </li>
@@ -90,7 +90,7 @@ Expects:
               {% elif date_type == 'month' %}
                 {{ next|date:'M' }}
               {% else %}
-                {{ next|date:'j M Y' }}
+                {{ next|date:'Y-m-d' }}
               {% endif %}
             {% endspaceless %}</span>
             <span aria-hidden="true">&rarr;</span>
