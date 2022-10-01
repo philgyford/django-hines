@@ -586,3 +586,23 @@ Cats""",
         mentions = p.get_received_mentions()
         self.assertEqual(len(mentions), 1)
         self.assertEqual(mentions[0], w)
+
+    def test_should_process_webmentions_live_true(self):
+        "Should send webmentions if status is LIVE and setting is True"
+        p = LivePostFactory(allow_outgoing_webmentions=True)
+        self.assertTrue(p.should_process_webmentions())
+
+    def test_should_process_webmentions_draft_true(self):
+        "Should NOT send webmentions if status is DRAFT and setting is True"
+        p = DraftPostFactory(allow_outgoing_webmentions=True)
+        self.assertFalse(p.should_process_webmentions())
+
+    def test_should_process_webmentions_scheduled_true(self):
+        "Should NOT send webmentions if status is SCHEDULED and setting is True"
+        p = ScheduledPostFactory(allow_outgoing_webmentions=True)
+        self.assertFalse(p.should_process_webmentions())
+
+    def test_should_process_webmentions_live_false(self):
+        "Should NOT send webmentions if status is LIVE and setting is False"
+        p = LivePostFactory(allow_outgoing_webmentions=False)
+        self.assertFalse(p.should_process_webmentions())

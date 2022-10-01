@@ -343,6 +343,16 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         else:
             return self.trackbacks.filter(is_visible=True)
 
+    def should_process_webmentions(self):
+        """
+        Return True if this instance should process webmentions when saved.
+        Overriding the default from MentionableMixin.
+        """
+        if self.allow_outgoing_webmentions and self.status == self.Status.LIVE:
+            return True
+        else:
+            return False
+
     @property
     def title_text(self):
         """A Post title containing no HTML.
