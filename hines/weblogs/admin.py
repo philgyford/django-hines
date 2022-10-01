@@ -87,7 +87,6 @@ class PostAdmin(admin.ModelAdmin):
         "status_icon",
         "allow_comments",
         "comment_count",
-        "allow_incoming_webmentions",
         "allow_outgoing_webmentions",
         "time_published",
         # 'is_featured',
@@ -111,7 +110,6 @@ class PostAdmin(admin.ModelAdmin):
                     "time_published",
                     (
                         "allow_comments",
-                        "allow_incoming_webmentions",
                         "allow_outgoing_webmentions",
                     ),
                 )

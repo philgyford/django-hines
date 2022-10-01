@@ -251,7 +251,6 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
     trackback_count = models.IntegerField(default=0, blank=False, null=False)
 
     # ALSO HAS:
-    # allow_incoming_webmentions - from django-wm
     # allow_outgoing_webmentions - from django-wm
 
     # But you might want to use self.get_tags() instead, so they're in order.
