@@ -86,4 +86,9 @@ urlpatterns = [
         core_views.DayArchiveView.as_view(),
         name="day_archive",
     ),
+    path(
+        "admin-custom/clear-cache/",
+        core_views.admin_clear_cache,
+        name="admin_clear_cache",
+    ),
 ]

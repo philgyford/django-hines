@@ -6,6 +6,10 @@ from ditto.flickr.models import Photo, Photoset
 from ditto.pinboard.models import Bookmark
 from ditto.twitter.models import Tweet
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.cache import DEFAULT_CACHE_ALIAS, caches
+from django.core.cache.backends.base import InvalidCacheBackendError
 from django.core.exceptions import ImproperlyConfigured
 from django.core.paginator import InvalidPage
 from django.db import connection
@@ -15,6 +19,7 @@ from django.http import (
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseNotFound,
+    HttpResponseRedirect,
     HttpResponseServerError,
 )
 from django.shortcuts import get_object_or_404, redirect
@@ -119,6 +124,30 @@ class CacheMixin(object):
             return cache_page(self.get_cache_timeout())(super().dispatch)(
                 *args, **kwargs
             )
+
+
+@login_required
+def admin_clear_cache(request):
+    """
+    Clear all of the caches.
+
+    Copied from django-extensions
+    https://github.com/django-extensions/django-extensions/blob/main/django_extensions/management/commands/clear_cache.py  # noqa: E501
+    """
+    if request.user.is_superuser:
+        cache = getattr(settings, "CACHES", {DEFAULT_CACHE_ALIAS: {}}).keys()
+
+        for key in cache:
+            try:
+                caches[key].clear()
+            except InvalidCacheBackendError:
+                messages.error(request, f'Cache "{key}" is invalid.')
+            else:
+                messages.success(request, f'Cache "{key}" has been cleared.')
+    else:
+        messages.error("Only superusers allowed.")
+
+    return HttpResponseRedirect(reverse("admin:index"))
 
 
 class HomeView(CacheMixin, TemplateView):

@@ -74,6 +74,46 @@
       }
     }
 
+    /** Sidebar **/
+    .hines-actions {
+      float: right;
+      width: 260px;
+      position: relative;
+      margin-right: -300px;
+    }
+
+    .hines-actions ul,
+    .hines-actions li {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hines-actions a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 2em;
+      border: 1px solid #78aec8;
+      margin-bottom: 1em;
+    }
+
+    #content-related {
+      clear: right;
+    }
+
+    @media (max-width: 1024px) {
+      .hines-actions {
+        margin-right: -290px;
+      }
+    }
+    @media (max-width: 767px) {
+      .hines-actions {
+        width: 100%;
+        margin: 0;
+      }
+    }
   </style>
 {% endblock extrastyle %}
 
@@ -86,7 +126,7 @@
         Writing
         <ul>
           <li><a href="/backstage/weblogs/post/add/"><span>New post</span></a></li>
-          <li><a href="/phil/writing/"><span>Recent posts</span></a></li>
+          <li><a href="/backstage/weblogs/post/"><span>Posts</span></a></li>
         </ul>
       </li>
       <li>
@@ -109,3 +149,13 @@
   {{ block.super }}
 
 {% endblock content %}
+
+
+{% block sidebar %}
+  <div class="hines-actions">
+    <ul>
+      <li><a href="{% url 'hines:admin_clear_cache' %}">Clear cache</a></li>
+    </ul>
+  </div>
+  {{ block.super }}
+{% endblock sidebar %}
