@@ -1,0 +1,29 @@
+{% extends 'hines_core/layouts/sidebar_right.html' %}
+
+{% block head_title %}Manual webmention submission{% endblock %}
+
+{% block content_title %}
+Manual webmention submission
+{% endblock %}
+
+{% block content %}
+  <form id="webmention_manual_submit" name="webmention_manual_submit" method="POST" action="{% url 'incoming_webmention_api_view' %}">
+      {% csrf_token %}
+
+      {% for field in form %}
+        {% if field.is_hidden %}
+          {{ field }}
+        {% endif %}
+      {% endfor %}
+
+      {% for field in form %}
+        {% if not field.is_hidden %}
+          {% include 'hines_core/includes/form_field.html' with field=field %}
+        {% endif %}
+      {% endfor %}
+
+      <p class="form__buttons">
+        <button type="submit" class="button button--primary">Submit</button>
+      </p>
+  </form>
+{% endblock content %}
