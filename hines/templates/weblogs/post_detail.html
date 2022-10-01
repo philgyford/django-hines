@@ -62,6 +62,10 @@
     </aside>
 
     <div class="e-content">
+      {% if post.remote_url %}
+        <p><em class="utils-note">(This is something that I wrote on {{ post.remote_url|domain_urlize }}.)</em></p>
+      {% endif %}
+
       {{ post.intro_html|safe }}
 
       {{ post.body_html|safe }}
