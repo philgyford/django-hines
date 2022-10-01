@@ -1,0 +1,24 @@
+{% extends 'spectator_reading/publication_detail.html' %}
+
+{% block sidebar_nav %}
+
+  <aside class="card">
+    <div class="card__body">
+      <p>This is a {{ publication.get_kind_display|lower }} that
+        {% with last_reading=publication.reading_set.last %}
+          {% if last_reading %}
+            {% if last_reading.end_date %}
+              <span class="utils-nowrap">I’ve read.</span>
+            {% else %}
+              <span class="utils-nowrap">I’m reading.</span>
+            {% endif %}
+          {% else %}
+              I haven’t <span class="utils-nowrap">yet read.</span>
+          {% endif %}
+        {% endwith %}
+      </p>
+    </div>
+  </aside>
+
+  {{ block.super }}
+{% endblock sidebar_nav %}

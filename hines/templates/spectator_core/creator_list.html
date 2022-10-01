@@ -63,6 +63,16 @@ Differences between this and the standard creator_list.html:
 {% endblock content %}
 
 
+{% block sidebar_nav %}
+  <aside class="card">
+    <div class="card__body">
+      <p>People and organisations who have written things I’ve read, or directed films and plays I’ve seen, or performed at gigs I’ve been <span class="utils-nowrap">to, etc.</span></p>
+    </div>
+  </aside>
+
+  {{ block.super }}
+{% endblock sidebar_nav %}
+
 {% block sidebar_content %}
 
   {% most_read_creators_card num=10 %}
