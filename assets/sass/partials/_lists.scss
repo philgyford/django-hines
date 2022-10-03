@@ -11,6 +11,14 @@ ul {
 
 ol {
   padding-left: 2em;
+
+  ol {
+    list-style: lower-alpha;
+
+    ol {
+      list-style: lower-roman;
+    }
+  }
 }
 
 // Inline lists
