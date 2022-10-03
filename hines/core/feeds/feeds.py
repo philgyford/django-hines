@@ -149,11 +149,20 @@ class AdminWebmentionsFeedRSS(ExtendedFeed):
         return f"The most recent webmentions on {obj.name} (Admin)"
 
     def items(self, obj):
-        return Webmention.objects.all().order_by("-created_at")[:10]
+        """
+        Because webmentions can be accepted for any URL, but we're only
+        interested in those on Posts, we're ignoring all Webmentions
+        that don't have a valid GenericForeignKey – they'll be ones
+        to pages that aren't PostDetail pages.
+        """
+        return Webmention.objects.exclude(object_id__isnull=True).order_by(
+            "-created_at"
+        )[:10]
 
     # Getting details for each post in the feed:
 
     def item_link(self, item):
+        "The #m1 fragment links to the mention on the Post's page, if published"
         return item.target_object.get_absolute_url_with_domain() + f"#m{item.pk}"
 
     def item_pubdate(self, item):
