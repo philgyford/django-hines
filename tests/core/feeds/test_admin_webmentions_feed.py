@@ -2,6 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from mentions.models import Webmention
 
+from hines.core.utils import make_datetime
 from hines.weblogs.factories import BlogFactory, LivePostFactory
 
 # from tests import override_app_settings
@@ -35,7 +36,10 @@ class AdminWebmentionsFeedRSSTestCase(FeedTestCase):
     def test_content(self):
         "An item should contain the correct content"
         post = LivePostFactory(
-            title="Hello", slug="hello", blog=BlogFactory(slug="blog")
+            title="Hello",
+            slug="hello",
+            blog=BlogFactory(slug="blog"),
+            time_published=make_datetime("2022-10-09 12:00:00"),
         )
         webmention = Webmention.objects.create(
             sent_by="1.2.3.4",
@@ -64,7 +68,7 @@ class AdminWebmentionsFeedRSSTestCase(FeedTestCase):
         self.assertHTMLEqual(
             items[0].getElementsByTagName("content:encoded")[0].firstChild.wholeText,
             f"""<p>Webmention from<br><a href="https://example.org">https://example.org</a><br>
-to<br><a href="/terry/blog/2022/10/03/hello/">Hello</a><br>
+to<br><a href="/terry/blog/2022/10/09/hello/">Hello</a><br>
 sent by 1.2.3.4
 </p><hr><dl><dt>Validated?</dt><dd>❌</dd><dt>Approved?</dt><dd>❌</dd></dl><p><a href="http://example.com/backstage/mentions/webmention/{webmention.pk}/change/">Edit in Admin</a></p>""",  # noqa: E501
         )
