@@ -374,6 +374,12 @@ WEBMENTIONS_USE_CELERY = False
 
 WEBMENTIONS_AUTO_APPROVE = False
 
+# So that we only save Webmentions to the pages of Posts:
+WEBMENTIONS_INCOMING_TARGET_MODEL_REQUIRED = True
+
+# Don't want to register the times we refer to our own pages:
+WEBMENTIONS_ALLOW_SELF_MENTIONS = False
+
 DOMAIN_NAME = os.getenv("WM_DOMAIN_NAME", default="")
 
 # END THIRD-PARTY APPS
