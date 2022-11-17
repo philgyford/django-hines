@@ -55,13 +55,13 @@ function manage {
 
 function tests {
   # Run the Django tests
-  _dc ${TEST_ENV_ARGS} web python manage.py test "${@}"
+  _dc ${TEST_ENV_ARGS} web python manage.py test "${@}" --parallel
 }
 
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-  _dc ${TEST_ENV_ARGS} web coverage run manage.py test
+  _dc ${TEST_ENV_ARGS} web coverage run manage.py test --parallel
   _dc ${TEST_ENV_ARGS} web coverage html
 }
 

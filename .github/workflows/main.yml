@@ -44,13 +44,14 @@ jobs:
           ./manage.py migrate --verbosity=0 --noinput
           flake8 hines
           black . --check
-          coverage run ./manage.py test
+          coverage run ./manage.py test --parallel
         env:
           ALLOWED_HOSTS: "*"
           DATABASE_URL: "postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres"
           DJANGO_SECRET_KEY: "fake-secret-key-for-tests"
           HINES_ROOT_DIR: "terry"
           WM_DOMAIN_NAME: "testserver"
+          HINES_LOG_LEVEL: "ERROR"
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2
