@@ -15,7 +15,7 @@ if [[ ! -t 1 ]]; then
 fi
 
 # We need to pass this in to docker-compose when we run tests and coverage:
-TEST_ENV_ARGS="-e DEBUG=FALSE -e HINES_ROOT_DIR=terry -e WM_DOMAIN_NAME=testserver"
+TEST_ENV_ARGS="-e DEBUG=FALSE -e HINES_ROOT_DIR=terry -e WM_DOMAIN_NAME=testserver -e HINES_LOG_LEVEL=ERROR"
 
 
 # -----------------------------------------------------------------------------

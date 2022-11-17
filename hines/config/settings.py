@@ -256,7 +256,7 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": ["console"],
-            "level": os.getenv("OOHDIR_LOG_LEVEL", default="INFO"),
+            "level": os.getenv("HINES_LOG_LEVEL", default="INFO"),
         },
     },
     # "root": {"handlers": ["console"], "level": "INFO"},
