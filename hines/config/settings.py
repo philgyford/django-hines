@@ -289,6 +289,9 @@ elif HINES_CACHE == "dummy":
     }
 
 
+TEST_RUNNER = "hines.core.test_runner.HinesTestRunner"
+
+
 if DEBUG:
     # Changes for local development
 
