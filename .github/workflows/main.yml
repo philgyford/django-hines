@@ -51,7 +51,7 @@ jobs:
           DJANGO_SECRET_KEY: "fake-secret-key-for-tests"
           HINES_ROOT_DIR: "terry"
           WM_DOMAIN_NAME: "testserver"
-          HINES_LOG_LEVEL: "ERROR"
+          HINES_LOG_LEVEL: "CRITICAL"
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2

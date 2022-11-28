@@ -380,6 +380,13 @@ WEBMENTIONS_INCOMING_TARGET_MODEL_REQUIRED = True
 # Don't want to register the times we refer to our own pages:
 WEBMENTIONS_ALLOW_SELF_MENTIONS = False
 
+WEBMENTIONS_ALLOW_OUTGOING_DEFAULT = False
+
+if HINES_USE_HTTPS:
+    WEBMENTIONS_URL_SCHEME = "https"
+else:
+    WEBMENTIONS_URL_SCHEME = "http"
+
 DOMAIN_NAME = os.getenv("WM_DOMAIN_NAME", default="")
 
 # END THIRD-PARTY APPS

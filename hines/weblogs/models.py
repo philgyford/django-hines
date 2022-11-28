@@ -552,7 +552,7 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         else:
             return self.comments_are_open
 
-    def all_text(self):
+    def get_content_html(self):
         "Required for django-wm's MentionableMixin"
         return f"{self.intro_html} {self.body_html}"
 
