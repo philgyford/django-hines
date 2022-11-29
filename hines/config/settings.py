@@ -236,6 +236,12 @@ LOGGING = {
         },
     },
     "loggers": {
+        "commands": {
+            # For management commands and tasks where we specify the "commands" logger
+            "handlers": ["console"],
+            "propagate": True,
+            "level": os.getenv("HINES_LOG_LEVEL", default="INFO"),
+        },
         "django": {
             "handlers": ["console"],
             "level": os.getenv("HINES_LOG_LEVEL", default="INFO"),
