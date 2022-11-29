@@ -20,6 +20,7 @@ pygments
 python-dotenv
 requests
 sentry-sdk
+setproctitle
 smartypants
 
 # Dev
