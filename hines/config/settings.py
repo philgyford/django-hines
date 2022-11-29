@@ -71,6 +71,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -80,8 +81,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "mentions.middleware.WebmentionHeadMiddleware",
-    # Can go at the end of the list:
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 ROOT_URLCONF = "hines.config.urls"
@@ -107,22 +108,6 @@ WSGI_APPLICATION = "hines.config.wsgi.application"
 
 
 DATABASES = {"default": dj_database_url.config(conn_max_age=500)}
-
-
-# Custom setting to enable the site-wide caching.
-# (We must also have set up the CACHES setting, if making this True.)
-USE_PER_SITE_CACHE = False
-
-if USE_PER_SITE_CACHE:
-    # Must be first:
-    MIDDLEWARE = ["django.middleware.cache.UpdateCacheMiddleware"] + MIDDLEWARE
-    # Must be last:
-    MIDDLEWARE += [
-        "django.middleware.cache.FetchFromCacheMiddleware",
-    ]
-    CACHE_MIDDLEWARE_ALIAS = "default"
-    CACHE_MIDDLEWARE_SECONDS = 600
-    CACHE_MIDDLEWARE_KEY_PREFIX = ""
 
 
 # Password validation
@@ -260,31 +245,41 @@ LOGGING = {
 }
 
 
-HINES_CACHE = os.getenv("HINES_CACHE", default="memory")
+# Both of these are also used in HINES.apps.up.views.index:
+HINES_CACHE_TYPE = os.getenv("HINES_CACHE_TYPE", default="dummy")
+REDIS_URL = os.getenv("REDIS_URL", "")
 
-if HINES_CACHE == "redis":
-    # Use the TLS URL if set, otherwise, use the non-TLS one:
-    REDIS_URL = os.getenv("REDIS_TLS_URL", default=os.getenv("REDIS_URL", default=""))
-    if REDIS_URL != "":
-        CACHES = {
-            "default": {
-                "BACKEND": "django_redis.cache.RedisCache",
-                "LOCATION": REDIS_URL,
-                "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-            }
+# The DEFAULT_CACHE_TYPE setting is used in the /up/ URL to decide whether
+# to check the state of the Redis cache or not
+
+if HINES_CACHE_TYPE == "memory":
+    # Use in-memory caching
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "HINES",
         }
-        if os.getenv("REDIS_TLS_URL", default=""):
-            CACHES["default"]["OPTIONS"]["CONNECTION_POOL_KWARGS"] = {
-                "ssl_cert_reqs": None
-            }
+    }
 
-elif HINES_CACHE == "dummy":
+elif HINES_CACHE_TYPE == "redis" and REDIS_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv("REDIS_URL"),
+        }
+    }
+
+else:
+    # Use dummy cache (ie, no caching)
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         }
     }
 
+
+# Seconds before expiring a cached item. None for never expiring.
+CACHES["default"]["TIMEOUT"] = 300
 
 TEST_RUNNER = "hines.core.test_runner.HinesTestRunner"
 
