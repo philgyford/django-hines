@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.flatpages",
@@ -73,9 +72,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # Should go before WhiteNoiseMiddleware and CommonMiddleware:
     "corsheaders.middleware.CorsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -162,7 +159,7 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 STATIC_ROOT = BASE_DIR / "hines" / "static_collected"
 
@@ -321,15 +318,6 @@ COMMENTS_APP = "hines.custom_comments"
 # We don't want to allow duplicate tags like 'Fish' and 'fish':
 TAGGIT_CASE_INSENSITIVE = True
 
-
-# A directory of static files to be served in the root directory.
-# e.g. 'robots.txt'.
-WHITENOISE_ROOT = BASE_DIR / "hines" / "static_html"
-
-# Visiting /example/ will serve /example/index.html:
-WHITENOISE_INDEX_FILE = True
-
-WHITENOISE_MIMETYPES = {".xsl": "text/xsl"}
 
 HINES_MAPBOX_API_KEY = os.getenv("HINES_MAPBOX_API_KEY", default="")
 
