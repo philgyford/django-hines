@@ -58,6 +58,23 @@ services:
     volumes:
       - .:/code
 
+  django-q:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    command: >
+      sh -c "
+      python manage.py qcluster
+      "
+    container_name: hines_djangoq
+    depends_on:
+      - redis
+      - web
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - .:/code
+
 volumes:
   postgres_data:
   redis:

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "taggit",
     "django_comments",
+    "django_q",
     "hcaptcha",
     "imagekit",
     "spectator.core",
@@ -310,15 +311,57 @@ if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
-####################################################################
-# THIRD-PARTY APPS
+########################################################################################
+# THIRD-PARTY APP SETTINGS
 
+
+# django-comments ######################################################
 
 COMMENTS_APP = "hines.custom_comments"
 
-# We don't want to allow duplicate tags like 'Fish' and 'fish':
-TAGGIT_CASE_INSENSITIVE = True
 
+# django-cors-headers ##################################################
+
+CORS_ALLOWED_ORIGINS = [
+    "http://www.gyford.local:8000",
+    "https://www.gyford.com",
+    "https://cloudflareinsights.com",
+    "https://static.cloudflareinsights.com",
+]
+
+# django-hcaptcha ######################################################
+# https://github.com/AndrejZbin/django-hcaptcha
+
+# Used in the comments form.
+HCAPTCHA_SITEKEY = os.getenv("HCAPTCHA_SITEKEY", default="")
+HCAPTCHA_SECRET = os.getenv("HCAPTCHA_SECRET", default="")
+
+
+# django-q2#############################################################
+
+if os.getenv("DJANGOQ_REDIS_URL", ""):
+
+    Q_CLUSTER = {
+        "name": "hines",
+        "label": "Django Q2",
+        # Number of seconds a worker can spend on a task before it's terminated:
+        "timeout": 60,
+        # Number of seconds to wait for a cluster to finish a task, before it’s
+        # presented again. Must be bigger than timeout:
+        "retry": 120,
+        # Number of retry attempts for failed tasks. 0 for infinite retries:
+        "max_attempts": 3,
+        "redis": os.getenv("DJANGOQ_REDIS_URL"),
+    }
+
+
+# django-imagekit ######################################################
+# https://django-imagekit.readthedocs.io/en/stable/caching.html#removing-safeguards
+
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
+
+
+# django-spectator #####################################################
 
 HINES_MAPBOX_API_KEY = os.getenv("HINES_MAPBOX_API_KEY", default="")
 
@@ -333,34 +376,14 @@ else:
     SPECTATOR_MAPS = {"enable": False}
 
 
-AWS_DEFAULT_ACL = None
+# django-taggit ########################################################
+
+# We don't want to allow duplicate tags like 'Fish' and 'fish':
+TAGGIT_CASE_INSENSITIVE = True
 
 
-# https://django-imagekit.readthedocs.io/en/stable/caching.html#removing-safeguards
-IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
-
-
-CORS_ALLOWED_ORIGINS = [
-    "http://www.gyford.local:8000",
-    "https://www.gyford.com",
-    "https://cloudflareinsights.com",
-    "https://static.cloudflareinsights.com",
-]
-
-
-# Sentry
-# https://devcenter.heroku.com/articles/sentry#integrating-with-python-or-django
-
-SENTRY_DSN = os.getenv("SENTRY_DSN", default="")
-
-if SENTRY_DSN:
-    sentry_sdk.init(
-        dsn=SENTRY_DSN,
-        integrations=[DjangoIntegration()],
-    )
-
-
-# django-wm
+# django-wm ############################################################
+# https://github.com/beatonma/django-wm/
 
 WEBMENTIONS_USE_CELERY = False
 
@@ -381,11 +404,26 @@ else:
 
 DOMAIN_NAME = os.getenv("WM_DOMAIN_NAME", default="")
 
-# END THIRD-PARTY APPS
-####################################################################
+
+# sentry-sdk ###########################################################
+
+# Sentry
+# https://devcenter.heroku.com/articles/sentry#integrating-with-python-or-django
+
+SENTRY_DSN = os.getenv("SENTRY_DSN", default="")
+
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+    )
 
 
-####################################################################
+# END THIRD-PARTY APP SETTINGS
+########################################################################################
+
+
+########################################################################################
 # DJANGO-HINES-SPECIFIC SETTINGS
 
 
@@ -493,11 +531,6 @@ HINES_CLOUDFLARE_ANALYTICS_TOKEN = os.getenv(
 # Set to False to disable the hCaptcha field on the comment form:
 HINES_USE_HCAPTCHA = True
 
-# For https://github.com/AndrejZbin/django-hcaptcha
-# Used in the comments form.
-HCAPTCHA_SITEKEY = os.getenv("HCAPTCHA_SITEKEY", default="")
-HCAPTCHA_SECRET = os.getenv("HCAPTCHA_SECRET", default="")
-
 
 # DATE/TIME FORMATS
 
@@ -521,3 +554,7 @@ DITTO_CORE_DATETIME_FORMAT = HINES_DATETIME_FORMAT
 
 # The date format used by django-spectator:
 SPECTATOR_DATE_FORMAT = HINES_DATE_FORMAT
+
+
+# END DJANGO-HINES SPECIFIC SETTINGS
+########################################################################################
