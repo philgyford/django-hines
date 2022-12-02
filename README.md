@@ -215,10 +215,10 @@ Update any installed Node packages that are outdated.
 
 - Every 10 mins: `hines.core.tasks.publish_scheduled_posts`
 - Every 10 mins: `hines.core.tasks.fetch_lastfm_scrobbles`, kwargs `days="1", account="gyford"`
-- Every 1 hour: `hines.core.tasks.fetch_flickr_photos`, kwargs `days="30", account="35034346050@N01"`
-- Every 1 hour: `hines.core.tasks.fetch_pinboard_bookmarks`, kwargs `recent="20", account="philgyford"`
-- Every 1 hour: `hines.core.tasks.fetch_twitter_tweets`, kwargs `recent="200", account="philgyford"`
-- Every 1 hour: `hines.core.tasks.pending_mentions`
+- Hourly: `hines.core.tasks.fetch_flickr_photos`, kwargs `days="30", account="35034346050@N01"`
+- Hourly: `hines.core.tasks.fetch_pinboard_bookmarks`, kwargs `recent="20", account="philgyford"`
+- Hourly: `hines.core.tasks.fetch_twitter_tweets`, kwargs `recent="200", account="philgyford"`
+- Hourly: `hines.core.tasks.pending_mentions`
 - Daily: `hines.core.tasks.fetch_lastfm_scrobbles`, kwargs `days="14", account="gyford"`
 - Daily: `hines.core.tasks.fetch_twitter_favorites`, kwargs `recent="200", account="philgyford"`
 - Daily: `hines.core.tasks.fetch_twitter_files`
