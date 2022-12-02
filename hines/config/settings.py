@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "hines.stats",
     "hines.links",
     "hines.patterns",
+    "hines.up",
     "hines.weblogs",
 ]
 
