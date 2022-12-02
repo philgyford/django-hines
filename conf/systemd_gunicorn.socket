@@ -1,0 +1,10 @@
+# Should be symlinked to /etc/systemd/system/gunicorn_hines.socket
+
+[Unit]
+Description=gunicorn hines socket
+
+[Socket]
+ListenStream=/webapps/hines/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
