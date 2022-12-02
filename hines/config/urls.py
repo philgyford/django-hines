@@ -97,7 +97,7 @@ root_dir_patterns = [
 
 
 urlpatterns = [
-    path("up/", core_views.up, name="up"),
+    path("up/", include("hines.up.urls")),
     path("webmentions/", include("mentions.urls")),
     # REDIRECTS
     path(

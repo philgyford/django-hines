@@ -1,0 +1,18 @@
+# Should be symlinked to /etc/systemd/system/djangoq_hines.service
+
+[Unit]
+Description=django-q hines daemon
+After=network.target
+
+[Service]
+User=phil
+Group=phil
+WorkingDirectory=/webapps/hines/code
+EnvironmentFile=/webapps/hines/code/.env
+ExecStart=/webapps/hines/code/venv/bin/python /webapps/hines/code/manage.py qcluster
+# Both to same logfile:
+StandardOutput=append:/webapps/hines/logs/django-q.log
+StandardError=append:/webapps/hines/logs/django-q.log
+
+[Install]
+WantedBy=multi-user.target

@@ -8,3 +8,4 @@ Disallow: /
 User-agent: *
 Disallow: /phil/misc/strandbuilding/
 
+Sitemap: https://www.gyford.com/sitemap.xml

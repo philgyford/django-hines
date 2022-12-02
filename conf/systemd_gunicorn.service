@@ -1,0 +1,15 @@
+# Should be symlinked to /etc/systemd/system/gunicorn_hines.service
+
+[Unit]
+Description=gunicorn hines daemon
+Requires=gunicorn_hines.socket
+After=network.target
+
+[Service]
+User=phil
+Group=phil
+WorkingDirectory=/webapps/hines/code
+ExecStart=/bin/bash /webapps/hines/code/bin/gunicorn_start.sh
+
+[Install]
+WantedBy=multi-user.target

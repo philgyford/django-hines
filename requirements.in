@@ -9,6 +9,7 @@ django-cors-headers
 django-ditto
 django-extensions
 django-hcaptcha
+django-q2
 django-redis
 django-spectator
 django-storages
@@ -20,8 +21,8 @@ pygments
 python-dotenv
 requests
 sentry-sdk
+setproctitle
 smartypants
-whitenoise
 
 # Dev
 black

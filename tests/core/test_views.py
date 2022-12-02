@@ -36,13 +36,6 @@ class HomeViewTestCase(ViewTestCase):
         self.assertEqual(response.template_name[0], "hines_core/home.html")
 
 
-class UpViewTestCase(ViewTestCase):
-    def test_response_200(self):
-        "It should respond with 200."
-        response = views.up(self.request)
-        self.assertEqual(response.status_code, 200)
-
-
 class ReadingHomeViewTestCase(TestCase):
     def test_redirects(self):
         "It redirects if there's like a y=[\d\d\d\d] in the querystring."  # noqa: W605
