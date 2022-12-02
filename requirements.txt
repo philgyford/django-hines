@@ -58,13 +58,13 @@ bleach==5.0.1 \
     --hash=sha256:085f7f33c15bd408dd9b17a4ad77c577db66d76203e5984b1bd59baeee948b2a \
     --hash=sha256:0d03255c47eb9bd2f26aa9bb7f2107732e7e8fe195ca2f64709fcf3b0a4a085c
     # via -r requirements.in
-boto3==1.26.18 \
-    --hash=sha256:3c7315da16eb0b41823965e5ce55f99cb07e94680e0ed7830c581f505fb5bd15 \
-    --hash=sha256:933c88b189112a5fdd82d49ef00f95b9dd649d195e557a81aecb773a3e01c517
+boto3==1.26.21 \
+    --hash=sha256:311f1c7223f8298f3f175b581c56fad04ea4849a144c69934daf1658db4ae7dd \
+    --hash=sha256:cd66fee0b1d533c69b6ba2b7f8d3825cb0f5459e2cdbc604e2fe9e9c0a15609c
     # via -r requirements.in
-botocore==1.29.18 \
-    --hash=sha256:26e86fce95049f6cc18b5611901549943c4c22522fa8a3b6b265404f673977b2 \
-    --hash=sha256:2aba44433b6eac6d3a12cf93f2985e2d7a843307c1a527042fc48dd09b273992
+botocore==1.29.21 \
+    --hash=sha256:02d1f864e13d219887cc35a3f6e197e9f52c47b0e8f568b3fbbf5f69e667c7f5 \
+    --hash=sha256:ac620727f7b8c81e7c0c841d30be4a01a898e0b6aeed1ddf1ba653742d8f6319
     # via
     #   boto3
     #   s3transfer
@@ -199,9 +199,9 @@ django-picklefield==3.1 \
     --hash=sha256:c786cbeda78d6def2b43bff4840d19787809c8909f7ad683961703060398d356 \
     --hash=sha256:d77c504df7311e8ec14e8b779f10ca6fec74de6c7f8e2c136e1ef60cf955125d
     # via django-q2
-django-q2==1.4.5 \
-    --hash=sha256:b23de7a5e3155619f25027ffd0abdd1fc2832cb31db17e005f7c892dc7e0ac50 \
-    --hash=sha256:be8a3f73bd72fce712ade52a529be4c6b361949ce4af266e4ceb233b2bc92464
+django-q2==1.4.6 \
+    --hash=sha256:eab8813b03c970d6e1325e9e7dce45bea9e7c87c5fa3019269286f2f50374ac2 \
+    --hash=sha256:fc6aa77272e647d9c7ba40059d5bb69ad5b1957e7922ee35be23207492b3cf06
     # via -r requirements.in
 django-redis==5.2.0 \
     --hash=sha256:1d037dc02b11ad7aa11f655d26dac3fb1af32630f61ef4428860a2e29ff92026 \
@@ -234,9 +234,9 @@ factory-boy==3.2.1 \
     --hash=sha256:a98d277b0c047c75eb6e4ab8508a7f81fb03d2cb21986f627913546ef7a2a55e \
     --hash=sha256:eb02a7dd1b577ef606b75a253b9818e6f9eaf996d94449c9d5ebb124f90dc795
     # via -r requirements.in
-faker==15.3.3 \
-    --hash=sha256:20d090e661bbe88a5d801ea5eb3d853564940352120c84c9a14968847aca2893 \
-    --hash=sha256:b95b2423ef18d17dcd5977732a0bf0fbbde4937f10dce24ff804581f7f3ca4e9
+faker==15.3.4 \
+    --hash=sha256:2d5443724f640ce07658ca8ca8bbd40d26b58914e63eec6549727869aa67e2cc \
+    --hash=sha256:c2a2ff9dd8dfd991109b517ab98d5cb465e857acb45f6b643a0e284a9eb2cc76
     # via factory-boy
 flake8==6.0.0 \
     --hash=sha256:3833794e27ff64ea4e9cf5d410082a8b97ff1a06c16aa3d2027339cd0f1195c7 \
@@ -606,6 +606,7 @@ tomli==2.0.1 \
     #   black
     #   coverage
 traitlets==5.6.0 \
+    --hash=sha256:10b6ed1c9cedee83e795db70a8b9c2db157bb3778ec4587a349ecb7ef3b1033b \
     --hash=sha256:1410755385d778aed847d68deb99b3ba30fbbf489e17a1e8cbb753060d5cce73
     # via
     #   ipython
