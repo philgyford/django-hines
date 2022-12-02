@@ -324,7 +324,7 @@ COMMENTS_APP = "hines.custom_comments"
 # django-cors-headers ##################################################
 
 CORS_ALLOWED_ORIGINS = [
-    "http://www.gyford.local:8000",
+    "http://www.gyford.test:8000",
     "https://www.gyford.com",
     "https://cloudflareinsights.com",
     "https://static.cloudflareinsights.com",
@@ -344,7 +344,7 @@ if os.getenv("DJANGOQ_REDIS_URL", ""):
 
     Q_CLUSTER = {
         "name": "hines",
-        "label": "Django Q2",
+        "label": "Django Q",
         # Number of seconds a worker can spend on a task before it's terminated:
         "timeout": 60,
         # Number of seconds to wait for a cluster to finish a task, before it’s
