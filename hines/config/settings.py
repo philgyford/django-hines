@@ -346,12 +346,21 @@ if os.getenv("DJANGOQ_REDIS_URL", ""):
         "name": "hines",
         "label": "Django Q",
         # Number of seconds a worker can spend on a task before it's terminated:
+        # Default None
         "timeout": 60,
         # Number of seconds to wait for a cluster to finish a task, before it’s
         # presented again. Must be bigger than timeout:
+        # Default 60
         "retry": 120,
+        # Number of tasks to process before recycling, releasing memory resources:
+        # Default 500
+        "recycle": 200,
         # Number of retry attempts for failed tasks. 0 for infinite retries:
+        # Default 0 (infinite)
         "max_attempts": 3,
+        # Should it execute missed timeslots from while cluster was down?
+        # Default True
+        "catch_up": False,
         "redis": os.getenv("DJANGOQ_REDIS_URL"),
     }
 
