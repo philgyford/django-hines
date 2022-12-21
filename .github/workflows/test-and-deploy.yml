@@ -14,7 +14,7 @@ jobs:
     uses: philgyford/django-hines/.github/workflows/test.yml@main
 
   deploy:
-    needs: build-and-test
+    needs: use-test
     runs-on: ubuntu-latest
 
     steps:
