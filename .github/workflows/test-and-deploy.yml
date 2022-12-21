@@ -42,7 +42,7 @@ jobs:
         with:
           status: ${{ job.status }}
           # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-          fields: repo,message,commit,author,action,took
+          fields: repo,workflow,message,commit,action,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_CI_SLACK_HOOK }} # required
         # Run even if job fails/cancelled, but only if Slack webhook is present (it's not when Dependabot runs):
