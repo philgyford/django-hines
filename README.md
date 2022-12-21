@@ -214,7 +214,7 @@ Update any installed Node packages that are outdated.
 **NOTE:** If a task times out, it won't appear in the lists of Successful _or_ Failed tasks.
 
 - Every 10 mins: `hines.core.tasks.publish_scheduled_posts`
-- Hourly: `hines.core.tasks.fetch_flickr_photos`, kwargs `days="30", account="35034346050@N01"`
+- Hourly: `hines.core.tasks.fetch_flickr_photos`, kwargs `days="7", account="35034346050@N01"`
 - Hourly: `hines.core.tasks.fetch_lastfm_scrobbles`, kwargs `days="1", account="gyford"`
 - Hourly: `hines.core.tasks.fetch_pinboard_bookmarks`, kwargs `recent="20", account="philgyford"`
 - Hourly: `hines.core.tasks.fetch_twitter_tweets`, kwargs `recent="200", account="philgyford"`
