@@ -1,14 +1,21 @@
-name: CI
+name: test
 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches:
+      - main
+
+  # Allow calling this workflow from others:
+  workflow_call:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+concurrency:
+  # Skip intermediate builds: always.
+  # Cancel intermediate builds: only if it is a pull request build.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 
 jobs:
   build-and-test:
@@ -61,42 +68,7 @@ jobs:
         with:
           status: ${{ job.status }}
           # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-          fields: repo,message,commit,author,action,took
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_CI_SLACK_HOOK }} # required
-        # Run even if job fails/cancelled, but only if Slack webhook is present (it's not when Dependabot runs):
-        if: ${{ always() && env.SLACK_WEBHOOK_URL != null }}
-
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: |
-            cd /webapps/hines/code
-            git checkout .
-            git pull
-            source venv/bin/activate
-            pip-sync
-            ./manage.py migrate
-            ./manage.py collectstatic --noinput
-            sudo systemctl restart gunicorn_hines
-            sudo systemctl restart djangoq_hines
-
-      - name: Slack notification
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-          fields: repo,message,commit,author,action,took
+          fields: repo,workflow,message,commit,action,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_CI_SLACK_HOOK }} # required
         # Run even if job fails/cancelled, but only if Slack webhook is present (it's not when Dependabot runs):
