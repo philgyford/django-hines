@@ -411,6 +411,9 @@ class StaticGenerator(Generator):
         """
         data = []
 
+        # Ensure they're sorted by key (year):
+        totals = dict(sorted(totals.items()))
+
         for year, count in totals.items():
             data.append(
                 {
@@ -681,7 +684,10 @@ class StaticGenerator(Generator):
 
         for mailbox in mailboxes:
             for k, v in mailbox.items():
-                totals[k] = v
+                if k in totals:
+                    totals[k] += v
+                else:
+                    totals[k] = v
 
         return self._make_simple_data(
             totals,
