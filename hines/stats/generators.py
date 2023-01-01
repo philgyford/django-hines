@@ -454,6 +454,7 @@ class StaticGenerator(Generator):
             "2019": 51,
             "2020": 0,
             "2021": 0,
+            "2022": 368,
         }
 
         data = self._make_simple_data(
@@ -496,6 +497,7 @@ class StaticGenerator(Generator):
             "2019": 3873,
             "2020": 15636,
             "2021": 6428,
+            "2022": 8941,
         }
 
         return self._make_simple_data(
@@ -506,6 +508,81 @@ class StaticGenerator(Generator):
         )
 
     def get_emails_received_per_year(self):
+
+        barbicantalk = {
+            "2009": 53,
+            "2010": 57,
+            "2011": 44,
+            "2012": 34,
+            "2013": 64,
+            "2014": 18,
+            "2015": 12,
+            "2016": 1,
+            "2017": 8,
+            "2018": 20,
+            "2019": 103,
+            "2020": 21,
+            "2021": 25,
+            "2022": 10,
+        }
+
+        byliner = {
+            "1999": 2,
+            "2000": 35,
+            "2001": 19,
+            "2002": 33,
+            "2003": 49,
+            "2004": 58,
+            "2005": 52,
+            "2006": 78,
+            "2007": 34,
+            "2008": 40,
+            "2009": 8,
+            "2010": 49,
+            "2011": 10,
+        }
+
+        crazywalls = {
+            "2011": 7,
+            "2012": 10,
+            "2013": 3,
+            "2014": 7,
+            "2015": 8,
+            "2016": 21,
+            "2017": 3,
+            "2018": 32,
+            "2019": 2,
+            "2020": 7,
+            "2021": 5,
+            "2022": 7,
+        }
+
+        guardian = {
+            "2020": 2,
+            "2021": 1,
+            "2022": 7,
+        }
+
+        japanese = {
+            "2006": 4,
+            "2007": 5,
+            "2008": 15,
+            "2009": 6,
+            "2010": 4,
+            "2011": 3,
+            "2012": 4,
+            "2013": 6,
+            "2014": 2,
+            "2019": 1,
+            "2020": 4,
+            "2021": 9,
+            "2022": 2,
+        }
+
+        oohdir = {
+            "2022": 67,
+        }
+
         # From Archive by year folders:
         personal = {
             "1995": 541,
@@ -535,6 +612,7 @@ class StaticGenerator(Generator):
             "2019": 1480,
             "2020": 2117,
             "2021": 1744,
+            "2022": 1719,
         }
         # Pepys Feedback:
         pepys = {
@@ -558,22 +636,7 @@ class StaticGenerator(Generator):
             "2019": 239,
             "2020": 211,
             "2021": 219,
-        }
-
-        barbicantalk = {
-            "2009": 53,
-            "2010": 57,
-            "2011": 44,
-            "2012": 34,
-            "2013": 64,
-            "2014": 18,
-            "2015": 12,
-            "2016": 1,
-            "2017": 8,
-            "2018": 20,
-            "2019": 103,
-            "2020": 21,
-            "2021": 25,
+            "2022": 162,
         }
 
         whitstillman = {
@@ -597,41 +660,28 @@ class StaticGenerator(Generator):
             "2019": 6,
             "2020": 24,
             "2021": 13,
+            "2022": 0,
         }
 
-        byliner = {
-            "1999": 2,
-            "2000": 35,
-            "2001": 19,
-            "2002": 33,
-            "2003": 49,
-            "2004": 58,
-            "2005": 52,
-            "2006": 78,
-            "2007": 34,
-            "2008": 40,
-            "2009": 8,
-            "2010": 49,
-            "2011": 10,
-        }
+        # All of the above dicts that we want to add up:
+        mailboxes = [
+            barbicantalk,
+            byliner,
+            crazywalls,
+            guardian,
+            japanese,
+            oohdir,
+            pepys,
+            personal,
+            whitstillman,
+        ]
 
-        # Add all the above together into a single dict:
+        # Add all the above yearly totals into a single dict of yearly totals:
         totals = {}
 
-        for k, v in personal.items():
-            totals[k] = v
-
-        for k, v in pepys.items():
-            totals[k] += v
-
-        for k, v in barbicantalk.items():
-            totals[k] += v
-
-        for k, v in whitstillman.items():
-            totals[k] += v
-
-        for k, v in byliner.items():
-            totals[k] += v
+        for mailbox in mailboxes:
+            for k, v in mailbox.items():
+                totals[k] = v
 
         return self._make_simple_data(
             totals,
@@ -662,6 +712,7 @@ class StaticGenerator(Generator):
             "2019": 44,
             "2020": 46,
             "2021": 60,
+            "2022": 61,
         }
 
         return self._make_simple_data(
@@ -683,6 +734,7 @@ class StaticGenerator(Generator):
             "2019": 7842,
             "2020": 6396,
             "2021": 7137,
+            "2022": 6426,
         }
 
         return self._make_simple_data(
@@ -718,6 +770,7 @@ class StaticGenerator(Generator):
             "2019": 0,
             "2020": 0,
             "2021": 0,
+            "2022": 0,
         }
 
         freelance = {
@@ -742,6 +795,7 @@ class StaticGenerator(Generator):
             "2019": 126,
             "2020": 116,
             "2021": 33,
+            "2022": 59,
         }
 
         acting = {
@@ -766,6 +820,7 @@ class StaticGenerator(Generator):
             "2019": 3,
             "2020": 0,
             "2021": 0,
+            "2022": 0,
         }
 
         chart_data = []
@@ -812,6 +867,7 @@ class StaticGenerator(Generator):
             "2019": 2245,
             "2020": 2403,
             "2021": 1651,
+            "2022": 2671,
         }
 
         return self._make_simple_data(
