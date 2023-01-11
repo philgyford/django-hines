@@ -9,7 +9,7 @@
 
 Code for https://www.gyford.com
 
-Pushing to `main` will run the commit through [this GitHub Action](https://github.com/philgyford/django-hines/actions/workflows/main.yml) to run tests, and [Coveralls](https://coveralls.io) to check coverage. If it passes, it will be deployed automatically to Heroku.
+Pushing to `main` will run the commit through [this GitHub Action](https://github.com/philgyford/django-hines/actions/workflows/main.yml) to run tests, and [Coveralls](https://coveralls.io) to check coverage. If it passes, it will be deployed automatically to the VPS.
 
 When changing the python version, it will need to be changed in:
 
@@ -20,7 +20,7 @@ When changing the python version, it will need to be changed in:
 - `pyproject.toml` (black's target-version)
 - `Dockerfile`
 
-For local development we use Docker. The live site is on Heroku.
+For local development we use Docker. The live site is on an Ubuntu 22 VPS.
 
 ## Local development setup
 
@@ -50,7 +50,13 @@ Then start up the web, assets and database containers:
 
     $ docker-compose up
 
-There are three containers, the webserver (`hines_web`), the front-end assets builder (`hines_assets`) and the postgres server (`hines_db`). All the repository's code is mirrored in the web and assets containers in the `/code/` directory.
+There are five containers:
+
+- `hines_web`: the webserver
+- `hines_db`: the postgres server
+- `hines_assets`: the front-end assets builder
+- `hines_redis`: the redis server (for django-q2 and optional caching)
+- `hines_djangoq`: the django-q2 server
 
 ### 4. Set up the database
 
@@ -78,13 +84,20 @@ Log into postgres and drop the current (empty) database:
     # grant all privileges on database hines to hines;
     # \q
 
-On Heroku, download a backup file of the live site's database and rename it to something simpler. We'll use "heroku_db_dump" below.
+On the VPS, create a backup file of the live site's database:
+
+    $ pg_dump dbname -U username -h localhost | gzip > ~/hines_dump.gz
+
+Then scp it to your local machine:
+
+    $ scp username@your.vps.domain.com:/home/username/hines_dump.gz .
 
 Put the file in the same directory as this README.
 
 Import the data into the database ():
 
-    $ docker exec -i hines_db pg_restore --verbose --clean --no-acl --no-owner -U hines -d hines < heroku_db_dump
+    $ gunzip hines_dump.gz
+    $ docker exec -i hines_db pg_restore --verbose --clean --no-acl --no-owner -U hines -d hines < hines_dump
 
 #### 5. Vist and set up the site
 
@@ -209,7 +222,111 @@ Update any installed Node packages that are outdated.
 
 ## VPS set-up
 
-### Scheduled Tasks with django-q2
+The complete set-up of an Ubuntu VPS is beyond the scope of this README. Requirements:
+
+- Local postgresql
+- Local redis (for caching and django-q2)
+- pipx, virtualenv and pyenv
+- gunicorn
+- nginx
+- systemd
+- cron
+
+### 1. Create a database
+
+    username$ sudo su - postgres
+    postgres$ createuser --interactive -P
+    postgres$ createdb --owner hines hines
+    postgres$ exit
+
+### 2. Create a directory for the code
+
+    username$ sudo mkdir -p /webapps/hines/
+    username$ sudo chown username:username /webapps/hines/
+    username$ mkdir /webapps/hines/logs/
+    username$ cd /webapps/hines/
+    username$ git clone git@github.com:philgyford/django-hines.git code
+
+### 3. ## Install python version, set up virtualenv, install python dependencies
+
+    username$ pyenv install --list  # All those available to install
+    username$ pyenv versions        # All those already installed and available
+    username$ pyenv install 3.10.8  # Whatever version we're using
+
+Make the virtual environment and install pip-tools:
+
+    username$ cd /webapps/hines/code
+    username$ virtualenv --prompt hines venv -p $(pyenv which python)
+    username$ source venv/bin/activate
+    (hines) username$ python -m pip install pip-tools
+
+Install dependencies from `requirements.txt`:
+
+    (hines) username$ pip-sync
+
+### 4. Create `.env` file
+
+    (hines) username$ cp .env.dist .env
+
+Then fill it out as required.
+
+### 5. Set up database
+
+Either do `./manage.py migrate` and `./manage.py createsuperuser` to create a new database, or import an existing database dumbp.
+
+### 6. Set up gunicorn with systemd
+
+Symlink the files in this repo to correct location for systemd:
+
+    username$ sudo ln -s /webapps/hines/code/conf/systemd_gunicorn.socket /etc/systemd/system/gunicorn_hines.socket
+    username$ sudo ln -s /webapps/hines/code/conf/systemd_gunicorn.service /etc/systemd/system/gunicorn_hines.service
+
+Start the socket:
+
+    username$ sudo systemctl start gunicorn_hines.socket
+    username$ sudo systemctl enable gunicorn_hines.socket
+
+Check the socket status:
+
+    username$ sudo systemctl status gunicorn_hines.socket
+
+Start the service:
+
+    username$ sudo systemctl start gunicorn_hines
+
+### 5. Set up nginx
+
+Symlink the file in this repo to correct location:
+
+    username$ sudo ln -s /webapps/hines/code/conf/nginx.conf /etc/nginx/sites-available/hines
+
+Enable this site:
+
+    username$ sudo ln -s /etc/nginx/sites-available/hines /etc/nginx/sites-enabled/hines
+
+Remove the default site if it's not already:
+
+    username$ sudo rm /etc/nginx/sites-enabled/default
+
+Check configuration before (re)starting nginx:
+
+    username$ sudo nginx -t
+
+Start nginx:
+
+     username$ sudo service nginx start
+
+### 6. Set up django-q2 with systemd
+
+Symlink the file in this repo to the correct location for systemd:
+
+    username$ sudo ln -s /webapps/hines/code/conf/systemd_djangoq.service /etc/systemd/system/djangoq_hines.service
+
+Start the service:
+
+    username$ sudo systemctl start djangoq_hines
+
+#### The tasks we have set up to use with django-q2
 
 **NOTE:** If a task times out, it won't appear in the lists of Successful _or_ Failed tasks.
 
@@ -228,69 +345,6 @@ Update any installed Node packages that are outdated.
 Currently times out
 
 - Daily: `hines.core.tasks.fetch_flickr_photosets`, kwargs `account="35034346050@N01"` (took 1m 31s on command line)
-
-## Heroku set-up
-
-For hosting on Heroku, we use these add-ons:
-
-- Heroku Postgres
-- Heroku Redis (for caching)
-- Heroku Scheduler
-- Papertrail (for viewing/filtering logs)
-- Sentry (for error reporting)
-
-### Heroku Config settings
-
-The site will require Config settings to be set-up, the same as the variables defined in `.env.dist`. In addition, this must be set or Heroku complains:
-
-    DJANGO_SETTINGS_MODULE      hines.config.settings
-
-#EE Website cache
-
-Assuming `HINES_CACHE` is `redis`, and `HINES_USE_REDIS_CACHE` is `True`, and one or
-other of the Redis URLs are set...
-
-To clear the Redis cache, use our `clear_cache` management command:
-
-    $ heroku run python ./manage.py clear_cache
-
-Note that by default Heroku's Redis is set up with a `maxmemory-policy` of `noeviction` which will generate OOM (Out Of Memory) errors when the memory limit is reached. This [can be changed](https://devcenter.heroku.com/articles/heroku-redis#maxmemory-policy):
-
-    $ heroku redis:info
-    === redis-fishery-12345 (HEROKU_REDIS_NAVY_TLS_URL, ...
-
-Then use that Redis name like:
-
-    $ heroku redis:maxmemory redis-fisher-12345 --policy allkeys-lru
-
-### Image cache
-
-To clear the cached thumbnail images created by django-imagekit (used by django-spectator):
-
-1. Delete all the images from the `CACHES` directories on S3.
-2. Clear the Redis cache, as above.
-
-To re-generate all the cached thumbnail images (which must be done because of the
-"Optimistic" cache file strategy):
-
-    $ heroku run python ./manage.py generateimages
-
-### Schedule tasks
-
-Here are the tasks that, at time of writing, are set to run using Heroku Scheduler:
-
-- Every 10 mins: `./manage.py publish_scheduled_posts`
-- Every 10 mins: `./manage.py fetch_lastfm_scrobbles --account=gyford --days=1`
-- Hourly: `./manage.py fetch_flickr_photos --account=35034346050@N01 --days=30`
-- Hourly: `./manage.py fetch_pinboard_bookmarks --account=philgyford --recent=20`
-- Hourly: `./manage.py fetch_twitter_tweets --account=philgyford --recent=200`
-- Hourly: `./manage.py pending_mentions`
-- Daily: `./manage.py fetch_flickr_photosets --account=35034346050@N01`
-- Daily: `./manage.py fetch_lastfm_scrobbles --account=gyford --days=14`
-- Daily: `./manage.py update_twitter_tweets --account=philgyford`
-- Daily: `./manage.py update_twitter_users --account=philgyford`
-- Daily: `./manage.py fetch_twitter_favorites --account=philgyford --recent=200`
-- Daily: `./manage.py fetch_twitter_files`
 
 ## Media files
 
@@ -352,3 +406,15 @@ Whether in local dev or Heroku, we need an S3 bucket to store Media files in (St
 10. Upload all the files to the bucket in the required location.
 
 11. Update the server's environment variables for `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_STORAGE_BUCKET_NAME`.
+
+### Image cache
+
+To clear the cached thumbnail images created by django-imagekit (used by django-spectator):
+
+1. Delete all the images from the `CACHES` directories on S3.
+2. Clear the Redis cache, as above.
+
+To re-generate all the cached thumbnail images (which must be done because of the
+"Optimistic" cache file strategy):
+
+    (hines) username$ ./manage.py generateimages
