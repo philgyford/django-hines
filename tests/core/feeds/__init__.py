@@ -1,5 +1,6 @@
 from xml.dom import minidom
 
+from django.core.cache import cache
 from django.test import TestCase
 
 
@@ -10,6 +11,11 @@ class FeedTestCase(TestCase):
     Borrowing some handy methods from
     https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
     """
+
+    def tearDown(self):
+        super().tearDown()
+        # Had problems with caches when running in development with a cache:
+        cache.clear()
 
     def get_feed_element(self, url):
         response = self.client.get(url)
