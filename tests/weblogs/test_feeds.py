@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 from django.contrib.sites.models import Site
 from django.utils.feedgenerator import rfc2822_date
+from freezegun import freeze_time
 
 from hines.core.utils import make_datetime
 from hines.users.factories import UserFactory
@@ -9,6 +10,7 @@ from hines.weblogs.factories import BlogFactory, DraftPostFactory, LivePostFacto
 from tests.core.feeds import FeedTestCase
 
 
+@freeze_time("2022-08-30 12:00:00", tz_offset=0)
 class BlogPostsFeedRSSTestCase(FeedTestCase):
     """
     Borrowing a lot from
