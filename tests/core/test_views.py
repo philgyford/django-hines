@@ -1,6 +1,7 @@
 from ditto.flickr.factories import PhotoFactory
 from ditto.pinboard.factories import BookmarkFactory
 from ditto.twitter.factories import TweetFactory
+from django.core.cache import cache
 from django.http.response import Http404
 from django.test import RequestFactory, TestCase, override_settings
 from spectator.core.factories import IndividualCreatorFactory
@@ -23,6 +24,11 @@ class ViewTestCase(TestCase):
         # We use '/fake-path/' for all tests because not testing URLs here,
         # and the views don't care what the URL is.
         self.request = self.factory.get("/fake-path/")
+
+    def tearDown(self):
+        super().tearDown()
+        # Had problems with caches when running in development with a cache:
+        cache.clear()
 
 
 class HomeViewTestCase(ViewTestCase):
