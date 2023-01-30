@@ -464,7 +464,7 @@ HINES_FIRST_DATE = "1989-06-02"
 HINES_COMMENTS_ALLOWED = os.getenv("HINES_COMMENTS_ALLOWED", default="True") == "True"
 
 # Both these are used by Bleach to whitelist the contents of comments.
-HINES_COMMENTS_ALLOWED_TAGS = [
+HINES_COMMENTS_ALLOWED_TAGS = {
     "a",
     "blockquote",
     "code",
@@ -474,7 +474,7 @@ HINES_COMMENTS_ALLOWED_TAGS = [
     "ol",
     "li",
     "pre",
-]
+}
 HINES_COMMENTS_ALLOWED_ATTRIBUTES = {
     "a": ["href", "title"],
 }
