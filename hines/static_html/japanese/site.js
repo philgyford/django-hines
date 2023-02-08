@@ -153,6 +153,12 @@ function hideEl(classname) {
         handleRestartConfirm
       );
       getElByClass("js-restart-link").addEventListener("click", handleRestart);
+
+      // Initial form
+      getElByClass("js-font-select").addEventListener(
+        "change",
+        handleFontSelectChange
+      );
     }
 
     /**
@@ -162,11 +168,31 @@ function hideEl(classname) {
      */
     function initFromStorage() {
       if (storageAvailable("localStorage")) {
+        var font = localStorage.getItem("jpFont");
+        if (font) {
+          setFontClass(font);
+          // Set the <select>:
+          getElByClass("js-font-select").value = font;
+        }
+
+        setsToTest = localStorage.getItem("jpSetsToTest");
+        if (setsToTest) {
+          if (setsToTest == "hiragana") {
+            getElByClass("js-sets-hiragana").checked = true;
+            getElByClass("js-sets-katakana").checked = false;
+          } else if (setsToTest == "katakana") {
+            getElByClass("js-sets-hiragana").checked = false;
+            getElByClass("js-sets-katakana").checked = true;
+          } else {
+            getElByClass("js-sets-hiragana").checked = true;
+            getElByClass("js-sets-katakana").checked = true;
+          }
+        }
+
         var attempts = parseInt(localStorage.getItem("jpTotalAttempts"), 10);
         if (attempts) {
           totalAttempts = attempts;
           correctCount = parseInt(localStorage.getItem("jpCorrectCount"), 10);
-          setsToTest = localStorage.getItem("jpSetsToTest");
           usedCharacters = JSON.parse(localStorage.getItem("jpUsedCharacters"));
           startTest();
         }
@@ -180,7 +206,6 @@ function hideEl(classname) {
       if (storageAvailable("localStorage")) {
         localStorage.setItem("jpTotalAttempts", totalAttempts);
         localStorage.setItem("jpCorrectCount", correctCount);
-        localStorage.setItem("jpSetsToTest", setsToTest);
         localStorage.setItem(
           "jpUsedCharacters",
           JSON.stringify(usedCharacters)
@@ -192,9 +217,9 @@ function hideEl(classname) {
       if (storageAvailable("localStorage")) {
         localStorage.removeItem("jpTotalAttempts");
         localStorage.removeItem("jpCorrectCount");
-        localStorage.removeItem("jpSetsToTest");
         localStorage.removeItem("jpCurrentLetter");
         localStorage.removeItem("jpUsedCharacters");
+        // Don't clear jpFont
       }
     }
 
@@ -221,7 +246,14 @@ function hideEl(classname) {
         showMessage("Please choose Hiranga and/or Katakana.");
       }
 
+      // Set the element that will contain the characters to use the correct font.
+      var font = getElByClass("js-font-select").value;
+      setFontClass(font);
+
       if (setsToTest !== null) {
+        if (storageAvailable("localStorage")) {
+          localStorage.setItem("jpSetsToTest", setsToTest);
+        }
         initScores();
         startTest();
       }
@@ -257,6 +289,55 @@ function hideEl(classname) {
     }
 
     /**
+     * When the user changes the <select> for choosing a font on the front page,
+     * update the sample characters.
+     */
+    function handleFontSelectChange() {
+      var font = getElByClass("js-font-select").value;
+      setFontClass(font);
+    }
+
+    /**
+     * Set the current font for Japanese characters.
+     * Sets all places characters are displayed to use the font.
+     * Stores the font in local storage so it's the same for next time.
+     *
+     * @param string font The name of the font, like 'noto-sans-jp'
+     */
+    function setFontClass(font) {
+      setElFontClass(getElByClass("js-font-sample"), font);
+      setElFontClass(getElByClass("js-letter"), font);
+      setElFontClass(getElByClass("js-answer-letter-jp"), font);
+
+      if (storageAvailable("localStorage")) {
+        localStorage.setItem("jpFont", font);
+      }
+    }
+
+    /**
+     * Sets an element to use a Japanese Google Font.
+     * e.g. if font is 'noto-sans-jp' then the class 'font-noto-sans-jp'
+     * will be added to el, and any other 'font-*' classes will be removed.
+     *
+     * @param object el The element whose class to set.
+     * @param string font The name of the font, like 'noto-sans-jp'
+     */
+    function setElFontClass(el, font) {
+      var newClassName = "font-" + font;
+
+      // Add the class we're changing to
+      el.classList.add(newClassName);
+
+      // Then remove all other classes that start with "font-"
+      for (let i = el.classList.length - 1; i >= 0; i--) {
+        const className = el.classList[i];
+        if (className.startsWith("font-") && className != newClassName) {
+          el.classList.remove(className);
+        }
+      }
+    }
+
+    /**
      * The user has entered a guess for the current character.
      */
     function handleGuess(event) {
@@ -281,6 +362,8 @@ function hideEl(classname) {
         getElByClass("js-guessform-input").focus();
 
         totalAttempts += 1;
+
+        storeProgressInStorage();
       } else {
         // 'empty' or 'correct'.
         hideEl("js-answer-wrong");

@@ -7,6 +7,10 @@
 	<link rel="stylesheet" href="style.css" media="all">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Mochiy+Pop+One&family=Noto+Sans+JP&family=Shippori+Mincho&family=Yuji+Syuku&family=Zen+Antique&display=swap" rel="stylesheet">
+
 	<link rel="apple-touch-icon" sizes="180x180" href="/japanese/icons/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/japanese/icons/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/japanese/icons/favicon-16x16.png">
@@ -50,19 +54,36 @@
 		<div class="js-front">
 			<div class="block block-front block-bordered">
 				<form action="" method="get" class="js-startform">
-					<p>Select what you want&nbsp;to&nbsp;practise:</p>
-					<p>
-						<input type="checkbox" name="sets" value="hiragana" id="input-hiragana" class="js-sets-hiragana" checked="checked">
-						<label for="input-hiragana">Hiragana</label>
-					</p>
-					<p>
-						<input type="checkbox" name="sets" value="katakana" id="input-katakana" class="js-sets-katakana" checked="checked">
-						<label for="input-katakana">Katakana</label>
-					</p>
-
-					<p>
-						<button type="submit" class="button">Start!</button>
-					</p>
+          <div class="form-row">
+            <p>Select what you want&nbsp;to&nbsp;practise:</p>
+            <p>
+              <input type="checkbox" name="sets" value="hiragana" id="input-hiragana" class="js-sets-hiragana" checked="checked">
+              <label for="input-hiragana">Hiragana</label>
+            </p>
+            <p>
+              <input type="checkbox" name="sets" value="katakana" id="input-katakana" class="js-sets-katakana" checked="checked">
+              <label for="input-katakana">Katakana</label>
+            </p>
+          </div>
+          <div class="form-row">
+            <p><label for="input-font">Select a font:</label></p>
+            <p class="form-font-sample text-large-xx js-font-sample font-noto-sans-jp">やあ</p>
+            <p>
+              <select name="font" id="input-font" class="js-font-select">
+                <option value="noto-sans-jp">Noto Sans JP</option>
+                <option value="kosugi-maru">Kosugi Maru</option>
+                <option value="shippori-mincho">Shippori Mincho</option>
+                <option value="yuji-syuku">Yuji Syuku</option>
+                <option value="zen-antique">Zen Antique</option>
+                <option value="mochiy-pop-one">Mochiy Pop One</option>
+              </select>
+            </p>
+          </div>
+          <div class="form-row">
+            <p>
+              <button type="submit" class="button">Start!</button>
+            </p>
+          </div>
 				</form>
 			</div>
 

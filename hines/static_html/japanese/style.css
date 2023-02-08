@@ -1,8 +1,9 @@
-
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
@@ -13,6 +14,7 @@ body {
   margin: 0.5em 1em 1em 1em;
   font-size: 16px;
 }
+
 .text-large {
   font-size: 2em;
   line-height: 1.4em;
@@ -73,6 +75,42 @@ a.button {
   color: #999;
   font-size: 1em;
 }
+
+select {
+  font-size: inherit;
+}
+
+.form-row {
+  margin: 0 0 3em 0;
+}
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-font-sample {
+  margin: -0.15em 0 0 0;
+  line-height: 1.3;
+}
+
+.font-noto-sans-jp {
+  font-family: "Noto Sans JP", sans-serif;
+}
+.font-kosugi-maru {
+  font-family: "Kosugi Maru", sans-serif;
+}
+.font-shippori-mincho {
+  font-family: "Shippori Mincho", serif;
+}
+.font-yuji-syuku {
+  font-family: "Yuji Syuku", serif;
+}
+.font-zen-antique {
+  font-family: "Zen Antique", serif;
+}
+.font-mochiy-pop-one {
+  font-family: "Mochiy Pop One", sans-serif;
+}
+
 p {
   margin: 0 0 0.5em 0;
   padding: 0;
@@ -87,7 +125,7 @@ h1 {
   line-height: 1.2em;
   font-size: 2em;
 }
-.subtitle        {
+.subtitle {
   margin: 0;
   padding: 0;
 }
@@ -107,22 +145,22 @@ h1 {
 }
 
 .progress-bar {
-    background-color: #eef2ea;
-    border: 0;
-    width: 100%;
-    height: 10px;
+  background-color: #eef2ea;
+  border: 0;
+  width: 100%;
+  height: 10px;
 }
 .progress-bar::-moz-progress-bar {
-    background: #bca;
+  background: #bca;
 }
 .progress-bar::-webkit-progress-bar {
-    background: #eef2ea;
+  background: #eef2ea;
 }
 .progress-bar::-webkit-progress-value {
-    background: #bca;
+  background: #bca;
 }
 .progress-bar::-ms-fill {
-    background: #bca;
+  background: #bca;
 }
 
 div.row {
@@ -158,15 +196,13 @@ div.right {
   margin-top: 2em;
 }
 
-
 .footer {
   margin: 0 20px 0 20px;
   padding: 3em 0 0 0;
-}  
+}
 .u-right {
   text-align: right;
 }
-
 
 .blocks {
   display: flex;
