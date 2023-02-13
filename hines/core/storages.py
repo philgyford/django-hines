@@ -27,7 +27,6 @@ class CustomS3Boto3Storage(S3Boto3Storage):
         # size. This file will be automatically deleted when closed by
         # boto3 or after exiting the `with` statement if the boto3 is fixed
         with SpooledTemporaryFile() as content_autoclose:
-
             # Write our original content into our copy that will be closed by boto3
             content_autoclose.write(content.read())
 

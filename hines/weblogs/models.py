@@ -411,7 +411,6 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
             html isn't modified.
         """
         if field == "body":
-
             # We start on section 2, i.e. the one after the first <hr>:
             section_number = 2
 

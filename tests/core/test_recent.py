@@ -11,7 +11,6 @@ from hines.weblogs.models import Post
 
 
 class RecentObjectsTestCase(TestCase):
-
     # INIT ERRORS
 
     def test_raises_error_with_no_kinds(self):

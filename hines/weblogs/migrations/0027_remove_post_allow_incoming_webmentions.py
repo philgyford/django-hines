@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("weblogs", "0026_post_allow_incoming_webmentions_and_more"),
     ]

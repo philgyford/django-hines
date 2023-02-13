@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("weblogs", "0027_remove_post_allow_incoming_webmentions"),
     ]

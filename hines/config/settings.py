@@ -341,7 +341,6 @@ HCAPTCHA_SECRET = os.getenv("HCAPTCHA_SECRET", default="")
 # django-q2#############################################################
 
 if os.getenv("DJANGOQ_REDIS_URL", ""):
-
     Q_CLUSTER = {
         "name": "hines",
         "label": "Django Q",

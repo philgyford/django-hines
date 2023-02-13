@@ -161,7 +161,6 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
 
 
 class AdminCommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
-
     feed_url = "/terry/feeds/admin-comments/rss/"
 
     def test_response_200(self):

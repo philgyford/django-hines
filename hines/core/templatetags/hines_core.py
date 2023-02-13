@@ -134,7 +134,6 @@ def display_time(dt=None, show="both", granularity=0, link_to_day=False):
         stamp = dt.strftime("%Y-%m")
 
     else:
-
         if show == "time":
             visible_str = dt.strftime(t_fmt)
         else:

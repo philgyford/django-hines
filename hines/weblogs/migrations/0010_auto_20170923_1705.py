@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("weblogs", "0009_blog_show_author_email_in_feed"),
     ]

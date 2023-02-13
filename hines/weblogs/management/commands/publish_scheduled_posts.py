@@ -6,11 +6,9 @@ from ...models import Post
 
 
 class Command(BaseCommand):
-
     help = "Publishes any Posts that are scheduled with a publish time in the past."
 
     def handle(self, *args, **options):
-
         posts = Post.objects.filter(status=Post.Status.SCHEDULED).filter(
             time_published__lte=datetime_now()
         )
@@ -18,7 +16,6 @@ class Command(BaseCommand):
         num_posts = posts.count()
 
         if num_posts > 0:
-
             for post in posts:
                 post.status = Post.Status.LIVE
                 post.time_published = datetime_now()

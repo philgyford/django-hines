@@ -10,7 +10,6 @@ from . import FeedTestCase
 
 
 class AdminWebmentionsFeedRSSTestCase(FeedTestCase):
-
     feed_url = "/terry/feeds/admin-webmentions/rss/"
     maxDiff = None
 

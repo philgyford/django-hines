@@ -511,7 +511,6 @@ class StaticGenerator(Generator):
         )
 
     def get_emails_received_per_year(self):
-
         barbicantalk = {
             "2009": 53,
             "2010": 57,
