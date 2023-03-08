@@ -52,6 +52,7 @@ jobs:
           flake8 hines
           black . --check
           coverage run --concurrency=multiprocessing ./manage.py test --parallel
+          coverage combine
         env:
           ALLOWED_HOSTS: "*"
           DATABASE_URL: "postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres"
