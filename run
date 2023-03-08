@@ -61,7 +61,8 @@ function tests {
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-  _dc ${TEST_ENV_ARGS} web coverage run manage.py test --parallel
+  _dc ${TEST_ENV_ARGS} web coverage run --concurrency=multiprocessing manage.py test --parallel
+  _dc ${TEST_ENV_ARGS} web coverage combine
   _dc ${TEST_ENV_ARGS} web coverage html
 }
 
