@@ -53,6 +53,7 @@ jobs:
           black . --check
           coverage run --concurrency=multiprocessing ./manage.py test --parallel
           coverage combine
+          coverage xml
         env:
           ALLOWED_HOSTS: "*"
           DATABASE_URL: "postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres"
