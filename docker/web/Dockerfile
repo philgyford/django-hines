@@ -7,7 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONFAULTHANDLER 1
 
 RUN apt-get update \
-    && apt-get install -y build-essential git libpq-dev --no-install-recommends \
+    && apt-get install -y build-essential git libpq-dev vim --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man \
     && apt-get clean
 
