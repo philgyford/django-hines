@@ -89,11 +89,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "hines.config.urls"
 
+default_template_loaders = [
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
+]
+cached_template_loaders = [
+    ("django.template.loaders.cached.Loader", default_template_loaders),
+]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": ["hines/templates"],
-        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -102,6 +109,9 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "hines.core.context_processors.core",
             ],
+            # Stops templates being cached when DEBUG=True
+            # https://nickjanetakis.com/blog/django-4-1-html-templates-are-cached-by-default-with-debug-true
+            "loaders": default_template_loaders if DEBUG else cached_template_loaders,
         },
     },
 ]
