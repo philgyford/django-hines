@@ -22,6 +22,7 @@ $fig-max-cols: floor($main-columns * 0.5);
 $fig-max-cols-percentage: percentage(math.div($fig-max-cols, $main-columns));
 
 .figure {
+  position: relative; // For .section-anchor positioning
   margin: 0 0 $vertical-space 0;
 
   img {
