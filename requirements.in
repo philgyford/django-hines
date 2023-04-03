@@ -16,7 +16,7 @@ django-storages
 django-wm
 gunicorn
 markdown2
-psycopg2
+psycopg[binary]
 pygments
 python-dotenv
 requests
