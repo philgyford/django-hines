@@ -156,7 +156,14 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 STATIC_ROOT = BASE_DIR / "hines" / "static_collected"
 
@@ -172,7 +179,7 @@ MEDIA_URL = "/media/"
 
 if os.getenv("HINES_USE_AWS_FOR_MEDIA", default="False") == "True":
     # Storing Media files on AWS.
-    DEFAULT_FILE_STORAGE = "hines.core.storages.CustomS3Boto3Storage"
+    STORAGES["default"]["BACKEND"] = "hines.core.storages.CustomS3Boto3Storage"
 
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
