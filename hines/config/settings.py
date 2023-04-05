@@ -385,6 +385,10 @@ if os.getenv("DJANGOQ_REDIS_URL", ""):
 
 IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
 
+# Need to specify this or in production it started using the local filesystem
+# instead of S3BotoStorage:
+IMAGEKIT_DEFAULT_FILE_STORAGE = STORAGES["default"]["BACKEND"]
+
 
 # django-spectator #####################################################
 
