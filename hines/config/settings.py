@@ -178,7 +178,7 @@ MEDIA_URL = "/media/"
 
 if os.getenv("HINES_USE_AWS_FOR_MEDIA", default="False") == "True":
     # Storing Media files on AWS.
-    STORAGES["default"] = "hines.core.storages.CustomS3Boto3Storage"
+    STORAGES["default"]["BACKEND"] = "hines.core.storages.CustomS3Boto3Storage"
 
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
