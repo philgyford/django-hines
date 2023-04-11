@@ -330,7 +330,7 @@ class AuthorRedirectView(RedirectView):
         id = self.request.GET.get("id", None)
         try:
             author = Creator.objects.get(id=id)
-        except Creator.DoesNotExist:
+        except (Creator.DoesNotExist, ValueError):
             return None
         else:
             return author.get_absolute_url()
@@ -347,7 +347,7 @@ class PublicationRedirectView(RedirectView):
         id = self.request.GET.get("id", None)
         try:
             publication = Publication.objects.get(id=id)
-        except Publication.DoesNotExist:
+        except (Publication.DoesNotExist, ValueError):
             return None
         else:
             return publication.get_absolute_url()

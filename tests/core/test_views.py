@@ -125,6 +125,12 @@ class AuthorRedirectViewTestCase(TestCase):
         response = views.AuthorRedirectView.as_view()(request)
         self.assertEqual(response.status_code, 410)
 
+    def test_non_numeric_id(self):
+        "It shouldn't 500 error if id isn't a number"
+        request = RequestFactory().get("/fake-path/", {"id": "abc"})
+        response = views.AuthorRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 410)
+
 
 class PublicationRedirectViewTestCase(TestCase):
     def test_redirects(self):
@@ -141,6 +147,12 @@ class PublicationRedirectViewTestCase(TestCase):
     def test_410(self):
         "It should return 410 if there's no matching Publication"
         request = RequestFactory().get("/fake-path/", {"id": "123"})
+        response = views.PublicationRedirectView.as_view()(request)
+        self.assertEqual(response.status_code, 410)
+
+    def test_non_numeric_id(self):
+        "It shouldn't 500 error if id isn't a number"
+        request = RequestFactory().get("/fake-path/", {"id": "abc"})
         response = views.PublicationRedirectView.as_view()(request)
         self.assertEqual(response.status_code, 410)
 
