@@ -72,7 +72,7 @@ class BlogDetailView(CacheMixin, BlogDetailParentView):
     template_name = "weblogs/blog_detail.html"
 
     def get_queryset(self):
-        return self.object.public_posts.all()
+        return self.object.public_posts.all().select_related("blog")
 
 
 class BlogArchiveView(CacheMixin, DetailView):
