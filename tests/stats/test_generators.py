@@ -295,7 +295,7 @@ class PinboardGeneratorTestCase(TestCase):
         result = PinboardGenerator(username="philgyford").get_bookmarks_per_year()
 
         self.assertIn("title", result)
-        self.assertEqual(result["title"], "Links posted")
+        self.assertEqual(result["title"], "Links")
         self.assertIn("description", result)
         self.assertEqual(
             result["description"],
@@ -538,6 +538,31 @@ class StaticGeneratorTestCase(TestCase):
         self.assertIn("headaches", result["data"][0]["columns"])
         self.assertIn("value", result["data"][0]["columns"]["headaches"])
 
+    def test_mastodon_posts_title_description(self):
+        result = StaticGenerator().get_mastodon_posts_per_year()
+
+        self.assertIn("title", result)
+        self.assertEqual(result["title"], "Mastodon posts")
+        self.assertIn("description", result)
+        self.assertEqual(
+            result["description"],
+            (
+                "Number of tweets posted by "
+                '<a href="https://mastodon.social/@philgyford">'
+                "@philgyford@mastodon.social</a> per year"
+            ),
+        )
+
+    def test_mastodon_posts_data(self):
+        "Not testing the details as it's all hard-coded."
+        result = StaticGenerator().get_mastodon_posts_per_year()
+
+        self.assertIn("data", result)
+        self.assertIn("label", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("posts", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["posts"])
+
     def test_steps_title_description(self):
         result = StaticGenerator().get_steps_per_year()
 
@@ -586,7 +611,7 @@ class TwitterGeneratorTestCase(TestCase):
         result = TwitterGenerator(screen_name="philgyford").get_tweets_per_year()
 
         self.assertIn("title", result)
-        self.assertEqual(result["title"], "Tweets posted")
+        self.assertEqual(result["title"], "Tweets")
         self.assertIn("description", result)
         self.assertEqual(
             result["description"],
