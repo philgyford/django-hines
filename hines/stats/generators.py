@@ -306,7 +306,7 @@ class PinboardGenerator(Generator):
     def get_bookmarks_per_year(self):
         data = {
             "data": [],
-            "title": "Links posted",
+            "title": "Links",
             "description": "Number of links posted on Delicious, then "
             '<a href="https://pinboard.in/u:{}">on Pinboard</a>, per year.'.format(
                 self.username
@@ -731,6 +731,28 @@ class StaticGenerator(Generator):
             ),
         )
 
+    def get_mastodon_posts_per_year(self):
+        totals = {
+            "2017": 21,
+            "2018": 265,
+            "2019": 291,
+            "2020": 18,
+            "2021": 4,
+            "2022": 196,
+        }
+
+        return self._make_simple_data(
+            totals,
+            columns_key="posts",
+            label="Mastodon posts",
+            chart_title="Mastodon posts",
+            chart_description=(
+                "Number of tweets posted by "
+                '<a href="https://mastodon.social/@philgyford">'
+                "@philgyford@mastodon.social</a> per year"
+            ),
+        )
+
     def get_steps_per_year(self):
         totals = {
             "2016": 6466,
@@ -895,7 +917,7 @@ class TwitterGenerator(Generator):
     def get_tweets_per_year(self):
         data = {
             "data": [],
-            "title": "Tweets posted",
+            "title": "Tweets",
             "description": "Number of tweets posted by "
             '<a href="https://twitter.com/{}/">@{}</a> per year.'.format(
                 self.screen_name, self.screen_name

@@ -33,6 +33,7 @@ class StatsView(CacheMixin, TemplateView):
                 "writing_per_year",
                 "pinboard_bookmarks_per_year",
                 "twitter_tweets_per_year",
+                "mastodon_posts_per_year",
                 "flickr_photos_per_year",
                 "github_contributions_per_year",
                 "diary_words_per_year",
@@ -148,6 +149,9 @@ class StatsView(CacheMixin, TemplateView):
 
     def get_data_headaches_per_year(self):
         return StaticGenerator().get_headaches_per_year()
+
+    def get_data_mastodon_posts_per_year(self):
+        return StaticGenerator().get_mastodon_posts_per_year()
 
     def get_data_steps_per_year(self):
         return StaticGenerator().get_steps_per_year()
