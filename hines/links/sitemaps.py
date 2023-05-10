@@ -7,7 +7,7 @@ class BookmarkSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return Bookmark.public_objects.all()
+        return Bookmark.public_objects.prefetch_related("account").all()
 
     def lastmod(self, obj):
         return obj.time_modified

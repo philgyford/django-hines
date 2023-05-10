@@ -8,7 +8,7 @@ class PostSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return Post.public_objects.all()
+        return Post.public_objects.prefetch_related("blog").all()
 
     def lastmod(self, obj):
         return obj.time_modified
