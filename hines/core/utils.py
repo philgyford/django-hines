@@ -1,9 +1,7 @@
-# coding: utf-8
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 
 import markdown2
-import pytz
 from django.contrib.sites.models import Site
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
@@ -18,12 +16,12 @@ def make_date(d):
 
 def make_datetime(dt):
     "For convenience."
-    return datetime.strptime(dt, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc)
+    return datetime.strptime(dt, "%Y-%m-%d %H:%M:%S").astimezone(timezone.utc)
 
 
 def datetime_now():
     "Just returns a datetime object for now in UTC, with UTC timezone."
-    return datetime.utcnow().replace(tzinfo=pytz.utc)
+    return datetime.utcnow().replace(tzinfo=timezone.utc)
 
 
 def markdownify(content, output_format="xhtml"):
