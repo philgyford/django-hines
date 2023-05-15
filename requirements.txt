@@ -4,10 +4,6 @@
 #
 #    pip-compile --generate-hashes
 #
-appnope==0.1.3 \
-    --hash=sha256:02bd91c4de869fbb1e1c50aafc4098827a7a54ab2f39d9dcba6c9547ed920e24 \
-    --hash=sha256:265a455292d0bd8a72453494fa24df5a11eb18373a60c7c0430889f22548605e
-    # via ipython
 asgiref==3.6.0 \
     --hash=sha256:71e68008da809b957b7ee4b43dbccff33d1b23519fb8344e33f049897077afac \
     --hash=sha256:9567dfe7bd8d3c8c892227827c41cce860b368104c3431da67a0c5a65a949506
@@ -227,6 +223,7 @@ django==4.2.1 \
     #   -r requirements.in
     #   dj-database-url
     #   django-appconf
+    #   django-autocomplete-light
     #   django-contrib-comments
     #   django-cors-headers
     #   django-debug-toolbar
@@ -241,8 +238,8 @@ django-appconf==1.0.5 \
     --hash=sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d \
     --hash=sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4
     # via django-imagekit
-django-autocomplete-light==3.9.4 \
-    --hash=sha256:0f6da75c1c7186698b867a467a8cdb359f0513fdd8e09288a0c2fb018ae3d94e
+django-autocomplete-light==3.9.7 \
+    --hash=sha256:a34f192ac438c4df056dbfd399550799ddc631c4661960134ded924648770373
     # via -r requirements.in
 django-contrib-comments==2.2.0 \
     --hash=sha256:2ca79060bbc8fc5b636981ef6e50f35ab83649af75fc1be47bf770636be3271c \
