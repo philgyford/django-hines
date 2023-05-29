@@ -35,3 +35,4 @@ ipython
 isort
 responses
 tblib  # For tracebacks when running tests in parallel
+unittest-parametrize

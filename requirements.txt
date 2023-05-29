@@ -799,6 +799,10 @@ typing-extensions==4.5.0 \
     # via
     #   dj-database-url
     #   psycopg
+unittest-parametrize==1.0.0 \
+    --hash=sha256:b0fc88d4e8f812f862e38235f00b397441f5cc1f322d013d9c652a175874cfa4 \
+    --hash=sha256:fdc3070c97065dc64d7882fd29eb456744bca726101b2984ed634cf23fce19de
+    # via -r requirements.in
 urllib3==1.26.15 \
     --hash=sha256:8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305 \
     --hash=sha256:aa751d169e23c7479ce47a0cb0da579e3ede798f994f5816a74e4f4500dcea42
