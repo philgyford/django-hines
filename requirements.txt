@@ -295,8 +295,8 @@ django-sortedm2m==3.1.1 \
     --hash=sha256:136f3d4e0820b351608a7141d88ac3ba7fafcd37a9b8361ad00ffe616a790be5 \
     --hash=sha256:c67ae0757e8e60ded15a9ba04d0862fe39fba3d5b865899c2472166ff0050f2c
     # via django-ditto
-django-spectator==13.1.0 \
-    --hash=sha256:3b892d7b33acd3abd80865dc379cb63213d4cd6406aad9d8dd7bc6676291c6b5
+django-spectator==13.2.0 \
+    --hash=sha256:684a976153c742885e38379bf6af1ec15a07f0a48e452c3a71b08dbb3d664845
     # via -r requirements.in
 django-storages==1.13.2 \
     --hash=sha256:31dc5a992520be571908c4c40d55d292660ece3a55b8141462b4e719aa38eab3 \
