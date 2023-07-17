@@ -804,9 +804,9 @@ typing-extensions==4.5.0 \
     # via
     #   dj-database-url
     #   psycopg
-unittest-parametrize==1.2.0 \
-    --hash=sha256:24d486b65799aecb521b7edb825f28c8342abe6a4f9b243306e9178aaf02d5b2 \
-    --hash=sha256:51f1c3a463083b5a3334d2332081bad028f1fc3260b2cadcd9151d94a6969140
+unittest-parametrize==1.3.0 \
+    --hash=sha256:6ed8712d106446acf60f3c369cfe3eeffa9e33e338df4073681052059b0d55bb \
+    --hash=sha256:c5cf14b258f6d10ce1f0b32fc354cf878857a1f1d1f50bc0861fbb6142e4b3fa
     # via -r requirements.in
 urllib3==1.26.15 \
     --hash=sha256:8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305 \
