@@ -365,9 +365,9 @@ jmespath==1.0.1 \
     # via
     #   boto3
     #   botocore
-markdown2==2.4.9 \
-    --hash=sha256:58e1789543f47cdd4197760b04771671411f07699f958ad40a4b56c55ba3e668 \
-    --hash=sha256:7a1742dade7ec29b90f5c1d5a820eb977eee597e314c428e6b0aa7929417cd1b
+markdown2==2.4.10 \
+    --hash=sha256:cdba126d90dc3aef6f4070ac342f974d63f415678959329cc7909f96cc235d72 \
+    --hash=sha256:e6105800483783831f5dc54f827aa5b44eb137ecef5a70293d8ecfbb4109ecc6
     # via -r requirements.in
 matplotlib-inline==0.1.6 \
     --hash=sha256:f1f41aab5328aa5aaea9b16d083b128102f8712542f819fe7e6a420ff581b311 \
