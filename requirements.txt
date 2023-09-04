@@ -272,9 +272,9 @@ django-picklefield==3.1 \
     --hash=sha256:c786cbeda78d6def2b43bff4840d19787809c8909f7ad683961703060398d356 \
     --hash=sha256:d77c504df7311e8ec14e8b779f10ca6fec74de6c7f8e2c136e1ef60cf955125d
     # via django-q2
-django-q2==1.5.4 \
-    --hash=sha256:29a9742284817bd907cf562d1dedba98baaa9666838dd26ca7d723dc3d638d49 \
-    --hash=sha256:e45b484a72ddec734009432db39db6eeb192acc183244604dcfeec03f19a3e00
+django-q2==1.5.5 \
+    --hash=sha256:22c3e3c6133563790944bf1e5fc81b4cf9e5ff62fe415ea479bfcb9608305327 \
+    --hash=sha256:536327e36f47b723270a6624fa6a2ffaba522a6a8eebc51ab6e258257a4c93d8
     # via -r requirements.in
 django-redis==5.3.0 \
     --hash=sha256:2d8660d39f586c41c9907d5395693c477434141690fd7eca9d32376af00b0aac \
