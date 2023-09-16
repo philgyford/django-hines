@@ -146,7 +146,7 @@ class HomeView(CacheMixin, TemplateView):
             {
                 'flickr_photos_list': <QuerySet of Photos>,
                 'weblog_posts_writing': <QuerySet of Posts>,
-                'weblog_posts_comments': <QuerySet of Posts>,
+                # 'weblog_posts_comments': <QuerySet of Posts>,
                 'pinboard_bookmark_list': <QuerySet of Bookmarks>,
             }
 
@@ -223,12 +223,12 @@ class HomeView(CacheMixin, TemplateView):
         'comments':
             {
                 'weblog_posts_writing': <QuerySet of Posts>,
-                'weblog_posts_comments': <QuerySet of Posts>,
+                # 'weblog_posts_comments': <QuerySet of Posts>,
             }
         """
         posts = {}
 
-        for blog in Blog.objects.all():
+        for blog in Blog.objects.filter(slug="writing"):
             quantity = self._get_section_quantity("weblog_posts", blog.slug)
             if quantity > 0:
                 qs = blog.public_posts.all()[:quantity]

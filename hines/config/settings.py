@@ -527,7 +527,7 @@ HINES_HOME_PAGE_DISPLAY = {
 # Which blogs, accounts, etc should be featured in the 'everything combined' RSS feed?
 HINES_EVERYTHING_FEED_KINDS = (
     ("blog_posts", "writing"),
-    ("blog_posts", "comments"),
+    # ("blog_posts", "comments"),
     ("flickr_photos", "35034346050@N01"),
     ("pinboard_bookmarks", "philgyford"),
 )
