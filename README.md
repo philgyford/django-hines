@@ -13,12 +13,11 @@ Pushing to `main` will run the commit through [this GitHub Action](https://githu
 
 When changing the python version, it will need to be changed in:
 
-- `.github/workflows/main.yml`
+- `.github/workflows/test.yml`
 - `.pre-commit-config.yaml`
 - `.python-version` (for pyenv)
-- `runtime.txt` (for Heroku)
 - `pyproject.toml` (black's target-version)
-- `Dockerfile`
+- `docker/web/Dockerfile`
 
 For local development we use Docker. The live site is on an Ubuntu 22 VPS.
 
