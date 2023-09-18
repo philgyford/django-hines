@@ -287,9 +287,9 @@ django-sortedm2m==3.1.1 \
 django-spectator==14.0.0 \
     --hash=sha256:83e07b7d1c8db2d36647ac009126430e1cf71a9f5b79e602d63a1a137b81205e
     # via -r requirements.in
-django-storages==1.13.2 \
-    --hash=sha256:31dc5a992520be571908c4c40d55d292660ece3a55b8141462b4e719aa38eab3 \
-    --hash=sha256:cbadd15c909ceb7247d4ffc503f12a9bec36999df8d0bef7c31e57177d512688
+django-storages==1.14 \
+    --hash=sha256:11280a883b13812df548f3cfe9c10280afc0d4727c8babdee369a75e71158f16 \
+    --hash=sha256:6c97e5faad829c923a1262206281742c484d76d43b332a196ddcc242b909c551
     # via -r requirements.in
 django-taggit==4.0.0 \
     --hash=sha256:4d52de9d37245a9b9f98c0ec71fdccf1d2283e38e8866d40a7ae6a3b6787a161 \
