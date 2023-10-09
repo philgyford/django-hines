@@ -55,13 +55,13 @@ bleach==6.0.0 \
     --hash=sha256:1a1a85c1595e07d8db14c5f09f09e6433502c51c595970edc090551f0db99414 \
     --hash=sha256:33c16e3353dbd13028ab4799a0f89a83f113405c766e9c122df8a06f5b85b3f4
     # via -r requirements.in
-boto3==1.28.53 \
-    --hash=sha256:b95b0cc39f08402029c3a2bb141e1775cfa46576ebe9f9916f79bde90e27f53f \
-    --hash=sha256:dc2da9aff7de359774030a243a09b74568664117e2afb77c6e4b90572ae3a6c3
+boto3==1.28.62 \
+    --hash=sha256:0dfa2fc96ccafce4feb23044d6cba8b25075ad428a0c450d369d099c6a1059d2 \
+    --hash=sha256:148eeba0f1867b3db5b3e5ae2997d75a94d03fad46171374a0819168c36f7ed0
     # via -r requirements.in
-botocore==1.31.53 \
-    --hash=sha256:905580ea724d74f11652bab63fcec6bf0d32f1cf8b2963f7388efc0ea406b69b \
-    --hash=sha256:aa647f94039d21de97c969df21ce8c5186b68234eb5c53148f0d8bbd708e375d
+botocore==1.31.62 \
+    --hash=sha256:272b78ac65256b6294cb9cdb0ac484d447ad3a85642e33cb6a3b1b8afee15a4c \
+    --hash=sha256:be792d806afc064694a2d0b9b25779f3ca0c1584b29a35ac32e67f0064ddb8b7
     # via
     #   boto3
     #   s3transfer
@@ -656,9 +656,9 @@ responses==0.23.3 \
     --hash=sha256:205029e1cb334c21cb4ec64fc7599be48b859a0fd381a42443cdd600bfe8b16a \
     --hash=sha256:e6fbcf5d82172fecc0aa1860fd91e58cbfd96cee5e96da5b63fa6eb3caa10dd3
     # via -r requirements.in
-s3transfer==0.6.1 \
-    --hash=sha256:3c0da2d074bf35d6870ef157158641178a4204a6e689e82546083e31e0311346 \
-    --hash=sha256:640bb492711f4c0c0905e1f62b6aaeb771881935ad27884852411f8e9cacbca9
+s3transfer==0.7.0 \
+    --hash=sha256:10d6923c6359175f264811ef4bf6161a3156ce8e350e705396a7557d6293c33a \
+    --hash=sha256:fd3889a66f5fe17299fe75b82eae6cf722554edca744ca5d5fe308b104883d2e
     # via boto3
 sentry-sdk==1.31.0 \
     --hash=sha256:64a7141005fb775b9db298a30de93e3b83e0ddd1232dc6f36eb38aebc1553291 \
