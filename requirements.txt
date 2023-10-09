@@ -343,9 +343,9 @@ idna==3.4 \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
     # via requests
-ipython==8.15.0 \
-    --hash=sha256:2baeb5be6949eeebf532150f81746f8333e2ccce02de1c7eedde3f23ed5e9f1e \
-    --hash=sha256:45a2c3a529296870a97b7de34eda4a31bee16bc7bf954e07d39abe49caf8f887
+ipython==8.16.1 \
+    --hash=sha256:0852469d4d579d9cd613c220af7bf0c9cc251813e12be647cb9d463939db9b1e \
+    --hash=sha256:ad52f58fca8f9f848e256c629eff888efc0528c12fe0f8ec14f33205f23ef938
     # via -r requirements.in
 isort==5.12.0 \
     --hash=sha256:8bef7dde241278824a6d83f44a544709b065191b95b6e50894bdc722fcba0504 \
