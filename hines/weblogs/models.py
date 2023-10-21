@@ -193,6 +193,7 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         blank=True,
         help_text="If this post is reposted from elsewhere, add the "
         "URL for the original and it will be used for the post's permalink",
+        max_length=500,
     )
 
     time_published = models.DateTimeField(null=True, blank=False, default=timezone.now)
