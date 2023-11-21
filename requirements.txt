@@ -655,9 +655,9 @@ requests-toolbelt==1.0.0 \
     --hash=sha256:7681a0a3d047012b5bdc0ee37d7f8f07ebe76ab08caeccfc3921ce23c88d5bc6 \
     --hash=sha256:cccfdd665f0a24fcf4726e690f65639d272bb0637b9b92dfd91a5568ccf6bd06
     # via flickrapi
-responses==0.24.0 \
-    --hash=sha256:060be153c270c06fa4d22c1ef8865fdef43902eb595204deeef736cddb62d353 \
-    --hash=sha256:3df82f7d4dcd3e5f61498181aadb4381f291da25c7506c47fe8cb68ce29203e7
+responses==0.24.1 \
+    --hash=sha256:a2b43f4c08bfb9c9bd242568328c65a34b318741d3fab884ac843c5ceeb543f9 \
+    --hash=sha256:b127c6ca3f8df0eb9cc82fd93109a3007a86acb24871834c47b77765152ecf8c
     # via -r requirements.in
 s3transfer==0.7.0 \
     --hash=sha256:10d6923c6359175f264811ef4bf6161a3156ce8e350e705396a7557d6293c33a \
