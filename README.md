@@ -2,9 +2,8 @@
 
 [![Build Status](https://github.com/philgyford/django-hines/workflows/CI/badge.svg)](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/philgyford/django-hines/branch/main/graph/badge.svg?token=I2JRGN0UPP)](https://codecov.io/gh/philgyford/django-hines)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 Code for https://www.gyford.com
@@ -16,7 +15,7 @@ When changing the python version, it will need to be changed in:
 - `.github/workflows/test.yml`
 - `.pre-commit-config.yaml`
 - `.python-version` (for pyenv)
-- `pyproject.toml` (black's target-version)
+- `pyproject.toml` (ruff's target-version)
 - `docker/web/Dockerfile`
 
 For local development we use Docker. The live site is on an Ubuntu 22 VPS.

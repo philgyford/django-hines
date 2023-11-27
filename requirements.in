@@ -25,14 +25,12 @@ setproctitle
 smartypants
 
 # Dev
-black
 coverage[toml]
 django-debug-toolbar
 factory-boy
-flake8
 freezegun
 ipython
-isort
 responses
+ruff
 tblib  # For tracebacks when running tests in parallel
 unittest-parametrize
