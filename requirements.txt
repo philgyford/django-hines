@@ -337,9 +337,9 @@ idna==3.4 \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
     # via requests
-ipython==8.17.2 \
-    --hash=sha256:126bb57e1895594bb0d91ea3090bbd39384f6fe87c3d57fd558d0670f50339bb \
-    --hash=sha256:1e4d1d666a023e3c93585ba0d8e962867f7a111af322efff6b9c58062b3e5444
+ipython==8.18.0 \
+    --hash=sha256:4feb61210160f75e229ce932dbf8b719bff37af123c0b985fd038b14233daa16 \
+    --hash=sha256:d538a7a98ad9b7e018926447a5f35856113a85d08fd68a165d7871ab5175f6e0
     # via -r requirements.in
 isort==5.12.0 \
     --hash=sha256:8bef7dde241278824a6d83f44a544709b065191b95b6e50894bdc722fcba0504 \
@@ -484,9 +484,7 @@ prompt-toolkit==3.0.38 \
 psycopg[binary]==3.1.13 \
     --hash=sha256:1253010894cfb64e2da4556d4eff5f05e45cafee641f64e02453be849c8f7687 \
     --hash=sha256:e6d047ce16950651d6e26c7c19ca57cc42e1d4841b58729f691244baeee46e30
-    # via
-    #   -r requirements.in
-    #   psycopg
+    # via -r requirements.in
 psycopg-binary==3.1.13 \
     --hash=sha256:00e7c7bfa1d4bc9a31ed5da59bc402f29d14cc3156c08a5549998ef74fc54128 \
     --hash=sha256:0ab0b9118f5ba650d6aefd0d4dcbfbd36dfb415f0022a5f413d69b934a31a8a8 \
