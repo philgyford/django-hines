@@ -130,8 +130,8 @@ class CommentsFeedRSSTestCase(CommentsFeedRSSParentTestCase):
                     "<p><strong>This</strong> is my comment.</p>"
                     "<p>This is another paragraph.</p>\n"
                 ),
-                "link": f"http://example.com/terry/my-blog/2020/01/01/test-post/#c{self.comment.pk}",  # noqa: E501
-                "guid": f"http://example.com/terry/my-blog/2020/01/01/test-post/#c{self.comment.pk}",  # noqa: E501
+                "link": f"http://example.com/terry/my-blog/2020/01/01/test-post/#c{self.comment.pk}",
+                "guid": f"http://example.com/terry/my-blog/2020/01/01/test-post/#c{self.comment.pk}",
                 "pubDate": rfc2822_date(self.comment.submit_date),
                 "dc:creator": "Bob Ferris",
                 "content:encoded": (

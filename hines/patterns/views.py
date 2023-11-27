@@ -27,9 +27,10 @@ class PatternsView(TemplateView):
         if slug is None:
             return [self.template_name]
         elif slug in self.valid_slugs:
-            return ["patterns/{}.html".format(slug)]
+            return [f"patterns/{slug}.html"]
         else:
-            raise Http404(("'{}' is not a valid slug.").format(slug))
+            msg = f"'{slug}' is not a valid slug."
+            raise Http404(msg)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

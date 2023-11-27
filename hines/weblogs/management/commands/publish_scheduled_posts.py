@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from hines.core.utils import datetime_now
-
-from ...models import Post
+from hines.weblogs.models import Post
 
 
 class Command(BaseCommand):
@@ -23,6 +22,4 @@ class Command(BaseCommand):
 
             noun = "Post" if num_posts == 1 else "Posts"
 
-            self.stdout.write(
-                self.style.SUCCESS("{} {} published".format(num_posts, noun))
-            )
+            self.stdout.write(self.style.SUCCESS(f"{num_posts} {noun} published"))

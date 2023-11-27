@@ -34,10 +34,11 @@ COMMENTS_CLOSE_AFTER_DAYS = getattr(settings, "HINES_COMMENTS_CLOSE_AFTER_DAYS",
 if COMMENTS_CLOSE_AFTER_DAYS is not None and not isinstance(
     COMMENTS_CLOSE_AFTER_DAYS, int
 ):
-    raise ImproperlyConfigured(
+    msg = (
         "The HINES_COMMENTS_CLOSE_AFTER_DAYS setting should be an integer, "
         f"but it's 'f{COMMENTS_CLOSE_AFTER_DAYS}"
     )
+    raise ImproperlyConfigured(msg)
 
 COMMENTS_ADMIN_FEED_SLUG = getattr(
     settings,

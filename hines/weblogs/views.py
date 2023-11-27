@@ -69,6 +69,7 @@ class BlogDetailParentView(SingleObjectMixin, PaginatedListView):
 
 class BlogDetailView(CacheMixin, BlogDetailParentView):
     "Front page of a Blog, listing its recent Posts."
+
     template_name = "weblogs/blog_detail.html"
 
     def get_queryset(self):
@@ -77,6 +78,7 @@ class BlogDetailView(CacheMixin, BlogDetailParentView):
 
 class BlogArchiveView(CacheMixin, DetailView):
     "List of all the months in which there are posts."
+
     template_name = "weblogs/blog_archive.html"
     model = Blog
     slug_url_kwarg = "blog_slug"
@@ -92,6 +94,7 @@ class BlogArchiveView(CacheMixin, DetailView):
 
 class BlogTagDetailView(CacheMixin, BlogDetailParentView):
     "Listing Posts with a particular Tag (by 'tag_slug') in a Blog."
+
     template_name = "weblogs/blog_tag_detail.html"
 
     def get_context_data(self, **kwargs):
@@ -107,6 +110,7 @@ class BlogTagDetailView(CacheMixin, BlogDetailParentView):
 
 class BlogTagListView(CacheMixin, DetailView):
     "Listing the most popular Tags in a Blog."
+
     model = Blog
     slug_url_kwarg = "blog_slug"
     template_name = "weblogs/blog_tag_list.html"
@@ -188,7 +192,10 @@ class PostDetailView(TemplateSetMixin, DateDetailView):
         blog_slug = self.kwargs.get("blog_slug")
         post_slug = self.kwargs.get(self.slug_url_kwarg)
 
-        if not self.get_allow_future() and date > datetime.date.today():
+        if (
+            not self.get_allow_future()
+            and date > datetime.now(tz=datetime.timezone.utc).date()
+        ):
             raise Http404(
                 _(
                     "Future %(verbose_name_plural)s not available because "
@@ -214,14 +221,13 @@ class PostDetailView(TemplateSetMixin, DateDetailView):
                 **{blog_slug_field: blog_slug, post_slug_field: post_slug}
             )
         else:
-            raise AttributeError(
-                "PostDetailView must be called with " "a blog slug and a post slug."
-            )
+            msg = "PostDetailView must be called with " "a blog slug and a post slug."
+            raise AttributeError(msg)
         try:
             # Get the single item from the filtered queryset
             obj = queryset.get()
-        except queryset.model.DoesNotExist:
-            raise Http404(_("No Posts found matching the query"))
+        except queryset.model.DoesNotExist as err:
+            raise Http404(_("No Posts found matching the query")) from err
         return obj
 
     def get_template_set_date(self):
@@ -259,7 +265,7 @@ class PostRedirectView(RedirectView):
         )
 
 
-class PostDatedArchiveMixin(object):
+class PostDatedArchiveMixin:
     """
     A mixin for the month/year archive views that restricts results to a
     Blog defined by the `blog_slug` URL kwarg.
@@ -321,7 +327,8 @@ class PostTagAutocomplete(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
         if not self.request.user.is_authenticated:
-            raise Http404("Not found")
+            msg = "Not found"
+            raise Http404(msg)
 
         qs = Tag.objects.all()
 
@@ -594,11 +601,8 @@ class RandomPhilView(CacheMixin, TemplateView):
 
         # Was a string containing a list of indexes submitted?
         idx_list = self.request.POST.get("idx", "")
-        if idx_list == "":
-            used_pics = []
-        else:
-            # Will be like ['3', '15', '0']:
-            used_pics = idx_list.split("+")
+        # If so, will be like ['3', '15', '0']:
+        used_pics = [] if idx_list == "" else idx_list.split("+")
 
         if len(used_pics) > 0:
             # This isn't the first time here, so find a new photo.
@@ -639,9 +643,14 @@ def _date_from_string(
     format = year_format + delim + month_format + delim + day_format
     datestr = str(year) + delim + str(month) + delim + str(day)
     try:
-        return datetime.datetime.strptime(datestr, format).date()
-    except ValueError:
-        raise Http404(
-            _("Invalid date string '%(datestr)s' given format '%(format)s'")
-            % {"datestr": datestr, "format": format}
+        return (
+            datetime.datetime.strptime(datestr, format)
+            .replace(tzinfo=datetime.timezone.utc)
+            .date()
         )
+    except ValueError as err:
+        msg = _("Invalid date string '%(datestr)s' given format '%(format)s'") % {
+            "datestr": datestr,
+            "format": format,
+        }
+        raise Http404(msg) from err

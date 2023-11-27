@@ -1,3 +1,4 @@
+import contextlib
 import re
 from xml.sax.saxutils import XMLGenerator
 
@@ -8,8 +9,8 @@ from django.templatetags.static import static
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.xmlutils import SimplerXMLGenerator, UnserializableContentError
 
-from .. import app_settings
-from ..utils import get_site_url
+from hines.core import app_settings
+from hines.core.utils import get_site_url
 
 
 class HinesSimplerXMLGenerator(SimplerXMLGenerator):
@@ -19,7 +20,7 @@ class HinesSimplerXMLGenerator(SimplerXMLGenerator):
     From https://stackoverflow.com/a/68530135/250962
     """
 
-    def addQuickElement(self, name, contents=None, attrs=None):
+    def addQuickElement(self, name, contents=None, attrs=None):  # noqa: N802
         "Convenience method for adding an element with no children"
         if attrs is None:
             attrs = {}
@@ -35,9 +36,8 @@ class HinesSimplerXMLGenerator(SimplerXMLGenerator):
         if content and re.search(r"[\x00-\x08\x0B-\x0C\x0E-\x1F]", content):
             # Fail loudly when content has control chars (unsupported in XML 1.0)
             # See https://www.w3.org/International/questions/qa-controls
-            raise UnserializableContentError(
-                "Control characters are not supported in XML 1.0"
-            )
+            msg = "Control characters are not supported in XML 1.0"
+            raise UnserializableContentError(msg)
         XMLGenerator.ignorableWhitespace(self, content)
 
 
@@ -107,7 +107,7 @@ class ExtendedRSSFeed(Rss201rev2Feed):
     def channel_image_url(self):
         "URL of the image to use for the feed."
         url = static(app_settings.SITE_ICON)
-        return "{}{}".format(get_site_url(), url)
+        return f"{get_site_url()}{url}"
 
     def channel_image_title(self):
         "Might be used for image alt tag."
@@ -181,8 +181,6 @@ class ExtendedFeed(Feed):
         content_tmp = None
 
         if self.content_template is not None:
-            try:
+            with contextlib.suppress(TemplateDoesNotExist):
                 content_tmp = loader.get_template(self.content_template)
-            except TemplateDoesNotExist:
-                pass
         return content_tmp

@@ -9,7 +9,7 @@ from hines.core.utils import get_site_url
 def core(request):
     current_site = get_current_site(request)
 
-    show_grid = True if request.GET.get("grid", None) == "1" else False
+    show_grid = bool(request.GET.get("grid", None) == "1")
 
     return {
         "site_name": current_site.name,

@@ -3,7 +3,7 @@ from django import forms
 
 class ManualSubmitWebmentionForm(forms.Form):
     """
-    The same as https://github.com/beatonma/django-wm/blob/master/mentions/forms/manual_submit_webmention.py  # noqa: E501
+    The same as https://github.com/beatonma/django-wm/blob/master/mentions/forms/manual_submit_webmention.py
     but with the target being hidden
     """
 

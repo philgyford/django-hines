@@ -129,7 +129,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
             },
         )
 
-    @patch("hines.weblogs.models.Post.comments_allowed", False)
+    @patch("hines.weblogs.models.Post.comments_allowed", False)  # noqa: FBT003
     def test_items(self):
         """
         Check the <item> elements
@@ -179,7 +179,7 @@ class BlogPostsFeedRSSTestCase(FeedTestCase):
                 item.getElementsByTagName("guid")[0].attributes.get("isPermaLink")
             )
 
-    @patch("hines.weblogs.models.Post.comments_allowed", True)
+    @patch("hines.weblogs.models.Post.comments_allowed", True)  # noqa: FBT003
     def test_items_comments_allowed(self):
         "If comments are enabled on a Post, there should be a link in content:encoded"
 

@@ -46,7 +46,7 @@ class GetItemTestCase(TestCase):
         ages = {"bob": 37}
         self.assertEqual(get_item(ages, "bob"), 37)
 
-    def test_returns_None(self):
+    def test_returns_none(self):
         ages = {"bob": 37}
         self.assertIsNone(get_item(ages, "amy"))
 

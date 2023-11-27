@@ -85,7 +85,7 @@ def server_error(request, template_name="errors/500.html"):
     return HttpResponseServerError(t.render(context, request))
 
 
-class CacheMixin(object):
+class CacheMixin:
     """
     Add this mixin to a view to cache it.
 
@@ -114,7 +114,7 @@ def admin_clear_cache(request):
     Clear all of the caches.
 
     Copied from django-extensions
-    https://github.com/django-extensions/django-extensions/blob/main/django_extensions/management/commands/clear_cache.py  # noqa: E501
+    https://github.com/django-extensions/django-extensions/blob/main/django_extensions/management/commands/clear_cache.py
     """
     if request.user.is_superuser:
         cache = getattr(settings, "CACHES", {DEFAULT_CACHE_ALIAS: {}}).keys()
@@ -210,9 +210,8 @@ class HomeView(CacheMixin, TemplateView):
 
         if section_name in display:
             section_quantity = display[section_name]
-            if section_name == "weblog_posts":
-                if subsection_name in section_quantity:
-                    section_quantity = section_quantity[subsection_name]
+            if section_name == "weblog_posts" and subsection_name in section_quantity:
+                section_quantity = section_quantity[subsection_name]
 
         return section_quantity
 
@@ -232,7 +231,7 @@ class HomeView(CacheMixin, TemplateView):
             quantity = self._get_section_quantity("weblog_posts", blog.slug)
             if quantity > 0:
                 qs = blog.public_posts.all()[:quantity]
-            key = "weblog_posts_{}".format(blog.slug)
+            key = f"weblog_posts_{blog.slug}"
             posts[key] = qs
 
         return posts
@@ -300,11 +299,10 @@ class WritingResourcesRedirectView(RedirectView):
         path = kwargs.get("path", None)
 
         if path is None:
-            raise Http404("No path supplied.")
+            msg = "No path supplied."
+            raise Http404(msg)
         else:
-            return "{}weblogs/{}/{}/{}/{}".format(
-                settings.MEDIA_URL, year, month, day, path
-            )
+            return f"{settings.MEDIA_URL}weblogs/{year}/{month}/{day}/{path}"
 
 
 class ArchiveRedirectView(RedirectView):
@@ -316,7 +314,7 @@ class ArchiveRedirectView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         path = kwargs.get("path", "")
-        return "http://archive.gyford.com/{}".format(path)
+        return f"http://archive.gyford.com/{path}"
 
 
 class AuthorRedirectView(RedirectView):
@@ -359,7 +357,7 @@ class MTSearchRedirectView(RedirectView):
     404 everything else.
 
     e.g. a tag on Mary's site (blog 14):
-    FROM: www.gyford.com/cgi-bin/mt/mt-search.cgi?IncludeBlogs=14&tag=test%20this%20tag%28brackets%29&limit=1000  # noqa: E501
+    FROM: www.gyford.com/cgi-bin/mt/mt-search.cgi?IncludeBlogs=14&tag=test%20this%20tag%28brackets%29&limit=1000
     TO: https://www.sparklytrainers.com/blog/tag/test-this-tag-brackets/
 
     e.g. a search on both Mary's blogs (blogs 14 and 18):
@@ -369,7 +367,7 @@ class MTSearchRedirectView(RedirectView):
     e.g. a search on Overmorgen (blog 10):
     FROM: /cgi-bin/mt/mt-search.cgi?search=test+search&IncludeBlogs=10&limit=1000
     TO: https://www.google.com/search?as_sitesearch=www.overmorgen.com&q=test+search
-    """
+    """  # noqa: E501
 
     permanent = True
 
@@ -379,15 +377,18 @@ class MTSearchRedirectView(RedirectView):
         search_str = self.request.GET.get("search", None)
 
         if blog_ids is None:
-            raise Http404("No Blog IDs supplied.")
+            msg = "No Blog IDs supplied."
+            raise Http404(msg)
 
         if tag_str is None and search_str is None:
-            raise Http404("No tag or search string supplied.")
+            msg = "No tag or search string supplied."
+            raise Http404(msg)
 
         blog_ids = blog_ids.split(",")
 
         if len(blog_ids) == 0:
-            raise Http404("No Blog IDs supplied.")
+            msg = "No Blog IDs supplied."
+            raise Http404(msg)
 
         if "14" in blog_ids or "18" in blog_ids:
             # One of Mary's blogs.
@@ -395,9 +396,9 @@ class MTSearchRedirectView(RedirectView):
             search_str = self._get_wp_search_str(search_str)
 
             if tag_str:
-                url = "https://www.sparklytrainers.com/blog/tag/{}/".format(tag_str)
+                url = f"https://www.sparklytrainers.com/blog/tag/{tag_str}/"
             else:
-                url = "https://www.sparklytrainers.com/?s={}".format(search_str)
+                url = f"https://www.sparklytrainers.com/?s={search_str}"
 
         elif "10" in blog_ids:
             # Overmorgen.
@@ -407,7 +408,8 @@ class MTSearchRedirectView(RedirectView):
             ).format(search_str)
 
         else:
-            raise Http404("Not the right combination of Blog ID, tag or search.")
+            msg = "Not the right combination of Blog ID, tag or search."
+            raise Http404(msg)
 
         return url
 
@@ -551,13 +553,12 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         object_lists.update(self._get_twitter_favorites(date))
 
-        if not allow_empty:
-            if len(object_lists) == 0:
-                raise Http404(_("Nothing available"))
+        if not allow_empty and len(object_lists) == 0:
+            raise Http404(_("Nothing available"))
 
         # Count the total number of ALL items are in the QuerySets:
         object_count = 0
-        for key, object_list in object_lists.items():
+        for _key, object_list in object_lists.items():
             object_count += len(object_list)
 
         return (
@@ -585,9 +586,11 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
         If not set, return False.
         """
         if app_settings.FIRST_DATE:
-            return datetime.datetime.strptime(
-                app_settings.FIRST_DATE, "%Y-%m-%d"
-            ).date()
+            return (
+                datetime.datetime.strptime(app_settings.FIRST_DATE, "%Y-%m-%d")
+                .replace(tzinfo=datetime.timezone.utc)
+                .date()
+            )
         else:
             return False
 
@@ -617,7 +620,7 @@ class DayArchiveView(YearMixin, MonthMixin, DayMixin, TemplateView):
 
         for blog in Blog.objects.all():
             qs = blog.public_posts.filter(time_published__date=date)
-            key = "weblog_posts_{}".format(blog.slug)
+            key = f"weblog_posts_{blog.slug}"
             posts[key] = qs
 
         return posts
@@ -691,21 +694,18 @@ class PaginatedListView(ListView):
         page = self.kwargs.get(page_kwarg) or self.request.GET.get(page_kwarg) or 1
         try:
             page_number = int(page)
-        except ValueError:
+        except ValueError as err:
             if page == "last":
                 page_number = paginator.num_pages
             else:
-                raise Http404(
-                    _("Page is not 'last', nor can it be converted to an int.")
-                )
+                msg = _("Page is not 'last', nor can it be converted to an int.")
+                raise Http404(msg) from err
         try:
             page = paginator.page(page_number, softlimit=self.softlimit)
             return (paginator, page, page.object_list, page.has_other_pages())
-        except InvalidPage as e:
-            raise Http404(
-                _("Invalid page (%(page_number)s): %(message)s")
-                % {"page_number": page_number, "message": str(e)}
-            )
+        except InvalidPage as err:
+            msg = _(f"Invalid page ({page_number}): {str(err)}")
+            raise Http404(msg) from err
 
 
 class PhotosHomeView(PaginatedListView):
@@ -729,7 +729,7 @@ class PhotosHomeView(PaginatedListView):
         return context
 
 
-class TemplateSetMixin(object):
+class TemplateSetMixin:
     """
     Lets us use a different template for a page depending on the date of its
     object (or something else).
@@ -793,22 +793,25 @@ class TemplateSetMixin(object):
                 elif isinstance(d, datetime.datetme):
                     return d.date()
                 else:
-                    raise ImproperlyConfigured(
+                    msg = (
                         "TemplateSetMixin can't make a date object from the "
                         "self.template_set_date_attr attribute on self.object."
                     )
+                    raise ImproperlyConfigured(msg)
             else:
-                raise ImproperlyConfigured(
+                msg = (
                     "TemplateSetMixin can't find a {} attribute on self.object. "
                     "Either change self.template_set_date_attr or use a different "
                     "get_template_set_date() method."
                 )
+                raise ImproperlyConfigured(msg)
         else:
-            raise ImproperlyConfigured(
+            msg = (
                 "TemplateSetMixin.get_template_set_date() assumes there is a "
                 "self.object. Provide one or use a different "
                 "get_template_set_date() method."
             )
+            raise ImproperlyConfigured(msg)
 
     def get_template_names(self):
         """
@@ -821,12 +824,11 @@ class TemplateSetMixin(object):
         templates = []
 
         if self.template_set is not None:
-            templates.append("sets/{}/{}".format(self.template_set, self.template_name))
+            templates.append(f"sets/{self.template_set}/{self.template_name}")
 
         if self.template_name is None:
-            raise ImproperlyConfigured(
-                "TemplateSetMixin requires a definition of 'template_name'"
-            )
+            msg = "TemplateSetMixin requires a definition of 'template_name'"
+            raise ImproperlyConfigured(msg)
         else:
             templates.append(self.template_name)
 
@@ -890,7 +892,7 @@ def timezone_today():
     if settings.USE_TZ:
         return timezone.localtime(timezone.now()).date()
     else:
-        return datetime.date.today()
+        return datetime.now(tz=timezone.utc).date()
 
 
 def _date_from_string(
@@ -900,14 +902,12 @@ def _date_from_string(
     Helper: get a datetime.date object given a format string and a year,
     month, and day (only year is mandatory). Raise a 404 for an invalid date.
 
-    Copied from https://github.com/django/django/blob/2.0/django/views/generic/dates.py#L609  # noqa: E501
+    Copied from https://github.com/django/django/blob/main/django/views/generic/dates.py#L679
     """
     format = year_format + delim + month_format + delim + day_format
     datestr = str(year) + delim + str(month) + delim + str(day)
     try:
-        return datetime.datetime.strptime(datestr, format).date()
-    except ValueError:
-        raise Http404(
-            _("Invalid date string '%(datestr)s' given format '%(format)s'")
-            % {"datestr": datestr, "format": format}
-        )
+        return datetime.datetime.strptime(datestr, format).date()  # noqa: DTZ007
+    except ValueError as err:
+        msg = _(f"Invalid date string '{datestr}' given format '{format}'")
+        raise Http404(msg) from err

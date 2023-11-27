@@ -1,6 +1,6 @@
 from django import template
 
-from ..models import Block
+from hines.blocks.models import Block
 
 register = template.Library()
 

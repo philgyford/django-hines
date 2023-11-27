@@ -9,7 +9,7 @@ from django.utils import timezone
 from hines.weblogs.models import Blog, Post
 
 
-class RecentObjects(object):
+class RecentObjects:
     """
     For getting a list of the most recently posted objects across various apps.
 
@@ -75,18 +75,18 @@ class RecentObjects(object):
                 self.kinds.append(kind)
             else:
                 if len(kind) == 2:
-                    invalid_kinds.append("{}: {}".format(kind[0], kind[1]))
+                    invalid_kinds.append(f"{kind[0]}: {kind[1]}")
                 else:
                     invalid_kinds.append(str(kind))
 
         if len(invalid_kinds) > 0:
-            raise ValueError(
-                "Invalid kind(s) supplied to __init__(): {}".format(
-                    ", ".join(invalid_kinds)
-                )
+            msg = "Invalid kind(s) supplied to __init__(): {}".format(
+                ", ".join(invalid_kinds)
             )
+            raise ValueError(msg)
         elif len(self.kinds) == 0:
-            raise ValueError("No valid kinds supplied to __init__().")
+            msg = "No valid kinds supplied to __init__()."
+            raise ValueError(msg)
 
     def validate_kind(self, kind):
         """

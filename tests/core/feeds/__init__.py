@@ -40,21 +40,22 @@ class FeedTestCase(TestCase):
 
         return chan
 
-    def assertChildNodes(self, elem, expected):
+    def assertChildNodes(self, elem, expected):  # noqa: N802
         actual = set(n.nodeName for n in elem.childNodes)
         expected = set(expected)
         self.assertEqual(actual, expected)
 
-    def assertChildNodeContent(self, elem, expected):
+    def assertChildNodeContent(self, elem, expected):  # noqa: N802
         for k, v in expected.items():
             try:
                 self.assertEqual(
                     elem.getElementsByTagName(k)[0].firstChild.wholeText, v
                 )
-            except IndexError as e:
-                raise IndexError("{} for '{}' and '{}'".format(e, k, v))
+            except IndexError as err:
+                msg = f"{err} for '{k}' and '{v}'"
+                raise IndexError(msg) from err
 
-    def assertCategories(self, elem, expected):
+    def assertCategories(self, elem, expected):  # noqa: N802
         self.assertEqual(
             set(
                 i.firstChild.wholeText

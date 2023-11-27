@@ -1,6 +1,6 @@
 from django import template
 
-from ..models import Blog, Post
+from hines.weblogs.models import Blog, Post
 
 register = template.Library()
 
@@ -60,7 +60,7 @@ def blog_years_card(blog, current_year=None):
     `current_year` is the year (a date object) that shouldn't be a link, if any.
     """
     return {
-        "card_title": "Years of {}".format(blog.short_name),
+        "card_title": f"Years of {blog.short_name}",
         "date_list": blog_years(blog=blog),
         "blog": blog,
         "current_year": current_year,

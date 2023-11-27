@@ -124,8 +124,8 @@ def test_comment_for_spam(sender, comment, request, **kwargs):
         if len(managers) > 0:
             message_content += (
                 " If it wasn't then "
-                '<a href="mailto:%s?subject=Flagged comment (ID: %s)">email me</a> '
-                "to have it published." % (managers[0][1], comment.id)
+                f'<a href="mailto:{managers[0][1]}?subject=Flagged comment (ID: '
+                f'{comment.id})">email me</a> to have it published.'
             )
 
         messages.add_message(

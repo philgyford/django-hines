@@ -126,7 +126,7 @@ urlpatterns = [
     path("backstage/", admin.site.urls),
     # EVERYTHING ELSE
     path("", core_views.HomeView.as_view(), name="home"),
-    path("{}/".format(ROOT_DIR), include(root_dir_patterns)),
+    path(f"{ROOT_DIR}/", include(root_dir_patterns)),
     # Used in the weblogs app:
     path("comments/", include("django_comments.urls")),
 ]

@@ -38,16 +38,18 @@ class CustomComment(Comment):
         try:
             content_type = ContentType.objects.get(pk=self.content_type_id)
             if not content_type.model_class():
-                raise AttributeError(
-                    "Content type %(ct_id)s object has no associated model"
-                    % {"ct_id": self.content_type_id}
+                msg = (
+                    f"Content type {self.content_type_id} object has no "
+                    "associated model"
                 )
+                raise AttributeError(msg)
             obj = content_type.get_object_for_this_type(pk=self.object_pk)
-        except (ObjectDoesNotExist, ValueError):
-            raise AttributeError(
-                "Content type %(ct_id)s object %(obj_id)s doesn't exist"
-                % {"ct_id": self.content_type_id, "obj_id": self.object_pk}
+        except (ObjectDoesNotExist, ValueError) as err:
+            msg = (
+                f"Content type {self.content_type_id} object {self.object_pk} "
+                "doesn't exist"
             )
+            raise AttributeError(msg) from err
 
         # All good. So set the count of visible comments.
         # Note: We explicitly remove any ordering because we don't need it

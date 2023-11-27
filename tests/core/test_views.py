@@ -44,7 +44,7 @@ class HomeViewTestCase(ViewTestCase):
 
 class ReadingHomeViewTestCase(TestCase):
     def test_redirects(self):
-        "It redirects if there's like a y=[\d\d\d\d] in the querystring."  # noqa: W605
+        "It redirects if there's like a y=[\d\d\d\d] in the querystring."
         request = RequestFactory().get("/fake-path/", {"y": 2017})
         response = views.ReadingHomeView.as_view()(request)
         self.assertEqual(response.status_code, 301)

@@ -306,7 +306,7 @@ class PostDetailViewTestCase(ViewTestCase):
         self.client.login(username="admin", password="pass")
         response = self.client.get("/terry/my-blog/2017/02/20/draft-post/")
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_response_preview_scheduled_status(self):
         "A superuser should be able to see a scheduled post."
@@ -320,7 +320,7 @@ class PostDetailViewTestCase(ViewTestCase):
         self.client.login(username="admin", password="pass")
         response = self.client.get("/terry/my-blog/2100/02/20/scheduled-post/")
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     @override_app_settings(
         TEMPLATE_SETS=({"name": "2009", "start": "2009-02-10", "end": "2018-01-04"},)
