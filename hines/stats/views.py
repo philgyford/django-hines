@@ -98,7 +98,8 @@ class StatsView(CacheMixin, TemplateView):
         if slug is None or slug in valid_slugs:
             return super().get(request, *args, **kwargs)
         else:
-            raise Http404(("'{}' is not a valid slug.").format(slug))
+            msg = f"'{slug}' is not a valid slug."
+            raise Http404(msg)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -132,7 +133,7 @@ class StatsView(CacheMixin, TemplateView):
             "name": chart_name,
         }
 
-        data_method = getattr(self, "get_data_{}".format(chart_name))
+        data_method = getattr(self, f"get_data_{chart_name}")
 
         chart_data.update(data_method())
 

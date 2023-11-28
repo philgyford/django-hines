@@ -11,7 +11,7 @@ class CommentsFeedRSS(ExtendedFeed):
     Public feed of recent comments across all Blogs.
 
     Some bits based on
-    https://github.com/django/django-contrib-comments/blob/master/django_comments/feeds.py  # noqa: E501
+    https://github.com/django/django-contrib-comments/blob/master/django_comments/feeds.py
     """
 
     # Can be "public", "spam", or "all":
@@ -87,10 +87,8 @@ class CommentsFeedRSS(ExtendedFeed):
         # Get the object that this CustomComment was posted on:
         content_type = ContentType.objects.get(pk=item.content_type_id)
         if not content_type.model_class():
-            raise AttributeError(
-                "Content type %(ct_id)s object has no associated model"
-                % {"ct_id": item.content_type_id}
-            )
+            msg = f"Content type {item.content_type_id} object has no associated model"
+            raise AttributeError(msg)
         obj = content_type.get_object_for_this_type(pk=item.object_pk)
         return obj
 

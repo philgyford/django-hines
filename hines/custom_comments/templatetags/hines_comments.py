@@ -1,7 +1,7 @@
 from django import template
 from django.template.defaultfilters import pluralize
 
-from ..utils import clean_comment, get_allowed_tags
+from hines.custom_comments.utils import clean_comment, get_allowed_tags
 
 register = template.Library()
 

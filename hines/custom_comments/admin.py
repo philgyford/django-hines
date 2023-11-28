@@ -1,3 +1,5 @@
+import contextlib
+
 from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
 from django_comments import get_model
@@ -22,10 +24,8 @@ class CustomCommentAdmin(CommentsAdmin):
 
     def flag(self, obj):
         flag_name = ""
-        try:
+        with contextlib.suppress(IndexError, TypeError):
             flag_name = obj.flags.values().last()["flag"]
-        except (IndexError, TypeError):
-            pass
         return flag_name
 
     def post_title(self, obj):

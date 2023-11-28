@@ -28,7 +28,7 @@ def clean_comment(comment, max_url_length=23):
                      truncated.
     """
 
-    def shorten_url(attrs, new=False):
+    def shorten_url(attrs, new=False):  # noqa: FBT002
         """Shorten overly-long URLs in the text."""
         # Only adjust newly-created links
         if not new:
@@ -52,7 +52,7 @@ def clean_comment(comment, max_url_length=23):
     # links because by default Bleach doesn't recognise any of the
     # newer TLDs like .rocks, .blog, etc.
     # via https://github.com/mozilla/bleach/issues/563#issuecomment-715586797
-    URL_RE = re.compile(
+    url_re = re.compile(
         r"(?i)\b((?:(?:https?)://|www\d{0,3}[.])(?:[^\s()<>]+|"
         r"\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()"
         r"<>]+\)))*\)|[^\s`!()\[\]{};:" + r"'" + r'".,<>?«»“”‘’]))'
@@ -68,7 +68,7 @@ def clean_comment(comment, max_url_length=23):
             partial(
                 LinkifyFilter,
                 callbacks=[bleach.callbacks.nofollow, shorten_url],
-                url_re=URL_RE,
+                url_re=url_re,
             )
         ],
     )

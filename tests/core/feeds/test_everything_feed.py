@@ -37,7 +37,7 @@ class EverythingFeedTestCase(FeedTestCase):
             time_published=make_datetime("2017-04-25 16:00:00"),
         )
 
-    @patch("hines.weblogs.models.Post.comments_allowed", False)
+    @patch("hines.weblogs.models.Post.comments_allowed", False)  # noqa: FBT003
     @override_app_settings(EVERYTHING_FEED_KINDS=(("blog_posts", "my-blog"),))
     def test_blog_post(self):
         """It should contain the correct data for a blog post.
@@ -66,7 +66,7 @@ class EverythingFeedTestCase(FeedTestCase):
             },
         )
 
-    @patch("hines.weblogs.models.Post.comments_allowed", True)
+    @patch("hines.weblogs.models.Post.comments_allowed", True)  # noqa: FBT003
     @override_app_settings(EVERYTHING_FEED_KINDS=(("blog_posts", "my-blog"),))
     def test_blog_post_comments_allowed(self):
         "If comments are enabled on a Post, there should be a link in content:encoded"

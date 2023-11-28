@@ -87,19 +87,19 @@ class Blog(TimeStampedModelMixin, models.Model):
         default=True, help_text="If true, can still be overridden in Django SETTINGS."
     )
 
+    class Meta:
+        ordering = ["sort_order", "name"]
+
     def __str__(self):
         return self.name
 
-    class Meta:
-        ordering = ["sort_order", "name"]
+    def get_absolute_url(self):
+        return reverse("weblogs:blog_detail", kwargs={"blog_slug": self.slug})
 
     @property
     def public_posts(self):
         "Returns a QuerySet of publicly-visible Posts for this Blog."
         return Post.public_objects.filter(blog=self)
-
-    def get_absolute_url(self):
-        return reverse("weblogs:blog_detail", kwargs={"blog_slug": self.slug})
 
     def get_absolute_url_with_domain(self):
         """
@@ -114,7 +114,7 @@ class Blog(TimeStampedModelMixin, models.Model):
         if self.feed_title:
             return self.feed_title
         else:
-            return "Latest posts from {}".format(self.name)
+            return f"Latest posts from {self.name}"
 
     def popular_tags(self, num=10):
         return (
@@ -349,10 +349,7 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         Return True if this instance should process webmentions when saved.
         Overriding the default from MentionableMixin.
         """
-        if self.allow_outgoing_webmentions and self.status == self.Status.LIVE:
-            return True
-        else:
-            return False
+        return self.allow_outgoing_webmentions and self.status == self.Status.LIVE
 
     @property
     def title_text(self):
@@ -439,10 +436,10 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
                     ):
                         # We've found the first eligible element in this section,
                         # so add an anchor to it.
-                        id = "s{}".format(section_number)
+                        id = f"s{section_number}"
                         anchor = soup.new_tag(
                             "a",
-                            href="#{}".format(id),
+                            href=f"#{id}",
                             title="Link to this section",
                             # Inline style on the off-chance it's used by RSS readers:
                             style="text-decoration:none;",
@@ -476,7 +473,7 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         if self.excerpt:
             text = self.excerpt
         else:
-            text = "{} {}".format(self.intro_html, self.body_html)
+            text = f"{self.intro_html} {self.body_html}"
             # The HTML texts will contain entities like '&#8217;' which we
             # don't want in an excerpt, so:
             text = html.unescape(text)
@@ -528,27 +525,19 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
             return True
 
         cutoff_time = timezone.now() - timedelta(days=cutoff_days)
-        if self.time_published >= cutoff_time:
-            # The post is within the cutoff, so comments allowed
-            return True
-        else:
-            # The post is too old, so comments no longer allowed
-            return False
+        return self.time_published >= cutoff_time
 
     @property
     def comments_allowed(self):
         """
         Returns a boolean indicating whether new comments are allowed on this.
         """
-        if app_settings.COMMENTS_ALLOWED is not True:
+        if (
+            app_settings.COMMENTS_ALLOWED is not True
+            or self.blog.allow_comments is False
+            or self.allow_comments is False
+        ):
             return False
-
-        elif self.blog.allow_comments is False:
-            return False
-
-        elif self.allow_comments is False:
-            return False
-
         else:
             return self.comments_are_open
 
@@ -628,10 +617,8 @@ class PostCommentModerator(CommentModerator):
         if not result:
             # Default method already soys NO, so:
             return False
-        elif content_object.comments_allowed:
-            return True
         else:
-            return False
+            return content_object.comments_allowed
 
     def moderate(self, comment, content_object, request):
         """

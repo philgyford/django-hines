@@ -14,8 +14,8 @@ from spectator.events.templatetags.spectator_events import (
     most_seen_creators_by_works_card,
 )
 
-from .. import app_settings
-from ..utils import get_site_url
+from hines.core import app_settings
+from hines.core.utils import get_site_url
 
 register = template.Library()
 
@@ -69,15 +69,14 @@ def current_url_name(context):
     url_name = False
 
     # In 400 and 500 error templates context has no 'request':
-    if hasattr(context, "request"):
-        if context.request.resolver_match:
-            if context.request.resolver_match.namespace:
-                url_name = "{}:{}".format(
-                    context.request.resolver_match.namespace,
-                    context.request.resolver_match.url_name,
-                )
-            else:
-                url_name = context.request.resolver_match.url_name
+    if hasattr(context, "request") and context.request.resolver_match:
+        if context.request.resolver_match.namespace:
+            url_name = "{}:{}".format(
+                context.request.resolver_match.namespace,
+                context.request.resolver_match.url_name,
+            )
+        else:
+            url_name = context.request.resolver_match.url_name
     return url_name
 
 
@@ -94,7 +93,7 @@ def fieldtype(field):
 
 
 @register.simple_tag
-def display_time(dt=None, show="both", granularity=0, link_to_day=False):
+def display_time(dt=None, show="both", granularity=0, link_to_day=False):  # noqa: FBT002
     """Return the HTML to display a datetime nicely, wrapped in a <time> tag.
 
     dt -- The datetime. If None, then the current time is used.
@@ -150,8 +149,8 @@ def display_time(dt=None, show="both", granularity=0, link_to_day=False):
                 )
 
                 visible_str = (
-                    '<a href="%(url)s" title="All items from this day">%(date)s</a>'
-                    % {"url": url, "date": dt.strftime(d_fmt)}
+                    f'<a href="{url}" title="All items from this day">'
+                    f"{dt.strftime(d_fmt)}</a>"
                 )
             else:
                 visible_str = dt.strftime(d_fmt)
@@ -164,10 +163,7 @@ def display_time(dt=None, show="both", granularity=0, link_to_day=False):
 
         stamp = dt.strftime("%Y-%m-%dT%H:%M:%S%z")
 
-    return format_html(
-        '<time datetime="%(stamp)s">%(visible)s</time>'
-        % {"stamp": stamp, "visible": visible_str}
-    )
+    return format_html(f'<time datetime="{stamp}">{visible_str}</time>')
 
 
 @register.filter
@@ -187,13 +183,19 @@ def widont(text):
     From https://github.com/chrisdrackett/django-typogrify
     """
     widont_finder = re.compile(
-        r"""((?:</?(?:a|em|span|strong|i|b)[^>]*>)|[^<>\s]) # must be proceeded by an approved inline opening or closing tag or a nontag/nonspace  # noqa: E501
-                                   \s+                                             # the space to replace
-                                   ([^<>\s]+                                       # must be flollowed by non-tag non-space characters
-                                   \s*                                             # optional white space!
-                                   (</(a|em|span|strong|i|b)>\s*)*                 # optional closing inline tags with optional white space after each
-                                   ((</(p|h[1-6]|li|dt|dd)>)|$))                   # end with a closing p, h1-6, li or the end of the string
-                                   """,
+        # must be preceeded by approved inline opening/closing tag or a nontag/nonspace:
+        r"""((?:</?(?:a|em|span|strong|i|b)[^>]*>)|[^<>\s])
+            # the space to replace:
+            \s+
+            # must be followed by non-tag non-space characters:
+            ([^<>\s]+
+            # optional white space:
+            \s*
+            # optional closing inline tags with optional white space after each:
+            (</(a|em|span|strong|i|b)>\s*)*
+            # end with a closing p, h1-6, li or the end of the string:
+            ((</(p|h[1-6]|li|dt|dd)>)|$))
+            """,
         re.VERBOSE,
     )
 
@@ -273,7 +275,7 @@ def domain_urlize(value):
         <a href="http://www.example.org/foo/" rel="nofollow">example.org</a>
     """
     parsed_uri = urlparse(value)
-    domain = "{uri.netloc}".format(uri=parsed_uri)
+    domain = f"{parsed_uri.netloc}"
 
     if domain.startswith("www."):
         domain = domain[4:]
@@ -294,7 +296,7 @@ def add_domain(value):
     else:
         start = get_site_url()
 
-        return "{}{}".format(start, value)
+        return f"{start}{value}"
 
 
 @register.inclusion_tag("spectator_core/includes/card_chart.html")
@@ -318,12 +320,15 @@ def most_seen_directors_card(num=10):
     creators = data["object_list"]
 
     for n, creator in enumerate(creators):
-        if prev_creator is not None:
-            if prev_creator.name in coens and creator.name in coens:
-                # Both this item and the previous are Coen brothers.
-                # This is the position they should both be at:
-                coen_position = n
-                break
+        if (
+            prev_creator is not None
+            and prev_creator.name in coens
+            and creator.name in coens
+        ):
+            # Both this item and the previous are Coen brothers.
+            # This is the position they should both be at:
+            coen_position = n
+            break
         prev_creator = creator
 
     if coen_position is not None:
@@ -339,11 +344,13 @@ def most_seen_directors_card(num=10):
         # Now we need to improve the positions of all subsequent people
         # because we just removed a position:
         for m, creator in enumerate(creators):
-            if not isinstance(creators[m], list):
+            if (
+                not isinstance(creators[m], list)
                 # It's not the Coens...
-                if creator.chart_position > coen_position:
-                    # And its at the same position as the Coens or after:
-                    creators[m].chart_position = creators[m].chart_position - 1
+                and creator.chart_position > coen_position
+            ):
+                # And its at the same position as the Coens or after:
+                creators[m].chart_position = creators[m].chart_position - 1
 
         data["object_list"] = creators
 

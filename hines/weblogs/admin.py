@@ -69,13 +69,11 @@ class PostAdminForm(autocomplete.FutureModelForm):
 
         if status == Post.Status.SCHEDULED:
             if time_published is None:
-                raise forms.ValidationError(
-                    "If this post is Scheduled it should have a Time Published."
-                )
+                msg = "If this post is Scheduled it should have a Time Published."
+                raise forms.ValidationError(msg)
             elif time_published <= datetime_now():
-                raise forms.ValidationError(
-                    "This post is Scheduled but its Time Published is in the past."
-                )
+                msg = "This post is Scheduled but its Time Published is in the past."
+                raise forms.ValidationError(msg)
         return self.cleaned_data
 
 

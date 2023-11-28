@@ -42,10 +42,10 @@ class ExPaginator(Paginator):
         # see Django #7307
         try:
             return int(num)
-        except ValueError:
-            raise e
+        except ValueError as err:
+            raise e from err
 
-    def page(self, number, softlimit=False):
+    def page(self, number, *, softlimit=False):
         try:
             return super().page(number)
         except InvalidPage as e:

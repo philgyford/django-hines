@@ -20,7 +20,7 @@ class BlogPostsFeedRSS(ExtendedFeed):
         if obj.feed_title:
             return obj.feed_title
         else:
-            return "Latest posts from {}".format(obj.name)
+            return f"Latest posts from {obj.name}"
 
     def description(self, obj):
         return obj.feed_description

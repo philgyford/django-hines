@@ -11,7 +11,7 @@ from . import app_settings
 
 def make_date(d):
     "For convenience."
-    return datetime.strptime(d, "%Y-%m-%d").date()
+    return datetime.strptime(d, "%Y-%m-%d").astimezone(timezone.utc).date()
 
 
 def make_datetime(dt):
@@ -21,7 +21,7 @@ def make_datetime(dt):
 
 def datetime_now():
     "Just returns a datetime object for now in UTC, with UTC timezone."
-    return datetime.utcnow().replace(tzinfo=timezone.utc)
+    return datetime.now(tz=timezone.utc)
 
 
 def markdownify(content, output_format="xhtml"):
@@ -86,7 +86,7 @@ def _do_strike(text):
 
 
 def truncate_string(
-    text, strip_html=True, chars=255, truncate="…", at_word_boundary=False
+    text, *, strip_html=True, chars=255, truncate="…", at_word_boundary=False
 ):
     """Truncate a string to a certain length, removing line breaks and mutliple
     spaces, optionally removing HTML, and appending a 'truncate' string.
@@ -163,9 +163,10 @@ def expire_view_cache(path, key_prefix=None):
             else:
                 return (False, "Cache_key does not exist in cache")
         else:
-            raise ValueError("Failed to create cache_key")
-    except (ValueError, Exception) as e:
-        return (False, e)
+            msg = "Failed to create cache_key"
+            raise ValueError(msg)
+    except (ValueError, Exception) as err:
+        return (False, err)
 
 
 def get_site_url():
@@ -184,4 +185,4 @@ def get_site_url():
 
     domain = Site.objects.get_current().domain
 
-    return "{}://{}".format(protocol, domain)
+    return f"{protocol}://{domain}"

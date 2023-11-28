@@ -4,9 +4,10 @@ from django.contrib.sites.models import Site
 from django.urls import reverse
 from mentions.models import Webmention
 
-from .. import app_settings
-from ..recent import RecentObjects
-from ..utils import get_site_url
+from hines.core import app_settings
+from hines.core.recent import RecentObjects
+from hines.core.utils import get_site_url
+
 from . import ExtendedFeed, ExtendedRSSFeed
 
 
@@ -88,10 +89,7 @@ class EverythingFeedRSS(ExtendedFeed):
             return item["objects"][0].post_time
 
     def item_updateddate(self, item):
-        if item["kind"] == "blog_post":
-            return item["object"].time_modified
-
-        elif item["kind"] == "pinboard_bookmark":
+        if item["kind"] == "blog_post" or item["kind"] == "pinboard_bookmark":
             return item["object"].time_modified
 
         elif item["kind"] == "flickr_photos":
