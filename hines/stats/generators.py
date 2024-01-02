@@ -455,6 +455,7 @@ class StaticGenerator(Generator):
             "2020": 0,
             "2021": 0,
             "2022": 368,
+            "2023": 91,
         }
 
         data = self._make_simple_data(
@@ -498,6 +499,7 @@ class StaticGenerator(Generator):
             "2020": 15636,
             "2021": 6428,
             "2022": 8941,
+            "2023": 9159,
         }
 
         return self._make_simple_data(
@@ -523,6 +525,7 @@ class StaticGenerator(Generator):
             "2020": 21,
             "2021": 25,
             "2022": 10,
+            "2023": 0,
         }
 
         byliner = {
@@ -554,12 +557,14 @@ class StaticGenerator(Generator):
             "2020": 7,
             "2021": 5,
             "2022": 7,
+            "2023": 1,
         }
 
         guardian = {
             "2020": 2,
             "2021": 1,
             "2022": 7,
+            "2023": 0,
         }
 
         japanese = {
@@ -576,10 +581,12 @@ class StaticGenerator(Generator):
             "2020": 4,
             "2021": 9,
             "2022": 2,
+            "2023": 3,
         }
 
         oohdir = {
             "2022": 67,
+            "2023": 69,
         }
 
         # From Archive by year folders:
@@ -612,6 +619,7 @@ class StaticGenerator(Generator):
             "2020": 2117,
             "2021": 1744,
             "2022": 1719,
+            "2023": 1911,
         }
         # Pepys Feedback:
         pepys = {
@@ -636,6 +644,7 @@ class StaticGenerator(Generator):
             "2020": 211,
             "2021": 219,
             "2022": 162,
+            "2023": 312,
         }
 
         whitstillman = {
@@ -660,6 +669,7 @@ class StaticGenerator(Generator):
             "2020": 24,
             "2021": 13,
             "2022": 0,
+            "2023": 5,
         }
 
         # All of the above dicts that we want to add up:
@@ -715,6 +725,7 @@ class StaticGenerator(Generator):
             "2020": 46,
             "2021": 60,
             "2022": 61,
+            "2023": 62,
         }
 
         return self._make_simple_data(
@@ -759,6 +770,7 @@ class StaticGenerator(Generator):
             "2020": 6396,
             "2021": 7137,
             "2022": 6426,
+            "2023": 6527,
         }
 
         return self._make_simple_data(
@@ -795,6 +807,7 @@ class StaticGenerator(Generator):
             "2020": 0,
             "2021": 0,
             "2022": 0,
+            "2023": 0,
         }
 
         freelance = {
@@ -820,6 +833,7 @@ class StaticGenerator(Generator):
             "2020": 116,
             "2021": 33,
             "2022": 59,
+            "2023": 29,
         }
 
         acting = {
@@ -845,6 +859,7 @@ class StaticGenerator(Generator):
             "2020": 0,
             "2021": 0,
             "2022": 0,
+            "2023": 0,
         }
 
         chart_data = []
@@ -892,6 +907,7 @@ class StaticGenerator(Generator):
             "2020": 2403,
             "2021": 1651,
             "2022": 2671,
+            "2023": 1539,
         }
 
         return self._make_simple_data(
