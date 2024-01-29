@@ -70,6 +70,8 @@ def markdownify(content, output_format="xhtml"):
 
     html = _do_strike(html)
 
+    html = _tidy_disclosures(html)
+
     return html
 
 
@@ -83,6 +85,22 @@ def _do_strike(text):
     """
     text = _strike_re.sub(r"<s>\1</s>", text)
     return text
+
+
+def _tidy_disclosures(html):
+    """Markdownify can't handle disclosure elements, so tidy up the mess it makes
+    Remove the unwanted paragraph tags it puts in various places.
+    """
+    replacements = (
+        ("<p><details>", "<details>"),
+        ("</summary></p>", "</summary>"),
+        ("<p></details></p>", "</details>"),
+        ("</details></p>", "</details>"),
+    )
+    for old, new in replacements:
+        html = html.replace(old, new)
+
+    return html
 
 
 def truncate_string(

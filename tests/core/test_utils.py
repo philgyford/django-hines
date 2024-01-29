@@ -90,6 +90,25 @@ class MarkdownifyTestCase(TestCase):
         "Using ~~foo~~ should translate into <s>foo</s>"
         self.assertHTMLEqual(markdownify("~~foo~~"), "<p><s>foo</s></p>")
 
+    def test_details(self):
+        "It should render disclosures correctly"
+        html = """<details>
+<summary>Summary</summary>
+Text inside.
+</details>"""
+        self.assertHTMLEqual(markdownify(html, output_format="html5"), html)
+
+    def test_details_containing_html(self):
+        "It should render disclosures containing HTML correctly"
+        html = """<details>
+<summary>Summary</summary>
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+</ul>
+</details>"""
+        self.assertHTMLEqual(markdownify(html, output_format="html5"), html)
+
 
 class TruncateStringTestCase(TestCase):
     def test_strip_html(self):
