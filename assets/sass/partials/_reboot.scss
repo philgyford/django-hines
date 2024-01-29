@@ -511,3 +511,12 @@ template {
 main {
   margin-bottom: 2em;
 }
+
+details {
+  margin: 0 0 $vertical-space ($border-width * 2);
+}
+
+summary {
+  cursor: pointer;
+  margin: 0 0 0 ($border-width * -2);
+}
