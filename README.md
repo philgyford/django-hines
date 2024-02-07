@@ -1,6 +1,6 @@
 # django-hines
 
-[![Build Status](https://github.com/philgyford/django-hines/workflows/CI/badge.svg)](https://github.com/philgyford/django-hines/actions?query=workflow%3ACI)
+[![Build Status](https://github.com/philgyford/django-hines/actions/workflows/test.yml/badge.svg)](https://github.com/philgyford/django-hines/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/philgyford/django-hines/branch/main/graph/badge.svg?token=I2JRGN0UPP)](https://codecov.io/gh/philgyford/django-hines)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
