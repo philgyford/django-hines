@@ -280,9 +280,9 @@ django-taggit==5.0.1 \
     --hash=sha256:a0ca8a28b03c4b26c2630fd762cb76ec39b5e41abf727a7b66f897a625c5e647 \
     --hash=sha256:edcd7db1e0f35c304e082a2f631ddac2e16ef5296029524eb792af7430cab4cc
     # via django-ditto
-django-wm==4.0.4 \
-    --hash=sha256:9217073de16726d6569102137907dfed1f8f1c03d07aae0ada9537569420a63d \
-    --hash=sha256:c5d0f83a3395f0cb52ffffbedcc5afb529e02c09444d4199066a0af89fef1bf8
+django-wm==4.1.1 \
+    --hash=sha256:3c5edc17e28b347fe193c2c62d1f3dec35b0c87a78dcff5ed7f3cad321794905 \
+    --hash=sha256:73c8c6a8bcdd008ed5f84faf001dc2206159f621c1eb7a2bc37a1ecc9a4a6117
     # via -r requirements.in
 exceptiongroup==1.2.0 \
     --hash=sha256:4bfd3996ac73b41e9b9628b04e079f193850720ea5945fc96a08633c66912f14 \
