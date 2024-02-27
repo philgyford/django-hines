@@ -223,8 +223,8 @@ django-appconf==1.0.6 \
     --hash=sha256:c3ae442fba1ff7ec830412c5184b17169a7a1e71cf0864a4c3f93cf4c98a1993 \
     --hash=sha256:cfe87ea827c4ee04b9a70fab90b86d704cb02f2981f89da8423cb0fabf88efbf
     # via django-imagekit
-django-autocomplete-light==3.9.7 \
-    --hash=sha256:a34f192ac438c4df056dbfd399550799ddc631c4661960134ded924648770373
+django-autocomplete-light==3.11.0 \
+    --hash=sha256:212576a17e3308ef7ca77e280b86684167916d2091d4b73640f38845d9516328
     # via -r requirements.in
 django-contrib-comments==2.2.0 \
     --hash=sha256:2ca79060bbc8fc5b636981ef6e50f35ab83649af75fc1be47bf770636be3271c \
@@ -755,7 +755,6 @@ six==1.16.0 \
     # via
     #   asttokens
     #   bleach
-    #   django-autocomplete-light
     #   flickrapi
     #   html5lib
     #   python-dateutil
