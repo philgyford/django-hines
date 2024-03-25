@@ -19,6 +19,6 @@ class BlockTestCase(TestCase):
         )
         self.assertEqual(
             block.content_html,
-            '<p><a href="http://example.org">Hello</a>. <br />\n'
+            '<p><a href="http://example.org">Hello</a>.<br />\n'
             "<em>Another</em> line.</p>\n",
         )
