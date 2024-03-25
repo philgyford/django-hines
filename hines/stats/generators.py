@@ -267,9 +267,10 @@ class LastfmGenerator(Generator):
         data = {
             "data": [],
             "title": "Tracks listened to",
-            "description": "Number of scrobbles "
-            '<a href="https://www.last.fm/user/{}">on Last.fm</a> per year.'.format(
-                self.username
+            "description": (
+                "Number of scrobbles "
+                f'<a href="https://www.last.fm/user/{self.username}">on Last.fm</a> '
+                "per year."
             ),
         }
 
@@ -307,9 +308,10 @@ class PinboardGenerator(Generator):
         data = {
             "data": [],
             "title": "Links",
-            "description": "Number of links posted on Delicious, then "
-            '<a href="https://pinboard.in/u:{}">on Pinboard</a>, per year.'.format(
-                self.username
+            "description": (
+                "Number of links posted on Delicious, then "
+                f'<a href="https://pinboard.in/u:{self.username}">on Pinboard</a>, '
+                "per year."
             ),
         }
 
@@ -932,9 +934,10 @@ class TwitterGenerator(Generator):
         data = {
             "data": [],
             "title": "Tweets",
-            "description": "Number of tweets posted by "
-            '<a href="https://twitter.com/{}/">@{}</a> per year.'.format(
-                self.screen_name, self.screen_name
+            "description": (
+                "Number of tweets posted by "
+                f'<a href="https://twitter.com/{self.screen_name}/">@{self.screen_name}'
+                "</a> per year."
             ),
         }
 
@@ -965,9 +968,10 @@ class TwitterGenerator(Generator):
         data = {
             "data": [],
             "title": "Tweets liked",
-            "description": "Number of tweets liked by "
-            '<a href="https://twitter.com/{}/">@{}</a> per year.'.format(
-                self.screen_name, self.screen_name
+            "description": (
+                "Number of tweets liked by "
+                f'<a href="https://twitter.com/{self.screen_name}/">@'
+                "{self.screen_naqme}</a> per year."
             ),
         }
 

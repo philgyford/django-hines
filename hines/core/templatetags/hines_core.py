@@ -71,10 +71,9 @@ def current_url_name(context):
     # In 400 and 500 error templates context has no 'request':
     if hasattr(context, "request") and context.request.resolver_match:
         if context.request.resolver_match.namespace:
-            url_name = "{}:{}".format(
-                context.request.resolver_match.namespace,
-                context.request.resolver_match.url_name,
-            )
+            namespace = context.request.resolver_match.namespace
+            name = context.request.resolver_match.url_name
+            url_name = f"{namespace}:{name}"
         else:
             url_name = context.request.resolver_match.url_name
     return url_name

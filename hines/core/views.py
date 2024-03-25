@@ -404,8 +404,9 @@ class MTSearchRedirectView(RedirectView):
             # Overmorgen.
             search_str = self._get_google_search_str(search_str)
             url = (
-                "https://www.google.com/search?" "as_sitesearch=www.overmorgen.com&q={}"
-            ).format(search_str)
+                "https://www.google.com/search?"
+                f"as_sitesearch=www.overmorgen.com&q={search_str}"
+            )
 
         else:
             msg = "Not the right combination of Blog ID, tag or search."
