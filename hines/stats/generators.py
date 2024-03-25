@@ -971,7 +971,7 @@ class TwitterGenerator(Generator):
             "description": (
                 "Number of tweets liked by "
                 f'<a href="https://twitter.com/{self.screen_name}/">@'
-                "{self.screen_naqme}</a> per year."
+                "{self.screen_name}</a> per year."
             ),
         }
 
