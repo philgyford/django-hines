@@ -324,9 +324,9 @@ idna==3.6 \
     --hash=sha256:9ecdbbd083b06798ae1e86adcbfe8ab1479cf864e4ee30fe4e46a003d12491ca \
     --hash=sha256:c05567e9c24a6b9faaa835c4821bad0590fbb9d5779e7caa6e1cc4978e7eb24f
     # via requests
-ipython==8.22.2 \
-    --hash=sha256:2dcaad9049f9056f1fef63514f176c7d41f930daa78d05b82a176202818f2c14 \
-    --hash=sha256:3c86f284c8f3d8f2b6c662f885c4889a91df7cd52056fd02b7d8d6195d7f56e9
+ipython==8.23.0 \
+    --hash=sha256:07232af52a5ba146dc3372c7bf52a0f890a23edf38d77caef8d53f9cdc2584c1 \
+    --hash=sha256:7468edaf4f6de3e1b912e57f66c241e6fd3c7099f2ec2136e239e142e800274d
     # via -r requirements.in
 jedi==0.19.1 \
     --hash=sha256:cf0496f3651bc65d7174ac1b7d043eff454892c708a87d1b683e57b569927ffd \
@@ -800,6 +800,7 @@ typing-extensions==4.10.0 \
     # via
     #   asgiref
     #   dj-database-url
+    #   ipython
     #   psycopg
 unittest-parametrize==1.4.0 \
     --hash=sha256:8b9554fbcfd36bfef6c5c522b9146f13647eb4ec589c17af7f67f22793cecb82 \
