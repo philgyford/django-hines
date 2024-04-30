@@ -236,8 +236,8 @@ django-debug-toolbar==4.3.0 \
     --hash=sha256:0b0dddee5ea29b9cb678593bc0d7a6d76b21d7799cb68e091a2148341a80f3c4 \
     --hash=sha256:e09b7dcb8417b743234dfc57c95a7c1d1d87a88844abd13b4c5387f807b31bf6
     # via -r requirements.in
-django-ditto==3.2.0 \
-    --hash=sha256:e7ab873a824ca1ec5467e1316451fa62871c1dde7b9fb055ed4bfc33c8f6fa25
+django-ditto==3.2.1 \
+    --hash=sha256:1a2036e566d240f19b3c8200d2c9fec4fe0f296cbcf166b7cfbd5753a0d6c724
     # via -r requirements.in
 django-extensions==3.2.3 \
     --hash=sha256:44d27919d04e23b3f40231c4ab7af4e61ce832ef46d610cc650d53e68328410a \
