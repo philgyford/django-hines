@@ -33,7 +33,7 @@ class EverythingFeedRSS(ExtendedFeed):
         return get_site_url()
 
     def title(self, obj):
-        return "%s: Everything" % obj.name
+        return f"{obj.name}: Everything"
 
     def description(self, obj):
         return "Things written, created, linked to or liked by Phil Gyford"

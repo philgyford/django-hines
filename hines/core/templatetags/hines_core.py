@@ -118,20 +118,20 @@ def display_time(dt=None, show="both", granularity=0, link_to_day=False):  # noq
     dt_fmt = app_settings.DATETIME_FORMAT
 
     if granularity == 8:
-        visible_str = "circa %s" % dt.strftime("%Y")
         stamp = dt.strftime("%Y")
+        visible_str = f"circa {stamp}"
 
     elif granularity == 6:
-        visible_str = "sometime in %s" % dt.strftime("%Y")
         stamp = dt.strftime("%Y")
+        visible_str = f"sometime in {stamp}"
 
     elif granularity == 4:
-        visible_str = "sometime in %s" % dt.strftime(
-            app_settings.DATE_YEAR_MONTH_FORMAT
-        )
         stamp = dt.strftime("%Y-%m")
+        year = dt.strftime(app_settings.DATE_YEAR_MONTH_FORMAT)
+        visible_str = f"sometime in {year}"
 
     else:
+        stamp = dt.strftime("%Y-%m-%dT%H:%M:%S%z")
         if show == "time":
             visible_str = dt.strftime(t_fmt)
         else:
@@ -159,8 +159,6 @@ def display_time(dt=None, show="both", granularity=0, link_to_day=False):  # noq
                 visible_str = dt_fmt.replace("[date]", visible_str).replace(
                     "[time]", dt.strftime(t_fmt)
                 )
-
-        stamp = dt.strftime("%Y-%m-%dT%H:%M:%S%z")
 
     return format_html(f'<time datetime="{stamp}">{visible_str}</time>')
 

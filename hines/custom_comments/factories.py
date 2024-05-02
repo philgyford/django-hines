@@ -28,7 +28,7 @@ class CustomCommentFactory(factory.django.DjangoModelFactory):
         model = models.CustomComment
         exclude = ["content_object"]
 
-    comment = factory.Sequence(lambda n: "A comment %s" % n)
+    comment = factory.Sequence(lambda n: f"A comment {n}")
     site_id = Site.objects.get_current().id
 
     content_object = factory.SubFactory(LivePostFactory)
@@ -49,5 +49,5 @@ class CommentFlagFactory(factory.django.DjangoModelFactory):
         model = CommentFlag
 
     comment = factory.SubFactory(CustomCommentFactory)
-    flag = factory.Sequence(lambda n: "Reason %s" % n)
+    flag = factory.Sequence(lambda n: f"Reason {n}")
     user = factory.SubFactory(UserFactory)

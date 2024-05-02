@@ -36,6 +36,6 @@ class Command(BaseCommand):
             try:
                 caches[key].clear()
             except InvalidCacheBackendError:
-                self.stderr.write('Cache "%s" is invalid!\n' % key)
+                self.stderr.write(f'Cache "{key}" is invalid!\n')
             else:
-                self.stdout.write('Cache "%s" has been cleared!\n' % key)
+                self.stdout.write(f'Cache "{key}" has been cleared!\n')

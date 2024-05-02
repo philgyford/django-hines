@@ -7,5 +7,5 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.User
 
-    username = factory.Sequence(lambda n: "user%s" % n)
-    email = factory.Sequence(lambda n: "user%s@example.org" % n)
+    username = factory.Sequence(lambda n: f"user{n}")
+    email = factory.Sequence(lambda n: f"user{n}@example.org")
