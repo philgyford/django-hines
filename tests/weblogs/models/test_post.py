@@ -158,7 +158,7 @@ Cats
 
 ##Fish
 
-Cod"""  # noqaL E501
+Cod"""
         post = LivePostFactory(html_format=Post.Formats.HINES_MARKDOWN, body=body)
         self.assertHTMLEqual(
             post.body_html,
