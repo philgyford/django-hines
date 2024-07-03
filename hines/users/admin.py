@@ -6,4 +6,9 @@ from .models import User
 
 @admin.register(User)
 class MyUserAdmin(UserAdmin):
-    pass
+    fieldsets = UserAdmin.fieldsets + (
+        ("Extra fields", {"fields": ["mastodon_account"]}),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ("Extra fields", {"fields": ["mastodon_account"]}),
+    )

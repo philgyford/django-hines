@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class User(AbstractUser):
@@ -6,6 +7,13 @@ class User(AbstractUser):
     In case we want to customise the user in future.
     Use this rather than django.contrib.auth.models.User.
     """
+
+    mastodon_account = models.CharField(
+        max_length=255,
+        blank=True,
+        null=False,
+        help_text="e.g. @Gargron@mastodon.social",
+    )
 
     @property
     def display_name(self):
