@@ -7,14 +7,14 @@ set -eo pipefail
 
 DC="${DC:-exec}"
 
-# If we're running in CI we need to disable TTY allocation for docker-compose
+# If we're running in CI we need to disable TTY allocation for docker compose
 # commands that enable it by default, such as exec and run.
 TTY=""
 if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
 
-# We need to pass this in to docker-compose when we run tests and coverage:
+# We need to pass this in to docker compose when we run tests and coverage:
 TEST_ENV_ARGS="-e DEBUG=FALSE -e HINES_ROOT_DIR=terry -e WM_DOMAIN_NAME=testserver -e HINES_LOG_LEVEL=CRITICAL"
 
 
@@ -23,13 +23,13 @@ TEST_ENV_ARGS="-e DEBUG=FALSE -e HINES_ROOT_DIR=terry -e WM_DOMAIN_NAME=testserv
 # -----------------------------------------------------------------------------
 
 function _dc {
-  docker-compose "${DC}" ${TTY} "${@}"
+  docker compose "${DC}" ${TTY} "${@}"
 }
 
 function _build_run_down {
-  docker-compose build
-  docker-compose run ${TTY} "${@}"
-  docker-compose down
+  docker compose build
+  docker compose run ${TTY} "${@}"
+  docker compose down
 }
 
 
