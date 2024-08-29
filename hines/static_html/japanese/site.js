@@ -120,6 +120,15 @@ function hideEl(classname) {
     // Will be characters the user has guessed correctly.
     var usedCharacters = [];
 
+    // We'll add any failed characters here, with a count of failures.
+    var failedGuesses = {
+      hiragana: {},
+      katakana: {},
+    };
+
+    // Will map characters to either "hiragana" or "katakana".
+    var characterToSet = {};
+
     var totalAttempts = 0;
 
     var correctCount = 0;
@@ -130,6 +139,9 @@ function hideEl(classname) {
     // The letter displayed to the user to guess at the moment.
     // Will be like ['rya', 'リャ']
     var currentLetter = null;
+
+    // Will be set on the initial form submission:
+    var jpFont = null;
 
     var exports = {
       init: function () {
@@ -269,6 +281,11 @@ function hideEl(classname) {
 
       currentLetter = null;
 
+      failedGuesses = {
+        hiragana: {},
+        katakana: {},
+      };
+
       usedCharacters = [];
 
       clearStorage();
@@ -279,6 +296,9 @@ function hideEl(classname) {
      */
     function startTest() {
       hideEl("js-front");
+      hideEl("js-failures-hiragana");
+      hideEl("js-failures-katakana");
+      hideEl("js-failures");
 
       showEl("js-quiz");
       showEl("js-instructions");
@@ -305,12 +325,13 @@ function hideEl(classname) {
      * @param string font The name of the font, like 'noto-sans-jp'
      */
     function setFontClass(font) {
-      setElFontClass(getElByClass("js-font-sample"), font);
-      setElFontClass(getElByClass("js-letter"), font);
-      setElFontClass(getElByClass("js-answer-letter-jp"), font);
+      jpFont = font;
+      setElFontClass(getElByClass("js-font-sample"), jpFont);
+      setElFontClass(getElByClass("js-letter"), jpFont);
+      setElFontClass(getElByClass("js-answer-letter-jp"), jpFont);
 
       if (storageAvailable("localStorage")) {
-        localStorage.setItem("jpFont", font);
+        localStorage.setItem("jpFont", jpFont);
       }
     }
 
@@ -361,6 +382,14 @@ function hideEl(classname) {
         // For some reason it was losing focus when this happened:
         getElByClass("js-guessform-input").focus();
 
+        // Created/increment the failed guess score for this character:
+        var set = characterToSet[currentLetter[1]];
+        if (failedGuesses[set].hasOwnProperty(currentLetter[1])) {
+          failedGuesses[set][currentLetter[1]]++;
+        } else {
+          failedGuesses[set][currentLetter[1]] = 1;
+        }
+
         totalAttempts += 1;
 
         storeProgressInStorage();
@@ -394,6 +423,53 @@ function hideEl(classname) {
         if (getPercentComplete() === 100) {
           hideEl("js-guessform");
           showEl("js-complete");
+
+          if (
+            Object.keys(failedGuesses["hiragana"]).length > 0 ||
+            Object.keys(failedGuesses["katakana"]).length > 0
+          ) {
+            var maxFailuresToShow = 5;
+            var sortFunc = function (a, b) {
+              return b[1] - a[1];
+            };
+            var sets = ["hiragana", "katakana"];
+            sets.forEach(function (set) {
+              if (Object.keys(failedGuesses[set]).length > 0) {
+                // Makes an array of arrays like
+                // [["え", 2], ["い", 1], ["あ", 5]]
+                var failedGuessesArr = Object.entries(failedGuesses[set]);
+                // Sorts that in reverse:
+                var failedCounts = failedGuessesArr.sort(sortFunc);
+
+                var listHtml = "";
+                var failuresToShow = Math.min(
+                  maxFailuresToShow,
+                  failedCounts.length
+                );
+                for (var n = 0; n < failuresToShow; n++) {
+                  listHtml +=
+                    '<li><span class="js-failure-letter">' +
+                    failedCounts[n][0] +
+                    "</span><span>" +
+                    failedCounts[n][1] +
+                    "</span></li>";
+                }
+                var className = "js-failures-" + set;
+                getElByClass(className + "-list").innerHTML = listHtml;
+
+                // So that we set the font correctly for these new elements:
+                var letters = document.getElementsByClassName("js-failure-letter");
+                for (var n=0; n<letters.length; n++) {
+                  setElFontClass(letters.item(n), jpFont);
+                }
+
+                showEl(className);
+              }
+            });
+
+            showEl("js-failures");
+          }
+
           clearStorage();
         } else {
           showNewLetter();
@@ -432,6 +508,12 @@ function hideEl(classname) {
       hideEl("js-quiz");
       hideEl("js-answer");
       hideEl("js-complete");
+
+      getElByClass("js-failures-hiragana-list").innerText = "";
+      getElByClass("js-failures-katakana-list").innerText = "";
+      hideEl("js-failures-hiragana");
+      hideEl("js-failures-katakana");
+      hideEl("js-failures");
 
       showEl("js-guessform");
       showEl("js-front");
@@ -846,6 +928,14 @@ function hideEl(classname) {
 
         // ['vu', 'ヴ']
       ];
+
+      // Populate characterToSet:
+      for (var n = 0; n < characters["hiragana"].length; n++) {
+        characterToSet[characters["hiragana"][n][1]] = "hiragana";
+      }
+      for (var n = 0; n < characters["katakana"].length; n++) {
+        characterToSet[characters["katakana"][n][1]] = "katakana";
+      }
     }
 
     return exports;
