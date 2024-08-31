@@ -57,8 +57,7 @@ jobs:
         run: uv sync
 
       - name: Run ruff
-        # ruff is already installed from our requirements
-        run: ruff check .
+        run: uv run ruff check .
 
       - name: Run Tests
         # Shouldn't need to manually migrate, but otherwise the tests that use AdminSite() fail:
