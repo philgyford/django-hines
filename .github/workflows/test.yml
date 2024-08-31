@@ -78,8 +78,8 @@ jobs:
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v4
 
-      - name: Minimize uv cache
-        run: uv cache prune --ci
+      # - name: Minimize uv cache
+      #   run: uv cache prune --ci
 
       - name: Slack notification
         uses: 8398a7/action-slack@v3
