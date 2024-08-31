@@ -53,12 +53,12 @@ jobs:
             uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
             uv-${{ runner.os }}
 
+      - name: Install dependencies
+        run: uv sync
+
       - name: Run ruff
         # ruff is already installed from our requirements
         run: ruff check .
-
-      - name: Install dependencies
-        run: uv sync
 
       - name: Run Tests
         # Shouldn't need to manually migrate, but otherwise the tests that use AdminSite() fail:
