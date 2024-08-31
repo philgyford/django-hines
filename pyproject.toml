@@ -1,3 +1,35 @@
+[project]
+dependencies = [
+  "bleach",
+  "boto3",
+  "dj-database-url",
+  "Django",
+  "django-autocomplete-light",
+  "django-contrib-comments",
+  "django-cors-headers",
+  "django-ditto",
+  "django-extensions",
+  "django-hcaptcha",
+  "django-q2",
+  "django-redis",
+  "django-spectator",
+  "django-storages",
+  "django-wm",
+  "gunicorn",
+  "ipython",
+  "markdown2",
+  "psycopg[binary]",
+  "pygments",
+  "python-dotenv",
+  "requests",
+  "sentry-sdk",
+  "setproctitle",
+  "smartypants",
+]
+name = "django-hines"
+requires_python = "3.10"
+version = "1.0"
+
 [tool.coverage.report]
 omit = ["*/migrations/*"]
 
@@ -39,3 +71,21 @@ select = [
   "RUF100", # unused-noqa
   "RUF200", # invalid-pyproject-toml
 ]
+
+[tool.uv]
+dev-dependencies = [
+  "coverage[toml]",
+  "django-debug-toolbar",
+  "factory-boy",
+  "freezegun",
+  "responses",
+  "ruff",
+  "tblib",
+  # For tracebacks when running tests in parallel
+  "unittest-parametrize",
+  "coverage[toml]>=7.6.1",
+]
+
+[tool.uv.pip]
+generate-hashes = true
+python-version = "3.10"

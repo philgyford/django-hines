@@ -44,8 +44,8 @@ services:
       dockerfile: ./docker/web/Dockerfile
     command: >
       sh -c "
-      python manage.py migrate &&
-      python -Wd manage.py runserver 0.0.0.0:8000
+      uv run python manage.py migrate &&
+      uv run python -Wd manage.py runserver 0.0.0.0:8000
       "
     container_name: hines_web
     depends_on:
@@ -64,7 +64,7 @@ services:
       dockerfile: ./docker/web/Dockerfile
     command: >
       sh -c "
-      python manage.py qcluster
+      uv run python manage.py qcluster
       "
     container_name: hines_djangoq
     depends_on:

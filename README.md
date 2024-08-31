@@ -12,10 +12,9 @@ Pushing to `main` will run the commit through [this GitHub Action](https://githu
 
 When changing the python version, it will need to be changed in:
 
-- `.github/workflows/test.yml`
 - `.pre-commit-config.yaml`
-- `.python-version` (for pyenv)
-- `pyproject.toml` (ruff's target-version)
+- `.python-version`
+- `pyproject.toml` (in `project`, `tool.ruff` and `tool.uv.pip`)
 - `docker/web/Dockerfile`
 
 For local development we use Docker. The live site is on an Ubuntu 22 VPS.
