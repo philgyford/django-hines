@@ -27,7 +27,7 @@ dependencies = [
   "smartypants",
 ]
 name = "django-hines"
-requires_python = "3.10"
+requires_python = "~=3.10"
 version = "1.0"
 
 [tool.coverage.report]
