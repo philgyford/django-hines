@@ -15,7 +15,7 @@ if [[ ! -t 1 ]]; then
 fi
 
 # We need to pass this in to docker compose when we run tests and coverage:
-TEST_ENV_ARGS="-e DEBUG=FALSE -e HINES_ROOT_DIR=terry -e WM_DOMAIN_NAME=testserver -e HINES_LOG_LEVEL=CRITICAL"
+TEST_ENV_ARGS="-e DEBUG=FALSE -e HINES_ROOT_DIR=terry -e HINES_LOG_LEVEL=CRITICAL"
 
 
 # -----------------------------------------------------------------------------
@@ -49,27 +49,27 @@ function sh {
 
 function manage {
   # Run any manage.py commands
-  cmd python manage.py "${@}"
+  cmd uv run python manage.py "${@}"
 }
 
 
 function tests {
   # Run the Django tests
-  _dc ${TEST_ENV_ARGS} web python manage.py test "${@}" --parallel
+  _dc ${TEST_ENV_ARGS} web uv run python manage.py test "${@}" --parallel
 }
 
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-  _dc ${TEST_ENV_ARGS} web coverage run --concurrency=multiprocessing manage.py test --parallel
-  _dc ${TEST_ENV_ARGS} web coverage combine
-  _dc ${TEST_ENV_ARGS} web coverage html
+  _dc ${TEST_ENV_ARGS} web uv run coverage run --concurrency=multiprocessing manage.py test --parallel
+  _dc ${TEST_ENV_ARGS} web uv run coverage combine
+  _dc ${TEST_ENV_ARGS} web uv run coverage html
 }
 
 
 function sp {
   # Run the shell_plus command from django-extensions
-  cmd python manage.py shell_plus
+  cmd uv run python manage.py shell_plus
 }
 
 
@@ -91,12 +91,6 @@ function psql {
 #   # Connect to Redis with redis-cli
 #   _dc redis redis-cli "${@}"
 # }
-
-
-function pipsync {
-  # Install/uninstall/update packages
-  cmd pip-sync "${@}"
-}
 
 
 function yarn:outdated {
