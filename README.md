@@ -15,9 +15,12 @@ When changing the python version, it will need to be changed in:
 - `.pre-commit-config.yaml`
 - `.python-version`
 - `pyproject.toml` (in `project`, `tool.ruff` and `tool.uv.pip`)
-- `docker/web/Dockerfile`
 
-For local development we use Docker. The live site is on an Ubuntu 22 VPS.
+For local development we use uv to manage python version and dependencies,
+running Django on the local, host machine. Postgres, Redis, and the
+asset-building processes are run in a Docker VM.
+
+The live site is on an Ubuntu 22 VPS.
 
 ## Local development setup
 
@@ -47,13 +50,11 @@ Then start up the web, assets and database containers:
 
     $ docker compose up
 
-There are five containers:
+There are three containers:
 
-- `hines_web`: the webserver
 - `hines_db`: the postgres server
 - `hines_assets`: the front-end assets builder
 - `hines_redis`: the redis server (for django-q2 and optional caching)
-- `hines_djangoq`: the django-q2 server
 
 ### 4. Set up the database
 
@@ -96,7 +97,15 @@ Import the data into the database ():
     $ gunzip hines_dump.gz
     $ docker exec -i hines_db pg_restore --verbose --clean --no-acl --no-owner -U hines -d hines < hines_dump
 
-#### 5. Vist and set up the site
+#### 5. Run the webserver
+
+    $ ./run runserver
+
+And, optionally, as required, the Django-Q process:
+
+    $ ./run djangoq
+
+#### 6. Vist and set up the site
 
 Then go to http://www.gyford.test:8000 and you should see the site.
 
@@ -124,30 +133,15 @@ See details on the `./run` script below for running things inside the containers
 
 Adding and removing python depenencies is most easily done with a virtual environment on your host machine. This also means you can use that environment easily in VS Code.
 
-Set up and activate a virtual environment on your host machine using [virtualenv](https://virtualenv.pypa.io/en/latest/):
+Set up and activate a virtual environment on your host machine using [uv](https://github.com/astral-sh/uv):
 
-    $ virtualenv --prompt . venv
-    $ source venv/bin/activate
+    $ uv venv --python 3.10
+    $ uv sync
+    $ source .venv/bin/activate
 
-We use [pip-tools](https://pip-tools.readthedocs.io/en/latest/) to generate `requirements.txt` from `requirements.in`, and install the dependencies. Install the current dependencies into the activated virtual environment:
+To add a new depenency, add it to `pyproject.toml` and then regenerate `requirements.txt` (the file used in production):
 
-    (venv) $ python -m pip install -r requirements.txt
-
-To add a new depenency, add it to `requirements.in` and then regenerate `requirements.txt`:
-
-    (venv) $ pip-compile --upgrade --quiet --generate-hashes
-
-And do the `pip install` step again to install.
-
-To remove a dependency, delete it from `requirements.in`, run that same `pip-compile` command, and then:
-
-    (venv) $ python -m pip uninstall <module-name>
-
-To update the python dependencies in the Docker container, this should work:
-
-    $ ./run pipsync
-
-But you might have to do `docker compose build` instead?
+    (venv) $ uv pip compile pyproject.toml -o requirements.txt
 
 ### pre-commit
 
@@ -163,26 +157,11 @@ The `./run` script makes it easier to run things that are within the Docker cont
 
     $ ./run
 
-### `./run cmd`
-
-Run any command in the web container. e.g.
-
-    $ ./run cmd ls -al
-
-### `./run sh`
-
-Starts a Shell session in the web container.
-
 ### `./run manage`
 
-Run the Django `manage.py` file with any of the usual commands, within the pipenv virtual environment. e.g.
+Run the Django `manage.py` file with any of the usual commands, within the uv virtual environment. e.g.
 
     $ ./run manage makemigrations
-
-The development environment has [django-extensions](https://django-extensions.readthedocs.io/en/latest/index.html) installed so you can use its `shell_plus` and other commands. e.g.:
-
-    $ ./run manage shell_plus
-    $ ./run manage show_urls
 
 ### `./run tests`
 
@@ -201,13 +180,9 @@ Run all the tests with coverage. The HTML report files will be at `htmlcov/index
 
 ### `./run psql`
 
-Conects to PosgreSQL with psql. Add any required arguments on the end. Uses the `hines` database unless you specify another like:
+Connects to PosgreSQL with psql. Add any required arguments on the end. Uses the `hines` database unless you specify another like:
 
     $ ./run psql -d databasename
-
-### `./run pipsync`
-
-Update the installed python depenencies depending on the contents of `requirements.txt`.
 
 ### `./run yarn:outdated`
 

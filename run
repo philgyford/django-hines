@@ -15,7 +15,7 @@ if [[ ! -t 1 ]]; then
 fi
 
 # We need to pass this in to docker compose when we run tests and coverage:
-TEST_ENV_ARGS="-e DEBUG=FALSE -e HINES_ROOT_DIR=terry -e HINES_LOG_LEVEL=CRITICAL"
+TEST_ENV_ARGS="DEBUG=FALSE HINES_ROOT_DIR=terry HINES_LOG_LEVEL=CRITICAL"
 
 
 # -----------------------------------------------------------------------------
@@ -32,52 +32,56 @@ function _build_run_down {
   docker compose down
 }
 
+function _uv {
+  env ${TEST_ENV_ARGS} uv run "${@}"
+}
+
 
 # -----------------------------------------------------------------------------
-
-function cmd {
-  # Run any command you want in the web container
-  _dc web "${@}"
-}
-
-
-function sh {
-  # Start a Shell session in the web container
-  cmd sh "${@}"
-}
-
+# Helpers for running commands in the host with uv
+# -----------------------------------------------------------------------------
 
 function manage {
-  # Run any manage.py commands
-  cmd uv run python manage.py "${@}"
+  # Run any Django management command
+  _uv manage.py "${@}"
+}
+
+
+function runserver {
+  # Run the Django development webserver
+  _uv python -Wd manage.py runserver 0.0.0.0:8000
+}
+
+
+function djangoq {
+  # Run the Django-Q process
+  _uv manage.py qcluster
 }
 
 
 function tests {
   # Run the Django tests
-  _dc ${TEST_ENV_ARGS} web uv run python manage.py test "${@}" --parallel
+  _uv manage.py test "${@}" --parallel
 }
 
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-  _dc ${TEST_ENV_ARGS} web uv run coverage run --concurrency=multiprocessing manage.py test --parallel
-  _dc ${TEST_ENV_ARGS} web uv run coverage combine
-  _dc ${TEST_ENV_ARGS} web uv run coverage html
+  _uv coverage run --concurrency=multiprocessing manage.py test --parallel
+  _uv coverage combine
+  _uv coverage html
 }
 
 
-function sp {
-  # Run the shell_plus command from django-extensions
-  cmd uv run python manage.py shell_plus
-}
+# function sp {
+#   # Run the shell_plus command from django-extensions
+#   _uv manage.py shell_plus
+# }
 
 
-function shell {
-  # Start a shell session in the web container
-  cmd bash "${@}"
-}
-
+# -----------------------------------------------------------------------------
+# Helpers for running commands in the Docker container
+# -----------------------------------------------------------------------------
 
 function psql {
   # Connect to PostgreSQL with psql

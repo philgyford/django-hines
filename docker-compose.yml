@@ -19,7 +19,7 @@ services:
     # Uncomment this and restart to log all queries to the console:
     # command: ["postgres", "-c", "log_statement=all"]
     ports:
-      - "5432:5432"
+      - "5555:5432"
     restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -33,47 +33,12 @@ services:
           cpus: "0"
           memory: "0"
     image: "redis:7-bullseye"
+    ports:
+      - "6666:6379"
     restart: unless-stopped
     stop_grace_period: "3s"
     volumes:
       - "redis:/data"
-
-  web:
-    build:
-      context: .
-      dockerfile: ./docker/web/Dockerfile
-    command: >
-      sh -c "
-      uv run python manage.py migrate &&
-      uv run python -Wd manage.py runserver 0.0.0.0:8000
-      "
-    container_name: hines_web
-    depends_on:
-      - db
-      - redis
-    env_file: .env
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
-    volumes:
-      - .:/code
-
-  django-q:
-    build:
-      context: .
-      dockerfile: ./docker/web/Dockerfile
-    command: >
-      sh -c "
-      uv run python manage.py qcluster
-      "
-    container_name: hines_djangoq
-    depends_on:
-      - redis
-      - web
-    env_file: .env
-    restart: unless-stopped
-    volumes:
-      - .:/code
 
 volumes:
   postgres_data:
