@@ -1,6 +1,7 @@
 """
 Should be extended by settings for specific environments.
 """
+
 import os
 from pathlib import Path
 
@@ -55,7 +56,6 @@ INSTALLED_APPS = [
     "spectator.reading",
     "sortedm2m",
     "corsheaders",
-    "mentions",
     "ditto.core",
     "ditto.flickr",
     "ditto.lastfm",
@@ -82,7 +82,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "mentions.middleware.WebmentionHeadMiddleware",
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
@@ -411,26 +410,6 @@ else:
 TAGGIT_CASE_INSENSITIVE = True
 
 
-# django-wm ############################################################
-# https://github.com/beatonma/django-wm/
-
-WEBMENTIONS_USE_CELERY = False
-
-WEBMENTIONS_AUTO_APPROVE = False
-
-# So that we only save Webmentions to the pages of Posts:
-WEBMENTIONS_INCOMING_TARGET_MODEL_REQUIRED = True
-
-# Don't want to register the times we refer to our own pages:
-WEBMENTIONS_ALLOW_SELF_MENTIONS = False
-
-WEBMENTIONS_ALLOW_OUTGOING_DEFAULT = False
-
-WEBMENTIONS_URL_SCHEME = "https" if HINES_USE_HTTPS else "http"
-
-DOMAIN_NAME = os.getenv("WM_DOMAIN_NAME", default="")
-
-
 # sentry-sdk ###########################################################
 
 # Sentry
@@ -502,11 +481,6 @@ HINES_COMMENTS_CLOSE_AFTER_DAYS = 30
 # The slug to use for the RSS feed for submitted comments used by Admins:
 HINES_COMMENTS_ADMIN_FEED_SLUG = os.getenv(
     "HINES_COMMENTS_ADMIN_FEED_SLUG", default="admin-comments"
-)
-
-# The slug to use for the RSS feed for webmentions used by Admins:
-HINES_WEBMENTIONS_ADMIN_FEED_SLUG = os.getenv(
-    "HINES_WEBMENTIONS_ADMIN_FEED_SLUG", default="admin-webmentions"
 )
 
 # Used to check submitted comments for spam using https://akismet.com:

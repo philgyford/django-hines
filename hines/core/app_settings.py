@@ -75,9 +75,3 @@ TEMPLATE_SETS = getattr(settings, "HINES_TEMPLATE_SETS", None)
 TIME_FORMAT = getattr(settings, "HINES_TIME_FORMAT", "%H:%M")
 
 USE_HTTPS = getattr(settings, "HINES_USE_HTTPS", False)
-
-WEBMENTIONS_ADMIN_FEED_SLUG = getattr(
-    settings,
-    "HINES_WEBMENTIONS_ADMIN_FEED_SLUG",
-    "admin-webmentions",
-)

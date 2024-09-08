@@ -1,8 +1,5 @@
-import re
-
 from django.contrib.sites.models import Site
 from django.urls import reverse
-from mentions.models import Webmention
 
 from hines.core import app_settings
 from hines.core.recent import RecentObjects
@@ -115,74 +112,3 @@ class EverythingFeedRSS(ExtendedFeed):
         elif app_settings.AUTHOR_EMAIL:
             email = app_settings.AUTHOR_EMAIL
         return email
-
-
-class AdminWebmentionsFeedRSS(ExtendedFeed):
-    """
-    Includes both public and spam comments, plus links to
-    approve/delete/edit them in the Admin.
-
-    Assumes that the target_object of a Webmention is a weblog Post
-    object, that has a `title` field and a
-    `get_absolute_url_with_domain()` method.
-    """
-
-    feed_type = ExtendedRSSFeed
-
-    # This will be used in <content:encoded>
-    content_template = "hines_core/feeds/webmentions_admin.html"
-
-    # Getting details about the feed/site:
-
-    def get_object(self, request):
-        return Site.objects.get_current()
-
-    def link(self, obj):
-        return get_site_url()
-
-    def title(self, obj):
-        return f"Webmentions on {obj.name} (Admin)"
-
-    def description(self, obj):
-        return f"The most recent webmentions on {obj.name} (Admin)"
-
-    def items(self, obj):
-        """
-        Because webmentions can be accepted for any URL, but we're only
-        interested in those on Posts, we're ignoring all Webmentions
-        that don't have a valid GenericForeignKey – they'll be ones
-        to pages that aren't PostDetail pages.
-        """
-        return Webmention.objects.exclude(object_id__isnull=True).order_by(
-            "-created_at"
-        )[:10]
-
-    # Getting details for each post in the feed:
-
-    def item_link(self, item):
-        "The #m1 fragment links to the mention on the Post's page, if published"
-        return item.target_object.get_absolute_url_with_domain() + f"#m{item.pk}"
-
-    def item_pubdate(self, item):
-        return item.published
-
-    def item_title(self, item):
-        """
-        For each item's title, include the title of the linked-to blog Post, followed
-        by the URL that mentioned it.
-        Flag as not validated, if it isn't.
-        """
-        url_re = re.compile(r"https?://(www\.)?")
-        source_url = url_re.sub("", item.source_url)
-        title = f"{item.target_object.title}: {source_url}"
-
-        if not item.validated:
-            title = f"[NOT VALIDATED] {title}"
-
-        return title
-
-    def item_description(self, item):
-        "Return the most important thing, the admin URL for the simple description"
-        return get_site_url() + reverse(
-            "admin:mentions_webmention_change", args=[item.pk]
-        )

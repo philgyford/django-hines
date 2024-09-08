@@ -7,7 +7,6 @@ import smartypants
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import Count
 from django.template.defaultfilters import linebreaks
@@ -15,8 +14,6 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
 from django_comments.moderation import CommentModerator, moderator
-from mentions.models.mixins.mentionable import MentionableMixin
-from mentions.models.webmention import Webmention
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItemBase
 
@@ -137,7 +134,7 @@ class TaggedPost(TaggedItemBase):
     content_object = models.ForeignKey("Post", on_delete=models.CASCADE)
 
 
-class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
+class Post(TimeStampedModelMixin, models.Model):
     """
     TimeStampedModelMixin gives us:
 
@@ -251,9 +248,6 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
 
     trackback_count = models.IntegerField(default=0, blank=False, null=False)
 
-    # ALSO HAS:
-    # allow_outgoing_webmentions - from django-wm
-
     # But you might want to use self.get_tags() instead, so they're in order.
     tags = TaggableManager(through=TaggedPost, blank=True)
 
@@ -275,18 +269,7 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
         self.body_html = self.htmlize_text(self.body, "body")
         self.excerpt = self.make_excerpt()
 
-        # # Adapted from mentions.models.mixins.mentionable.MentionableMixin:
-        # if self.status == self.Status.LIVE and self.allow_outgoing_webmentions:
-        #     log.info("Outgoing webmention processing task added to queue...")
-        #     handle_outgoing_webmentions(self.get_absolute_url(), self.all_text())
-
-        # # To prevent MentionableMixin.save() handling them again:
-        # orig_allow_outgoing_webmentions = self.allow_outgoing_webmentions
-
         super().save(*args, **kwargs)
-
-        # # Put it back how it was:
-        # self.allow_outgoing_webmentions = orig_allow_outgoing_webmentions
 
         # Expire old detail page, home page, and blog home page.
         # Assumes the things used to generate the absolute_url haven't changed.
@@ -343,13 +326,6 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
             return None
         else:
             return self.trackbacks.filter(is_visible=True)
-
-    def should_process_webmentions(self):
-        """
-        Return True if this instance should process webmentions when saved.
-        Overriding the default from MentionableMixin.
-        """
-        return self.allow_outgoing_webmentions and self.status == self.Status.LIVE
 
     @property
     def title_text(self):
@@ -540,35 +516,6 @@ class Post(TimeStampedModelMixin, MentionableMixin, models.Model):
             return False
         else:
             return self.comments_are_open
-
-    def get_content_html(self):
-        "Required for django-wm's MentionableMixin"
-        return f"{self.intro_html} {self.body_html}"
-
-    @classmethod
-    def resolve_from_url_kwargs(
-        cls, blog_slug, year, month, day, post_slug, **url_kwargs
-    ):
-        """
-        Used by django-wm's MentionableMixin to find the matching Post
-        based on a URL.
-        """
-        obj = cls.objects.get(
-            blog__slug=blog_slug,
-            time_published__year=year,
-            time_published__month=month,
-            time_published__day=day,
-            slug=post_slug,
-        )
-        return obj
-
-    def get_received_mentions(self):
-        "Returns approved, validated incoming Webmentions"
-
-        ct = ContentType.objects.get_for_model(self)
-        return Webmention.objects.filter(
-            content_type=ct, object_id=self.pk, approved=True, validated=True
-        ).order_by("created_at")
 
 
 class PostCommentModerator(CommentModerator):

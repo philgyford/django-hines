@@ -1,5 +1,6 @@
 [project]
 dependencies = [
+  "beautifulsoup4",
   "bleach",
   "boto3",
   "dj-database-url",
@@ -14,7 +15,6 @@ dependencies = [
   "django-redis",
   "django-spectator",
   "django-storages",
-  "django-wm",
   "gunicorn",
   "ipython",
   "markdown2",
@@ -27,7 +27,7 @@ dependencies = [
   "smartypants",
 ]
 name = "django-hines"
-requires_python = "~=3.10"
+requires-python = "~=3.10"
 version = "1.0"
 
 [tool.coverage.report]

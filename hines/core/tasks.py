@@ -68,12 +68,6 @@ def fetch_twitter_tweets(recent="200", account=None):
     return out.getvalue()
 
 
-def pending_mentions():
-    out = StringIO()
-    call_command("pending_mentions", stdout=out)
-    return out.getvalue()
-
-
 def publish_scheduled_posts():
     out = StringIO()
     call_command("publish_scheduled_posts", stdout=out)

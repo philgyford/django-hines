@@ -18,7 +18,6 @@ from taggit.models import Tag
 
 from hines.core.views import CacheMixin, PaginatedListView, TemplateSetMixin
 
-from .forms import ManualSubmitWebmentionForm
 from .models import Blog, Post
 
 # Colorful
@@ -151,9 +150,6 @@ class PostDetailView(TemplateSetMixin, DateDetailView):
             if self.object.status != Post.Status.LIVE:
                 context["is_preview"] = True
 
-        context["webmention_form"] = ManualSubmitWebmentionForm(
-            initial={"target": self.object.get_absolute_url_with_domain()}
-        )
         return context
 
     def get_date(self):

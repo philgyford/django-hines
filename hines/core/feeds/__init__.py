@@ -1,9 +1,8 @@
 from .base import ExtendedFeed, ExtendedRSSFeed
-from .feeds import AdminWebmentionsFeedRSS, EverythingFeedRSS
+from .feeds import EverythingFeedRSS
 
 __all___ = [
     ExtendedFeed,
     ExtendedRSSFeed,
     EverythingFeedRSS,
-    AdminWebmentionsFeedRSS,
 ]

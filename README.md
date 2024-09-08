@@ -332,7 +332,6 @@ Start the service:
 - Hourly: `hines.core.tasks.fetch_lastfm_scrobbles`, kwargs `days="1", account="gyford"`
 - Hourly: `hines.core.tasks.fetch_pinboard_bookmarks`, kwargs `recent="20", account="philgyford"`
 - Hourly: `hines.core.tasks.fetch_twitter_tweets`, kwargs `recent="200", account="philgyford"`
-- Hourly: `hines.core.tasks.pending_mentions`
 - Daily: `hines.core.tasks.fetch_lastfm_scrobbles`, kwargs `days="14", account="gyford"`
 - Daily: `hines.core.tasks.fetch_twitter_favorites`, kwargs `recent="200", account="philgyford"`
 - Daily: `hines.core.tasks.fetch_twitter_files`

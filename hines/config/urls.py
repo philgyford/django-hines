@@ -98,7 +98,6 @@ root_dir_patterns = [
 
 urlpatterns = [
     path("up/", include("hines.up.urls")),
-    path("webmentions/", include("mentions.urls")),
     # REDIRECTS
     path(
         "favicon.ico",
