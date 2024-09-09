@@ -201,9 +201,8 @@ django-redis==5.4.0 \
     --hash=sha256:6a02abaa34b0fea8bf9b707d2c363ab6adc7409950b2db93602e6cb292818c42 \
     --hash=sha256:ebc88df7da810732e2af9987f7f426c96204bf89319df4c6da6ca9a2942edd5b
     # via django-hines (pyproject.toml)
-django-sortedm2m==3.1.1 \
-    --hash=sha256:136f3d4e0820b351608a7141d88ac3ba7fafcd37a9b8361ad00ffe616a790be5 \
-    --hash=sha256:c67ae0757e8e60ded15a9ba04d0862fe39fba3d5b865899c2472166ff0050f2c
+django-sortedm2m==4.0.0 \
+    --hash=sha256:7e76f3f3ea3184b4ca1d4043ec75316c606d00f5534fc71e69981d8b2198ff33
     # via django-ditto
 django-spectator==14.1.1 \
     --hash=sha256:b722294344faf1f79b4f637fd60ad90809013078b9e674027c4fc44993427b39
