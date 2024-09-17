@@ -103,7 +103,10 @@ function showEl(classname) {
  * Hide the element with a CSS class of `classname`.
  */
 function hideEl(classname) {
-  getElByClass(classname).style.display = "none";
+  let el = getElByClass(classname);
+  if (el) {
+    el.style.display = "none";
+  }
 }
 
 (function () {
@@ -458,8 +461,9 @@ function hideEl(classname) {
                 getElByClass(className + "-list").innerHTML = listHtml;
 
                 // So that we set the font correctly for these new elements:
-                var letters = document.getElementsByClassName("js-failure-letter");
-                for (var n=0; n<letters.length; n++) {
+                var letters =
+                  document.getElementsByClassName("js-failure-letter");
+                for (var n = 0; n < letters.length; n++) {
                   setElFontClass(letters.item(n), jpFont);
                 }
 
