@@ -104,7 +104,7 @@ function showEl(classname) {
  */
 function hideEl(classname) {
   let el = getElByClass(classname);
-  if (el) {
+  if (el.length !== 0) {
     el.style.display = "none";
   }
 }
