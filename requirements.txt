@@ -211,9 +211,9 @@ django-storages==1.14.3 \
     --hash=sha256:31f263389e95ce3a1b902fb5f739a7ed32895f7d8b80179fe7453ecc0dfe102e \
     --hash=sha256:95a12836cd998d4c7a4512347322331c662d9114c4344f932f5e9c0fce000608
     # via django-hines (pyproject.toml)
-django-taggit==5.0.1 \
-    --hash=sha256:a0ca8a28b03c4b26c2630fd762cb76ec39b5e41abf727a7b66f897a625c5e647 \
-    --hash=sha256:edcd7db1e0f35c304e082a2f631ddac2e16ef5296029524eb792af7430cab4cc
+django-taggit==6.0.0 \
+    --hash=sha256:7094f797b7e5e3727525a0af7bc550860000ddc2248266529d568eca61b39fb1 \
+    --hash=sha256:723d98bd5c536daa3c0e1bdae0965f7005a9b15269816bb4053fafec4ebad57e
     # via django-ditto
 django-wm==4.1.1 \
     --hash=sha256:3c5edc17e28b347fe193c2c62d1f3dec35b0c87a78dcff5ed7f3cad321794905 \
