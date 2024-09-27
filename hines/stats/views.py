@@ -91,7 +91,7 @@ class StatsView(CacheMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         "Ensure the slug is valid for our pages."
-        slug = kwargs.get("slug", None)
+        slug = kwargs.get("slug")
 
         valid_slugs = [p["slug"] for p in self.pages]
 

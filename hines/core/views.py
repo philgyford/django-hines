@@ -293,10 +293,10 @@ class WritingResourcesRedirectView(RedirectView):
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        year = kwargs.get("year", None)
-        month = kwargs.get("month", None)
-        day = kwargs.get("day", None)
-        path = kwargs.get("path", None)
+        year = kwargs.get("year")
+        month = kwargs.get("month")
+        day = kwargs.get("day")
+        path = kwargs.get("path")
 
         if path is None:
             msg = "No path supplied."
@@ -870,7 +870,7 @@ class TweetDetailRedirectView(RedirectView):
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        twitter_id = kwargs.get("twitter_id", None)
+        twitter_id = kwargs.get("twitter_id")
 
         tweet = get_object_or_404(Tweet, twitter_id=twitter_id)
 
