@@ -250,9 +250,9 @@ jmespath==1.0.1 \
     # via
     #   boto3
     #   botocore
-markdown2==2.5.0 \
-    --hash=sha256:300d4429b620ebc974ef512339a9e08bc080473f95135a91f33906e24e8280c1 \
-    --hash=sha256:9bff02911f8b617b61eb269c4c1a5f9b2087d7ff051604f66a61b63cab30adc2
+markdown2==2.5.1 \
+    --hash=sha256:12fc04ea5a87f7bb4b65acf5bf3af1183b20838cc7d543b74c92ec7eea4bbc74 \
+    --hash=sha256:190ae60a4bd0425c60c863bede18a9f3d45b1cbf3fbc9f40b4fac336ff2c520b
     # via django-hines (pyproject.toml)
 matplotlib-inline==0.1.7 \
     --hash=sha256:8423b23ec666be3d16e16b60bdd8ac4e86e840ebd1dd11a30b9f117f2fa0ab90 \
