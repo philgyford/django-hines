@@ -14,7 +14,7 @@ if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
 
-# We need to pass this in to docker compose when we run tests and coverage:
+# We need to adjust these when we run tests and coverage:
 TEST_ENV_ARGS="DEBUG=FALSE HINES_ROOT_DIR=terry HINES_LOG_LEVEL=CRITICAL"
 
 
@@ -33,7 +33,7 @@ function _build_run_down {
 }
 
 function _uv {
-  env ${TEST_ENV_ARGS} uv run "${@}"
+  env uv run "${@}"
 }
 
 
@@ -61,15 +61,15 @@ function djangoq {
 
 function tests {
   # Run the Django tests
-  _uv manage.py test "${@}" --parallel
+  _uv ${TEST_ENV_ARGS} manage.py test "${@}" --parallel
 }
 
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-  _uv coverage run --concurrency=multiprocessing manage.py test --parallel
-  _uv coverage combine
-  _uv coverage html
+  _uv ${TEST_ENV_ARGS} coverage run --concurrency=multiprocessing manage.py test --parallel
+  _uv ${TEST_ENV_ARGS} coverage combine
+  _uv ${TEST_ENV_ARGS} coverage html
 }
 
 
