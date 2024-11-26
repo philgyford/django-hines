@@ -70,8 +70,8 @@ select = [
   "RUF200", # invalid-pyproject-toml
 ]
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
   "coverage[toml]",
   "django-debug-toolbar",
   "factory-boy",
