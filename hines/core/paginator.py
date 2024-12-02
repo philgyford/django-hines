@@ -195,7 +195,8 @@ class DiggPaginator(ExPaginator):
         max_padding = int(math.ceil(self.body / 2.0) - 1)
         self.padding = kwargs.pop("padding", min(4, max_padding))
         if self.padding > max_padding:
-            raise ValueError("padding too large for body (max %d)" % max_padding)
+            msg = f"padding too large for body (max {max_padding})"
+            raise ValueError(msg)
         super().__init__(*args, **kwargs)
 
     def page(self, number, *args, **kwargs):
