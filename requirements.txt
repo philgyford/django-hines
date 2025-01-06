@@ -567,9 +567,9 @@ tzdata==2024.2 ; sys_platform == 'win32' \
 unittest-parametrize==1.5.0 \
     --hash=sha256:957f4a0ef73e46687ae898d805e9736efeb98fe1900efc33b893a2c9abe27359 \
     --hash=sha256:8047ca934b6cfc00ebc2b950b25dad3a3666a4e43312a954bc37707b8490e2bc
-urllib3==2.2.3 \
-    --hash=sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9 \
-    --hash=sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac
+urllib3==2.3.0 \
+    --hash=sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df \
+    --hash=sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d
 wcwidth==0.2.13 \
     --hash=sha256:72ea0c06399eb286d978fdedb6923a9eb47e1c486ce63e9b4e64fc18303972b5 \
     --hash=sha256:3da69048e4540d84af32131829ff948f1e022c1c6bdb8d6102117aac784f6859
