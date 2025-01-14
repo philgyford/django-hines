@@ -594,9 +594,9 @@ typing-extensions==4.12.2 \
 tzdata==2024.2 ; sys_platform == 'win32' \
     --hash=sha256:7d85cc416e9382e69095b7bdf4afd9e3880418a2413feec7069d533d6b4e31cc \
     --hash=sha256:a48093786cdcde33cad18c2555e8532f34422074448fbc874186f0abd79565cd
-unittest-parametrize==1.5.0 \
-    --hash=sha256:957f4a0ef73e46687ae898d805e9736efeb98fe1900efc33b893a2c9abe27359 \
-    --hash=sha256:8047ca934b6cfc00ebc2b950b25dad3a3666a4e43312a954bc37707b8490e2bc
+unittest-parametrize==1.6.0 \
+    --hash=sha256:d9d2209a265b61b310ce81c1890f0e3a2282025deae758773f04d5a692cf1a3f \
+    --hash=sha256:fcbc0023304b08624b38a4762d25b691468d66f61fd5f11672b372ed71eee0e2
 urllib3==2.3.0 \
     --hash=sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df \
     --hash=sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d
