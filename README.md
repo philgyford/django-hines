@@ -113,35 +113,42 @@ Log in to the [Django Admin](http://www.gyford.test:8000/backstage/), go to the 
 
 ## Ongoing work
 
-### Docker
+### Docker databases
 
-Whenever you come back to start work you need to start the containers up again by doing this from the project directory:
+The Postgres and Redis databases, and the assets processing, are in Docker
+containers for local development. Start them with:
 
     $ docker compose up
 
-When you want to stop the server, then this from the same directory:
+Stop with:
 
     $ docker compose down
 
-You can check if anything's running by doing this, which will list any Docker processes:
-
-    $ docker ps
-
 See details on the `./run` script below for running things inside the containers.
 
-### Python dependencies with virtualenv and pip-tools
+### uv environment
 
-Adding and removing python depenencies is most easily done with a virtual environment on your host machine. This also means you can use that environment easily in VS Code.
+Create a virtual env and install Python dependencies using `uv`:
 
-Set up and activate a virtual environment on your host machine using [uv](https://github.com/astral-sh/uv):
-
-    $ uv venv --python 3.10
     $ uv sync
-    $ source .venv/bin/activate
 
-To add a new depenency, add it to `pyproject.toml` and then regenerate `requirements.txt` (the file used in production):
+The webserver and optional django-q processes are run on your local machine,
+not in Docker:
 
-    (venv) $ uv pip compile pyproject.toml -o requirements.txt
+    $ run runserver
+
+And:
+
+    $ run djangoq
+
+See the `./run` script for more shortcuts.
+
+## Updating dependencies
+
+The live site currently doesn't use `uv`, so we need to keep `requirements.txt`
+updated if we change anything:
+
+    $ uv pip compile pyproject.toml -o requirements.txt
 
 ### pre-commit
 

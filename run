@@ -32,50 +32,45 @@ function _build_run_down {
   docker compose down
 }
 
-function _uv {
-  env uv run "${@}"
-}
-
-
 # -----------------------------------------------------------------------------
 # Helpers for running commands in the host with uv
 # -----------------------------------------------------------------------------
 
 function manage {
   # Run any Django management command
-  _uv manage.py "${@}"
+  uv run manage.py "${@}"
 }
 
 
 function runserver {
   # Run the Django development webserver
-  _uv python -Wd manage.py runserver 0.0.0.0:8000
+  uv run python -Wd manage.py runserver 0.0.0.0:8000
 }
 
 
 function djangoq {
   # Run the Django-Q process
-  _uv manage.py qcluster
+  uv run manage.py qcluster
 }
 
 
 function tests {
   # Run the Django tests
-  _uv ${TEST_ENV_ARGS} manage.py test "${@}" --parallel
+  env ${TEST_ENV_ARGS} uv run manage.py test "${@}" --parallel
 }
 
 
 function coverage {
   # Run the tests and generate a coverage report in htmlcov/
-  _uv ${TEST_ENV_ARGS} coverage run --concurrency=multiprocessing manage.py test --parallel
-  _uv ${TEST_ENV_ARGS} coverage combine
-  _uv ${TEST_ENV_ARGS} coverage html
+  env ${TEST_ENV_ARGS} uv run coverage run --concurrency=multiprocessing manage.py test --parallel
+  env ${TEST_ENV_ARGS} uv run coverage combine
+  env ${TEST_ENV_ARGS} uv run coverage html
 }
 
 
 # function sp {
 #   # Run the shell_plus command from django-extensions
-#   _uv manage.py shell_plus
+#   uv run manage.py shell_plus
 # }
 
 

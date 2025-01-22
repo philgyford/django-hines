@@ -3,6 +3,7 @@ Should be extended by settings for specific environments.
 """
 
 import os
+import sys
 from pathlib import Path
 
 import dj_database_url
@@ -309,21 +310,6 @@ TEST_RUNNER = "hines.core.test_runner.HinesTestRunner"
 
 if DEBUG:
     # Changes for local development
-
-    MIDDLEWARE += [
-        "debug_toolbar.middleware.DebugToolbarMiddleware",
-    ]
-
-    INSTALLED_APPS += ["debug_toolbar", "django_extensions"]
-
-    def show_toolbar(request):
-        return True
-
-    DEBUG_TOOLBAR_CONFIG = {
-        "INTERCEPT_REDIRECTS": False,
-        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-    }
-
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
@@ -344,6 +330,22 @@ CORS_ALLOWED_ORIGINS = [
     "https://cloudflareinsights.com",
     "https://static.cloudflareinsights.com",
 ]
+
+# django-debug-toolbar #################################################
+
+TESTING = "test" in sys.argv
+
+if not TESTING and DEBUG:
+    INSTALLED_APPS = [*INSTALLED_APPS, "debug_toolbar"]
+    MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware", *MIDDLEWARE]
+
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "INTERCEPT_REDIRECTS": False,
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
 
 # django-hcaptcha ######################################################
 # https://github.com/AndrejZbin/django-hcaptcha

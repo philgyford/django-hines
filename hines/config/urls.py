@@ -1,3 +1,4 @@
+from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls import static
 from django.contrib import admin
@@ -167,7 +168,8 @@ if settings.DEBUG:
 
     urlpatterns += static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-    if "debug_toolbar" in settings.INSTALLED_APPS:
-        import debug_toolbar
 
-        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+if not settings.TESTING:
+    urlpatterns = [
+        *urlpatterns,
+    ] + debug_toolbar_urls()
