@@ -1,4 +1,3 @@
-from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls import static
 from django.contrib import admin
@@ -170,6 +169,8 @@ if settings.DEBUG:
 
 
 if not settings.TESTING:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
     urlpatterns = [
         *urlpatterns,
     ] + debug_toolbar_urls()
