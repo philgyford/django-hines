@@ -53,7 +53,7 @@ spectator_patterns = (
 twitter_patterns = (
     [
         re_path(
-            r"^(?P<screen_name>\w+)/(?P<twitter_id>\d+)/$",
+            r"^(?P<screen_name>\w+)/(?P<twitter_id>[0-9]+)/$",
             view=core_views.TweetDetailRedirectView.as_view(),
             name="tweet_detail",
         ),
@@ -78,7 +78,7 @@ root_dir_patterns = [
     path("stats/", include("hines.stats.urls")),
     path("patterns/", include("hines.patterns.urls")),
     re_path(
-        r"^writing/resources/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/"
+        r"^writing/resources/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/"
         r"(?P<path>.*?)$",
         core_views.WritingResourcesRedirectView.as_view(),
     ),
