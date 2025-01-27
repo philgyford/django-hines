@@ -203,8 +203,9 @@ django-redis==5.4.0 \
 django-sortedm2m==4.0.0 \
     --hash=sha256:7e76f3f3ea3184b4ca1d4043ec75316c606d00f5534fc71e69981d8b2198ff33
     # via django-ditto
-django-spectator==14.2.0 \
-    --hash=sha256:beb512edf6686a10052a490d7024090958351bdd159941d935bec7051914b7e2
+django-spectator==15.0.1 \
+    --hash=sha256:14065fef64cb330739f2d38cc4c261812d31f0349ac5b604a5d205d6892749fa \
+    --hash=sha256:3c7e6c0c4d4ce4d0fc0a2bd78f46bd6f70adaef2185d5a7059f5bb7ceb304e1b
     # via django-hines (pyproject.toml)
 django-storages==1.14.4 \
     --hash=sha256:69aca94d26e6714d14ad63f33d13619e697508ee33ede184e462ed766dc2a73f \
