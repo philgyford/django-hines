@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import feeds, views
 
 app_name = "pinboard"
 
@@ -13,6 +13,11 @@ urlpatterns = [
         "bookmark-tag-autocomplete/",
         views.BookmarkTagAutocomplete.as_view(),
         name="bookmark_tag_autocomplete",
+    ),
+    path(
+        "feeds/rss/",
+        feeds.BookmarksFeedRSS(),
+        name="bookmarks_feed_rss",
     ),
     path(
         # These path converters are defined in config.urls:

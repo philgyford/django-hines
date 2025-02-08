@@ -43,6 +43,8 @@ class FeedTestCase(TestCase):
     def assertChildNodes(self, elem, expected):  # noqa: N802
         actual = set(n.nodeName for n in elem.childNodes)
         expected = set(expected)
+        # print("Actual", actual)
+        # print("Expected", expected)
         self.assertEqual(actual, expected)
 
     def assertChildNodeContent(self, elem, expected):  # noqa: N802
