@@ -2,6 +2,8 @@ import datetime
 import random
 
 from dal import autocomplete
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -315,21 +317,21 @@ class PostYearArchiveView(CacheMixin, PostDatedArchiveMixin, YearArchiveView):
     template_name = "weblogs/post_archive_year.html"
 
 
-class PostTagAutocomplete(autocomplete.Select2QuerySetView):
+class PostTagAutocomplete(LoginRequiredMixin, autocomplete.Select2QuerySetView):
     """
     Used to autocomplete tag suggestions in the Admin Post change view.
     Using django-autocomplete-light.
     """
 
     def get_queryset(self):
-        if not self.request.user.is_authenticated:
-            msg = "Not found"
-            raise Http404(msg)
-
         qs = Tag.objects.all()
 
         if self.q:
-            qs = qs.filter(name__istartswith=self.q).order_by("name")
+            qs = (
+                qs.filter(name__istartswith=self.q)
+                .annotate(count=Count("post"))
+                .order_by("-count")
+            )
 
         return qs
 

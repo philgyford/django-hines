@@ -497,6 +497,62 @@ class PostYearArchiveViewTestCase(ViewTestCase):
         self.assertEqual(response.context_data["blog"], self.blog)
 
 
+class PostTagAutocompleteTestCase(ViewTestCase):
+    "Testing while logged out"
+
+    def test_response(self):
+        "It should redirect to login page"
+        response = self.client.get("/terry/post-tag-autocomplete/?q=foo")
+        self.assertRedirects(
+            response,
+            "/backstage/login/?next=/terry/post-tag-autocomplete/?q=foo",
+            status_code=302,
+            target_status_code=200,
+        )
+
+
+class AuthenticatedPostTagAutocompleteTestCase(ViewTestCase):
+    "Testing while logged in"
+
+    def setUp(self):
+        super().setUp()
+        user = User.objects.create_user("bob", "bob@example.com", "pass")
+        self.client.force_login(user=user)
+
+    def test_response_authenticated(self):
+        "It should respond with 200 for authenticated users"
+        response = self.client.get("/terry/post-tag-autocomplete/?q=foo")
+        self.assertEqual(response.status_code, 200)
+
+    def test_tags(self):
+        "It should return the requested tags, most popular first"
+        post_1 = LivePostFactory()
+        post_1.tags.set(["foo"])
+        tag_1 = post_1.tags.first()
+
+        post_2 = LivePostFactory()
+        post_2.tags.set(["food"])
+        tag_2 = post_2.tags.first()
+
+        post_3 = LivePostFactory()
+        post_3.tags.set(["bar"])
+
+        post_4 = LivePostFactory()
+        post_4.tags.set(["food"])
+
+        response = self.client.get("/terry/post-tag-autocomplete/?q=foo")
+        self.assertJSONEqual(
+            response.content,
+            {
+                "results": [
+                    {"id": f"{tag_2.id}", "text": "food", "selected_text": "food"},
+                    {"id": f"{tag_1.id}", "text": "foo", "selected_text": "foo"},
+                ],
+                "pagination": {"more": False},
+            },
+        )
+
+
 class RandomPhilViewTestCase(ViewTestCase):
     def test_templates_default(self):
         response = views.RandomPhilView.as_view()(self.request)
