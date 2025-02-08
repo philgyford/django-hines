@@ -4,13 +4,13 @@ from django.contrib import admin
 from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemaps_views
 from django.templatetags.static import static as static_tag
-from django.urls import include, path, re_path
+from django.urls import include, path, re_path, register_converter
 from django.views.generic.base import RedirectView
 from spectator.core.sitemaps import CreatorSitemap
 from spectator.events import sitemaps as event_sitemaps
 from spectator.reading import sitemaps as reading_sitemaps
 
-from hines.core import app_settings
+from hines.core import app_settings, converters
 from hines.core import views as core_views
 from hines.core.sitemaps import PagesSitemap
 from hines.links.sitemaps import BookmarkSitemap
@@ -18,6 +18,14 @@ from hines.weblogs.sitemaps import PostSitemap
 
 # e.g. 'phil':
 ROOT_DIR = app_settings.ROOT_DIR
+
+# Used in core and weblogs
+register_converter(converters.FourDigitYearConverter, "yyyy")
+register_converter(converters.TwoDigitMonthConverter, "mm")
+register_converter(converters.TwoDigitDayConverter, "dd")
+
+# Used in links
+register_converter(converters.WordCharacterConverter, "word")
 
 
 sitemaps = {

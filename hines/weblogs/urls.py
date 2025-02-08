@@ -1,13 +1,6 @@
-from django.urls import path, register_converter
-
-from hines.core import converters
+from django.urls import path
 
 from . import feeds, views
-
-register_converter(converters.FourDigitYearConverter, "yyyy")
-register_converter(converters.TwoDigitMonthConverter, "mm")
-register_converter(converters.TwoDigitDayConverter, "dd")
-
 
 app_name = "weblogs"
 
@@ -32,12 +25,14 @@ urlpatterns = [
         name="random_phil_2002",
     ),
     path(
+        # These path converters are defined in config.urls:
         "<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>.php",
         views.PostRedirectView.as_view(),
         name="post_redirect",
     ),
     # Same as above but with index.php instead.
     path(
+        # These path converters are defined in config.urls:
         "<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>/index.php",
         views.PostRedirectView.as_view(),
         name="post_redirect_index",
@@ -62,21 +57,25 @@ urlpatterns = [
         name="blog_tag_detail",
     ),
     path(
+        # These path converters are defined in config.urls:
         "<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>/",
         views.PostDetailView.as_view(),
         name="post_detail",
     ),
     path(
+        # These path converters are defined in config.urls:
         "<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/",
         views.PostDayArchiveView.as_view(),
         name="post_day_archive",
     ),
     path(
+        # These path converters are defined in config.urls:
         "<slug:blog_slug>/<yyyy:year>/<mm:month>/",
         views.PostMonthArchiveView.as_view(),
         name="post_month_archive",
     ),
     path(
+        # These path converters are defined in config.urls:
         "<slug:blog_slug>/<yyyy:year>/",
         views.PostYearArchiveView.as_view(),
         name="post_year_archive",

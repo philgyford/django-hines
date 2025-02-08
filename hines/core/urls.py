@@ -1,15 +1,11 @@
 from django.contrib.flatpages import views as flatpages_views
-from django.urls import path, register_converter
+from django.urls import path
 from django.views.generic.base import RedirectView
 
 from hines.custom_comments import feeds as comments_feeds
 
-from . import app_settings, converters, feeds
+from . import app_settings, feeds
 from . import views as core_views
-
-register_converter(converters.FourDigitYearConverter, "yyyy")
-register_converter(converters.TwoDigitMonthConverter, "mm")
-register_converter(converters.TwoDigitDayConverter, "dd")
 
 app_name = "hines"
 
@@ -76,6 +72,7 @@ urlpatterns = [
     ),
     path("feeds/", flatpages_views.flatpage, {"url": "/phil/feeds/"}, name="feeds"),
     path(
+        # These path converters are defined in config.urls:
         "<yyyy:year>/<mm:month>/<dd:day>/",
         core_views.DayArchiveView.as_view(),
         name="day_archive",
