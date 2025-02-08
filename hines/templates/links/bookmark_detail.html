@@ -2,8 +2,8 @@
 
 {% load hines_core %}
 
-{% block head_page_title %}A link{% endblock %}
-{% block content_title %}A link{% endblock %}
+{% block head_page_title %}{{ bookmark.title|truncatewords:10 }}{% endblock %}
+{% block content_title %}{{ bookmark.title|truncatewords:10 }}{% endblock %}
 
 {% block content %}
 
