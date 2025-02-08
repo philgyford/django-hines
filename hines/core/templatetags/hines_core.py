@@ -160,7 +160,7 @@ def display_time(dt=None, show="both", granularity=0, link_to_day=False):  # noq
                     "[time]", dt.strftime(t_fmt)
                 )
 
-    return format_html(f'<time datetime="{stamp}">{visible_str}</time>')
+    return format_html('<time datetime="{}">{}</time>', stamp, mark_safe(visible_str))
 
 
 @register.filter
