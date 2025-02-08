@@ -10,6 +10,11 @@ urlpatterns = [
     # Pinboard tags can contain pretty much any punctuation character:
     path("tags/<str:slug>/", views.TagDetailView.as_view(), name="tag_detail"),
     path(
+        "bookmark-tag-autocomplete/",
+        views.BookmarkTagAutocomplete.as_view(),
+        name="bookmark_tag_autocomplete",
+    ),
+    path(
         # These path converters are defined in config.urls:
         "<word:username>/<word:hash>/",
         views.BookmarkDetailView.as_view(),

@@ -118,6 +118,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "hines.config.wsgi.application"
 
+LOGIN_URL = "/backstage/login/"
 
 DATABASES = {"default": dj_database_url.config(conn_max_age=500)}
 DATABASES["default"]["OPTIONS"] = {"server_side_binding": True}
