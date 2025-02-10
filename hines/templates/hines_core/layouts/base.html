@@ -124,7 +124,7 @@
                 <h1 class="card__header">RSS feeds <a href="https://aboutfeeds.com" title="More about feeds and how to use them">(<span class="utils-sr-only">What are feeds</span>?)</a></h1>
                 <ul class="list-unstyled">
                   <li class="icon-rss">
-                    <a href="{% url 'hines:everything_feed_rss' %}">These three feeds combined</a>
+                    <a href="{% url 'hines:everything_feed_rss' %}">These three feeds combined:</a>
                     <ul>
                       {% with all_blogs|get_item:'writing' as b %}
                         <li class="icon-rss">
@@ -133,10 +133,10 @@
                       {% endwith %}
 
                       <li class="icon-rss">
-                        <a href="{% url 'hines:bookmarks_feed_rss' %}">Links</a>
+                        <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos (at Flickr)</a>
                       </li>
                       <li class="icon-rss">
-                        <a href="http://www.flickr.com/services/feeds/photos_public.gne?id=35034346050@N01&format=rss_200">Photos at Flickr</a>
+                        <a href="{% url 'hines:bookmarks_feed_rss' %}">Links</a>
                       </li>
                       {% comment %}
                         {% with all_blogs|get_item:'comments' as b %}
