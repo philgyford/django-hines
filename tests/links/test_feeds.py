@@ -17,7 +17,7 @@ class BookmarksFeedRSSTestCase(FeedTestCase):
     https://github.com/django/django/blob/master/tests/syndication_tests/tests.py
     """
 
-    feed_url = "/terry/links/feeds/rss/"
+    feed_url = "/terry/feeds/links/rss/"
 
     def setUp(self):
         super().setUp()
@@ -51,7 +51,7 @@ class BookmarksFeedRSSTestCase(FeedTestCase):
         site.save()
 
     def test_response_200(self):
-        response = self.client.get("/terry/links/feeds/rss/")
+        response = self.client.get(self.feed_url)
         self.assertEqual(response.status_code, 200)
 
     def test_feed_element(self):

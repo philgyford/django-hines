@@ -3,6 +3,7 @@ from django.urls import path
 from django.views.generic.base import RedirectView
 
 from hines.custom_comments import feeds as comments_feeds
+from hines.links import feeds as links_feeds
 
 from . import app_settings, feeds
 from . import views as core_views
@@ -22,6 +23,11 @@ urlpatterns = [
         "feeds/comments/rss/",
         comments_feeds.CommentsFeedRSS(),
         name="comments_feed_rss",
+    ),
+    path(
+        "feeds/links/rss/",
+        links_feeds.BookmarksFeedRSS(),
+        name="bookmarks_feed_rss",
     ),
     path(
         f"feeds/{admin_comments_slug}/rss/",
