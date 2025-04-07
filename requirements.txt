@@ -195,9 +195,9 @@ django-sortedm2m==4.0.0 \
 django-spectator==15.0.1 \
     --hash=sha256:3c7e6c0c4d4ce4d0fc0a2bd78f46bd6f70adaef2185d5a7059f5bb7ceb304e1b \
     --hash=sha256:14065fef64cb330739f2d38cc4c261812d31f0349ac5b604a5d205d6892749fa
-django-storages==1.14.4 \
-    --hash=sha256:69aca94d26e6714d14ad63f33d13619e697508ee33ede184e462ed766dc2a73f \
-    --hash=sha256:d61930acb4a25e3aebebc6addaf946a3b1df31c803a6bf1af2f31c9047febaa3
+django-storages==1.14.6 \
+    --hash=sha256:11b7b6200e1cb5ffcd9962bd3673a39c7d6a6109e8096f0e03d46fab3d3aabd9 \
+    --hash=sha256:7a25ce8f4214f69ac9c7ce87e2603887f7ae99326c316bc8d2d75375e09341c9
 django-taggit==6.1.0 \
     --hash=sha256:c4d1199e6df34125dd36db5eb0efe545b254dec3980ce5dd80e6bab3e78757c3 \
     --hash=sha256:ab776264bbc76cb3d7e49e1bf9054962457831bd21c3a42db9138b41956e4cf0
