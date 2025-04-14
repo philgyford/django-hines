@@ -172,9 +172,9 @@ django-debug-toolbar==5.0.1 \
 django-ditto==3.5.0 \
     --hash=sha256:ed023acaf5edae63f275911bd8a22a8ba98c268af00c4aa278446e676c68934a \
     --hash=sha256:0da4364f1038002e928c0fcf877c895982e8d5bdffc7f219cee76981ecb38d2a
-django-extensions==3.2.3 \
-    --hash=sha256:44d27919d04e23b3f40231c4ab7af4e61ce832ef46d610cc650d53e68328410a \
-    --hash=sha256:9600b7562f79a92cbf1fde6403c04fee314608fefbb595502e34383ae8203401
+django-extensions==4.1 \
+    --hash=sha256:0699a7af28f2523bf8db309a80278519362cd4b6e1fd0a8cd4bf063e1e023336 \
+    --hash=sha256:7b70a4d28e9b840f44694e3f7feb54f55d495f8b3fa6c5c0e5e12bcb2aa3cdeb
 django-hcaptcha==0.2.0 \
     --hash=sha256:b2519eaf0cc97865ac72f825301122c5cf61e1e4852d6895994160222acb6c1a \
     --hash=sha256:18804fb38a01827b6c65d111bac31265c1b96fcf52d7a54c3e2d2cb1c62ddcde
