@@ -32,8 +32,9 @@ class StatsView(CacheMixin, TemplateView):
             "charts": [
                 "writing_per_year",
                 "pinboard_bookmarks_per_year",
-                "twitter_tweets_per_year",
-                "mastodon_posts_per_year",
+                "social_media_posts_per_year",
+                # "twitter_tweets_per_year",
+                # "mastodon_posts_per_year",
                 "flickr_photos_per_year",
                 "github_contributions_per_year",
                 "diary_words_per_year",
@@ -151,9 +152,6 @@ class StatsView(CacheMixin, TemplateView):
     def get_data_headaches_per_year(self):
         return StaticGenerator().get_headaches_per_year()
 
-    def get_data_mastodon_posts_per_year(self):
-        return StaticGenerator().get_mastodon_posts_per_year()
-
     def get_data_steps_per_year(self):
         return StaticGenerator().get_steps_per_year()
 
@@ -202,8 +200,14 @@ class StatsView(CacheMixin, TemplateView):
     def get_data_flickr_photos_per_year(self):
         return FlickrGenerator(nsid="35034346050@N01").get_photos_per_year()
 
-    def get_data_twitter_tweets_per_year(self):
-        return TwitterGenerator(screen_name="philgyford").get_tweets_per_year()
+    def get_data_social_media_posts_per_year(self):
+        return StaticGenerator().get_social_media_posts_per_year()
+
+    # def get_data_mastodon_posts_per_year(self):
+    #     return StaticGenerator().get_mastodon_posts_per_year()
+
+    # def get_data_twitter_tweets_per_year(self):
+    #     return TwitterGenerator(screen_name="philgyford").get_tweets_per_year()
 
     def get_data_twitter_favorites_per_year(self):
         return TwitterGenerator(screen_name="philgyford").get_favorites_per_year()

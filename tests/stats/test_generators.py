@@ -299,8 +299,8 @@ class PinboardGeneratorTestCase(TestCase):
         self.assertIn("description", result)
         self.assertEqual(
             result["description"],
-            "Number of links posted on Delicious, then "
-            '<a href="https://pinboard.in/u:philgyford">on Pinboard</a>, per year.',
+            "Number of links posted on Delicious, then on Pinboard, then only "
+            '<a href="https://www.gyford.com/phil/links/">on this site</a>, per year.',
         )
 
     @freeze_time("2018-01-01 00:00:00", tz_offset=0)
@@ -562,6 +562,22 @@ class StaticGeneratorTestCase(TestCase):
         self.assertIn("columns", result["data"][0])
         self.assertIn("posts", result["data"][0]["columns"])
         self.assertIn("value", result["data"][0]["columns"]["posts"])
+
+    def test_social_media_posts_title(self):
+        result = StaticGenerator().get_social_media_posts_per_year()
+
+        self.assertIn("title", result)
+        self.assertEqual(result["title"], "Social media posts")
+
+    def test_social_media_posts_data(self):
+        "Not testing the details as it's hard-coded (except for Twitter)."
+        result = StaticGenerator().get_social_media_posts_per_year()
+        self.assertIn("data", result)
+        self.assertIn("label", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("value", result["data"][0]["columns"]["twitter"])
+        self.assertIn("value", result["data"][0]["columns"]["mastodon"])
+        self.assertIn("value", result["data"][0]["columns"]["bluesky"])
 
     def test_steps_title_description(self):
         result = StaticGenerator().get_steps_per_year()

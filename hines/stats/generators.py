@@ -173,7 +173,9 @@ class EventsGenerator(Generator):
                     all_data[label]["columns"][kind] = year_data["columns"][kind]
 
             data = {"data": list(all_data.values()), "title": "All Events"}
+            import pprint
 
+            pprint.pp(data)
         else:
             # A chart for a single kind, like "cinema".
             data = {
@@ -309,8 +311,8 @@ class PinboardGenerator(Generator):
             "data": [],
             "title": "Links",
             "description": (
-                "Number of links posted on Delicious, then "
-                f'<a href="https://pinboard.in/u:{self.username}">on Pinboard</a>, '
+                "Number of links posted on Delicious, then on Pinboard, then only "
+                '<a href="https://www.gyford.com/phil/links/">on this site</a>, '
                 "per year."
             ),
         }
@@ -775,6 +777,55 @@ class StaticGenerator(Generator):
                 "@philgyford@mastodon.social</a> per year"
             ),
         )
+
+    def get_social_media_posts_per_year(self):
+        "Twitter, Mastodon and Bluesky posts combined"
+
+        # We never had a separate method for Bluesky posts, so they're here:
+        bluesky_posts = {
+            "2023": 11,
+            "2024": 46,
+        }
+
+        # Get Twitter year:count in same format as above, from database:
+        twitter_data = TwitterGenerator(screen_name="philgyford").get_tweets_per_year()
+        twitter_posts = {
+            d["label"]: d["columns"]["twitter_tweets"]["value"]
+            for d in twitter_data["data"]
+        }
+
+        # Get Mastodon year:count in same format as above:
+        mastodon_data = self.get_mastodon_posts_per_year()
+        mastodon_posts = {
+            d["label"]: d["columns"]["posts"]["value"] for d in mastodon_data["data"]
+        }
+
+        all_years = (
+            list(mastodon_posts.keys())
+            + list(bluesky_posts.keys())
+            + list(twitter_posts.keys())
+        )
+        all_years = [int(y) for y in all_years]
+        data = []
+        for year in range(min(all_years), max(all_years)):
+            columns = {
+                "twitter": {"label": "Twitter (@philgyford)", "value": 0},
+                "mastodon": {
+                    "label": "Mastodon (@philgyford@mastodon.social)",
+                    "value": 0,
+                },
+                "bluesky": {"label": "Bluesky (@phil.gyford.com)", "value": 0},
+            }
+            year = str(year)
+            if year in twitter_posts:
+                columns["twitter"]["value"] = twitter_posts[year]
+            if year in mastodon_posts:
+                columns["mastodon"]["value"] = mastodon_posts[year]
+            if year in bluesky_posts:
+                columns["bluesky"]["value"] = bluesky_posts[year]
+            data.append({"label": year, "columns": columns})
+
+        return {"data": data, "title": "Social media posts"}
 
     def get_steps_per_year(self):
         totals = {
