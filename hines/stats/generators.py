@@ -173,9 +173,6 @@ class EventsGenerator(Generator):
                     all_data[label]["columns"][kind] = year_data["columns"][kind]
 
             data = {"data": list(all_data.values()), "title": "All Events"}
-            import pprint
-
-            pprint.pp(data)
         else:
             # A chart for a single kind, like "cinema".
             data = {
