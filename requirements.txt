@@ -166,9 +166,9 @@ django-contrib-comments==2.2.0 \
 django-cors-headers==4.7.0 \
     --hash=sha256:6fdf31bf9c6d6448ba09ef57157db2268d515d94fc5c89a0a1028e1fc03ee52b \
     --hash=sha256:f1c125dcd58479fe7a67fe2499c16ee38b81b397463cf025f0e2c42937421070
-django-debug-toolbar==5.0.1 \
-    --hash=sha256:296f6f18a80710e84fbb8361538ae5ec522a75ebe9ab67db34bcf1026cbeb420 \
-    --hash=sha256:7456cc2e951db37dab335686db7803c4a0ecb6736d120705f6668db9548bf49f
+django-debug-toolbar==5.1.0 \
+    --hash=sha256:8a3b9da4aeab8d384a366e20304bd939a451f0242523c5b7b402248ad474eed2 \
+    --hash=sha256:c0591e338ee9603bdfce5aebf8d18ca7341fdbb69595e2b0b34869be5857180e
 django-ditto==3.5.0 \
     --hash=sha256:ed023acaf5edae63f275911bd8a22a8ba98c268af00c4aa278446e676c68934a \
     --hash=sha256:0da4364f1038002e928c0fcf877c895982e8d5bdffc7f219cee76981ecb38d2a
