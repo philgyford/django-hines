@@ -74,7 +74,15 @@ Then create a superuser:
 
 #### 4b. Use a dump from the live site
 
-Log into postgres and drop the current (empty) database:
+Dump a database on the server with:
+
+    phil$ pg_dump -h localhost -U hines -d hines -Fc -b -f dump.sql
+
+SCP that to this local directory with:
+
+    $ scp username@your.vps.domain.com:/home/username/dump.sql .
+
+Drop the existing dev database:
 
     $ ./run psql -d postgres
     # drop database hines with (FORCE);
@@ -82,22 +90,12 @@ Log into postgres and drop the current (empty) database:
     # grant all privileges on database hines to hines;
     # \q
 
-On the VPS, create a backup file of the live site's database:
+Then copy the dump into Docker and load it into the database:
 
-    $ pg_dump dbname -U username -h localhost | gzip > ~/hines_dump.gz
+    $ docker cp dump.sql hines_db:/tmp/
+    $ docker exec -i hines_db pg_restore -h localhost -U hines -d hines -j 2 /tmp/dump.sql
 
-Then scp it to your local machine:
-
-    $ scp username@your.vps.domain.com:/home/username/hines_dump.gz .
-
-Put the file in the same directory as this README.
-
-Import the data into the database ():
-
-    $ gunzip hines_dump.gz
-    $ docker exec -i hines_db pg_restore --verbose --clean --no-acl --no-owner -U hines -d hines < hines_dump
-
-#### 5. Run the webserver
+### 5. Run the webserver
 
     $ ./run runserver
 
@@ -105,7 +103,7 @@ And, optionally, as required, the Django-Q process:
 
     $ ./run djangoq
 
-#### 6. Vist and set up the site
+### 6. Vist and set up the site
 
 Then go to http://www.gyford.test:8000 and you should see the site.
 
