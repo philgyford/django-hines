@@ -1,0 +1,4 @@
+{% spaceless %}
+<p>{{ obj.description|safe }}</p>
+<p><a href="{{ site_url }}{{ obj.get_absolute_url }}">Permalink</a></p>
+{% endspaceless %}

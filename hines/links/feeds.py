@@ -11,6 +11,8 @@ class BookmarksFeedRSS(ExtendedFeed):
 
     feed_type = ExtendedRSSFeed
 
+    content_template = "links/feeds/item_content.html"
+
     # Getting details about the feed:
 
     def link(self, obj):
@@ -50,10 +52,6 @@ class BookmarksFeedRSS(ExtendedFeed):
 
     def item_categories(self, item):
         return [tag.name for tag in item.tags.all()]
-
-    def item_content(self, item):
-        "For content:encoded"
-        return item.description
 
     def item_guid(self, item):
         return get_site_url() + item.get_absolute_url()

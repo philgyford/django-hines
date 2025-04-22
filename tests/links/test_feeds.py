@@ -140,7 +140,7 @@ class BookmarksFeedRSSTestCase(FeedTestCase):
                 "guid": f"http://example.com/terry/links/bobferris/{self.bookmark2.url_hash}/",
                 "pubDate": rfc2822_date(self.bookmark2.post_time),
                 "author": "bob@example.com (Bob Ferris)",
-                "content:encoded": "I like this",
+                "content:encoded": f'<p>I like this</p><p><a href="http://example.com/terry/links/bobferris/{self.bookmark2.url_hash}/">Permalink</a></p>\n',
             },
         )
 
