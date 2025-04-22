@@ -68,12 +68,6 @@ function coverage {
 }
 
 
-# function sp {
-#   # Run the shell_plus command from django-extensions
-#   uv run manage.py shell_plus
-# }
-
-
 # -----------------------------------------------------------------------------
 # Helpers for running commands in the Docker container
 # -----------------------------------------------------------------------------
