@@ -15,7 +15,7 @@ services:
   db:
     container_name: hines_db
     env_file: .env
-    image: postgres:13
+    image: postgres:14
     # Uncomment this and restart to log all queries to the console:
     # command: ["postgres", "-c", "log_statement=all"]
     ports:
