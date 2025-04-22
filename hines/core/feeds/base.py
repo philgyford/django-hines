@@ -2,7 +2,6 @@ import contextlib
 import re
 from xml.sax.saxutils import XMLGenerator
 
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.syndication.views import Feed
 from django.template import TemplateDoesNotExist, loader
 from django.templatetags.static import static
@@ -69,6 +68,9 @@ class ExtendedRSSFeed(Rss201rev2Feed):
         "Override default write() method just to use our new XML Generator"
         handler = HinesSimplerXMLGenerator(outfile, encoding)
         handler.startDocument()
+        # Any stylesheet must come after the start of the document but before any tag.
+        # https://www.w3.org/Style/styling-XML.en.html
+        self.add_stylesheets(handler)
         handler.startElement("rss", self.rss_attributes())
         handler.startElement("channel", self.root_attributes())
         self.add_root_elements(handler)
@@ -127,19 +129,9 @@ class ExtendedFeed(Feed):
     # Specify the path to a template to use that for the content:encoded data.
     content_template = None
 
-    def __call__(self, request, *args, **kwargs):
-        response = super().__call__(request, *args, **kwargs)
-
-        xsl_url = staticfiles_storage.url("hines/xsl/pretty-feed-v3a.xsl").encode(
-            "utf-8"
-        )
-
-        tag = b'<?xml-stylesheet type="text/xsl" href="' + xsl_url + b'"?>\n'
-        start = b"<rss version"
-
-        response.content = response.content.replace(start, tag + start)
-
-        return response
+    stylesheets = [
+        static("hines/xsl/pretty-feed-v3a.xsl"),
+    ]
 
     def item_extra_kwargs(self, item):
         """
