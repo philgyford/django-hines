@@ -170,7 +170,6 @@ django==5.2 \
     #   django-contrib-comments
     #   django-cors-headers
     #   django-debug-toolbar
-    #   django-extensions
     #   django-hines
     #   django-picklefield
     #   django-q2
@@ -199,10 +198,6 @@ django-debug-toolbar==5.1.0 \
 django-ditto==3.6.0 \
     --hash=sha256:0d6d5e90bc20908a3d9a8bc6a4411a42e901c4b08c89302da1eef2ab73c46e75 \
     --hash=sha256:3f5fc8668e5cf51b80f15686913fee62e400800df290a9fbba7799f2ded6b9b9
-    # via django-hines
-django-extensions==4.1 \
-    --hash=sha256:0699a7af28f2523bf8db309a80278519362cd4b6e1fd0a8cd4bf063e1e023336 \
-    --hash=sha256:7b70a4d28e9b840f44694e3f7feb54f55d495f8b3fa6c5c0e5e12bcb2aa3cdeb
     # via django-hines
 django-hcaptcha==0.2.0 \
     --hash=sha256:18804fb38a01827b6c65d111bac31265c1b96fcf52d7a54c3e2d2cb1c62ddcde \
