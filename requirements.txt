@@ -213,9 +213,9 @@ django-picklefield==3.3 \
     --hash=sha256:4e76dd20f2e95ffdaf18d641226ccecc169ff0473b0d6bec746f3ab97c26b8cb \
     --hash=sha256:d6f6fd94a17177fe0d16b0b452a9860b8a1da97b6e70633ab53ade4975f1ce9a
     # via django-q2
-django-q2==1.7.6 \
-    --hash=sha256:5210b121573cf65b97d495dbebefe6cfac394d8c0aec9ca2117e8e56e2fda17d \
-    --hash=sha256:9060f4d68e1f3a8a748e0ebd0bd83c8c24bc13036105035873faab9d85b0e8f6
+django-q2==1.8.0 \
+    --hash=sha256:78aaaf18dff1ad3e35bcf6556666f2c26494120f0b75961c13206e37d180dfaa \
+    --hash=sha256:e86b9625c0ce57a5ae31ca8fd7e798d63b9ef91a227c52f8b47536ba50b2b284
     # via django-hines
 django-redis==5.4.0 \
     --hash=sha256:6a02abaa34b0fea8bf9b707d2c363ab6adc7409950b2db93602e6cb292818c42 \
