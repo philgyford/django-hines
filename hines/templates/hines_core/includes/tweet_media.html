@@ -22,7 +22,9 @@ Expects:
         <source src="{{ media_list.0.video_url }}" type="{{ media_list.0.video_mime_type }}">
       </video>
     {% else %}
-      <ol class="gallery{% if media_list|length >= 4 %} gallery--4{% elif media_list|length == 3 %} gallery--3{% endif %}">
+      {# Not displaying any images just in case they were hastily used copyrighted ones. #}
+      <p class="utils-warning">[Image{{ media_list|length|pluralize }} removed, just in case.]</p>
+      {% comment %} <ol class="gallery{% if media_list|length >= 4 %} gallery--4{% elif media_list|length == 3 %} gallery--3{% endif %}">
         {% for media in media_list %}
           <li class="gallery__item">
             <div class="gallery__item__img">
@@ -30,7 +32,7 @@ Expects:
             </div>
           </li>
         {% endfor %}
-      </ol>
+      </ol> {% endcomment %}
     {% endif %}
   {% endwith %}
 {% endif %}
