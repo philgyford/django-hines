@@ -1,10 +1,12 @@
 import datetime
 import random
 
+from bs4 import BeautifulSoup
 from dal import autocomplete
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.generic import (
@@ -45,6 +47,35 @@ from .models import Blog, Post
 # A bit wider
 # http://web.archive.org/web/20090227031141/http://www.gyford.com/phil/writing/2009/02/10/front_page.php
 # 2009-02-10 - now
+
+
+class AllImagesView(TemplateView):
+    """
+    Hasty view for displaying all images used in a Blog's Posts' HTML.
+    Doesn't display images from flickr.com.
+    In case you need to check what images you've been using over the years.
+    """
+
+    template_name = "weblogs/all_images.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        images = []
+        blog = get_object_or_404(Blog, slug=self.kwargs.get("blog_slug"))
+        for post in blog.public_posts.all():
+            soup = BeautifulSoup(post.intro_html + post.body_html)
+            for img in soup.find_all("img"):
+                src = img.get("src")
+                if "flickr.com" not in src:
+                    images.append(
+                        {
+                            "src": src,
+                            "post": post,
+                        }
+                    )
+        context["blog"] = blog
+        context["images"] = images
+        return context
 
 
 class BlogDetailParentView(SingleObjectMixin, PaginatedListView):
@@ -219,7 +250,7 @@ class PostDetailView(TemplateSetMixin, DateDetailView):
                 **{blog_slug_field: blog_slug, post_slug_field: post_slug}
             )
         else:
-            msg = "PostDetailView must be called with " "a blog slug and a post slug."
+            msg = "PostDetailView must be called with a blog slug and a post slug."
             raise AttributeError(msg)
         try:
             # Get the single item from the filtered queryset

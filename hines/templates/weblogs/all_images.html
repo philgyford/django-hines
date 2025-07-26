@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All images from {{ blog.name }}</title>
+</head>
+<body>
+  <h1>All images from {{ blog.name }}</h1>
+
+  {% for image in images %}
+    {% ifchanged image.post.pk %}
+      <h2><a href="{{ image.post.get_absolute_url }}">{{ image.post.title }}</a></h2>
+    {% endifchanged %}
+
+    <p>
+      <img src="{{ image.src }}" style="max-height: 500px; width: auto; max-width: 100%;">
+    </p>
+  {% endfor %}
+
+</body>
+</html>

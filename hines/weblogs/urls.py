@@ -56,6 +56,8 @@ urlpatterns = [
         views.BlogTagDetailView.as_view(),
         name="blog_tag_detail",
     ),
+    # Commented out because we only needed it once:
+    # path("<slug:blog_slug>/all-images/", views.AllImagesView.as_view()),
     path(
         # These path converters are defined in config.urls:
         "<slug:blog_slug>/<yyyy:year>/<mm:month>/<dd:day>/<slug:post_slug>/",
