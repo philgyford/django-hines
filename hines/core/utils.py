@@ -183,7 +183,7 @@ def expire_view_cache(path, key_prefix=None):
         else:
             msg = "Failed to create cache_key"
             raise ValueError(msg)
-    except (ValueError, Exception) as err:
+    except (ValueError, Exception) as err:  # noqa: BLE001
         return (False, err)
 
 
