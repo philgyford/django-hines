@@ -146,7 +146,7 @@ See the `./run` script for more shortcuts.
 The live site currently doesn't use `uv`, so we need to keep `requirements.txt`
 updated if we change anything:
 
-    $ uv pip compile pyproject.toml -o requirements.txt
+    $ uv export --quiet --format requirements-txt --output-file requirements.txt
 
 ### pre-commit
 
