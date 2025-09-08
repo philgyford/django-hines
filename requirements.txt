@@ -26,9 +26,9 @@ boto3==1.40.8 \
     --hash=sha256:62959010dfd3d24157f73a8183fca7619ec97fb42ac400477006f7ecb9548d06 \
     --hash=sha256:9f55edd8e2eb5cd86e1c972b5250f9ab0a9555f84632506a2ed131e4a82ea23a
     # via django-hines
-botocore==1.40.8 \
-    --hash=sha256:7f0327e08d7c061aaa03e32459e56bcf6daa29cd946e95b1c06be14d61a9a94d \
-    --hash=sha256:954fa6e36020ebf58898de80a8f864ba13b74dc26994cf20ccfff2966724b0b9
+botocore==1.40.25 \
+    --hash=sha256:41fd186018a48dc517a4312a8d3085d548cb3fb1f463972134140bf7ee55a397 \
+    --hash=sha256:5603ea9955cd31974446f0b5688911a5dad71fbdfbf7457944cda8a83fcf2a9e
     # via
     #   boto3
     #   s3transfer
