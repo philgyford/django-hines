@@ -38,6 +38,10 @@ $fig-max-cols-percentage: percentage(math.div($fig-max-cols, $main-columns));
       width: 100%;
       height: auto;
     }
+
+    table {
+      width: 100%;
+    }
   }
 
   &.figure--left,
@@ -103,12 +107,10 @@ figcaption {
 }
 
 .grid__col--main--only {
-  .figure--img {
-    &.figure--full {
-      @include figure-full(md);
-      @include figure-full(lg);
-      @include figure-full(xl);
-    }
+  .figure--full {
+    @include figure-full(md);
+    @include figure-full(lg);
+    @include figure-full(xl);
   }
 }
 
