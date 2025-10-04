@@ -80,10 +80,10 @@ function psql {
 }
 
 
-# function redis-cli {
-#   # Connect to Redis with redis-cli
-#   _dc redis redis-cli "${@}"
-# }
+function redis-cli {
+  # Connect to Redis with redis-cli
+  _dc redis redis-cli "${@}"
+}
 
 
 function yarn:outdated {
