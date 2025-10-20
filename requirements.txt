@@ -22,9 +22,9 @@ bleach==6.2.0 \
     --hash=sha256:117d9c6097a7c3d22fd578fcd8d35ff1e125df6736f554da4e432fdd63f31e5e \
     --hash=sha256:123e894118b8a599fd80d3ec1a6d4cc7ce4e5882b1317a7e1ba69b56e95f991f
     # via django-hines
-boto3==1.40.45 \
-    --hash=sha256:5b145752d20f29908e3cb8c823bee31c77e6bcf18787e570f36bbc545cc779ed \
-    --hash=sha256:e8d794dc1f01729d93dc188c90cf63cd0d32df8818a82ac46e641f6ffcea615e
+boto3==1.40.55 \
+    --hash=sha256:27e35b4fa9edd414ce06c1a748bf57cacd8203271847d93fc1053e4a4ec6e1a9 \
+    --hash=sha256:2e30f5a0d49e107b8a5c0c487891afd300bfa410e1d918bf187ae45ac3839332
     # via django-hines
 botocore==1.40.45 \
     --hash=sha256:9abf473d8372ade8442c0d4634a9decb89c854d7862ffd5500574eb63ab8f240 \
