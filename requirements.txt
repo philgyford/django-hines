@@ -184,9 +184,9 @@ markdown2==2.5.4 \
     --hash=sha256:3c4b2934e677be7fec0e6f2de4410e116681f4ad50ec8e5ba7557be506d3f439 \
     --hash=sha256:a09873f0b3c23dbfae589b0080587df52ad75bb09a5fa6559147554736676889
     # via django-hines
-matplotlib-inline==0.1.7 \
-    --hash=sha256:8423b23ec666be3d16e16b60bdd8ac4e86e840ebd1dd11a30b9f117f2fa0ab90 \
-    --hash=sha256:df192d39a4ff8f21b1895d72e6a13f5fcc5099f00fa84384e0ea28c2cc0653ca
+matplotlib-inline==0.2.1 \
+    --hash=sha256:d56ce5156ba6085e00a9d54fead6ed29a9c47e215cd1bba2e976ef39f5710a76 \
+    --hash=sha256:e1ee949c340d771fc39e241ea75683deb94762c8fa5f2927ec57c83c4dffa9fe
     # via ipython
 oauthlib==3.3.1 \
     --hash=sha256:0f0f8aa759826a193cf66c12ea1af1637f87b9b4622d46e866952bb022e538c9 \
