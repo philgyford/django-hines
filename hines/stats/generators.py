@@ -748,7 +748,7 @@ class StaticGenerator(Generator):
             "2022": 61,
             "2023": 62,
             "2024": 73,
-            "2025": 761,
+            "2025": 76,
         }
 
         return self._make_simple_data(
