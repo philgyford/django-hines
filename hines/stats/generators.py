@@ -458,6 +458,7 @@ class StaticGenerator(Generator):
             "2022": 368,
             "2023": 91,
             "2024": 139,
+            "2025": 170,
         }
 
         data = self._make_simple_data(
@@ -503,6 +504,7 @@ class StaticGenerator(Generator):
             "2022": 8941,
             "2023": 9159,
             "2024": 2057,
+            "2025": 0,
         }
 
         return self._make_simple_data(
@@ -530,6 +532,7 @@ class StaticGenerator(Generator):
             "2022": 10,
             "2023": 0,
             "2024": 2,
+            "2025": 0,
         }
 
         byliner = {
@@ -563,6 +566,7 @@ class StaticGenerator(Generator):
             "2022": 7,
             "2023": 1,
             "2024": 2,
+            "2025": 8,
         }
 
         guardian = {
@@ -571,6 +575,7 @@ class StaticGenerator(Generator):
             "2022": 7,
             "2023": 0,
             "2024": 1,
+            "2025": 4,
         }
 
         japanese = {
@@ -589,12 +594,14 @@ class StaticGenerator(Generator):
             "2022": 2,
             "2023": 3,
             "2024": 6,
+            "2025": 2,
         }
 
         oohdir = {
             "2022": 67,
             "2023": 69,
             "2024": 35,
+            "2025": 43,
         }
 
         # From Archive by year folders:
@@ -629,6 +636,7 @@ class StaticGenerator(Generator):
             "2022": 1719,
             "2023": 1911,
             "2024": 2066,
+            "2025": 2192,
         }
         # Pepys Feedback:
         pepys = {
@@ -655,6 +663,7 @@ class StaticGenerator(Generator):
             "2022": 162,
             "2023": 312,
             "2024": 265,
+            "2025": 271,
         }
 
         whitstillman = {
@@ -681,6 +690,7 @@ class StaticGenerator(Generator):
             "2022": 0,
             "2023": 5,
             "2024": 0,
+            "2025": 0,
         }
 
         # All of the above dicts that we want to add up:
@@ -738,6 +748,7 @@ class StaticGenerator(Generator):
             "2022": 61,
             "2023": 62,
             "2024": 73,
+            "2025": 761,
         }
 
         return self._make_simple_data(
@@ -761,6 +772,7 @@ class StaticGenerator(Generator):
             "2022": 196,
             "2023": 474,
             "2024": 388,
+            "2025": 270,
         }
 
         return self._make_simple_data(
@@ -782,6 +794,7 @@ class StaticGenerator(Generator):
         bluesky_posts = {
             "2023": 11,
             "2024": 46,
+            "2025": 158,
         }
 
         # Get Twitter year:count in same format as above, from database:
@@ -825,6 +838,7 @@ class StaticGenerator(Generator):
         return {"data": data, "title": "Social media posts"}
 
     def get_steps_per_year(self):
+        "Average steps per day from Apple Health app"
         totals = {
             "2016": 6466,
             "2017": 6219,
@@ -835,6 +849,7 @@ class StaticGenerator(Generator):
             "2022": 6426,
             "2023": 6527,
             "2024": 7075,
+            "2025": 5922,
         }
 
         return self._make_simple_data(
@@ -873,6 +888,7 @@ class StaticGenerator(Generator):
             "2022": 0,
             "2023": 0,
             "2024": 0,
+            "2025": 0,
         }
 
         freelance = {
@@ -900,6 +916,7 @@ class StaticGenerator(Generator):
             "2022": 59,
             "2023": 29,
             "2024": 20,
+            "2025": 12,
         }
 
         acting = {
@@ -927,6 +944,7 @@ class StaticGenerator(Generator):
             "2022": 0,
             "2023": 0,
             "2024": 0,
+            "2025": 0,
         }
 
         chart_data = []
@@ -976,6 +994,7 @@ class StaticGenerator(Generator):
             "2022": 2671,
             "2023": 1539,
             "2024": 958,
+            "2025": 721,
         }
 
         return self._make_simple_data(
