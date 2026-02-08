@@ -26,7 +26,7 @@ class CustomCommentForm(CommentForm):
         self.fields["email"].widget.attrs["required"] = "required"
         self.fields["email"].help_text = "Will not be displayed."
 
-        self.fields["url"].help_text = "e.g. Your personal website, Twitter URL, etc."
+        self.fields["url"].help_text = "e.g. Your personal website, Mastodon URL, etc."
 
         self.fields["comment"].required = True
         self.fields["comment"].widget.attrs["required"] = "required"
