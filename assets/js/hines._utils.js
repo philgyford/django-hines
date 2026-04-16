@@ -1,5 +1,3 @@
-"use strict";
-
 var $ = {};
 
 /**
@@ -72,6 +70,7 @@ $.each = function (selector, fn) {
  * });
  * @param  {Function} fn Callback function
  */
+// biome-ignore lint: correctness/noUnusedVariables
 var ready = function (fn) {
   // Sanity check
   if (typeof fn !== "function") return;

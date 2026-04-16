@@ -2,8 +2,6 @@
  * We use EasyMDE, which is a fork of SimpleMDE.
  */
 (function ($) {
-  "use strict";
-
   $(document).ready(function () {
     // Enable the Markdown editor.
     // Requires the MDE JS and CSS to be loaded too.
@@ -47,8 +45,8 @@
       init: function () {
         // Only for Markdown posts.
         if (markdown_formats.indexOf($("#id_html_format").val()) >= 0) {
-          $.each(fields, function (idx, field) {
-            if ($(field["selector"]).length > 0) {
+          $.each(fields, function (_idx, field) {
+            if ($(field.selector).length > 0) {
               initField(field);
             }
           });
@@ -58,8 +56,10 @@
 
     function initField(field) {
       var config = {
-        element: document.getElementById(field["elementId"]),
+        element: document.getElementById(field.elementId),
         autoDownloadFontAwesome: true,
+        // If you uncomment this, you'll need to uncomment both
+        // getAutosaveId() and getObjectId() too:
         // autosave: {
         //   enabled: true,
         //   uniqueId: getAutosaveId(field),
@@ -67,11 +67,11 @@
         // },
         indentWithTabs: false, // Use spaces
         promptURLs: true, // Show pop-up for URL when adding a link
-        minHeight: field["minHeight"],
+        minHeight: field.minHeight,
       };
 
-      if (field["buttons"] == "minimal") {
-        config["toolbar"] = [
+      if (field.buttons === "minimal") {
+        config.toolbar = [
           {
             name: "textArea",
             action: revertToTextArea,
@@ -93,8 +93,8 @@
           "side-by-side",
           "fullscreen",
         ];
-      } else if (field["buttons"] == "full") {
-        config["toolbar"] = [
+      } else if (field.buttons === "full") {
+        config.toolbar = [
           {
             name: "textArea",
             action: revertToTextArea,
@@ -149,6 +149,7 @@
             title: "Image, aligned right",
           },
           "|",
+          // If you uncomment this, also uncomment makeVideoLeft():
           // {
           //   name: "video-left",
           //   action: makeVideoLeft,
@@ -161,6 +162,7 @@
             className: "fa fa-play",
             title: "Video, full-width",
           },
+          // If you uncomment this, also uncomment makeVideoRight():
           // {
           //   name: "video-right",
           //   action: makeVideoRight,
@@ -174,6 +176,7 @@
         ];
       }
 
+      // biome-ignore lint: correctness/noUnusedVariables
       var editor = new EasyMDE(config);
     }
 
@@ -188,16 +191,16 @@
      * @param field An object with an 'autosaveId' element.
      * @return string
      */
-    function getAutosaveId(field) {
-      var autosaveId = field["autosaveId"];
-      var objectId = getObjectId();
-
-      if (objectId !== null) {
-        autosaveId += "-" + objectId;
-      }
-
-      return autosaveId;
-    }
+    // function getAutosaveId(field) {
+    //   var autosaveId = field.autosaveId;
+    //   var objectId = getObjectId();
+    //
+    //   if (objectId !== null) {
+    //     autosaveId += "-" + objectId;
+    //   }
+    //
+    //   return autosaveId;
+    // }
 
     /**
      * Return the ID of the Django object that's being edited, if any.
@@ -205,15 +208,15 @@
      *
      * @return string or null
      */
-    function getObjectId() {
-      var urlParts = window.location.href.split("/");
-      var len = urlParts.length;
-      if (urlParts[len - 2] == "change") {
-        return urlParts[len - 3];
-      } else {
-        return null;
-      }
-    }
+    // function getObjectId() {
+    //   var urlParts = window.location.href.split("/");
+    //   var len = urlParts.length;
+    //   if (urlParts[len - 2] === "change") {
+    //     return urlParts[len - 3];
+    //   } else {
+    //     return null;
+    //   }
+    // }
 
     /**
      * Disables EasyMDE for this textarea.
@@ -262,13 +265,13 @@
       makeImage(editor, "right");
     }
 
-    function makeVideoLeft(editor) {
-      makeVideo(editor, "left");
-    }
-
-    function makeVideoRight(editor) {
-      makeVideo(editor, "right");
-    }
+    // function makeVideoLeft(editor) {
+    //   makeVideo(editor, "left");
+    // }
+    //
+    // function makeVideoRight(editor) {
+    //   makeVideo(editor, "right");
+    // }
 
     function makeVideoFull(editor) {
       makeVideo(editor, "full");
@@ -281,17 +284,20 @@
      * @param alignment string "standard", "left", "right" or 'full'.
      */
     function makeImage(editor, alignment) {
-      var startStr = '\
+      var startStr =
+        '\
 <figure class="figure figure--img';
 
       if (["left", "right", "full"].indexOf(alignment) > -1) {
         startStr += " figure--" + alignment;
       }
 
-      startStr += '">\n\
+      startStr +=
+        '">\n\
   <a href="" title="See on Flickr"><img src="';
 
-      var endStr = '" alt=""></a>\n\
+      var endStr =
+        '" alt=""></a>\n\
   <figcaption></figcaption>\n\
 </figure>';
 
@@ -306,7 +312,8 @@
      * @param alignment string "left", "right" or 'full'.
      */
     function makeVideo(editor, alignment) {
-      var startStr = '\
+      var startStr =
+        '\
 <figure class="figure figure--embed';
 
       if (["left", "right"].indexOf(alignment) > -1) {
@@ -328,7 +335,7 @@
       var cm = editor.codemirror;
       var text = cm.getSelection();
       if (text.startsWith("http")) {
-        var url = _makeVideoEmbedUrl(text);
+        const url = _makeVideoEmbedUrl(text);
         _replaceSelectedText(editor, url);
       }
 
@@ -347,7 +354,7 @@
     function _addInlineTag(editor, start_chars, end_chars) {
       if (
         /editor-preview-active/.test(
-          editor.codemirror.getWrapperElement().lastChild.className
+          editor.codemirror.getWrapperElement().lastChild.className,
         )
       ) {
         return;
@@ -355,7 +362,9 @@
 
       end_chars = typeof end_chars === "undefined" ? start_chars : end_chars;
       var cm = editor.codemirror;
-      var stat = editor.getState(cm);
+
+      // Unused?
+      // var stat = editor.getState(cm);
 
       var text;
       var start = start_chars;
@@ -436,7 +445,7 @@
         {
           line: end_line_sel,
           ch: 0,
-        }
+        },
       );
     }
 
@@ -502,10 +511,10 @@
    */
   function _makeVideoEmbedUrl(url) {
     if (url.search(/youtube.com\/watch/) >= 0) {
-      var urlObj = new URL(url.trim());
+      const urlObj = new URL(url.trim());
       // Get relevant URL args:
-      var v = urlObj.searchParams.get("v");
-      var t = urlObj.searchParams.get("t");
+      const v = urlObj.searchParams.get("v");
+      const t = urlObj.searchParams.get("t");
 
       if (v) {
         url = "https://www.youtube.com/embed/" + v;
@@ -515,7 +524,7 @@
         }
       }
     } else if (url.search(/\/\/vimeo.com/) >= 0) {
-      var matches = url.match(/vimeo.com\/(\w+)$/);
+      const matches = url.match(/vimeo.com\/(\w+)$/);
       if (matches.length > 1) {
         url = "https://player.vimeo.com/video/" + matches[1];
       }

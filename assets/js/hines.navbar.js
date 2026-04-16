@@ -18,8 +18,6 @@
  * Relies on our utils.js.
  */
 (function () {
-  "use strict";
-
   window.hines = window.hines || {};
 
   window.hines.navbar = function module() {
