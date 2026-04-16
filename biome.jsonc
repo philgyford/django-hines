@@ -1,0 +1,35 @@
+{
+  // See: https://biomejs.dev/reference/configuration/
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
+  "files": {
+    // Only use on JS, but not minified JS:
+    "includes": ["assets/**/*.js", "!**/*.min.js"],
+    "ignoreUnknown": true
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "always"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "complexity": {
+        // Don't want to change compatibility at this stage:
+        "useArrowFunction": "off"
+      },
+      "style": {
+        // Don't use template literals yet:
+        "useTemplate": "off"
+      }
+    }
+  },
+  "assist": {
+    "enabled": true
+  }
+}
