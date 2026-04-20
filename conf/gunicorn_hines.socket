@@ -1,4 +1,4 @@
-# Should be symlinked to /etc/systemd/system/gunicorn_hines.socket
+# Should be copied symlinked to /etc/systemd/system/gunicorn_hines.socket
 
 [Unit]
 Description=gunicorn hines socket

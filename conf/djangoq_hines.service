@@ -1,4 +1,4 @@
-# Should be symlinked to /etc/systemd/system/djangoq_hines.service
+# Should be copied to /etc/systemd/system/djangoq_hines.service
 
 [Unit]
 Description=django-q hines daemon

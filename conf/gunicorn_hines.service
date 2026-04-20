@@ -1,4 +1,4 @@
-# Should be symlinked to /etc/systemd/system/gunicorn_hines.service
+# Should be copied to /etc/systemd/system/gunicorn_hines.service
 
 [Unit]
 Description=gunicorn hines daemon
