@@ -82,6 +82,9 @@ dev = [
   "unittest-parametrize",
 ]
 
+[tool.uv]
+exclude-newer = "1 week"
+
 [tool.uv.pip]
 generate-hashes = true
 python-version = "3.10"
