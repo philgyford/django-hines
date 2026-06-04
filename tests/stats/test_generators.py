@@ -476,6 +476,65 @@ class StaticGeneratorTestCase(TestCase):
         self.assertIn("number_format_prefix", result)
         self.assertEqual(result["number_format_prefix"], "£")
 
+    def test_music_spending_title_description(self):
+        result = StaticGenerator().get_music_spending_per_year()
+
+        self.assertIn("title", result)
+        self.assertEqual(result["title"], "Amount spent on music listening per year")
+        self.assertIn("description", result)
+        self.assertEqual(
+            result["description"],
+            (
+                "Data for 1996 starts in August.<br>"
+                "Does not count cash (more common in earlier years, see below).<br>"
+                "Does not include gigs or paying for radio.<br>"
+                "Foreign currency converted into GBP where applicable."
+            ),
+        )
+
+    def test_music_spending_data(self):
+        "Not testing the details as it's all hard-coded."
+        result = StaticGenerator().get_music_spending_per_year()
+
+        self.assertIn("data", result)
+        self.assertIn("label", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("cds", result["data"][0]["columns"])
+        self.assertIn("downloads", result["data"][1]["columns"])
+        self.assertIn("streaming", result["data"][2]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["cds"])
+        self.assertIn("value", result["data"][1]["columns"]["downloads"])
+        self.assertIn("value", result["data"][2]["columns"]["streaming"])
+        self.assertIn("number_format_prefix", result)
+        self.assertEqual(result["number_format_prefix"], "£")
+
+    def test_cash_withdrawals_title_description(self):
+        result = StaticGenerator().get_cash_withdrawals_per_year()
+
+        self.assertIn("title", result)
+        self.assertEqual(result["title"], "Amount withdrawn in cash per year")
+        self.assertIn("description", result)
+        self.assertEqual(
+            result["description"],
+            (
+                "Data for 1996 starts in August.<br>"
+                "50% of joint withdrawals included where applicable.<br>"
+                "Foreign currency converted into GBP where applicable."
+            ),
+        )
+
+    def test_cash_withdrawals_data(self):
+        "Not testing the details as it's all hard-coded."
+        result = StaticGenerator().get_cash_withdrawals_per_year()
+
+        self.assertIn("data", result)
+        self.assertIn("label", result["data"][0])
+        self.assertIn("columns", result["data"][0])
+        self.assertIn("cash_withdrawals", result["data"][0]["columns"])
+        self.assertIn("value", result["data"][0]["columns"]["cash_withdrawals"])
+        self.assertIn("number_format_prefix", result)
+        self.assertEqual(result["number_format_prefix"], "£")
+
     def test_diary_title_description(self):
         result = StaticGenerator().get_diary_words_per_year()
 

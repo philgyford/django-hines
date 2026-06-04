@@ -432,6 +432,9 @@ class StaticGenerator(Generator):
 
     def get_amazon_spending_per_year(self):
         totals = {
+            "1996": 0,
+            "1997": 0,
+            "1998": 0,
             "1999": 117,
             "2000": 63,
             "2001": 62,
@@ -973,6 +976,188 @@ class StaticGenerator(Generator):
                 "Acting includes paid or unpaid work."
             ),
         }
+
+    def get_music_spending_per_year(self):
+
+        cds = {
+            "1996": 180,
+            "1997": 299,
+            "1998": 205,
+            "1999": 43,
+            "2000": 305,
+            "2001": 319,
+            "2002": 214,
+            "2003": 267,
+            "2004": 286,
+            "2005": 317,
+            "2006": 228,
+            "2007": 112,
+            "2008": 31,
+            "2009": 21,
+            "2010": 0,
+            "2011": 0,
+            "2012": 0,
+            "2013": 0,
+            "2014": 0,
+            "2015": 0,
+            "2016": 0,
+            "2017": 0,
+            "2018": 0,
+            "2019": 0,
+            "2020": 0,
+            "2021": 0,
+            "2022": 0,
+            "2023": 0,
+            "2024": 0,
+            "2025": 0,
+        }
+
+        downloads = {
+            "1996": 0,
+            "1997": 0,
+            "1998": 0,
+            "1999": 0,
+            "2000": 0,
+            "2001": 0,
+            "2002": 0,
+            "2003": 0,
+            "2004": 0,
+            "2005": 0,
+            "2006": 42,
+            "2007": 74,
+            "2008": 134,
+            "2009": 233,
+            "2010": 132,
+            "2011": 168,
+            "2012": 70,
+            "2013": 62,
+            "2014": 90,
+            "2015": 179,
+            "2016": 119,
+            "2017": 164,
+            "2018": 167,
+            "2019": 129,
+            "2020": 244,
+            "2021": 157,
+            "2022": 193,
+            "2023": 175,
+            "2024": 153,
+            "2025": 203,
+        }
+
+        streaming = {
+            "1996": 0,
+            "1997": 0,
+            "1998": 0,
+            "1999": 0,
+            "2000": 0,
+            "2001": 0,
+            "2002": 0,
+            "2003": 0,
+            "2004": 0,
+            "2005": 0,
+            "2006": 0,
+            "2007": 0,
+            "2008": 0,
+            "2009": 0,
+            "2010": 10,
+            "2011": 65,
+            "2012": 60,
+            "2013": 60,
+            "2014": 60,
+            "2015": 60,
+            "2016": 60,
+            "2017": 60,
+            "2018": 60,
+            "2019": 60,
+            "2020": 60,
+            "2021": 75,
+            "2022": 120,
+            "2023": 124,
+            "2024": 132,
+            "2025": 77,
+        }
+
+        columns_data = []
+
+        for year in cds:
+            columns_data.append(
+                {
+                    "label": year,
+                    "columns": {
+                        "cds": {"value": cds[year], "label": "CDs"},
+                        "downloads": {"value": downloads[year], "label": "Downloads"},
+                        "streaming": {"value": streaming[year], "label": "Streaming"},
+                    },
+                }
+            )
+
+        chart_data = {
+            "data": columns_data,
+            "title": "Amount spent on music listening per year",
+            "description": (
+                "Data for 1996 starts in August.<br>"
+                "Does not count cash (more common in earlier years, see below).<br>"
+                "Does not include gigs or paying for radio.<br>"
+                "Foreign currency converted into GBP where applicable."
+            ),
+        }
+
+        chart_data["number_format_prefix"] = "£"
+
+        return chart_data
+
+    def get_cash_withdrawals_per_year(self):
+        "Includes personal withdrawals and 50% of joint"
+
+        totals = {
+            "1996": 790,
+            "1997": 3825,
+            "1998": 3252,
+            "1999": 2101,
+            "2000": 2553,
+            "2001": 3523,
+            "2002": 4640,
+            "2003": 2041,
+            "2004": 2278,
+            "2005": 2326,
+            "2006": 1130,
+            "2007": 895,
+            "2008": 2118,
+            "2009": 2235,
+            "2010": 2639,
+            "2011": 2336,
+            "2012": 1195,
+            "2013": 960,
+            "2014": 1325,
+            "2015": 1300,
+            "2016": 805,
+            "2017": 885,
+            "2018": 682,
+            "2019": 700,
+            "2020": 75,
+            "2021": 75,
+            "2022": 0,
+            "2023": 5,
+            "2024": 35,
+            "2025": 20,
+        }
+
+        data = self._make_simple_data(
+            totals,
+            columns_key="cash_withdrawals",
+            label="Amount",
+            chart_title="Amount withdrawn in cash per year",
+            chart_description=(
+                "Data for 1996 starts in August.<br>"
+                "50% of joint withdrawals included where applicable.<br>"
+                "Foreign currency converted into GBP where applicable."
+            ),
+        )
+
+        data["number_format_prefix"] = "£"
+
+        return data
 
     def get_github_contributions_per_year(self):
         # From https://github.com/philgyford
