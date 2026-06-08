@@ -30,8 +30,8 @@ jobs:
             cd /webapps/hines/code
             git checkout .
             git pull
-            source venv/bin/activate
-            pip-sync
+            source .venv/bin/activate
+            uv sync --no-dev
             ./manage.py migrate
             ./manage.py collectstatic --noinput
             sudo systemctl restart gunicorn_hines
