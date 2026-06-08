@@ -31,6 +31,8 @@ jobs:
             git checkout .
             git pull
             source .venv/bin/activate
+            echo "$PATH"
+            which uv
             uv sync --no-dev
             ./manage.py migrate
             ./manage.py collectstatic --noinput
