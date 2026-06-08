@@ -299,9 +299,9 @@ s3transfer==0.17.1 \
     --hash=sha256:042dd5e3b1b512355e35a23f0223e426b7042e80b97830ea2680ddce327fc45e \
     --hash=sha256:5b9827d1044159bbb01b86ef8902760ea39281927f5de31de75e1d657177bf4c
     # via boto3
-sentry-sdk==2.61.0 \
-    --hash=sha256:1ca9b4bb777eb5be67004edab7eb894f21c6301f1d05ed64966719ad5d1764ce \
-    --hash=sha256:ec4d30273909cb1d198e03208b16ee70e2bc5d90a16fd9f1fb2fc6a72e1f03dc
+sentry-sdk==2.61.1 \
+    --hash=sha256:9c6adccb3feefa9ba032c8d295ca477575c2f11896046a2b0ad686c47c4af555 \
+    --hash=sha256:fa36eaf4b8ad708f718500d4bdcc1532637526a22beb874d88cbc0a46458b5ae
     # via django-hines
 setproctitle==1.3.7 \
     --hash=sha256:00afa6fc507967d8c9d592a887cdc6c1f5742ceac6a4354d111ca0214847732c \
