@@ -145,10 +145,10 @@ See the `./run` script for more shortcuts.
 
 ## Updating dependencies
 
-The live site currently doesn't use `uv`, so we need to keep `requirements.txt`
-updated if we change anything:
+### uv
 
-    $ uv export --quiet --format requirements-txt --output-file requirements.txt
+  $ uv lock --upgrade  # update `uv.lock` file
+  $ uv sync  # install dependencies
 
 ### pre-commit
 
@@ -205,7 +205,7 @@ The complete set-up of an Ubuntu VPS is beyond the scope of this README. Require
 
 - Local postgresql
 - Local redis (for caching and django-q2)
-- pipx, virtualenv and pyenv
+- uv
 - gunicorn
 - nginx
 - systemd
@@ -226,39 +226,31 @@ The complete set-up of an Ubuntu VPS is beyond the scope of this README. Require
     username$ cd /webapps/hines/
     username$ git clone git@github.com:philgyford/django-hines.git code
 
-### 3. ## Install python version, set up virtualenv, install python dependencies
+### 3. ## Install uv, Python and dependencies
 
-    username$ pyenv install --list  # All those available to install
-    username$ pyenv versions        # All those already installed and available
-    username$ pyenv install 3.10.8  # Whatever version we're using
+    username$ sudo curl -LsSf https://astral.sh/uv/install.sh | sh
+    username$ uv python install 3.10 # Whatever version we're using
 
-Make the virtual environment and install pip-tools:
+Install dependencies in a virtual environment:
 
-    username$ cd /webapps/hines/code
-    username$ virtualenv --prompt hines venv -p $(pyenv which python)
-    username$ source venv/bin/activate
-    (hines) username$ python -m pip install pip-tools
-
-Install dependencies from `requirements.txt`:
-
-    (hines) username$ pip-sync
+    username$ uv sync --no-dev
 
 ### 4. Create `.env` file
 
-    (hines) username$ cp .env.dist .env
+    username$ cp .env.dist .env
 
 Then fill it out as required.
 
 ### 5. Set up database
 
-Either do `./manage.py migrate` and `./manage.py createsuperuser` to create a new database, or import an existing database dumbp.
+Either do `uv run python manage.py migrate` and `uv run python manage.py createsuperuser` to create a new database, or import an existing database dumbp.
 
 ### 6. Set up gunicorn with systemd
 
-Symlink the files in this repo to correct location for systemd:
+Copy the files in this repo to correct location for systemd (we used to symlink them but had problems):
 
-    username$ sudo ln -s /webapps/hines/code/conf/systemd_gunicorn.socket /etc/systemd/system/gunicorn_hines.socket
-    username$ sudo ln -s /webapps/hines/code/conf/systemd_gunicorn.service /etc/systemd/system/gunicorn_hines.service
+    username$ cp /webapps/hines/code/conf/systemd_gunicorn.socket /etc/systemd/system/gunicorn_hines.socket
+    username$ cp /webapps/hines/code/conf/systemd_gunicorn.service /etc/systemd/system/gunicorn_hines.service
 
 Start the socket:
 
@@ -297,9 +289,9 @@ Start nginx:
 
 ### 6. Set up django-q2 with systemd
 
-Symlink the file in this repo to the correct location for systemd:
+Copy the file in this repo to the correct location for systemd:
 
-    username$ sudo ln -s /webapps/hines/code/conf/systemd_djangoq.service /etc/systemd/system/djangoq_hines.service
+    username$ cp /webapps/hines/code/conf/systemd_djangoq.service /etc/systemd/system/djangoq_hines.service
 
 Start the service:
 
@@ -395,4 +387,4 @@ To clear the cached thumbnail images created by django-imagekit (used by django-
 To re-generate all the cached thumbnail images (which must be done because of the
 "Optimistic" cache file strategy):
 
-    (hines) username$ ./manage.py generateimages
+    username$ uv run python manage.py generateimages
