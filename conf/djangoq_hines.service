@@ -9,7 +9,7 @@ User=phil
 Group=phil
 WorkingDirectory=/webapps/hines/code
 EnvironmentFile=/webapps/hines/code/.env
-ExecStart=/webapps/hines/code/venv/bin/python /webapps/hines/code/manage.py qcluster
+ExecStart=/webapps/hines/code/.venv/bin/python /webapps/hines/code/manage.py qcluster
 # Both to same logfile:
 StandardOutput=append:/webapps/hines/logs/django-q.log
 StandardError=append:/webapps/hines/logs/django-q.log

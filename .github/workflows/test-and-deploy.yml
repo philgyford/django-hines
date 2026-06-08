@@ -26,15 +26,15 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
+          # The "export PATH..." ensures it picks up the user-installed uv
           script: |
             export PATH="$HOME/.local/bin:$PATH"
             cd /webapps/hines/code
             git checkout .
             git pull
-            source .venv/bin/activate
             uv sync --no-dev
-            ./manage.py migrate
-            ./manage.py collectstatic --noinput
+            uv run python manage.py migrate
+            uv run python manage.py collectstatic --noinput
             sudo systemctl restart gunicorn_hines
             sudo systemctl restart djangoq_hines
 

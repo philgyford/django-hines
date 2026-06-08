@@ -6,4 +6,5 @@ htmlcov/
 hines/static_collected/
 hines/media/
 /venv/
+/.venv/
 __pycache__/
