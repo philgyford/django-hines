@@ -27,14 +27,11 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
+            export PATH="$HOME/.local/bin:$PATH"
             cd /webapps/hines/code
             git checkout .
             git pull
             source .venv/bin/activate
-            echo "START"
-            whoami
-            echo $HOME
-            echo "END"
             uv sync --no-dev
             ./manage.py migrate
             ./manage.py collectstatic --noinput
