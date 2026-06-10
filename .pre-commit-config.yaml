@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.10
+  python: python3.14
 
 exclude: |
   (?x)^(
@@ -9,6 +9,10 @@ exclude: |
     |hines/static_html/.*
   )$
 repos:
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: 1.30.0
+    hooks:
+      - id: django-upgrade
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -26,7 +30,7 @@ repos:
         language: system
         types: [text]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.10
+    rev: v0.15.16
     hooks:
       - id: ruff-check
         args: [--fix]
