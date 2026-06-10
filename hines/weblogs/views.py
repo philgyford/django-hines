@@ -221,10 +221,7 @@ class PostDetailView(TemplateSetMixin, DateDetailView):
         blog_slug = self.kwargs.get("blog_slug")
         post_slug = self.kwargs.get(self.slug_url_kwarg)
 
-        if (
-            not self.get_allow_future()
-            and date > datetime.now(tz=datetime.timezone.utc).date()
-        ):
+        if not self.get_allow_future() and date > datetime.now(tz=datetime.UTC).date():
             raise Http404(
                 _(
                     "Future %(verbose_name_plural)s not available because "
@@ -674,7 +671,7 @@ def _date_from_string(
     try:
         return (
             datetime.datetime.strptime(datestr, format)
-            .replace(tzinfo=datetime.timezone.utc)
+            .replace(tzinfo=datetime.UTC)
             .date()
         )
     except ValueError as err:

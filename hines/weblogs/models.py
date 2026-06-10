@@ -392,7 +392,7 @@ class Post(TimeStampedModelMixin, models.Model):
             added_anchor_to_section = False
 
             # The elements we can insert a § into:
-            eligible_elements = ["figure", "p", "h2", "h3", "h4" "h5", "h6"]
+            eligible_elements = ["figure", "p", "h2", "h3", "h4", "h5", "h6"]
 
             # We use html.parser as that doesn't add <html> amd <body> tags.
             soup = BeautifulSoup(html, "html.parser")

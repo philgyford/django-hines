@@ -26,14 +26,14 @@ def is_akismet_spam(comment, request):
 
     protocol = "http" if not request.is_secure() else "https"
     host = protocol + "://" + request.get_host()
-    ip = request.META.get("HTTP_X_FORWARDED_FOR", request.META["REMOTE_ADDR"])
+    ip = request.headers.get("x-forwarded-for", request.META["REMOTE_ADDR"])
 
     # URL of the Post the Comment was posted on
     parent_object_url = comment.content_object.get_absolute_url()
 
     parameters = {
         "user_ip": ip,
-        "user_agent": request.META.get("HTTP_USER_AGENT", ""),
+        "user_agent": request.headers.get("user-agent", ""),
         "referrer": request.POST.get("referrer", ""),
         # "The full permanent URL of the entry the comment was submitted to.":
         "permalink": f"{host}{parent_object_url}",

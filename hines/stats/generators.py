@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from ditto.flickr.models import Photo
 from ditto.flickr.models import User as FlickrUser
@@ -150,7 +150,7 @@ class EventsGenerator(Generator):
         except AttributeError:
             self.start_year = None
 
-        self.end_year = datetime.now(tz=timezone.utc).year
+        self.end_year = datetime.now(tz=UTC).year
 
     def get_per_year(self):
         """
@@ -249,7 +249,7 @@ class FlickrGenerator(Generator):
             qs,
             group_key="flickr_photos",
             group_label="Flickr photos",
-            end_year=datetime.now(tz=timezone.utc).year,
+            end_year=datetime.now(tz=UTC).year,
         )
 
         return data
@@ -292,7 +292,7 @@ class LastfmGenerator(Generator):
             group_key="lastfm_scrobbles",
             group_label="Tracks",
             start_year=start_year,
-            end_year=datetime.now(tz=timezone.utc).year,
+            end_year=datetime.now(tz=UTC).year,
         )
 
         return data
@@ -332,7 +332,7 @@ class PinboardGenerator(Generator):
             qs,
             group_key="pinboard_bookmarks",
             group_label="Links",
-            end_year=datetime.now(tz=timezone.utc).year,
+            end_year=datetime.now(tz=UTC).year,
         )
 
         return data
@@ -365,7 +365,7 @@ class ReadingGenerator(Generator):
         # The first years we have complete data for each kind:
         start_year = 2005 if self.kind == "periodical" else 1998
 
-        end_year = datetime.now(tz=timezone.utc).year
+        end_year = datetime.now(tz=UTC).year
 
         group_key = f"reading_{self.kind}"
 
@@ -1228,7 +1228,7 @@ class TwitterGenerator(Generator):
             qs,
             group_key="twitter_tweets",
             group_label="Tweets",
-            end_year=datetime.now(tz=timezone.utc).year,
+            end_year=datetime.now(tz=UTC).year,
         )
 
         return data
@@ -1261,7 +1261,7 @@ class TwitterGenerator(Generator):
             qs,
             group_key="twitter_favorites",
             group_label="Favorites",
-            end_year=datetime.now(tz=timezone.utc).year,
+            end_year=datetime.now(tz=UTC).year,
         )
 
         return data
@@ -1297,7 +1297,7 @@ class WeblogGenerator(Generator):
             qs,
             group_key="weblog_posts",
             group_label="Posts",
-            end_year=datetime.now(tz=timezone.utc).year,
+            end_year=datetime.now(tz=UTC).year,
         )
 
         # Go through and add URLs for each year of writing.

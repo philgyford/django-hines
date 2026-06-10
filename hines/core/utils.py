@@ -1,5 +1,5 @@
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import markdown2
 from django.contrib.sites.models import Site
@@ -11,17 +11,17 @@ from . import app_settings
 
 def make_date(d):
     "For convenience."
-    return datetime.strptime(d, "%Y-%m-%d").astimezone(timezone.utc).date()
+    return datetime.strptime(d, "%Y-%m-%d").astimezone(UTC).date()
 
 
 def make_datetime(dt):
     "For convenience."
-    return datetime.strptime(dt, "%Y-%m-%d %H:%M:%S").astimezone(timezone.utc)
+    return datetime.strptime(dt, "%Y-%m-%d %H:%M:%S").astimezone(UTC)
 
 
 def datetime_now():
     "Just returns a datetime object for now in UTC, with UTC timezone."
-    return datetime.now(tz=timezone.utc)
+    return datetime.now(tz=UTC)
 
 
 def markdownify(content, output_format="xhtml"):
