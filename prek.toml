@@ -1,0 +1,57 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+default_language_version = { python = "python3.13" }
+exclude = """
+(?x)^(
+  assets/css/vendor/.*
+  |assets/js/vendor/.*
+  |hines/static/.*
+  |hines/static_html/.*
+)$
+"""
+
+[auto_update]
+# To match uv's setting
+cooldown_days = 7
+
+[[repos]]
+repo = "https://github.com/adamchainz/django-upgrade"
+rev = "1.30.0"
+hooks = [
+  { id = "django-upgrade" }
+]
+
+[[repos]]
+repo = "https://github.com/pre-commit/pre-commit-hooks"
+rev = "v6.0.0"
+hooks = [
+  { id = "trailing-whitespace" },
+  { id = "end-of-file-fixer" },
+  { id = "check-yaml" },
+  { id = "check-added-large-files" }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "local-biome-check",
+    name = "biome check",
+    entry = "npx biome check --write --files-ignore-unknown=true --no-errors-on-unmatched",
+    language = "system",
+    types = ["text"]
+  }
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.15.16"
+hooks = [
+  {
+    id = "ruff-check",
+    args = ["--fix"]
+  },
+  { id = "ruff-format" }
+]

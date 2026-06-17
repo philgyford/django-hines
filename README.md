@@ -6,7 +6,7 @@
 [![Formatted with Biome](https://img.shields.io/badge/Formatted_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev/)
 [![Linted with Biome](https://img.shields.io/badge/Linted_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![prek](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/j178/prek/master/docs/assets/badge-v0.json)](https://github.com/j178/prek)
 
 Code for https://www.gyford.com
 
@@ -14,8 +14,8 @@ Pushing to `main` will run the commit through [this GitHub Action](https://githu
 
 When changing the python version, it will need to be changed in:
 
-- `.pre-commit-config.yaml`
 - `.python-version`
+- `prek.toml`
 - `pyproject.toml` (in `project`, `tool.ruff` and `tool.uv.pip`)
 
 For local development we use uv to manage python version and dependencies,
@@ -147,12 +147,15 @@ See the `./run` script for more shortcuts.
 
 ### uv
 
-  $ uv lock --upgrade  # update `uv.lock` file
-  $ uv sync  # install dependencies
+    $ uv lock --upgrade  # update `uv.lock` file
+    $ uv sync  # install dependencies
 
-### pre-commit
+### prek
 
-Install [pre-commit](https://pre-commit.com) to run `.pre-commit-config.yml` automatically when `git commit` is done.
+Install [prek](https://prek.j178.dev) to run `prek.toml` automatically when `git commit` is done:
+
+    $ brew install prek
+    $ prek install
 
 ### Front-end assets
 
