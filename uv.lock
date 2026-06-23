@@ -26,15 +26,15 @@ wheels = [
 
 [[package]]
 name = "beautifulsoup4"
-version = "4.14.3"
+version = "4.15.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "soupsieve" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/b0/1c6a16426d389813b48d95e26898aff79abbde42ad353958ad95cc8c9b21/beautifulsoup4-4.14.3.tar.gz", hash = "sha256:6292b1c5186d356bba669ef9f7f051757099565ad9ada5dd630bd9de5fa7fb86", size = 627737, upload-time = "2025-11-30T15:08:26.084Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/43/65/318323f98dbee45d42dff61d8f047181bc6f2268a9068cfad035a46be5af/beautifulsoup4-4.15.0.tar.gz", hash = "sha256:288e3ca7d54b06f2ac191970bc275c1939cb46d450b255bf6718b04aa37ab4f7", size = 632571, upload-time = "2026-06-07T16:44:20.453Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1a/39/47f9197bdd44df24d67ac8893641e16f386c984a0619ef2ee4c51fbbc019/beautifulsoup4-4.14.3-py3-none-any.whl", hash = "sha256:0918bfe44902e6ad8d57732ba310582e98da931428d231a5ecb9e7c703a735bb", size = 107721, upload-time = "2025-11-30T15:08:24.087Z" },
+    { url = "https://files.pythonhosted.org/packages/88/c6/92fcd42f1ba33e1184263f25bfabf3d27c383410470f169e4b8163bf9c17/beautifulsoup4-4.15.0-py3-none-any.whl", hash = "sha256:d6f88de62e1d4e38ecb1077eb9724cd0eff29d2a08ca16a401e9b9e93f117cf9", size = 109924, upload-time = "2026-06-07T16:44:21.566Z" },
 ]
 
 [[package]]
@@ -208,14 +208,14 @@ wheels = [
 
 [[package]]
 name = "django-autocomplete-light"
-version = "4.0.1"
+version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/b9/5b335b792519441785597ba511a467cf5359299a5f0fa050f01bfc033fb3/django_autocomplete_light-4.0.1.tar.gz", hash = "sha256:cdf7c7ae8596d4f1b2bb85e04cc25ef8438c70ad5eb9e7592b5afac2d3ec266c", size = 117611, upload-time = "2026-05-27T12:22:00.335Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/40/2a/7dfb8b219d7c8ed3e82481a801829e5d74203a854a11a3db105e91659d06/django_autocomplete_light-4.0.0.tar.gz", hash = "sha256:2d4438320eefe1248ad0543e1d1673449f571afcc5c603fb487e5ed2fe4849cf", size = 102423, upload-time = "2026-04-23T07:11:51.727Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/78/32/0aeb15dd3092dd2db9e7e991d35adcd41a567b76c7f29081c35ca66a72bb/django_autocomplete_light-4.0.1-py3-none-any.whl", hash = "sha256:870a8a850c036ee6aeffe73d72d2289d33e5d5115a04674de39189aeccd627c8", size = 134027, upload-time = "2026-05-27T12:21:58.053Z" },
+    { url = "https://files.pythonhosted.org/packages/93/c2/feb897d6215d6aa8d8b96081f2be976624ff22717950d058ad16dea94072/django_autocomplete_light-4.0.0-py3-none-any.whl", hash = "sha256:60ecf1bbc00f8a633c3967443ab745d9945b73cd6b4f7f64f236280c956b7ba4", size = 117892, upload-time = "2026-04-23T07:11:49.78Z" },
 ]
 
 [[package]]
