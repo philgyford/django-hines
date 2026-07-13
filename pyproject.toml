@@ -15,7 +15,6 @@ dependencies = [
   "django-spectator",
   "django-storages",
   "gunicorn",
-  "ipython",
   "markdown2",
   "psycopg[binary]",
   "pygments",
