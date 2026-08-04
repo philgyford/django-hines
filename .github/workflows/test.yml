@@ -82,7 +82,9 @@ jobs:
         run: uv cache prune --ci
 
   slack:
-    if: always()  # Pick up events even if the job fails or is cancelled.
+    # Pick up events even if the job fails or is cancelled.
+    # BUT, don't run if it's called from a different workflow.
+    if: ${{ always() && github.event_name != 'workflow_call' }}
     runs-on: ubuntu-latest
     needs:
       - build-and-test
