@@ -94,13 +94,15 @@ jobs:
           webhook: ${{ secrets.ACTIONS_CI_SLACK_HOOK }}
           webhook-type: incoming-webhook
           payload: |
-            text: "*Result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}*"
+            text: "${{ needs.build-and-test.result == 'success' && '✅' || '❌' }} Tests"
+
             blocks:
               - type: "section"
                 text:
                   type: "mrkdwn"
                   text: |
-                    GitHub Action result: ${{ job.status }}
+                    *Workflow:* ${{ github.workflow }}
+                    *Status:* ${{ needs.build-and-test.result }}
               - type: "section"
                 text:
                   type: "mrkdwn"
@@ -110,5 +112,5 @@ jobs:
                 text:
                   type: "mrkdwn"
                   text: |
-                    *${{ github.event.pull_request.html_url && 'PR' || 'Commit' }}:* ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    *${{ github.event.pull_request.html_url && 'PR' || 'Commit' }}:* ${{ github.event.pull_request.html_url || github.event.head_commit.url }}
                     *Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
