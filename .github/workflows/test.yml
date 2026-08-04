@@ -104,7 +104,6 @@ jobs:
                   type: "mrkdwn"
                   text: |
                     *Workflow:* ${{ github.workflow }}
-                    *Status:* ${{ needs.build-and-test.result }}
               - type: "section"
                 text:
                   type: "mrkdwn"
