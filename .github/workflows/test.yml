@@ -82,30 +82,13 @@ jobs:
         run: uv cache prune --ci
 
       - name: Slack notification
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-          fields: repo,workflow,message,commit,action,took
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_CI_SLACK_HOOK }} # required
-        # Run even if job fails/cancelled, but only if Slack webhook is present (it's not when Dependabot runs):
-        if: ${{ always() && env.SLACK_WEBHOOK_URL != null }}
-
-  slack:
-    if: always()  # Pick up events even if the job fails or is cancelled.
-    runs-on: ubuntu-latest
-    needs:
-      - test
-
-    steps:
-      - name: Slack notification
         uses: slackapi/slack-github-action@v4
+        if: always()   # Pick up events even if the job fails or is cancelled.
         with:
           webhook: ${{ secrets.ACTIONS_CI_SLACK_HOOK }}
           webhook-type: incoming-webhook
           payload: |
-            text: "*Build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}*"
+            text: "*Result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}*"
             blocks:
               - type: "section"
                 text:
@@ -116,7 +99,7 @@ jobs:
                 text:
                   type: "mrkdwn"
                   text: |
-                    ${{ needs.test.result == 'success' && '✅' || '❌' }} Tests
+                    ${{ job.status == 'success' && '✅' || '❌' }} Tests
               - type: "section"
                 text:
                   type: "mrkdwn"
