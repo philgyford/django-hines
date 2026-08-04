@@ -94,7 +94,7 @@ jobs:
                 text:
                   type: "mrkdwn"
                   text: |
-                    GitHub Action build result: ${{ job.status }}
+                    GitHub Action result: ${{ job.status }}
               - type: "section"
                 text:
                   type: "mrkdwn"
