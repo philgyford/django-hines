@@ -81,9 +81,15 @@ jobs:
       - name: Minimize uv cache
         run: uv cache prune --ci
 
+  slack:
+    if: always()  # Pick up events even if the job fails or is cancelled.
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+
+    steps:
       - name: Slack notification
         uses: slackapi/slack-github-action@v4
-        if: always()   # Pick up events even if the job fails or is cancelled.
         with:
           webhook: ${{ secrets.ACTIONS_CI_SLACK_HOOK }}
           webhook-type: incoming-webhook
@@ -99,7 +105,7 @@ jobs:
                 text:
                   type: "mrkdwn"
                   text: |
-                    ${{ job.status == 'success' && '✅' || '❌' }} Tests
+                    ${{ needs.build-and-test.result == 'success' && '✅' || '❌' }} Tests
               - type: "section"
                 text:
                   type: "mrkdwn"
