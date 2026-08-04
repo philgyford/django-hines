@@ -37,6 +37,11 @@ jobs:
       UV_CACHE_DIR: /tmp/.uv-cache
 
     steps:
+      - name: Debug event
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "event_action=${{ github.event.action }}"
+
       - uses: actions/checkout@v7
 
       - name: Install uv
