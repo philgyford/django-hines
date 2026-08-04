@@ -39,12 +39,27 @@ jobs:
             sudo systemctl restart djangoq_hines
 
       - name: Slack notification
-        uses: 8398a7/action-slack@v3
+        uses: slackapi/slack-github-action@v4
+        if: always()   # Pick up events even if the job fails or is cancelled.
         with:
-          status: ${{ job.status }}
-          # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-          fields: repo,workflow,message,commit,action,took
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.ACTIONS_CI_SLACK_HOOK }} # required
-        # Run even if job fails/cancelled, but only if Slack webhook is present (it's not when Dependabot runs):
-        if: ${{ always() && env.SLACK_WEBHOOK_URL != null }}
+          webhook: ${{ secrets.ACTIONS_CI_SLACK_HOOK }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "*Result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}*"
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: |
+                    GitHub Action build result: ${{ job.status }}
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: |
+                    ${{ job.status == 'success' && '✅' || '❌' }} Tests
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: |
+                    *${{ github.event.pull_request.html_url && 'PR' || 'Commit' }}:* ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    *Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
