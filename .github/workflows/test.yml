@@ -9,6 +9,7 @@ on:
   workflow_call:
     # We don't want this workflow to send a Slack notification if it's
     # called from another one (which will send its own).
+    # So set the default for this custom variable:
     inputs:
       send-slack:
         required: false
@@ -113,16 +114,19 @@ jobs:
             text: "${{ needs.build-and-test.result == 'success' && '✅' || '❌' }} Tests"
 
             blocks:
+              # Name of workflow
               - type: "section"
                 text:
                   type: "mrkdwn"
                   text: |
                     *Workflow:* ${{ github.workflow }}
+              # Did the 1 job succeed?
               - type: "section"
                 text:
                   type: "mrkdwn"
                   text: |
                     ${{ needs.build-and-test.result == 'success' && '✅' || '❌' }} Tests
+              # Outputs links to the PR, or Commit, if any.
               - type: "section"
                 text:
                   type: "mrkdwn"

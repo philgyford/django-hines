@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Run the tests first:
+  # Run the test workflow first:
   use-test:
     uses: philgyford/django-hines/.github/workflows/test.yml@main
     secrets: inherit  # e.g. the repo's Slack webhook secret
@@ -56,11 +56,13 @@ jobs:
           payload: |
             text: "*Result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}*"
             blocks:
+              # Name of workflow
               - type: "section"
                 text:
                   type: "mrkdwn"
                   text: |
                     *Workflow:* ${{ github.workflow }}
+              # Did the 2 jobs succeed?
               - type: "section"
                 text:
                   type: "mrkdwn"
@@ -70,6 +72,7 @@ jobs:
 
                     ${{ needs.use-test.result == 'success' && '✅' || '❌' }} Tests
                     ${{ needs.deploy.result == 'success' && '✅' || '❌' }} Deploy
+              # Outputs links to the PR, or Commit, if any.
               - type: "section"
                 text:
                   type: "mrkdwn"
