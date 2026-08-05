@@ -76,7 +76,7 @@ jobs:
                   text: |
                     *${{
                       github.event.pull_request.html_url && 'PR'
-                      || github.event.head_commit.url && 'Commit
+                      || github.event.head_commit.url && 'Commit'
                       || 'Source'
                     }}:* ${{
                       github.event.pull_request.html_url &&
@@ -85,4 +85,4 @@ jobs:
                           format('<{0}|{1}>', github.event.head_commit.url, github.event.head_commit.id)
                       || 'none'
                     }}
-                    *Run:* [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+                    *Run:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.run_id }}>
