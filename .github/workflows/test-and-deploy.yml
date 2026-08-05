@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -13,6 +12,8 @@ jobs:
   use-test:
     uses: philgyford/django-hines/.github/workflows/test.yml@main
     secrets: inherit  # e.g. the repo's Slack webhook secret
+    with:
+      send-slack: false  # So the test workflow doesn't send Slack notification
 
   deploy:
     needs: use-test

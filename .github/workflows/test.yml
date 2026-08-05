@@ -7,6 +7,13 @@ on:
 
   # Allow calling this workflow from others:
   workflow_call:
+    # We don't want this workflow to send a Slack notification if it's
+    # called from another one (which will send its own).
+    inputs:
+      send-slack:
+        required: false
+        type: boolean
+        default: false
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -87,9 +94,11 @@ jobs:
         run: uv cache prune --ci
 
   slack:
-    # Pick up events even if the job fails or is cancelled.
-    # BUT, don't run if it's called from a different workflow.
-    if: ${{ always() && github.event_name != 'workflow_call' }}
+    # Pick up events even if the job fails or is cancelled
+    # but not if a calling workflow passes in send-slack=false
+    if: >-
+      always() &&
+      (inputs.send-slack || github.event_name != 'push')
     runs-on: ubuntu-latest
     needs:
       - build-and-test
