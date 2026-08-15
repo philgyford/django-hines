@@ -380,7 +380,7 @@ wheels = [
 
 [[package]]
 name = "django-spectator"
-version = "15.4.0"
+version = "15.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
@@ -389,9 +389,9 @@ dependencies = [
     { name = "piexif" },
     { name = "pillow" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7b/86/0481c427e5610a17f70114aeba661fdb59ce9dc196e7cb3d274ef06cd98b/django_spectator-15.4.0.tar.gz", hash = "sha256:061ac6557f7ce3133dbf82e42895cbe2a65f5453dec06b4f4b6c636d8f3d8a4f", size = 237226, upload-time = "2026-08-03T14:22:06.423Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e4/32/6897990b023991a896fea43a87b2edf6b509f36cd5a85208b1b15f29bd0f/django_spectator-15.5.0.tar.gz", hash = "sha256:3960d7ab2e78fefac286d62d82b00c2d3320c69dbed9d27e334b82cc2cfdb35d", size = 236468, upload-time = "2026-08-06T11:19:57.726Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/81/6a/3977126c48dd83512a7b7b0ecc95702e019bf45e1d630a9117dfd9b546b2/django_spectator-15.4.0-py3-none-any.whl", hash = "sha256:9b06bea235d2a854a65555a8aa1b8403457c2114d554e3c5190722712e648e6e", size = 288643, upload-time = "2026-08-03T14:22:04.957Z" },
+    { url = "https://files.pythonhosted.org/packages/c8/e2/78dae503c4ba524ee953e03a933017bbb0f847a47ab1638b6d5420598469/django_spectator-15.5.0-py3-none-any.whl", hash = "sha256:f4371db1a9c9ccab688b2e51682b52412b6e3e031b797943daae957e30bd264c", size = 288012, upload-time = "2026-08-06T11:19:55.807Z" },
 ]
 
 [[package]]
