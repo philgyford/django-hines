@@ -213,9 +213,10 @@ wheels = [
 
 [[package]]
 name = "django-ditto"
-version = "3.8.0"
+version = "3.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "django" },
     { name = "django-imagekit" },
     { name = "django-sortedm2m" },
     { name = "django-taggit" },
@@ -224,9 +225,9 @@ dependencies = [
     { name = "twitter-text-python" },
     { name = "twython" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/15/1e/e3b634b2f51bc73502aa4c204bbf02c5cb2dbeaf2f47ea4b366212e3bff1/django_ditto-3.8.0.tar.gz", hash = "sha256:4153d46f993e532068ed00ac59a736269f35cf46dca421eb378ae83bdeb46ac8", size = 446300, upload-time = "2026-08-04T12:32:16.94Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ff/ad/fdde1460e9e590a9ee5e3c82bb330c3d7d0c74095fd21d974820ed5aa7ca/django_ditto-3.9.0.tar.gz", hash = "sha256:3eb34d6e90a9a09733d7c9eb60c01e542be0c5fcdfe104a34de3c4b4bdb938d8", size = 445520, upload-time = "2026-08-06T11:19:50.316Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/25/94/9229610d8133c7869802bce980f030fd55f3ff12c801b52e07fda3798b68/django_ditto-3.8.0-py3-none-any.whl", hash = "sha256:0b899f09917f44915c024331ed0ad6598c1c650a074dfbd077e532007904afb8", size = 563985, upload-time = "2026-08-04T12:32:15.033Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/50/46c429c7a805b42b1a5ef5972796f591f2b2ef7c3213a590a2b758b8b4f5/django_ditto-3.9.0-py3-none-any.whl", hash = "sha256:47d7a1fde714a2f88d5c5c1c9cbe29b110216d32f8e3f6202d2f5742b2296e03", size = 563340, upload-time = "2026-08-06T11:19:47.98Z" },
 ]
 
 [[package]]
