@@ -15,14 +15,14 @@ services:
   db:
     container_name: hines_db
     env_file: .env
-    image: postgres:14
+    image: postgres:18
     # Uncomment this and restart to log all queries to the console:
     # command: ["postgres", "-c", "log_statement=all"]
     ports:
       - "5555:5432"
     restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql
 
   redis:
     container_name: hines_redis
@@ -32,7 +32,7 @@ services:
           # When set to 0 these will use as much as needed:
           cpus: "0"
           memory: "0"
-    image: "redis:7-bullseye"
+    image: "redis:8-alpine"
     ports:
       - "6666:6379"
     restart: unless-stopped
