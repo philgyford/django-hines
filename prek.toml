@@ -12,7 +12,7 @@ exclude = """
 )$
 """
 
-[auto_update]
+[update]
 # To match uv's setting
 cooldown_days = 7
 
