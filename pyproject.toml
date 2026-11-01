@@ -12,7 +12,7 @@ dependencies = [
   "django-hcaptcha",
   "django-q2",
   "django-redis",
-  "django-spectator",
+  "django-spectator>=15.7.1",
   "django-storages",
   "gunicorn",
   "markdown2",
@@ -83,6 +83,8 @@ dev = [
 
 [tool.uv]
 exclude-newer = "1 week"
+# Allow us to install these immediately:
+exclude-newer-package = { django_ditto = false, django_spectator = false}
 
 [tool.uv.pip]
 generate-hashes = true

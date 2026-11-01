@@ -6,6 +6,9 @@ requires-python = "==3.14.*"
 exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
 exclude-newer-span = "P1W"
 
+[options.exclude-newer-package]
+django-spectator = false
+
 [[package]]
 name = "asgiref"
 version = "3.13.0"
@@ -354,7 +357,7 @@ requires-dist = [
     { name = "django-hcaptcha" },
     { name = "django-q2" },
     { name = "django-redis" },
-    { name = "django-spectator" },
+    { name = "django-spectator", specifier = ">=15.7.1" },
     { name = "django-storages" },
     { name = "gunicorn" },
     { name = "markdown2" },
@@ -440,7 +443,7 @@ wheels = [
 
 [[package]]
 name = "django-spectator"
-version = "15.7.0"
+version = "15.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
@@ -449,9 +452,9 @@ dependencies = [
     { name = "piexif" },
     { name = "pillow" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f0/35/50bae8d519912a1a64c1c42bf320c7f2c832a2501db0b7201da9e0b5d79b/django_spectator-15.7.0.tar.gz", hash = "sha256:0fe95f2c0edbf158707a71f8e2abd6892c0603c5bb0f2e89f15dd55201025420", size = 239318, upload-time = "2026-08-11T11:14:28.11Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/50/2a/85fabc5c86d504d1ff4a51827e3cceb7094101b1cb1507e863e38104fb3c/django_spectator-15.7.1.tar.gz", hash = "sha256:a8d7e662434fedebbaba241b103814b6e00f63c27c33f24255d6ce6c039c3dd8", size = 239398, upload-time = "2026-11-01T18:18:09.174Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2f/cb/fdb33576bc3d25d6c133a9010391a3053b92123b48b7d5d053a9c0627ece/django_spectator-15.7.0-py3-none-any.whl", hash = "sha256:f9714806f86ee7b5cdeb5015882da00b57a47b5e9b1b185c37dcc4549b8ab8d1", size = 290781, upload-time = "2026-08-11T11:14:26.712Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/79/290376a62a1be7d417752f82641bd9c05491d47c6f89d9dc6456cca2c19e/django_spectator-15.7.1-py3-none-any.whl", hash = "sha256:5dcf777408bee7cab7b48788aa0d9d20684808fe72e87cc4e2ec8a3d98b856dd", size = 290775, upload-time = "2026-11-01T18:18:07.901Z" },
 ]
 
 [[package]]
